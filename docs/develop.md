@@ -2,6 +2,7 @@
 
 Features are broken up into directories.
 
+```
 src
 ├── lib - Scripts common to multiple features
 │   └── api - Functions to modify database data
@@ -19,3 +20,4 @@ src
 │   └── reducers.js
 ├── App.js - Root app instance
 └── index.js - App initialization functions
+```
