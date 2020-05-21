@@ -7,8 +7,19 @@ import {
 } from 'react-router-dom';
 import LandingPage from './landing';
 import SchedulePlanner from './planner';
+import ScheduleListPage from './schedules';
 
 function App() {
+  const testSchedules = [
+    {
+      name: 'Just a test schedule.',
+      id: 'test1',
+    },
+    {
+      name: 'Just another test schedule.',
+      id: 'test2',
+    },
+  ];
   return (
     <Router>
       <Switch>
@@ -16,7 +27,7 @@ function App() {
           <SchedulePlanner></SchedulePlanner>
         </Route>
         <Route path="/schedules">
-          {/* TODO: Display list of schedules */}
+          <ScheduleListPage schedules={testSchedules}></ScheduleListPage>
         </Route>
         <Route path="/auth">
           {/* TODO: Handle sign-in */}

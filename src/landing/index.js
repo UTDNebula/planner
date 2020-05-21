@@ -1,5 +1,6 @@
 import React from 'react';
 import logo from '../logo.svg';
+import { Link } from 'react-router-dom';
 
 export default function LandingPage() {
   return (
@@ -16,6 +17,12 @@ export default function LandingPage() {
         >
           Built by ACM Development.
         </a>
+        <section>
+          <h1>Testing stuff</h1>
+          <div>
+            <Link to="/schedules">See all test schedules</Link>
+          </div>
+        </section>
       </header>
     </div>
   );
