@@ -13,12 +13,14 @@
  * @property {string} suffix The course "number", like 1200, 4V98
  * @property {Map<string, Grade>?} prerequisites An optional map of IDs for courses and minimum grades that must be taken before taking this class
  * @property {Map<string, Grade>?} corequisites An optional map of IDs for courses and minimum grades that must be taken before or concurrently with this class
+ * @property {string} owner The student ID of this schedule's owner
  */
 
 /**
  * 
  * @typedef {object} Schedule
  * @property {string} name A user-defined title
+ * @property {string} owner The student ID of this schedule's owner
  * @property {string} created A timestamp denoting when this schedule was first created
  * @property {string} lastUpdated A timestamp denoting when this schedule was last saved
  * @property {Array<ScheduleSemester>} semesters The semesters that contain this schedule's courses
@@ -52,7 +54,6 @@
  * @property {number} attemptedCreditHours The amount of attempted credit hours
  * @property {number} gpa The current grade point average
  * @property {Array<CourseAttempt>} attemptedCourses All a student's course attempts and letter grades
- * @property {Array<string>} schedules All schedules owned by this student
  * @property {Array<string>} plans The IDs of the CoursePlans being attempted 
  */
 
