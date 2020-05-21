@@ -6,22 +6,22 @@
  * The basic building block for a schedule.
  *
  * @typedef {object} Course
- * @param {string} fullName The official long name of this course, such as "Computer Architecture"
- * @param {Array<SemesterCode>} offered When this course may be taken
- * @param {string} description An official catalog-provided user-readable description of this course
- * @param {SubjectCode} subject The subject code of this course, like "CS"
- * @param {string} suffix The course "number", like 1200, 4V98
- * @param {Map<string, Grade>?} prerequisites An optional map of IDs for courses and minimum grades that must be taken before taking this class
- * @param {Map<string, Grade>?} corequisites An optional map of IDs for courses and minimum grades that must be taken before or concurrently with this class
+ * @property {string} fullName The official long name of this course, such as "Computer Architecture"
+ * @property {Array<SemesterCode>} offered When this course may be taken
+ * @property {string} description An official catalog-provided user-readable description of this course
+ * @property {SubjectCode} subject The subject code of this course, like "CS"
+ * @property {string} suffix The course "number", like 1200, 4V98
+ * @property {Map<string, Grade>?} prerequisites An optional map of IDs for courses and minimum grades that must be taken before taking this class
+ * @property {Map<string, Grade>?} corequisites An optional map of IDs for courses and minimum grades that must be taken before or concurrently with this class
  */
 
 /**
  * 
  * @typedef {object} Schedule
- * @param {string} name A user-defined title
- * @param {string} created A timestamp denoting when this schedule was first created
- * @param {string} lastUpdated A timestamp denoting when this schedule was last saved
- * @param {Array<ScheduleSemester>} semesters The semesters that contain this schedule's courses
+ * @property {string} name A user-defined title
+ * @property {string} created A timestamp denoting when this schedule was first created
+ * @property {string} lastUpdated A timestamp denoting when this schedule was last saved
+ * @property {Array<ScheduleSemester>} semesters The semesters that contain this schedule's courses
  */
 
 /**
@@ -32,10 +32,10 @@
  * Comuter Science.
  *
  * @typedef {object} CoursePlan
- * @param {string} name The , such as "Computer Science"
- * @param {PlanType} type The formal type, such as "Bachelor of Science"
- * @param {PlanCategory?} category The category of plan
- * @param {Array<PlanRequirement>} requirements All required courses for this plan
+ * @property {string} name The subject of the plan, such as "Computer Science"
+ * @property {PlanType} type The formal type, such as "Bachelor of Science"
+ * @property {PlanCategory?} category The category of plan
+ * @property {Array<PlanRequirement>} requirements All required courses for this plan
  */
 
 /**
@@ -45,15 +45,15 @@
  * student's attempted courses and provides some fields for quick querying.
  * 
  * @typedef {object} Student
- * @param {string} name The user's full name
- * @param {Term} startTerm When this student first enrolled in classes 
- * @param {Term} endTerm Anticipated or actual term of graduation
- * @param {Classification} classification The registrar-determined year
- * @param {number} attemptedCreditHours The amount of attempted credit hours
- * @param {number} gpa The current grade point average
- * @param {Array<CourseAttempt>} attemptedCourses All a student's course attempts and letter grades
- * @param {Array<string>} schedules All schedules owned by this student
- * @param {Array<string>} plans The IDs of the CoursePlans being attempted 
+ * @property {string} name The user's full name
+ * @property {Term} startTerm When this student first enrolled in classes 
+ * @property {Term} endTerm Anticipated or actual term of graduation
+ * @property {Classification} classification The registrar-determined year
+ * @property {number} attemptedCreditHours The amount of attempted credit hours
+ * @property {number} gpa The current grade point average
+ * @property {Array<CourseAttempt>} attemptedCourses All a student's course attempts and letter grades
+ * @property {Array<string>} schedules All schedules owned by this student
+ * @property {Array<string>} plans The IDs of the CoursePlans being attempted 
  */
 
 /**
@@ -62,9 +62,9 @@
  * Note: There may be multiple instances of the same course in a student record.
  *
  * @typedef {object} CourseAttempt
- * @param {string} course Name of course taken
- * @param {Grade} grade Letter grade of course
- * @param {Term} term The specific semester this course was taken 
+ * @property {string} course Name of course taken
+ * @property {Grade} grade Letter grade of course
+ * @property {Term} term The specific semester this course was taken 
  */
 
 
@@ -74,16 +74,16 @@
  * Used in schedule planning.
  * 
  * @typedef {object} ScheduleSemester
- * @param {Term} term When these courses will be taken
- * @param {Array<Course>} courses The planned courses to enroll in this semester
+ * @property {Term} term When these courses will be taken
+ * @property {Array<Course>} courses The planned courses to enroll in this semester
  */
 
 /**
  * A grouping of courses required to satisfy a degree requirements.
  *
  * @typedef {object} PlanRequirement
- * @param {string} name The formal title of this requirement, like "Major Preparatory Courses"
- * @param {Array<String>} courses A list of required course IDs to satisfy this requirement
+ * @property {string} name The formal title of this requirement, like "Major Preparatory Courses"
+ * @property {Array<String>} courses A list of required course IDs to satisfy this requirement
  */
 
 /**
