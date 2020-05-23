@@ -5,9 +5,17 @@
 ## Getting Started
 
 Stable release: checkout [master](https://github.com/acmutd/comet_planning/tree/master)
+
 Developer version: checkout [dev](https://github.com/acmutd/comet_planning/tree/dev)
 
 ## Git Work Flow
+
+There will be three branches that we will be utilizing: the master branch, the dev branch, and branches for particular features. Below are the step by step process we will use as a team.
+
+1. Create a feature branch from dev
+2. Add your code to the feature branch that you create
+3. Once you are finished with a feature, open a pull request and merge it back into dev
+4. Once you have finished all features you merge dev branch to the master branch
 
 ## Backend and UI Guidelines
 
