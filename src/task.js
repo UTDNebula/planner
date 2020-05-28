@@ -4,7 +4,20 @@ import {Card} from '@material-ui/core';
 import {CardContent} from '@material-ui/core';
 import {Typography} from '@material-ui/core';
 import { Draggable } from 'react-beautiful-dnd';
+import styled from 'styled-components';
 
+
+const Container = styled.div`
+    border: 1px solid lightgrey;
+    padding: 8px; 
+    border-radius: 2px; 
+    margin-bottom: 8px; 
+    height: 100px;
+    background-color: ${props => (props.isDragging ? 'lightgreen': 'white')};
+    display: flex; 
+`;
+
+/** 
 const style = (theme) => ({
     root:{
         borderRadius:'15px',
@@ -13,7 +26,7 @@ const style = (theme) => ({
     },
 
 });
-
+**/
 
 class Task extends React.Component {
     render(){
@@ -22,20 +35,17 @@ class Task extends React.Component {
         return(
             <Draggable draggableId={this.props.task} key = {this.props.task} index={this.props.index}>
             {(provided, snapshot) => (
-                <Card 
-                className = {classes.root}
+                <Container
                 {...provided.draggableProps}
                 ref = {provided.innerRef}
                 isDragging = {snapshot.isDragging}
                 {...provided.dragHandleProps}
                 >
-                <CardContent>
-                    <Typography>
+                
                        
                         {this.props.task}
-                    </Typography>
-                </CardContent>
-                </Card>
+                  
+                </Container>
             )}
 
        </Draggable>
@@ -46,7 +56,7 @@ class Task extends React.Component {
     }
 }
 
-export default withStyles(style)(Task);
+export default Task;
 
 
 /**

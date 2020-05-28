@@ -6,21 +6,40 @@ import Task from './task';
 import styled from 'styled-components';
 import { List } from '@material-ui/core';
 
+const Container = styled.div`
+    margin: 8px; 
+    border: 1px solid black; 
+    border-radius: 2px; 
+    width: 500px;
+    height: 300px;
+    overflow: auto;
+    display: flex; 
+    flex-direction: column; 
+    `;
 const TaskList = styled.div`
+    padding: 9px; 
     font-family: Arial; 
     background-color: ${props => (props.isDraggingOver ? 'skyblue' : 'white')};
-`;
+    flex-grow: 1; 
+    
+`; 
+
+/**
 
 const style = (theme) => ({
     root:{
        borderColor: 'black',
        backgroundColor: 'lightgrey',
        width: 250,
-       maxHeight: 300,
+       minHeight: 200,
        overflow: 'auto',
+       display: 'flex',
+       flexDirection: 'column',
         
     },
 });
+
+ */
 
 
 
@@ -36,13 +55,11 @@ class Board extends React.Component{
        
         return(
         
-        <Box className={classes.root} border={2}>
-            <h3>{this.props.semester.title}</h3>
+        <Container>
             <Droppable droppableId = {this.props.semester.id}
                 isDropDisabled={this.props.isDisabled}>
             {(provided, snapshot) => (
-                <List
-                 className={classes.root}
+                <TaskList
                  ref = {provided.innerRef}
                  {...provided.droppableProps}
                  isDraggingOver = {snapshot.isDraggingOver}
@@ -50,14 +67,14 @@ class Board extends React.Component{
                 {this.props.semester.taskIds.map((task, index) =>
                 <Task key = {task.id} task = {task} index={index}/>)}
                 {provided.placeHolder}
-            </List>
+            </TaskList>
             
             )}
             </Droppable>
-         </Box>
-        )
+        </Container>
+        );
     }
 
 }
 
-export default withStyles(style)(Board);
+export default Board; 
