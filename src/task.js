@@ -8,7 +8,7 @@ import { Draggable } from 'react-beautiful-dnd';
 const style = (theme) => ({
     root:{
         borderRadius:'15px',
-        height: 100,
+        height: 50,
         margin: 5,
     },
 
@@ -18,15 +18,15 @@ const style = (theme) => ({
 class Task extends React.Component {
     render(){
         const {classes} = this.props; 
-       // console.log(this.props);
+        console.log(this.props);
         return(
-            <Draggable draggableId={this.props.task} index={this.props.index}>
+            <Draggable draggableId={this.props.task} key = {this.props.task} index={this.props.index}>
             {(provided, snapshot) => (
                 <Card 
                 className = {classes.root}
                 {...provided.draggableProps}
                 ref = {provided.innerRef}
-                
+                isDragging = {snapshot.isDragging}
                 {...provided.dragHandleProps}
                 >
                 <CardContent>
