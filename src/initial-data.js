@@ -15,21 +15,27 @@ const initialData = {
         'semester-1': {
             id: 'semester-1',
             title: 'fall',
-            taskIds: ['task-1', 'task-2'],
+            taskIds: [],
         },
         'semester-2': {
             id: 'semester-2',
             title: 'spring',
             taskIds: [],
-        }
+        },
+        'semester-3':{
+            id: 'semester-3',
+            title: 'summer',
+            taskIds: [],
+        },
+        
     },
     courselist: {
         id: 'courselist',
         title: 'Courses',
-        taskIds:['task-3','task-4'
+        taskIds:['task-1', 'task-2','task-3','task-4'
             ,'task-5', 'task-6','task-7'],
     },
-    columnOrder: ['semester-1', 'semester-2'],
+    columnOrder: ['semester-1', 'semester-2', 'semester-3'],
 };
 
 export default initialData; 

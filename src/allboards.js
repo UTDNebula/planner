@@ -16,7 +16,7 @@ const style = (theme) => ({
 class AllBoards extends React.Component{
     render(){
 
-        console.log(this.props.tasks);
+        //console.log(this.props.tasks);
 
         const tasks = this.props.tasks; 
         //contains an array of the semester objects
