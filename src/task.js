@@ -31,7 +31,7 @@ const style = (theme) => ({
 class Task extends React.Component {
     render(){
         const {classes} = this.props; 
-        console.log(this.props);
+        //console.log(this.props);
         return(
             <Draggable draggableId={this.props.task} key = {this.props.task} index={this.props.index}>
             {(provided, snapshot) => (
