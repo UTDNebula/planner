@@ -1,7 +1,11 @@
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
 
-function appState(state = {}) {
+import planner from '../planner/reducers';
+import courses from '../courses/reducers';
 
-}
+const appState = combineReducers({
+  planner,
+  courses,
+});
 
 export const store = createStore(appState);
