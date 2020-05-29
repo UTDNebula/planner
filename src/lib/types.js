@@ -13,7 +13,6 @@
  * @property {string} suffix The course "number", like 1200, 4V98
  * @property {Map<string, Grade>?} prerequisites An optional map of IDs for courses and minimum grades that must be taken before taking this class
  * @property {Map<string, Grade>?} corequisites An optional map of IDs for courses and minimum grades that must be taken before or concurrently with this class
- * @property {string} owner The student ID of this schedule's owner
  */
 
 /**
