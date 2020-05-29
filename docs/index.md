@@ -7,3 +7,4 @@ Run `npm start` to start the React dev server.
 # Table of Contents
 - [Develop](./develop.md)
 - [Design](./design.md)
+- [Style Guide](./style.md)
