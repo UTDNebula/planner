@@ -107,8 +107,8 @@ class App extends React.Component{
       taskIds: foreignTaskIds,
     };
 
-    
-  //  console.log(newForeign);
+    console.log(newHome);
+    console.log(newForeign);
   //the problem is newhome or newforeign can either be semester or courselist
 
   if(newHome.id === 'courselist' && newForeign.id !== 'courselist'){
@@ -126,21 +126,40 @@ class App extends React.Component{
     };
 
     this.setState(newState);
-    //console.log(newState);
+ //   console.log(newState);
   }
-  else if (newHome.id !== 'courselist' && newForeign.id !== 'courselist'){
+  else if (newHome.id === newForeign.id){
+
+    const newTaskIds = Array.from(home.taskIds);
+    newTaskIds.splice(source.index,1);
+    newTaskIds.splice(destination.index, 0, draggableId);
+
+    const newHome = {
+      ...home,
+      taskIds: newTaskIds, 
+    };
+
     const newState = {
       ...this.state, 
       semesters: {
         ...this.state.semesters, 
-        [newForeign.id] : newForeign, 
-        [newHome.id] : newHome, 
-        
+        [newHome.id] : newHome,
       },
-    }
+    };
 
     this.setState(newState);
   //  console.log(newState);
+  }
+  else if(newHome.id !== 'courselist' && newForeign.id !== 'courselist' ){
+    const newState = {
+      ...this.state, 
+      semesters:{
+        ...this.state.semesters,
+        [newHome.id] : newHome, 
+        [newForeign.id] : newForeign, 
+      },
+    };
+    this.setState(newState);
   }
   else if (newHome.id !== 'courselist' && newForeign.id === 'courselist'){
     const newState = {
