@@ -1,8 +1,4 @@
 import React from 'react'; 
-import { withStyles } from '@material-ui/core/styles';
-import {Card} from '@material-ui/core';
-import {CardContent} from '@material-ui/core';
-import {Typography} from '@material-ui/core';
 import { Draggable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 
@@ -17,16 +13,6 @@ const Container = styled.div`
     display: flex; 
 `;
 
-/** 
-const style = (theme) => ({
-    root:{
-        borderRadius:'15px',
-        height: 50,
-        margin: 5,
-    },
-
-});
-**/
 
 class Task extends React.Component {
     render(){
@@ -77,3 +63,15 @@ export default Task;
 
            </Draggable>   
  */
+
+
+ /** 
+const style = (theme) => ({
+    root:{
+        borderRadius:'15px',
+        height: 50,
+        margin: 5,
+    },
+
+});
+**/
