@@ -1,10 +1,8 @@
 import React from 'react'; 
-import { withStyles } from '@material-ui/core/styles';
-import { Box } from '@material-ui/core';
 import { Droppable } from 'react-beautiful-dnd';
 import Task from './task';
 import styled from 'styled-components';
-import { List } from '@material-ui/core';
+
 
 const Container = styled.div`
     margin: 8px; 
@@ -23,23 +21,6 @@ const TaskList = styled.div`
     flex-grow: 1; 
     
 `; 
-
-/**
-
-const style = (theme) => ({
-    root:{
-       borderColor: 'black',
-       backgroundColor: 'lightgrey',
-       width: 250,
-       minHeight: 200,
-       overflow: 'auto',
-       display: 'flex',
-       flexDirection: 'column',
-        
-    },
-});
-
- */
 
 
 
@@ -78,3 +59,22 @@ class Board extends React.Component{
 }
 
 export default Board; 
+
+
+/**
+
+const style = (theme) => ({
+    root:{
+       borderColor: 'black',
+       backgroundColor: 'lightgrey',
+       width: 250,
+       minHeight: 200,
+       overflow: 'auto',
+       display: 'flex',
+       flexDirection: 'column',
+        
+    },
+});
+
+ */
+

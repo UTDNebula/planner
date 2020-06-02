@@ -9,10 +9,10 @@ const style = (theme) => ({
   root:{
     display: 'flex',
     flexDirection: 'row',
-    
   },
-
 });
+
+
 
 class App extends React.Component{
 
@@ -56,32 +56,6 @@ class App extends React.Component{
       const foreign = (destination.droppableId === 'courselist') ? 
       this.state.courselist : this.state.semesters[destination.droppableId];
 
-      /** 
-      if(home === foreign){
-        const newTaskIds = Array.from(home.taskIds);
-        newTaskIds.splice(source.index,1);
-        newTaskIds.splice(destination.index, 0, draggableId);
-
-        const newHome = {
-          ...home, 
-          taskIds: newTaskIds, 
-        };
-
-        const newState = {
-          ...this.state,
-          columns:{
-            ...this.state.columns, 
-            [newHome.id] : newHome, 
-          },
-        };
-
-        this.setState(newState); 
-        return; 
-
-      }
-      */
-
-      
   
      
       
@@ -178,6 +152,76 @@ class App extends React.Component{
     this.setState(newState);
   //  console.log(newState);
   }
+    
+  }
+
+  render(){
+
+
+    const tasks = this.state.courselist.taskIds.map(taskId => this.state.tasks[taskId]);
+    const semesters = this.state.columnOrder.map(column => this.state.semesters[column]);
+
+    console.log(tasks);
+
+    const list = this.state.courselist; 
+    const {classes} = this.props;
+    const isDropDisabled = false;
+
+      return(
+        <DragDropContext
+          onDragStart = {this.onDragStart}
+          onDragEnd = {this.onDragEnd} >
+        <div className={classes.root}>
+          
+        <MainList
+          key = {list.id} 
+          tasks = {tasks} 
+          semesters = {semesters} 
+          list = {list} 
+          isDropDisabled={isDropDisabled} />
+        <AllBoards semesters = {semesters} tasks = {tasks} />
+        </div>
+        </DragDropContext>
+      );
+     
+    }
+};
+
+export default withStyles(style)(App);
+
+
+
+
+
+
+      /** 
+      if(home === foreign){
+        const newTaskIds = Array.from(home.taskIds);
+        newTaskIds.splice(source.index,1);
+        newTaskIds.splice(destination.index, 0, draggableId);
+
+        const newHome = {
+          ...home, 
+          taskIds: newTaskIds, 
+        };
+
+        const newState = {
+          ...this.state,
+          columns:{
+            ...this.state.columns, 
+            [newHome.id] : newHome, 
+          },
+        };
+
+        this.setState(newState); 
+        return; 
+
+      }
+      */
+
+      
+
+
 
   /** 
 
@@ -228,40 +272,5 @@ class App extends React.Component{
 
     this.setState(diffState);
  */
-  
-  
-    
-  }
-
-  render(){
-
-    
-
-    const tasks = this.state.courselist.taskIds.map(taskId => this.state.tasks[taskId]);
-    const semesters = this.state.columnOrder.map(column => this.state.semesters[column]);
-
-    
-
-    const list = this.state.courselist; 
-    const {classes} = this.props;
-    const isDropDisabled = false;
-
-      return(
-        <DragDropContext
-          onDragStart = {this.onDragStart}
-          onDragEnd = {this.onDragEnd}
-        >
-        <div className={classes.root}>
-          
-        <MainList key = {list.id} tasks = {tasks} semesters = {semesters} list = {list} isDropDisabled={isDropDisabled} />
-        <AllBoards semesters = {semesters} tasks = {tasks} />
-        </div>
-        </DragDropContext>
-      );
-     
-    }
-};
-
-export default withStyles(style)(App);
 
 
