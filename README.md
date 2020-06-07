@@ -8,21 +8,22 @@ Stable release: checkout [master](https://github.com/acmutd/comet_planning/tree/
 
 Developer version: checkout [dev](https://github.com/acmutd/comet_planning/tree/dev)
 
-## Git Work Flow
+## How to Contribute
 
 There will be three branches that we will be utilizing: the master branch, the dev branch, and branches for particular features. Below are the step by step process we will use as a team.
 
-1. Create a feature branch from dev
-2. Add your code to the feature branch that you create
-3. Once you are finished with a feature, open a pull request and merge it back into dev
-4. Once you have finished all features you merge dev branch to the master branch
+1. From `dev`, create a new feature branch. For example, `auth-signin`
+2. Make commits to the feature branch.
+3. When enough of the feature is complete, open a pull request to merge changes from your feature branch to `dev`. For larger features or changes to code, open a draft pull request to track changes until completion.
+4. Request a review from a project contributor, and add the pull request to a project board and milestone (if applicable)
+5. When a review is complete, a contributor will squash merge the feature branch into `dev`. The feature branch can then be deleted.
 
 ## Backend and UI Guidelines
 
 ## Contributors
 
-- [Aliah Guzman](https://www.linkedin.com/in/aliahdg/)
-- [Willie Chalmers](https://www.linkedin.com/in/willie-chalmers-iii/)
+- [Aliah Shaira De Guzman](https://www.linkedin.com/in/aliahdg/)
+- [Willie Chalmers III](https://www.linkedin.com/in/willie-chalmers-iii/)
 - [Aishani De Sirkar](https://www.linkedin.com/in/aishani-de-sirkar-9222a7170/)
 - [Medha Aiyah](https://www.linkedin.com/in/medha-aiyah/)
 
