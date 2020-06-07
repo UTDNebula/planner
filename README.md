@@ -11,6 +11,28 @@ Stable release: checkout [master](https://github.com/acmutd/comet_planning/tree/
 
 Developer version: checkout [dev](https://github.com/acmutd/comet_planning/tree/dev)
 
+### Initializing Firebase
+To set up, go to the Firebase console and download the credientials. Paste the
+body of the config into `src/firebase.config.js` in the exported block.
+
+For example, `src/firebase-config.js` should look something like this:
+```js
+export default {
+  // Config goes here
+  apiKey: 'some_api_key',
+  authDomain: 'cometplanning.firebaseapp.com',
+  databaseURL: 'https://cometplanning.firebaseio.com',
+  projectId: 'cometplanning',
+  storageBucket: 'cometplanning.appspot.com',
+  messagingSenderId: 'some_messaging_sender_id',
+  appId: 'some_app_id',
+};
+```
+
+Note: Changes to `src/firebase-config.js` should not be checked into source
+control. To prevent accidents, the project `.gitignore` automatically ignores
+changes to the file.
+
 ## How to Contribute
 
 This project loosely uses the [Git Flow](https://nvie.com/posts/a-successful-git-branching-model/) branching model.
@@ -22,8 +44,6 @@ Here is the process to make changes to the project:
 3. When enough of the feature is complete, open a pull request to merge changes from your feature branch to `dev`. For larger features or changes to code, open a draft pull request to track changes until completion.
 4. Request a review from a project contributor, and add the pull request to a project board and milestone (if applicable)
 5. When a review is complete, a contributor will squash merge the feature branch into `dev`. The feature branch can then be deleted.
-
-## Backend and UI Guidelines
 
 ## Contributors
 
