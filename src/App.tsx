@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import './App.css';
 import {
   RouteComponentProps,
   Switch,
