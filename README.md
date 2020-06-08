@@ -4,25 +4,51 @@
 
 ## Getting Started
 
+This project requires a working Node.js and NPM installation.
+To start, clone the repository, and then run `npm start` to launch a local development server.
+
 Stable release: checkout [master](https://github.com/acmutd/comet_planning/tree/master)
 
 Developer version: checkout [dev](https://github.com/acmutd/comet_planning/tree/dev)
 
-## Git Work Flow
+### Initializing Firebase
+To set up, go to the Firebase console and download the credientials. Paste the
+body of the config into `src/firebase.config.js` in the exported block.
 
-There will be three branches that we will be utilizing: the master branch, the dev branch, and branches for particular features. Below are the step by step process we will use as a team.
+For example, `src/firebase-config.js` should look something like this:
+```js
+export default {
+  // Config goes here
+  apiKey: 'some_api_key',
+  authDomain: 'cometplanning.firebaseapp.com',
+  databaseURL: 'https://cometplanning.firebaseio.com',
+  projectId: 'cometplanning',
+  storageBucket: 'cometplanning.appspot.com',
+  messagingSenderId: 'some_messaging_sender_id',
+  appId: 'some_app_id',
+};
+```
 
-1. Create a feature branch from dev
-2. Add your code to the feature branch that you create
-3. Once you are finished with a feature, open a pull request and merge it back into dev
-4. Once you have finished all features you merge dev branch to the master branch
+Note: Changes to `src/firebase-config.js` should not be checked into source
+control. To prevent accidents, the project `.gitignore` automatically ignores
+changes to the file.
 
-## Backend and UI Guidelines
+## How to Contribute
+
+This project loosely uses the [Git Flow](https://nvie.com/posts/a-successful-git-branching-model/) branching model.
+There are three types of branches: `master`, which always contains complete, production-ready copies of project code, `dev`, which is guaranteed to at least be runnable on any machine (generally free of bugs), and feature branches, which are children of `dev` that are primarily used to create new features.
+Here is the process to make changes to the project:
+
+1. From `dev`, create a new feature branch. For example, `auth-signin`
+2. Make commits to the feature branch.
+3. When enough of the feature is complete, open a pull request to merge changes from your feature branch to `dev`. For larger features or changes to code, open a draft pull request to track changes until completion.
+4. Request a review from a project contributor, and add the pull request to a project board and milestone (if applicable)
+5. When a review is complete, a contributor will squash merge the feature branch into `dev`. The feature branch can then be deleted.
 
 ## Contributors
 
-- [Aliah Guzman](https://www.linkedin.com/in/aliahdg/)
-- [Willie Chalmers](https://www.linkedin.com/in/willie-chalmers-iii/)
+- [Aliah Shaira De Guzman](https://www.linkedin.com/in/aliahdg/)
+- [Willie Chalmers III](https://www.linkedin.com/in/willie-chalmers-iii/)
 - [Aishani De Sirkar](https://www.linkedin.com/in/aishani-de-sirkar-9222a7170/)
 - [Medha Aiyah](https://www.linkedin.com/in/medha-aiyah/)
 

@@ -7,18 +7,15 @@ import * as serviceWorker from './serviceWorker';
 import { initFirebase } from './lib/firebase-init';
 import { store } from './lib';
 import config from './firebase-config';
-import { BrowserRouter as Router } from 'react-router-dom';
 
 initFirebase(config);
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <Router>
-        <App />
-      </Router>
-    </Provider>
-  </React.StrictMode>,
+  <Provider store={store}>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </Provider>,
   document.getElementById('root')
 );
 
