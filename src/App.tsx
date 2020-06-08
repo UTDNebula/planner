@@ -242,9 +242,9 @@ export class App extends React.Component<any, componentState>{
             <DragDropContext
                onDragStart = {this.onDragStart}
                onDragEnd = {this.onDragEnd} >
-            
-            <AllBoards semesters = {semesters} tasks = {tasks} />
+                   
             <Sidebar tasks = {tasks} list = {this.state.variable.courselist} />
+            <AllBoards semesters = {semesters} tasks = {tasks} />
             </DragDropContext>
             </Wrapper>
         );
