@@ -1,5 +1,11 @@
 import React from 'react'; 
 import { Board } from './board';
+import styled from 'styled-components'; 
+
+const Wrapper = styled.div`
+    display: flex; 
+    flex-direction: row;
+`; 
 
 type semester = {
     id: string;
@@ -31,14 +37,13 @@ export class AllBoards extends React.Component<componentProps, {}>{
     
 
         return(
-            <div>
+            <Wrapper>
                 {this.props.semesters.map(semester =>
                 <Board key = {semester.id} 
                     semester = {semester}
                     tasks = {tasks} />)
                 }
-
-            </div>
+            </Wrapper>
         )
     }
 }
