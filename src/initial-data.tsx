@@ -13,7 +13,7 @@ const initialData = {
         'semester-1': {
             id: 'semester-1',
             title: 'fall',
-            taskIds: ['task-1'],
+            taskIds: [],
         },
         'semester-2': {
             id: 'semester-2',
