@@ -18,7 +18,6 @@ const TaskList = styled.div`
     padding: 9px; 
     font-family: Arial; 
     flex-grow: 1; 
-    
 `; 
 
 type semester = {
@@ -51,9 +50,6 @@ export class Board extends React.Component<componentProps, {}>{
 
         //contains the masterlist 
         const tasks: any = this.props.tasks; 
-
-        //console.log(this.props.tasks);
-
        
         return( 
         <Container>
