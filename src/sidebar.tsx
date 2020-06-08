@@ -8,11 +8,10 @@ const Container = styled.div`
     margin: 8px; 
     border: 1px solid black; 
     border-radius: 2px; 
-    width: 500px;
+    width: 300px;
     height: 550px;
     overflow: auto;
-    display: flex; 
-    flex-direction: column; 
+
     `;
 const TaskList = styled.div`
     padding: 9px; 

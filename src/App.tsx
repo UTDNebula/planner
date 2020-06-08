@@ -2,8 +2,16 @@ import * as React from "react";
 import initial from './initial-data';
 import { Sidebar } from './sidebar';
 import { AllBoards } from './all-boards'; 
+import styled from 'styled-components'; 
 
 import {DragDropContext}  from 'react-beautiful-dnd'; 
+
+const Wrapper = styled.div`
+    display: flex; 
+    flex-direction: row;
+   
+`; 
+
 
 
 //interface and type declarations 
@@ -72,10 +80,14 @@ export class App extends React.Component<any, componentState>{
         this.setState({
           variable: newVar, 
         });       
+
+        console.log('card dragged');
     }
 
 
     onDragEnd = (result: any) => {
+
+        console.log('card dropped'); 
 
         const newVar = {
             ...initial, 
@@ -101,11 +113,11 @@ export class App extends React.Component<any, componentState>{
 
         //where the card is dragged from 
         const home: semester | list = (source.droppableId === 'courselist') ?
-        this.state.variable.courselist : this.state.variable.semesters[destination.droppableId];
+        this.state.variable.courselist : this.state.variable.semesters[source.droppableId];
 
 
         //where the card is being dragged to 
-        const foreign: semester| list = (source.droppableId === 'courselist') ?
+        const foreign: semester | list = (destination.droppableId === 'courselist') ?
         this.state.variable.courselist: this.state.variable.semesters[destination.droppableId]; 
 
         //contains the task ids inside a specific board
@@ -120,7 +132,6 @@ export class App extends React.Component<any, componentState>{
             taskIds: hometaskIds, 
         }; 
 
-        console.log(newHome); 
 
         //contains the task ids inside the board that the card is dropping to
         const foreigntaskIds: string[] = Array.from(foreign.taskIds); 
@@ -128,17 +139,18 @@ export class App extends React.Component<any, componentState>{
         //removes that specific task from the destination board
         foreigntaskIds.splice(destination.index, 0, draggableId); 
 
+
         const newForeign = {
             ...foreign, 
             taskIds: foreigntaskIds, 
         }
 
-        console.log(newForeign);
+    
 
         //moving of cards between different boards 
         if(newHome.id === 'courselist' && newForeign.id !== 'courselist'){
             const newState = {
-                ...this.state, 
+                ...this.state.variable, 
                 semesters: {
                     ...this.state.variable.semesters, 
                     [newForeign.id] : newForeign, 
@@ -149,7 +161,12 @@ export class App extends React.Component<any, componentState>{
                 }, 
             }; 
 
-            this.setState(newState); 
+            this.setState({
+                variable: newState,
+            }); 
+
+            console.log(this.state);
+
         }
         else if (newHome.id === newForeign.id){
 
@@ -163,30 +180,35 @@ export class App extends React.Component<any, componentState>{
             };
         
             const newState = {
-              ...this.state, 
+              ...this.state.variable, 
               semesters: {
                 ...this.state.variable.semesters, 
                 [newHome.id] : newHome,
               },
             };
         
-            this.setState(newState);
-          //  console.log(newState);
+            this.setState({
+                variable: newState,
+            }); 
+          
           }
           else if(newHome.id !== 'courselist' && newForeign.id !== 'courselist' ){
             const newState = {
-              ...this.state, 
+              ...this.state.variable, 
               semesters:{
                 ...this.state.variable.semesters,
                 [newHome.id] : newHome, 
                 [newForeign.id] : newForeign, 
               },
             };
-            this.setState(newState);
+            this.setState({
+                variable: newState,
+            }); 
+        
           }
           else if (newHome.id !== 'courselist' && newForeign.id === 'courselist'){
             const newState = {
-              ...this.state, 
+              ...this.state.variable, 
               semesters: {
                 ...this.state.variable.semesters, 
                 [newHome.id] : newHome, 
@@ -198,8 +220,10 @@ export class App extends React.Component<any, componentState>{
               },
             }
         
-            this.setState(newState);
-          //  console.log(newState);
+            this.setState({
+                variable: newState,
+            }); 
+
           }
 
 
@@ -214,14 +238,18 @@ export class App extends React.Component<any, componentState>{
         //contains an array of tasks in a specific semester
         const semesters:semester[] = this.state.variable.columnOrder.map(column => this.state.variable.semesters[column]);
 
+        console.log(semesters);
+
         return(
+            <Wrapper>
             <DragDropContext
                onDragStart = {this.onDragStart}
-               onDragEnd = {this.onDragStart} >
+               onDragEnd = {this.onDragEnd} >
             
             <AllBoards semesters = {semesters} tasks = {tasks} />
             <Sidebar tasks = {tasks} list = {this.state.variable.courselist} />
             </DragDropContext>
+            </Wrapper>
         );
         
     }

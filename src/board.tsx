@@ -8,8 +8,8 @@ const Container = styled.div`
     margin: 8px; 
     border: 1px solid black; 
     border-radius: 2px; 
-    width: 500px;
-    height: 300px;
+    width: 300px;
+    height: 400px;
     overflow: auto;
     display: flex; 
     flex-direction: column; 
