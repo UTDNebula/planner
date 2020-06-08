@@ -68,18 +68,7 @@ export class App extends React.Component<any, componentState>{
 
         //checks if card's home is the mainlist or within semester boards
         const indexHome: number = (start.source.droppableId === 'courselist') ? 
-        13 : num;
-
-        //creates a new state with different homeIndex and puts it in variable
-        const newVar = {
-            ...initial, 
-            homeIndex: indexHome, 
-        }
-    
-        //sets the new state
-        this.setState({
-          variable: newVar, 
-        });       
+        13 : num;  
 
         console.log('card dragged');
     }
@@ -123,14 +112,20 @@ export class App extends React.Component<any, componentState>{
         //contains the task ids inside a specific board
         const hometaskIds: string[] = Array.from(home.taskIds); 
 
+        console.log(hometaskIds);
+
         //removes that specific task from the home board
         hometaskIds.splice(source.index, 1); 
+
+        console.log(hometaskIds);
 
         //new state of the previous column a card left 
         const newHome = {
             ...home, 
             taskIds: hometaskIds, 
         }; 
+
+        console.log(newHome);
 
 
         //contains the task ids inside the board that the card is dropping to
@@ -145,6 +140,8 @@ export class App extends React.Component<any, componentState>{
             taskIds: foreigntaskIds, 
         }
 
+         
+        //console.log(foreigntaskIds);
     
 
         //moving of cards between different boards 
@@ -165,7 +162,8 @@ export class App extends React.Component<any, componentState>{
                 variable: newState,
             }); 
 
-            console.log(this.state);
+            console.log(newState);
+           
 
         }
         else if (newHome.id === newForeign.id){
@@ -238,7 +236,6 @@ export class App extends React.Component<any, componentState>{
         //contains an array of tasks in a specific semester
         const semesters:semester[] = this.state.variable.columnOrder.map(column => this.state.variable.semesters[column]);
 
-        console.log(semesters);
 
         return(
             <Wrapper>

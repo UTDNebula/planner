@@ -28,7 +28,7 @@ export class AllBoards extends React.Component<componentProps, {}>{
     //pass down the tasks object to board
       const tasks: any = this.props.tasks; 
 
-      console.log(this.props);
+    
 
         return(
             <div>
