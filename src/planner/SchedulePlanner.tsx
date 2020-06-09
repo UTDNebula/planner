@@ -304,6 +304,9 @@ class SchedulePlanner extends React.Component<SchedulePlannerProps, SchedulePlan
           Comet Planning |
             In scheduling mode: {this.inSchedulingMode ? 'Yes' : 'No'} |
             Current schedule ID: {this.scheduleId}
+            <NavLink to={this.inSchedulingMode ? '.': 'plan'}>
+              {this.inSchedulingMode ? 'Switch to Viewing' : 'Switch to Planning'}
+            </NavLink>
         </SchedulerHeader>
         <GrowContainer>
           <DragDropContext
@@ -318,7 +321,7 @@ class SchedulePlanner extends React.Component<SchedulePlannerProps, SchedulePlan
                 {this.semesters.map(semester =>
                   <SemesterBlock key={semester.term}
                     semester={semester}
-                    enabled={true} />
+                    enabled={this.inSchedulingMode} />
                 )}
               </SemesterListWrapper>
             </PlannerWindow>
