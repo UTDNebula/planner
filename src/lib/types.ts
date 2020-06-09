@@ -21,24 +21,30 @@ export interface Course {
   /**
    * The subject code of this course, like "CS".
    */
-  subject: string,
+  subject: string;
 
   /**
    * The course "number", like 1200, 4V98.
    */
-  suffix: string,
+  suffix: string;
 
   /**
    * An optional map of IDs for courses and minimum grades that must be taken
    * before taking this class.
    */
-  prerequisites?: Map<string, Grade>;
+  prerequisites?: {
+    [courseCode: string]: any;
+    // TODO: Use grade
+  }
 
   /**
    * An optional map of IDs for courses and minimum grades that must be taken
    * before or concurrently with this class.
    */
-  corequisites?: Map<string, Grade>;
+  corequisites?: {
+    [courseCode: string]: any;
+    // TODO: Use grade
+  }
 }
 
 /**
@@ -206,7 +212,8 @@ export interface PlanRequirement {
   /**
    * A list of required course IDs to satisfy this requirement.
    */
-  courses: Array<string>;
+  courses: Array<Course>;
+  // TODO: Store ID instead of whole course
 }
 
 /**
@@ -253,7 +260,7 @@ export type SubjectCode = 'CS' | 'MATH' | 'PHYS' | 'ECS' | 'RHET' | 'ENGL';
  * @readonly
  * @enum {number}
  */
-export enum Grade {
+export enum GradeMappings {
   'A+' = 4.000,
   'A' = 4.000,
   'A-' = 3.670,
@@ -286,14 +293,14 @@ export enum Grade {
   'W' = -1,
   'WL' = -1,
   'NR' = -1,
-};
+}
 
-// /**
-//  * A letter grade with an associated number of grade points.
-//  *
-//  * @typedef {string} Grade
-//  */
-// export type Grade = 'A+' | 'A' | 'A-' | 'B+' | 'B' | 'B-' | 'C+' | 'C' | 'C-' | 'D+' | 'D' | 'D-' | 'F' | 'NC' | 'CR' | 'I' | 'P' | 'W' | 'WL' | 'NR';
+/**
+ * A letter grade with an associated number of grade points.
+ *
+ * @typedef {string} Grade
+ */
+export type Grade = 'A+' | 'A' | 'A-' | 'B+' | 'B' | 'B-' | 'C+' | 'C' | 'C-' | 'D+' | 'D' | 'D-' | 'F' | 'NC' | 'CR' | 'I' | 'P' | 'W' | 'WL' | 'NR';
 
 /**
  * All valid semester codes.
@@ -318,8 +325,6 @@ export const SEMESTER_CODES = {
 
 /**
  * The season of a semester.
- *
- * @typedef {string} SemesterCode
  */
 export type SemesterCode = 'f' | 's' | 'u';
 
