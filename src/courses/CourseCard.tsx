@@ -75,9 +75,9 @@ export default class CourseCard extends React.Component<CourseCardProps, CourseC
   public render() {
     return (
       <Draggable
-        draggableId={this.courseCode}
+        draggableId={this.props.course.id}
         index={this.props.index}
-        key={this.courseCode}
+        key={this.props.course.id}
         isDragDisabled={!this.props.enabled}>
         {(provided: DraggableProvided, _: DraggableStateSnapshot) => (
           <Container
