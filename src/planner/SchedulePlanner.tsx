@@ -1,18 +1,18 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { addCourse, moveCourse, removeCourse, saveSchedule } from './actions';
-import { ScheduleSemester, Schedule, Course } from '../lib/types';
 import styled from 'styled-components';
-import SemesterBlock from './SemesterBlock';
+import { connect } from 'react-redux';
+import { RouteComponentProps, withRouter, NavLink } from 'react-router-dom';
 import {
   DragDropContext,
   DragStart,
   DragUpdate,
+  DraggableLocation,
 } from 'react-beautiful-dnd';
-
+import { ScheduleSemester, Schedule, Course } from '../lib/types';
+import { addCourse, moveCourse, removeCourse, saveSchedule } from './actions';
+import CourseSourceSidebar, { SIDEBAR_DROPPABLE_ID } from './CourseSourceSidebar';
 import dummySchedule from '../dummy_schedule.json';
-import CourseSourceSidebar from './CourseSourceSidebar';
+import SemesterBlock from './SemesterBlock';
 
 interface SchedulePlannerRouteInfo {
   id: string;
