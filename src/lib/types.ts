@@ -4,6 +4,11 @@
 export interface Course {
 
   /**
+   * A unique identifier for this course.
+   */
+  id: string;
+
+  /**
    * The official long name of this course, such as "Computer Architecture".
    */
   fullName: string;
