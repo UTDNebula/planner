@@ -9,6 +9,7 @@
       "term": "2020f",
       "courses": [
         {
+          "id": "0000001",
           "fullName": "Calculus I",
           "offered": [
             "f",
@@ -21,6 +22,7 @@
           "corequisites": {}
         },
         {
+          "id": "0000002",
           "fullName": "Introduction to Computer Science and Software Engineering",
           "offered": [
             "f"
@@ -32,6 +34,7 @@
           "corequisites": {}
         },
         {
+          "id": "0000003",
           "fullName": "Mechanics",
           "offered": [
             "f",
@@ -46,6 +49,7 @@
           }
         },
         {
+          "id": "0000004",
           "fullName": "Physics Laboratory I",
           "offered": [
             "f",
@@ -60,6 +64,7 @@
           }
         },
         {
+          "id": "0000005",
           "fullName": "Introduction to Engineering and Computer Science",
           "offered": [
             "f"
