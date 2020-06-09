@@ -114,26 +114,56 @@ class SchedulePlanner extends React.Component<SchedulePlannerProps, SchedulePlan
     //   ? 13
     //   : num;
   }
+  
+  private moveCourse(source: DraggableLocation, destination: DraggableLocation, draggableId: string) {
+    const newSemesters = this.semesters;
+    // Remove course from source semester
+    const sourceIndex = this.semesters.findIndex(semester => semester.term === source.droppableId);
+    const sourceSemester = this.semesters[sourceIndex];
+    const updatedSourceCourses = sourceSemester.courses.filter(course => course.id !== draggableId);
+    newSemesters[sourceIndex] = {
+      term: sourceSemester.term,
+      courses: updatedSourceCourses,
+    };
+    // Add course to destination semester
+    const destinationIndex = this.semesters.findIndex(semester => semester.term === destination.droppableId);
+    const destinationSemester = this.semesters[destinationIndex];
+    const courseToAdd = sourceSemester.courses.find(course => course.id === draggableId) as Course;
+    destinationSemester.courses.push(courseToAdd);
+    newSemesters[destinationIndex] = destinationSemester;
+    this.setState({
+      openSchedule: {
+        ...this.state.openSchedule,
+        semesters: newSemesters,
+      },
+    });
+  }
 
-  private onDragEnd(result: DragUpdate) {
-    const { source, destination } = result;
+  private onDragEnd = (result: DragUpdate) => {
+    const { source, destination, draggableId } = result;
+    console.log(result);
 
     // Handle drops outside list
     if (!destination) {
       return; // no-op
     }
 
-    if (destination.droppableId === 'sourceCourse') {
-
+    if (destination.droppableId === SIDEBAR_DROPPABLE_ID) {
+      // TODO: Delete the course from the schedule, update sidebar state
+      return;
     }
 
     // Handle drops inside list
     if (source.droppableId === destination.droppableId) {
       // Source is the same list
-      
-    } else {
-      // Source is different list
+      // Reorder? No-op for now
+      return;
+    }
 
+    // Handle drops between lists
+    if (source.droppableId !== destination.droppableId) {
+      this.moveCourse(source, destination, draggableId);
+      return;
     }
   }
 
@@ -150,151 +180,6 @@ class SchedulePlanner extends React.Component<SchedulePlannerProps, SchedulePlan
   //   result[droppableDestination.droppableId] = destClone;
 
   //   return result;
-  // }
-
-  // private onDragEnd(result: DragUpdate) {
-  //   console.log('card dropped');
-
-  //   const newVar = {
-  //     ...initial,
-  //     homeIndex: null,
-  //   }
-  //   this.setState({
-  //     variable: newVar,
-  //   });
-
-
-  //   const { destination, source, draggableId } = result;
-
-  //   // Card doesn't go out of bounds
-  //   if (!destination) {
-  //     return;
-  //   }
-
-  //   // Card is on the same place
-  //   if (destination.droppableId === source.droppableId &&
-  //     destination.index === source.index) {
-  //     return;
-  //   }
-
-  //   //where the card is dragged from 
-  //   const home: semester | list = (source.droppableId === 'courselist') ?
-  //     this.state.variable.courselist : this.state.variable.semesters[source.droppableId];
-
-
-  //   //where the card is being dragged to 
-  //   const foreign: semester | list = (destination.droppableId === 'courselist') ?
-  //     this.state.variable.courselist : this.state.variable.semesters[destination.droppableId];
-
-  //   //contains the task ids inside a specific board
-  //   const hometaskIds: string[] = Array.from(home.taskIds);
-
-  //   //removes that specific task from the home board
-  //   hometaskIds.splice(source.index, 1);
-
-  //   console.log(hometaskIds);
-
-  //   //new state of the previous column a card left 
-  //   const newHome = {
-  //     ...home,
-  //     taskIds: hometaskIds,
-  //   };
-
-  //   //contains the task ids inside the board that the card is dropping to
-  //   const foreigntaskIds: string[] = Array.from(foreign.taskIds);
-
-  //   //removes that specific task from the destination board
-  //   foreigntaskIds.splice(destination.index, 0, draggableId);
-
-
-  //   const newForeign = {
-  //     ...foreign,
-  //     taskIds: foreigntaskIds,
-  //   }
-
-
-  //   //console.log(foreigntaskIds);
-
-
-  //   //moving of cards between different boards 
-  //   if (newHome.id === 'courselist' && newForeign.id !== 'courselist') {
-  //     const newState = {
-  //       ...this.state.variable,
-  //       semesters: {
-  //         ...this.state.variable.semesters,
-  //         [newForeign.id]: newForeign,
-  //       },
-  //       courselist: {
-  //         ...this.state.variable.courselist,
-  //         taskIds: newHome.taskIds,
-  //       },
-  //     };
-
-  //     this.setState({
-  //       variable: newState,
-  //     });
-
-  //     console.log(newState);
-
-
-  //   }
-  //   else if (newHome.id === newForeign.id) {
-
-  //     const newTaskIds = Array.from(home.taskIds);
-  //     newTaskIds.splice(source.index, 1);
-  //     newTaskIds.splice(destination.index, 0, draggableId);
-
-  //     const newHome = {
-  //       ...home,
-  //       taskIds: newTaskIds,
-  //     };
-
-  //     const newState = {
-  //       ...this.state.variable,
-  //       semesters: {
-  //         ...this.state.variable.semesters,
-  //         [newHome.id]: newHome,
-  //       },
-  //     };
-
-  //     this.setState({
-  //       variable: newState,
-  //     });
-
-  //   }
-  //   else if (newHome.id !== 'courselist' && newForeign.id !== 'courselist') {
-  //     const newState = {
-  //       ...this.state.variable,
-  //       semesters: {
-  //         ...this.state.variable.semesters,
-  //         [newHome.id]: newHome,
-  //         [newForeign.id]: newForeign,
-  //       },
-  //     };
-  //     this.setState({
-  //       variable: newState,
-  //     });
-
-  //   }
-  //   else if (newHome.id !== 'courselist' && newForeign.id === 'courselist') {
-  //     const newState = {
-  //       ...this.state.variable,
-  //       semesters: {
-  //         ...this.state.variable.semesters,
-  //         [newHome.id]: newHome,
-
-  //       },
-  //       courselist: {
-  //         ...this.state.variable.courselist,
-  //         taskIds: newForeign.taskIds,
-  //       },
-  //     }
-
-  //     this.setState({
-  //       variable: newState,
-  //     });
-
-  //   }
   // }
 
   render() {
