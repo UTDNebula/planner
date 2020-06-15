@@ -1,3 +1,4 @@
+import { SemesterCode } from "../lib/types";
 
 export const ADD_COURSE = 'ADD_COURSE';
 
@@ -15,9 +16,13 @@ export const REMOVE_SEMESTER = 'REMOVE_SEMESTER';
 
 /**
  * @typedef ScheduleAction
- * @property {Action} type
- * @property {object} payload
+ * @param {Action} type
+ * @param {object} payload
  */
+// interface ScheduleAction {
+//   type: string;
+//   payload: 
+// }
 
 /**
  * Delete a user's schedule.
@@ -30,25 +35,32 @@ export const DELETE_SCHEDULE = 'DELETE_SCHEDULE';
 export const UPDATE_SCHEDULE = 'UPDATE_SCHEDULE';
 
 /**
- * A
- *
- * @readonly
- * @typedef {string} Action
- * @enum {Action}
+ * All actions
  */
 // eslint-disable-next-line no-unused-vars
-const ACTIONS = {
+enum Action {
   ADD_COURSE,
   CREATE_SCHEDULE,
   DELETE_SCHEDULE,
   UPDATE_SCHEDULE,
-};
+}
 
 /**
  * Persist local changes to remote data store.
  */
 export const SAVE_SCHEDULE = 'SAVE_SCHEDULE';
 
+
+export function addCourse(scheduleId: string, courseId: string, location: number) {
+  return {
+    type: ADD_COURSE,
+    payload: {
+      scheduleId,
+      courseId,
+      location,
+    },
+  };
+}
 
 /**
  * Update a position of the course
@@ -57,7 +69,7 @@ export const SAVE_SCHEDULE = 'SAVE_SCHEDULE';
  * @param {number} start The term the course is originally in
  * @param {string} end The desired term to move the course
  */
-export function moveCourse(scheduleId, courseId, start, end) {
+export function moveCourse(scheduleId: string, courseId: string, start: number, end: number) {
   return {
     type: MOVE_COURSE,
     payload: {
@@ -69,7 +81,7 @@ export function moveCourse(scheduleId, courseId, start, end) {
   };
 }
 
-export function removeCourse(scheduleId, semester, courseId) {
+export function removeCourse(scheduleId: string, semester: SemesterCode, courseId: string) {
   return {
     type: REMOVE_COURSE,
     payload: {
@@ -84,7 +96,7 @@ export function removeCourse(scheduleId, semester, courseId) {
  * @param {Schedule} schedule The schedule to save
  * @param {string} id The ID of the existing schedule
  */
-export function saveSchedule(schedule, id) {
+export function saveSchedule(schedule: string, id: string) {
   return {
     type: SAVE_SCHEDULE,
     payload: {
@@ -93,3 +105,10 @@ export function saveSchedule(schedule, id) {
     },
   };
 }
+
+export default {
+  addCourse,
+  moveCourse,
+  removeCourse,
+  saveSchedule,
+};

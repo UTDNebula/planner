@@ -1,4 +1,5 @@
 {
+  "id": "test",
   "name": "My Awesome Test Schedule",
   "owner": "test@example.com",
   "created": "2020-05-22T17:11:00",
@@ -8,6 +9,7 @@
       "term": "2020f",
       "courses": [
         {
+          "id": "0000001",
           "fullName": "Calculus I",
           "offered": [
             "f",
@@ -20,6 +22,7 @@
           "corequisites": {}
         },
         {
+          "id": "0000002",
           "fullName": "Introduction to Computer Science and Software Engineering",
           "offered": [
             "f"
@@ -31,6 +34,7 @@
           "corequisites": {}
         },
         {
+          "id": "0000003",
           "fullName": "Mechanics",
           "offered": [
             "f",
@@ -41,10 +45,11 @@
           "suffix": "2325",
           "prerequisites": {},
           "corequisites": {
-            "PHYS 2125": ""
+            "PHYS 2125": "NR"
           }
         },
         {
+          "id": "0000004",
           "fullName": "Physics Laboratory I",
           "offered": [
             "f",
@@ -55,10 +60,11 @@
           "suffix": "2125",
           "prerequisites": {},
           "corequisites": {
-            "PHYS 2325": ""
+            "PHYS 2325": "NR"
           }
         },
         {
+          "id": "0000005",
           "fullName": "Introduction to Engineering and Computer Science",
           "offered": [
             "f"
@@ -70,6 +76,18 @@
           "corequisites": {}
         }
       ]
+    },
+    {
+      "term": "2021s",
+      "courses": []
+    },
+    {
+      "term": "2021f",
+      "courses": []
+    },
+    {
+      "term": "2022s",
+      "courses": []
     }
   ]
 }
