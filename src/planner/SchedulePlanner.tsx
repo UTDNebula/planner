@@ -189,7 +189,9 @@ class SchedulePlanner extends React.Component<SchedulePlannerProps, SchedulePlan
           Comet Planning |
             In scheduling mode: {this.inSchedulingMode ? 'Yes' : 'No'} |
             Current schedule ID: {this.scheduleId}
-            <NavLink to={this.inSchedulingMode ? '.': 'plan'}>
+            <NavLink to={this.inSchedulingMode
+              ? `/schedules/${this.scheduleId}`
+              : `/schedules/${this.scheduleId}/plan`}>
               {this.inSchedulingMode ? 'Switch to Viewing' : 'Switch to Planning'}
             </NavLink>
         </SchedulerHeader>
