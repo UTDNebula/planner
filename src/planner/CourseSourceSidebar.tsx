@@ -1,11 +1,15 @@
 import React from 'react';
-import styled from 'styled-components';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 import { Droppable, DroppableProvided, DroppableStateSnapshot } from 'react-beautiful-dnd';
 import { PlanRequirement, Course } from '../lib/types';
 import { CourseCard } from '.';
+import Box from '@material-ui/core/Box';
+import List from '@material-ui/core/List';
+import { theme } from '../styling';
 
 export const SIDEBAR_DROPPABLE_ID = 'sourceCourse';
 
+/** 
 const SidebarContainer = styled.div`
   margin: 8px;
   border: 1px solid black;
@@ -19,6 +23,7 @@ const CourseList = styled.div`
   font-family: Arial;
   flex-grow: 1; 
 `;
+*/
 
 interface PlanRequirementBlockProps {
 
@@ -51,9 +56,9 @@ class PlanRequirementBlock extends React.Component<PlanRequirementBlockProps, Pl
     return (
       <div>
         <h2>{this.props.requirement.name}</h2>
-        <CourseList>
+        <List>
           {courses}
-        </CourseList>
+        </List>
       </div>
     )
   }
@@ -72,17 +77,19 @@ export default class CourseSourceSidebar extends React.Component<{ courses: Arra
       <CourseCard course={course} index={index} enabled={this.props.enabled}></CourseCard>
     );
     return (
-      <SidebarContainer>
+      <MuiThemeProvider theme={theme}>
+      <Box>
         <h1>Courses</h1>
         <Droppable droppableId="sourceCourse">
           {(provided: DroppableProvided, _: DroppableStateSnapshot) => (
-            <CourseList ref={provided.innerRef} {...provided.droppableProps}>
+            <List ref={provided.innerRef} {...provided.droppableProps}>
               {courses}
               {provided.placeholder}
-            </CourseList>
+            </List>
           )}
         </Droppable>
-      </SidebarContainer>
+      </Box>
+      </MuiThemeProvider>
     );
   }
 }
