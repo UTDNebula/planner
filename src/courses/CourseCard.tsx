@@ -1,5 +1,4 @@
 import React from 'react';
-//import styled from 'styled-components';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import {
   Draggable,
@@ -79,7 +78,7 @@ export default class CourseCard extends React.Component<CourseCardProps, CourseC
 
   public render() {
     return (
-      <MuiThemeProvider theme = {theme}>
+      <MuiThemeProvider theme={theme}>
       <Draggable
         draggableId={this.props.course.id}
         index={this.props.index}

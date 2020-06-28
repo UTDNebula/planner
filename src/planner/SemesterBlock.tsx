@@ -1,7 +1,6 @@
 import React from 'react';
 import CourseCard from '../courses/CourseCard';
 import { MuiThemeProvider } from '@material-ui/core/styles';
-//import styled from 'styled-components';
 import {
   Droppable,
   DroppableProvided,
@@ -71,7 +70,7 @@ export default class SemesterBlock extends React.Component<SemesterBlockProps, S
       );
     });
     return (
-      <MuiThemeProvider theme = {theme}>
+      <MuiThemeProvider theme={theme}>
       <Box border = {1}>
         <h1>{this.termText}</h1>
         <Droppable droppableId={this.props.semester.term}>

@@ -1,5 +1,4 @@
 import React from 'react';
-//import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter, NavLink } from 'react-router-dom';
 import {
@@ -13,7 +12,7 @@ import { addCourse, moveCourse, removeCourse, saveSchedule } from './actions';
 import CourseSourceSidebar, { SIDEBAR_DROPPABLE_ID } from './CourseSourceSidebar';
 import dummySchedule from '../dummy_schedule.json';
 import SemesterBlock from './SemesterBlock';
-import { SchedulerHeader, SemesterListWrapper, GrowContainer, PlannerWindow, Wrapper } from '../styling';
+import { SchedulerHeader, SemesterListWrapper, GrowContainer, PlannerWindow, Wrapper } from './SchedulePlannerStyle';
 
 interface SchedulePlannerRouteInfo {
   id: string;
