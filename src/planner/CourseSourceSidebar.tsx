@@ -1,5 +1,4 @@
 import React from 'react';
-//import styled from 'styled-components';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import { Droppable, DroppableProvided, DroppableStateSnapshot } from 'react-beautiful-dnd';
 import { PlanRequirement, Course } from '../lib/types';
@@ -78,7 +77,7 @@ export default class CourseSourceSidebar extends React.Component<{ courses: Arra
       <CourseCard course={course} index={index} enabled={this.props.enabled}></CourseCard>
     );
     return (
-      <MuiThemeProvider theme = {theme}>
+      <MuiThemeProvider theme={theme}>
       <Box>
         <h1>Courses</h1>
         <Droppable droppableId="sourceCourse">
