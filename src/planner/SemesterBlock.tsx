@@ -1,11 +1,16 @@
 import React from 'react';
 import CourseCard from '../courses/CourseCard';
-import styled from 'styled-components';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+//import styled from 'styled-components';
 import {
   Droppable,
   DroppableProvided,
 } from 'react-beautiful-dnd';
 import { ScheduleSemester } from '../lib/types';
+import Box from '@material-ui/core/Box'; 
+import List from '@material-ui/core/List'; 
+import { theme } from '../styling';
+
 
 interface SemesterBlockProps {
   enabled: boolean;
@@ -16,6 +21,7 @@ interface SemesterBlockState {
   courses: Array<any>; // TODO: Fix me
 };
 
+/**
 const Container = styled.div`
   margin: 8px; 
   border: 1px solid black; 
@@ -31,6 +37,7 @@ const TaskList = styled.div`
   font-family: Arial; 
   flex-grow: 1; 
 `;
+ */
 
 /**
  * A semester 
@@ -64,20 +71,22 @@ export default class SemesterBlock extends React.Component<SemesterBlockProps, S
       );
     });
     return (
-      <Container>
+      <MuiThemeProvider theme = {theme}>
+      <Box border = {1}>
         <h1>{this.termText}</h1>
         <Droppable droppableId={this.props.semester.term}>
           {(provided: DroppableProvided, _) => (
-            <TaskList
+            <List
               ref={provided.innerRef}
               {...provided.droppableProps}
             >
               {displayedCourses}
               {provided.placeholder}
-            </TaskList>
+            </List>
           )}
         </Droppable>
-      </Container>
+      </Box>
+      </MuiThemeProvider>
     );
   }
 }
