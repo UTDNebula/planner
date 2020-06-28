@@ -1,15 +1,18 @@
 import React from 'react';
-import styled from 'styled-components';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 import {
   Draggable,
   DraggableProvided,
   DraggableStateSnapshot,
 } from 'react-beautiful-dnd';
 import { Course } from '../lib/types';
+import Card from '@material-ui/core/Card';
+import Typography from '@material-ui/core/Typography';
+import { theme } from '../styling';
 
 /**
  * A wrapper component for card contents.
- */
+ 
 const Container = styled.div`
   border: 1px solid lightgrey;
   padding: 8px; 
@@ -17,6 +20,7 @@ const Container = styled.div`
   margin-bottom: 8px; 
   height: 100px;
 `;
+**/
 
 /**
  * Component properties for a {@link CourseCard}.
@@ -74,24 +78,26 @@ export default class CourseCard extends React.Component<CourseCardProps, CourseC
 
   public render() {
     return (
+      <MuiThemeProvider theme={theme}>
       <Draggable
         draggableId={this.props.course.id}
         index={this.props.index}
         key={this.props.course.id}
         isDragDisabled={!this.props.enabled}>
         {(provided: DraggableProvided, _: DraggableStateSnapshot) => (
-          <Container
+          <Card
             ref={provided.innerRef}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
           >
             <div>
-              <h1>{this.courseCode}</h1>
+              <Typography>{this.courseCode}</Typography>
               <div>{this.props.course.fullName}</div>
             </div>
-          </Container>
+          </Card>
         )}
       </Draggable>
+      </MuiThemeProvider>
     );
   }
 }
