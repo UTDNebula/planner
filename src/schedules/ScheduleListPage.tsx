@@ -7,17 +7,42 @@ import { addScheduleToUser, removeSchedule, refreshSchedules } from '../store/us
 import { AppState } from '../store';
 
 interface ScheduleListPageProps extends RouteComponentProps {
+  user: StudentData;
   schedules: Array<Schedule>;
+  uploadSchedule: Function;
+  deleteSchedule: Function;
+  refreshSchedules: Function;
 }
-
-function mapStateToProps(state: any) {
-  const schedules = state.schedules || [];
-  return { schedules };
-}
-
 
 class ScheduleListPage extends React.Component<ScheduleListPageProps> {
-  
+
+  /**
+   * Trigger a database deletion.
+   *
+   * @param id The ID of the schedule being deleted.
+   */
+  private handleScheduleDeletion = (scheduleId: string) => {
+    this.props.deleteSchedule({
+      userId: this.props.user.id,
+      scheduleId: scheduleId,
+    });
+  }
+
+  private addDummySchedule = () => {
+    console.log('Adding dummy schedule');
+    this.props.uploadSchedule({
+      userId: this.props.user.id,
+      schedule: {
+        id: 'test-' + Date.now(),
+        name: 'A dummy schedule',
+        owner: 'test@example.com',
+        created: Date.now(),
+        lastUpdated: Date.now(),
+        semesters: [],
+      },
+    });
+  }
+
   componentDidMount() {
     // Get schedules
     this.props.refreshSchedules(this.props.user.id); // TODO: Ensure user is signed in
@@ -27,7 +52,10 @@ class ScheduleListPage extends React.Component<ScheduleListPageProps> {
     return (
       <main>
         <h1>Schedules for current user</h1>
-        <ScheduleList schedules={this.props.schedules}></ScheduleList>
+        <button onClick={() => {
+          this.addDummySchedule();
+        }}>Create dummy schedule</button>
+        <ScheduleList onScheduleDeleted={this.handleScheduleDeletion} schedules={this.props.schedules}></ScheduleList>
       </main>
     );
   }
