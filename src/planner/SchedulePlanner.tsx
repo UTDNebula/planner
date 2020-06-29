@@ -13,6 +13,7 @@ import { addCourse, moveCourse, removeCourse, saveSchedule } from './actions';
 import CourseSourceSidebar, { SIDEBAR_DROPPABLE_ID } from './CourseSourceSidebar';
 import dummySchedule from '../dummy_schedule.json';
 import SemesterBlock from './SemesterBlock';
+import Button from '@material-ui/core/Button';
 
 interface SchedulePlannerRouteInfo {
   id: string;
@@ -214,7 +215,10 @@ class SchedulePlanner extends React.Component<SchedulePlannerProps, SchedulePlan
             </PlannerWindow>
           </DragDropContext>
         </GrowContainer>
-      </Wrapper>
+      <Button variant="contained" color="primary">
+      	Export
+      </Button>
+     </Wrapper>
     );
   }
 }
