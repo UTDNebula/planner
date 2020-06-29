@@ -4,8 +4,8 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
 import { initFirebase } from './lib/firebase-init';
-import { store } from './lib';
 import App from './App';
+import store from './store';
 import config from './firebase-config';
 import './index.css';
 

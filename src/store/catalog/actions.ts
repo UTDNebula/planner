@@ -1,7 +1,19 @@
-// Action types
+import { createAction } from "@reduxjs/toolkit";
+
+/**
+ * Action type to load all available courses.
+ */
 export const LOAD_COURSES = 'LOAD_COURSES';
-export const LOAD_CATALOGS = 'LOAD_CATALOGS';
-export const FILTER_COURSES = 'FILTER_COURSES';
+
+/**
+ * Action type to load all catalogs.
+ */
+export const LOAD_CATALOG = 'LOAD_CATALOGS'
+
+/**
+ * Action type to update course content;
+ */
+export const UPDATE_COURSES = 'UPDATE_COURSES';
 
 /**
  * Search parameters for filtering courses.
@@ -31,14 +43,7 @@ interface FilterParams {
 //   };
 // }
 
-export function loadCourses() {
-  return {
-    type: LOAD_COURSES,
-  };
-}
 
-export function loadCatalog() {
-  return {
-    type: LOAD_CATALOGS,
-  };
-}
+export const loadCatalog = createAction(LOAD_CATALOG);
+
+export const loadRequirements = createAction('LOAD_REQUIREMENTS');

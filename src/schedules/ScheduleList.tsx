@@ -1,5 +1,5 @@
 import React from 'react';
-import { Schedule } from '../lib/types';
+import { Schedule } from '../store/user/types';
 import { Link } from 'react-router-dom';
 
 interface ScheduleListProps {

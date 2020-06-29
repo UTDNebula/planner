@@ -6,23 +6,14 @@ import {
   withRouter,
 } from 'react-router-dom';
 import LandingPage from './landing';
-import { SchedulePlanner } from './planner';
+import SchedulePlanner from './planner/SchedulePlanner';
 import { ScheduleListPage } from './schedules';
-import { connector } from './lib';
 import './App.css';
-
 
 /**
  * The root component for the Comet Planning app.
  */
 class App extends React.Component<RouteComponentProps> {
-
-  public componentDidMount() {
-    // Subscribe to schedules
-    //@ts-ignore
-    this.props.loadCourses();
-  }
-
   public render(): ReactElement {
     return (
       <Switch>
@@ -43,4 +34,4 @@ class App extends React.Component<RouteComponentProps> {
   }
 }
 
-export default withRouter(connector(App));
+export default withRouter(App);

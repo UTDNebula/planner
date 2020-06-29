@@ -1,88 +1,4 @@
-/**
- * The basic building block for a schedule.
- */
-export interface Course {
-
-  /**
-   * A unique identifier for this course.
-   */
-  id: string;
-
-  /**
-   * The official long name of this course, such as "Computer Architecture".
-   */
-  fullName: string;
-
-  /**
-   * When this course may be taken.
-   */
-  offered: Array<SemesterCode>;
-
-  /**
-   * An official catalog-provided user-readable description of this course.
-   */
-  description: string;
-
-  /**
-   * The subject code of this course, like "CS".
-   */
-  subject: string;
-
-  /**
-   * The course "number", like 1200, 4V98.
-   */
-  suffix: string;
-
-  /**
-   * An optional map of IDs for courses and minimum grades that must be taken
-   * before taking this class.
-   */
-  prerequisites?: {
-    [courseCode: string]: any;
-    // TODO: Use grade
-  }
-
-  /**
-   * An optional map of IDs for courses and minimum grades that must be taken
-   * before or concurrently with this class.
-   */
-  corequisites?: {
-    [courseCode: string]: any;
-    // TODO: Use grade
-  }
-}
-
-/**
- * A schedule containing courses grouped into semesters.
- */
-export interface Schedule {
-  id: string;
-
-  /**
-   * A user-defined title.
-   */
-  name: string;
-
-  /**
-   * The student ID of this schedule's owner.
-   */
-  owner: string;
-
-  /**
-   * A timestamp denoting when this schedule was first created.
-   */
-  created: string;
-
-  /**
-   * A timestamp denoting when this schedule was last saved.
-   */
-  lastUpdated: string;
-
-  /**
-   * The semesters that contain this schedule's courses.
-   */
-  semesters: Array<ScheduleSemester>;
-}
+import { Course } from '../store/catalog/types';
 
 /**
  * A wrapper for degree plan information used to validate a four-year plan.
@@ -115,55 +31,6 @@ export interface CoursePlan {
 }
 
 /**
- * A wrapper for student data.
- * 
- * A student can own one or more schedules. This object keeps track of a
- * student's attempted courses and provides some fields for quick querying.
- */
-export interface Student {
-
-  /**
-   * The user's full name.
-   */
-  name: string;
-
-  /**
-   * When this student first enrolled in classes.
-   */
-  startTerm: string;
-
-  /**
-   * Anticipated or actual term of graduation
-   */
-  endTerm: string;
-
-  /**
-   * The registrar-determined year.
-   */
-  classification: YearClassification;
-
-  /**
-   * The amount of attempted credit hours.
-   */
-  attemptedCreditHours: Number;
-
-  /**
-   * The current grade point average.
-   */
-  gpa: Number;
-
-  /**
-   * All a student's course attempts and letter grades.
-   */
-  attemptedCourses: Array<CourseAttempt>;
-
-  /**
-   * The IDs of the CoursePlans being attempted.
-   */
-  plans: Array<string>;
-}
-
-/**
  * Used to keep track of a specific instance of a student course performance.
  *
  * Note: There may be multiple instances of the same course in a student record.
@@ -171,9 +38,9 @@ export interface Student {
 export interface CourseAttempt {
 
   /**
-   * Name of course taken.
+   * Unique identifier of course taken.
    */
-  course: string;
+  id: string;
 
   /**
    * Letter grade received for this course.
