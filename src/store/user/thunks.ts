@@ -87,20 +87,31 @@ export const loadRequirements = createAsyncThunk(
   'schedules/loadRequirements',
   async () => {
     // TODO: Globally load degree plan requirements for user
-  }
-);
+});
 
-export const importSchedule = createAsyncThunk(
-  'schedules/importSchedule',
-  async (scheduleJson: string) => {
-    try {
-      const schedule = JSON.parse(scheduleJson);
-      // TODO: Validate schedule
-      return schedule;
-    } catch (e) {
-      console.error(e);
-      throw e;
-    }
+export const importSchedule = createAsyncThunk<
+  void,
+  string,
+  {
+    dispatch: AppDispatch;
+    state: AppState;
+  }
+>('schedules/importSchedule', async (scheduleJson: string, { dispatch, getState }) => {
+  try {
+    const schedule = JSON.parse(scheduleJson);
+    // TODO: Validate schedule
+    const userId = getState().user.data.id;
+    dispatch(
+      addSchedule({
+        userId,
+        schedule,
+      }),
+    );
+    return schedule;
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
   }
 );
 
