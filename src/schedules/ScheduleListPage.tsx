@@ -1,21 +1,17 @@
 import React from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import ScheduleList from './ScheduleList';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import { Schedule, StudentData } from '../store/user/types';
 import { addScheduleToUser, removeSchedule, refreshSchedules } from '../store/user/thunks';
 import { AppState } from '../store';
 
-interface ScheduleListPageProps extends RouteComponentProps {
+interface ScheduleListPageProps extends ScheduleListPageReduxProps {
   user: StudentData;
   schedules: Array<Schedule>;
-  uploadSchedule: Function;
-  deleteSchedule: Function;
-  refreshSchedules: Function;
 }
 
-class ScheduleListPage extends React.Component<ScheduleListPageProps> {
-
+class ScheduleListPage extends React.Component<ScheduleListPageProps & RouteComponentProps> {
   /**
    * Trigger a database deletion.
    *
@@ -26,7 +22,7 @@ class ScheduleListPage extends React.Component<ScheduleListPageProps> {
       userId: this.props.user.id,
       scheduleId: scheduleId,
     });
-  }
+  };
 
   private addDummySchedule = () => {
     console.log('Adding dummy schedule');
@@ -36,12 +32,12 @@ class ScheduleListPage extends React.Component<ScheduleListPageProps> {
         id: 'test-' + Date.now(),
         name: 'A dummy schedule',
         owner: 'test@example.com',
-        created: Date.now(),
-        lastUpdated: Date.now(),
+        created: new Date().toISOString(),
+        lastUpdated: new Date().toISOString(),
         semesters: [],
       },
     });
-  }
+  };
 
   componentDidMount() {
     // Get schedules
@@ -52,10 +48,17 @@ class ScheduleListPage extends React.Component<ScheduleListPageProps> {
     return (
       <main>
         <h1>Schedules for current user</h1>
-        <button onClick={() => {
-          this.addDummySchedule();
-        }}>Create dummy schedule</button>
-        <ScheduleList onScheduleDeleted={this.handleScheduleDeletion} schedules={this.props.schedules}></ScheduleList>
+        <button
+          onClick={() => {
+            this.addDummySchedule();
+          }}
+        >
+          Create dummy schedule
+        </button>
+        <ScheduleList
+          onScheduleDeleted={this.handleScheduleDeletion}
+          schedules={this.props.schedules}
+        ></ScheduleList>
       </main>
     );
   }
@@ -75,6 +78,8 @@ const mapDispatch = {
 };
 
 const connector = connect(mapStateToProps, mapDispatch);
+
+type ScheduleListPageReduxProps = ConnectedProps<typeof connector>;
 
 const ConnectedScheduleListPage = connector(ScheduleListPage);
 

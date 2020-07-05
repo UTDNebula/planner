@@ -1,10 +1,9 @@
 import React from 'react';
 import { Schedule } from '../store/user/types';
-import { Link } from 'react-router-dom';
-
-type ScheduleSelectionCallback = (scheduleId: string) => void;
-
-type ScheduleDeletionCallback = ScheduleSelectionCallback;
+import ScheduleListItem, {
+  ScheduleDeletionCallback,
+  ScheduleSelectionCallback,
+} from './ScheduleListItem';
 
 interface ScheduleListProps {
   schedules: Array<Schedule>;
@@ -15,22 +14,12 @@ interface ScheduleListProps {
 /**
  * A list of schedule info.
  *
- * @param {object} props 
+ * @param {object} props
  */
 class ScheduleList extends React.Component<ScheduleListProps> {
-  render() {
+  public render(): React.ReactNode {
     return this.props.schedules.map((schedule: Schedule) => (
-      <div key={schedule.id}>
-        <h2>
-          <Link to={`/schedules/${schedule.id}`}>
-            {schedule.name}
-          </Link>
-        </h2>
-        <div>
-          Created: {new Date(schedule.created).toISOString()}
-        </div>
-        <div>Schedule ID: {schedule.id}</div>
-      </div>
+      <ScheduleListItem key={schedule.id} schedule={schedule}></ScheduleListItem>
     ));
   }
 }
