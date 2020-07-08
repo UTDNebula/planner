@@ -68,7 +68,7 @@ function ScheduleListItem(props: ScheduleListItemProps) {
 
   return (
     <ListItem>
-      <Link to={`/schedules/${props.schedule}`}>
+      <Link to={`/schedules/${id}`}>
         <ListItemText primary={name} secondary={lastUpdatedLabel}></ListItemText>
       </Link>
       <Popover
