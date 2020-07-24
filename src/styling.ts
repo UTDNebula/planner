@@ -1,6 +1,14 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#E87500',
+    },
+    secondary: {
+      main: '#154734',
+    },
+  },
   typography: {
     body1: {
       fontSize: 25,
@@ -23,11 +31,6 @@ const theme = createMuiTheme({
       root: {
         width: 800,
         minHeight: 100,
-      },
-    },
-    MuiButton: {
-      root: {
-        backgroundColor: 'grey',
       },
     },
     MuiCard: {
