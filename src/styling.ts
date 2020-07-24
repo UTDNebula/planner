@@ -10,29 +10,8 @@ const theme = createMuiTheme({
     },
   },
   typography: {
-    body1: {
-      fontSize: 25,
-    },
-    h1: {
-      fontSize: 25,
-      fontWeight: 'bold',
-      padding: 10,
-    },
-    h2: {
-      fontSize: 15,
-      padding: 10,
-    },
-    h3: {
-      fontSize: 50,
-    },
   },
   overrides: {
-    MuiPaper: {
-      root: {
-        width: 800,
-        minHeight: 100,
-      },
-    },
     MuiCard: {
       root: {
         width: 200,
@@ -46,12 +25,6 @@ const theme = createMuiTheme({
         '&:hover': {
           background: 'rgb(221, 221, 221)',
         },
-      },
-    },
-    MuiIconButton: {
-      root: {
-        float: 'right',
-        paddingRight: 0,
       },
     },
   },
