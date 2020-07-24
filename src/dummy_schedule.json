@@ -11,10 +11,7 @@
         {
           "id": "0000001",
           "fullName": "Calculus I",
-          "offered": [
-            "f",
-            "s"
-          ],
+          "offered": ["f", "s"],
           "description": "Functions, limits, continuity, differentiation; integration of function of one variable; logarithmic, exponential, and inverse trigonometric functions; techniques of integration, and applications.",
           "subject": "MATH",
           "suffix": "2417",
@@ -24,9 +21,7 @@
         {
           "id": "0000002",
           "fullName": "Introduction to Computer Science and Software Engineering",
-          "offered": [
-            "f"
-          ],
+          "offered": ["f"],
           "description": "",
           "subject": "CS",
           "suffix": "1200",
@@ -36,10 +31,7 @@
         {
           "id": "0000003",
           "fullName": "Mechanics",
-          "offered": [
-            "f",
-            "s"
-          ],
+          "offered": ["f", "s"],
           "description": "Motion in two dimensions; momentum, work, and energy; Netwon's laws; conversation of energy.",
           "subject": "PHYS",
           "suffix": "2325",
@@ -51,10 +43,7 @@
         {
           "id": "0000004",
           "fullName": "Physics Laboratory I",
-          "offered": [
-            "f",
-            "s"
-          ],
+          "offered": ["f", "s"],
           "description": "Physics lab. Cool stuff.",
           "subject": "PHYS",
           "suffix": "2125",
@@ -66,12 +55,20 @@
         {
           "id": "0000005",
           "fullName": "Introduction to Engineering and Computer Science",
-          "offered": [
-            "f"
-          ],
+          "offered": ["f"],
           "description": "It's freshman seminar.",
           "subject": "ECS",
           "suffix": "1100",
+          "prerequisites": {},
+          "corequisites": {}
+        },
+        {
+          "id": "0000006",
+          "fullName": "Computer Architecture",
+          "offered": ["f"],
+          "description": "Architecture of a computer. And stuff.",
+          "subject": "CS",
+          "suffix": "3340",
           "prerequisites": {},
           "corequisites": {}
         }
