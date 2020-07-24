@@ -1,10 +1,14 @@
 import React from 'react';
+import { Fab } from '@material-ui/core';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import ScheduleList from './ScheduleList';
 import { connect, ConnectedProps } from 'react-redux';
 import { Schedule, StudentData } from '../store/user/types';
 import { addScheduleToUser, removeSchedule, refreshSchedules } from '../store/user/thunks';
 import { AppState } from '../store';
+import AddIcon from '@material-ui/icons/Add';
+import UserHomeAppBar from './UserHomeAppBar';
+import './ScheduleListPage.css';
 
 interface ScheduleListPageProps extends ScheduleListPageReduxProps {
   user: StudentData;
@@ -46,20 +50,26 @@ class ScheduleListPage extends React.Component<ScheduleListPageProps & RouteComp
 
   render() {
     return (
-      <main>
-        <h1>Schedules for current user</h1>
-        <button
-          onClick={() => {
-            this.addDummySchedule();
-          }}
-        >
-          Create dummy schedule
-        </button>
-        <ScheduleList
-          onScheduleDeleted={this.handleScheduleDeletion}
-          schedules={this.props.schedules}
-        ></ScheduleList>
-      </main>
+      <div className="schedule-list-page--wrapper">
+        <UserHomeAppBar />
+        <main className="schedule-list-page--contents">
+          <ScheduleList
+            onScheduleDeleted={this.handleScheduleDeletion}
+            schedules={this.props.schedules} 
+          />
+          <Fab
+            className="schedule-list-page--fab"
+            variant="extended"
+            color="secondary"
+            onClick={() => {
+              this.addDummySchedule();
+            }}
+            >
+            <AddIcon></AddIcon>
+            Create schedule
+          </Fab>
+        </main>
+      </div>
     );
   }
 }
