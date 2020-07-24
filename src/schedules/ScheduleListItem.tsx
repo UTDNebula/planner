@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   ListItem,
   ListItemText,
@@ -9,8 +9,11 @@ import {
   ListItemSecondaryAction,
   IconButton,
   Tooltip,
+  List,
+  ListItemIcon,
 } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import DeleteIcon from '@material-ui/icons/Delete';
 import { Link } from 'react-router-dom';
 import { Schedule } from '../store/user/types';
 
@@ -49,45 +52,39 @@ const useStyles = makeStyles((theme: Theme) =>
 
 /**
  * A summary of a schedule for use in a list.
+ *
+ * When clicked, this list item redirects to the schedule planner and opens the
+ * schedule for this item's associated ID.
  */
 function ScheduleListItem(props: ScheduleListItemProps) {
   const { id, name, lastUpdated } = props.schedule;
   const lastUpdatedLabel = `Last updated ${lastUpdated}`;
 
   const classes = useStyles();
-  const open = Boolean(false);
+  const [open, setOpen]= useState(false);
   const [anchorElement, setAnchorElement] = React.useState<HTMLElement | null>(null);
 
   const openMenu = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
     setAnchorElement(event.currentTarget);
+    setOpen(!open);
   };
 
   const onMenuClose = () => {
     setAnchorElement(null);
+    setOpen(false);
+  };
+
+  const handleDeleteClick = () => {
+    if (props.onScheduleDeleted) {
+      props.onScheduleDeleted(id);
+    }
   };
 
   return (
-    <ListItem>
-      <Link to={`/schedules/${id}`}>
-        <ListItemText primary={name} secondary={lastUpdatedLabel}></ListItemText>
-      </Link>
-      <Popover
-        id={`scheduleItemMenu-${id}`}
-        open={open}
-        className={classes.popover}
-        classes={{
-          paper: classes.paper,
-        }}
-        anchorEl={anchorElement}
-        onClose={onMenuClose}
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'left',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
-        }}
+    <ListItem component={Link} to={`/schedules/${id}`} >
+      <ListItemText
+        primary={name}
+        secondary={lastUpdatedLabel}
       />
       <ListItemSecondaryAction>
         <Tooltip title="Options" aria-label="options">
@@ -103,9 +100,35 @@ function ScheduleListItem(props: ScheduleListItemProps) {
           </IconButton>
         </Tooltip>
       </ListItemSecondaryAction>
+      <Popover
+        id={`scheduleItemMenu-${id}`}
+        open={open}
+        className={classes.popover}
+        classes={{
+          paper: classes.paper,
+        }}
+        anchorEl={anchorElement}
+        onClose={onMenuClose}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+      >
+        <List component="nav" aria-label="Schedule plan options">
+          <ListItem button onClick={handleDeleteClick}>
+            <ListItemIcon>
+              <DeleteIcon />
+            </ListItemIcon>
+            <ListItemText primary="Delete plan" />
+          </ListItem>
+        </List>
+      </Popover>
     </ListItem>
   );
-  // </Link>;
 }
 
 export default ScheduleListItem;
