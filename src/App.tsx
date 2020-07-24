@@ -10,6 +10,8 @@ import { SchedulePlanner } from './planner';
 import { ScheduleListPage } from './schedules';
 import { connector } from './lib';
 import './App.css';
+import { ThemeProvider } from '@material-ui/core';
+import { theme } from './styling';
 
 
 /**
@@ -25,20 +27,22 @@ class App extends React.Component<RouteComponentProps> {
 
   public render(): ReactElement {
     return (
-      <Switch>
-        <Route path="/schedules/:id/:part?">
-          <SchedulePlanner {...this.props}></SchedulePlanner>
-        </Route>
-        <Route path="/schedules">
-          <ScheduleListPage {...this.props}></ScheduleListPage>
-        </Route>
-        <Route path="/auth">
-          {/* TODO: Handle sign-in */}
-        </Route>
-        <Route path="/">
-          <LandingPage></LandingPage>
-        </Route>
-      </Switch>
+      <ThemeProvider theme={theme}>
+        <Switch>
+          <Route path="/schedules/:id/:part?">
+            <SchedulePlanner {...this.props}></SchedulePlanner>
+          </Route>
+          <Route path="/schedules">
+            <ScheduleListPage {...this.props}></ScheduleListPage>
+          </Route>
+          <Route path="/auth">
+            {/* TODO: Handle sign-in */}
+          </Route>
+          <Route path="/">
+            <LandingPage></LandingPage>
+          </Route>
+        </Switch>
+      </ThemeProvider>
     );
   }
 }
