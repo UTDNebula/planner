@@ -1,24 +1,20 @@
 import React from 'react';
 import CourseCard from '../courses/CourseCard';
 import { MuiThemeProvider } from '@material-ui/core/styles';
-import {
-  Droppable,
-  DroppableProvided,
-} from 'react-beautiful-dnd';
+import { Droppable, DroppableProvided } from 'react-beautiful-dnd';
 import { ScheduleSemester } from '../lib/types';
-import Box from '@material-ui/core/Box'; 
-import List from '@material-ui/core/List'; 
+import Box from '@material-ui/core/Box';
+import List from '@material-ui/core/List';
 import { theme } from '../styling';
-
 
 interface SemesterBlockProps {
   enabled: boolean;
   semester: ScheduleSemester;
-};
+}
 
 interface SemesterBlockState {
   courses: Array<any>; // TODO: Fix me
-};
+}
 
 /**
 const Container = styled.div`
@@ -39,7 +35,7 @@ const TaskList = styled.div`
  */
 
 /**
- * A semester 
+ * A semester
  */
 export default class SemesterBlock extends React.Component<SemesterBlockProps, SemesterBlockState> {
   constructor(props: SemesterBlockProps) {
@@ -54,9 +50,7 @@ export default class SemesterBlock extends React.Component<SemesterBlockProps, S
     return `Term ${termCode}`;
   }
 
-  onCourseDrag() {
-
-  }
+  onCourseDrag() {}
 
   render() {
     const displayedCourses = this.props.semester.courses.map((course, index) => {
@@ -65,26 +59,23 @@ export default class SemesterBlock extends React.Component<SemesterBlockProps, S
           key={`${course.subject} ${course.suffix}`}
           index={index}
           course={course}
-          enabled={this.props.enabled}>
-        </CourseCard>
+          enabled={this.props.enabled}
+        ></CourseCard>
       );
     });
     return (
       <MuiThemeProvider theme={theme}>
-      <Box border = {1}>
-        <h1>{this.termText}</h1>
-        <Droppable droppableId={this.props.semester.term}>
-          {(provided: DroppableProvided, _) => (
-            <List
-              ref={provided.innerRef}
-              {...provided.droppableProps}
-            >
-              {displayedCourses}
-              {provided.placeholder}
-            </List>
-          )}
-        </Droppable>
-      </Box>
+        <Box border={1}>
+          <h1>{this.termText}</h1>
+          <Droppable droppableId={this.props.semester.term}>
+            {(provided: DroppableProvided, _) => (
+              <List ref={provided.innerRef} {...provided.droppableProps}>
+                {displayedCourses}
+                {provided.placeholder}
+              </List>
+            )}
+          </Droppable>
+        </Box>
       </MuiThemeProvider>
     );
   }

@@ -3,6 +3,8 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import { Draggable, DraggableProvided, DraggableStateSnapshot } from 'react-beautiful-dnd';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { theme } from '../styling';
 import { Course } from '../store/catalog/types';
 
@@ -66,14 +68,19 @@ export default class CourseCard extends React.Component<CourseCardProps, CourseC
           key={this.props.course.id}
           isDragDisabled={!this.props.enabled}
         >
-          {(provided: DraggableProvided) => (
+          {(provided: DraggableProvided, _: DraggableStateSnapshot) => (
             <Card
               ref={provided.innerRef}
               {...provided.draggableProps}
               {...provided.dragHandleProps}
             >
               <div>
-                <Typography>{this.courseCode}</Typography>
+                <Typography>
+                  {this.courseCode}
+                  <IconButton aria-label="settings">
+                    <MoreVertIcon />
+                  </IconButton>
+                </Typography>
                 <div>{this.props.course.fullName}</div>
               </div>
             </Card>
