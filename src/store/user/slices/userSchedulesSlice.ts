@@ -10,8 +10,10 @@ const schedulesSlice = createSlice({
   reducers: {
     addSchedule(state, action: { payload: { userId: string; schedule: Schedule } }) {
       const { userId, schedule } = action.payload;
-      console.log('New schedule added to store');
       storeSchedule(userId, schedule);
+      if (state.findIndex((existingSchedule) => existingSchedule.id === schedule.id) !== -1) {
+        return;
+      }
       state.push(schedule);
     },
     updateSchedule(state, action: { payload: { id: string; schedule: Schedule } }) {
