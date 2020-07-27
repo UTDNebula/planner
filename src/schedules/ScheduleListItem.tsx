@@ -56,12 +56,12 @@ const useStyles = makeStyles((theme: Theme) =>
  * When clicked, this list item redirects to the schedule planner and opens the
  * schedule for this item's associated ID.
  */
-function ScheduleListItem(props: ScheduleListItemProps) {
+function ScheduleListItem(props: ScheduleListItemProps): JSX.Element {
   const { id, name, lastUpdated } = props.schedule;
   const lastUpdatedLabel = `Last updated ${lastUpdated}`;
 
   const classes = useStyles();
-  const [open, setOpen]= useState(false);
+  const [open, setOpen] = useState(false);
   const [anchorElement, setAnchorElement] = React.useState<HTMLElement | null>(null);
 
   const openMenu = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
@@ -81,25 +81,8 @@ function ScheduleListItem(props: ScheduleListItemProps) {
   };
 
   return (
-    <ListItem component={Link} to={`/schedules/${id}`} >
-      <ListItemText
-        primary={name}
-        secondary={lastUpdatedLabel}
-      />
-      <ListItemSecondaryAction>
-        <Tooltip title="Options" aria-label="options">
-          <IconButton
-            onClick={openMenu}
-            edge="end"
-            aria-label="menu"
-            classes={{
-              root: classes.iconButton,
-            }}
-          >
-            <MoreVertIcon />
-          </IconButton>
-        </Tooltip>
-      </ListItemSecondaryAction>
+    <ListItem component={Link} to={`/schedules/${id}`}>
+      <ListItemText primary={name} secondary={lastUpdatedLabel} />
       <Popover
         id={`scheduleItemMenu-${id}`}
         open={open}
@@ -127,6 +110,20 @@ function ScheduleListItem(props: ScheduleListItemProps) {
           </ListItem>
         </List>
       </Popover>
+      <ListItemSecondaryAction>
+        <Tooltip title="Options" aria-label="options">
+          <IconButton
+            onClick={openMenu}
+            edge="end"
+            aria-label="menu"
+            classes={{
+              root: classes.iconButton,
+            }}
+          >
+            <MoreVertIcon />
+          </IconButton>
+        </Tooltip>
+      </ListItemSecondaryAction>
     </ListItem>
   );
 }
