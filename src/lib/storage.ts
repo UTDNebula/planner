@@ -33,15 +33,7 @@ export function storeSchedule(userId: string, data: Schedule): void {
   const { schedules } = JSON.parse(
     localStorage.getItem(KEY_SCHEDULES) || '{ "schedules": {} }',
   ) as ScheduleStorageType;
-  console.log('schedules');
-  console.log(schedules);
-  console.log('New schedule');
-  console.log(data);
   schedules[data.id] = data;
-  console.log('Schedules after adding');
-  console.log(schedules);
-  console.log('Schedule data');
-  console.log(schedules[data.id]);
   // localStorage.setItem(generateKey(userId, data.id), JSON.stringify({ schedules }));
   localStorage.setItem(KEY_SCHEDULES, JSON.stringify({ schedules }));
 }
