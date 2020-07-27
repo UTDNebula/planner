@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
+import 'fontsource-roboto';
 import * as serviceWorker from './serviceWorker';
 import { initFirebase } from './lib/firebase-init';
 import App from './App';
@@ -19,7 +20,7 @@ ReactDOM.render(
       </React.StrictMode>
     </Provider>
   </Router>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
 
 // If you want your app to work offline and load faster, you can change
