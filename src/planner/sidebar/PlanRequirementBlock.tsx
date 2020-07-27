@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import List from '@material-ui/core/List';
 import { PlanRequirement } from '../../lib/types';
 import CourseCard from '../../courses/CourseCard';
+import { Typography } from '@material-ui/core';
 
 interface PlanRequirementBlockProps {
   /**
@@ -12,32 +13,19 @@ interface PlanRequirementBlockProps {
   enabled: boolean;
 }
 
-interface PlanRequirementBlockState {
-  /**
-   * False if more information should be shown for this course.
-   */
-  collapsed: boolean;
-}
-
 /**
  * A collection of courses under a specific designation.
  */
-export default class PlanRequirementBlock extends React.Component<
-  PlanRequirementBlockProps,
-  PlanRequirementBlockState
-> {
-  public render() {
-    const courses = this.props.requirement.courses.map((course, index) => {
-      return (
-        <CourseCard key={course.id} index={index} course={course} enabled={this.props.enabled} />
-      );
-      // TODO: Handle index offset due to position in plan requirement list
-    });
-    return (
-      <div>
-        <h2>{this.props.requirement.name}</h2>
-        <List>{courses}</List>
-      </div>
-    );
-  }
+export default function PlanRequirementBlock(props: PlanRequirementBlockProps): JSX.Element {
+  const [collapsed, setCollapsed] = useState(false);
+  const courses = props.requirement.courses.map((course, index) => {
+    return <CourseCard key={course.id} index={index} course={course} enabled={props.enabled} />;
+    // TODO: Handle index offset due to position in plan requirement list
+  });
+  return (
+    <div>
+      <Typography variant="h6">{props.requirement.name}</Typography>
+      <List>{courses}</List>
+    </div>
+  );
 }
