@@ -84,6 +84,12 @@ export default function LandingPage() {
       returnTo: window.location.origin,
     });
 
+  function AddDataToFirestore() {
+    //add user to database here if not already exists
+    console.log("added to database with id", user.sub);
+    return (<></>);
+  };
+
   return (
     <div className={classes.page}>
       <main className={classes.contentContainer}>
@@ -112,9 +118,12 @@ export default function LandingPage() {
                 </Button>
               )}
               {isAuthenticated && (
-                <Button variant="contained" className={classes.button} color="secondary" onClick={() => logout()}>
-                  Sign out
-                </Button>
+                <>
+                  <AddDataToFirestore/>
+                  <Button variant="contained" className={classes.button} color="secondary" onClick={() => logout()}>
+                    Sign out
+                  </Button>
+                </>
               )}
             </div>
           </div>
