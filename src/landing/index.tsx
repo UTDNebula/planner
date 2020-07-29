@@ -6,6 +6,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { useTheme } from 'styled-components';
 import { useAuth0 } from "@auth0/auth0-react";
+import UserAuth from "../users/UserAuth";
+import {getUserData} from "../schedules/actions";
 import './index.css';
 
 const useStyles = makeStyles((theme) => ({
@@ -86,6 +88,13 @@ export default function LandingPage() {
 
   function AddDataToFirestore() {
     //add user to database here if not already exists
+    try {
+      getUserData(user.sub);
+      console.log("Data received for user", user.sub);
+    } catch(error){
+      console.log(error);
+    }
+    
     console.log("added to database with id", user.sub);
     return (<></>);
   };
@@ -112,19 +121,7 @@ export default function LandingPage() {
               <Button variant="contained" className={classes.button} color="secondary" component={Link} to="/schedules">
                 My schedules
               </Button>
-              {!isAuthenticated && (
-                <Button variant="contained" className={classes.button} color="secondary" onClick={() => loginWithRedirect()}>
-                  Sign in with account
-                </Button>
-              )}
-              {isAuthenticated && (
-                <>
-                  <AddDataToFirestore/>
-                  <Button variant="contained" className={classes.button} color="secondary" onClick={() => logout()}>
-                    Sign out
-                  </Button>
-                </>
-              )}
+              <UserAuth/>
             </div>
           </div>
         </header>
