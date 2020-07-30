@@ -17,3 +17,8 @@ const rootReducer = combineReducers({
 });
 
 export default rootReducer;
+
+/**
+ * The data type for the app data store root reducer.
+ */
+export type RootState = ReturnType<typeof rootReducer>;
