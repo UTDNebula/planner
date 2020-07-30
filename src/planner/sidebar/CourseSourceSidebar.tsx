@@ -1,15 +1,14 @@
 import React from 'react';
-import Box from '@material-ui/core/Box';
-import { MuiThemeProvider } from '@material-ui/core/styles';
+import { Typography } from '@material-ui/core';
 import { Droppable } from 'react-beautiful-dnd';
-import { connect } from 'react-redux';
+import { connect, useSelector, useDispatch } from 'react-redux';
 import { PlanRequirement } from '../../lib/types';
-import { theme } from '../../styling';
-import { AppState } from '../../store';
+import { RootState } from '../../store/reducers';
 import { Course } from '../../store/catalog/types';
 import { searchCourse as searchCourses } from '../../store/catalog/thunks';
 import PlanRequirementBlock from './PlanRequirementBlock';
 import CourseSearch from './CourseSearch';
+import './CourseSourceSidebar.css';
 
 export const SIDEBAR_DROPPABLE_ID = 'courseSource';
 
@@ -31,6 +30,10 @@ interface CourseSourceSidebarProps {
    * True if items in this sidebar can be modified.
    */
   enabled: boolean;
+
+  // onCourseRemoved: (courseId: string) => void;
+
+  // onCourseAdded: (courseId: string) => void;
 }
 
 /**
@@ -50,10 +53,12 @@ class CourseSourceSidebar extends React.Component<CourseSourceSidebarProps> {
       />
     ));
     return (
-      <MuiThemeProvider theme={theme}>
-        <Box>
-          <CourseSearch courses={this.props.courses} />
-          <h1>Courses</h1>
+      <section className="course-source-sidebar">
+        <CourseSearch courses={this.props.courses} />
+        <div className="plan-requirement-list">
+          <Typography variant="h5" className="course-source-sidebar--header">
+            Degree Plan Requirements
+          </Typography>
           <Droppable droppableId={SIDEBAR_DROPPABLE_ID}>
             {(provided, _) => (
               <div ref={provided.innerRef} {...provided.droppableProps}>
@@ -62,13 +67,13 @@ class CourseSourceSidebar extends React.Component<CourseSourceSidebarProps> {
               </div>
             )}
           </Droppable>
-        </Box>
-      </MuiThemeProvider>
+        </div>
+      </section>
     );
   }
 }
 
-const mapStateToProps = (state: AppState) => {
+const mapStateToProps = (state: RootState) => {
   return {
     courses: state.courses,
   };
