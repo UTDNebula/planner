@@ -9,6 +9,7 @@ import {
   makeStyles,
   Theme,
   createStyles,
+  Typography,
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 
@@ -40,6 +41,8 @@ const useStyles = makeStyles((theme: Theme) => {
 export default function CourseSearch(props: CourseSearchProps): JSX.Element {
   const [results, setResults] = React.useState<Course[]>([]);
   const [query, setQuery] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
+  const [timeoutCounter, setTimeoutCounter] = React.useState(0);
 
   const classes = useStyles();
 
@@ -47,8 +50,20 @@ export default function CourseSearch(props: CourseSearchProps): JSX.Element {
    * Updates the currently stored search results in state.
    */
   const search = () => {
-    const results = props.courses;
+    setLoading(true);
+    const results = props.courses.filter((course: Course) => {
+      return (
+        course.fullName.includes(query) ||
+        course.description.includes(query) ||
+        course.subject.includes(query) ||
+        course.suffix.includes(query)
+      );
+    });
+    setTimeout(() => {
+      console.log('Search complete');
+    }, 1000);
     setResults(results);
+    setLoading(false);
   };
 
   /**
@@ -58,11 +73,19 @@ export default function CourseSearch(props: CourseSearchProps): JSX.Element {
    */
   const handleQueryUpdate = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
+    // TODO: Use timeout for searching
     search();
   };
   const resultBlocks = results.map((course, index) => (
     <CourseCard key={course.id} index={index} course={course} enabled={true} />
   ));
+  const loadingIndicator = loading ? (
+    <div>
+      <Typography variant="subtitle1">Loading</Typography>
+    </div>
+  ) : (
+    <></>
+  );
   return (
     <div>
       <Paper elevation={2} className={classes.searchBox}>
@@ -77,6 +100,7 @@ export default function CourseSearch(props: CourseSearchProps): JSX.Element {
           <SearchIcon />
         </IconButton>
       </Paper>
+      {loadingIndicator}
       <List>{resultBlocks}</List>
     </div>
   );
