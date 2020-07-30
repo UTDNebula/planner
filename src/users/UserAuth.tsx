@@ -29,13 +29,7 @@ export default function UserAuth() {
     });
 
   function AddDataToFirestore() {
-    //add user to database here if not already exists
-    try {
-      getUserData(user.sub);
-      console.log("Data received for user", user.sub);
-    } catch(error){
-      console.log(error);
-    }
+    //add user to database here if not already exist
     
     console.log("added to database with id", user.sub);
     return (<></>);
