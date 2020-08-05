@@ -8,17 +8,27 @@ import { store } from './lib';
 import App from './App';
 import config from './firebase-config';
 import './index.css';
+import { Auth0Provider } from "@auth0/auth0-react";
+import authConfig from "./auth0-config";
 
 initFirebase(config);
 
 ReactDOM.render(
-  <Router>
-    <Provider store={store}>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
-    </Provider>
-  </Router>,
+  <Auth0Provider
+    domain={authConfig.domain}
+    clientId={authConfig.clientId}
+    redirectUri={window.location.origin}
+    audience={authConfig.audience}
+    scope={"read:current_user update:current_user_metadata"} //minimum required permissions, tack on more if necessary for the application
+  >
+    <Router>
+      <Provider store={store}>
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
+      </Provider>
+    </Router>
+  </Auth0Provider>,
   document.getElementById('root')
 );
 
