@@ -3,6 +3,7 @@ import { fetchStudentData, fetchUserSchedules, deleteSchedule } from '../../lib/
 import { uploadSchedule } from '../../lib/api/schedules';
 import { StudentData, Schedule } from './types';
 import { addSchedule } from './slices/userSchedulesSlice';
+import { updateUser } from './slices/userMetadataSlice';
 import { AppDispatch, AppState } from '..';
 import { loadAllSchedules } from '../../lib/storage';
 
@@ -83,9 +84,10 @@ export const refreshSchedules = createAsyncThunk<
  */
 export const updateStudentData = createAsyncThunk(
   'users/updateStudentData',
-  async (user: StudentData) => {
+  async (user: StudentData, { dispatch }) => {
     try {
       // TODO: Update user data in store
+      dispatch(updateUser({ user }));
     } catch (e) {
       throw e;
     }

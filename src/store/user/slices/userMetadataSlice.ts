@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 import { fetchUserById } from '../thunks';
 import { StudentData } from '../types';
 
-
 interface UserMetadataSliceState {
   data: StudentData;
   loading: 'idle' | 'pending' | 'succeeded' | 'failed';
@@ -14,7 +13,7 @@ const initialState: UserMetadataSliceState = {
     id: 'test',
     name: '',
     startTerm: '2020f',
-    endTerm: '2024f',  // TODO: get generator function
+    endTerm: '2024f', // TODO: get generator function
     classification: 'fr',
     attemptedCreditHours: 0,
     gpa: 0,
@@ -32,7 +31,7 @@ const initialState: UserMetadataSliceState = {
   },
   loading: 'idle',
   error: null,
-}
+};
 
 const userMetadataSlice = createSlice({
   name: 'user',
@@ -41,30 +40,25 @@ const userMetadataSlice = createSlice({
     /**
      * Should be called on sign-in.
      */
-    updateUser(state, action) {
-      const updatedUser = action.payload;
+    updateUser(state, action: { payload: { user: StudentData } }) {
+      const updatedUser = action.payload.user;
       state.data = updatedUser;
     },
     signOut(state, action) {
       state.data = initialState.data;
     },
   },
-  extraReducers: (builder) => {
-    builder.addCase(fetchUserById.fulfilled, (state, { payload }) => {
-      state.data = payload;
-      // TODO: Account for extra properties
-    });
-    builder.addCase(fetchUserById.rejected, (state, { payload }) => {
-
-    });
-  }
+  // extraReducers: (builder) => {
+  //   builder.addCase(fetchUserById.fulfilled, (state, { payload }) => {
+  //     state.data = payload;
+  //     // TODO: Account for extra properties
+  //   });
+  //   builder.addCase(fetchUserById.rejected, (state, { payload }) => {});
+  // },
 });
 
 const { actions, reducer } = userMetadataSlice;
 
-export const {
-  updateUser,
-  signOut,
-} = actions;
+export const { updateUser, signOut } = actions;
 
 export default reducer;
