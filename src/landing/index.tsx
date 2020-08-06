@@ -5,9 +5,8 @@ import Button from '@material-ui/core/Button';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { useTheme } from 'styled-components';
-import { useAuth0 } from "@auth0/auth0-react";
-import UserAuth from "../users/UserAuth";
-import {getUserData} from "../schedules/actions";
+import { useAuth0 } from '@auth0/auth0-react';
+import UserAuth from '../users/UserAuth';
 import './index.css';
 
 const useStyles = makeStyles((theme) => ({
@@ -79,49 +78,52 @@ const useStyles = makeStyles((theme) => ({
 
 export default function LandingPage() {
   const classes = useStyles();
-  const { user, isAuthenticated, loginWithRedirect, logout } = useAuth0();
-
-  const logoutWithRedirect = () =>
-    logout({
-      returnTo: window.location.origin,
-    });
-
-  function AddDataToFirestore() {
-    //add user to database here if not already exists
-    try {
-      getUserData(user.sub);
-      console.log("Data received for user", user.sub);
-    } catch(error){
-      console.log(error);
-    }
-    
-    console.log("added to database with id", user.sub);
-    return (<></>);
-  };
 
   return (
     <div className={classes.page}>
       <main className={classes.contentContainer}>
         <header className={classes.header}>
-          <h1 className={classes.title}>
-            Comet Planning
-            </h1>
+          <h1 className={classes.title}>Comet Planning</h1>
           <p className={classes.description}>Plan out classes and more for your time at UTD.</p>
           <div className="buttonBlock">
             <div>
-              <Button variant="contained" className={classes.button} color="primary" component={Link} to="/schedules/new">
+              <Button
+                variant="contained"
+                className={classes.button}
+                color="primary"
+                component={Link}
+                to="/schedules/new"
+              >
                 Start from scratch
               </Button>
-              <Button variant="contained" className={classes.button} color="primary" component={Link} to="/schedules/new?withCredits=true">
+              <Button
+                variant="contained"
+                className={classes.button}
+                color="primary"
+                component={Link}
+                to="/schedules/new?withCredits=true"
+              >
                 Start with credits
               </Button>
-              <Button variant="contained" className={classes.button} color="primary" component={Link} to="/schedules/new?import=true">
+              <Button
+                variant="contained"
+                className={classes.button}
+                color="primary"
+                component={Link}
+                to="/schedules/new?import=true"
+              >
                 Import existing plan
               </Button>
-              <Button variant="contained" className={classes.button} color="secondary" component={Link} to="/schedules">
+              <Button
+                variant="contained"
+                className={classes.button}
+                color="secondary"
+                component={Link}
+                to="/schedules"
+              >
                 My schedules
               </Button>
-              <UserAuth/>
+              <UserAuth />
             </div>
           </div>
         </header>
