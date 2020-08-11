@@ -9,18 +9,14 @@ const theme = createMuiTheme({
       main: '#154734',
     },
   },
-  typography: {
-  },
   overrides: {
     MuiCard: {
       root: {
-        width: 200,
-        paddingRight: 5,
-        paddingLeft: 5,
-        paddingBottom: 5,
-        marginBottom: 15,
-        marginRight: 10,
-        marginLeft: 10,
+        paddingRight: 8,
+        paddingLeft: 8,
+        paddingBottom: 8,
+        marginBottom: 16,
+        paddingTop: 8,
         background: 'rgb(244, 245, 247)',
         '&:hover': {
           background: 'rgb(221, 221, 221)',
