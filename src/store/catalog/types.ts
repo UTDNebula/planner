@@ -3,7 +3,6 @@ import { SemesterCode } from '../../lib/types';
  * The basic building block for a schedule.
  */
 export interface Course {
-
   /**
    * A unique identifier for this course.
    */
@@ -17,7 +16,7 @@ export interface Course {
   /**
    * When this course may be taken.
    */
-  offered: Array<SemesterCode>;
+  offered: Array<string>; // TODO: Remove once temp schedules are removed
 
   /**
    * An official catalog-provided user-readable description of this course.

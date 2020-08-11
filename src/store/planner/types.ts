@@ -1,4 +1,3 @@
-
 export interface PlannerAction {
   operation: PlannerActionType;
   data: {
@@ -9,7 +8,7 @@ export interface PlannerAction {
 }
 
 /**
- * 
+ *
  */
 export enum PlannerActionType {
   ADD,

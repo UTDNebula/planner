@@ -1,4 +1,4 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
 interface SearchCoursePayload {
   query: string;
@@ -6,7 +6,5 @@ interface SearchCoursePayload {
 
 export const searchCourse = createAsyncThunk(
   'catalog/loadCourse',
-  async (payload: SearchCoursePayload) => {
-
-  }
+  async (payload: SearchCoursePayload) => {},
 );

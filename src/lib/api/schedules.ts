@@ -8,7 +8,7 @@ export async function uploadSchedule(userId: string, schedule: Schedule): Promis
   try {
     console.log('Uploading schedule to Firebase');
     // await db.collection('users').doc(userId).collection('schedules')
-    // .doc(schedule.id) // TODO: Separate ID 
+    // .doc(schedule.id) // TODO: Separate ID
     // .set(schedule);
   } catch (e) {
     throw e;

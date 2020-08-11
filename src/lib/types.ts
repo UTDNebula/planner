@@ -8,7 +8,6 @@ import { Course } from '../store/catalog/types';
  * Comuter Science.
  */
 export interface CoursePlan {
-
   /**
    * The subject of the plan, such as "Computer Science".
    */
@@ -36,7 +35,6 @@ export interface CoursePlan {
  * Note: There may be multiple instances of the same course in a student record.
  */
 export interface CourseAttempt {
-
   /**
    * Unique identifier of course taken.
    */
@@ -55,11 +53,10 @@ export interface CourseAttempt {
 
 /**
  * A collection of courses to be taken in a semester.
- * 
+ *
  * Used in schedule planning.
-*/
+ */
 export interface ScheduleSemester {
-
   /**
    * When these courses will be taken.
    */
@@ -75,7 +72,6 @@ export interface ScheduleSemester {
  * A grouping of courses required to satisfy a degree requirements.
  */
 export interface PlanRequirement {
-
   /**
    * The formal title of this requirement, like "Major Preparatory Courses".
    */
@@ -100,11 +96,11 @@ export type YearClassification = 'fr' | 'so' | 'ju' | 'se' | 'gr';
  * @enum {string}
  */
 export const CLASSIFICATIONS = {
-  'fr': 'freshman',
-  'so': 'sophomore',
-  'ju': 'junior',
-  'se': 'senior',
-  'gr': 'graduate',
+  fr: 'freshman',
+  so: 'sophomore',
+  ju: 'junior',
+  se: 'senior',
+  gr: 'graduate',
 };
 
 /**
@@ -114,8 +110,8 @@ export const CLASSIFICATIONS = {
  * @enum {string}
  */
 export const SUBJECT_CODES = {
-  'CS': 'Computer Science',
-  'MATH': 'Mathematics',
+  CS: 'Computer Science',
+  MATH: 'Mathematics',
   // TODO: Add rest of subject code mappings
 };
 
@@ -126,20 +122,20 @@ export type SubjectCode = 'CS' | 'MATH' | 'PHYS' | 'ECS' | 'RHET' | 'ENGL';
 
 /**
  * Mappings of letter grades to grade points.
- * 
+ *
  * Grades with values of -1 should not be factored into GPA calculations.
  *
  * @readonly
  * @enum {number}
  */
 export enum GradeMappings {
-  'A+' = 4.000,
-  'A' = 4.000,
-  'A-' = 3.670,
-  'B+' = 3.330,
-  'B' = 3.000,
+  'A+' = 4.0,
+  'A' = 4.0,
+  'A-' = 3.67,
+  'B+' = 3.33,
+  'B' = 3.0,
   // TOOD: Insert rest of grades
-  'F' = 0.000,
+  'F' = 0.0,
   /**
    * Indicates credit was not recieved for a course, only used in undergraduate
    * courses.
@@ -172,7 +168,27 @@ export enum GradeMappings {
  *
  * @typedef {string} Grade
  */
-export type Grade = 'A+' | 'A' | 'A-' | 'B+' | 'B' | 'B-' | 'C+' | 'C' | 'C-' | 'D+' | 'D' | 'D-' | 'F' | 'NC' | 'CR' | 'I' | 'P' | 'W' | 'WL' | 'NR';
+export type Grade =
+  | 'A+'
+  | 'A'
+  | 'A-'
+  | 'B+'
+  | 'B'
+  | 'B-'
+  | 'C+'
+  | 'C'
+  | 'C-'
+  | 'D+'
+  | 'D'
+  | 'D-'
+  | 'F'
+  | 'NC'
+  | 'CR'
+  | 'I'
+  | 'P'
+  | 'W'
+  | 'WL'
+  | 'NR';
 
 /**
  * All valid semester codes.
@@ -200,7 +216,6 @@ export const SEMESTER_CODES = {
  */
 export type SemesterCode = 'f' | 's' | 'u';
 
-
 /**
  * A specific semester term.
  * Should be foramtted [year][SemesterCode].
@@ -219,8 +234,8 @@ export type Term = string;
  *  BS
  */
 export const PLAN_TYPES = {
-  'BS': 'Bachelor of Science',
-  'BA': 'Bachelor of Arts',
+  BS: 'Bachelor of Science',
+  BA: 'Bachelor of Arts',
   // TODO: Add rest of degrees
 };
 
@@ -230,15 +245,15 @@ export const PLAN_TYPES = {
  * @enum {string}
  */
 export const PLAN_CATEGORIES = {
-  'major': 'Major',
-  'minor': 'Minor',
-  'honors': 'Honors',
-  'cert': 'Certificate',
+  major: 'Major',
+  minor: 'Minor',
+  honors: 'Honors',
+  cert: 'Certificate',
 };
 
 /**
  * A category of degree plan.
- * 
+ *
  * Only used for undergraduate degrees.
  *
  * @typedef {string} PlanCategory

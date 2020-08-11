@@ -1,4 +1,9 @@
-import { YearClassification, CourseAttempt, ScheduleSemester, PlanRequirement } from "../../lib/types";
+import {
+  YearClassification,
+  CourseAttempt,
+  ScheduleSemester,
+  PlanRequirement,
+} from '../../lib/types';
 
 /**
  * A wrapper for student data.
@@ -7,7 +12,6 @@ import { YearClassification, CourseAttempt, ScheduleSemester, PlanRequirement } 
  * student's attempted courses and provides some fields for quick querying.
  */
 export interface Student {
-
   id: string;
 
   /**
@@ -33,12 +37,12 @@ export interface Student {
   /**
    * The amount of attempted credit hours.
    */
-  attemptedCreditHours: Number;
+  attemptedCreditHours: number;
 
   /**
    * The current grade point average.
    */
-  gpa: Number;
+  gpa: number;
 
   /**
    * All a student's course attempts and letter grades.
@@ -58,7 +62,6 @@ export interface Student {
 }
 
 export interface StudentData {
-
   id: string;
 
   name: string;

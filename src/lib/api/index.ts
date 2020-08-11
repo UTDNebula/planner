@@ -4,8 +4,8 @@ import 'firebase/firestore';
 import { initFirebase } from '../firebase-init';
 import firebaseConfig from '../../firebase-config';
 import { CoursePlan } from '../types';
-import { Course } from "../../store/catalog/types";
-import { Student, Schedule, StudentData } from "../../store/user/types";
+import { Course } from '../../store/catalog/types';
+import { Student, Schedule, StudentData } from '../../store/user/types';
 
 initFirebase(firebaseConfig);
 
@@ -23,7 +23,7 @@ const COLLECTION_STUDENTS = 'students';
  * Retrieves schedule data.
  *
  * @param {string} scheduleId The ID of the schedule to fetch
- * 
+ *
  * @return {Promise<Schedule>} The requested schedule
  */
 export async function fetchSchedule(scheduleId: string): Promise<Schedule> {
@@ -36,7 +36,6 @@ export async function fetchSchedule(scheduleId: string): Promise<Schedule> {
   }
 }
 
-
 /**
  * Download all schedules for the given user.
  *
@@ -45,9 +44,12 @@ export async function fetchSchedule(scheduleId: string): Promise<Schedule> {
 export async function fetchSchedulesForUser(userId: string): Promise<Schedule[]> {
   // TODO: Store simple schedule metadata in student.schedules ({scheduleId, name }), then fetch later based off these IDs
   try {
-    const snap = await db.collection(COLLECTION_STUDENTS).doc(userId)
-      .collection(COLLECTION_SCHEDULES).get();
-    const schedules = snap.docs.map(doc => doc.data() as Schedule);
+    const snap = await db
+      .collection(COLLECTION_STUDENTS)
+      .doc(userId)
+      .collection(COLLECTION_SCHEDULES)
+      .get();
+    const schedules = snap.docs.map((doc) => doc.data() as Schedule);
     return schedules;
   } catch (e) {
     throw e;
@@ -64,7 +66,7 @@ export async function fetchSchedulesForUser(userId: string): Promise<Schedule[]>
 export async function fetchCourses(): Promise<Course[]> {
   try {
     const snap = await db.collection(COLLECTION_COURSES).get();
-    const courses = snap.docs.map(doc => doc.data() as Course);
+    const courses = snap.docs.map((doc) => doc.data() as Course);
     return courses;
   } catch (e) {
     throw e;
@@ -79,7 +81,7 @@ export async function fetchCourses(): Promise<Course[]> {
 export async function loadCoursePlans(): Promise<CoursePlan[]> {
   try {
     const snap = await db.collection(COLLECTION_COURSE_PLAN).get();
-    const coursePlans = snap.docs.map(doc => doc.data() as CoursePlan);
+    const coursePlans = snap.docs.map((doc) => doc.data() as CoursePlan);
     return coursePlans;
   } catch (e) {
     throw e;
@@ -88,7 +90,7 @@ export async function loadCoursePlans(): Promise<CoursePlan[]> {
 
 /**
  * Fetches student data from the database.
- * 
+ *
  * @param {string} id The email of the user
  *
  * @return {Student} The student with the given ID
@@ -105,7 +107,7 @@ export async function fetchStudent(id: string): Promise<Student> {
 
 /**
  * Fetches student data from the database.
- * 
+ *
  * @param {string} id The email of the user
  *
  * @return {Student} The student with the given ID
@@ -118,7 +120,7 @@ export async function fetchStudentData(id: string): Promise<StudentData> {
       throw new Error('Student data is undefined.');
     }
     const schedulesSnap = await db.collection(`${COLLECTION_STUDENTS}/${id}/schedules`).get();
-    const schedulesData = schedulesSnap.docs.map(doc => doc.data() as Schedule);
+    const schedulesData = schedulesSnap.docs.map((doc) => doc.data() as Schedule);
     const student: StudentData = {
       id: studentData['id'],
       name: studentData['name'],
@@ -142,9 +144,13 @@ export async function fetchStudentData(id: string): Promise<StudentData> {
  */
 export async function fetchUserSchedules(userId: string): Promise<Schedule[]> {
   try {
-    const snap = await db.collection(COLLECTION_STUDENTS).doc(userId)
-      .collection(COLLECTION_SCHEDULES).get();
-    const schedules = snap.docs.map(doc => doc.data() as Schedule);
+    // const snap = await db
+    //   .collection(COLLECTION_STUDENTS)
+    //   .doc(userId)
+    //   .collection(COLLECTION_SCHEDULES)
+    //   .get();
+    // const schedules = snap.docs.map((doc) => doc.data() as Schedule);
+    const schedules: Schedule[] = [];
     return schedules;
   } catch (e) {
     throw e;
@@ -156,8 +162,12 @@ export async function fetchUserSchedules(userId: string): Promise<Schedule[]> {
  */
 export async function deleteSchedule(userId: string, scheduleId: string): Promise<void> {
   try {
-    await db.collection(COLLECTION_STUDENTS).doc(userId)
-      .collection(COLLECTION_SCHEDULES).doc(scheduleId).delete();
+    await db
+      .collection(COLLECTION_STUDENTS)
+      .doc(userId)
+      .collection(COLLECTION_SCHEDULES)
+      .doc(scheduleId)
+      .delete();
   } catch (e) {
     throw e;
   }
