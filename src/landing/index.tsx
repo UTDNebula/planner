@@ -54,20 +54,14 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
     letterSpacing: '0.25px',
     wordSpacing: '1.5px',
-    // '&:hover': {
-    //   backgroundColor: '#F4F4F4',
-    // },
   },
   button: {
     width: 216,
     display: 'block',
     borderRadius: 4,
     margin: '8px',
-    fontSize: '14px',
     fontWeight: 'bold',
-    letterSpacing: '-0.25px',
     padding: 8,
-    wordSpacing: '1px',
   },
   description: {
     fontSize: '16px',
@@ -76,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function LandingPage() {
+function LandingPage(): JSX.Element {
   const classes = useStyles();
 
   return (
@@ -146,3 +140,5 @@ export default function LandingPage() {
     </div>
   );
 }
+
+export default LandingPage;
