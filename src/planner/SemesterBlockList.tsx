@@ -18,36 +18,20 @@ type CourseMovementCallback = (start: string, end: string, courseInstanceId: str
 /**
  * Component properties for a {@link ScheduleBlockList}.
  */
-interface SemesterBlockListProps extends SemesterBlockListReduxProps {
-  semesters: ScheduleSemester[];
+interface SemesterBlockListProps {
+  semesters: { [key: string]: ScheduleSemester };
   enabled: boolean;
   onSemesterMoved: SemesterMovementCallback;
   onCourseMoved: CourseMovementCallback;
 }
 
-class SemesterBlockList extends React.Component<SemesterBlockListProps> {
-  public render(): React.ReactNode {
-    const semesters = this.props.semesters.map((semester) => (
-      <SemesterBlock key={semester.term} semester={semester} enabled={this.props.enabled} />
-    ));
-    // TODO: Show buttons to add semesters (like summer semester) between existing blocks.
-    return <main className="semester-block-list">{semesters}</main>;
-  }
+function SemesterBlockList(props: SemesterBlockListProps): JSX.Element {
+  const { semesters, enabled, onCourseMoved, onSemesterMoved } = props;
+  const displayedSemesters = Object.values(semesters).map((semester) => (
+    <SemesterBlock key={semester.term} semester={semester} enabled={enabled} />
+  ));
+  // TODO: Show buttons to add semesters (like summer semester) between existing blocks.
+  return <main className="semester-block-list">{displayedSemesters}</main>;
 }
 
-const mapStateToProps = (state: RootState) => {
-  return {};
-};
-
-const mapDispatch = {};
-
-const connector = connect(mapStateToProps, mapDispatch);
-
-/**
- * The type container for injected by react-redux.
- */
-type SemesterBlockListReduxProps = ConnectedProps<typeof connector>;
-
-const ConnectedSemesterBlockList = connector(SemesterBlockList);
-
-export default ConnectedSemesterBlockList;
+export default SemesterBlockList;

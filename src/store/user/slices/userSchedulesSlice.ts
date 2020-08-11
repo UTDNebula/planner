@@ -1,8 +1,21 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 import { Schedule } from '../types';
 import { storeSchedule } from '../../../lib/storage';
+import { addScheduleToUser } from '../thunks';
 
-const initialState: Schedule[] = [];
+interface SchedulesState {
+  data: {
+    [key: string]: Schedule;
+  };
+  status: 'idle' | 'loading' | 'error';
+  error: null | Error;
+}
+
+const initialState: SchedulesState = {
+  data: {},
+  status: 'idle',
+  error: null,
+};
 
 const schedulesSlice = createSlice({
   name: 'schedules',
@@ -11,28 +24,41 @@ const schedulesSlice = createSlice({
     addSchedule(state, action: { payload: { userId: string; schedule: Schedule } }) {
       const { userId, schedule } = action.payload;
       storeSchedule(userId, schedule);
-      if (state.findIndex((existingSchedule) => existingSchedule.id === schedule.id) !== -1) {
-        return;
-      }
-      state.push(schedule);
+      state.data[schedule.id] = schedule;
     },
     updateSchedule(state, action: { payload: { id: string; schedule: Schedule } }) {
-      const schedule = action.payload.schedule;
-      console.log('Schedule updated in store');
-      console.log(schedule);
-      const index = state.findIndex((oldSchedule) => oldSchedule.id === action.payload.id);
-      state[index] = action.payload.schedule;
+      const { id, schedule } = action.payload;
+      state.data[id] = schedule;
     },
     deleteSchedule(state, action) {
       const scheduleId = action.payload;
-      Object.assign(
-        state,
-        state.filter((schedule) => schedule.id !== scheduleId),
-      );
+      delete state.data[scheduleId];
     },
+    deleteAllSchedules(state) {
+      state.data = {};
+    },
+  },
+  extraReducers: (builder) => {
+    // builder.addCase(addScheduleToUser.fulfilled, (state, action) => {
+    //   const schedule = action.payload as Schedule;
+    //   state.data[schedule.id] = schedule;
+    // });
+    // builder.addCase(addScheduleToUser.rejected, (state, action) => {
+    //   // state.error = action.error;
+    //   // TODO: Mark error
+    //   state.error = {
+    //     name: 'AddScheduleError',
+    //     message: 'Error when adding schedule to user',
+    //   };
+    // });
   },
 });
 
-export const { addSchedule, updateSchedule, deleteSchedule } = schedulesSlice.actions;
+export const {
+  addSchedule,
+  updateSchedule,
+  deleteSchedule,
+  deleteAllSchedules,
+} = schedulesSlice.actions;
 
 export default schedulesSlice.reducer;

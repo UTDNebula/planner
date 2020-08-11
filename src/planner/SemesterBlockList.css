@@ -1,10 +1,10 @@
 .semester-block-list {
-  /* display: grid; */
+  display: grid;
   padding: 16px;
-  /* grid-gap: calc(16px / 2); */
+  grid-gap: calc(16px / 2);
   /* TODO: Use JSS for responsive padding */
-  /* grid-template-columns: repeat(12, calc(50% - 48px)); */
-  /* grid-auto-flow: column; */
+  grid-template-columns: repeat(12, calc(50% - 48px));
+  grid-auto-flow: column;
   
   overflow-x: scroll;
   scroll-snap-type: x proximity;

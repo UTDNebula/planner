@@ -18,14 +18,16 @@ interface PlanRequirementBlockProps {
  */
 export default function PlanRequirementBlock(props: PlanRequirementBlockProps): JSX.Element {
   const [collapsed, setCollapsed] = useState(false);
-  const courses = props.requirement.courses.map((course, index) => {
-    return <CourseCard key={course.id} index={index} course={course} enabled={props.enabled} />;
+  const { requirement, enabled } = props;
+  const courses = requirement.courses.map((course, index) => {
+    return <CourseCard key={course.id} index={index} course={course} enabled={enabled} />;
     // TODO: Handle index offset due to position in plan requirement list
   });
   return (
-    <div>
-      <Typography variant="h6">{props.requirement.name}</Typography>
-      <List>{courses}</List>
-    </div>
+    <>{courses}</>
+    // <div>
+    //   {/* The following line prevents react-beautiful-dnd from working properly. */}
+    //   {/* <Typography variant="h6">{props.requirement.name}</Typography> */}
+    // </div>
   );
 }

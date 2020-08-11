@@ -1,245 +1,284 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { RouteComponentProps, withRouter, NavLink } from 'react-router-dom';
-import { DragDropContext, DragStart, DragUpdate, DraggableLocation } from 'react-beautiful-dnd';
-import { ScheduleSemester, PlanRequirement } from '../lib/types';
+import { Typography } from '@material-ui/core';
+import { useSelector, useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import {
+  DragDropContext,
+  DraggableLocation,
+  DropResult,
+} from 'react-beautiful-dnd';
+import { ScheduleSemester, PlanRequirement, CoursePlan } from '../lib/types';
 import { Schedule } from '../store/user/types';
 import { Course } from '../store/catalog/types';
-import { AppState } from '../store';
-import { loadSchedule } from '../store/planner/thunks';
-import { saveSchedule } from '../store/planner/slices/openScheduleSlice';
-import { loadRequirements as loadScheduleRequirements } from '../store/user/thunks';
-import { pushAction, popAction } from '../store/planner/slices/plannerActionSlice';
-import { PlannerActionType } from '../store/planner/types';
-import CourseSourceSidebar, { SIDEBAR_DROPPABLE_ID } from './sidebar/CourseSourceSidebar';
-import SemesterBlock from './SemesterBlock';
+import { RootState } from '../store/reducers';
 import {
-  SchedulerHeader,
-  SemesterListWrapper,
-  GrowContainer,
-  PlannerWindow,
-  Wrapper,
-} from './SchedulePlannerStyle';
+  loadRequirements,
+  refreshSchedules,
+} from '../store/user/thunks';
+import { AppDispatch } from '../store';
+import { pushAction, popAction } from '../store/planner/slices/plannerActionSlice';
+import CourseSourceSidebar, { SIDEBAR_DROPPABLE_ID } from './sidebar/CourseSourceSidebar';
+import SemesterBlockList from './SemesterBlockList';
+import SchedulePlannerAppBar from './toolbar/SchedulePlannerAppBar';
+import { GrowContainer, PlannerWindow, Wrapper } from './SchedulePlannerStyle';
+import { fetchSchedule } from '../lib/api';
+import { storeSchedule } from '../lib/storage';
+import sampleDegreePlan from '../data/sample_degree_plan.json';
+import { generateSemesters } from './utils';
+import './SchedulePlanner.css';
 
 interface SchedulePlannerRouteInfo {
   id: string;
   part: string;
 }
 
-interface SchedulePlannerProps extends RouteComponentProps<SchedulePlannerRouteInfo> {
-  loadSchedule: Function;
-  saveSchedule: Function;
-  loadRequirements: Function;
-  pushAction: Function;
-  popAction: Function;
-}
-
-/**
- * Properties for a schedule planner's state.
- */
-interface SchedulePlannerState {
-  /**
-   * The currently open schedule.
-   */
-  schedule: Schedule | undefined;
-  requirements: Array<PlanRequirement>;
-}
-
 /**
  * A dashboard to plan out schedules.
  */
-class SchedulePlanner extends React.Component<SchedulePlannerProps, SchedulePlannerState> {
-  constructor(props: SchedulePlannerProps) {
-    super(props);
-    this.state = {
-      schedule: undefined,
-      requirements: [],
+function SchedulePlanner(): JSX.Element {
+  // Data
+  const [activeSchedule, setActiveSchedule] = React.useState<Schedule | null>(null);
+  const [planRequirements, setPlanRequirements] = React.useState<PlanRequirement[]>([]);
+  const [semesters, setSemesters] = React.useState<{ [key: string]: ScheduleSemester }>({});
+
+  const { schedules, requirements, user } = useSelector((state: RootState) => ({
+    schedules: state.schedules,
+    requirements: state.requirements, // Catalog requirements
+    user: state.user.data,
+  }));
+
+  // "Actual" state
+  const [inEditMode, setInEditMode] = React.useState(true);
+  const [loading, setLoading] = React.useState(false); // Component-wide loading status
+  const [showError, setShowError] = React.useState(false);
+  const [message, setMessage] = React.useState('Something went wrong.'); // Snackbar-like message
+
+  const { scheduleId } = useParams<{ scheduleId: string }>();
+
+  const dispatch = useDispatch<AppDispatch>();
+
+  React.useEffect(() => {
+    console.log('Refreshing schedules');
+    dispatch(refreshSchedules(user.id));
+  }, [user]);
+
+  React.useEffect(() => {
+    // TODO: Fix store to prevent the absurd amount of state updates
+    console.log('Reloading schedules');
+    console.log('New ID ' + scheduleId);
+    if (scheduleId in schedules.data) {
+      const schedule = { ...schedules.data[scheduleId] };
+      console.log('Schedule loaded from store');
+      if (schedule.semesters.length === 0) {
+        const semesters: { [key: string]: ScheduleSemester } = {};
+        for (const semester of generateSemesters()) {
+          semesters[semester.term] = semester;
+        }
+        setSemesters(semesters);
+      }
+      console.log('Updated schedule');
+      console.log(schedule);
+      setActiveSchedule(schedule);
+    } else {
+      console.log('Could not find schedule in store.');
+      // TODO: Show snackbar message
+    }
+  }, [scheduleId, schedules]);
+
+  function normalize<T extends { id: string }>(objects: T[]) {
+    const normalized: { [id: string]: T } = {};
+    for (const object of objects) {
+      normalized[object.id] = object;
+    }
+    return normalized;
+  }
+
+  function denormalize<T>(objects: { [key: string]: T }) {
+    return Object.values(objects);
+  }
+
+  function moveItem<T>(
+    source: Array<T>,
+    destination: Array<T>,
+    droppableSource: DraggableLocation,
+    droppableDestination: DraggableLocation,
+  ) {
+    const clonedSource = Array.from(source);
+    const clonedDestination = Array.from(destination);
+    const [removed] = clonedSource.splice(droppableSource.index, 1);
+
+    clonedDestination.splice(droppableDestination.index, 0, removed);
+
+    return {
+      [droppableSource.droppableId]: clonedSource,
+      [droppableDestination.droppableId]: clonedDestination,
     };
   }
 
-  public async componentDidMount() {
-    try {
-      // TODO: Show loading animation
-      const schedule = await this.props.loadSchedule({
-        scheduleId: this.scheduleId,
-      });
-      console.log(schedule);
-      this.setState({
-        ...this.state,
-        schedule,
-      });
-    } catch (e) {
-      console.error(e);
-    }
+  function reorder<T>(list: T[], startIndex: number, endIndex: number) {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+    return result;
   }
 
-  /**
-   * True if the schedule is open for modification.
-   */
-  get inSchedulingMode(): boolean {
-    return this.props.match.params.part === 'plan';
-  }
-
-  /**
-   * The unique identifier of the currently open schedule.
-   *
-   * If none is open, this will be undefined.
-   */
-  get scheduleId(): string {
-    return this.props.match.params.id;
-  }
-
-  /**
-   * Shortcut accessor property for the semesters of the currently open schedule.
-   */
-  get semesters(): Array<ScheduleSemester> {
-    // return this.state.openSchedule.semesters;
-    const schedule = this.state.schedule;
-    if (schedule) {
-      return schedule.semesters;
-    }
-    return [];
-  }
-
-  private onDragStart(start: DragStart) {
-    //contains the index of the card's home when dragging
-    // const num: number = this.state.variable.columnOrder.indexOf(start.source.droppableId);
-    //checks if card's home is the mainlist or within semester boards
-    // const indexHome: number = (start.source.droppableId === 'courselist')
-    //   ? 13
-    //   : num;
-  }
-
-  private moveCourse(
+  const moveCourseFromSidebarToSemester = (
+    destinationId: string,
     source: DraggableLocation,
     destination: DraggableLocation,
-    draggableId: string,
-  ) {
-    const newSemesters = this.semesters;
-    // Remove course from source semester
-    const sourceIndex = this.semesters.findIndex(
-      (semester) => semester.term === source.droppableId,
-    );
-    const sourceSemester = this.semesters[sourceIndex];
-    const updatedSourceCourses = sourceSemester.courses.filter(
-      (course) => course.id !== draggableId,
-    );
-    newSemesters[sourceIndex] = {
-      term: sourceSemester.term,
-      courses: updatedSourceCourses,
-    };
-    // Add course to destination semester
-    const destinationIndex = this.semesters.findIndex(
-      (semester) => semester.term === destination.droppableId,
-    );
-    const destinationSemester = this.semesters[destinationIndex];
-    const courseToAdd = sourceSemester.courses.find(
-      (course) => course.id === draggableId,
-    ) as Course;
-    destinationSemester.courses.push(courseToAdd);
-    newSemesters[destinationIndex] = destinationSemester;
-    this.updateSchedule(newSemesters);
-    this.props.pushAction({
-      operation: PlannerActionType.MOVE,
-      data: {
-        course: courseToAdd,
-        semesterStart: source.droppableId,
-        semesterEnd: destination.droppableId,
+  ) => {
+    // TODO: Remove from sidebar
+    const sidebarCourses = [];
+    // const requirements = [];
+    // setPlanRequirements(requirements);
+    // TODO: Replace with semesters-like ID indexing
+
+    const courses: Course[] = [];
+    for (const semester of planRequirements) {
+      courses.push(...semester.courses);
+      // Probably inefficient; find a way to do this in-place
+    }
+
+    const destinationSemester = semesters[destinationId];
+    const destinationCourses = Array.from(destinationSemester.courses);
+    // TODO: There's probably a code smell here by not cloning the requirement courses
+    const [removed] = courses.splice(source.index, 1);
+
+    destinationCourses.splice(destination.index, 0, removed);
+    const updatedSemesters = {
+      ...semesters,
+      [destinationId]: {
+        ...destinationSemester,
+        courses: destinationCourses,
       },
-    });
-  }
+    };
+    setSemesters(updatedSemesters);
+  };
 
-  private updateSchedule(newSemesters: ScheduleSemester[]) {
-    // this.setState({
-    //   openSchedule: {
-    //     ...this.state.openSchedule,
-    //     semesters: newSemesters,
-    //   },
-    // });
-  }
+  const onDragStart = () => {
+    // Temporarily hide headers to avoid drag and drop side-effects
+    // TODO: Fix header/card overlap when dragging card
+  };
 
-  private onDragEnd = (result: DragUpdate) => {
-    const { source, destination, draggableId } = result;
-    console.log(result);
-
-    // Handle drops outside list
+  /**
+   * Handle movement of courses when drag and drop action ends.
+   */
+  const onDragEnd = (result: DropResult) => {
+    const { source, destination } = result;
     if (!destination) {
-      return; // no-op
+      return; // Item has been dropped outside of list
     }
 
-    if (destination.droppableId === SIDEBAR_DROPPABLE_ID) {
-      // TODO: Delete the course from the schedule, update sidebar state
-      return;
-    }
+    const sourceId = source.droppableId; // The semester/sidebar ID
+    const destinationId = destination.droppableId; // The semester/sidebar ID
 
-    // Handle drops inside list
-    if (source.droppableId === destination.droppableId) {
-      // Source is the same list
-      // Reorder? No-op for now
-      return;
-    }
-
-    // Handle drops between lists
-    if (source.droppableId !== destination.droppableId) {
-      this.moveCourse(source, destination, draggableId);
-      return;
+    // Handle dragging from sidebar
+    if (sourceId === SIDEBAR_DROPPABLE_ID) {
+      moveCourseFromSidebarToSemester(destinationId, source, destination);
+    } else {
+      if (destinationId === SIDEBAR_DROPPABLE_ID) {
+        // Dragging from semesters to sidebar, no-op
+        // TODO: Handle deletion logic
+        return;
+      }
+      // It's being dropped from a semester
+      if (destinationId === sourceId) {
+        // It' just a reordering
+        const semester = semesters[sourceId];
+        const newCourses = reorder(semester.courses, source.index, destination.index);
+        const newSemesters = { ...semesters };
+        newSemesters[sourceId].courses = newCourses;
+        setSemesters(newSemesters);
+      } else {
+        // Actually move something
+        const sourceCourses = semesters[sourceId].courses;
+        const destinationCourses = semesters[destinationId].courses;
+        const result = moveItem(sourceCourses, destinationCourses, source, destination);
+        const movedSource = result[sourceId];
+        const movedDestination = result[destinationId];
+        const newSemesters = {
+          ...semesters,
+          [sourceId]: {
+            ...semesters[sourceId],
+            courses: movedSource,
+          },
+          [destinationId]: {
+            ...semesters[destinationId],
+            courses: movedDestination,
+          },
+        };
+        setSemesters(newSemesters);
+      }
     }
   };
 
-  public render() {
-    const semesters = this.semesters?.map((semester) => (
-      <SemesterBlock key={semester.term} semester={semester} enabled={this.inSchedulingMode} />
-    ));
-    return (
-      <Wrapper>
-        {/* TODO: Refractor SchedulerHeader into separate component */}
-        <SchedulerHeader>
-          {JSON.stringify(this.state.schedule)}
-          {this.state.schedule ? this.state.schedule.name : 'Open a schedule'} | In scheduling mode:{' '}
-          {this.inSchedulingMode ? 'Yes' : 'No'} | Current schedule ID: {this.scheduleId}
-          <NavLink
-            to={
-              this.inSchedulingMode
-                ? `/schedules/${this.scheduleId}`
-                : `/schedules/${this.scheduleId}/plan`
-            }
-          >
-            {this.inSchedulingMode ? 'Switch to Viewing' : 'Switch to Planning'}
-          </NavLink>
-        </SchedulerHeader>
-        <GrowContainer>
-          <DragDropContext onDragStart={this.onDragStart} onDragEnd={this.onDragEnd}>
-            <PlannerWindow>
-              <CourseSourceSidebar
-                requirements={this.state.requirements}
-                enabled={this.inSchedulingMode}
-              />
-              <SemesterListWrapper>{semesters}</SemesterListWrapper>
-            </PlannerWindow>
-          </DragDropContext>
-        </GrowContainer>
-      </Wrapper>
-    );
-  }
+  const handleToggleEdit = (shouldEdit: boolean) => {
+    setInEditMode(shouldEdit);
+  };
+
+  const handleScheduleSave = () => {
+    // TODO: Use higher-level API to save based on currently active user
+    if (!activeSchedule) {
+      console.warn('Save triggered but no schedule is loaded.');
+      return;
+    }
+    const denormalizedSemesters = Object.values(semesters).map((semester) => semester);
+    const savedSchedule = { ...activeSchedule, semesters: denormalizedSemesters };
+    storeSchedule(user.id, savedSchedule);
+    console.debug(`Schedule ${savedSchedule.id} saved.`);
+  };
+
+  const onSemesterMoved = (start: string, end: string, semesterId: string) => {};
+
+  const onCourseMoved = (start: string, end: string, courseId: string) => {};
+
+  const loadSampleDegreePlan = () => {
+    const coursePlan = sampleDegreePlan as CoursePlan;
+    setPlanRequirements(coursePlan.requirements);
+    console.log('Degree plan loaded');
+    // TODO: Calculate difference between expected catalog requirements and courses in schedule
+    // planRequirements = catalogRequirements - activeSchedule.sources
+  };
+
+  // Generate the selected courses
+  React.useEffect(
+    () => {
+      // TODO: Load sample degree plan based on chosen majors/minors
+      loadSampleDegreePlan();
+    },
+    [
+      /* TODO: Add planRequirements */
+    ],
+  );
+
+  const body = activeSchedule ? (
+    <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
+      <PlannerWindow>
+        <CourseSourceSidebar requirements={planRequirements} enabled={inEditMode} />
+        <SemesterBlockList
+          onSemesterMoved={onSemesterMoved}
+          onCourseMoved={onCourseMoved}
+          enabled={inEditMode}
+          semesters={semesters}
+        />
+      </PlannerWindow>
+    </DragDropContext>
+  ) : (
+    <div className="schedule-planner--empty">
+      <Typography variant="h5">Open a schedule to get started!</Typography>
+    </div>
+  );
+  const name = activeSchedule ? activeSchedule.name : 'Schedule Planner';
+  return (
+    <Wrapper>
+      <SchedulePlannerAppBar
+        title={name}
+        onToggleEdit={handleToggleEdit}
+        onTriggerSave={handleScheduleSave}
+      />
+      <GrowContainer>{body}</GrowContainer>
+    </Wrapper>
+  );
 }
 
-const mapStateToProps = (state: AppState) => {
-  return {
-    courses: state.courses,
-    // schedule: state.openSchedule,
-  };
-};
-
-const mapDispatch = {
-  loadSchedule: loadSchedule,
-  saveSchedule: saveSchedule,
-  loadRequirements: loadScheduleRequirements,
-  pushAction,
-  popAction,
-};
-
-const connector = connect(mapStateToProps, mapDispatch);
-
-const ConnectedSchedulePlanner = connector(SchedulePlanner);
-
-export default withRouter(ConnectedSchedulePlanner);
+export default SchedulePlanner;

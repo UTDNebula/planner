@@ -13,8 +13,9 @@ if (process.env.NODE_ENV === 'development' && module.hot) {
   });
 }
 
+/**
+ * The data type for the app store dispatcher.
+ */
 export type AppDispatch = typeof store.dispatch;
-
-export type AppState = ReturnType<typeof rootReducer>;
 
 export default store;
