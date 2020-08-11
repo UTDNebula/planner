@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { fetchUserById } from '../thunks';
 import { StudentData } from '../types';
 
-interface UserMetadataSliceState {
+export interface UserMetadataSliceState {
   data: StudentData;
   loading: 'idle' | 'pending' | 'succeeded' | 'failed';
   error: { e: Error } | null;
@@ -48,13 +48,13 @@ const userMetadataSlice = createSlice({
       state.data = initialState.data;
     },
   },
-  // extraReducers: (builder) => {
-  //   builder.addCase(fetchUserById.fulfilled, (state, { payload }) => {
-  //     state.data = payload;
-  //     // TODO: Account for extra properties
-  //   });
-  //   builder.addCase(fetchUserById.rejected, (state, { payload }) => {});
-  // },
+  extraReducers: (builder) => {
+    // builder.addCase(fetchUserById.fulfilled, (state, { payload }) => {
+    //   state.data = payload;
+    //   // TODO: Account for extra properties
+    // });
+    // builder.addCase(fetchUserById.rejected, (state, { payload }) => {});
+  },
 });
 
 const { actions, reducer } = userMetadataSlice;

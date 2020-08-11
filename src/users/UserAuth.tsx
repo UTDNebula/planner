@@ -1,10 +1,9 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import { useTheme } from 'styled-components';
 import { useAuth0 } from '@auth0/auth0-react';
 import { StudentData } from '../store/user/types';
-import { AppState } from '../store';
+import { RootState } from '../store/reducers';
 import { updateStudentData } from '../store/user/thunks';
 
 const useStyles = makeStyles((theme) => ({

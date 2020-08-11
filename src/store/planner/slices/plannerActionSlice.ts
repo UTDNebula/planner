@@ -23,13 +23,10 @@ const plannerActionSlice = createSlice({
     },
     popAction(state, action) {
       state.actions.pop();
-    }
-  }
+    },
+  },
 });
 
-export const {
-  pushAction,
-  popAction,
-} = plannerActionSlice.actions;
+export const { pushAction, popAction } = plannerActionSlice.actions;
 
 export default plannerActionSlice.reducer;

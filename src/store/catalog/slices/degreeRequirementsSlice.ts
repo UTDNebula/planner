@@ -5,19 +5,14 @@ import { createSlice } from '@reduxjs/toolkit';
  */
 const degreeRequirementsSlice = createSlice({
   name: 'user',
-  initialState: {
-  },
+  initialState: {},
   reducers: {
     /**
      * Load the degree requirements for a particular degree plan.
      */
-    loadRequirement(state, action) {
-
-    },
+    loadRequirement(state, action) {},
   },
-  extraReducers: {
-
-  },
+  extraReducers: {},
 });
 
 export default degreeRequirementsSlice.reducer;

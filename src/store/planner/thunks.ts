@@ -1,37 +1,39 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { Schedule } from "../user/types";
-import { AppDispatch, AppState } from '..';
-import { updateSchedule } from "./slices/openScheduleSlice";
-import { fetchSchedule } from "../../lib/api";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { Schedule } from '../user/types';
+import { AppDispatch } from '..';
+import { RootState } from '../reducers';
+import { updateSchedule } from './slices/openScheduleSlice';
+import { fetchSchedule } from '../../lib/api';
 
 interface LoadScheduleParams {
   scheduleId: string;
 }
 
+/**
+ * Retreive a schedule from the local storage.
+ *
+ * If the schedule cannot be found, then this attempts to fetch it from the
+ * database. If it doesn't exist there, then an error is created.
+ */
 export const loadSchedule = createAsyncThunk<
   Schedule,
   LoadScheduleParams,
   {
-    dispatch: AppDispatch,
-    state: AppState,
+    dispatch: AppDispatch;
+    state: RootState;
   }
->(
-  'users/loadSchedule',
-  async (params: LoadScheduleParams, { dispatch, getState }) => {
-    const schedules = getState().schedules;
-    const scheduleIndex = schedules.findIndex(schedule => (
-      schedule.id === params.scheduleId));
-    if (scheduleIndex !== -1) { // Schedule already in schedules
-      dispatch(updateSchedule(schedules[scheduleIndex]));
-      return schedules[scheduleIndex];
-    }
+>('users/loadSchedule', async (params: LoadScheduleParams, { dispatch, getState }) => {
+  const schedules = getState().schedules.data;
+  const { scheduleId } = params;
+  try {
+    const schedule = schedules[scheduleId];
+    return schedule;
+  } catch (e) {
     try {
-      const schedule = await fetchSchedule(params.scheduleId);
-      // TODO: Dispatch adding schedule to current schedules
-      return schedule;
+      const schedule = await fetchSchedule(scheduleId);
     } catch (e) {
-      console.error(e);
       throw e;
     }
+    throw e;
   }
-);
+});

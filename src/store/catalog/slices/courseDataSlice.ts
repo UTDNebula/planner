@@ -8,16 +8,12 @@ const courseDataSlice = createSlice({
   initialState: initialState,
   reducers: {
     /**
-     * 
-     * @param state 
-     * @param action 
+     *
+     * @param state
+     * @param action
      */
-    addCourse(state, action) {
-
-    },
-    signOut(state, action) {
-
-    },
+    addCourse(state, action) {},
+    signOut(state, action) {},
   },
   extraReducers: (builder) => {
     // builder.addCase()
