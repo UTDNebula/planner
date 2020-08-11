@@ -5,6 +5,7 @@
   "dependencies": {
     "@auth0/auth0-react": "^1.0.0",
     "@material-ui/core": "^4.10.2",
+    "@reduxjs/toolkit": "^1.4.0",
     "@material-ui/icons": "^4.9.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -61,12 +62,16 @@
     "@types/react-redux": "^7.1.9",
     "@types/react-router-dom": "^5.1.5",
     "@types/styled-components": "^5.1.0",
+    "@types/webpack-env": "^1.15.2",
     "@typescript-eslint/eslint-plugin": "^3.4.0",
     "@typescript-eslint/parser": "^3.4.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.20.3",
+    "eslint-plugin-react-hooks": "^4.0.8",
     "prettier": "^2.0.5",
     "redux-devtools": "^3.5.0",
+    "typesafe-actions": "^5.1.0",
     "typescript": "^3.9.6"
   }
 }
