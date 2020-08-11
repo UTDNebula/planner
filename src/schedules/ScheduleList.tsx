@@ -7,7 +7,7 @@ import ScheduleListItem, {
 
 interface ScheduleListProps {
   schedules: Array<Schedule>;
-  onScheduleDeleted: ScheduleDeletionCallback;
+  onScheduleDeleted?: ScheduleDeletionCallback;
   onScheduleSelected?: ScheduleSelectionCallback;
 }
 
@@ -16,12 +16,14 @@ interface ScheduleListProps {
  *
  * @param {object} props
  */
-class ScheduleList extends React.Component<ScheduleListProps> {
-  public render(): React.ReactNode {
-    return this.props.schedules.map((schedule: Schedule) => (
-      <ScheduleListItem key={schedule.id} schedule={schedule}></ScheduleListItem>
-    ));
-  }
+function ScheduleList(props: ScheduleListProps): JSX.Element {
+  return (
+    <div>
+      {props.schedules.map((schedule: Schedule) => (
+        <ScheduleListItem key={schedule.id} schedule={schedule} {...props} />
+      ))}
+    </div>
+  );
 }
 
 export default ScheduleList;
