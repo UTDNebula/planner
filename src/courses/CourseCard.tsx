@@ -1,11 +1,7 @@
 import React from 'react';
-import { MuiThemeProvider } from '@material-ui/core/styles';
-import { Draggable, DraggableProvided, DraggableStateSnapshot } from 'react-beautiful-dnd';
-import Card from '@material-ui/core/Card';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { theme } from '../styling';
+import { Card, Typography, IconButton, makeStyles } from '@material-ui/core';
+// import MoreVertIcon from '@material-ui/icons/MoreVert';
+import { Draggable, DraggableProvided } from 'react-beautiful-dnd';
 import { Course } from '../store/catalog/types';
 
 /**
@@ -28,65 +24,44 @@ interface CourseCardProps {
   enabled: boolean;
 }
 
-/**
- * Component state for a {@link CourseCard}.
- */
-interface CourseCardState {
-  /**
-   * True if this card should show more information.
-   */
-  expanded: boolean;
-}
+const useStyles = makeStyles(() => ({
+  courseCode: {
+    fontWeight: 'bold',
+  },
+}));
 
 /**
  * A draggable card that contains course information.
  */
-export default class CourseCard extends React.Component<CourseCardProps, CourseCardState> {
-  constructor(props: CourseCardProps) {
-    super(props);
-    this.state = {
-      expanded: false,
-    };
-  }
+function CourseCard(props: CourseCardProps): JSX.Element {
+  const classes = useStyles();
+  const { index, course, enabled } = props;
 
   /**
-   * Returns a formatted course code.
-   *
-   * Example: CS 1200
+   * True if this card should show more information.
    */
-  private get courseCode() {
-    const course = this.props.course;
-    return `${course.subject} ${course.suffix}`;
-  }
+  const [expanded, setExpanded] = React.useState(false);
 
-  public render(): React.ReactNode {
-    return (
-      <MuiThemeProvider theme={theme}>
-        <Draggable
-          draggableId={this.props.course.id}
-          index={this.props.index}
-          key={this.props.course.id}
-          isDragDisabled={!this.props.enabled}
-        >
-          {(provided: DraggableProvided, _: DraggableStateSnapshot) => (
-            <Card
-              ref={provided.innerRef}
-              {...provided.draggableProps}
-              {...provided.dragHandleProps}
-            >
-              <div>
-                <Typography>
-                  {this.courseCode}
-                  <IconButton aria-label="settings">
-                    <MoreVertIcon />
-                  </IconButton>
-                </Typography>
-                <div>{this.props.course.fullName}</div>
-              </div>
-            </Card>
-          )}
-        </Draggable>
-      </MuiThemeProvider>
-    );
-  }
+  const courseCode = `${course.subject} ${course.suffix}`;
+
+  return (
+    <Draggable draggableId={course.id} index={index} key={course.id} isDragDisabled={!enabled}>
+      {(provided: DraggableProvided) => (
+        <Card ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+          <div className="course-card--header">
+            <Typography variant="overline" className={classes.courseCode}>
+              {courseCode}
+            </Typography>
+            <Typography variant="h6">{course.fullName}</Typography>
+          </div>
+          {/* TODO: Re-enable options button with appropriate styling */}
+          {/* <IconButton aria-label="options">
+            <MoreVertIcon />
+          </IconButton> */}
+        </Card>
+      )}
+    </Draggable>
+  );
 }
+
+export default CourseCard;
