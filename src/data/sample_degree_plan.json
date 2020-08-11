@@ -1,0 +1,140 @@
+{
+  "name": "Computer Science",
+  "type": "Bachelor of Science",
+  "category": "major",
+  "requirements": [
+    {
+      "name": "Communication",
+      "courses": [
+        {
+          "id": "1001",
+          "fullName": "Rhetoric",
+          "offered": [
+            "f", "s", "u"
+          ],
+          "description": "This course presents an integrated approach to writing, reading, and critical thinking by developing the grammatical, logical, and rhetorical skills necessary for university writing.",
+          "subject": "RHET",
+          "suffix": "1302"
+        },
+        {
+          "id": "1002",
+          "fullName": "Professional and Technical Communication",
+          "offered": [
+            "f", "s", "u"
+          ],
+          "description": "Expands students' professional and team communication skills and strategies in technical contexts. Integrates writing, speaking and group communication by developing and presenting technical information to different audiences. Written assignments focus on creating professional technical documents, such as proposals, memos, abstracts, reports and letters. Presentation assignments emphasize planning, preparing and delivering dynamic, informative and persuasive presentations. Attendance at first class mandatory.",
+          "subject": "ECS",
+          "suffix": "3390",
+          "prerequisites": [
+            {
+              "1001": "C"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Mathematics",
+      "courses": [
+        {
+          "id": "1003",
+          "fullName": "Differential Calculus",
+          "offered": [
+            "f", "s", "u"
+          ],
+          "description": "Course covers topics in differential calculus of functions of one variable; topics include limits, continuity, derivative, chain rule, implicit differentiation, mean value theorem, maxima and minima, curve sketching, derivatives of inverse trigonometric functions, antiderivative, substitution method, and applications.",
+          "subject": "MATH",
+          "suffix": "2413"
+        }
+      ]
+    },
+    {
+      "name": "Life and Physical Sciences",
+      "courses": [
+        {
+          "id": "1004",
+          "fullName": "Mechanics",
+          "offered": [
+            "f", "s", "u"
+          ],
+          "description": "Calculus based. Basic physics including a study of space and time, kinematics, forces, energy and momentum, conservation laws, rotational motion, torques, and harmonic oscillation.",
+          "subject": "PHYS",
+          "suffix": "2325",
+          "prerequisites": [
+            {
+              "1003": "C"
+            }
+          ],
+          "corequisites": [
+            {
+              "2000": ""
+            }
+          ]
+        },
+        {
+          "id": "1005",
+          "fullName": "Electromagnetism and Waves",
+          "offered": [
+            "f", "s", "u"
+          ],
+          "description": "Continuation of PHYS 2325. Topics include electrostatics and electromagnetics, electric field and potential, electric currents, magnetic fields, laws of Coulomb, Ampere, and Faraday, Maxwell's theory of wave propagation.",
+          "subject": "PHYS",
+          "suffix": "2326",
+          "prerequisites": [
+            {
+              "5003": "C"
+            },
+            {
+              "1004": "C"
+            }
+          ],
+          "corequisites": [
+            {
+              "2001": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Language, Philosophy and Culture",
+      "courses": []
+    },
+    {
+      "name": "Creative Arts",
+      "courses": []
+    },
+    {
+      "name": "American History",
+      "courses": []
+    },
+    {
+      "name": "Government/Political Science",
+      "courses": []
+    },
+    {
+      "name": "Social and Behavioral Sciences",
+      "courses": []
+    },
+    {
+      "name": "Component Area Option",
+      "courses": []
+    },
+    {
+      "name": "Major Preparatory Courses",
+      "courses": []
+    },
+    {
+      "name": "Major Core Courses",
+      "courses": []
+    },
+    {
+      "name": "Major Guided Electives",
+      "courses": []
+    },
+    {
+      "name": "Free Electives",
+      "courses": []
+    }
+  ]
+}

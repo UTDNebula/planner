@@ -1,9 +1,10 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import { useTheme } from 'styled-components';
-import { useAuth0 } from "@auth0/auth0-react";
-import {getUserData} from "../schedules/actions";
+import { useAuth0 } from '@auth0/auth0-react';
+import { StudentData } from '../store/user/types';
+import { RootState } from '../store/reducers';
+import { updateStudentData } from '../store/user/thunks';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -28,28 +29,48 @@ export default function UserAuth() {
       returnTo: window.location.origin,
     });
 
-  function AddDataToFirestore() {
-    //add user to database here if not already exist
-    
-    console.log("added to database with id", user.sub);
-    return (<></>);
-  };
+  function SaveUser() {
+    const student: StudentData = {
+      id: user.sub,
+      name: '',
+      startTerm: '2020f',
+      endTerm: '2024f',
+      classification: 'fr',
+      attemptedCreditHours: 0,
+      gpa: 0,
+      attemptedCourses: [],
+      requirements: [],
+    };
+    updateStudentData(student);
+    console.log('added to database with id', user.sub);
+    return <></>;
+  }
 
   return (
-        <div>
-            {!isAuthenticated && (
-            <Button variant="contained" className={classes.button} color="secondary" onClick={() => loginWithRedirect()}>
-                Sign in with account
-            </Button>
-            )}
-            {isAuthenticated && (
-            <>
-                <AddDataToFirestore/>
-                <Button variant="contained" className={classes.button} color="secondary" onClick={() => logout()}>
-                Sign out
-                </Button>
-            </>
-            )}
-        </div>
-    );
+    <div>
+      {!isAuthenticated && (
+        <Button
+          variant="contained"
+          className={classes.button}
+          color="secondary"
+          onClick={() => loginWithRedirect()}
+        >
+          Sign in with account
+        </Button>
+      )}
+      {isAuthenticated && (
+        <>
+          <SaveUser />
+          <Button
+            variant="contained"
+            className={classes.button}
+            color="secondary"
+            onClick={() => logout()}
+          >
+            Sign out
+          </Button>
+        </>
+      )}
+    </div>
+  );
 }

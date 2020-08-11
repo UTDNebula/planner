@@ -1,0 +1,20 @@
+.semester-block-list {
+  display: grid;
+  padding: 16px;
+  grid-gap: calc(16px / 2);
+  /* TODO: Use JSS for responsive padding */
+  grid-template-columns: repeat(12, calc(50% - 48px));
+  grid-auto-flow: column;
+  
+  overflow-x: scroll;
+  scroll-snap-type: x proximity;
+  /* TODO: Create custom Material Design scrollbar */
+}
+
+.semester-block-list > * {
+  /* scroll-snap-align: center; */
+  display: inline-block;
+  flex-direction: column;
+  background: #f5f5f5;
+  border-radius: 4px;
+}

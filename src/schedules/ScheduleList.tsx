@@ -1,29 +1,29 @@
 import React from 'react';
-import { Schedule } from '../lib/types';
-import { Link } from 'react-router-dom';
+import { Schedule } from '../store/user/types';
+import ScheduleListItem, {
+  ScheduleDeletionCallback,
+  ScheduleSelectionCallback,
+} from './ScheduleListItem';
 
 interface ScheduleListProps {
   schedules: Array<Schedule>;
+  onScheduleDeleted?: ScheduleDeletionCallback;
+  onScheduleSelected?: ScheduleSelectionCallback;
 }
 
 /**
  * A list of schedule info.
  *
- * @param {object} props 
+ * @param {object} props
  */
-class ScheduleList extends React.Component<ScheduleListProps> {
-  render() {
-    return this.props.schedules.map((schedule: Schedule) => (
-      <div key={schedule.id}>
-        <h2>
-          <Link to={`/schedules/${schedule.id}`}>
-            Schedule Name: {schedule.name}
-          </Link>
-        </h2>
-        <div>Schedule ID: {schedule.id}</div>
-      </div>
-    ));
-  }
+function ScheduleList(props: ScheduleListProps): JSX.Element {
+  return (
+    <div>
+      {props.schedules.map((schedule: Schedule) => (
+        <ScheduleListItem key={schedule.id} schedule={schedule} {...props} />
+      ))}
+    </div>
+  );
 }
 
 export default ScheduleList;
