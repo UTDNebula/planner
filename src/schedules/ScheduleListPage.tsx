@@ -62,8 +62,9 @@ function SchedulesHome(): JSX.Element {
           semesters: [],
         },
       }),
-    );
-    history.push(`/schedules/${scheduleId}`);
+    ).then(() => {
+      history.push(`/schedules/${scheduleId}`);
+    });
   };
 
   const handleDelete = (scheduleId: string) => {

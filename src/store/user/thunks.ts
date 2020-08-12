@@ -29,6 +29,7 @@ export const addScheduleToUser = createAsyncThunk(
       console.log('New schedule');
       console.log(schedule);
       await uploadSchedule(userId, schedule);
+      dispatch(addSchedule({ userId, schedule }));
     } catch (e) {
       console.error(e);
       throw e;
