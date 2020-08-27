@@ -91,7 +91,7 @@ export async function loadCoursePlans(): Promise<CoursePlan[]> {
 /**
  * Fetches student data from the database.
  *
- * @param {string} id The email of the user
+ * @param {string} id The unique id of the user from Auth0
  *
  * @return {Student} The student with the given ID
  */
@@ -100,6 +100,24 @@ export async function fetchStudent(id: string): Promise<Student> {
     const doc = await db.doc(`${COLLECTION_STUDENTS}/${id}`).get();
     const student = doc.data() as Student;
     return student;
+  } catch (e) {
+    throw e;
+  }
+}
+
+/**
+ * Fetches student data from the database.
+ *
+ * @param {StudentData} id The student that has to be added to firestore
+ *
+ * @return {Student} The student with the given ID
+ */
+export async function uploadStudent(user: StudentData): Promise<void> {
+  try {
+    const doc = await db.collection(`${COLLECTION_STUDENTS}`).doc(`${user.id}`).set(user);
+    //const student = doc.user() as Student;
+    // const student = doc;
+    // return student;
   } catch (e) {
     throw e;
   }

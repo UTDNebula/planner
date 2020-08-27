@@ -5,7 +5,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { StudentData } from '../store/user/types';
 import { RootState } from '../store/reducers';
 import { updateStudentData } from '../store/user/thunks';
-import { fetchStudent } from '../lib/api/index';
+import { fetchStudent, uploadStudent } from '../lib/api/index';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -26,8 +26,8 @@ export default function UserAuth() {
   const { user, isAuthenticated, loginWithRedirect, logout } = useAuth0();
 
   if (isAuthenticated) {
-    SaveUserToLocalStorage();
-    SaveUserToFirebase();
+    const student = SaveUserToLocalStorage();
+    SaveUserToFirebase(student);
   }
 
   const logoutWithRedirect = () =>
@@ -49,12 +49,18 @@ export default function UserAuth() {
     };
     console.log(student);
     updateStudentData(student);
+    return student;
   }
 
-  async function SaveUserToFirebase() {
-    const response = await fetchStudent(user.sub);
-    console.log(response);
-    console.log('added to database with id', user.sub);
+  async function SaveUserToFirebase(user: StudentData) {
+    const response = await fetchStudent(user.id);
+    if (!response) {
+      await uploadStudent(user);
+      console.log('added to database with id', user.id);
+    } else {
+      console.log('user already exists');
+      console.log(response);
+    }
   }
 
   return (
