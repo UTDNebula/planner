@@ -17,7 +17,7 @@ const COLLECTION_COURSES = 'courses';
 
 const COLLECTION_COURSE_PLAN = 'coursePlans';
 
-const COLLECTION_STUDENTS = 'students';
+const COLLECTION_STUDENTS = 'users';
 
 /**
  * Retrieves schedule data.
