@@ -38,7 +38,9 @@ export default function UserAuth() {
   function SaveUserToLocalStorage() {
     const student: StudentData = {
       id: user.sub,
-      name: '',
+      name: user.name,
+      email: user.email,
+      picture: user.picture,
       startTerm: '2020f',
       endTerm: '2024f',
       classification: 'fr',
@@ -47,7 +49,7 @@ export default function UserAuth() {
       attemptedCourses: [],
       requirements: [],
     };
-    console.log(student);
+    console.log(user);
     updateStudentData(student);
     return student;
   }

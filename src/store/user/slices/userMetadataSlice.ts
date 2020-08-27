@@ -12,6 +12,8 @@ const initialState: UserMetadataSliceState = {
   data: {
     id: 'test',
     name: '',
+    email: '',
+    picture: '',
     startTerm: '2020f',
     endTerm: '2024f', // TODO: get generator function
     classification: 'fr',

@@ -142,6 +142,8 @@ export async function fetchStudentData(id: string): Promise<StudentData> {
     const student: StudentData = {
       id: studentData['id'],
       name: studentData['name'],
+      email: studentData['email'],
+      picture: studentData['picture'],
       startTerm: studentData['startTerm'],
       endTerm: studentData['endTerm'],
       classification: studentData['classification'],

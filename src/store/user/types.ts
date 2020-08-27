@@ -76,6 +76,10 @@ export interface StudentData {
 
   gpa: number;
 
+  email: string;
+
+  picture: string;
+
   attemptedCourses: CourseAttempt[];
 
   requirements: PlanRequirement[];
