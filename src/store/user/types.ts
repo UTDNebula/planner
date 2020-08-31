@@ -45,6 +45,11 @@ export interface Student {
   gpa: number;
 
   /**
+   * The curl for user's profile picture.
+   */
+  picture: string;
+
+  /**
    * All a student's course attempts and letter grades.
    * /students/:id/attempts
    */
@@ -75,8 +80,6 @@ export interface StudentData {
   attemptedCreditHours: number;
 
   gpa: number;
-
-  email: string;
 
   picture: string;
 
