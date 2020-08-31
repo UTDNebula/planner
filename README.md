@@ -88,7 +88,7 @@ Here is the process to make changes to the project:
 
 ## Questions
 
-Sometimes you may have questions regarding the development of this product. If the answer was not found in this readme please feel free to reach out to the development officers at ([development@acmutd.co](mailto:development@acmutd.co).
+Sometimes you may have questions regarding the development of this product. If the answer was not found in this readme please feel free to reach out to the development officers at [development@acmutd.co](mailto:development@acmutd.co).
 
 We request that you be as detailed as possible in your questions, doubts or concerns to ensure that we can be of maximum assistance. Thank you!
 
