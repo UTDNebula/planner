@@ -13,10 +13,10 @@ Planning coursework poses a challenge for many.
 From choosing the right professors to knowing when to take a class, schedule planning is the bane
 of any college student.
 
-UTD students have access to tools like UTD grades and Rate My Professors to help them pick classes
-for a specific semeester, but there hasn't been a solution that allows a student to say, "I want
-to major in CS, minor in psychology, and do a few internships before grad school. Generate a plan
-lets me do all of that with the professors I want."
+UTD students have access to tools like [UTD Grades](https://utdgrades.com) and Rate My Professors 
+to help them pick classes for a specific semeester, but there hasn't been a solution that allows
+a student to say, "I want to major in CS, minor in psychology, and do a few internships before
+grad school. Generate a plan lets me do all of that with the professors I want."
 
 Until now, that is.
 
@@ -75,10 +75,16 @@ Here is the process to make changes to the project:
 4. Request a review from a project contributor, and add the pull request to a project board and milestone (if applicable)
 5. When a review is complete, a contributor will squash merge the feature branch into `dev`. The feature branch can then be deleted.
 
-## Current Contributors
+### Contributors
+**Current:**
 - [Willie Chalmers III](https://www.linkedin.com/in/willie-chalmers-iii/)
 - [Sunny Guan](https://www.linkedin.com/in/sunny-guan)
 - [Saloni Shivdasani](https://www.linkedin.com/in/saloni-s/)
+
+**Past:**
+- [Aliah Shaira De Guzman](https://www.linkedin.com/in/aliahdg/)
+- [Aishani De Sirkar](https://www.linkedin.com/in/aishani-de-sirkar-9222a7170/)
+- [Medha Aiyah](https://www.linkedin.com/in/medha-aiyah/)
 
 ## Questions
 
