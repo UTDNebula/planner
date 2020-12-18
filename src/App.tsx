@@ -1,34 +1,30 @@
-import React, { ReactElement } from 'react';
-import { RouteComponentProps, Switch, Route, withRouter } from 'react-router-dom';
-import { ThemeProvider } from '@material-ui/core';
-import LandingPage from './landing';
-import SchedulePlanner from './planner/SchedulePlanner';
-import ScheduleListPage from './schedules/ScheduleListPage';
-import { theme } from './styling';
+import React from 'react';
+import {
+  BrowserRouter as Router, Route, Switch
+} from 'react-router-dom';
 import './App.css';
+import Home from './features/home/Home';
+import { AuthProvider } from './features/auth/auth-context';
 
-/**
- * The root component for the Comet Planning app.
- */
-class App extends React.Component<RouteComponentProps> {
-  public render(): ReactElement {
-    return (
-      <ThemeProvider theme={theme}>
-        <Switch>
-          <Route path="/schedules/:scheduleId/:part?">
-            <SchedulePlanner />
-          </Route>
-          <Route path="/schedules">
-            <ScheduleListPage />
-          </Route>
-          <Route path="/auth">{/* TODO: Handle sign-in */}</Route>
-          <Route path="/">
-            <LandingPage></LandingPage>
-          </Route>
-        </Switch>
-      </ThemeProvider>
-    );
-  }
+
+function App() {
+
+  return (
+    <AuthProvider>
+      <Router>
+        <div>
+          <Switch>
+            <Route exact path="/">
+              <Home></Home>
+            </Route>
+            <Route path="/plans/:planId">
+
+            </Route>
+          </Switch>
+        </div>
+      </Router>
+    </AuthProvider>
+  );
 }
 
-export default withRouter(App);
+export default App;
