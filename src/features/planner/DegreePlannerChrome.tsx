@@ -26,7 +26,7 @@ export default function DegreePlannerChrome(props: DegreePlannerChromeProps) {
         {title}
       </div>
     );
-  }));
+  });
 
   return (
     <div>
