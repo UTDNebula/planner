@@ -13,7 +13,9 @@ function App() {
   const [toolbarTitle, setToolbarTitle] = React.useState('Comet Planning');
 
   // TODO: Use context here
-  setToolbarTitle('Comet Planning | Home');
+  React.useEffect(() => {
+    setToolbarTitle('Comet Planning | Home');
+  });
 
   return (
     <AuthProvider>
