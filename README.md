@@ -1,6 +1,8 @@
 # Comet Planning
 *Comet Planning is a tool for planning out students' college experience*
 
+![Deploy to Firebase Hosting on merge](https://github.com/acmutd/comet-planning/workflows/Deploy%20to%20Firebase%20Hosting%20on%20merge/badge.svg?branch=chore%2Ffront-rewrite)
+
 ## Overview
 Comet Planning allows students to plan out including coursework, co-curricular activities
 like studying abroad and research, and extracurricular involvement in student organizations.
