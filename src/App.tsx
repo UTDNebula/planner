@@ -15,7 +15,7 @@ function App() {
   // TODO: Use context here
   React.useEffect(() => {
     setToolbarTitle('Comet Planning | Home');
-  });
+  }, []);
 
   return (
     <AuthProvider>
