@@ -3,7 +3,7 @@ import { AppBar, IconButton, makeStyles, Toolbar, Typography } from '@material-u
 import MenuIcon from '@material-ui/icons/Menu';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import ProfileIcon from './ProfileIcon';
-import { AuthContext, useAuthContext } from '../../auth/auth-context';
+import { useAuthContext } from '../../auth/auth-context';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,7 +54,7 @@ export default function AppToolbar(props: AppToolbarProps) {
   };
 
   const handleBackButtonClick = () => {
-
+    setInDetail(false);
   };
 
   const leftButtonIcon = inDetail

@@ -5,20 +5,27 @@ import {
 import './App.css';
 import Home from './features/home/Home';
 import { AuthProvider } from './features/auth/auth-context';
+import DegreePlannerChrome from './features/planner/DegreePlannerChrome';
+import AppToolbar from './features/common/toolbar/AppToolbar';
 
 
 function App() {
+  const [toolbarTitle, setToolbarTitle] = React.useState('Comet Planning');
+
+  // TODO: Use context here
+  setToolbarTitle('Comet Planning | Home');
 
   return (
     <AuthProvider>
       <Router>
         <div>
+          <AppToolbar shouldShowProfile={true} title={toolbarTitle} />
           <Switch>
             <Route exact path="/">
               <Home></Home>
             </Route>
             <Route path="/plans/:planId">
-
+              <DegreePlannerChrome />
             </Route>
           </Switch>
         </div>
