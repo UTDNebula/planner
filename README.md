@@ -36,11 +36,19 @@ This project requires a working [Node.js](https://nodejs.org/en/) and NPM instal
 To start, clone the repository, and then run `npm start` to launch a local development server
 at [`localhost:3000`](https://localhost:3000) by default.
 
-```bash
+```shell script
 git clone https://github.com/acmutd/comet-planning
 cd comet-planning
 git checkout dev
+npm install
 npm start
+```
+
+### Using Storybook
+Storybook is a tool for building UI components. More information [here](https://storybook.js.org/).
+
+```shell script
+npm run storybook
 ```
 
 ### Initializing Firebase

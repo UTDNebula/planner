@@ -27,7 +27,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy:demo": "react-scripts build && firebase hosting:channel:deploy demo"
+    "deploy:demo": "react-scripts build && firebase hosting:channel:deploy demo",
+    "storybook": "start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook -s public"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -45,6 +47,12 @@
     ]
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^6.1.11",
+    "@storybook/addon-essentials": "^6.1.11",
+    "@storybook/addon-links": "^6.1.11",
+    "@storybook/node-logger": "^6.1.11",
+    "@storybook/preset-create-react-app": "^3.1.5",
+    "@storybook/react": "^6.1.11",
     "@types/react-beautiful-dnd": "^13.0.0",
     "@types/react-router-dom": "^5.1.6",
     "firebase-tools": "^9.0.1"
