@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core';
-import { DragDropContext } from 'react-beautiful-dnd';
+import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { useParams } from 'react-router-dom';
 import SemesterBlock from './SemesterBlock';
 import SemesterNavigationDrawer from './SemesterNavigationDrawer';
@@ -98,6 +98,8 @@ const START_YEAR = 2020;
 
 const START_SEMESTER = SemesterCode.f;
 
+
+
 /**
  * The root degree planner editor component.
  */
@@ -113,6 +115,43 @@ export default function DegreePlannerChrome(props: DegreePlannerChromeProps) {
   const [recentSemesterData, setRecentSemesterData] = React.useState<RecentSemester>({
     year: START_YEAR, semester: START_SEMESTER
   });
+
+  function onDragEnd({ destination, source, draggableId }: DropResult) {
+    if (!destination) {
+      return;
+    }
+
+    if (destination.droppableId === source.droppableId && destination.index === source.index) {
+      return;
+    }
+
+    const sourceColumn = plannerColumns[source.droppableId];
+    const newSourceCourseIds = Array.from(sourceColumn.courseIds);
+    newSourceCourseIds.splice(source.index, 1);
+    newSourceCourseIds.splice(destination.index, 0, draggableId);
+    
+    const newSourceColumn = {
+      ...sourceColumn,
+      courseIds: newSourceCourseIds,
+    };
+    
+    // const destinationColumn = plannerColumns[destination.droppableId];
+    // const newDestinationCourseIds = Array.from(destinationColumn.courseIds);
+    // newDestinationCourseIds.splice(destination.index, 0, draggableId);
+    // // newDestinationCourseIds.splice(destination.index, 0, draggableId);
+
+    // const newDesintationColumn = {
+    //   ...destinationColumn,
+    //   courseIds: newDestinationCourseIds,
+    // };
+
+    const newColumns = {
+      ...plannerColumns,
+      [newSourceColumn.code]: newSourceColumn,
+      // [newDesintationColumn.code]: newDesintationColumn,
+    };
+    setPlannerColumns(newColumns);
+  }
 
   /**
    * Generate metadata for adding a new semester.
@@ -279,7 +318,7 @@ export default function DegreePlannerChrome(props: DegreePlannerChromeProps) {
 
     setPlannerColumns(newColumns);
     setColumnOrder(newColumnOrder);
-  
+
     // TODO: Fix this obviously smelly bit of code. Should just be "updateSemesterData"
     const updatedData = getUpdatedSemesterData();
     setRecentSemesterData(updatedData);
@@ -348,7 +387,7 @@ export default function DegreePlannerChrome(props: DegreePlannerChromeProps) {
     <div className={classes.root}>
       <SemesterNavigationDrawer semesters={navSemesterData} onSelection={handleSemesterSelection} />
       <DragDropContext
-        onDragEnd={() => { }}
+        onDragEnd={onDragEnd}
         onDragStart={() => { }}>
         <div className={classes.semesterListContainer}>
           <div className={classes.semesterList}>
