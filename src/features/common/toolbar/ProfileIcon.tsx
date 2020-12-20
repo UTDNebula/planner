@@ -25,6 +25,7 @@ export default function ProfileIcon(props: ProfileIconProps) {
 
   const handleClose = () => {
     setProfileAnchor(null);
+    setDialogIsOpen(false);
   };
 
   const handleProfileClick = () => {
