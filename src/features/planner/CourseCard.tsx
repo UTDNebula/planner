@@ -15,13 +15,9 @@ interface CourseCardProps {
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
-    minWidth: 368,
-    maxWidth: 368,
-  },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+    padding: 2,
   },
   courseTitle: {
     fontSize: 12,

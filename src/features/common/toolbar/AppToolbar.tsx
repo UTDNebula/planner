@@ -1,13 +1,13 @@
 import React from 'react';
-import { AppBar, IconButton, makeStyles, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, IconButton, makeStyles, createStyles, Toolbar, Typography } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import ProfileIcon from './ProfileIcon';
 import { useAuthContext } from '../../auth/auth-context';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => createStyles({
   root: {
-    flexGrow: 1,
+    zIndex: theme.zIndex.drawer + 1,
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -66,7 +66,7 @@ export default function AppToolbar(props: AppToolbarProps) {
     );
 
   return (
-    <AppBar position="static">
+    <AppBar position="fixed" className={classes.root}>
       <Toolbar>
         <IconButton
           className={classes.menuButton}

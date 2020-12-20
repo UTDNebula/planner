@@ -20,8 +20,8 @@ export default function Home() {
   return (
     <div>
       <div className={classes.root}>
-        <HomePlanBlock />
         <HomeUserAnnouncementsBlock />
+        <HomePlanBlock />
       </div>
     </div>
   );

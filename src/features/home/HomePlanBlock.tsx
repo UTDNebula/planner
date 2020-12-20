@@ -25,7 +25,7 @@ export default function HomePlanBlock() {
         <div>
           <Typography variant="subtitle1">This semester</Typography>
           <div>
-            <Button color="primary" component={Link} to="/plan">Start planning</Button>
+            <Button color="primary" component={Link} to="/plans/new">Start planning</Button>
           </div>
         </div>
         <div>
