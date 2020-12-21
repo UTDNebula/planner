@@ -5,21 +5,13 @@ import { useParams } from 'react-router-dom';
 import SemesterBlock from './SemesterBlock';
 import SemesterNavigationDrawer from './SemesterNavigationDrawer';
 import AddSemesterTrigger from './AddSemesterTrigger';
+import { convertSemesterToData } from '../common/data-utils';
+import { SemesterCode, StudentPlan, Course, SEMESTER_CODE_MAPPINGS, createSamplePlan } from '../../app/data';
 
-export interface Course {
-  id: string;
-  title: string;
-  catalogCode: string;
-  description: string;
-}
-
-/**
- * Backing data type for a SemesterBlock.
- */
-export interface Semester {
+interface SemesterColumn {
   title: string;
   code: string;
-  courses: Course[];
+  courseIds: string[];
 }
 
 /**
@@ -60,34 +52,6 @@ const useStyles = (columnCount: number) => makeStyles((theme: Theme) => createSt
 }))();
 
 
-interface StudentPlan {
-  id: string;
-  title: string;
-  major: string;
-  semesters: Semester[];
-}
-
-interface SemesterColumn {
-  title: string;
-  code: string;
-  courseIds: string[];
-}
-
-enum SemesterCode {
-  'f' = 0,
-  's' = 1,
-  'u' = 2,
-}
-
-/**
- * A mapping of {@link SemesterCode}s to human-readable titles.
- */
-const SEMESTER_CODE_MAPPINGS = {
-  [SemesterCode.f]: 'Fall',
-  [SemesterCode.s]: 'Spring',
-  [SemesterCode.u]: 'Summer',
-};
-
 interface RecentSemester {
   year: number;
   semester: SemesterCode;
@@ -97,8 +61,6 @@ interface RecentSemester {
 const START_YEAR = 2020;
 
 const START_SEMESTER = SemesterCode.f;
-
-
 
 /**
  * The root degree planner editor component.
@@ -218,66 +180,19 @@ export default function DegreePlannerChrome(props: DegreePlannerChromeProps) {
     };
   }
 
-  function generateCourses(amount: number = 5): Course[] {
-    const courses = [];
-    for (let i = 0; i < amount; ++i) {
-      const id = Math.floor(Math.random() * (5000 - 1000) + 1000);
-      courses.push({
-        id: id.toString(),
-        title: 'A course with a code.',
-        catalogCode: `CS ${id}`,
-        description: 'Just another course. What can we say?',
-      });
-    }
-    return courses;
-  }
-
   const { planId } = useParams<AppParams>();
 
   React.useEffect(() => {
-
-    function loadPlan(planId: string): StudentPlan {
-      function generateSemesters(amount: number = 4, onlyLong: boolean = true): Semester[] {
-        const result = [];
-        let semester = START_SEMESTER;
-        let year = START_YEAR;
-        for (let i = 0; i < amount; ++i) {
-          const code = `${year}${semester}`;
-          const newSemester = {
-            title: `${year} ${SEMESTER_CODE_MAPPINGS[semester]}`,
-            code: code,
-            courses: generateCourses(),
-          };
-          result.push(newSemester);
-          if (semester === SemesterCode.f) {
-            year = year + 1;
-            semester = SemesterCode.s;
-          } else { // Semester code is either spring or summer
-            if (onlyLong || semester === SemesterCode.s) {
-              semester = SemesterCode.f;
-            } else {
-              semester = SemesterCode.u;
-            }
-          }
-        }
-        setRecentSemesterData({
-          year,
-          semester,
-        });
-        return result;
-      }
-
-      const plan = {
-        id: planId,
-        title: 'Test plan',
-        major: 'Computer Science',
-        semesters: generateSemesters(),
-      };
-      return plan;
-    }
-
     // Load plan into memory, prepare for modification
-    const loadedPlan = loadPlan(planId);
+    const loadedPlan = createSamplePlan(planId);
+
+    const lastSemesterCode = loadedPlan.semesters[loadedPlan.semesters.length - 1].code;
+    const lastSemesterData = convertSemesterToData(lastSemesterCode);
+    setRecentSemesterData({
+      year: lastSemesterData.year,
+      semester: lastSemesterData.semester,
+    });
+
     console.log('Loaded plan');
     const { semesterBlocks, courses, columnOrder } = convertPlanToBlocks(loadedPlan);
     setStudentPlan(loadedPlan);
