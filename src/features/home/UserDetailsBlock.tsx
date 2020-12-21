@@ -73,6 +73,8 @@ export default function UserDetailsBlock(props: UserDetailsBlockProps) {
 
   const { year: startingYear, semester: startingSemester } = convertSemesterToData(start);
 
+    console.log('Starting year: ' + startingYear + ', starting semester: ' + startingSemester);
+
   const classes = useStyles();
 
   return (
