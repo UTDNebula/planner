@@ -184,7 +184,7 @@ export default function DegreePlannerChrome(props: DegreePlannerChromeProps) {
 
   React.useEffect(() => {
     // Load plan into memory, prepare for modification
-    const loadedPlan = createSamplePlan(planId);
+    const loadedPlan = createSamplePlan(4, planId);
 
     const lastSemesterCode = loadedPlan.semesters[loadedPlan.semesters.length - 1].code;
     const lastSemesterData = convertSemesterToData(lastSemesterCode);

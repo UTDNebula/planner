@@ -67,20 +67,20 @@ export function generateCourses(amount: number = 5): Course[] {
 /**
  * Generate a test degree plan with sample values.
  *
- * @param planId A sample plan ID, "test-plan" by default
+ * @param semesterCount The number of semesters to generate, 4 by default
  * @param startYear The first semester to create courses, 2020 by default
  * @param startSemester The first semester to create courses, f by default
  * @param title A descriptor for this plan, "My degree plan" by default
  * @param major A name for this plan's major of study, "Computer Science" by default
- * @param semesterCount The number of semesters to generate, 4 by default
+ * @param planId A sample plan ID, "test-plan" by default
  */
 export function createSamplePlan(
-  planId: string = 'test-plan',
-  startYear: number = 2020,
-  startSemester: SemesterCode = SemesterCode.f,
-  title: string = 'My degree plan',
-  major: string = 'Computer Science',
-  semesterCount: number = 4,
+  semesterCount = 4,
+  planId = 'test-plan',
+  startYear = 2020,
+  startSemester = SemesterCode.f,
+  title = 'My degree plan',
+  major = 'Computer Science',
 ): StudentPlan {
 
   function generateSemesters(onlyLong: boolean = true): Semester[] {
