@@ -8,14 +8,21 @@ import { store } from './app/store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(
+const rootElement = document.getElementById('root');
+
+const tree = (
   <React.StrictMode>
     <Provider store={store}>
       <App />
     </Provider>
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 );
+
+if (rootElement?.hasChildNodes()) {
+  ReactDOM.hydrate(tree, rootElement);
+} else {
+  ReactDOM.render(tree, rootElement);
+}
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
