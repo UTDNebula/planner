@@ -1,7 +1,7 @@
 import React from 'react';
 import { DragDropContext, SensorAPI } from 'react-beautiful-dnd';
 import { Button, createStyles, makeStyles, Theme } from '@material-ui/core';
-import { createSamplePlan, SemesterCode, StudentPlan } from '../../app/data';
+import { createSamplePlan, StudentPlan } from '../../app/data';
 import SemesterBlockList from '../planner/SemesterBlockList';
 import LandingToolbar from './LandingToolbar';
 import { Link as RouterLink } from 'react-router-dom';
