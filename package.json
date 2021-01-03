@@ -29,7 +29,6 @@
     "typescript": "^3.8.3"
   },
   "scripts": {
-    "postbuild": "react-snap",
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
