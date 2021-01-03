@@ -90,7 +90,7 @@ export function createSamplePlan(
     for (let i = 0; i < semesterCount; ++i) {
       const code = `${year}${semester}`;
       const newSemester = {
-        title: `${year} ${SEMESTER_CODE_MAPPINGS[semester]}`,
+        title: `${SEMESTER_CODE_MAPPINGS[semester]} ${year} `,
         code: code,
         courses: generateCourses(),
       };
