@@ -81,7 +81,7 @@ export default function LandingPage() {
               variant="contained"
               color="primary"
               component={RouterLink}
-              to="/app/plan/demo" >
+              to="/app" >
               Try a demo
             </Button>
             <noscript>
