@@ -43,19 +43,17 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
-    maxWidth: 360,
+    maxWidth: 480,
   },
   bullet: {
     display: 'inline-block',
     margin: '0 2px',
     transform: 'scale(0.8)',
   },
-  semesterHeaderIcon: {
-    padding: theme.spacing(1),
-  },
   semesterHeader: {
     display: 'flex',
     marginBottom: theme.spacing(1),
+    height: 48,
   },
   semesterHeaderTitle: {
     flex: 1,
@@ -64,7 +62,9 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     fontSize: theme.typography.h6.fontSize,
   },
   dragIndicator: {
-    margin: theme.spacing(1),
+    // TODO: Find out why the styling for this looks off
+    marginTop: theme.spacing(1),
+    marginLeft: theme.spacing(1),
   },
   courseTitle: {
     fontSize: 12,
@@ -124,7 +124,7 @@ export default function SemesterBlock(props: SemesterBlockProps) {
     setOptionsMenuShowing(false);
   };
 
-  const blockContents = displayOnly
+  const blockContents = displayOnly === true
     ? (
       <div>
         {courses.map(({ id, catalogCode, title, description }) => {
@@ -139,7 +139,7 @@ export default function SemesterBlock(props: SemesterBlockProps) {
     )
     : (
       <Droppable droppableId={semesterCode}>
-        {(provided) =>
+        {(provided) => (
           <div ref={provided.innerRef} {...provided.droppableProps}>
             {courses.map(({ id, catalogCode, title, description }, index) => {
               return (
@@ -153,7 +153,7 @@ export default function SemesterBlock(props: SemesterBlockProps) {
             })}
             {provided.placeholder}
           </div>
-        }
+        )}
       </Droppable>
     );
 
@@ -169,15 +169,17 @@ export default function SemesterBlock(props: SemesterBlockProps) {
         <Typography variant="h6" className={classes.semesterHeaderTitle}>
           {semesterTitle}
         </Typography>
-        <IconButton
-          aria-label="Semester options"
-          aria-controls="menu-appbar"
-          aria-haspopup="true"
-          hidden={!showOptions}
-          disabled={!showOptions}
-          onClick={handleHeaderOptionsClick}>
-          <MoreVert />
-        </IconButton>
+        {!displayOnly && (
+          <IconButton
+            aria-label="Semester options"
+            aria-controls="menu-appbar"
+            aria-haspopup="true"
+            hidden={!showOptions}
+            disabled={displayOnly}
+            onClick={handleHeaderOptionsClick}>
+            <MoreVert />
+          </IconButton>
+        )}
         <Menu
           id="menu-semester-options"
           anchorEl={optionsMenuAnchor}
