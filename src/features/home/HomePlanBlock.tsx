@@ -77,7 +77,7 @@ export default function HomePlanBlock() {
     <section className={classes.root}>
       <header className={classes.header}>
         <Typography variant="h5">Your current plan</Typography>
-        <Button variant="contained" color="primary" component={Link} to="/plans/new">Open plan</Button>
+        <Button variant="contained" color="primary" component={Link} to="/app/plans/new">Open plan</Button>
       </header>
       <div className={classes.semesterDisplay}>
         <div className={classes.block}>

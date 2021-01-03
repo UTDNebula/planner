@@ -4,6 +4,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import ProfileIcon from './ProfileIcon';
 import { useAuthContext } from '../../auth/auth-context';
+import { Link as RouterLink, useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => createStyles({
   root: {
@@ -31,8 +32,9 @@ export default function AppToolbar(props: AppToolbarProps) {
 
   const { user, signOut, switchAccounts } = useAuthContext();
 
-  const [inDetail, setInDetail] = React.useState(false);
+  const history = useHistory();
 
+  const [inDetail, setInDetail] = React.useState(false);
 
   const determineLeftButtonLabel = () => {
     if (inDetail) { // TODO: Determine based on viewing/planning context
@@ -43,6 +45,8 @@ export default function AppToolbar(props: AppToolbarProps) {
 
   const handleSignOut = () => {
     signOut();
+    // TODO: Verify success
+    history.replace('/');
   };
 
   const handleSignIn = () => {
@@ -75,7 +79,7 @@ export default function AppToolbar(props: AppToolbarProps) {
           aria-label={determineLeftButtonLabel()}>
           {leftButtonIcon}
         </IconButton>
-        <Typography variant="h6" className={classes.title}>
+        <Typography variant="h6" className={classes.title} component={RouterLink} to="/app">
           {title}
         </Typography>
         {shouldShowProfile &&
