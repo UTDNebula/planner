@@ -13,14 +13,22 @@ interface SemesterNavigationDrawerProps {
   onSelection: (semesterCode: string) => void;
 }
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
-  root: {
-    // width: 240,
-  },
-  drawerContainer: {
-    overflow: 'auto',
-  },
-}));
+const useStyles = (drawerWidth: number = 240) => (
+  makeStyles((theme: Theme) => createStyles({
+    root: {
+      width: 240,
+    },
+    drawerContainer: {
+      overflow: 'auto',
+    },
+    drawerPaper: {
+      width: drawerWidth,
+    },
+    drawerTitle: {
+      padding: theme.spacing(2),
+    },
+  }))
+)();
 
 
 export default function SemesterNavigationDrawer(props: SemesterNavigationDrawerProps) {
@@ -37,9 +45,11 @@ export default function SemesterNavigationDrawer(props: SemesterNavigationDrawer
   const classes = useStyles();
 
   return (
-    <Drawer className={classes.root} variant="permanent">
+    <Drawer className={classes.root} variant="permanent" classes={{
+      paper: classes.drawerPaper,
+    }}>
       <Toolbar />
-      <Typography variant="caption">Semesters</Typography>
+      <Typography className={classes.drawerTitle} variant="h6">Semesters</Typography>
       <List className={classes.drawerContainer}>
         {navItems}
       </List>
