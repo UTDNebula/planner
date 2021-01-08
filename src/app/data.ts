@@ -37,6 +37,36 @@ export enum SemesterCode {
 }
 
 /**
+ * A grade received for a course, used for record-keeping.
+ */
+export type Grade = 'A+' | 'A' | 'A-' | 'B+' | 'B' | 'B-' | 'C+' | 'C' | 'C-' | 'D+' | 'D' | 'D-' | 'F' | 'CR' | 'NC' | 'P' | 'NR' | 'I';
+
+/**
+ * A value of -1 indicates the course for which the letter grade was recieved
+ * should not have its attmpted hours used in GPA calculations.
+ */
+export const GPA_MAPPINGS: { [key in Grade]: number } = {
+  'A+': 4.00,
+  'A': 4.00,
+  'A-': 3.666,
+  'B+': 3.333,
+  'B': 3.000,
+  'B-': 2.666,
+  'C+': 2.333,
+  'C': 2.000,
+  'C-': 1.333,
+  'D+': 1.000,
+  'D': 0.666,
+  'D-': 0.333,
+  'F': 0,
+  'CR': -1,
+  'NC': -1,
+  'P': -1,
+  'NR': -1,
+  'I': -1,
+};
+
+/**
  * A mapping of {@link SemesterCode}s to human-readable titles.
  */
 export const SEMESTER_CODE_MAPPINGS = {
