@@ -78,6 +78,8 @@ export default function DegreePlannerChrome(props: DegreePlannerChromeProps) {
     year: START_YEAR, semester: START_SEMESTER
   });
 
+  const [focusedSemester, setFocusedSemester] = React.useState(0);
+
   function onDragEnd({ destination, source, draggableId }: DropResult) {
     if (!destination) {
       return;
@@ -113,6 +115,15 @@ export default function DegreePlannerChrome(props: DegreePlannerChromeProps) {
       // [newDesintationColumn.code]: newDesintationColumn,
     };
     setPlannerColumns(newColumns);
+  }
+
+  /**
+   * Returns the index of the given semester, -1 if it doesn't exist.
+   */
+  function findSemester(semesterCode: string): number {
+    return studentPlan?.semesters.findIndex(semester => {
+      return semester.code === semesterCode;
+    }) ?? 0;
   }
 
   /**
@@ -202,9 +213,15 @@ export default function DegreePlannerChrome(props: DegreePlannerChromeProps) {
   }, [planId]);
 
 
+  /**
+   * Focuses on a selected semester.
+   *
+   * @param semesterCode The identifier of the selected semester
+   */
   const handleSemesterSelection = (semesterCode: string) => {
-    // TODO: Navigate to semester
     console.log('Semester selected: ' + semesterCode);
+    const semesterIndex = findSemester(semesterCode);
+    setFocusedSemester(semesterIndex);
   };
 
   const navSemesterData = columnOrder.map((semesterId) => {
@@ -298,9 +315,18 @@ export default function DegreePlannerChrome(props: DegreePlannerChromeProps) {
 
   const classes = useStyles(columnOrder.length + 1); // +1 accounts for additional AddSemesterTrigger
 
+  const handleShowSemesterInfo = (semesterId: string) => {
+    // FIXME: This definitely doesn't scale well.
+    const semesterIndex = findSemester(semesterId);
+    setFocusedSemester(semesterIndex);
+  };
+
   return (
     <div className={classes.root}>
-      <SemesterNavigationDrawer semesters={navSemesterData} onSelection={handleSemesterSelection} />
+      <SemesterNavigationDrawer
+        semesters={navSemesterData}
+        selected={focusedSemester}
+        onSelection={handleSemesterSelection} />
       <DragDropContext
         onDragEnd={onDragEnd}
         onDragStart={() => { }}>

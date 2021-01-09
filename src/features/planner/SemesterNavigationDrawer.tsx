@@ -1,18 +1,52 @@
 import {
-  makeStyles, Theme, createStyles, Drawer, List, ListItem, ListItemText, Toolbar, Typography
+  createStyles,
+  makeStyles,
+  Theme,
+  Drawer,
+  List,
+  ListItemText,
+  Toolbar,
+  Typography,
+  MenuItem,
 } from '@material-ui/core';
 import React from 'react';
 
+/**
+ * A containing type for a displayed semester item.
+ */
 interface NavDrawerSemester {
   code: string;
   title: string;
 }
 
+/**
+ * Component properties for a SemesterNavigationDrawer.
+ */
 interface SemesterNavigationDrawerProps {
+
+  /**
+   * The navigation items displayed in this drawer.
+   */
   semesters: NavDrawerSemester[];
+
+  /**
+   * The index of the currently selected navigation item.
+   */
+  selected: number;
+
+  /**
+   * A callback notified on semester navigation item selection.
+   */
   onSelection: (semesterCode: string) => void;
 }
 
+/**
+ * Create styles for a SemesterNavigationDrawer.
+ *
+ * TODO: Make responsive.
+ *
+ * @param drawerWidth The horizontal width of the drawer when rendered.
+ */
 const useStyles = (drawerWidth: number = 240) => (
   makeStyles((theme: Theme) => createStyles({
     root: {
@@ -31,14 +65,17 @@ const useStyles = (drawerWidth: number = 240) => (
 )();
 
 
+/**
+ * A navigation drawer that exposes shortcuts for quickly jumping to semesters.
+ */
 export default function SemesterNavigationDrawer(props: SemesterNavigationDrawerProps) {
-  const { semesters, onSelection } = props;
+  const { semesters, onSelection, selected } = props;
 
-  const navItems = semesters.map(({ code, title }) => {
+  const navItems = semesters.map(({ code, title }, index) => {
     return (
-      <ListItem key={code} onClick={() => { onSelection(code) }} button>
+      <MenuItem key={code} onClick={() => { onSelection(code) }} selected={selected === index} button>
         <ListItemText primary={title} />
-      </ListItem>
+      </MenuItem>
     );
   });
 
