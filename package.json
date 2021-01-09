@@ -35,7 +35,8 @@
     "eject": "craco eject",
     "deploy:demo": "craco build && firebase hosting:channel:deploy demo",
     "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -61,7 +62,18 @@
     "@storybook/react": "^6.1.11",
     "@types/react-beautiful-dnd": "^13.0.0",
     "@types/react-router-dom": "^5.1.6",
+    "@typescript-eslint/eslint-plugin": "^4.12.0",
+    "@typescript-eslint/parser": "^4.12.0",
+    "eslint": "^7.17.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "firebase-tools": "^9.0.1",
+    "prettier": "^2.2.1",
     "react-snap": "^1.23.0"
   },
   "reactSnap": {
@@ -71,6 +83,16 @@
     ],
     "exclude": [
       "/app/**"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx}": [
+      "eslint --fix"
     ]
   }
 }
