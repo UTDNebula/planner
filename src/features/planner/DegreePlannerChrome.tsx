@@ -1,8 +1,7 @@
 import React from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core';
-import { DragDropContext, DropResult } from 'react-beautiful-dnd';
-import { useParams } from 'react-router-dom';
-import SemesterBlock from './SemesterBlock';
+import { DragDropContext, DraggableLocation, DropResult } from 'react-beautiful-dnd';
+import { useHistory, useParams } from 'react-router-dom';
 import SemesterNavigationDrawer from './SemesterNavigationDrawer';
 import AddSemesterTrigger from './AddSemesterTrigger';
 import { convertSemesterToData } from '../common/data-utils';
@@ -80,41 +79,80 @@ export default function DegreePlannerChrome(props: DegreePlannerChromeProps) {
 
   const [focusedSemester, setFocusedSemester] = React.useState(0);
 
+  /**
+   * Move the item at the given start index to the given end index.
+   *
+   * @param courses The semester to reorder
+   * @param startIndex The starting index of the item to move
+   * @param endIndex The destination index of the item to move
+   */
+  function reorderSemester(courses: string[], startIndex: number, endIndex: number) {
+    const result = Array.from(courses);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+    return result;
+  }
+
+  function moveCourse<T>(
+    source: Array<T>,
+    destination: Array<T>,
+    droppableSource: DraggableLocation,
+    droppableDestination: DraggableLocation,
+  ) {
+    const clonedSource = Array.from(source);
+    const clonedDestination = Array.from(destination);
+    const [removed] = clonedSource.splice(droppableSource.index, 1);
+
+    clonedDestination.splice(droppableDestination.index, 0, removed);
+
+    return {
+      [droppableSource.droppableId]: clonedSource,
+      [droppableDestination.droppableId]: clonedDestination,
+    };
+  }
+
   function onDragEnd({ destination, source, draggableId }: DropResult) {
     if (!destination) {
       return;
     }
 
-    if (destination.droppableId === source.droppableId && destination.index === source.index) {
+    const sourceSemester = source.droppableId;
+    const destinationSemester = destination.droppableId;
+
+    if (destinationSemester === sourceSemester && destination.index === source.index) {
+      // Dragging from source to source, so no-op
       return;
     }
 
-    const sourceColumn = plannerColumns[source.droppableId];
-    const newSourceCourseIds = Array.from(sourceColumn.courseIds);
-    newSourceCourseIds.splice(source.index, 1);
-    newSourceCourseIds.splice(destination.index, 0, draggableId);
-    
-    const newSourceColumn = {
-      ...sourceColumn,
-      courseIds: newSourceCourseIds,
-    };
-    
-    // const destinationColumn = plannerColumns[destination.droppableId];
-    // const newDestinationCourseIds = Array.from(destinationColumn.courseIds);
-    // newDestinationCourseIds.splice(destination.index, 0, draggableId);
-    // // newDestinationCourseIds.splice(destination.index, 0, draggableId);
-
-    // const newDesintationColumn = {
-    //   ...destinationColumn,
-    //   courseIds: newDestinationCourseIds,
-    // };
-
-    const newColumns = {
-      ...plannerColumns,
-      [newSourceColumn.code]: newSourceColumn,
-      // [newDesintationColumn.code]: newDesintationColumn,
-    };
-    setPlannerColumns(newColumns);
+    const sourceSources = plannerColumns[sourceSemester].courseIds;
+    if (destinationSemester === sourceSemester) {
+      const reordered = reorderSemester(sourceSources, source.index, destination.index);
+      const column = {
+        ...plannerColumns[sourceSemester],
+        courseIds: reordered,
+      };
+      setPlannerColumns({
+        ...plannerColumns,
+        [column.code]: column,
+      });
+    } else {
+      const destinationCourses = plannerColumns[destinationSemester].courseIds;
+      const movedItems = moveCourse(sourceSources, destinationCourses, source, destination);
+      // const [sourceColumnCourses, destinationColumnCourses] = movedItems;
+      const newSource = {
+        ...plannerColumns[sourceSemester],
+        courseIds: movedItems[source.droppableId],
+      };
+      const newDestination = {
+        ...plannerColumns[destinationSemester],
+        courseIds: movedItems[destination.droppableId],
+      };
+      setPlannerColumns({
+        ...plannerColumns,
+        [newSource.code]: newSource,
+        [newDestination.code]: newDestination,
+      });
+    }
   }
 
   /**
@@ -291,20 +329,14 @@ export default function DegreePlannerChrome(props: DegreePlannerChromeProps) {
     console.log('Not yet implemented.');
   };
 
-  const displayedSemesters = columnOrder.map((semesterId) => {
+  const semesters: Semester[] = columnOrder.map((semesterId) => {
     const semester = plannerColumns[semesterId];
     const semesterCourses = semester.courseIds.map((courseId) => plannerCourses[courseId]);
-    return (
-      <SemesterBlock
-        key={semester.code}
-        semesterCode={semester.code}
-        semesterTitle={semester.title}
-        courses={semesterCourses}
-        onAddCourse={addCourseToSemester}
-        onShowSemesterInfo={showSemesterInfo}
-        onClearSemester={clearSemester}
-        onRemoveSemester={removeSemester} />
-    );
+    return {
+      title: semester.title,
+      code: semester.code,
+      courses: semesterCourses,
+    };
   });
 
   React.useEffect(() => {
@@ -328,16 +360,19 @@ export default function DegreePlannerChrome(props: DegreePlannerChromeProps) {
         selected={focusedSemester}
         onSelection={handleSemesterSelection} />
       <DragDropContext
-        onDragEnd={onDragEnd}
-        onDragStart={() => { }}>
-        <div className={classes.semesterListContainer}>
-          <div className={classes.semesterList}>
-            {displayedSemesters}
-            <AddSemesterTrigger
-              infoText={getAddSemesterInfoText()}
-              onAddSemester={handleAddSemester} />
-          </div>
-        </div>
+        onDragEnd={onDragEnd}>
+        <SemesterBlockList
+          semesters={semesters}
+          enabled={true}
+          onAddCourse={addCourseToSemester}
+          onClearSemester={clearSemester} // TODO: Probably ask with a confirmation dialog
+          onRemoveSemester={removeSemester}
+          onShowSemesterInfo={handleShowSemesterInfo}
+          direction={ScrollDirection.vertically}>
+          <AddSemesterTrigger
+            infoText={getAddSemesterInfoText()}
+            onAddSemester={handleAddSemester} />
+        </SemesterBlockList>
       </DragDropContext>
     </div>
   );

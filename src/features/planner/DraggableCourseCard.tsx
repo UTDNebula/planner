@@ -1,15 +1,12 @@
 import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
-import CourseCard from './CourseCard';
+import CourseCard, { CourseCardProps } from './CourseCard';
 
 /**
  * Component properties for a {@link DraggableCourseCard}.
  */
-export interface DraggableCourseCardProps {
+export interface DraggableCourseCardProps extends CourseCardProps {
   id: string;
-  code: string;
-  title: string;
-  description: string;
   index: number;
 }
 
@@ -17,20 +14,24 @@ export interface DraggableCourseCardProps {
  * A draggable card showing course details.
  */
 export default function DraggableCourseCard(props: DraggableCourseCardProps) {
-  const { id, code, title, description, index } = props;
+  const { id, code, title, description, index, showOptions } = props;
   return (
-    <Draggable draggableId={id} index={index}>
+    <Draggable
+      key={id}
+      draggableId={id}
+      index={index}
+      isDragDisabled={false}>
       {(provided) => (
-        <div ref={provided.innerRef}>
-          <CourseCard
-            code={code}
-            title={title}
-            description={description}
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
-          />
-        </div>
+        <CourseCard
+          ref={provided.innerRef}
+          code={code}
+          title={title}
+          description={description}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          showOptions={showOptions}
+        />
       )}
-    </Draggable >
+    </Draggable>
   );
-}
+};

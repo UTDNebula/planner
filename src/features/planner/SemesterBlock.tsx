@@ -10,11 +10,11 @@ import {
   Theme,
   Typography,
 } from '@material-ui/core';
+import { DragIndicator, MoreVert } from '@material-ui/icons';
 import { Droppable } from 'react-beautiful-dnd';
 import CourseCard from './CourseCard';
-import { DragIndicator, MoreVert } from '@material-ui/icons';
-import { Course } from '../../app/data';
 import DraggableCourseCard from './DraggableCourseCard';
+import { Course } from '../../app/data';
 
 /**
  * Component properties for an {@link SemesterBlock}.
@@ -37,7 +37,10 @@ interface SemesterBlockProps {
   onRemoveSemester: SemesterCallback;
 }
 
-type SemesterCallback = (semesterCode: string) => void;
+/**
+ * A callback notified when an action is taken on a SemesterBlock.
+ */
+export type SemesterCallback = (semesterCode: string) => void;
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
@@ -63,6 +66,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
   dragIndicator: {
     // TODO: Find out why the styling for this looks off
+    height: 36,
     marginTop: theme.spacing(1),
     marginLeft: theme.spacing(1),
   },
@@ -77,19 +81,18 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 /**
  * A list of {@link CourseCard}s and options.
  */
-export default function SemesterBlock(props: SemesterBlockProps) {
-  const {
-    semesterCode,
-    semesterTitle,
-    courses,
-    showDragHandle,
-    showOptions,
-    displayOnly,
-    onAddCourse,
-    onShowSemesterInfo,
-    onClearSemester,
-    onRemoveSemester
-  } = props;
+export default function SemesterBlock({
+  semesterCode,
+  semesterTitle,
+  courses,
+  showDragHandle,
+  showOptions = true,
+  displayOnly,
+  onAddCourse,
+  onShowSemesterInfo,
+  onClearSemester,
+  onRemoveSemester
+}: SemesterBlockProps) {
 
   const [optionsMenuShowing, setOptionsMenuShowing] = React.useState(false);
   const [optionsMenuAnchor, setOptionsMenuAnchor] = React.useState<null | HTMLElement>(null);
@@ -124,84 +127,68 @@ export default function SemesterBlock(props: SemesterBlockProps) {
     setOptionsMenuShowing(false);
   };
 
-  const blockContents = displayOnly === true
-    ? (
-      <div>
-        {courses.map(({ id, catalogCode, title, description }) => {
-          return (
-            <CourseCard key={id}
-              code={catalogCode}
-              title={title}
-              description={description} />
-          );
-        })}
-      </div>
-    )
-    : (
-      <Droppable droppableId={semesterCode}>
-        {(provided) => (
-          <div ref={provided.innerRef} {...provided.droppableProps}>
-            {courses.map(({ id, catalogCode, title, description }, index) => {
-              return (
-                <DraggableCourseCard key={id}
-                  id={id}
-                  index={index}
-                  code={catalogCode}
-                  title={title}
-                  description={description} />
-              );
-            })}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
-    );
+  const contents = courses.map(({ id, catalogCode, title, description }, index) => (
+    <DraggableCourseCard
+      key={id}
+      id={id}
+      index={index}
+      code={catalogCode}
+      title={title}
+      description={description}
+      showOptions={showOptions}
+    />
+  ));
 
   const classes = useStyles();
 
   // TODO: Support non-course displays
   return (
-    <div className={classes.root}>
-      <Paper component="header" className={classes.semesterHeader}>
-        <Icon className={classes.dragIndicator} hidden={!showDragHandle}>
-          <DragIndicator />
-        </Icon>
-        <Typography variant="h6" className={classes.semesterHeaderTitle}>
-          {semesterTitle}
-        </Typography>
-        {!displayOnly && (
-          <IconButton
-            aria-label="Semester options"
-            aria-controls="menu-appbar"
-            aria-haspopup="true"
-            hidden={!showOptions}
-            disabled={displayOnly}
-            onClick={handleHeaderOptionsClick}>
-            <MoreVert />
-          </IconButton>
-        )}
-        <Menu
-          id="menu-semester-options"
-          anchorEl={optionsMenuAnchor}
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          keepMounted
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          open={optionsMenuShowing}
-          onClose={handleOptionsMenuClose}
-        >
-          <MenuItem onClick={handleAddCourse}>Add/transfer course</MenuItem>
-          <MenuItem onClick={handleShowSemesterInfo}>Show semester info</MenuItem>
-          <MenuItem onClick={handleClearSemester}>Clear semester</MenuItem>
-          <MenuItem onClick={handleRemoveSemester}>Remove semester</MenuItem>
-        </Menu>
-      </Paper>
-      {blockContents}
-    </div>
+    <Droppable droppableId={semesterCode}>
+      {(provided) => (
+        <div className={classes.root} ref={provided.innerRef}>
+          <Paper component="header" className={classes.semesterHeader}>
+            <Icon className={classes.dragIndicator} hidden={!showDragHandle}>
+              <DragIndicator />
+            </Icon>
+            <Typography variant="h6" className={classes.semesterHeaderTitle}>
+              {semesterTitle}
+            </Typography>
+            {!displayOnly && (
+              <IconButton
+                aria-label="Semester options"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                hidden={!showOptions}
+                disabled={displayOnly}
+                onClick={handleHeaderOptionsClick}>
+                <MoreVert />
+              </IconButton>
+            )}
+            <Menu
+              id="menu-semester-options"
+              anchorEl={optionsMenuAnchor}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={optionsMenuShowing}
+              onClose={handleOptionsMenuClose}
+            >
+              <MenuItem onClick={handleAddCourse}>Add/transfer course</MenuItem>
+              <MenuItem onClick={handleShowSemesterInfo}>Show semester info</MenuItem>
+              <MenuItem onClick={handleClearSemester}>Clear semester</MenuItem>
+              <MenuItem onClick={handleRemoveSemester}>Remove semester</MenuItem>
+            </Menu>
+          </Paper>
+          {contents}
+          {provided.placeholder}
+        </div>
+      )}
+    </Droppable>
   );
 }

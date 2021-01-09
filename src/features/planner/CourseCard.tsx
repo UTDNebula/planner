@@ -1,13 +1,27 @@
-import { Card, CardContent, createStyles, makeStyles, Menu, Theme, colors } from '@material-ui/core';
 import React from 'react';
+import { Card, CardContent, createStyles, makeStyles, Menu, Theme, colors } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 
 /**
  * Component properties for a {@link CourseCard}.
  */
 export interface CourseCardProps {
+
+  /**
+   * The subject and number for this course.
+   * 
+   * {@example CS 3345}
+   */
   code: string;
+
+  /**
+   * The formal title for this course.
+   */
   title: string;
+
+  /**
+   * The long description for this course.
+   */
   description: string;
 
   /**
@@ -19,6 +33,11 @@ export interface CourseCardProps {
    * The estimated amount of hours spent per week outside class.
    */
   estimatedWorkload?: number;
+
+  /**
+   * True if an options menu should be shown for this course.
+   */
+  showOptions: boolean;
 }
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
@@ -58,8 +77,8 @@ function pluralize(count?: number, item?: string, defaultCount: number = 0) {
 /**
  * A card showing course details.
  */
-export default function CourseCard(props: CourseCardProps) {
-  const { code, title, description, creditHours, estimatedWorkload } = props;
+function CourseCard(props: CourseCardProps, ref: React.Ref<any>) {
+  const { code, title, description, creditHours, estimatedWorkload, showOptions, ...other } = props;
   const classes = useStyles();
 
   // TODO: Probably replace this with a pure CSS version  
@@ -110,7 +129,7 @@ export default function CourseCard(props: CourseCardProps) {
   );
 
   return (
-    <Card className={classes.root}>
+    <Card ref={ref} className={classes.root} {...other}>
       {/* TODO: Add option to show letter grade */}
       <CardContent>
         <div className="text-headline6 font-bold">{code}</div>
@@ -123,4 +142,6 @@ export default function CourseCard(props: CourseCardProps) {
       </CardContent>
     </Card>
   );
-}
+};
+
+export default React.forwardRef(CourseCard);
