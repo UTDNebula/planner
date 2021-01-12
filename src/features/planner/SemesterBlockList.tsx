@@ -26,30 +26,19 @@ export enum ScrollDirection {
  */
 const useStyles = (shouldScroll: boolean, direction: ScrollDirection) => {
   return makeStyles((theme: Theme) => {
-    const isNormal = direction === 'horizontally';
+    const isNormal = direction === ScrollDirection.horizontally;
     const overflow = isNormal ? 'overflowX' : 'overflowY';
     return createStyles({
       root: {
-        [overflow]: shouldScroll ? 'scroll' : 'hidden',
+        // [overflow]: shouldScroll ? 'scroll' : 'hidden',
+        overflowX: 'scroll',
+        paddingLeft: theme.spacing(2),
+        paddingRight: theme.spacing(2),
       },
       paper: {
         padding: theme.spacing(2),
         textAlign: 'center',
         color: theme.palette.text.secondary,
-      },
-      block: {
-        marginLeft: theme.spacing(2),
-        marginRight: theme.spacing(2),
-      },
-      semesterDisplay: {
-        display: 'flex',
-        marginTop: theme.spacing(2),
-        flexWrap: 'wrap',
-      },
-      semesterList: {
-        marginLeft: 64,
-        display: 'flex',
-        flexWrap: 'wrap',
       },
       semesterItem: {
         marginLeft: theme.spacing(1),
@@ -63,7 +52,6 @@ const useStyles = (shouldScroll: boolean, direction: ScrollDirection) => {
  * Component properties for a SemesterBlockList.
  */
 interface SemesterBlockListProps {
-
   /**
    * The semester items to display.
    */
@@ -77,22 +65,22 @@ interface SemesterBlockListProps {
   /**
    * Called when a course addition request is triggered.
    */
-  onAddCourse: SemesterCallback;
+  onAddCourse?: SemesterCallback;
 
   /**
    * Called when more information about this semester should be displayed.
    */
-  onShowSemesterInfo: SemesterCallback;
+  onShowSemesterInfo?: SemesterCallback;
 
   /**
    * Called when this semester should be cleared of its courses.
    */
-  onClearSemester: SemesterCallback;
+  onClearSemester?: SemesterCallback;
 
   /**
    * Called when this semester should be deleted from its parent.
    */
-  onRemoveSemester: SemesterCallback;
+  onRemoveSemester?: SemesterCallback;
 
   /**
    * The direction SemesterBlocks should be laid out.
@@ -102,27 +90,47 @@ interface SemesterBlockListProps {
 
 /**
  * A list of SemesterBlocks.
- * 
+ *
  * This list can be rendered vertically or horizontally by using component
  * props.
  */
 export default function SemesterBlockList({
   semesters,
   enabled,
-  onAddCourse,
-  onShowSemesterInfo,
-  onClearSemester,
-  onRemoveSemester,
+  onAddCourse = () => undefined,
+  onShowSemesterInfo = () => undefined,
+  onClearSemester = () => undefined,
+  onRemoveSemester = () => undefined,
   direction,
   children,
 }: React.PropsWithChildren<SemesterBlockListProps>) {
+  const blockRefs = semesters
+    .map((semester) => semester.code)
+    .reduce((refs: { [key: string]: React.RefObject<HTMLElement> }, semesterCode) => {
+      refs[semesterCode] = React.createRef();
+      return refs;
+    }, {});
 
-  const shouldScroll = false;
+  const scrollToSemester = (semesterCode: string) => {
+    const semesterRef = blockRefs[semesterCode];
+    if (semesterRef == null || semesterRef.current == null) {
+      console.warn(`Semester ref or current for ${semesterCode} is null`);
+      return;
+    }
+    semesterRef.current.scrollIntoView({
+      behavior: 'smooth',
+      // block: 'start',
+    });
+  };
+
+  const shouldScroll = true;
   const classes = useStyles(shouldScroll, direction);
 
   const semesterBlocks = semesters.map((semester) => {
+    const ref = blockRefs[semester.code];
     return (
       <SemesterBlock
+        ref={ref}
         key={semester.code}
         showDragHandle={enabled}
         semesterCode={semester.code}
@@ -132,7 +140,7 @@ export default function SemesterBlockList({
         onShowSemesterInfo={onShowSemesterInfo}
         onClearSemester={onClearSemester}
         onRemoveSemester={onRemoveSemester}
-        displayOnly={false}
+        enabled={enabled}
       />
     );
   });
