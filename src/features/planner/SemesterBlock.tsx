@@ -12,8 +12,9 @@ import {
 } from '@material-ui/core';
 import { DragIndicator, MoreVert } from '@material-ui/icons';
 import { Droppable } from 'react-beautiful-dnd';
-import CourseCard from './CourseCard';
 import DraggableCourseCard from './DraggableCourseCard';
+import { ScrollDirection } from './SemesterBlockList';
+import { useToggleableCard } from './hooks/toggleableCard';
 import { Course } from '../../app/data';
 
 /**
@@ -27,14 +28,15 @@ interface SemesterBlockProps {
   showOptions?: boolean;
   /**
    * If true, drag and drop functionality is removed from this block.
-   * 
+   *
    * TODO: Create separate block component that doesn't use drag and drop.
    */
-  displayOnly?: boolean;
-  onAddCourse: SemesterCallback;
-  onShowSemesterInfo: SemesterCallback;
-  onClearSemester: SemesterCallback;
-  onRemoveSemester: SemesterCallback;
+  enabled?: boolean;
+  displayDirection?: ScrollDirection;
+  onAddCourse?: SemesterCallback;
+  onShowSemesterInfo?: SemesterCallback;
+  onClearSemester?: SemesterCallback;
+  onRemoveSemester?: SemesterCallback;
 }
 
 /**
@@ -42,58 +44,66 @@ interface SemesterBlockProps {
  */
 export type SemesterCallback = (semesterCode: string) => void;
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
-  root: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
-    maxWidth: 480,
-  },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
-  },
-  semesterHeader: {
-    display: 'flex',
-    marginBottom: theme.spacing(1),
-    height: 48,
-  },
-  semesterHeaderTitle: {
-    flex: 1,
-    paddingTop: 6,
-    paddingLeft: theme.spacing(2),
-    fontSize: theme.typography.h6.fontSize,
-  },
-  dragIndicator: {
-    // TODO: Find out why the styling for this looks off
-    height: 36,
-    marginTop: theme.spacing(1),
-    marginLeft: theme.spacing(1),
-  },
-  courseTitle: {
-    fontSize: 12,
-  },
-  courseCode: {
-    fontSize: 16,
-  },
-}));
+/**
+ * Generate styles for a SemesterBlock.
+ *
+ * @param displayDirection The direction items will be laid out
+ * @param enabled True if drag-and-drop functionality is allowed
+ */
+const useStyles = (displayDirection: ScrollDirection, enabled: boolean) => {
+  return makeStyles((theme: Theme) => {
+    const display = displayDirection === ScrollDirection.horizontally ? 'inline-block' : 'block';
+    const rightMargin = displayDirection === ScrollDirection.horizontally ? theme.spacing(2) : 0;
+    return createStyles({
+      root: {
+        marginTop: theme.spacing(1),
+        marginBottom: theme.spacing(1),
+        marginRight: rightMargin,
+        maxWidth: 480,
+        width: '100%',
+        display: display,
+        verticalAlign: 'top',
+      },
+      semesterHeader: {
+        display: 'flex',
+        marginBottom: theme.spacing(1),
+        height: 48,
+      },
+      semesterHeaderTitle: {
+        flex: 1,
+        paddingTop: 6,
+        paddingLeft: theme.spacing(2),
+        fontSize: theme.typography.h6.fontSize,
+      },
+      dragIndicator: {
+        // TODO: Find out why the styling for this looks off
+        height: 36,
+        marginTop: theme.spacing(1),
+        marginLeft: theme.spacing(1),
+      },
+    });
+  })();
+};
 
 /**
  * A list of {@link CourseCard}s and options.
  */
-export default function SemesterBlock({
-  semesterCode,
-  semesterTitle,
-  courses,
-  showDragHandle,
-  showOptions = true,
-  displayOnly,
-  onAddCourse,
-  onShowSemesterInfo,
-  onClearSemester,
-  onRemoveSemester
-}: SemesterBlockProps) {
-
+function SemesterBlock(
+  {
+    semesterCode,
+    semesterTitle,
+    courses,
+    showDragHandle,
+    showOptions = true,
+    displayDirection = ScrollDirection.horizontally,
+    enabled = false,
+    onAddCourse = () => undefined,
+    onShowSemesterInfo = () => undefined,
+    onClearSemester = () => undefined,
+    onRemoveSemester = () => undefined,
+  }: SemesterBlockProps,
+  ref: React.Ref<any>,
+) {
   const [optionsMenuShowing, setOptionsMenuShowing] = React.useState(false);
   const [optionsMenuAnchor, setOptionsMenuAnchor] = React.useState<null | HTMLElement>(null);
 
@@ -127,40 +137,49 @@ export default function SemesterBlock({
     setOptionsMenuShowing(false);
   };
 
-  const contents = courses.map(({ id, catalogCode, title, description }, index) => (
+  const contents = courses.map(({ id, catalogCode, title, description, creditHours }, index) => (
     <DraggableCourseCard
       key={id}
-      id={id}
       index={index}
-      code={catalogCode}
+      id={id}
       title={title}
+      code={catalogCode}
       description={description}
-      showOptions={showOptions}
+      creditHours={creditHours}
+      enabled={enabled}
     />
   ));
 
-  const classes = useStyles();
+  const semesterHours = courses.reduce((total: number, course) => {
+    total += course.creditHours;
+    return total;
+  }, 0);
+
+  const { cardProps } = useToggleableCard(enabled);
+
+  const classes = useStyles(displayDirection, enabled);
 
   // TODO: Support non-course displays
   return (
-    <Droppable droppableId={semesterCode}>
+    <Droppable droppableId={semesterCode} ref={ref}>
       {(provided) => (
         <div className={classes.root} ref={provided.innerRef}>
-          <Paper component="header" className={classes.semesterHeader}>
+          <Paper component="header" className={classes.semesterHeader} {...cardProps}>
             <Icon className={classes.dragIndicator} hidden={!showDragHandle}>
               <DragIndicator />
             </Icon>
             <Typography variant="h6" className={classes.semesterHeaderTitle}>
               {semesterTitle}
             </Typography>
-            {!displayOnly && (
+            {enabled && (
               <IconButton
                 aria-label="Semester options"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
                 hidden={!showOptions}
-                disabled={displayOnly}
-                onClick={handleHeaderOptionsClick}>
+                disabled={!enabled}
+                onClick={handleHeaderOptionsClick}
+              >
                 <MoreVert />
               </IconButton>
             )}
@@ -187,8 +206,13 @@ export default function SemesterBlock({
           </Paper>
           {contents}
           {provided.placeholder}
+          <div className="my-4 mx-5 font-bold text-subtitle1">
+            {semesterHours} total credit hours
+          </div>
         </div>
       )}
     </Droppable>
   );
 }
+
+export default React.forwardRef(SemesterBlock);
