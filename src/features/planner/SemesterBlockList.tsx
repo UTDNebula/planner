@@ -86,6 +86,11 @@ interface SemesterBlockListProps {
    * The direction SemesterBlocks should be laid out.
    */
   direction: ScrollDirection;
+
+  /**
+   * The ID of the first currently displayed semester in this list.
+   */
+  focusedSemester: string;
 }
 
 /**
@@ -102,6 +107,7 @@ export default function SemesterBlockList({
   onClearSemester = () => undefined,
   onRemoveSemester = () => undefined,
   direction,
+  focusedSemester,
   children,
 }: React.PropsWithChildren<SemesterBlockListProps>) {
   const blockRefs = semesters
@@ -144,6 +150,12 @@ export default function SemesterBlockList({
       />
     );
   });
+
+  React.useEffect(() => {
+    if (false) {
+      scrollToSemester(focusedSemester);
+    }
+  }, [focusedSemester]);
 
   return (
     <div className={classes.root}>
