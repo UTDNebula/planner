@@ -3,16 +3,16 @@ import { createStyles, makeStyles, Theme, Typography } from '@material-ui/core';
 import { HonorsIndicator } from './types';
 import { convertSemesterToData } from '../common/data-utils';
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
-  root: {
-    padding: theme.spacing(2),
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.primary.contrastText,
-  },
-  attemptedHours: {
-
-  },
-}));
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      padding: theme.spacing(2),
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.primary.contrastText,
+    },
+    attemptedHours: {},
+  }),
+);
 
 /**
  * Component properties for a UserDetailsBlock.
@@ -32,7 +32,7 @@ export interface UserDetailsBlockProps {
 
   /**
    * The starting date.
-   * 
+   *
    * @example 2019f
    */
   start: string;
@@ -61,19 +61,22 @@ export default function UserDetailsBlock(props: UserDetailsBlockProps) {
     gpa,
   } = props;
 
-  const honorsIndicatorText = honorsIndicators.length > 0
-    ? honorsIndicators.reduce((acc, indicator, index) => {
-      let result = acc.concat(`${indicator}`);
-      if (index < honorsIndicators.length - 1) {
-        result = result.concat(', ');
-      }
-      return result;
-    }, 'A ').concat(' scholar')
-    : '';
+  const honorsIndicatorText =
+    honorsIndicators.length > 0
+      ? honorsIndicators
+          .reduce((acc, indicator, index) => {
+            let result = acc.concat(`${indicator}`);
+            if (index < honorsIndicators.length - 1) {
+              result = result.concat(', ');
+            }
+            return result;
+          }, 'A ')
+          .concat(' scholar')
+      : '';
 
   const { year: startingYear, semester: startingSemester } = convertSemesterToData(start);
 
-    console.log('Starting year: ' + startingYear + ', starting semester: ' + startingSemester);
+  console.log('Starting year: ' + startingYear + ', starting semester: ' + startingSemester);
 
   const classes = useStyles();
 
@@ -86,12 +89,11 @@ export default function UserDetailsBlock(props: UserDetailsBlockProps) {
         <Typography variant="caption">{honorsIndicatorText}</Typography>
       </div>
       <div>
-        <Typography variant="caption">
-          GPA: {gpa.toFixed(3)}
-        </Typography> | &nbsp;
+        <Typography variant="caption">GPA: {gpa.toFixed(3)}</Typography> | &nbsp;
         <Typography variant="caption">
           {coursesCompleted}/{coursesCompleted + coursesRemaining} courses fulfilled
-        </Typography> | &nbsp;
+        </Typography>{' '}
+        | &nbsp;
         <Typography variant="caption" component="span" className={classes.attemptedHours}>
           {attemptedHours} attmpted hours
         </Typography>

@@ -5,7 +5,5 @@ export default function AuthPage() {
   const history = useHistory();
   history.push('/app');
   // TODO: Like actually sign in
-  return (
-    <div>Redirecting...</div>
-  );
+  return <div>Redirecting...</div>;
 }
