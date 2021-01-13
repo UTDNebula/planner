@@ -132,38 +132,74 @@ export function createSamplePlan(
   title = 'My degree plan',
   major = 'Computer Science',
 ): StudentPlan {
-  function generateSemesters(onlyLong = true): Semester[] {
-    const result = [];
-    let semester = startSemester;
-    let year = startYear;
-    for (let i = 0; i < semesterCount; ++i) {
-      const code = `${year}${semester}`;
-      const newSemester = {
-        title: `${SEMESTER_CODE_MAPPINGS[semester]} ${year}`,
-        code: code,
-        courses: generateCourses(),
-      };
-      result.push(newSemester);
-      if (semester === SemesterCode.f) {
-        year = year + 1;
-        semester = SemesterCode.s;
-      } else {
-        // Semester code is either spring or summer
-        if (onlyLong || semester === SemesterCode.s) {
-          semester = SemesterCode.f;
-        } else {
-          semester = SemesterCode.u;
-        }
-      }
-    }
-    return result;
-  }
-
   const plan = {
     id: planId,
     title: title,
     major: major,
-    semesters: generateSemesters(),
+    semesters: generateSemesters(semesterCount, startYear, startSemester),
   };
   return plan;
+}
+
+export function generateSemesters(
+  count: number,
+  startYear: number,
+  startSemester: SemesterCode,
+  courses: Course[] = [],
+  coursesPerSemester = 5,
+  onlyLong = true,
+  useRandom = false,
+): Semester[] {
+  const result = [];
+  let semester = startSemester;
+  let year = startYear;
+  const code = `${year}${semester}`;
+  for (let i = 0; i < count; ++i) {
+    const newSemester = {
+      title: `${SEMESTER_CODE_MAPPINGS[semester]} ${year}`,
+      code: code,
+      courses: useRandom ? generateCourses() : [],
+    };
+    result.push(newSemester);
+    if (semester === SemesterCode.f) {
+      year = year + 1;
+      semester = SemesterCode.s;
+    } else {
+      // Semester code is either spring or summer
+      if (onlyLong || semester === SemesterCode.s) {
+        semester = SemesterCode.f;
+      } else {
+        semester = SemesterCode.u;
+      }
+    }
+  }
+  let semesterIndex = 0;
+  for (const course of courses) {
+    const current = result[semesterIndex];
+    if (current.courses.length <= coursesPerSemester) {
+      current.courses.push(course);
+    } else {
+      semesterIndex++;
+      if (semesterIndex > result.length - 1) {
+        result.push({
+          title: `${SEMESTER_CODE_MAPPINGS[semester]} ${year}`,
+          code: code,
+          courses: [course],
+        });
+        if (semester === SemesterCode.f) {
+          year = year + 1;
+          semester = SemesterCode.s;
+        } else {
+          // Semester code is either spring or summer
+          if (onlyLong || semester === SemesterCode.s) {
+            semester = SemesterCode.f;
+          } else {
+            semester = SemesterCode.u;
+          }
+        }
+      }
+      result[semesterIndex].courses.push(course);
+    }
+  }
+  return result;
 }
