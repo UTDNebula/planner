@@ -1,14 +1,16 @@
 import React from 'react';
-import { Avatar, IconButton, Menu, MenuItem } from '@material-ui/core';
+import { Avatar, IconButton, ListItemIcon, ListItemText, Menu, MenuItem } from '@material-ui/core';
 import AccountIcon from '@material-ui/icons/AccountCircle';
+import { Link } from 'react-router-dom';
+import AccountBox from '@material-ui/icons/AccountBox';
+import { ExitToApp } from '@material-ui/icons';
+import styles from './ProfileIcon.module.css';
+import { useAuthContext } from '../../auth/auth-context';
 
 /**
  * Component properties for a {@link ProfileIcon}.
  */
 interface ProfileIconProps {
-  userImage: string | null;
-  userName: string;
-  isSignedIn: boolean;
   onSignIn: () => void;
   onSignOut: () => void;
   onAccountProfileClick: () => void;
@@ -18,7 +20,7 @@ interface ProfileIconProps {
  * A profile icon that triggers a user profile dialog when clicked.
  */
 export default function ProfileIcon(props: ProfileIconProps) {
-  const { userImage, userName, isSignedIn, onSignIn, onSignOut, onAccountProfileClick } = props;
+  const { onSignIn, onSignOut, onAccountProfileClick } = props;
 
   const [dialogIsOpen, setDialogIsOpen] = React.useState(false);
   const [profileAnchor, setProfileAnchor] = React.useState<null | HTMLElement>(null);
@@ -48,19 +50,29 @@ export default function ProfileIcon(props: ProfileIconProps) {
     setDialogIsOpen(true);
   };
 
-  const avatarIcon = isSignedIn && userImage != null
-    ? (
-      <Avatar alt={userName} src={userImage} />
-    )
-    : (
-      <Avatar alt={userName}>
+  const { user, signOut, switchAccounts } = useAuthContext();
+
+  const { name, image } = user;
+
+  const isSignedIn = user.id !== 'guest';
+
+  const userData = {
+    classification: 'Junior',
+    major: 'Computer Science', // TODO: Fetch from store
+  };
+
+  const avatarIcon =
+    isSignedIn && image != null ? (
+      <Avatar alt={image} src={image} />
+    ) : (
+      <Avatar alt={name}>
         <AccountIcon />
       </Avatar>
     );
   return (
     <div>
       <IconButton
-        aria-label={userName}
+        aria-label={name}
         aria-controls="menu-appbar"
         aria-haspopup="true"
         onClick={handleIconClick}
@@ -70,6 +82,7 @@ export default function ProfileIcon(props: ProfileIconProps) {
       </IconButton>
       <Menu
         id="menu-appbar"
+        className={styles.dialog}
         anchorEl={profileAnchor}
         anchorOrigin={{
           vertical: 'top',
@@ -84,15 +97,48 @@ export default function ProfileIcon(props: ProfileIconProps) {
         onClose={handleClose}
       >
         {/* TODO: Include prettier dialog like Google's account switcher */}
-        {isSignedIn
-          ?
-          <div>
-            <MenuItem onClick={handleProfileClick}>Profile</MenuItem>
-            <MenuItem onClick={handleSignOutClick}>Sign out</MenuItem>
+        <div className="w-full p-4 flex bg-gray-100">
+          {/* TODO: Shared component transition between profile icon and dialog */}
+          <div className="h-12 flex-0">{avatarIcon}</div>
+          <div className="mx-4">
+            <div className="text-headline6 font-bold">{name}</div>
+            <div className="text-subtitle1 font-bold">
+              <span className="">{userData.classification}</span>, <span>{userData.major}</span>
+            </div>
           </div>
-          :
-          <MenuItem onClick={handleSignInClick}>Sign in</MenuItem>
-        }
+        </div>
+        {isSignedIn ? (
+          [
+            <MenuItem component={Link} to="/app/profile" key="profile">
+              <ListItemIcon>
+                <AccountBox />
+              </ListItemIcon>
+              <ListItemText primary="Manage profile" />
+            </MenuItem>,
+            <MenuItem component={Link} to="/auth/signOut" key="auth">
+              <ListItemIcon>
+                <ExitToApp />
+              </ListItemIcon>
+              <ListItemText primary="Sign out" />
+            </MenuItem>,
+          ]
+        ) : (
+          <MenuItem onClick={handleSignInClick}>
+            <ListItemIcon>
+              <ExitToApp />
+            </ListItemIcon>
+            <ListItemText primary="Sign in" secondary="Log in for more functionality" />
+          </MenuItem>
+        )}
+        <div className="p-2 text-center">
+          <Link className="text-blue-700 underline" to="/terms">
+            Terms
+          </Link>
+          &nbsp;|&nbsp;
+          <Link className="text-blue-700 underline" to="/privacy">
+            Privacy
+          </Link>
+        </div>
       </Menu>
     </div>
   );

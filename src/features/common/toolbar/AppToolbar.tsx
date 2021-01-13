@@ -1,23 +1,31 @@
 import React from 'react';
-import { AppBar, IconButton, makeStyles, createStyles, Toolbar, Typography } from '@material-ui/core';
+import {
+  AppBar,
+  IconButton,
+  makeStyles,
+  createStyles,
+  Toolbar,
+  Typography,
+} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import ProfileIcon from './ProfileIcon';
 import { useAuthContext } from '../../auth/auth-context';
 import { Link as RouterLink, useHistory } from 'react-router-dom';
 
-const useStyles = makeStyles((theme) => createStyles({
-  root: {
-    zIndex: theme.zIndex.drawer + 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
-}));
-
+const useStyles = makeStyles((theme) =>
+  createStyles({
+    root: {
+      zIndex: theme.zIndex.drawer + 1,
+    },
+    menuButton: {
+      marginRight: theme.spacing(2),
+    },
+    title: {
+      flexGrow: 1,
+    },
+  }),
+);
 
 interface AppToolbarProps {
   title: string;
@@ -37,7 +45,8 @@ export default function AppToolbar(props: AppToolbarProps) {
   const [inDetail, setInDetail] = React.useState(false);
 
   const determineLeftButtonLabel = () => {
-    if (inDetail) { // TODO: Determine based on viewing/planning context
+    if (inDetail) {
+      // TODO: Determine based on viewing/planning context
       return 'Menu';
     }
     return 'Back';
@@ -61,13 +70,7 @@ export default function AppToolbar(props: AppToolbarProps) {
     setInDetail(false);
   };
 
-  const leftButtonIcon = inDetail
-    ? (
-      <BackIcon onClick={handleBackButtonClick} />
-    )
-    : (
-      <MenuIcon />
-    );
+  const leftButtonIcon = inDetail ? <BackIcon onClick={handleBackButtonClick} /> : <MenuIcon />;
 
   return (
     <AppBar position="fixed" className={classes.root}>
@@ -76,22 +79,20 @@ export default function AppToolbar(props: AppToolbarProps) {
           className={classes.menuButton}
           edge="start"
           color="inherit"
-          aria-label={determineLeftButtonLabel()}>
+          aria-label={determineLeftButtonLabel()}
+        >
           {leftButtonIcon}
         </IconButton>
         <Typography variant="h6" className={classes.title} component={RouterLink} to="/app">
           {title}
         </Typography>
-        {shouldShowProfile &&
+        {shouldShowProfile && (
           <ProfileIcon
-            userName={user.name}
-            userImage={user.image}
-            isSignedIn={user.id !== 'guest'}
             onSignIn={handleSignIn}
             onSignOut={handleSignOut}
             onAccountProfileClick={handleAccountSettingsClick}
           />
-        }
+        )}
       </Toolbar>
     </AppBar>
   );
