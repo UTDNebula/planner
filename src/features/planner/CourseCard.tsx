@@ -91,11 +91,6 @@ function CourseCard(
 ) {
   const classes = useStyles(enabled);
 
-  // TODO: Remove need for silly null/undefined checks
-  const hoursText = pluralize(creditHours, 'credit hour', 3);
-  const workloadText = pluralize(estimatedWorkload, 'hour');
-  const creditHoursText = `${hoursText} | Est. ${workloadText}/week`;
-
   let tooltipReason;
   if (estimatedWorkload === undefined) {
     estimatedWorkload = 3 * creditHours;
@@ -104,6 +99,11 @@ function CourseCard(
   } else {
     tooltipReason = 'Estimated workload was determined based from user feedback.';
   }
+
+  // TODO: Remove need for silly null/undefined checks
+  const hoursText = pluralize(creditHours, 'credit hour', 3);
+  const workloadText = pluralize(estimatedWorkload, 'hour');
+  const creditHoursText = `${hoursText} | Est. ${workloadText}/week`;
 
   const metadata = (
     <div className="mt-1">
