@@ -4,29 +4,37 @@ import ReactDOM from 'react-dom';
 import '@fontsource/roboto';
 import './index.css';
 import App from './App';
-import { store } from './app/store';
+import store from './app/store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 import { CssBaseline } from '@material-ui/core';
 
-const rootElement = document.getElementById('root');
+function render() {
+  const rootElement = document.getElementById('root');
 
-const tree = (
-  <React.StrictMode>
-    <CssBaseline />
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </React.StrictMode>
-);
+  const tree = (
+    <React.StrictMode>
+      <CssBaseline />
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </React.StrictMode>
+  );
 
-if (rootElement?.hasChildNodes()) {
-  ReactDOM.hydrate(tree, rootElement);
-} else {
-  ReactDOM.render(tree, rootElement);
+  if (rootElement?.hasChildNodes()) {
+    ReactDOM.hydrate(tree, rootElement);
+  } else {
+    ReactDOM.render(tree, rootElement);
+  }
 }
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
+
+// if (process.env.NODE_ENV === 'development' && module.hot) {
+//   module.hot.accept('./App', render);
+// }
+
+render();
