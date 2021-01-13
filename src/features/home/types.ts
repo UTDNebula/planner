@@ -29,47 +29,47 @@ export type HonorsIndicator =
   /**
    * Collegium V Honors
    */
-  'cv' |
+  | 'cv'
 
   /**
    * Computer Science Scholar
    */
-  'cs2' |
+  | 'cs2'
 
   /**
-   * Liberal Arts Honors  
+   * Liberal Arts Honors
    */
-  'lahc' |
+  | 'lahc'
 
   /**
    * Behavioral and Brain Sciences Honors
    */
-  'bbs' |
+  | 'bbs'
 
   /**
    * Arts and Humanities Honors
    */
-  'ah' |
+  | 'ah'
 
   /**
    * Economic, Political & Policy Sciences Honors
    */
-  'epps' |
+  | 'epps'
 
   /**
    * Natural Sciences and Mathematics Honors
    */
-  'nsm' |
+  | 'nsm'
 
   /**
    * Arts & Technology Honors
    */
-  'atec' |
+  | 'atec'
 
   /**
    * Interdisciplinary Studies Honors
    */
-  'is';
+  | 'is';
 
 /**
  * A degree plan descriptor.
@@ -83,7 +83,6 @@ export interface PlanInfo {
  * Useful information about a student's academic career.
  */
 export interface StudentDetails {
-
   /**
    * The name of the student.
    */

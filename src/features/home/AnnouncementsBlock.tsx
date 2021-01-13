@@ -2,15 +2,16 @@ import React from 'react';
 import { colors, createStyles, makeStyles, Theme, Typography } from '@material-ui/core';
 import { Notice } from './types';
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
-  root: {
-    padding: theme.spacing(2),
-    backgroundColor: colors.grey[200],
-    overflowY: 'scroll',
-  },
-  announcementItem: {
-  },
-}));
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      padding: theme.spacing(2),
+      backgroundColor: colors.grey[200],
+      overflowY: 'scroll',
+    },
+    announcementItem: {},
+  }),
+);
 
 /**
  * Component properties for an AnnouncementsBlock.
@@ -29,13 +30,9 @@ export default function AnnouncementsBlock(props: AnnouncementsBlockProps) {
 
   const noticeItems = notices.map((notice) => {
     return (
-      <li className={classes.announcementItem}>
-        <div>
-          {notice.title}
-        </div>
-        {notice.action &&
-          <a href={notice.action.link}>{notice.action.text}</a>
-        }
+      <li className={classes.announcementItem} key={notice.title}>
+        <div>{notice.title}</div>
+        {notice.action && <a href={notice.action.link}>{notice.action.text}</a>}
       </li>
     );
   });

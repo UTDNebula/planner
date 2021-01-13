@@ -23,16 +23,15 @@ interface NavDrawerSemester {
  * Component properties for a SemesterNavigationDrawer.
  */
 interface SemesterNavigationDrawerProps {
-
   /**
    * The navigation items displayed in this drawer.
    */
   semesters: NavDrawerSemester[];
 
   /**
-   * The index of the currently selected navigation item.
+   * The ID of the currently selected navigation item.
    */
-  selected: number;
+  selected: string;
 
   /**
    * A callback notified on semester navigation item selection.
@@ -47,23 +46,23 @@ interface SemesterNavigationDrawerProps {
  *
  * @param drawerWidth The horizontal width of the drawer when rendered.
  */
-const useStyles = (drawerWidth: number = 240) => (
-  makeStyles((theme: Theme) => createStyles({
-    root: {
-      width: 240,
-    },
-    drawerContainer: {
-      overflow: 'auto',
-    },
-    drawerPaper: {
-      width: drawerWidth,
-    },
-    drawerTitle: {
-      padding: theme.spacing(2),
-    },
-  }))
-)();
-
+const useStyles = (drawerWidth = 240) =>
+  makeStyles((theme: Theme) =>
+    createStyles({
+      root: {
+        width: 240,
+      },
+      drawerContainer: {
+        overflow: 'auto',
+      },
+      drawerPaper: {
+        width: drawerWidth,
+      },
+      drawerTitle: {
+        padding: theme.spacing(2),
+      },
+    }),
+  )();
 
 /**
  * A navigation drawer that exposes shortcuts for quickly jumping to semesters.
@@ -71,9 +70,16 @@ const useStyles = (drawerWidth: number = 240) => (
 export default function SemesterNavigationDrawer(props: SemesterNavigationDrawerProps) {
   const { semesters, onSelection, selected } = props;
 
-  const navItems = semesters.map(({ code, title }, index) => {
+  const navItems = semesters.map(({ code, title }) => {
     return (
-      <MenuItem key={code} onClick={() => { onSelection(code) }} selected={selected === index} button>
+      <MenuItem
+        key={code}
+        onClick={() => {
+          onSelection(code);
+        }}
+        selected={selected === code}
+        button
+      >
         <ListItemText primary={title} />
       </MenuItem>
     );
@@ -82,14 +88,18 @@ export default function SemesterNavigationDrawer(props: SemesterNavigationDrawer
   const classes = useStyles();
 
   return (
-    <Drawer className={classes.root} variant="permanent" classes={{
-      paper: classes.drawerPaper,
-    }}>
+    <Drawer
+      className={classes.root}
+      variant="permanent"
+      classes={{
+        paper: classes.drawerPaper,
+      }}
+    >
       <Toolbar />
-      <Typography className={classes.drawerTitle} variant="h6">Semesters</Typography>
-      <List className={classes.drawerContainer}>
-        {navItems}
-      </List>
+      <Typography className={classes.drawerTitle} variant="h6">
+        Semesters
+      </Typography>
+      <List className={classes.drawerContainer}>{navItems}</List>
     </Drawer>
   );
 }

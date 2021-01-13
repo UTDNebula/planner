@@ -1,6 +1,8 @@
 import React from 'react';
 import { Story, Meta } from '@storybook/react';
-import DraggableCourseCard, { DraggableCourseCardProps } from '../features/planner/DraggableCourseCard';
+import DraggableCourseCard, {
+  DraggableCourseCardProps,
+} from '../features/planner/DraggableCourseCard';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 export default {
@@ -23,7 +25,7 @@ export default {
 } as Meta;
 
 const Template: Story<DraggableCourseCardProps> = (args) => (
-  <DragDropContext onDragEnd={() => { }}>
+  <DragDropContext onDragEnd={() => undefined}>
     <Droppable droppableId="test">
       {(provided) => (
         <div ref={provided.innerRef}>
@@ -39,5 +41,6 @@ PlanningCard.args = {
   id: '000001',
   code: 'CS 2305',
   title: 'Discrete Mathematics for Computing I',
-  description: 'Principles of counting. Boolean operations. Logic and proof methods. Recurrence relations. Sets, relations, functions. Elementary graph theory. Elementary number theory.'
+  description:
+    'Principles of counting. Boolean operations. Logic and proof methods. Recurrence relations. Sets, relations, functions. Elementary graph theory. Elementary number theory.',
 };

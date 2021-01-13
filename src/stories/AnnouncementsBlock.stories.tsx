@@ -25,7 +25,8 @@ MultipleAnnouncements.args = {
       },
     },
     {
-      title: 'It looks like this semester was a little rough. Maybe you should rethink your coursework.',
+      title:
+        'It looks like this semester was a little rough. Maybe you should rethink your coursework.',
       action: {
         text: 'Review four year plan',
         link: 'https://example.com',

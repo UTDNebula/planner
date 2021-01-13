@@ -5,27 +5,29 @@ import AnnouncementsBlock from './AnnouncementsBlock';
 import { Notice, StudentDetails } from './types';
 import UserDetailsBlock from './UserDetailsBlock';
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
-  root: {
-    display: 'flex',
-    background: colors.grey[200],
-    flexWrap: 'wrap',
-    marginBottom: theme.spacing(2),
-  },
-  userDetails: {
-    minWidth: 240,
-  },
-  announcements: {
-    flex: 1,
-    height: '100%',
-  },
-}));
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      display: 'flex',
+      background: colors.grey[200],
+      flexWrap: 'wrap',
+      marginBottom: theme.spacing(2),
+    },
+    userDetails: {
+      minWidth: 240,
+    },
+    announcements: {
+      flex: 1,
+      height: '100%',
+    },
+  }),
+);
 
 export default function HomeUserAnnouncementsBlock() {
   const classes = useStyles();
 
   /**
-   * 
+   *
    * Currently returns a list of sample notices.
    */
   function fetchNotices(): Notice[] {
@@ -38,7 +40,8 @@ export default function HomeUserAnnouncementsBlock() {
         },
       },
       {
-        title: 'It looks like this semester was a little rough. Maybe you should rethink your coursework.',
+        title:
+          'It looks like this semester was a little rough. Maybe you should rethink your coursework.',
         action: {
           text: 'Review four year plan',
           link: 'https://example.com',
@@ -72,12 +75,11 @@ export default function HomeUserAnnouncementsBlock() {
   const notices = fetchNotices();
 
   const { type, title } = studentDetails.planInfo;
-  const planTitle = `${type} in ${title}`; // TODO: Account for majors, minors  
+  const planTitle = `${type} in ${title}`; // TODO: Account for majors, minors
 
-  const {
-    year: graduatingYear,
-    semester: graduatingSemester,
-  } = convertSemesterToData(studentDetails.estimatedGraduation);
+  const { year: graduatingYear, semester: graduatingSemester } = convertSemesterToData(
+    studentDetails.estimatedGraduation,
+  );
 
   const classText = `Class of ${graduatingYear} ${graduatingSemester}`;
   const estimatedGraduation = classText;

@@ -21,13 +21,12 @@ export default {
   },
 } as Meta;
 
-const Template: Story<CourseCardProps> = (args) => (
-  <CourseCard {...args} />
-);
+const Template: Story<CourseCardProps> = (args) => <CourseCard {...args} />;
 
 export const PlanningCard = Template.bind({});
 PlanningCard.args = {
   code: 'CS 2305',
   title: 'Discrete Mathematics for Computing I',
-  description: 'Principles of counting. Boolean operations. Logic and proof methods. Recurrence relations. Sets, relations, functions. Elementary graph theory. Elementary number theory.'
+  description:
+    'Principles of counting. Boolean operations. Logic and proof methods. Recurrence relations. Sets, relations, functions. Elementary graph theory. Elementary number theory.',
 };
