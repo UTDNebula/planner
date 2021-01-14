@@ -131,12 +131,13 @@ export function createSamplePlan(
   startSemester = SemesterCode.f,
   title = 'My degree plan',
   major = 'Computer Science',
+  useRandom = true,
 ): StudentPlan {
   const plan = {
     id: planId,
     title: title,
     major: major,
-    semesters: generateSemesters(semesterCount, startYear, startSemester),
+    semesters: generateSemesters(semesterCount, startYear, startSemester, useRandom),
   };
   return plan;
 }
@@ -145,16 +146,16 @@ export function generateSemesters(
   count: number,
   startYear: number,
   startSemester: SemesterCode,
+  useRandom = false,
   courses: Course[] = [],
   coursesPerSemester = 5,
   onlyLong = true,
-  useRandom = false,
 ): Semester[] {
   const result = [];
   let semester = startSemester;
   let year = startYear;
-  const code = `${year}${semester}`;
   for (let i = 0; i < count; ++i) {
+    const code = `${year}${semester}`;
     const newSemester = {
       title: `${SEMESTER_CODE_MAPPINGS[semester]} ${year}`,
       code: code,
@@ -175,6 +176,7 @@ export function generateSemesters(
   }
   let semesterIndex = 0;
   for (const course of courses) {
+    const code = `${year}${semester}`;
     const current = result[semesterIndex];
     if (current.courses.length <= coursesPerSemester) {
       current.courses.push(course);

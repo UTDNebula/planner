@@ -129,6 +129,7 @@ function createDisplayPlan(coursesPerSemester = 4, planId = '2020-cs-undergrad')
     3,
     2020,
     SemesterCode.f,
+    false,
     CS_DEMO_REQUIREMENTS,
     coursesPerSemester,
   );

@@ -1,40 +1,52 @@
 import React from 'react';
-import styles from './Home.module.css';
+import { AnimateSharedLayout, motion } from 'framer-motion';
 import { NoticeBlock } from '../../components/home/announcements/NoticeBlock';
 import UserWelcome from '../../components/home/UserWelcome';
+import UserPlanSheet from '../../components/home/UserPlanSheet';
+import useUserPlanSheetTransition from '../../components/home/userPlanSheetTransition';
+import HomeUserInfo from '../../components/home/HomeUserInfo';
 
 /**
  * The home screen for the app.
  */
 export default function Home(): JSX.Element {
+  const { sheetIsOpen, togglePlan } = useUserPlanSheetTransition();
+
   return (
-    <>
-      <div className="container mx-auto mt-16 p-4">
-        <UserWelcome />
-      </div>
-      <section className="container mx-auto md:grid min-h-full lg:grid-cols-12">
-        <div className="lg:col-span-4 bg-blue-200 rounded-md m-2 p-4">
-          <h1 className="text-headline5">Student Name</h1>
-          <div className="text-subtitle1">Junior studying Computer Science</div>
-          <div className="text-caption">A Computer Science Scholar</div>
+    <AnimateSharedLayout>
+      <main className="bg-gray-100 h-full">
+        <div className="w-screen max-w-6xl mx-auto pt-16 p-4">
+          <UserWelcome />
         </div>
-        <div className="lg:col-span-8 bg-gray-200 rounded-md m-2 p-4 border-2 border-gray-300">
-          <NoticeBlock />
-        </div>
-      </section>
-      <section className="container mx-auto md:flex m-4 border-gray-400 shadow-md">
-        <div className={styles.blockCardVariant}>
-          <div className="text-headline5">This semester</div>
-          {/* Courses */}
-        </div>
-        <div className={styles.blockCard}>
-          <div className="text-headline5">What&apos;s next</div>
-        </div>
-      </section>
-    </>
-    // <Container className={classes.root}>
-    //   <HomeUserAnnouncementsBlock />
-    //   <HomePlanBlock />
-    // </Container>
+        <section className="w-screen max-w-6xl mx-auto md:grid min-h-full lg:grid-cols-12 mb-8">
+          <div className="lg:col-span-4 m-2 p-4 bg-yellow-200 rounded-md border-2 border-gray-300">
+            <HomeUserInfo />
+          </div>
+          <div className="lg:col-span-8 m-2 p-4 bg-white rounded-md border-2 border-gray-300">
+            <NoticeBlock />
+          </div>
+        </section>
+        <motion.section
+          layoutId="planSheet"
+          className="mx-auto md:flex shadow-md rounded-lg"
+          animate={
+            sheetIsOpen
+              ? {
+                  y: 0,
+                  width: '100vw',
+                  height: '100%',
+                }
+              : {
+                  y: 'auto',
+                  width: '72rem',
+                  height: 'auto',
+                }
+          }
+          transition={{ duration: 0.33 }}
+        >
+          <UserPlanSheet isOpen={sheetIsOpen} onExpandClick={togglePlan} />
+        </motion.section>
+      </main>
+    </AnimateSharedLayout>
   );
 }
