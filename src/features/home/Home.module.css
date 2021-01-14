@@ -1,0 +1,10 @@
+.blockCard {
+  @apply rounded-md m-2;
+  @apply p-4;
+}
+
+.blockCardVariant {
+  @apply rounded-md m-2;
+  @apply p-4;
+  @apply bg-blue-200;
+}
