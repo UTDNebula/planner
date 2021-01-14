@@ -13,21 +13,20 @@ export interface AuthUser {
  * A mapping of all users.
  */
 export const users: { [key: string]: AuthUser } = {
-  'guest': {
+  guest: {
     id: 'guest',
     name: 'Guest',
     image: null,
   }, // No privileges
-  'default': {
+  default: {
     id: 'default',
-    name: 'Sudent',
+    name: 'Student',
     image: 'https://picsum.photos/256',
   }, // First (and only) signed in user
 };
 
-
 interface AuthContextState {
-  user: any;
+  user: AuthUser;
   switchAccounts: (accountId: 'guest' | 'default') => void;
   signOut: () => void;
 }
@@ -35,9 +34,9 @@ interface AuthContextState {
 const AuthContext = React.createContext<AuthContextState | undefined>(undefined); // Find a better solution for this
 
 /**
- * A React hook that exposes 
+ * A React hook that exposes
  */
-function useAuthContext() {
+function useAuthContext(): AuthContextState {
   const context = React.useContext(AuthContext);
   if (context == null) {
     throw new Error('useAuthState must be used in an AuthContextProvider');
@@ -45,14 +44,14 @@ function useAuthContext() {
   return context;
 }
 
-function AuthProvider({ children }: { children: React.ReactNode }) {
+function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element {
   const [user, setUser] = React.useState<AuthUser>(users.guest);
 
   /**
-  * Switches the currently active user session.
-  *
-  * @param accountId 
-  */
+   * Switches the currently active user session.
+   *
+   * @param accountId The UID of the account to switch to
+   */
   function switchAccounts(accountId: 'guest' | 'default') {
     const user = users[accountId];
     setUser(user);
@@ -62,7 +61,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
 
   /**
    * Signs out the currently signed-in user.
-   * 
+   *
    * This switches to the guest user.
    */
   function signOut() {
@@ -78,11 +77,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
     signOut,
   };
 
-  return (
-    <AuthContext.Provider value={authContextValue}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={authContextValue}>{children}</AuthContext.Provider>;
 }
 
 export { AuthContext, AuthProvider, useAuthContext };

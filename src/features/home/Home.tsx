@@ -1,7 +1,7 @@
 import React from 'react';
-import { Toolbar } from '@material-ui/core';
 import styles from './Home.module.css';
 import { NoticeBlock } from '../../components/home/announcements/NoticeBlock';
+import UserWelcome from '../../components/home/UserWelcome';
 
 /**
  * The home screen for the app.
@@ -9,7 +9,9 @@ import { NoticeBlock } from '../../components/home/announcements/NoticeBlock';
 export default function Home(): JSX.Element {
   return (
     <>
-      <Toolbar /> {/* TODO: Fix toolbar for spacing */}
+      <div className="container mx-auto mt-16 p-4">
+        <UserWelcome />
+      </div>
       <section className="container mx-auto md:grid min-h-full lg:grid-cols-12">
         <div className="lg:col-span-4 bg-blue-200 rounded-md m-2 p-4">
           <h1 className="text-headline5">Student Name</h1>
