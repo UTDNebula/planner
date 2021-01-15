@@ -67,7 +67,9 @@ const useStyles = (drawerWidth = 240) =>
 /**
  * A navigation drawer that exposes shortcuts for quickly jumping to semesters.
  */
-export default function SemesterNavigationDrawer(props: SemesterNavigationDrawerProps) {
+export default function SemesterNavigationDrawer(
+  props: SemesterNavigationDrawerProps,
+): JSX.Element {
   const { semesters, onSelection, selected } = props;
 
   const navItems = semesters.map(({ code, title }) => {

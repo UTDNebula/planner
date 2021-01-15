@@ -18,10 +18,10 @@ function useQuery() {
 /**
  * A hook to watch the current plan ID and planning mode.
  */
-export function useObservePlanId() {
+export function useObservePlanId(): ObservePlanIdReturnType {
   const { planId } = useParams<AppParams>();
   const query = useQuery();
-  const mode = query.get('mode');
+  const mode = (query.get('mode') as PLANNING_MODE) ?? 'plan';
 
   const inPlanningMode = mode === 'plan';
 
@@ -31,3 +31,9 @@ export function useObservePlanId() {
     mode,
   };
 }
+
+type ObservePlanIdReturnType = {
+  planId: string;
+  inPlanningMode: boolean;
+  mode: PLANNING_MODE;
+};

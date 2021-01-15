@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-export default function AuthPage() {
+export default function AuthPage(): JSX.Element {
   const history = useHistory();
   history.push('/app');
   // TODO: Like actually sign in

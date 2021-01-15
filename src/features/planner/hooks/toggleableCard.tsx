@@ -6,9 +6,9 @@
  *
  * @param enabled True if the card allows drag and drop functionality
  */
-export function useToggleableCard(enabled: boolean) {
+export function useToggleableCard(enabled: boolean): TogglecableCardReturnType {
   const elevation = enabled ? 1 : 0;
-  const cardProps: { [key: string]: 'elevation' | 'outlined' } = {
+  const cardProps: { variant: 'elevation' | 'outlined' } = {
     variant: enabled ? 'elevation' : 'outlined',
   };
   return {
@@ -16,3 +16,8 @@ export function useToggleableCard(enabled: boolean) {
     cardProps,
   };
 }
+
+type TogglecableCardReturnType = {
+  elevation: number;
+  cardProps: { variant: 'elevation' | 'outlined' };
+};

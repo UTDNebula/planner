@@ -46,7 +46,7 @@ interface AddSemesterTriggerProps {
 /**
  * A button that is triggered when a semester should be added to a plan.
  */
-export default function AddSemesterTrigger(props: AddSemesterTriggerProps) {
+export default function AddSemesterTrigger(props: AddSemesterTriggerProps): JSX.Element {
   const { infoText, onAddSemester } = props;
   const classes = useStyles();
   return (

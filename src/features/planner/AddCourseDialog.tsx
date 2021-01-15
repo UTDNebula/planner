@@ -2,7 +2,6 @@ import React from 'react';
 import {
   Button,
   Checkbox,
-  createStyles,
   Dialog,
   DialogTitle,
   FormControl,
@@ -10,24 +9,9 @@ import {
   FormGroup,
   FormHelperText,
   FormLabel,
-  makeStyles,
-  Theme,
 } from '@material-ui/core';
 import { Course } from '../../app/data';
 import { DestinationData } from './hooks/selectableCourseDialog';
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {},
-    buttonGroup: {
-      padding: theme.spacing(1),
-      alignContent: 'end',
-    },
-    selectCoursesGroup: {
-      padding: theme.spacing(2),
-    },
-  }),
-);
 
 /**
  * Component properties for a AddCourseDialog.
@@ -77,7 +61,7 @@ export default function AddCourseDialog({
   open,
   onCancelled,
   onCoursesSelected,
-}: AddCourseDialogProps) {
+}: AddCourseDialogProps): JSX.Element {
   const destinationName = destination ? destination.name : '';
   const destinationText = `Add course${allowMultiple ? 's' : ''} to ${destinationName}`;
 
@@ -120,7 +104,7 @@ export default function AddCourseDialog({
     );
   });
 
-  const classes = useStyles();
+  // const classes = useStyles();
 
   return (
     <Dialog open={open} onClose={handleOnClose} aria-labelledby={destinationText}>

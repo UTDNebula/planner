@@ -20,7 +20,7 @@ const useStyles = (elevated: boolean) =>
 /**
  * A toolbar with functionality specific to the LandingPage.
  */
-export default function LandingToolbar() {
+export default function LandingToolbar(): JSX.Element {
   const shouldElevate = false;
   const classes = useStyles(shouldElevate);
 

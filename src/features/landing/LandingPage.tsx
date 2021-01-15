@@ -27,6 +27,7 @@ function useDemoSensor(plan: StudentPlan) {
   const semesters = plan.semesters;
   console.log(semesters);
   return (api: SensorAPI) => {
+    console.log(api);
     // TODO: Make these hooks work
     // const start = React.useCallback(function start(event: MouseEvent) {
     //   // TODO: Swap out wih actual course card IDs
@@ -150,7 +151,7 @@ function createDisplayPlan(coursesPerSemester = 4, planId = '2020-cs-undergrad')
  * This is mostly for marketing, but we also show some lightweight
  * interactive demos since why not.
  */
-export default function LandingPage() {
+export default function LandingPage(): JSX.Element {
   const contents = SUBTEXT_VARIANTS[0];
 
   const samplePlan = createDisplayPlan();
