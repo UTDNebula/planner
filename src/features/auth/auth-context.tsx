@@ -1,4 +1,6 @@
 import React from 'react';
+import { Course, Grade } from '../../app/data';
+import { YearClassification } from '../../app/student';
 
 /**
  * A user for this app.
@@ -9,13 +11,41 @@ export interface AuthUser {
   image: string | null;
 }
 
+export interface PlanData {
+  id: string;
+  title: string;
+  type: 'major' | 'minor' | 'certificate' | 'honors';
+}
+
+export interface CourseAttempt {
+  semester: string;
+  grade: Grade;
+  course: Course;
+}
+
+export interface StudentInfo {
+  classification: YearClassification;
+  /**
+   * An ID corresponding to the user's primary major of study.
+   */
+  primaryMajor: string;
+  /**
+   * A list of IDs corresponding to all selected plans of study.
+   */
+  requiredPlans: PlanData[];
+
+  joinDate: Date;
+
+  attemptedCourses: CourseAttempt[];
+}
+
 /**
  * A mapping of all users.
  */
 export const users: { [key: string]: AuthUser } = {
   guest: {
     id: 'guest',
-    name: 'Guest',
+    name: 'Guest Student',
     image: null,
   }, // No privileges
   default: {
