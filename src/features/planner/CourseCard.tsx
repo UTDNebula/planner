@@ -46,9 +46,19 @@ export interface CourseCardProps {
    * True if an options menu should be shown for this course.
    */
   enabled: boolean;
+
+  /**
+   * A callback triggered when an a course should be removed from its container.
+   */
+  onOptionRemove?: (key: string) => void;
+
+  /**
+   * A callback triggered when a course should be swapped with another one
+   */
+  onOptionSwap?: (key: string) => void;
 }
 
-const useStyles = (enabled: boolean) => {
+const useStyles = () => {
   return makeStyles((theme: Theme) => {
     return createStyles({
       root: {
@@ -86,10 +96,20 @@ function pluralize(count?: number, item?: string, defaultCount = 0) {
  * A card showing course details.
  */
 function CourseCard(
-  { code, title, description, creditHours, estimatedWorkload, enabled, ...other }: CourseCardProps,
-  ref: React.Ref<any>,
+  {
+    code,
+    title,
+    description,
+    creditHours,
+    estimatedWorkload,
+    enabled,
+    onOptionRemove = () => undefined,
+    onOptionSwap = () => undefined,
+    ...other
+  }: CourseCardProps,
+  ref: React.Ref<HTMLElement>,
 ) {
-  const classes = useStyles(enabled);
+  const classes = useStyles();
 
   let tooltipReason;
   if (estimatedWorkload === undefined) {
@@ -118,17 +138,34 @@ function CourseCard(
 
   const { cardProps } = useToggleableCard(enabled);
 
+  // const cardStyles = {
+
+  // };
+
   return (
-    <Card ref={ref} className={classes.root} raised={false} {...cardProps} {...other}>
-      {/* TODO: Add option to show letter grade */}
-      <CardContent>
-        <div className="text-headline6 font-bold">{code}</div>
-        <div className="text-subtitle1">{title}</div>
-        <div className="text-subtitle2">{description}</div>
-        {metadata}
-      </CardContent>
-      {/* TODO: Show options menu */}
-    </Card>
+    <article ref={ref} className="mt-2 p-4 bg-white border-gray-200 border rounded-md">
+      <div className="text-headline6 font-bold">{code}</div>
+      <div className="text-subtitle1 font-bold">{title}</div>
+      <div className="text-body2">{description}</div>
+      <div className="mt-1">
+        <span className="text-body2">{creditHoursText}</span>
+        <span>
+          <Tooltip title={tooltipReason} placement="right-end">
+            <InfoIcon className={classes.popupIcon} />
+          </Tooltip>
+        </span>
+      </div>
+    </article>
+    // <Card ref={ref} className={classes.root} raised={false} {...cardProps} {...other}>
+    //   {/* TODO: Add option to show letter grade */}
+    //   <CardContent>
+    //     <div className="text-headline6 font-bold">{code}</div>
+    //     <div className="text-subtitle1">{title}</div>
+    //     <div className="text-subtitle2">{description}</div>
+    //     {metadata}
+    //   </CardContent>
+    //   {/* TODO: Show options menu */}
+    // </Card>
   );
 }
 
