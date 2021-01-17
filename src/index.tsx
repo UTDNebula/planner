@@ -8,6 +8,8 @@ import store from './app/store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 import { CssBaseline } from '@material-ui/core';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { AuthProvider } from './features/auth/auth-context';
 
 function render() {
   const rootElement = document.getElementById('root');
@@ -15,9 +17,13 @@ function render() {
   const tree = (
     <React.StrictMode>
       <CssBaseline />
-      <Provider store={store}>
-        <App />
-      </Provider>
+      <AuthProvider>
+        <Provider store={store}>
+          <Router>
+            <App />
+          </Router>
+        </Provider>
+      </AuthProvider>
     </React.StrictMode>
   );
 
