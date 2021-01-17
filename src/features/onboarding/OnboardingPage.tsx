@@ -1,4 +1,6 @@
+import { Button, TextField } from '@material-ui/core';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Disclaimer from '../../components/onboarding/Disclaimer';
 import { useAuthContext } from '../auth/auth-context';
 import { HonorsIndicator } from '../home/types';
@@ -167,6 +169,7 @@ function useUserSetup(studentDefaultName = 'Comet') {
 
   return {
     data,
+    setData,
     consentData,
     setConsentData,
     setScholarship,
@@ -180,21 +183,91 @@ function useUserSetup(studentDefaultName = 'Comet') {
  */
 export default function OnboardingPage(): JSX.Element {
   const { user } = useAuthContext();
-  const { data, consentData, setConsentData } = useUserSetup();
+  const { data, setData, consentData, setConsentData } = useUserSetup();
 
   if (user === null) {
     // TODO: Do something useful
   }
 
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setData({
+      ...data,
+      preferredName: event.currentTarget.value,
+    });
+  };
+
+  function generateRedirect({ plan }: OnboardingFormData): string {
+    // const modifiers = Object.entries(plan.programs).reduce((acc, (key, value)) => {
+    //   acc += `${key}=${value}`;
+    //   return acc;
+    // }, '');
+    const coursePlans = plan.majors.concat(plan.minors).join('&');
+    return `?coursePlans=${coursePlans}&fastTrack=${plan.programs.fastTrack}`;
+  }
+
+  const onboardingRedirect = `/app/plans/new${generateRedirect(data)}`;
+
+  const handleSubmit = () => {
+    console.log('Saving user information from onboarding:', data);
+  };
+
+  // TODO: Find better way to structure this glorified form.
   return (
-    <div className="h-full w-full">
-      <section className="container">
-        <Disclaimer onConsent={setConsentData} />
+    <div className="h-full w-full py-8">
+      <section className="">
+        <div className="max-w-4xl mx-auto p-8 bg-white">
+          <div className="text-headline4 pt-4 pb-2">Before we start...</div>
+          <Disclaimer onConsent={setConsentData} />
+        </div>
       </section>
-      {consentData && (
-        <section>
-          <div className="text-headline-4">Tell us about yourself.</div>
-        </section>
+      {consentData.disclaimer && (
+        <>
+          <section className="max-w-4xl mx-auto p-8">
+            <div className="text-headline4 font-bold mb-4">Tell us about yourself.</div>
+            <TextField
+              id="studentName"
+              label="Preferred name"
+              variant="filled"
+              value={data.preferredName}
+              onChange={handleChange}
+            />
+            <div className="text-headline6 font-bold mt-4 mb-4">
+              Are you recieving financial student aid?
+            </div>
+            <div className="text-headline6 font-bold mb-4">
+              Are you recieving any school-provided scholarships?
+            </div>
+          </section>
+          <section className="max-w-4xl mx-auto p-8">
+            <div className="text-headline4 font-bold mb-4">What are you studying?</div>
+          </section>
+          <section className="max-w-4xl mx-auto p-8">
+            <div className="text-headline4 font-bold mb-4">
+              What would you like to do after graduation?
+            </div>
+          </section>
+          <section className="max-w-4xl mx-auto p-8">
+            <div className="text-headline4 font-bold mb-4">
+              Are you a part of any special honors programs?
+            </div>
+          </section>
+          <section className="max-w-4xl mx-auto p-8">
+            <div className="text-headline4 font-bold mb-4">
+              What would you like to do during your time at UTD?
+            </div>
+          </section>
+          <section className="max-w-4xl mx-auto p-8">
+            <Button
+              color="primary"
+              variant="contained"
+              component={Link}
+              to={onboardingRedirect}
+              onClick={handleSubmit}
+            >
+              Generate plan
+            </Button>
+          </section>
+        </>
       )}
     </div>
   );

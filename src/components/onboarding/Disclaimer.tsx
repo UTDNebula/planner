@@ -1,3 +1,4 @@
+import { Button, Checkbox, FormControlLabel } from '@material-ui/core';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import ServiceName from '../common/ServiceName';
@@ -59,53 +60,133 @@ export default function Disclaimer({ onConsent }: DisclaimerProps): JSX.Element 
     onConsent(consentState);
   };
 
+  const { disclaimer, personalization, analytics, performance } = consentState;
+
   return (
     <article>
-      <p className="text-body1">
-        <ServiceName /> is a student-built project maintained by the Development officers at
-        <a href="https://acmutd.co">ACM UTD</a>, a registered student organization at The University
-        of Texas at Dallas.
-      </p>
-      <p className="text-body1">
-        <b className="font-bold">
-          This is an unofficial tool only to be used to supplement other campus resources.
-        </b>
-        <ServiceName /> tries its best to help you plan out college, but sometimes it may not be
-        up-to-date. When in doubt, check the{' '}
-        <a href="https://catalog.utdallas.edu/now">Academic catalog</a>
-        for the most current information on academic policies, and ask your academic advisors and/or
-        financial aid counselors and/or scholarship office when you have a question that could
-        impact your academic career.
-      </p>
-      <p>
-        Finally, an account is not required to use this service, but having one allows more
-        functionality like backing up your degree plan to the cloud and sharing a link to your plan
-        with others.
-      </p>
-
-      <p className="mt-2">With all of that out of the way, let&apos;s get started!</p>
-      <div>
-        <h1>Personalization</h1>
-        <p className="text-body1"></p>
-        <h1>Analytics</h1>
-        <p className="text-body1">
-          We want to make planning your college experience as easy and useful as possible.
-          Collecting anonymous analytics helps us power features like:
+      <div className="max-w-4xl mx-auto py-2">
+        <p className="text-body1 my-2">
+          <ServiceName /> is a student-built project maintained by the Development team at&nbsp;
+          <a className="text-blue-500 font-bold" href="https://acmutd.co">
+            ACM UTD
+          </a>
+          , a registered student organization at The University of Texas at Dallas.
         </p>
-        <ul className="text-body1">
-          <li>Grade distributions</li>
-          <li>Class popularity estimates</li>
-        </ul>
-        <p>
-          Analytics help us understand which features are most used. Comet Planning does not track
-          you across the web. All data you give is kept within the service and not shared with
-          third-parties. By opting in, you&apos;ll help us keep Comet Planning running for a long
-          time
+        <p className="text-body2 my-2">
+          <b className="font-bold">
+            This is an unofficial tool only to be used to supplement other campus resources.{' '}
+          </b>
+          <ServiceName /> tries its best to help you plan out college, but sometimes it may not be
+          up-to-date. When in doubt, check the academic{' '}
+          <a className="text-blue-500 font-bold" href="https://catalog.utdallas.edu/now">
+            Catalog
+          </a>{' '}
+          for the most current information on academic policies, and ask your academic advisors
+          and/or financial aid counselors and/or scholarship office when you have a question that
+          could impact your academic career.
         </p>
-        <p>
-          For more inforation, see our <Link to="/privacy">Privacy Policy</Link>
-        </p>
+        <FormControlLabel
+          control={<Checkbox checked={disclaimer} onChange={handleChange} name="disclaimer" />}
+          label="I understand that Comet Planning is a student-maintained project not maintained or officially endorsed by The University of Texas at Dallas or any of its departments."
+        />
+        {disclaimer && (
+          <p className="text-body1 my-2">With that out of the way, let&apos;s get started!</p>
+        )}
       </div>
+
+      {disclaimer && (
+        <div className="py-4">
+          <div className="max-w-4xl mx-auto">
+            {/* TODO(onboarding): Illustrations or colors or something. No wall of text. */}
+            <div className="">
+              <div className="my-4">
+                <h1 className="text-headline5">Personalization</h1>
+                <p className="text-body1 py-1">
+                  Comet Planning supports some functionality that lets you back up information to an
+                  account:
+                </p>
+                <ul className="text-body1 list-disc list-inside my-1">
+                  <li>Customized degree plans</li>
+                  <li>Personal career goal information</li>
+                  <li>Course recommendations</li>
+                </ul>
+                <p className="text-body1 py-1">
+                  You do not have to enable personalization to use the following features:
+                </p>
+                <ul className="text-body1 list-disc list-inside my-1">
+                  <li>Course planning</li>
+                  <li>Unofficial degree validation</li>
+                  <li>Exporting a plan to PDF/spreadsheet/image</li>
+                </ul>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={personalization}
+                      onChange={handleChange}
+                      name="personalization"
+                    />
+                  }
+                  label="I agree to let Comet Planning personalize my experience."
+                />
+                {/* TODO: Link to create an account with redirect */}
+              </div>
+              <div className="my-4">
+                <h1 className="text-headline5">Analytics</h1>
+                <p className="text-body1 py-1">
+                  We want to make planning your college experience as easy and useful as possible.
+                  Collecting anonymous analytics helps us power features like:
+                </p>
+                <ul className="text-body1 list-disc list-inside my-1">
+                  <li>Grade distributions</li>
+                  <li>Class popularity estimates</li>
+                </ul>
+                <p>
+                  Analytics help us understand which features are most used. Comet Planning does not
+                  track you across the web. All data you give is kept within the service and not
+                  shared with third-parties. By opting in, you&apos;ll help us keep updating Comet
+                  Planning with new features based on your input.
+                </p>
+                <p className="text-body1 py-1">
+                  For more inforation, see our{' '}
+                  <Link className="text-blue-500 font-bold" to="/privacy">
+                    Privacy Policy
+                  </Link>
+                  .
+                </p>
+                <FormControlLabel
+                  control={
+                    <Checkbox checked={analytics} onChange={handleChange} name="analytics" />
+                  }
+                  label="I opt into analytics collection for Comet Planning."
+                />
+              </div>
+              <div className="my-4">
+                <h1 className="text-headline5">Performance</h1>
+                <p className="text-body1">
+                  By opting into performance monitoring, the Comet Planning maintainers will:
+                </p>
+                <ul className="text-body1 list-disc list-inside my-1">
+                  <li>Be able to better diagnose errors that take place in the app</li>
+                  <li>Understand which app features are being used.</li>
+                  <li>Class popularity estimates</li>
+                  <li>Know how to guide future development of the project</li>
+                </ul>
+                <FormControlLabel
+                  control={
+                    <Checkbox checked={performance} onChange={handleChange} name="performance" />
+                  }
+                  label="I opt into performance monitoring for Comet Planning."
+                />
+              </div>
+            </div>
+            <div className="my-2">
+              <Button color="primary" variant="contained" onClick={handleDone}>
+                Start planning
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </article>
   );
 }
