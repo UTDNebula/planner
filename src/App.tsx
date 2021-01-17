@@ -8,6 +8,7 @@ import DegreePlannerChrome from './features/planner/DegreePlannerChrome';
 import AppToolbar from './features/common/toolbar/AppToolbar';
 import LandingPage from './features/landing/LandingPage';
 import AuthPage from './features/auth/AuthPage';
+import OnboardingPage from './features/onboarding/OnboardingPage';
 import './App.css';
 
 const useStyles = makeStyles(() =>
@@ -53,6 +54,9 @@ function App(): JSX.Element {
                   {/* TODO: Share toolbar */}
                   {/* <AppToolbar shouldShowProfile={true} title={toolbarTitle} /> */}
                   <Home />
+                </Route>
+                <Route exact path="/app/onboarding">
+                  <OnboardingPage />
                 </Route>
                 <Route path="/app/plans/:planId">
                   <AppToolbar shouldShowProfile={true} title={toolbarTitle} />

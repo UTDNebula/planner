@@ -69,7 +69,12 @@ export type HonorsIndicator =
   /**
    * Interdisciplinary Studies Honors
    */
-  | 'is';
+  | 'is'
+
+  /**
+   * Not in any honors program.
+   */
+  | 'none';
 
 /**
  * A degree plan descriptor.
