@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAuthContext } from '../auth/auth-context';
+import { useAuthContext } from '../../features/auth/auth-context';
 
 /**
  * A block of user information.
