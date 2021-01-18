@@ -51,39 +51,27 @@ Storybook is a tool for building UI components. More information [here](https://
 npm run storybook
 ```
 
-### Initializing Firebase
-To set up Firebase, go to the Firebase console and download the credientials. Paste the
-body of the config into `src/firebase.config.js` in the exported block.
+### Setting up Firebase
+Create a `.env.local` file at the root of the repository. It should contain the
+following environment variables copied from their respective names in the
+Firebase developer console.
 
-For example, `src/firebase-config.js` should look something like this:
-```js
-export default {
-  // Config goes here
-  apiKey: 'some_api_key',
-  authDomain: 'cometplanning.firebaseapp.com',
-  databaseURL: 'https://cometplanning.firebaseio.com',
-  projectId: 'cometplanning',
-  storageBucket: 'cometplanning.appspot.com',
-  messagingSenderId: 'some_messaging_sender_id',
-  appId: 'some_app_id',
-};
+```env
+REACT_APP_FIREBASE_API_KEY=<apiKey>
+REACT_APP_FIREBASE_AUTH_DOMAIN=<authDomain>
+REACT_APP_FIREBASE_DATABASE_URL=<databaseURL>
+REACT_APP_FIREBASE_PROJECT_ID=<projectId>
+REACT_APP_FIREBASE_STORAGE_BUCKET=<storageBucket>
+REACT_APP_FIREBASE_MESSAGING_SENDER_ID=<messagingSenderId>
+REACT_APP_FIREBASE_APP_ID=<appId>
 ```
 
-Note: Changes to `src/firebase-config.js` should not be checked into source
-control. To prevent accidents, the project `.gitignore` automatically ignores
-changes to the file.
+Note: If you update the Firebase environment variables while the development
+server is running, you will have to restart it to apply the changes. 
+
 
 ## How to Contribute
-
-This project loosely uses the [Git Flow](https://nvie.com/posts/a-successful-git-branching-model/) branching model.
-There are three types of branches: `master`, which always contains complete, production-ready copies of project code, `dev`, which is guaranteed to at least be runnable on any machine (generally free of bugs), and feature branches, which are children of `dev` that are primarily used to create new features.
-Here is the process to make changes to the project:
-
-1. From `dev`, create a new feature branch. For example, `auth-signin`
-2. Make commits to the feature branch.
-3. When enough of the feature is complete, open a pull request to merge changes from your feature branch to `dev`. For larger features or changes to code, open a draft pull request to track changes until completion.
-4. Request a review from a project contributor, and add the pull request to a project board and milestone (if applicable)
-5. When a review is complete, a contributor will squash merge the feature branch into `dev`. The feature branch can then be deleted.
+Contributors to the project are welcome! See the [CONTRIBUTING.md](./CONTRIBUTING.md) file for more information.
 
 ### Contributors
 **Current:**
