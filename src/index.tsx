@@ -10,6 +10,7 @@ import * as serviceWorker from './serviceWorker';
 import { CssBaseline } from '@material-ui/core';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { AuthProvider } from './features/auth/auth-context';
+import './index.css';
 
 function render() {
   const rootElement = document.getElementById('root');
