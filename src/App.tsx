@@ -9,6 +9,7 @@ import LandingPage from './features/landing/LandingPage';
 import AuthPage from './features/auth/AuthPage';
 import OnboardingPage from './features/onboarding/OnboardingPage';
 import { useAppLocation } from './features/common/appLocation';
+import TermsPage from './pages/Terms';
 import './App.css';
 
 /**
@@ -27,6 +28,9 @@ function App(): JSX.Element {
           <Switch>
             <Route exact path="/">
               <LandingPage />
+            </Route>
+            <Route path="/terms">
+              <TermsPage />
             </Route>
             <Route path="/auth">
               <AuthPage />
