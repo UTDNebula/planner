@@ -9,8 +9,9 @@ import LandingPage from './features/landing/LandingPage';
 import AuthPage from './features/auth/AuthPage';
 import OnboardingPage from './features/onboarding/OnboardingPage';
 import { useAppLocation } from './features/common/appLocation';
-import TermsPage from './pages/Terms';
+import PrivacyPage from './pages/Privacy';
 import SupportPage from './pages/Support';
+import TermsPage from './pages/Terms';
 import './App.css';
 
 /**
@@ -35,6 +36,9 @@ function App(): JSX.Element {
             </Route>
             <Route path="/terms">
               <TermsPage />
+            </Route>
+            <Route path="/privacy">
+              <PrivacyPage />
             </Route>
             <Route path="/auth">
               <AuthPage />
