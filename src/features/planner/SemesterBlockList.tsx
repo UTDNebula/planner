@@ -1,7 +1,8 @@
 import React from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
-import SemesterBlock, { SemesterCallback } from './SemesterBlock';
+import { SemesterCallback } from './SemesterBlock';
 import { Semester } from '../../app/data';
+import DroppableSemesterBlock from '../../components/common/DroppableSemesterBlock/DroppableSemesterBlock';
 
 /**
  * A direction a list should scroll.
@@ -29,12 +30,11 @@ const useStyles = (shouldScroll: boolean, direction: ScrollDirection) => {
     const isNormal = direction === ScrollDirection.horizontally;
     const overflow = isNormal ? 'overflowX' : 'overflowY';
     return createStyles({
-      root: {
-        // [overflow]: shouldScroll ? 'scroll' : 'hidden',
-        overflowX: 'scroll',
-        paddingLeft: theme.spacing(2),
-        paddingRight: theme.spacing(2),
-      },
+      // root: {
+      //   [overflow]: shouldScroll ? 'scroll' : 'hidden',
+      //   paddingLeft: theme.spacing(2),
+      //   paddingRight: theme.spacing(2),
+      // },
       paper: {
         padding: theme.spacing(2),
         textAlign: 'center',
@@ -109,10 +109,10 @@ export default function SemesterBlockList({
   direction,
   focusedSemester,
   children,
-}: React.PropsWithChildren<SemesterBlockListProps>) {
+}: React.PropsWithChildren<SemesterBlockListProps>): JSX.Element {
   const blockRefs = semesters
     .map((semester) => semester.code)
-    .reduce((refs: { [key: string]: React.RefObject<HTMLElement> }, semesterCode) => {
+    .reduce((refs: { [key: string]: React.RefObject<HTMLDivElement> }, semesterCode) => {
       refs[semesterCode] = React.createRef();
       return refs;
     }, {});
@@ -135,10 +135,10 @@ export default function SemesterBlockList({
   const semesterBlocks = semesters.map((semester) => {
     const ref = blockRefs[semester.code];
     return (
-      <SemesterBlock
+      <DroppableSemesterBlock
         ref={ref}
+        // id={semester.code}
         key={semester.code}
-        showDragHandle={enabled}
         semesterCode={semester.code}
         semesterTitle={semester.title}
         courses={semester.courses}
@@ -158,7 +158,16 @@ export default function SemesterBlockList({
   }, [focusedSemester]);
 
   return (
-    <div className={classes.root}>
+    <div
+      style={{
+        overflowX: 'scroll',
+        gridAutoFlow: 'column',
+        display: 'grid',
+        gridGap: '4px',
+        gridAutoColumns: 'calc(50% - 24px)',
+        padding: '16px',
+      }}
+    >
       {semesterBlocks}
       {children}
     </div>

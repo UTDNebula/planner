@@ -12,10 +12,10 @@ import {
 } from '@material-ui/core';
 import { DragIndicator, MoreVert } from '@material-ui/icons';
 import { Droppable } from 'react-beautiful-dnd';
-import { Course } from '../../app/data';
-import DraggableCourseCard from '../../features/planner/DraggableCourseCard';
-import { useToggleableCard } from '../../features/planner/hooks/toggleableCard';
-import { ScrollDirection } from '../../features/planner/SemesterBlockList';
+import { Course } from '../../../app/data';
+import DraggableCourseCard from '../DraggableCourseCard';
+import { useToggleableCard } from '../CourseCard/toggleableCard';
+import { ScrollDirection } from '../../../features/planner/SemesterBlockList';
 
 /**
  * Component properties for an {@link SemesterBlock}.
@@ -137,6 +137,8 @@ function DraggableSemesterBlock(
     setOptionsMenuShowing(false);
   };
 
+  console.log('Courses: ', courses);
+
   const contents = courses.map(({ id, catalogCode, title, description, creditHours }, index) => (
     <DraggableCourseCard
       key={id}
@@ -149,6 +151,7 @@ function DraggableSemesterBlock(
       enabled={enabled}
     />
   ));
+  // const contents = <div></div>;
 
   const semesterHours = courses.reduce((total: number, course) => {
     total += course.creditHours;

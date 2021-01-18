@@ -1,6 +1,6 @@
 import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
-import CourseCard, { CourseCardProps } from './CourseCard';
+import CourseCard, { CourseCardProps } from '../CourseCard';
 
 /**
  * Component properties for a {@link DraggableCourseCard}.
@@ -30,14 +30,24 @@ export default function DraggableCourseCard(props: DraggableCourseCardProps): JS
   return (
     <Draggable key={id} draggableId={id} index={index} isDragDisabled={!enabled}>
       {(provided) => (
+        // <article
+        //   ref={provided.innerRef}
+        //   className="mt-2 p-4 bg-white border-gray-200 border rounded-md"
+        //   key={code}
+        //   {...provided.draggableProps}
+        //   {...provided.dragHandleProps}
+        // >
+        //   <div className="text-headline6 font-bold">{code}</div>
+        //   <div className="text-subtitle1 font-bold">{title}</div>
+        //   <div className="text-body2">{description}</div>
+        //   <div className="text-caption">{creditHours} credit hours</div>
+        // </article>
         <CourseCard
           ref={provided.innerRef}
           code={code}
           title={title}
           description={description}
           creditHours={creditHours}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
           enabled={enabled}
         />
       )}

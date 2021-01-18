@@ -3,6 +3,9 @@ import { Close, KeyboardArrowUp } from '@material-ui/icons';
 import { IconButton } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { Course, createSamplePlan } from '../../app/data';
+import useUserPlanData from '../common/userPlanData';
+import { useAuthContext } from '../../features/auth/auth-context';
+import CourseCard from '../common/CourseCard';
 /**
  * Component props for a UserPlanSheet.
  */
@@ -22,6 +25,10 @@ interface UserPlanSheetProps {
  * A sheet that displays the current semester and upcoming semesters.
  */
 export default function UserPlanSheet({ isOpen, onExpandClick }: UserPlanSheetProps): JSX.Element {
+  // TODO: Find out if this is the right place to put the reference to auth
+  const { user } = useAuthContext();
+  const { plans, planIds } = useUserPlanData(user);
+  // const plan = plans[0];
   const plan = createSamplePlan(5);
 
   const startSemester = 0;
@@ -45,14 +52,16 @@ export default function UserPlanSheet({ isOpen, onExpandClick }: UserPlanSheetPr
   };
 
   function CourseList(courses: Course[]): JSX.Element[] {
-    return courses.map(({ catalogCode, title, description, creditHours }) => {
+    return courses.map(({ id, catalogCode, title, description, creditHours }) => {
       return (
-        <article className="mt-2 p-4 bg-white border-gray-200 border rounded-md" key={catalogCode}>
-          <div className="text-headline6 font-bold">{catalogCode}</div>
-          <div className="text-subtitle1 font-bold">{title}</div>
-          <div className="text-body2">{description}</div>
-          <div className="text-caption">{creditHours} credit hours</div>
-        </article>
+        <CourseCard
+          key={id}
+          code={catalogCode}
+          title={title}
+          description={description}
+          creditHours={creditHours}
+          enabled={false}
+        />
       );
     });
   }

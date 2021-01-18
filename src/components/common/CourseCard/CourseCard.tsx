@@ -9,7 +9,8 @@ import {
   Tooltip,
 } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
-import { useToggleableCard } from './hooks/toggleableCard';
+import { useToggleableCard } from './toggleableCard';
+import styles from './CourseCard.module.css';
 
 /**
  * Component properties for a {@link CourseCard}.
@@ -125,17 +126,6 @@ function CourseCard(
   const workloadText = pluralize(estimatedWorkload, 'hour');
   const creditHoursText = `${hoursText} | Est. ${workloadText}/week`;
 
-  const metadata = (
-    <div className="mt-1">
-      <span className="text-body2">{creditHoursText}</span>
-      <span>
-        <Tooltip title={tooltipReason} placement="right-end">
-          <InfoIcon className={classes.popupIcon} />
-        </Tooltip>
-      </span>
-    </div>
-  );
-
   const { cardProps } = useToggleableCard(enabled);
 
   // const cardStyles = {
@@ -143,7 +133,7 @@ function CourseCard(
   // };
 
   return (
-    <article ref={ref} className="mt-2 p-4 bg-white border-gray-200 border rounded-md">
+    <article ref={ref} className={styles.CourseCard}>
       <div className="text-headline6 font-bold">{code}</div>
       <div className="text-subtitle1 font-bold">{title}</div>
       <div className="text-body2">{description}</div>
@@ -156,16 +146,6 @@ function CourseCard(
         </span>
       </div>
     </article>
-    // <Card ref={ref} className={classes.root} raised={false} {...cardProps} {...other}>
-    //   {/* TODO: Add option to show letter grade */}
-    //   <CardContent>
-    //     <div className="text-headline6 font-bold">{code}</div>
-    //     <div className="text-subtitle1">{title}</div>
-    //     <div className="text-subtitle2">{description}</div>
-    //     {metadata}
-    //   </CardContent>
-    //   {/* TODO: Show options menu */}
-    // </Card>
   );
 }
 

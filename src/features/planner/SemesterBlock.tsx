@@ -10,12 +10,11 @@ import {
   Theme,
   Typography,
 } from '@material-ui/core';
-import { DragIndicator, MoreVert } from '@material-ui/icons';
-import { Droppable } from 'react-beautiful-dnd';
-import DraggableCourseCard from './DraggableCourseCard';
+import { Add, DragIndicator, MoreVert } from '@material-ui/icons';
 import { ScrollDirection } from './SemesterBlockList';
-import { useToggleableCard } from './hooks/toggleableCard';
+import { useToggleableCard } from '../../components/common/CourseCard/toggleableCard';
 import { Course } from '../../app/data';
+import CourseCard from '../../components/common/CourseCard';
 
 /**
  * Component properties for an {@link SemesterBlock}.
@@ -24,7 +23,6 @@ interface SemesterBlockProps {
   semesterCode: string;
   semesterTitle: string;
   courses: Course[];
-  showDragHandle?: boolean;
   showOptions?: boolean;
   /**
    * If true, drag and drop functionality is removed from this block.
@@ -50,7 +48,7 @@ export type SemesterCallback = (semesterCode: string) => void;
  * @param displayDirection The direction items will be laid out
  * @param enabled True if drag-and-drop functionality is allowed
  */
-const useStyles = (displayDirection: ScrollDirection, enabled: boolean) => {
+const useStyles = (displayDirection: ScrollDirection) => {
   return makeStyles((theme: Theme) => {
     const display = displayDirection === ScrollDirection.horizontally ? 'inline-block' : 'block';
     const rightMargin = displayDirection === ScrollDirection.horizontally ? theme.spacing(2) : 0;
@@ -93,7 +91,6 @@ function SemesterBlock(
     semesterCode,
     semesterTitle,
     courses,
-    showDragHandle,
     showOptions = true,
     displayDirection = ScrollDirection.horizontally,
     enabled = false,
@@ -102,7 +99,7 @@ function SemesterBlock(
     onClearSemester = () => undefined,
     onRemoveSemester = () => undefined,
   }: SemesterBlockProps,
-  ref: React.Ref<any>,
+  ref: React.Ref<HTMLDivElement>,
 ) {
   const [optionsMenuShowing, setOptionsMenuShowing] = React.useState(false);
   const [optionsMenuAnchor, setOptionsMenuAnchor] = React.useState<null | HTMLElement>(null);
@@ -138,10 +135,8 @@ function SemesterBlock(
   };
 
   const contents = courses.map(({ id, catalogCode, title, description, creditHours }, index) => (
-    <DraggableCourseCard
+    <CourseCard
       key={id}
-      index={index}
-      id={id}
       title={title}
       code={catalogCode}
       description={description}
@@ -157,61 +152,66 @@ function SemesterBlock(
 
   const { cardProps } = useToggleableCard(enabled);
 
-  const classes = useStyles(displayDirection, enabled);
+  const classes = useStyles(displayDirection);
+
+  // TODO: Disable if max credit load achieved
+  const courseAddEnabled = true;
 
   // TODO: Support non-course displays
   return (
-    <Droppable droppableId={semesterCode} ref={ref}>
-      {(provided) => (
-        <div className={classes.root} ref={provided.innerRef}>
-          <Paper component="header" className={classes.semesterHeader} {...cardProps}>
-            <Icon className={classes.dragIndicator} hidden={!showDragHandle}>
-              <DragIndicator />
-            </Icon>
-            <Typography variant="h6" className={classes.semesterHeaderTitle}>
-              {semesterTitle}
-            </Typography>
-            {enabled && (
-              <IconButton
-                aria-label="Semester options"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                hidden={!showOptions}
-                disabled={!enabled}
-                onClick={handleHeaderOptionsClick}
-              >
-                <MoreVert />
-              </IconButton>
-            )}
-            <Menu
-              id="menu-semester-options"
-              anchorEl={optionsMenuAnchor}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={optionsMenuShowing}
-              onClose={handleOptionsMenuClose}
-            >
-              <MenuItem onClick={handleAddCourse}>Add/transfer course</MenuItem>
-              <MenuItem onClick={handleShowSemesterInfo}>Show semester info</MenuItem>
-              <MenuItem onClick={handleClearSemester}>Clear semester</MenuItem>
-              <MenuItem onClick={handleRemoveSemester}>Remove semester</MenuItem>
-            </Menu>
-          </Paper>
-          {contents}
-          {provided.placeholder}
-          <div className="my-4 mx-5 font-bold text-subtitle1">
-            {semesterHours} total credit hours
-          </div>
-        </div>
-      )}
-    </Droppable>
+    <div className={classes.root} ref={ref}>
+      <Paper component="header" className={classes.semesterHeader} {...cardProps}>
+        <Icon className={classes.dragIndicator} hidden={!enabled}>
+          <DragIndicator />
+        </Icon>
+        <Typography variant="h6" className={classes.semesterHeaderTitle}>
+          {semesterTitle}
+        </Typography>
+        <IconButton
+          aria-label="Add/transfer course"
+          aria-controls="menu-add-course"
+          hidden={!showOptions}
+          disabled={!courseAddEnabled}
+          onClick={handleAddCourse}
+        >
+          <Add />
+        </IconButton>
+        {enabled && (
+          <IconButton
+            aria-label="Semester options"
+            aria-controls="menu-appbar"
+            aria-haspopup="true"
+            hidden={!showOptions}
+            disabled={!enabled}
+            onClick={handleHeaderOptionsClick}
+          >
+            <MoreVert />
+          </IconButton>
+        )}
+        <Menu
+          id="menu-semester-options"
+          anchorEl={optionsMenuAnchor}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          open={optionsMenuShowing}
+          onClose={handleOptionsMenuClose}
+        >
+          <MenuItem onClick={handleAddCourse}>Add/transfer course</MenuItem>
+          <MenuItem onClick={handleShowSemesterInfo}>Show semester info</MenuItem>
+          <MenuItem onClick={handleClearSemester}>Clear semester</MenuItem>
+          <MenuItem onClick={handleRemoveSemester}>Remove semester</MenuItem>
+        </Menu>
+      </Paper>
+      {contents}
+      <div className="my-4 mx-5 font-bold text-subtitle1">{semesterHours} total credit hours</div>
+    </div>
   );
 }
 

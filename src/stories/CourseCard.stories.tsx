@@ -1,6 +1,6 @@
 import React from 'react';
 import { Story, Meta } from '@storybook/react';
-import CourseCard, { CourseCardProps } from '../features/planner/CourseCard';
+import CourseCard, { CourseCardProps } from '../components/common/CourseCard';
 
 export default {
   title: 'Planning/CourseCard',

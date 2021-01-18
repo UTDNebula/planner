@@ -2,7 +2,7 @@ import React from 'react';
 import { Story, Meta } from '@storybook/react';
 import DraggableCourseCard, {
   DraggableCourseCardProps,
-} from '../features/planner/DraggableCourseCard';
+} from '../components/common/DraggableCourseCard';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 export default {
