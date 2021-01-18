@@ -16,9 +16,9 @@ interface ServiceNameProps {
 export default function ServiceName({ titleClassName = '' }: ServiceNameProps): JSX.Element {
   // TODO: Finalize styles
   return (
-    <div className="inline">
+    <span>
       <span className={titleClassName}>Comet Planning</span>
       <sup className="p-1 uppercase">Beta</sup>
-    </div>
+    </span>
   );
 }

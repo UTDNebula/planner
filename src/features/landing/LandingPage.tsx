@@ -1,10 +1,12 @@
 import React from 'react';
 import { DragDropContext, SensorAPI } from 'react-beautiful-dnd';
+import { Link as RouterLink } from 'react-router-dom';
 import { Button, createStyles, makeStyles, Theme } from '@material-ui/core';
 import { Course, generateSemesters, SemesterCode, StudentPlan } from '../../app/data';
 import SemesterBlockList, { ScrollDirection } from '../planner/SemesterBlockList';
+import Footer from '../../components/common/Footer';
+import ServiceName from '../../components/common/ServiceName';
 import LandingToolbar from './LandingToolbar';
-import { Link as RouterLink } from 'react-router-dom';
 import styles from './LandingPage.module.css';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -58,7 +60,7 @@ const CS_DEMO_REQUIREMENTS: Course[] = [
     creditHours: 4,
   },
   {
-    id: '1298',
+    id: '1869',
     title: 'Rhetoric',
     catalogCode: 'RHET 1302',
     description:
@@ -66,7 +68,7 @@ const CS_DEMO_REQUIREMENTS: Course[] = [
     creditHours: 3,
   },
   {
-    id: '1298',
+    id: '746',
     title: 'Introduction to Engineering and Computer Science',
     catalogCode: 'ECS 1100',
     description:
@@ -161,64 +163,69 @@ export default function LandingPage(): JSX.Element {
   const classes = useStyles();
 
   return (
-    <div className="bg-gray-200 max-h-screen max-w-screen">
-      <div className="lg:flex h-screen">
-        <section className="lg:flex-0 lg:left-thing bg-white flex flex-col">
-          <div className="md:h-screen m-4 lg:ml-32 lg:mr-16 flex-1 flex flex-col justify-center">
-            <div className="">
-              <h1 className="text-headline2 font-bold">Comet Planning</h1>
-              <div className="mt-8 text-headline4">
-                <span className="block">
-                  A <span id="subheaderText">{contents}</span>
-                </span>
-                and so much more.
-              </div>
-              <Button
-                className={classes.ctaButton}
-                variant="contained"
-                color="primary"
-                component={RouterLink}
-                to="/app"
-              >
-                Try a demo
-              </Button>
-              <noscript>
-                <div>The demo requires JavaScript. Please enable it to continue.</div>
-              </noscript>
-            </div>
-          </div>
-          <nav className={styles.navBar}>
-            <a className={styles.navBarItem} href="#overview">
-              Overview
-            </a>
-            <a className={styles.navBarItem} href="#features">
-              Features
-            </a>
-            <a className={styles.navBarItem} href="#integrations">
-              Integrations
-            </a>
-            <a className={styles.navBarItem} href="#developers">
-              Developers
-            </a>
-          </nav>
-        </section>
-        <section className="h-full lg:flex-1">
-          <LandingToolbar />
-          <div className="overflow-x-hidden whitespace-nowrap">
-            {/* TODO: Scripted drag and drop: https://github.com/atlassian/react-beautiful-dnd/blob/master/docs/sensors/sensor-api.md */}
-            <DragDropContext sensors={[demoSensor]} onDragEnd={() => undefined}>
+    <div>
+      <div className="bg-gray-200 max-h-screen max-w-screen">
+        <div className="lg:flex h-screen">
+          <section className={styles.heroBox}>
+            <div className="md:h-screen m-4 lg:ml-32 lg:mr-16 flex-1 flex flex-col justify-center">
               <div className="">
-                <SemesterBlockList
-                  semesters={samplePlan.semesters}
-                  direction={ScrollDirection.horizontally}
-                  enabled={false}
-                  focusedSemester={samplePlan.semesters[0].code}
-                />
+                <h1 className="text-headline2 font-bold">
+                  <ServiceName />
+                </h1>
+                <div className="mt-8 text-headline4">
+                  <span className="block">
+                    A <span id="subheaderText">{contents}</span>
+                  </span>
+                  and so much more.
+                </div>
+                <Button
+                  className={classes.ctaButton}
+                  variant="contained"
+                  color="primary"
+                  component={RouterLink}
+                  to="/app"
+                >
+                  Try a demo
+                </Button>
+                <noscript>
+                  <div>The demo requires JavaScript. Please enable it to continue.</div>
+                </noscript>
               </div>
-            </DragDropContext>
-          </div>
-        </section>
+            </div>
+            <nav className={styles.navBar}>
+              <a className={styles.navBarItem} href="#overview">
+                Overview
+              </a>
+              <a className={styles.navBarItem} href="#features">
+                Features
+              </a>
+              <a className={styles.navBarItem} href="#integrations">
+                Integrations
+              </a>
+              <a className={styles.navBarItem} href="#developers">
+                Developers
+              </a>
+            </nav>
+          </section>
+          <section className="h-full lg:flex-1">
+            <LandingToolbar />
+            <div className="overflow-x-hidden whitespace-nowrap">
+              {/* TODO: Scripted drag and drop: https://github.com/atlassian/react-beautiful-dnd/blob/master/docs/sensors/sensor-api.md */}
+              <DragDropContext sensors={[demoSensor]} onDragEnd={() => undefined}>
+                <div className="">
+                  <SemesterBlockList
+                    semesters={samplePlan.semesters}
+                    direction={ScrollDirection.horizontally}
+                    enabled={false}
+                    focusedSemester={samplePlan.semesters[0].code}
+                  />
+                </div>
+              </DragDropContext>
+            </div>
+          </section>
+        </div>
       </div>
+      <Footer />
     </div>
   );
 }

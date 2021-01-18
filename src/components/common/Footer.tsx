@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import ServiceName from './ServiceName';
 
 /**
  * A footer that displays useful site links.
@@ -47,7 +48,9 @@ export default function Footer(): JSX.Element {
           </ul>
         </div>
         <div className="p-4">
-          <h1 className="text-subtitle1 py-2 font-semibold text-gray-100">Comet Planning Info</h1>
+          <h1 className="text-subtitle1 py-2 font-semibold text-gray-100">
+            <ServiceName /> Info
+          </h1>
           <ul>
             <li>
               <Link to="/">Landing</Link>
