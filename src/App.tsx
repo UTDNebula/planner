@@ -7,6 +7,7 @@ import DegreePlannerChrome from './features/planner/DegreePlannerChrome';
 import AppToolbar from './features/common/toolbar/AppToolbar';
 import LandingPage from './features/landing/LandingPage';
 import AuthPage from './features/auth/AuthPage';
+import { useAuthContext } from './features/auth/auth-context';
 import OnboardingPage from './features/onboarding/OnboardingPage';
 import { useAppLocation } from './features/common/appLocation';
 import PrivacyPage from './pages/Privacy';
@@ -19,6 +20,8 @@ import './App.css';
  */
 function App(): JSX.Element {
   const { title, updateTitle } = useAppLocation();
+  const { signOut } = useAuthContext();
+
   React.useEffect(() => {
     updateTitle('Overview');
   });
@@ -42,6 +45,11 @@ function App(): JSX.Element {
             </Route>
             <Route path="/auth">
               <AuthPage />
+            </Route>
+            <Route path="/auth/signOut">
+              {() => {
+                signOut();
+              }}
             </Route>
             <Route exact path="/app">
               {/* TODO: Share toolbar */}

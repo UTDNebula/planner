@@ -13,14 +13,13 @@ import { useAuthContext } from '../../auth/auth-context';
 interface ProfileIconProps {
   onSignIn: () => void;
   onSignOut: () => void;
-  onAccountProfileClick: () => void;
 }
 
 /**
  * A profile icon that triggers a user profile dialog when clicked.
  */
-export default function ProfileIcon(props: ProfileIconProps) {
-  const { onSignIn, onSignOut, onAccountProfileClick } = props;
+export default function ProfileIcon(props: ProfileIconProps): JSX.Element {
+  const { user, authWithRedirect } = useAuthContext();
 
   const [dialogIsOpen, setDialogIsOpen] = React.useState(false);
   const [profileAnchor, setProfileAnchor] = React.useState<null | HTMLElement>(null);
@@ -30,18 +29,9 @@ export default function ProfileIcon(props: ProfileIconProps) {
     setDialogIsOpen(false);
   };
 
-  const handleProfileClick = () => {
-    onAccountProfileClick();
-    setDialogIsOpen(false);
-  };
-
-  const handleSignOutClick = () => {
-    onSignOut();
-    setDialogIsOpen(false);
-  };
-
   const handleSignInClick = () => {
-    onSignIn();
+    // TODO: Just use current route
+    authWithRedirect('/app');
     setDialogIsOpen(false);
   };
 
@@ -49,8 +39,6 @@ export default function ProfileIcon(props: ProfileIconProps) {
     setProfileAnchor(event.currentTarget);
     setDialogIsOpen(true);
   };
-
-  const { user, signOut, switchAccounts } = useAuthContext();
 
   const { name, image } = user;
 
@@ -123,7 +111,7 @@ export default function ProfileIcon(props: ProfileIconProps) {
             </MenuItem>,
           ]
         ) : (
-          <MenuItem onClick={handleSignInClick}>
+          <MenuItem component={Link} to="/auth/signIn" onClick={handleSignInClick}>
             <ListItemIcon>
               <ExitToApp />
             </ListItemIcon>

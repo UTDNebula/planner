@@ -9,9 +9,9 @@ import {
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import BackIcon from '@material-ui/icons/ArrowBack';
+import { Link as RouterLink, useHistory } from 'react-router-dom';
 import ProfileIcon from './ProfileIcon';
 import { useAuthContext } from '../../auth/auth-context';
-import { Link as RouterLink, useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -33,12 +33,12 @@ interface AppToolbarProps {
   // TODO: Maybe use context for viewing/planning modes
 }
 
-export default function AppToolbar(props: AppToolbarProps) {
+export default function AppToolbar(props: AppToolbarProps): JSX.Element {
   const { title, shouldShowProfile } = props;
 
   const classes = useStyles();
 
-  const { user, signOut, switchAccounts } = useAuthContext();
+  const { signOut } = useAuthContext();
 
   const history = useHistory();
 
@@ -59,11 +59,7 @@ export default function AppToolbar(props: AppToolbarProps) {
   };
 
   const handleSignIn = () => {
-    switchAccounts('default');
-  };
-
-  const handleAccountSettingsClick = () => {
-    // TODO: Navigate to account settings
+    history.push('/auth/signIn');
   };
 
   const handleBackButtonClick = () => {
@@ -86,13 +82,7 @@ export default function AppToolbar(props: AppToolbarProps) {
         <Typography variant="h6" className={classes.title} component={RouterLink} to="/app">
           {title}
         </Typography>
-        {shouldShowProfile && (
-          <ProfileIcon
-            onSignIn={handleSignIn}
-            onSignOut={handleSignOut}
-            onAccountProfileClick={handleAccountSettingsClick}
-          />
-        )}
+        {shouldShowProfile && <ProfileIcon onSignIn={handleSignIn} onSignOut={handleSignOut} />}
       </Toolbar>
     </AppBar>
   );

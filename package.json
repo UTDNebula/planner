@@ -18,6 +18,8 @@
     "@types/react-dom": "^16.9.10",
     "@types/react-redux": "^7.1.12",
     "autoprefixer": "^9.8.6",
+    "classnames": "^2.2.6",
+    "firebase": "^8.2.3",
     "framer-motion": "^3.2.1",
     "postcss": "^7.0.35",
     "react": "^17.0.1",
@@ -27,7 +29,8 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "uuid": "^8.3.2"
   },
   "scripts": {
     "start": "craco start",
@@ -63,6 +66,7 @@
     "@storybook/react": "^6.1.11",
     "@types/react-beautiful-dnd": "^13.0.0",
     "@types/react-router-dom": "^5.1.6",
+    "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.12.0",
     "@typescript-eslint/parser": "^4.12.0",
     "eslint": "^7.17.0",
