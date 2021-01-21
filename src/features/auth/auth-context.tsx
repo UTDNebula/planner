@@ -114,6 +114,11 @@ interface AuthContextState {
   user: ServiceUser;
 
   /**
+   * Returns whether a user is currently signed in to the Service.
+   */
+  isSignedIn: boolean;
+
+  /**
    * Forces a sign-in and redirects to the given link after success.
    *
    * @param redirect An in-app location to redirect to after sign-in
@@ -143,7 +148,7 @@ interface AuthContextState {
   /**
    * Signs out of the current user session if active.
    */
-  signOut: () => void;
+  signOut: () => Promise<void>;
 
   /**
    * Attempts sending a password reset link to the user with the given email.
@@ -198,8 +203,13 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
   }, []);
 
   React.useEffect(() => {
-    if (redirect) {
-      history.push(redirect);
+    if (shouldRedirect) {
+      if (redirect) {
+        history.push(redirect);
+        setShouldRedirect(false);
+      } else {
+        console.error('Redirect location is null');
+      }
     }
   }, [shouldRedirect]);
 
@@ -220,12 +230,21 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
    *
    * This switches to the guest user.
    */
-  function signOut() {
-    const user = users.anonymous;
-    setUser(user);
-    setRedirect('/');
-    // TODO: Update localStorage
-    console.log('Signed out user; switched to guest.');
+  async function signOut() {
+    return firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        const user = users.anonymous;
+        setUser(user);
+        setRedirect('/');
+        setShouldRedirect(true);
+        // TODO: Update localStorage
+        console.log('Signed out user; switched to guest.');
+      })
+      .catch(() => {
+        console.error('Could not sign out.');
+      });
   }
 
   /**
@@ -336,8 +355,11 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
     setRedirect(redirect);
   };
 
+  const isSignedIn = user.id !== 'anonymous';
+
   const authContextValue: AuthContextState = {
     user,
+    isSignedIn,
     authWithRedirect,
     signUpWithEmail,
     switchAccounts,
