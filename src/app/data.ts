@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 /**
  * A topic of study.
  */
@@ -102,13 +104,17 @@ export const SEMESTER_CODE_MAPPINGS = {
 export function generateCourses(amount = 5): Course[] {
   const courses = [];
   for (let i = 0; i < amount; ++i) {
-    const id = Math.floor(Math.random() * (5000 - 1000) + 1000);
+    const difficulty = Math.floor(Math.random() * (5 - 1) + 1);
+    const finalPart = Math.floor(Math.random() * (10 - 1) + 1);
+    const courseNumber =
+      1_000 * Math.floor(Math.random() * (5 - 1) + 1) + 100 * difficulty + finalPart;
     courses.push({
-      id: id.toString(),
+      id: uuidv4(),
       title: 'A course with a code.',
-      catalogCode: `CS ${id}`,
-      description: 'Just another course. What can we say?',
-      creditHours: 3,
+      catalogCode: `CS ${courseNumber}`,
+      description:
+        'Just another course. What can we say? It has a title and a description long enough to be believable.',
+      creditHours: Number(courseNumber.toString().slice(1, 2)),
     });
   }
   return courses;
