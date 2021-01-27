@@ -1,10 +1,10 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import plannerDataReducer from '../features/planner/plannerDataSlice';
+import catalogDataReducer from '../features/planner/plannerDataSlice';
+import userDataReducer from '../features/userData/userDataSlice';
 
 const rootReducer = combineReducers({
-  planData: plannerDataReducer,
+  catalogData: catalogDataReducer,
+  userData: userDataReducer,
 });
-
-export type RootState = ReturnType<typeof rootReducer>;
 
 export default rootReducer;
