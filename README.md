@@ -1,8 +1,8 @@
-# Comet Planning
-*Comet Planning is a tool for planning out students' college experience*
+# Nebula
+*Nebula is a tool for planning out students' college experience*
 
 ## Overview
-Comet Planning allows students to plan out including coursework, co-curricular activities
+Nebula allows students to plan out including coursework, co-curricular activities
 like studying abroad and research, and extracurricular involvement in student organizations.
 It does this with an intuitive drag-and-drop interface that represents various college activities
 as blocks and displays them in semester groups.
@@ -20,7 +20,7 @@ grad school. Generate a plan lets me do all of that with the professors I want."
 
 Until now, that is.
 
-Comet Planning is an integrated solution designed to help students plan out their entire
+Nebula is an integrated solution designed to help students plan out their entire
 undergraduate experience in one place. It allows students to focus on ensuring their college
 experience holistically suits their desires and optimize for long-term success.
 
