@@ -16,7 +16,7 @@ of this app, contact the Nebula maintainers at development@acmutd.co
 with the subject line `[nebula]: User-Facing Security Vulnerability`.
 
 If the issue is due to something internal - like a vulnerability in the app's
-library dependencies, open an [issue]https://github.com/acmutd/nebula/issues/new/choose)
+library dependencies, open an [issue](https://github.com/acmutd/nebula/issues/new/choose)
 and tag it with the `vulnerability` label.
 
 One a maintainer triages the issue and determines it to be an actual vulnerability,
