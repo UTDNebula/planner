@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Project Nebula Support
+    url: https://acmutd.co/discord
+    about: Please ask and answer questions about Project Nebula development here.
+  - name: Report a security vulnerability
+    url: nebula-maintainers@acmutd.co
+    about: Please report security vulnerabilities here.
