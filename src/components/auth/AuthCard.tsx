@@ -1,8 +1,8 @@
 import { Button, Tab, Tabs, TextField } from '@material-ui/core';
-import firebase from 'firebase';
+// import firebase from 'firebase';
 import 'firebase/auth';
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link /* useHistory */ } from 'react-router-dom';
 import { useAuthContext } from '../../features/auth/auth-context';
 
 /**
@@ -39,7 +39,7 @@ export default function AuthCard({ onForgetPassword, onGoogleSignIn }: AuthCardP
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
-  const [inForgetPasswordFlow, setInForgetPasswordFlow] = React.useState(false);
+  // const [inForgetPasswordFlow, setInForgetPasswordFlow] = React.useState(false);
 
   const handleEmailSignIn = () => {
     signInWithEmail(email, password);

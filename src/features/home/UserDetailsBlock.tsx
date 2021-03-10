@@ -48,7 +48,7 @@ export interface UserDetailsBlockProps {
   gpa: number;
 }
 
-export default function UserDetailsBlock(props: UserDetailsBlockProps) {
+export default function UserDetailsBlock(props: UserDetailsBlockProps): JSX.Element {
   const {
     name,
     planTitle,

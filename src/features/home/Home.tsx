@@ -4,7 +4,6 @@ import { NoticeBlock } from '../../components/home/announcements/NoticeBlock';
 import UserWelcome from '../../components/home/UserWelcome';
 import UserPlanSheet from '../../components/home/UserPlanSheet';
 import useUserPlanSheetTransition from '../../components/home/userPlanSheetTransition';
-import HomeUserInfo from '../../components/home/HomeUserInfo';
 import AppNavigation from '../../components/common/AppNavigation';
 import { useAppLocation } from '../common/appLocation';
 

@@ -15,7 +15,7 @@ interface CourseSearchBoxProps {
  * An integrated box that surfaces search results based on a query.
  */
 export default function CourseSearchBox({ onItemSelected }: CourseSearchBoxProps): JSX.Element {
-  const { results, updateQuery } = useCourseSearch();
+  const { results /* updateQuery */ } = useCourseSearch();
 
   const handleSearchSelection = (resultId: string) => {
     onItemSelected(resultId);

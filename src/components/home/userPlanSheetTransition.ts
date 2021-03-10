@@ -1,14 +1,14 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 
 /**
  * A hook that manages expansion state and navigation for a UserPlanSheet.
  */
 export default function useUserPlanSheetTransition(): UserPlanSheetTransitionData {
   const [sheetIsOpen, setSheetIsOpen] = React.useState(false);
-  const history = useHistory();
+  // const history = useHistory();
 
-  const openPlan = (planId: string) => {
+  const openPlan = (/* planId: string */) => {
     // TODO: Actually navigate to page
     // history.push(`/app/plan/${planId}`);
     setSheetIsOpen(true);

@@ -19,6 +19,7 @@ interface ProfileIconProps {
  * A profile icon that triggers a user profile dialog when clicked.
  */
 export default function ProfileIcon(props: ProfileIconProps): JSX.Element {
+  props; // TODO: Remove me when used
   const { user, authWithRedirect } = useAuthContext();
 
   const [dialogIsOpen, setDialogIsOpen] = React.useState(false);

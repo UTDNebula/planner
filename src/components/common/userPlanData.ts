@@ -6,6 +6,8 @@ import { ServiceUser } from '../../features/auth/auth-context';
 export default function useUserPlanData(user: ServiceUser): UserPlanData {
   const { plans, planIds } = useSelector((state: RootState) => state.userData);
 
+  console.log('Using user data: ', user);
+
   return {
     planIds,
     plans,

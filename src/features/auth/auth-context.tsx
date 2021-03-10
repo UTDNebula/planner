@@ -279,7 +279,7 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
     return firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(({ credential, user }) => {
+      .then(({ /* credential, */ user }) => {
         updateUser(user);
         setRedirect('/app/onboarding');
         setShouldRedirect(true);

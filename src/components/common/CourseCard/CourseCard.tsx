@@ -1,7 +1,7 @@
 import React from 'react';
 import {
-  Card,
-  CardContent,
+  // Card,
+  // CardContent,
   createStyles,
   makeStyles,
   Theme,
@@ -104,10 +104,10 @@ function CourseCard(
     creditHours,
     estimatedWorkload,
     enabled,
-    onOptionRemove = () => undefined,
-    onOptionSwap = () => undefined,
-    ...other
-  }: CourseCardProps,
+  }: // onOptionRemove = () => undefined,
+  // onOptionSwap = () => undefined,
+  // ...other
+  CourseCardProps,
   ref: React.Ref<HTMLElement>,
 ) {
   const classes = useStyles();
@@ -126,7 +126,9 @@ function CourseCard(
   const workloadText = pluralize(estimatedWorkload, 'hour');
   const creditHoursText = `${hoursText} | Est. ${workloadText}/week`;
 
-  const { cardProps } = useToggleableCard(enabled);
+  const {
+    /* cardProps */
+  } = useToggleableCard(enabled);
 
   // const cardStyles = {
 
