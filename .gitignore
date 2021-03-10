@@ -25,3 +25,7 @@ yarn-error.log*
 .eslintcache
 .firebaserc
 *.cache
+
+# Don't want IDE/code editor files in this repository
+# See docs/ide-config.md for more information.
+.vscode
