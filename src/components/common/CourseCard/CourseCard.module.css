@@ -5,5 +5,5 @@
 .CourseCard {
   @apply mt-2 p-4 bg-white border-gray-200 border rounded-md;
   width: '100%';
-  max-width: 344px;
+  max-width: 480px;
 }

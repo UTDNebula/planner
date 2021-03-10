@@ -15,6 +15,7 @@ import { ScrollDirection } from './SemesterBlockList';
 import { useToggleableCard } from '../../components/common/CourseCard/toggleableCard';
 import { Course } from '../../app/data';
 import CourseCard from '../../components/common/CourseCard';
+import styles from '../../components/common/SemesterBlock/SemesterBlock.module.css';
 
 /**
  * Component properties for an {@link SemesterBlock}.
@@ -159,7 +160,7 @@ function SemesterBlock(
 
   // TODO: Support non-course displays
   return (
-    <div className={classes.root} ref={ref}>
+    <div className={styles.SemesterBlock} ref={ref}>
       <Paper component="header" className={classes.semesterHeader} {...cardProps}>
         <Icon className={classes.dragIndicator} hidden={!enabled}>
           <DragIndicator />

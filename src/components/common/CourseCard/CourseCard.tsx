@@ -136,7 +136,7 @@ function CourseCard(
     <article ref={ref} className={styles.CourseCard}>
       <div className="text-headline6 font-bold">{code}</div>
       <div className="text-subtitle1 font-bold">{title}</div>
-      <div className="text-body2">{description}</div>
+      <div className="text-body2 break-words">{description}</div>
       <div className="mt-1">
         <span className="text-body2">{creditHoursText}</span>
         <span>

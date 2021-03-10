@@ -1,5 +1,4 @@
 import React from 'react';
-import { createStyles, makeStyles, Theme } from '@material-ui/core';
 import { SemesterCallback } from './SemesterBlock';
 import { Semester } from '../../app/data';
 import DroppableSemesterBlock from '../../components/common/DroppableSemesterBlock/DroppableSemesterBlock';
@@ -18,35 +17,6 @@ export enum ScrollDirection {
    */
   'horizontally',
 }
-
-/**
- * Creates styles used for a SemesterBlockList.
- *
- * @param shouldScroll True if the list should enable overflow scrolling
- * @param direction One of 'vertically' or 'horizontally' indicating layout direction
- */
-const useStyles = (shouldScroll: boolean, direction: ScrollDirection) => {
-  return makeStyles((theme: Theme) => {
-    const isNormal = direction === ScrollDirection.horizontally;
-    const overflow = isNormal ? 'overflowX' : 'overflowY';
-    return createStyles({
-      // root: {
-      //   [overflow]: shouldScroll ? 'scroll' : 'hidden',
-      //   paddingLeft: theme.spacing(2),
-      //   paddingRight: theme.spacing(2),
-      // },
-      paper: {
-        padding: theme.spacing(2),
-        textAlign: 'center',
-        color: theme.palette.text.secondary,
-      },
-      semesterItem: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
-      },
-    });
-  })();
-};
 
 /**
  * Component properties for a SemesterBlockList.
@@ -106,7 +76,7 @@ export default function SemesterBlockList({
   onShowSemesterInfo = () => undefined,
   onClearSemester = () => undefined,
   onRemoveSemester = () => undefined,
-  direction,
+  // direction,
   focusedSemester,
   children,
 }: React.PropsWithChildren<SemesterBlockListProps>): JSX.Element {
@@ -129,8 +99,9 @@ export default function SemesterBlockList({
     });
   };
 
-  const shouldScroll = true;
-  const classes = useStyles(shouldScroll, direction);
+  // TODO: Detemrine best way to handle styling
+  // const shouldScroll = true;
+  // const classes = useStyles(shouldScroll, direction);
 
   const semesterBlocks = semesters.map((semester) => {
     const ref = blockRefs[semester.code];

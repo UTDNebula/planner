@@ -34,7 +34,7 @@ export default function Home(): JSX.Element {
     <AnimateSharedLayout>
       <div className="flex w-full h-full">
         <AppNavigation />
-        <main className="h-full flex-1 bg-gray-100">
+        <main className="h-full flex-auto bg-gray-100">
           <div className="w-screen max-w-6xl mx-auto pt-16 p-4">
             <UserWelcome />
           </div>

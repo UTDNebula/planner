@@ -1,0 +1,8 @@
+.SemesterBlock {
+  @apply py-4;
+  @apply pr-4;
+  display: 'inline-block';
+  width: '100%';
+  max-width: 480px;
+  vertical-align: 'top';
+}

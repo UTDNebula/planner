@@ -9,7 +9,7 @@ import ServiceName from './ServiceName';
  */
 export default function MarketingHeader(): JSX.Element {
   return (
-    <header className="p-2 bg-yellow-500 flex sticky shadow-lg top-0">
+    <header className="px-2 py-3 bg-yellow-500 flex sticky shadow-lg top-0">
       <Link
         className="m-2 flex-1 flex flex-col justify-center text-headline6 text-black font-bold"
         to="/"
