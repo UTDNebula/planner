@@ -28,14 +28,14 @@ module.exports = {
             letterSpacing: '0.25px',
           },
         ],
-  
+
         headline5: [
           '24px',
           {
             letterSpacing: '0px',
           },
         ],
-  
+
         headline6: [
           '20px',
           {
@@ -90,11 +90,10 @@ module.exports = {
       sans: ['Roboto', 'ui-sans-serif', 'system-ui'],
     },
     screens: {
-      sm: '480px',
-      md: '720px',
-      lg: '960px',
-      xl: '1280px',
-      '2xl': '1440px',
+      sm: '600px',
+      md: '840px',
+      lg: '1024px',
+      xl: '1440px',
     },
   },
   variants: {
