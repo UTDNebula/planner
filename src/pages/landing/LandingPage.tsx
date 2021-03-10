@@ -1,7 +1,7 @@
 import React from 'react';
 import { DragDropContext, SensorAPI } from 'react-beautiful-dnd';
-import { Link as RouterLink } from 'react-router-dom';
-import { Button, createStyles, makeStyles, Theme } from '@material-ui/core';
+// import { Link as RouterLink } from 'react-router-dom';
+// import { createStyles, makeStyles, Theme } from '@material-ui/core';
 import { Course, generateSemesters, SemesterCode, StudentPlan } from '../../app/data';
 import SemesterBlockList, { ScrollDirection } from '../../features/planner/SemesterBlockList';
 import Footer from '../../components/common/Footer';
@@ -9,14 +9,14 @@ import ServiceName from '../../components/common/ServiceName';
 import LandingToolbar from './LandingToolbar';
 import styles from './LandingPage.module.css';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {},
-    ctaButton: {
-      marginTop: theme.spacing(4),
-    },
-  }),
-);
+// const useStyles = makeStyles((theme: Theme) =>
+//   createStyles({
+//     root: {},
+//     ctaButton: {
+//       marginTop: theme.spacing(4),
+//     },
+//   }),
+// );
 
 const SUBTEXT_VARIANTS = ['degree planning tool', 'course planner'];
 
@@ -202,28 +202,28 @@ export default function LandingPage(): JSX.Element {
     },
   ];
 
-  const pastMaintainers = [
-    {
-      name: 'Aliah Shaira De Guzman',
-      role: 'Project founder',
-      link: 'https://www.linkedin.com/in/aliahdg/',
-      image: 'https://picsum.photos/256',
-    },
-    {
-      name: 'Aishani De Sirkar',
-      role: 'Sofware Developer',
-      link: 'https://www.linkedin.com/in/aishanids/',
-      image: 'https://picsum.photos/256',
-    },
-    {
-      name: 'Medha Aiyah',
-      role: 'Sofware Developer',
-      link: 'https://www.linkedin.com/in/medha-aiyah/',
-      image: 'https://picsum.photos/256',
-    },
-  ];
+  // const pastMaintainers = [
+  //   {
+  //     name: 'Aliah Shaira De Guzman',
+  //     role: 'Project founder',
+  //     link: 'https://www.linkedin.com/in/aliahdg/',
+  //     image: 'https://picsum.photos/256',
+  //   },
+  //   {
+  //     name: 'Aishani De Sirkar',
+  //     role: 'Sofware Developer',
+  //     link: 'https://www.linkedin.com/in/aishanids/',
+  //     image: 'https://picsum.photos/256',
+  //   },
+  //   {
+  //     name: 'Medha Aiyah',
+  //     role: 'Sofware Developer',
+  //     link: 'https://www.linkedin.com/in/medha-aiyah/',
+  //     image: 'https://picsum.photos/256',
+  //   },
+  // ];
 
-  const classes = useStyles();
+  // const classes = useStyles();
 
   return (
     <div className="min-h-screen min-w-screen">
