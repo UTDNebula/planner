@@ -1,28 +1,4 @@
 /**
- * An announcement or suggestion displayed to a user.
- */
-export interface Notice {
-  /**
-   * A description for this notice.
-   */
-  title: string;
-
-  /**
-   * An action associated with this notice.
-   */
-  action?: {
-    /**
-     * A description for this action.
-     */
-    text: string;
-    /**
-     * A link that serves as a destination for a call to action.
-     */
-    link: string;
-  };
-}
-
-/**
  * An indicator that associates a student with one or more honors programs.
  */
 export type HonorsIndicator =

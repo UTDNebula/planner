@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Disclaimer from '../../components/onboarding/Disclaimer';
 import { useAuthContext } from '../auth/auth-context';
+import { useAppLocation } from '../common/appLocation';
 import { HonorsIndicator } from '../home/types';
 
 /**
@@ -153,10 +154,6 @@ function useUserSetup(studentDefaultName = 'Comet') {
       traditional: false,
       receivingAid: false,
     },
-
-    /**
-     * Flags for special academic/scholarship programs a student is a part of.
-     */
     prestige: {
       honors: 'none',
       scholarship: 'NONE',
@@ -184,6 +181,11 @@ function useUserSetup(studentDefaultName = 'Comet') {
 export default function OnboardingPage(): JSX.Element {
   const { user } = useAuthContext();
   const { data, setData, consentData, setConsentData } = useUserSetup();
+
+  const { updateTitle } = useAppLocation();
+  React.useEffect(() => {
+    updateTitle('Getting started');
+  }, []);
 
   if (user === null) {
     // TODO: Do something useful

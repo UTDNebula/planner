@@ -67,4 +67,9 @@ export const HONORS_INDICATOR_LABELS: { [key in HonorsIndicator]: string } = {
    * Interdisciplinary Studies Honors
    */
   is: 'IS Honors',
+
+  /**
+   * No honors.
+   */
+  none: 'No honors',
 };

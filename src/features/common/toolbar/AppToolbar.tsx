@@ -12,6 +12,7 @@ import BackIcon from '@material-ui/icons/ArrowBack';
 import { Link as RouterLink, useHistory } from 'react-router-dom';
 import ProfileIcon from './ProfileIcon';
 import { useAuthContext } from '../../auth/auth-context';
+import { useAppLocation } from '../appLocation';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -28,13 +29,15 @@ const useStyles = makeStyles((theme) =>
 );
 
 interface AppToolbarProps {
-  title: string;
+  title?: string;
   shouldShowProfile: boolean;
   // TODO: Maybe use context for viewing/planning modes
 }
 
 export default function AppToolbar(props: AppToolbarProps): JSX.Element {
-  const { title, shouldShowProfile } = props;
+  const { shouldShowProfile } = props;
+
+  const { title } = useAppLocation();
 
   const classes = useStyles();
 
