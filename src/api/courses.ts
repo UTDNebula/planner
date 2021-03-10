@@ -9,7 +9,9 @@ import { Course } from '../app/data';
  * @param year The catalog year from which to load course data
  */
 export async function loadCourses(year = 2020): Promise<Course[]> {
-  const courseData: { [key: string]: any } = await import(`../../data/${year}-courses.json`);
+  const courseData: { [key: string]: JSONCourseType } = await import(
+    `../../data/${year}-courses.json`
+  );
   return Object.entries(courseData).map((value) => {
     const [catalogCode, courseData] = value;
     const { id, name: title, hours: creditHours, description } = courseData;
@@ -22,3 +24,14 @@ export async function loadCourses(year = 2020): Promise<Course[]> {
     };
   });
 }
+
+type JSONCourseType = {
+  id: number;
+  name: string;
+  hours: string;
+  description: string;
+  inclass: string;
+  outclass: string;
+  period: string;
+  prerequisites: string[];
+};
