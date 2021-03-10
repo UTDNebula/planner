@@ -17,7 +17,7 @@ export type CourseChipData = {
   /**
    * The hex color used for the chip's background.
    */
-  color: string;
+  color?: string;
 };
 
 /**

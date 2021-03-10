@@ -3,6 +3,8 @@ import {
   Button,
   Checkbox,
   Dialog,
+  DialogActions,
+  DialogContent,
   DialogTitle,
   FormControl,
   FormControlLabel,
@@ -12,6 +14,7 @@ import {
 } from '@material-ui/core';
 import { Course } from '../../app/data';
 import { DestinationData } from './hooks/selectableCourseDialog';
+import CourseSearchBox from '../../components/search/CourseSearchBox/CourseSearchBox';
 
 /**
  * Component properties for a AddCourseDialog.
@@ -103,25 +106,35 @@ export default function AddCourseDialog({
       />
     );
   });
-
   // const classes = useStyles();
+
+  const [searchSelections, setSearchSelections] = React.useState<string[]>([]);
+
+  const handleSearchSelection = (courseId: string) => {
+    // This appends; course can be removed some other way
+    setSearchSelections([...searchSelections, courseId]);
+  };
 
   return (
     <Dialog open={open} onClose={handleOnClose} aria-labelledby={destinationText}>
       <DialogTitle id="addCourseDialogTitle">{destinationText}</DialogTitle>
-      <div className={classes.selectCoursesGroup}>
-        <FormControl component="fieldset">
-          <FormLabel component="legend">Select courses</FormLabel>
-          <FormGroup>{courseItems}</FormGroup>
-          <FormHelperText>Choose as many as you want.</FormHelperText>
-        </FormControl>
-      </div>
-      <div className={classes.buttonGroup}>
+      <DialogContent>
+        <CourseSearchBox onItemSelected={handleSearchSelection} />
+        <div>
+          <div>Or select one from below:</div>
+          <FormControl component="fieldset">
+            <FormLabel component="legend">Select courses</FormLabel>
+            <FormGroup>{courseItems}</FormGroup>
+            <FormHelperText>Choose as many as you want.</FormHelperText>
+          </FormControl>
+        </div>
+      </DialogContent>
+      <DialogActions>
         <Button onClick={handleOnClose}>Cancel</Button>
-        <Button color="primary" disabled={!isDone} onClick={handleOnClose}>
+        <Button color="primary" disabled={!isDone} onClick={handleOnClose} autoFocus>
           Add
         </Button>
-      </div>
+      </DialogActions>
     </Dialog>
   );
 }

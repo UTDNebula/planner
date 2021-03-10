@@ -1,6 +1,7 @@
 import React from 'react';
 import { useCourseSearch } from './courseSearch';
 import CourseSearchBar from './CourseSearchBar';
+import CourseSearchChipList from './CourseSearchChipList';
 import SearchResult from './SearchResult';
 
 /**
@@ -32,9 +33,17 @@ export default function CourseSearchBox({ onItemSelected }: CourseSearchBoxProps
     );
   });
 
+  const preloadChips = [
+    {
+      id: '0',
+      contents: 'CS',
+    },
+  ];
+
   return (
     <div className="m-2">
       <CourseSearchBar />
+      <CourseSearchChipList chips={preloadChips} />
       <div className="my-2">{resultsList}</div>
     </div>
   );
