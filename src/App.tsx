@@ -5,11 +5,12 @@ import { AnimateSharedLayout } from 'framer-motion';
 import Home from './features/home/Home';
 import DegreePlannerChrome from './features/planner/DegreePlannerChrome';
 import AppToolbar from './features/common/toolbar/AppToolbar';
-import LandingPage from './features/landing/LandingPage';
+import LandingPage from './pages/landing/LandingPage';
 import AuthPage from './features/auth/AuthPage';
 import { useAuthContext } from './features/auth/auth-context';
 import OnboardingPage from './features/onboarding/OnboardingPage';
 import { useAppLocation } from './features/common/appLocation';
+import ProfilePage from './pages/Profile';
 import PrivacyPage from './pages/Privacy';
 import SupportPage from './pages/Support';
 import TermsPage from './pages/Terms';
@@ -28,8 +29,8 @@ function App(): JSX.Element {
 
   return (
     <AnimateSharedLayout>
-      <div className="min-h-full">
-        <main className="flex-1">
+      <div className="min-h-screen">
+        <main className="flex-1 h-full">
           <Switch>
             <Route exact path="/">
               <LandingPage />
@@ -48,13 +49,16 @@ function App(): JSX.Element {
             </Route>
             <Route path="/auth/signOut">
               {() => {
-                signOut();
+                signOut().then(() => {
+                  console.log('Signed out');
+                });
               }}
             </Route>
             <Route exact path="/app">
-              {/* TODO: Share toolbar */}
-              {/* <AppToolbar shouldShowProfile={true} title={toolbarTitle} /> */}
               <Home />
+            </Route>
+            <Route path="/app/profile">
+              <ProfilePage />
             </Route>
             <Route exact path="/app/onboarding">
               <OnboardingPage />
