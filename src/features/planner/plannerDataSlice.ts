@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { CoursePlan } from '../../api/plans';
 import { Course } from '../../app/data';
 
 interface CourseData {
@@ -11,7 +12,7 @@ interface CourseData {
 interface CatalogData {
   degreeIds: string[];
   degrees: {
-    [key: string]: any;
+    [key: string]: CoursePlan;
   };
 }
 
