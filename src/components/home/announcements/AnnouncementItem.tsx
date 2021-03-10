@@ -1,15 +1,59 @@
 import React from 'react';
 
+/**
+ * Metadata for action to be taken for a Notice.
+ */
 export type NoticeAction = {
-  link: string;
+  /**
+   * Call-to-action text informing the user what to do.
+   *
+   * @example "Schedule appointment with academic advisor"
+   */
   actionText: string;
+
+  /**
+   * A call-to-action link related to this action.
+   */
+  link: string;
 };
 
+/**
+ * Where a notice came from.
+ *
+ * - A 'service' source indicates a notice came from a service administrator.
+ * - An 'app' source indicates a notice came from the client based on some
+ *  automated or user-triggered functionality.
+ */
+export type NoticeSource = 'service' | 'app';
+
+/**
+ * An announcement for the user.
+ */
 export type Notice = {
+  /**
+   * A brief announcement title.
+   */
   title: string;
+
+  /**
+   * A 1-3 sentence description containing information for this notice.
+   */
   description: string;
+
+  /**
+   * A call to action.
+   */
   action: NoticeAction;
+
+  /**
+   * When this notice was sent to the user.
+   */
   issueDate: Date;
+
+  /**
+   * The issuer of the source
+   */
+  source: NoticeSource;
 };
 
 /**
