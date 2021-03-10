@@ -61,7 +61,7 @@ export default function Disclaimer({ onConsent }: DisclaimerProps): JSX.Element 
   };
 
   const { disclaimer, personalization, analytics, performance } = consentState;
-
+  // TODO: Collapse disclaimer when consent is given
   return (
     <article>
       <div className="max-w-4xl mx-auto py-2">
@@ -87,7 +87,7 @@ export default function Disclaimer({ onConsent }: DisclaimerProps): JSX.Element 
         </p>
         <FormControlLabel
           control={<Checkbox checked={disclaimer} onChange={handleChange} name="disclaimer" />}
-          label="I understand that Comet Planning is a student-maintained project not maintained or officially endorsed by The University of Texas at Dallas or any of its departments."
+          label="I understand that Nebula is a student-maintained project not maintained or officially endorsed by The University of Texas at Dallas or any of its departments."
         />
         {disclaimer && (
           <p className="text-body1 my-2">With that out of the way, let&apos;s get started!</p>
@@ -102,7 +102,7 @@ export default function Disclaimer({ onConsent }: DisclaimerProps): JSX.Element 
               <div className="my-4">
                 <h1 className="text-headline5">Personalization</h1>
                 <p className="text-body1 py-1">
-                  Comet Planning supports some functionality that lets you back up information to an
+                  Nebula supports some functionality that lets you back up information to an
                   account:
                 </p>
                 <ul className="text-body1 list-disc list-inside my-1">
@@ -126,7 +126,7 @@ export default function Disclaimer({ onConsent }: DisclaimerProps): JSX.Element 
                       name="personalization"
                     />
                   }
-                  label="I agree to let Comet Planning personalize my experience."
+                  label="I agree to let Nebula personalize my experience."
                 />
                 {/* TODO: Link to create an account with redirect */}
               </div>
@@ -141,10 +141,10 @@ export default function Disclaimer({ onConsent }: DisclaimerProps): JSX.Element 
                   <li>Class popularity estimates</li>
                 </ul>
                 <p>
-                  Analytics help us understand which features are most used. Comet Planning does not
-                  track you across the web. All data you give is kept within the service and not
-                  shared with third-parties. By opting in, you&apos;ll help us keep updating Comet
-                  Planning with new features based on your input.
+                  Analytics help us understand which features are most used. Nebula does not track
+                  you across the web. All data you give is kept within the service and not shared
+                  with third-parties. By opting in, you&apos;ll help us keep updating Nebula with
+                  new features based on your input.
                 </p>
                 <p className="text-body1 py-1">
                   For more inforation, see our{' '}
@@ -157,13 +157,13 @@ export default function Disclaimer({ onConsent }: DisclaimerProps): JSX.Element 
                   control={
                     <Checkbox checked={analytics} onChange={handleChange} name="analytics" />
                   }
-                  label="I opt into analytics collection for Comet Planning."
+                  label="I opt into analytics collection for Nebula."
                 />
               </div>
               <div className="my-4">
                 <h1 className="text-headline5">Performance</h1>
                 <p className="text-body1">
-                  By opting into performance monitoring, the Comet Planning maintainers will:
+                  By opting into performance monitoring, the Nebula maintainers will:
                 </p>
                 <ul className="text-body1 list-disc list-inside my-1">
                   <li>Be able to better diagnose errors that take place in the app</li>
@@ -175,18 +175,18 @@ export default function Disclaimer({ onConsent }: DisclaimerProps): JSX.Element 
                   control={
                     <Checkbox checked={performance} onChange={handleChange} name="performance" />
                   }
-                  label="I opt into performance monitoring for Comet Planning."
+                  label="I opt into performance monitoring for Nebula."
                 />
               </div>
-            </div>
-            <div className="my-2">
-              <Button color="primary" variant="contained" onClick={handleDone}>
-                Start planning
-              </Button>
             </div>
           </div>
         </div>
       )}
+      <div className="my-2">
+        <Button color="primary" variant="contained" onClick={handleDone} disabled={!disclaimer}>
+          Start planning
+        </Button>
+      </div>
     </article>
   );
 }

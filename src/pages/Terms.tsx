@@ -9,7 +9,7 @@ import ServiceName from '../components/common/ServiceName';
  */
 export default function TermsPage(): JSX.Element {
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       <MarketingHeader />
       <div className="p-4 md:p-8">
         <div className="max-w-4xl mx-auto bg-white rounded-md shadow-md">
@@ -23,8 +23,8 @@ export default function TermsPage(): JSX.Element {
             <div>
               <h1 className="text-headline6 my-4">TL;DR</h1>
               <p className="text-body1">
-                The <ServiceName /> maintainers hope that you read this relatively short terms of
-                service, but here are the highlights:
+                The Project Nebula maintainers hope that you read all these relatively short terms
+                of service, but here are the highlights:
               </p>
               <ul className="list-disc list-inside px-2">
                 <li className="py-1 text-subtitle1">
@@ -32,7 +32,7 @@ export default function TermsPage(): JSX.Element {
                   users with an account.
                 </li>
                 <li className="py-1 text-subtitle1">
-                  Comet Planning is open-source, but don&apos;t hack into our systems in bad faith.
+                  <ServiceName /> is open-source, but don&apos;t hack into our systems in bad faith.
                   If you do this, we may suspend your access to your account.
                 </li>
                 <li className="py-1 text-subtitle1">
@@ -44,8 +44,8 @@ export default function TermsPage(): JSX.Element {
                 </li>
                 <li className="py-1 text-subtitle1">
                   This is a student project maintained by ACM UTD, a registered student organization
-                  at The University of Texas at Dallas. Comet Planning is not an official service of
-                  UT Dallas and does not represent the views of the university or its officers.
+                  at The University of Texas at Dallas. Nebula Web is not an official service of UT
+                  Dallas and does not represent the views of the university or its officers.
                 </li>
               </ul>
             </div>
@@ -60,7 +60,7 @@ export default function TermsPage(): JSX.Element {
             </p>
             <ul className="list-disc list-inside px-2">
               <li className="py-1">
-                <b className="font-bold">App:</b> Comet Planning, the software tool that allows
+                <b className="font-bold">App:</b> Nebula Web, the software tool that allows
                 individuals to plan their college experience.
               </li>
               <li className="py-1">
@@ -82,7 +82,7 @@ export default function TermsPage(): JSX.Element {
                 the App.
               </li>
               <li className="py-1">
-                <b className="font-bold">Comet Planning Maintainers (Maintainers):</b> A group of
+                <b className="font-bold">Project Nebula Maintainers (Maintainers):</b> A group of
                 studnets officers in ACM Development, a division of the Association for Computing
                 Machinery at The University of Texas at Dallas.
               </li>
@@ -103,7 +103,7 @@ export default function TermsPage(): JSX.Element {
             <p className="py-2 text-body1">
               {/* TODO: Rewrite because this is unclear. */}
               All of your user information is stored locally on your machine. Anyone who has
-              physical access to your computer may be able to access your Comet Planning data.
+              physical access to your computer may be able to access your Nebula Web data.
             </p>
             <p className="py-2 text-body1">
               Although an account is not required to use core App functionality, you can create one
@@ -117,13 +117,14 @@ export default function TermsPage(): JSX.Element {
             <p className="py-2 text-body1">
               If you believe someone may have obtained unauthorized access to your account, let the
               Maintainers know by emailing{' '}
-              <a href="mailto:cometplanning@acmutd.co">development.acmutd.co</a> with the subject
-              line &quot;Need Help with Unauthorized Account Access&quot;.
+              <a href="mailto:nebula-maintainers@acmutd.co">nebula-maintainers@acmutd.co</a> with
+              the subject line &quot;Need Help with Unauthorized Account Access&quot;.
             </p>
             <h2 className="text-subtitle1 font-bold mt-2">Service Termination</h2>
             <p className="py-2 text-body1">
               If the App shuts down, you will be given until the end of the next academic semester
-              to download your data or sixty (60) calendar days after a public announcement is made.
+              or sixty (60) calendar days after a public announcement is made to download your
+              Account data.
             </p>
             <p className="py-2 text-body1">
               If the Maintainers transfer ownership of the App or the Service to another entity,
@@ -132,9 +133,9 @@ export default function TermsPage(): JSX.Element {
             </p>
             <h2 className="text-subtitle1 font-bold mt-2">Unauthorized access</h2>
             <p className="py-2 text-body1">
-              Comet Planning is an open-source project, so its code is publicly accessible. However,
-              the Admin Console is not. If the Maintainers detect you are trying to hack into the
-              App or Service in bad faith, your Account may be suspended or deleted.
+              Nebula Web is an open-source project, so its code is publicly accessible. However, the
+              Admin Console is not. If the Maintainers detect you are trying to hack into the App or
+              Service in bad faith, your Account may be suspended or deleted.
             </p>
             <h1 className="text-headline6 my-4">Disclaimer of liability</h1>
             <p className="py-2 text-body1">Because we should probably say this:</p>
@@ -163,12 +164,12 @@ export default function TermsPage(): JSX.Element {
                 <a className="text-blue-400" href="https://acmutd.co/discord">
                   ACM Discord&nbsp;
                 </a>
-                (in #development-general)
+                (in #nebula-general)
               </li>
               <li className="py-1">
                 <b className="font-bold">General inquiries to the Maintainers:</b>{' '}
-                <a className="text-blue-400" href="mailto:cometplanning@acmutd.co">
-                  cometplanning@acmutd.co
+                <a className="text-blue-400" href="mailto:nebula-maintainers@acmutd.co">
+                  nebula-maintainers@acmutd.co
                 </a>
               </li>
             </ul>
@@ -179,6 +180,6 @@ export default function TermsPage(): JSX.Element {
         </div>
       </div>
       <Footer />
-    </>
+    </div>
   );
 }

@@ -23,8 +23,8 @@ export default function SupportPage(): JSX.Element {
             <div className="py-4 text-headline6 text-center">Coming soon(tm)!</div>
             <p className="py-2 text-body1">
               In the meantime, you can contact the maintainers at{' '}
-              <a className="text-blue-500 font-bold" href="mailto:cometplanning@acmutd.co">
-                cometplanning.acmutd.co
+              <a className="text-blue-500 font-bold" href="mailto:nebula-maintainers@acmutd.co">
+                nebula-maintainers@acmutd.co
               </a>
               .
             </p>

@@ -17,7 +17,7 @@ export default function ServiceName({ titleClassName = '' }: ServiceNameProps): 
   // TODO: Finalize styles
   return (
     <span>
-      <span className={titleClassName}>Comet Planning</span>
+      <span className={titleClassName}>Nebula</span>
       <sup className="p-1 uppercase">Beta</sup>
     </span>
   );

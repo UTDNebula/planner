@@ -76,10 +76,10 @@ export default function Footer(): JSX.Element {
               <a href="https://github.com/acmutd">Other ACM Development Projects</a>
             </li>
             <li>
-              <a href="https://github.com/acmutd/comet-planning">Comet Planning on GitHub</a>
+              <a href="https://github.com/acmutd/nebula-web">Nebula Web on GitHub</a>
             </li>
             <li>
-              <a href="https://github.com/acmutd/comet-data-service">The Comet Data Service</a>
+              <a href="https://github.com/acmutd/nebula-data-service">The Nebula Data Service</a>
             </li>
             <li>
               <a href="https://acmutd.co">ACM UTD website</a>
@@ -88,7 +88,7 @@ export default function Footer(): JSX.Element {
               <a href="https://apply.acmutd.co/">Application to join the team</a>
             </li>
             <li>
-              <a href="https://github.com/acmutd/comet-planning/blob/dev/CONTRIBUTORS.md">
+              <a href="https://github.com/acmutd/nebula-planning/blob/develop/CONTRIBUTING.md">
                 How to contribute
               </a>
             </li>
