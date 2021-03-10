@@ -1,8 +1,8 @@
 import React from 'react';
 import { Close, KeyboardArrowUp } from '@material-ui/icons';
-import { IconButton } from '@material-ui/core';
+import { Button, IconButton } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import { Course, createSamplePlan } from '../../app/data';
+import { Course /* createSamplePlan */ } from '../../app/data';
 import useUserPlanData from '../common/userPlanData';
 import { useAuthContext } from '../../features/auth/auth-context';
 import CourseCard from '../common/CourseCard';
@@ -22,49 +22,33 @@ interface UserPlanSheetProps {
 }
 
 /**
+ * A list of CourseCard components.
+ *
+ * @param courses The courses to display
+ */
+function CourseList(courses: Course[]): JSX.Element[] {
+  return courses.map(({ id, catalogCode, title, description, creditHours }) => {
+    return (
+      <CourseCard
+        key={id}
+        code={catalogCode}
+        title={title}
+        description={description}
+        creditHours={creditHours}
+        enabled={false}
+      />
+    );
+  });
+}
+
+/**
  * A sheet that displays the current semester and upcoming semesters.
  */
 export default function UserPlanSheet({ isOpen, onExpandClick }: UserPlanSheetProps): JSX.Element {
   // TODO: Find out if this is the right place to put the reference to auth
   const { user } = useAuthContext();
   const { plans, planIds } = useUserPlanData(user);
-  // const plan = plans[0];
-  const plan = createSamplePlan(5);
-
-  const startSemester = 0;
-
-  // TODO: Determine next semester using current semester
-  const currentSemester = plan.semesters[startSemester];
-  console.log(plan);
-
-  const laterSemesters = plan.semesters.slice(startSemester + 1);
-
-  const generateListStyle = () => {
-    // overflow-x-hidden flex
-    return {
-      'overflow-x': 'auto',
-      'grid-auto-flow': 'column',
-      display: 'grid',
-      'grid-gap': '4px',
-      'grid-auto-columns': 'calc(50% - 24px)',
-      padding: '2px',
-    };
-  };
-
-  function CourseList(courses: Course[]): JSX.Element[] {
-    return courses.map(({ id, catalogCode, title, description, creditHours }) => {
-      return (
-        <CourseCard
-          key={id}
-          code={catalogCode}
-          title={title}
-          description={description}
-          creditHours={creditHours}
-          enabled={false}
-        />
-      );
-    });
-  }
+  const plan = plans[planIds[0]];
 
   const handlePlanToggle = () => {
     // TODO: Animate button
@@ -72,27 +56,18 @@ export default function UserPlanSheet({ isOpen, onExpandClick }: UserPlanSheetPr
     onExpandClick(planId);
   };
 
-  const icon = isOpen ? <Close /> : <KeyboardArrowUp />;
+  let sheetContents;
+  if (plan) {
+    const startSemester = 0;
 
-  return (
-    <div className="bg-white w-screen">
-      <header className="flex p-2">
-        <div className="inline-block">
-          <IconButton
-            aria-label={isOpen ? 'Close plan' : 'Open plan'}
-            color="primary"
-            // component={Link}
-            // to="/app/plans/new"
-            onClick={handlePlanToggle}
-          >
-            {icon}
-          </IconButton>
-        </div>
-        <Link className="ml-2 text-headline5 flex-1 my-auto" to={`/app/plans/${plan.id}`}>
-          Your plan
-        </Link>
-      </header>
-      <div className="md:flex">
+    const semesters = plan.semesters ?? [];
+    // TODO: Determine next semester using current semester
+    const currentSemester = semesters[startSemester] ?? console.log(plan);
+
+    const laterSemesters = semesters.slice(startSemester + 1);
+
+    sheetContents = (
+      <>
         <div className="p-2 flex-0">
           <div className="text-headline6 mx-4">This semester</div>
           <div className="max-w-sm w-full rounded-md" key={currentSemester.code}>
@@ -104,7 +79,16 @@ export default function UserPlanSheet({ isOpen, onExpandClick }: UserPlanSheetPr
         </div>
         <div className="p-2 flex-1">
           <div className="text-headline6 mx-4">What&apos;s next</div>
-          <div style={generateListStyle()}>
+          <div
+            style={{
+              overflowX: 'auto',
+              gridAutoFlow: 'column',
+              display: 'grid',
+              gridGap: '4px',
+              gridAutoColumns: 'calc(50% - 24px)',
+              padding: '2px',
+            }}
+          >
             {laterSemesters.map((semester) => {
               return (
                 <div key={semester.code} className="max-h-full inline-block align-top">
@@ -119,7 +103,48 @@ export default function UserPlanSheet({ isOpen, onExpandClick }: UserPlanSheetPr
             })}
           </div>
         </div>
+      </>
+    );
+  } else {
+    sheetContents = (
+      <div className="w-full p-4 text-center">
+        <div className="mx-auto">
+          <div className="text-headline6 font-bold">
+            It appears you don&apos;t have a plan yet. Let&apos;s change that.
+          </div>
+          <div className="flex justify-center my-4">
+            <Button variant="contained" color="primary" component={Link} to="/app/plans/new">
+              Create a plan
+            </Button>
+          </div>
+        </div>
       </div>
+    );
+  }
+
+  const icon = isOpen ? <Close /> : <KeyboardArrowUp />;
+
+  const planLink = plan ? `/app/plans/${plan.id}` : '';
+
+  return (
+    <div className="bg-white w-full">
+      <header className="flex p-2">
+        <div className="inline-block">
+          <IconButton
+            aria-label={isOpen ? 'Close plan' : 'Open plan'}
+            color="primary"
+            // component={Link}
+            // to="/app/plans/new"
+            onClick={handlePlanToggle}
+          >
+            {icon}
+          </IconButton>
+        </div>
+        <Link className="ml-2 text-headline5 flex-1 my-auto" to={planLink}>
+          Your plan
+        </Link>
+      </header>
+      <div className="md:flex">{sheetContents}</div>
     </div>
   );
 }
