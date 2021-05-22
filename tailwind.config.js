@@ -1,8 +1,22 @@
 module.exports = {
-  purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
+  purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      colors: {
+        primary: {
+          light: '#6470F7',
+          DEFAULT: '#2F3FF4',
+          dark: '#0B1CD5',
+        },
+        secondary: {
+          light: '#2FEEAB',
+          DEFAULT: '#11D08D',
+          dark: '#0C9766',
+        },
+        light: '#F9F9FA',
+        dark: '#1F201F',
+      },
       fontSize: {
         headline1: [
           '96px',
@@ -88,12 +102,6 @@ module.exports = {
     },
     fontFamily: {
       sans: ['Roboto', 'ui-sans-serif', 'system-ui'],
-    },
-    screens: {
-      sm: '600px',
-      md: '840px',
-      lg: '1024px',
-      xl: '1440px',
     },
   },
   variants: {
