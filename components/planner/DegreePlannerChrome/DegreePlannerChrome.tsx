@@ -1,26 +1,48 @@
 import React from 'react';
-import { makeStyles, Theme, createStyles } from '@material-ui/core';
+import {
+  makeStyles,
+  Theme,
+  createStyles,
+  AppBar,
+  Button,
+  IconButton,
+  Toolbar,
+  Typography,
+} from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
 import { DragDropContext } from 'react-beautiful-dnd';
-// import { useHistory } from 'react-router-dom';
-import SemesterNavigationDrawer from './SemesterNavigationDrawer';
 import AddSemesterTrigger from '../AddSemesterTrigger/AddSemesterTrigger';
-import { StudentPlan, Course /* createSamplePlan */ } from '../../app/data';
 import SemesterBlockList, { ScrollDirection } from '../../common/SemesterBlockList';
 import AddCourseDialog from '../AddCourseDialog/AddCourseDialog';
-import { useFocusableSemesterList } from './hooks/focusableSemesterList';
-import { useObservePlanId } from './hooks/planId';
-import { useCreateNewPlanFlow } from './hooks/newPlanFlow';
-import { usePlanManipulator } from './hooks/planManipulator';
-import { useSelectableCourseDialog } from './hooks/selectableCourseDialog';
-import { loadCourses } from '../../api/courses';
 import useUserPlanData from '../../common/userPlanData';
-import { useAuthContext } from '../auth/auth-context';
+import { useAuthContext } from '../../../modules/auth/auth-context';
+import { loadCourses } from '../../../modules/common/api/courses';
+import { StudentPlan, Course } from '../../../modules/common/data';
+import { useFocusableSemesterList } from '../../../modules/planner/hooks/focusableSemesterList';
+import { useCreateNewPlanFlow } from '../../../modules/planner/hooks/newPlanFlow';
+import { usePlanManipulator } from '../../../modules/planner/hooks/planManipulator';
+import { useSelectableCourseDialog } from '../../../modules/planner/hooks/selectableCourseDialog';
+import SemesterNavigationDrawer from '../SemesterNavigationDrawer';
 
 const useStyles = (columnCount: number) => {
   return makeStyles((theme: Theme) =>
     createStyles({
       root: {
         display: 'flex',
+        flexGrow: 1,
+      },
+      appBar: {
+        zIndex: theme.zIndex.drawer + 1,
+      },
+      drawer: {
+        width: 240,
+        flexShrink: 0,
+      },
+      menuButton: {
+        marginRight: theme.spacing(2),
+      },
+      title: {
+        flexGrow: 1,
       },
       paper: {
         padding: theme.spacing(2),
@@ -45,9 +67,16 @@ const useStyles = (columnCount: number) => {
 };
 
 /**
+ * Component properties for a DegreePlannerChrome.
+ */
+interface DegreePlannerChromeProps {
+  planId: string;
+}
+
+/**
  * The root degree planner editor component.
  */
-export default function DegreePlannerChrome(): JSX.Element {
+export default function DegreePlannerChrome({ planId }: DegreePlannerChromeProps): JSX.Element {
   const [studentPlan, setStudentPlan] = React.useState<StudentPlan | null>(null);
   const [allCourses, setAllCourses] = React.useState<{ [key: string]: Course }>({});
 
@@ -74,8 +103,6 @@ export default function DegreePlannerChrome(): JSX.Element {
   const { focusedSemester, navSemesterData, handleSemesterSelection } = useFocusableSemesterList(
     semesters,
   );
-
-  const { planId } = useObservePlanId();
 
   const { user } = useAuthContext();
   const { plans } = useUserPlanData(user);
@@ -164,12 +191,24 @@ export default function DegreePlannerChrome(): JSX.Element {
 
   return (
     <div className={classes.root}>
+      <AppBar position="fixed" className={classes.appBar}>
+        <Toolbar>
+          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" className={classes.title}>
+            Your plan
+          </Typography>
+          <Button color="inherit">Login</Button>
+        </Toolbar>
+      </AppBar>
       <SemesterNavigationDrawer
         semesters={navSemesterData}
         selected={focusedSemester}
         onSelection={handleSemesterSelection}
       />
-      <div className="w-full h-full">
+      <div className="h-full flex-grow">
+        <Toolbar />
         <DragDropContext onDragEnd={onDragEnd}>
           <SemesterBlockList
             semesters={semesters}

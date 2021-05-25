@@ -51,6 +51,7 @@ const useStyles = (drawerWidth = 240) =>
     createStyles({
       root: {
         width: 240,
+        flexShrink: 0,
       },
       drawerContainer: {
         overflow: 'auto',
@@ -96,6 +97,7 @@ export default function SemesterNavigationDrawer(
       classes={{
         paper: classes.drawerPaper,
       }}
+      anchor="left"
     >
       <Toolbar />
       <Typography className={classes.drawerTitle} variant="h6">

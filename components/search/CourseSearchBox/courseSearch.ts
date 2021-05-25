@@ -1,6 +1,6 @@
 import React from 'react';
-import { loadCourses } from '../../../../src/api/courses';
-import { Course } from '../../../../src/app/data';
+import { loadCourses } from '../../../modules/common/api/courses';
+import { Course } from '../../../modules/common/data';
 
 /**
  * Search all courses.

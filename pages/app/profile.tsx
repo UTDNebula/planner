@@ -1,5 +1,4 @@
-import React from 'react';
-import AppNavigation from '../../components/common/AppNavigation';
+import Head from 'next/head';
 import { useAuthContext } from '../../modules/auth/auth-context';
 import { useUserProfileData } from '../../modules/profile/userProfileData';
 
@@ -10,9 +9,11 @@ export default function ProfilePage(): JSX.Element {
   const { user } = useAuthContext();
   const { userInfo } = useUserProfileData(user.id);
   return (
-    <div className="flex min-h-full">
-      <AppNavigation />
-      <main className="flex">
+    <main className="mx-auto">
+      <Head>
+        <title>Nebula - Your profile</title>
+      </Head>
+      <div className="max-w-6xl">
         <section className="p-4">
           <div className="text-headline5 font-bold">Your information</div>
           <div className="md:grid-col-3">
@@ -25,7 +26,7 @@ export default function ProfilePage(): JSX.Element {
         <section className="p-4">
           <div className="text-headline5 font-bold">Account management</div>
         </section>
-      </main>
-    </div>
+      </div>
+    </main>
   );
 }

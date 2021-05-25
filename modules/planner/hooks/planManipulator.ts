@@ -6,7 +6,7 @@ import {
   Course,
   SEMESTER_CODE_MAPPINGS,
   Semester,
-} from '../../../app/data';
+} from '../../common/data';
 import { convertSemesterToData } from '../../common/data-utils';
 import { moveDroppableCourse, reorderSemester } from './planManipulatorUtils';
 

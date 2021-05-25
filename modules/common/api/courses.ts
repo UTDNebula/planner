@@ -1,4 +1,4 @@
-import { Course } from '../app/data';
+import { Course } from '../data';
 
 /**
  * Load all supported courses from file.
@@ -10,7 +10,7 @@ import { Course } from '../app/data';
  */
 export async function loadCourses(year = 2020): Promise<Course[]> {
   const courseData: { [key: string]: JSONCourseType } = await import(
-    `../../data/${year}-courses.json`
+    `../../../data/${year}-courses.json`
   );
   return Object.entries(courseData).map((value) => {
     const [catalogCode, courseData] = value;
