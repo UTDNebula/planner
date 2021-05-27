@@ -15,7 +15,7 @@ export default function AppNavigation(): JSX.Element {
   const { isSignedIn } = useAuthContext();
 
   const authItem = {
-    route: isSignedIn ? '/auth/signOut' : '/auth/signIn',
+    route: isSignedIn ? '/app/auth/signOut' : '/app/auth/signIn',
     label: isSignedIn ? 'Sign out' : 'Sign in',
   };
 

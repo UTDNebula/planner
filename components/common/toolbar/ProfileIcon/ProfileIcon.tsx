@@ -104,7 +104,7 @@ export default function ProfileIcon(props: ProfileIconProps): JSX.Element {
               </ListItemIcon>
               <ListItemText primary="Manage profile" />
             </MenuItem>,
-            <MenuItem component={Link} to="/auth/signOut" key="auth">
+            <MenuItem component={Link} to="/app/auth/signOut" key="auth">
               <ListItemIcon>
                 <ExitToApp />
               </ListItemIcon>
@@ -112,7 +112,7 @@ export default function ProfileIcon(props: ProfileIconProps): JSX.Element {
             </MenuItem>,
           ]
         ) : (
-          <MenuItem component={Link} to="/auth/signIn" onClick={handleSignInClick}>
+          <MenuItem component={Link} to="/app/auth/signIn" onClick={handleSignInClick}>
             <ListItemIcon>
               <ExitToApp />
             </ListItemIcon>
