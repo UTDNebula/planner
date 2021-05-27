@@ -9,7 +9,8 @@ import {
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import BackIcon from '@material-ui/icons/ArrowBack';
-import { Link as RouterLink, useHistory } from 'react-router-dom';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import ProfileIcon from '../ProfileIcon/ProfileIcon';
 import { useAuthContext } from '../../auth/auth-context';
 import { useAppLocation } from '../appLocation';
@@ -43,7 +44,7 @@ export default function AppToolbar(props: AppToolbarProps): JSX.Element {
 
   const { signOut } = useAuthContext();
 
-  const history = useHistory();
+  const router = useRouter();
 
   const [inDetail, setInDetail] = React.useState(false);
 
@@ -58,11 +59,11 @@ export default function AppToolbar(props: AppToolbarProps): JSX.Element {
   const handleSignOut = () => {
     signOut();
     // TODO: Verify success
-    history.replace('/');
+    router.replace('/');
   };
 
   const handleSignIn = () => {
-    history.push('/auth/signIn');
+    router.push('/auth/signIn');
   };
 
   const handleBackButtonClick = () => {
@@ -82,9 +83,11 @@ export default function AppToolbar(props: AppToolbarProps): JSX.Element {
         >
           {leftButtonIcon}
         </IconButton>
-        <Typography variant="h6" className={classes.title} component={RouterLink} to="/app">
-          {title}
-        </Typography>
+        <Link href="/app">
+          <Typography variant="h6" className={classes.title}>
+            {title}
+          </Typography>
+        </Link>
         {shouldShowProfile && <ProfileIcon onSignIn={handleSignIn} onSignOut={handleSignOut} />}
       </Toolbar>
     </AppBar>
