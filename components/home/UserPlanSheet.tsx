@@ -62,7 +62,9 @@ export default function UserPlanSheet({ isOpen, onExpandClick }: UserPlanSheetPr
 
     const semesters = plan.semesters ?? [];
     // TODO: Determine next semester using current semester
-    const currentSemester = semesters[startSemester] ?? console.log(plan);
+    const currentSemester = semesters[startSemester];
+    // TODO: Fix this obvious index 0 code smell
+    console.log(plan);
 
     const laterSemesters = semesters.slice(startSemester + 1);
 

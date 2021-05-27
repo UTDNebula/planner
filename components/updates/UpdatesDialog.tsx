@@ -1,5 +1,5 @@
 import React from 'react';
-import { useUpdateService } from '../../../src/features/updates/updateService';
+import { useUpdateService } from '../../modules/updates/updateService';
 
 /**
  * A dialog shown to the user when there is an update to the app.

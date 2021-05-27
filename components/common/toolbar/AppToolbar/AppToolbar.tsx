@@ -12,8 +12,7 @@ import BackIcon from '@material-ui/icons/ArrowBack';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import ProfileIcon from '../ProfileIcon/ProfileIcon';
-import { useAuthContext } from '../../auth/auth-context';
-import { useAppLocation } from '../appLocation';
+import { useAuthContext } from '../../../../modules/auth/auth-context';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -38,7 +37,7 @@ interface AppToolbarProps {
 export default function AppToolbar(props: AppToolbarProps): JSX.Element {
   const { shouldShowProfile } = props;
 
-  const { title } = useAppLocation();
+  const title = 'Nebula';
 
   const classes = useStyles();
 

@@ -1,11 +1,11 @@
 import React from 'react';
 import { Avatar, IconButton, ListItemIcon, ListItemText, Menu, MenuItem } from '@material-ui/core';
 import AccountIcon from '@material-ui/icons/AccountCircle';
-import { Link } from 'next/link';
 import AccountBox from '@material-ui/icons/AccountBox';
 import { ExitToApp } from '@material-ui/icons';
+import Link from 'next/link';
 import styles from './ProfileIcon.module.css';
-import { useAuthContext } from '../../auth/auth-context';
+import { useAuthContext } from '../../../../modules/auth/auth-context';
 
 /**
  * Component properties for a {@link ProfileIcon}.
@@ -98,13 +98,13 @@ export default function ProfileIcon(props: ProfileIconProps): JSX.Element {
         </div>
         {isSignedIn ? (
           [
-            <MenuItem component={Link} to="/app/profile" key="profile">
+            <MenuItem component={Link} href="/app/profile" key="profile">
               <ListItemIcon>
                 <AccountBox />
               </ListItemIcon>
               <ListItemText primary="Manage profile" />
             </MenuItem>,
-            <MenuItem component={Link} to="/app/auth/signOut" key="auth">
+            <MenuItem component={Link} href="/app/auth/signOut" key="auth">
               <ListItemIcon>
                 <ExitToApp />
               </ListItemIcon>
@@ -112,7 +112,7 @@ export default function ProfileIcon(props: ProfileIconProps): JSX.Element {
             </MenuItem>,
           ]
         ) : (
-          <MenuItem component={Link} to="/app/auth/signIn" onClick={handleSignInClick}>
+          <MenuItem component={Link} href="/app/auth/signIn">
             <ListItemIcon>
               <ExitToApp />
             </ListItemIcon>
@@ -120,12 +120,16 @@ export default function ProfileIcon(props: ProfileIconProps): JSX.Element {
           </MenuItem>
         )}
         <div className="p-2 text-center">
-          <Link className="text-blue-700 underline" to="/terms">
-            Terms
+          <Link href="/terms">
+            <span className="text-blue-700 underline">
+              Terms
+            </span>
           </Link>
           &nbsp;|&nbsp;
-          <Link className="text-blue-700 underline" to="/privacy">
-            Privacy
+          <Link href="/privacy"> 
+            <span className="text-blue-700 underline">
+              Privacy
+            </span>
           </Link>
         </div>
       </Menu>

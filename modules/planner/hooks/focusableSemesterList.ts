@@ -1,5 +1,5 @@
 import React from 'react';
-import { Semester } from '../../../app/data';
+import { Semester } from '../../common/data';
 
 /**
  * A hook to conslidate focusability for semesters.

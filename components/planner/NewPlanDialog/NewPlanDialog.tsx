@@ -1,5 +1,5 @@
 import React from 'react';
-import { useCreateNewPlanFlow } from './hooks/newPlanFlow';
+import { useCreateNewPlanFlow } from '../../../modules/planner/hooks/newPlanFlow';
 
 /**
  * A dialog that allows a user to initialize a new CoursePlan.

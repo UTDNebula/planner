@@ -12,10 +12,10 @@ import {
 } from '@material-ui/core';
 import { DragIndicator, MoreVert } from '@material-ui/icons';
 import { Droppable } from 'react-beautiful-dnd';
-import { Course } from '../../../../src/app/data';
 import DraggableCourseCard from '../DraggableCourseCard';
 import { useToggleableCard } from '../CourseCard/toggleableCard';
 import { ScrollDirection } from '../SemesterBlockList';
+import { Course } from '../../../modules/common/data';
 
 /**
  * Component properties for an {@link SemesterBlock}.

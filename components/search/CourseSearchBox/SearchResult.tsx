@@ -1,5 +1,5 @@
 import React from 'react';
-import { Course } from '../../../../src/app/data';
+import { Course } from '../../../modules/common/data';
 import CourseCard from '../../common/CourseCard';
 
 /**

@@ -1,5 +1,5 @@
+import Link from 'next/link';
 import React from 'react';
-import { Link } from 'react-router-dom';
 import Footer from '../components/common/Footer';
 import MarketingHeader from '../components/common/MarketingHeader';
 import ServiceName from '../components/common/ServiceName';
@@ -37,8 +37,10 @@ export default function TermsPage(): JSX.Element {
                 </li>
                 <li className="py-1 text-subtitle1">
                   Usage of the data you provide us is governed by our{' '}
-                  <Link className="text-blue-500 font-bold" to="/privacy">
-                    Privacy Policy
+                  <Link href="/privacy">
+                    <span className="text-blue-500 font-bold">
+                      Privacy Policy
+                    </span>
                   </Link>
                   .
                 </li>

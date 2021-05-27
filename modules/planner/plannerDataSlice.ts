@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { CoursePlan } from '../../api/plans';
-import { Course } from '../../app/data';
+import { CoursePlan } from '../common/api/plans';
+import { Course } from '../common/data';
 
 interface CourseData {
   courseIds: string[];

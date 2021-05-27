@@ -13,9 +13,9 @@ import {
 import { Add, DragIndicator, MoreVert } from '@material-ui/icons';
 import { ScrollDirection } from '../SemesterBlockList';
 import { useToggleableCard } from '../CourseCard/toggleableCard';
-import { Course } from '../../app/data';
 import CourseCard from '../CourseCard';
 import styles from '../../../nebula-web/components/common/SemesterBlock/SemesterBlock.module.css';
+import { Course } from '../../../modules/common/data';
 
 /**
  * Component properties for an {@link SemesterBlock}.

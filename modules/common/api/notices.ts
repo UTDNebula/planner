@@ -1,7 +1,5 @@
-import {
-  Notice,
-  NoticeSource,
-} from '../../nebula-web/components/home/announcements/AnnouncementItem';
+import { NoticeSource, Notice } from '../../../components/home/announcements/AnnouncementItem';
+
 
 const SAMPLE_NOTICES = [
   {
