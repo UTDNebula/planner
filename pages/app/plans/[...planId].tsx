@@ -1,5 +1,3 @@
-import classes from '*.module.css';
-import { AppBar, Button, IconButton, makeStyles, Toolbar, Typography } from '@material-ui/core';
 import { useRouter } from 'next/router';
 import React from 'react';
 import DegreePlannerChrome from '../../../components/planner/DegreePlannerChrome';
