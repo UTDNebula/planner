@@ -38,9 +38,7 @@ export default function TermsPage(): JSX.Element {
                 <li className="py-1 text-subtitle1">
                   Usage of the data you provide us is governed by our{' '}
                   <Link href="/privacy">
-                    <span className="text-blue-500 font-bold">
-                      Privacy Policy
-                    </span>
+                    <span className="text-blue-500 font-bold">Privacy Policy</span>
                   </Link>
                   .
                 </li>

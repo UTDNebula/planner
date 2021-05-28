@@ -121,15 +121,11 @@ export default function ProfileIcon(props: ProfileIconProps): JSX.Element {
         )}
         <div className="p-2 text-center">
           <Link href="/terms">
-            <span className="text-blue-700 underline">
-              Terms
-            </span>
+            <span className="text-blue-700 underline">Terms</span>
           </Link>
           &nbsp;|&nbsp;
-          <Link href="/privacy"> 
-            <span className="text-blue-700 underline">
-              Privacy
-            </span>
+          <Link href="/privacy">
+            <span className="text-blue-700 underline">Privacy</span>
           </Link>
         </div>
       </Menu>

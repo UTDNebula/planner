@@ -6,11 +6,10 @@ import { useAuthContext } from '../../../modules/auth/auth-context';
  */
 export default function AuthPage() {
   const router = useRouter();
-  const auth = useAuthContext();
+  const { signOut, isSignedIn } = useAuthContext();
   const shouldSignOut = router.route === '/app/auth/signOut';
   if (shouldSignOut) {
-    auth
-      .signOut()
+    signOut()
       .then(() => {
         console.debug('Succesfully signed out.');
       })
@@ -18,5 +17,5 @@ export default function AuthPage() {
         console.error('Error signing out.', error);
       });
   }
-  return <div>Is signed in: {auth.isSignedIn}</div>;
+  return <div>Is signed in: {isSignedIn}</div>;
 }

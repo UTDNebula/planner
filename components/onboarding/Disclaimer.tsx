@@ -1,6 +1,6 @@
 import { Button, Checkbox, FormControlLabel } from '@material-ui/core';
 import React from 'react';
-import Link from 'next/link'; 
+import Link from 'next/link';
 import ServiceName from '../common/ServiceName';
 
 /**
@@ -149,9 +149,7 @@ export default function Disclaimer({ onConsent }: DisclaimerProps): JSX.Element 
                 <p className="text-body1 py-1">
                   For more inforation, see our{' '}
                   <Link href="/privacy">
-                    <span className="text-blue-500 font-bold">
-                      Privacy Policy
-                    </span>
+                    <span className="text-blue-500 font-bold">Privacy Policy</span>
                   </Link>
                   .
                 </p>

@@ -1,6 +1,5 @@
 import { NoticeSource, Notice } from '../../../components/home/announcements/AnnouncementItem';
 
-
 const SAMPLE_NOTICES = [
   {
     title: 'Upcoming degree audit',
