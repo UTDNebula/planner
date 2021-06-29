@@ -2,6 +2,9 @@ import firebase from 'firebase/app';
 import { Provider } from 'react-redux';
 import { useRouter } from 'next/router';
 import { AnimateSharedLayout } from 'framer-motion';
+import React from 'react';
+import Head from 'next/head';
+import type { AppProps } from 'next/app';
 import '@fontsource/roboto';
 import '../styles/globals.css';
 import { AuthProvider } from '../modules/auth/auth-context';
@@ -28,7 +31,7 @@ function SidebarLayout({ Component, pageProps }) {
   const isPlanner = router.route.startsWith('/app/plans/'); // TODO: Make this routing more robust.
   const content = (isLanding && <Component {...pageProps} />) ||
     (isPlanner && <Component {...pageProps} />) || (
-      <div className="flex w-full h-full">
+      <div className="flex w-full min-h-full">
         <div className="h-full flex-1 max-w-2xl">
           <AppNavigation />
         </div>
@@ -48,11 +51,32 @@ function SidebarLayout({ Component, pageProps }) {
  * This wrapper handles conditional rendering for certain layouts for non-landing
  * page routes.
  */
-export default function NebulaApp({ Component, pageProps }): JSX.Element {
+export default function NebulaApp({ Component, pageProps }: AppProps): JSX.Element {
   const store = useStore(pageProps.initialReduxState);
 
   return (
     <AuthProvider>
+      <Head>
+        <meta charSet="utf-8" />
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+        <meta
+          name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"
+        />
+        <meta
+          name="description"
+          content="A tool to help students plan their degree plans and college experience at UTD."
+        />
+        <meta name="keywords" content="UTD, UT Dallas, degree planner" />
+        <title>Nebula Web</title>
+
+        <link rel="manifest" href="/manifest.json" />
+
+        <link href="/icons/favicon-16x16.png" rel="icon" type="image/png" sizes="16x16" />
+        <link href="/icons/favicon-32x32.png" rel="icon" type="image/png" sizes="32x32" />
+        <link rel="apple-touch-icon" href="/apple-icon.png"></link>
+        <meta name="theme-color" content="#317EFB" />
+      </Head>
       <Provider store={store}>
         <AnimateSharedLayout>{SidebarLayout({ Component, pageProps })}</AnimateSharedLayout>
       </Provider>
