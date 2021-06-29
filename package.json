@@ -60,6 +60,8 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog",
       "disableSubjectLowerCase": true,
+      "maxHeaderWidth": 72,
+      "maxLineWidth": 80,
       "defaultType": "chore"
     }
   }
