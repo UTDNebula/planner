@@ -6,9 +6,7 @@ import { HonorsIndicator } from './types';
  *
  * @param semesterCode A semester identifier code like 2020f.
  */
-export function convertSemesterToData(
-  semesterCode: string,
-): {
+export function convertSemesterToData(semesterCode: string): {
   year: number;
   semester: SemesterCode;
 } {

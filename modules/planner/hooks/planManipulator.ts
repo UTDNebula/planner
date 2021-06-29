@@ -67,9 +67,7 @@ function getUpdatedSemesterData(recentSemesterData: RecentSemester, onlyLong = t
 const START_YEAR = 2021;
 const START_SEMESTER = SemesterCode.s;
 
-function convertPlanToBlocks(
-  plan: StudentPlan,
-): {
+function convertPlanToBlocks(plan: StudentPlan): {
   courses: { [key: string]: Course };
   semesterBlocks: { [key: string]: SemesterColumn };
   columnOrder: string[];

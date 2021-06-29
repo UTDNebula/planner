@@ -1,18 +1,21 @@
 # Project Nebula Security Policy
+
 This security policy documents how to record a security vulnerability in Project
 web app and how the Project Nebula maintainers respond to such inquiries.
 
 ## Supported Versions
+
 **The current pre-release version of the Nebula Web will have security
 bugs fixed on an ad-hoc basis until the first public release.**
 
 Below is a table of what versions of Nebula Web will have security
 vulnerabilities patched:
-| Version     | Supported |
+| Version | Supported |
 | ----------- | --------- |
-| Pre-release | :x:       |
+| Pre-release | :x: |
 
 ## Reporting a Vulnerability
+
 If you notice a service vulnerability detectable in the user-facing portions
 of this app, contact the Nebula maintainers at nebula-maintainers@acmutd.co
 with the subject line `[nebula]: User-Facing Security Vulnerability`.

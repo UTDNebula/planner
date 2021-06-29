@@ -1,6 +1,7 @@
 # Quickstart
 
 ## Setting up Your Workspace
+
 Clone the repository
 
 The default branch is `develop`.
@@ -9,9 +10,11 @@ If you use VS Code, you're recommended to use the easy [IDE Configuration](./ide
 for this project.
 
 ## Setting Up the Project
+
 This project uses some Firebase APIs. To set up the project, append the
 following to your `.env.local`, replacing each of the ellipses with the actual
 values from the [Firebase Console](https://console.firebase.google.com):
+
 ```
 REACT_APP_FIREBASE_API_KEY=AI....
 REACT_APP_FIREBASE_AUTH_DOMAIN=...

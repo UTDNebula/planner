@@ -1,6 +1,7 @@
 # Style Guide
 
 ## Documentation
+
 The `docs/` folder contains project-wide design and architecture documentation
 for future project maintainers.
 
