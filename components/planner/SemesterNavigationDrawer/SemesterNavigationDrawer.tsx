@@ -31,12 +31,12 @@ interface SemesterNavigationDrawerProps {
   /**
    * The ID of the currently selected navigation item.
    */
-  selected: string;
+  focusedSemester: string;
 
   /**
    * A callback notified on semester navigation item selection.
    */
-  onSelection: (semesterCode: string) => void;
+  onSemesterSelection: (semesterCode: string) => void;
 }
 
 /**
@@ -50,6 +50,8 @@ const useStyles = (drawerWidth = 240) =>
   makeStyles((theme: Theme) =>
     createStyles({
       root: {
+        height: '100%',
+
         width: 240,
         flexShrink: 0,
       },
@@ -71,16 +73,16 @@ const useStyles = (drawerWidth = 240) =>
 export default function SemesterNavigationDrawer(
   props: SemesterNavigationDrawerProps,
 ): JSX.Element {
-  const { semesters, onSelection, selected } = props;
+  const { semesters, onSemesterSelection, focusedSemester } = props;
 
   const navItems = semesters.map(({ code, title }) => {
     return (
       <MenuItem
         key={code}
         onClick={() => {
-          onSelection(code);
+          onSemesterSelection(code);
         }}
-        selected={selected === code}
+        selected={focusedSemester === code}
         button
       >
         <ListItemText primary={title} />
@@ -106,4 +108,28 @@ export default function SemesterNavigationDrawer(
       <List className={classes.drawerContainer}>{navItems}</List>
     </Drawer>
   );
+}
+
+/**
+ * A custom hook to enapsulate SemesterNavigationDrawer behavior.
+ *
+ * @param semesters The semester information displayed on the sidebar
+ */
+export function useSemesterNavigation(semesters: NavDrawerSemester[]) {
+  const [focusedSemester, setFocusedSemester] = React.useState(semesters[0].code);
+
+  const scrollToSemseter = (semesterCode: string) => {
+    setFocusedSemester(semesterCode);
+  };
+
+  const onSemesterSelection = (semesterCode: string) => {
+    scrollToSemseter(semesterCode);
+  };
+
+  return {
+    semesters,
+    focusedSemester,
+    onSemesterSelection,
+    scrollToSemseter,
+  };
 }

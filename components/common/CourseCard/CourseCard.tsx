@@ -1,16 +1,7 @@
 import React from 'react';
-import {
-  // Card,
-  // CardContent,
-  createStyles,
-  makeStyles,
-  Theme,
-  colors,
-  Tooltip,
-} from '@material-ui/core';
+import { createStyles, makeStyles, Theme, colors, Tooltip, IconButton } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
-import { useToggleableCard } from './toggleableCard';
-import styles from './CourseCard.module.css';
+import { MoreVert } from '@material-ui/icons';
 
 /**
  * Component properties for a {@link CourseCard}.
@@ -46,7 +37,7 @@ export interface CourseCardProps {
   /**
    * True if an options menu should be shown for this course.
    */
-  enabled: boolean;
+  enabled?: boolean;
 
   /**
    * A callback triggered when an a course should be removed from its container.
@@ -103,10 +94,10 @@ function CourseCard(
     description,
     creditHours,
     estimatedWorkload,
-    enabled,
+    enabled = false,
+    ...otherProps
   }: // onOptionRemove = () => undefined,
   // onOptionSwap = () => undefined,
-  // ...other
   CourseCardProps,
   ref: React.Ref<HTMLElement>,
 ) {
@@ -126,18 +117,30 @@ function CourseCard(
   const workloadText = pluralize(estimatedWorkload, 'hour');
   const creditHoursText = `${hoursText} | Est. ${workloadText}/week`;
 
-  const {
-    /* cardProps */
-  } = useToggleableCard(enabled);
+  // TODO: Find a more robust way of doing this.
+  // TODO: Only show outlines on desktop.
+  const rootClasses = `p-4 m-2 bg-white rounded-md hover:shadow-md border-gray-200 border-2 ${
+    enabled ? 'shadow-sm' : 'shadow-none'
+  }`;
 
-  // const cardStyles = {
-
-  // };
+  const showCardOptions = () => {
+    console.debug('Showing course options');
+    // TODO(planner): Show options for a course
+  };
 
   return (
-    <article ref={ref} className={styles.CourseCard}>
-      <div className="text-headline6 font-bold">{code}</div>
-      <div className="text-subtitle1 font-bold">{title}</div>
+    <article ref={ref} className={rootClasses} {...otherProps}>
+      <div className="flex">
+        <div className="flex-1">
+          <div className="text-headline6 font-bold">{code}</div>
+          <div className="text-subtitle1 font-bold">{title}</div>
+        </div>
+        <div className="flex-0">
+          <IconButton onClick={showCardOptions}>
+            <MoreVert />
+          </IconButton>
+        </div>
+      </div>
       <div className="text-body2 break-words">{description}</div>
       <div className="mt-1">
         <span className="text-body2">{creditHoursText}</span>

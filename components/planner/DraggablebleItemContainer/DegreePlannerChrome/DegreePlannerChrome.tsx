@@ -203,8 +203,8 @@ export default function DegreePlannerChrome({ planId }: DegreePlannerChromeProps
       </AppBar>
       <SemesterNavigationDrawer
         semesters={navSemesterData}
-        selected={focusedSemester}
-        onSelection={handleSemesterSelection}
+        focusedSemester={focusedSemester}
+        onSemesterSelection={handleSemesterSelection}
       />
       <div className="h-full flex-grow">
         <Toolbar />
