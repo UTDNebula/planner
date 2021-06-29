@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint --fix .",
     "format": "prettier --write {pages,components,modules}/**/*.{tsx,ts,js}",
+    "format:all": "prettier --write .",
     "postinstall": "husky install"
   },
   "dependencies": {
@@ -49,7 +50,10 @@
     "typescript": "^4.3.4"
   },
   "lint-staged": {
-    "*.{tsx,ts,js}": "eslint --cache --fix"
+    "*.{tsx,ts,js}": [
+      "eslint --cache --fix .",
+      "prettier --write {pages,components,modules}/**/*.{tsx,ts,js}"
+    ]
   },
   "config": {
     "commitizen": {
