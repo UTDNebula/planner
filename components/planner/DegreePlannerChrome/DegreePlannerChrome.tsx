@@ -11,18 +11,18 @@ import {
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { DragDropContext } from 'react-beautiful-dnd';
-import AddSemesterTrigger from '../../AddSemesterTrigger/AddSemesterTrigger';
-import SemesterBlockList, { ScrollDirection } from '../../../common/SemesterBlockList';
-import AddCourseDialog from '../../AddCourseDialog/AddCourseDialog';
-import useUserPlanData from '../../../common/userPlanData';
-import { useAuthContext } from '../../../../modules/auth/auth-context';
-import { loadCourses } from '../../../../modules/common/api/courses';
-import { StudentPlan, Course } from '../../../../modules/common/data';
-import { useFocusableSemesterList } from '../../../../modules/planner/hooks/focusableSemesterList';
-import { useCreateNewPlanFlow } from '../../../../modules/planner/hooks/newPlanFlow';
-import { usePlanManipulator } from '../../../../modules/planner/hooks/planManipulator';
-import { useSelectableCourseDialog } from '../../../../modules/planner/hooks/selectableCourseDialog';
-import SemesterNavigationDrawer from '../../SemesterNavigationDrawer';
+import { useAuthContext } from '../../../modules/auth/auth-context';
+import { loadCourses } from '../../../modules/common/api/courses';
+import { StudentPlan, Course } from '../../../modules/common/data';
+import { useFocusableSemesterList } from '../../../modules/planner/hooks/focusableSemesterList';
+import { useCreateNewPlanFlow } from '../../../modules/planner/hooks/newPlanFlow';
+import { usePlanManipulator } from '../../../modules/planner/hooks/planManipulator';
+import { useSelectableCourseDialog } from '../../../modules/planner/hooks/selectableCourseDialog';
+import SemesterBlockList, { ScrollDirection } from '../../common/SemesterBlockList';
+import useUserPlanData from '../../common/userPlanData';
+import AddCourseDialog from '../AddCourseDialog';
+import AddSemesterTrigger from '../AddSemesterTrigger';
+import SemesterNavigationDrawer from '../SemesterNavigationDrawer';
 
 const useStyles = (columnCount: number) => {
   return makeStyles((theme: Theme) =>
@@ -203,8 +203,8 @@ export default function DegreePlannerChrome({ planId }: DegreePlannerChromeProps
       </AppBar>
       <SemesterNavigationDrawer
         semesters={navSemesterData}
-        selected={focusedSemester}
-        onSelection={handleSemesterSelection}
+        focusedSemester={focusedSemester}
+        onSemesterSelection={handleSemesterSelection}
       />
       <div className="h-full flex-grow">
         <Toolbar />
