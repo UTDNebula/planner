@@ -3,7 +3,7 @@ import React from 'react';
 import DraggableItemContainer, {
   getUpdatedSemesterData,
   useDraggableItemContainer,
-} from '../../../components/planner/DraggablebleItemContainer/DraggablebleItemContainer';
+} from '../../../components/planner/DraggablebleItemContainer';
 import PlanningToolbar, {
   usePlanningToolbar,
 } from '../../../components/planner/PlanningToolbar/PlanningToolbar';
