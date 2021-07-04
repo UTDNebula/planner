@@ -14,6 +14,7 @@ import { Semester, StudentPlan } from '../../../modules/common/data';
 import StudentHistoryView from '../../../components/planner/history/StudentHistoryView';
 import { CourseAttempt } from '../../../modules/auth/auth-context';
 import AddSemesterTrigger from '../../../components/planner/AddSemesterTrigger';
+import { usePlan } from '../../../modules/planner/hooks/usePlan';
 
 const COURSE_ATTEMPTS: CourseAttempt[] = [
   {
@@ -227,6 +228,8 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
     persistChanges,
   );
 
+  const { exportPlan } = usePlan();
+
   React.useEffect(() => {
     // Just a test
     const newPlan = fetchPlan(planId) ?? tempPlan;
@@ -298,6 +301,10 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
           planTitle={title}
           shouldShowTabs={shouldShowTabs}
           onTabChange={handleTabChange}
+          onExportPlan={() => {
+            console.log('Exporting plan');
+            exportPlan(plan);
+          }}
         />
       </div>
       <div className="flex-1">

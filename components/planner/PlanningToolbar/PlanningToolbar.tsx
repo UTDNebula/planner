@@ -8,12 +8,14 @@ import {
   makeStyles,
   Theme,
   createStyles,
+  Button,
 } from '@material-ui/core';
 import React from 'react';
 import MenuIcon from '@material-ui/icons/ArrowBack';
 import ProfileIcon from '../../common/toolbar/ProfileIcon';
 import { useAuthContext } from '../../../modules/auth/auth-context';
 import { useRouter } from 'next/router';
+import styles from './PlanningToolbar.module.css';
 
 function a11yProps(index: number) {
   return {
@@ -56,6 +58,11 @@ interface PlanningToolbarProps {
   shouldShowTabs: boolean;
 
   onTabChange: (newIndex: number) => void;
+
+  /**
+   * A callback triggered when the user wants to export the currently loaded plan.
+   */
+  onExportPlan?: () => void;
 }
 
 /**
@@ -66,6 +73,7 @@ export default function PlanningToolbar({
   planTitle,
   shouldShowTabs: showTabs,
   onTabChange,
+  onExportPlan = () => undefined,
 }: PlanningToolbarProps) {
   const { signOut } = useAuthContext();
 
@@ -100,6 +108,14 @@ export default function PlanningToolbar({
         <Typography variant="h6" className={classes.title}>
           {planTitle}
         </Typography>
+        <Button
+          color="inherit"
+          onClick={() => {
+            onExportPlan();
+          }}
+        >
+          Save plan
+        </Button>
         {/* <ProfileIcon onSignIn={handleSignIn} onSignOut={handleSignOut} /> */}
       </Toolbar>
       {showTabs && (
