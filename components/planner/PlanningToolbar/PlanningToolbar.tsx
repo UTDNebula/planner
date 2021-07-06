@@ -63,6 +63,13 @@ interface PlanningToolbarProps {
    * A callback triggered when the user wants to export the currently loaded plan.
    */
   onExportPlan?: () => void;
+
+  /**
+   * A callback triggered when the user wants to import a plan into a planner view.
+   *
+   * @param event The React form event called when the selected plan is changed.
+   */
+  onImportPlan?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 /**
@@ -73,6 +80,7 @@ export default function PlanningToolbar({
   planTitle,
   shouldShowTabs: showTabs,
   onTabChange,
+  onImportPlan = () => undefined,
   onExportPlan = () => undefined,
 }: PlanningToolbarProps) {
   const { signOut } = useAuthContext();
@@ -116,6 +124,19 @@ export default function PlanningToolbar({
         >
           Save plan
         </Button>
+        <input
+          id="planUpload"
+          className={styles.visuallyHidden}
+          type="file"
+          accept="application/json"
+          onChange={onImportPlan}
+        />
+        <label htmlFor="planUpload">
+          {/* This must render as a span for the input to function */}
+          <Button color="inherit" component="span">
+            Import plan
+          </Button>
+        </label>
         {/* <ProfileIcon onSignIn={handleSignIn} onSignOut={handleSignOut} /> */}
       </Toolbar>
       {showTabs && (

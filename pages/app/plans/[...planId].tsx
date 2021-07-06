@@ -228,13 +228,20 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
     persistChanges,
   );
 
-  const { exportPlan } = usePlan();
+  const { exportPlan, handleSelectedPlanChange } = usePlan();
 
-  React.useEffect(() => {
-    // Just a test
-    const newPlan = fetchPlan(planId) ?? tempPlan;
+  /**
+   * Re-renders the planner UI with the given plan.
+   */
+  const updateLoadedPlan = (newPlan: StudentPlan) => {
+    console.log('Loading new plan in UI', newPlan);
     setPlan(newPlan);
     updateSemesters(newPlan.semesters);
+  };
+
+  React.useEffect(() => {
+    const newPlan = fetchPlan(planId) ?? tempPlan;
+    updateLoadedPlan(newPlan);
   }, [planId]);
 
   const navSemesters = plan.semesters;
@@ -304,6 +311,9 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
           onExportPlan={() => {
             console.log('Exporting plan');
             exportPlan(plan);
+          }}
+          onImportPlan={(event) => {
+            handleSelectedPlanChange(event, updateLoadedPlan);
           }}
         />
       </div>

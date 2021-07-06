@@ -5,6 +5,9 @@ import { StudentPlan } from '../../common/data';
  *
  * The exportPlan function downloads a plan to a user's local machine and is the
  * primary means of downloading a file from the planner.
+ *
+ * The handleSelectedPlanChange function is used to import and parse a plan to
+ * pass it to a callback that the planner can use to load a plan into memory.
  */
 export function usePlan() {
   /**
@@ -38,7 +41,34 @@ export function usePlan() {
     console.log('Plan downloaded');
   };
 
+  /**
+   * Imports a plan from JSON and converts it to a JavaScript object.
+   *
+   * This only handles inputs that accept one file. Files after the first index
+   * (index 0) will be ignored.
+   *
+   * @param event A form event created on input selection.
+   * @param callback A callback function triggered when the input changes.
+   */
+  const handleSelectedPlanChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    callback: (plan: StudentPlan) => void,
+  ) => {
+    const file = event.target.files[0];
+    console.log('Uploading plan');
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const plan = event.target.result as string;
+      console.log('Uploaded plan:', plan);
+
+      callback(JSON.parse(plan));
+    };
+    reader.readAsText(file);
+  };
+
   return {
     exportPlan,
+    handleSelectedPlanChange,
   };
 }
