@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import { createStyles, lighten, makeStyles, Theme } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -25,42 +25,94 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
-import { Course, SemesterCode, GPA_MAPPINGS } from '../../../../modules/common/data';
+import {
+  Course,
+  SemesterCode,
+  GPA_MAPPINGS,
+  SEMESTER_CODE_MAPPINGS,
+} from '../../../../modules/common/data';
 
 let selectedState = [];
-let tempData = [];
+let tempData: CourseTaken[] = [];
 
 const letters = GPA_MAPPINGS;
-const semesters = { Spring: 4, Summer: 3, Fall: 2, Winter: 1 };
+const semesters = { Spring: 3, Summer: 2, Fall: 1 };
 
-function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
+interface CourseTaken {
+  id: string;
+  title: string;
+  catalogCode: string;
+  description: string;
+  creditHours: number;
+  semesterCode: SemesterCode;
+  year: number;
+  semester: string;
+  grade: string;
+}
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      width: '100%',
+    },
+    paper: {
+      width: '100%',
+      marginBottom: theme.spacing(2),
+    },
+    table: {
+      minWidth: 750,
+    },
+    visuallyHidden: {
+      border: 0,
+      clip: 'rect(0 0 0 0)',
+      height: 1,
+      margin: -1,
+      overflow: 'hidden',
+      padding: 0,
+      position: 'absolute',
+      top: 20,
+      width: 1,
+    },
+  }),
+);
+
+function descendingComparator<T>(a: T, b: T, orderBy: string) {
+  const bee = '' + b[orderBy]; //casting as string to pass type validation checks
+  const ay = '' + a[orderBy];
+
   if (orderBy === 'grade') {
-    if (letters[b[orderBy]] > letters[a[orderBy]]) {
+    if (letters[bee] > letters[ay]) {
       return -1;
     }
-    if (letters[b[orderBy]] < letters[a[orderBy]]) {
+    if (letters[bee] < letters[ay]) {
+      return 1;
+    }
+    if (bee === 'A+' && ay !== 'A+') {
+      return -1;
+    }
+    if (bee !== 'A+' && ay === 'A+') {
       return 1;
     }
   }
   if (orderBy === 'semester') {
-    if (b[orderBy].split(' ')[0] < a[orderBy].split(' ')[0]) {
+    if (bee.split(' ')[0] < ay.split(' ')[0]) {
       return -1;
     }
-    if (b[orderBy].split(' ')[0] > a[orderBy].split(' ')[0]) {
+    if (bee.split(' ')[0] > ay.split(' ')[0]) {
       return 1;
     }
-    if (semesters[b[orderBy].split(' ')[1]] < semesters[a[orderBy].split(' ')[1]]) {
+    if (semesters[bee.split(' ')[1]] < semesters[ay.split(' ')[1]]) {
       return -1;
     }
-    if (semesters[b[orderBy].split(' ')[1]] > semesters[a[orderBy].split(' ')[1]]) {
+    if (semesters[bee.split(' ')[1]] > semesters[ay.split(' ')[1]]) {
       return 1;
     }
   }
 
-  if (b[orderBy] < a[orderBy]) {
+  if (bee < ay) {
     return -1;
   }
-  if (b[orderBy] > a[orderBy]) {
+  if (bee > ay) {
     return 1;
   }
   return 0;
@@ -70,8 +122,8 @@ type Order = 'asc' | 'desc';
 
 function getComparator<Key extends keyof any>(
   order: Order,
-  orderBy: Key,
-): (a: { [key in Key]: number | string }, b: { [key in Key]: number | string }) => number {
+  orderBy: string,
+): (a: CourseTaken, b: CourseTaken) => number {
   return order === 'desc'
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
@@ -89,13 +141,13 @@ function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
 
 interface HeadCell {
   disablePadding: boolean;
-  id: keyof Data;
+  id: string;
   label: string;
   numeric: boolean;
 }
 
 const headCells: HeadCell[] = [
-  { id: 'course', numeric: false, disablePadding: true, label: 'Course Name' },
+  { id: 'catalogCode', numeric: false, disablePadding: true, label: 'Course Name' },
   { id: 'semester', numeric: true, disablePadding: false, label: 'Semester' },
   { id: 'grade', numeric: true, disablePadding: false, label: 'Grade' },
 ];
@@ -103,7 +155,7 @@ const headCells: HeadCell[] = [
 interface EnhancedTableProps {
   classes: ReturnType<typeof useStyles>;
   numSelected: number;
-  onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void;
+  onRequestSort: (event: React.MouseEvent<unknown>, property: string) => void;
   onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
   order: Order;
   orderBy: string;
@@ -112,7 +164,7 @@ interface EnhancedTableProps {
 
 function EnhancedTableHead(props: EnhancedTableProps) {
   const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
-  const createSortHandler = (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
+  const createSortHandler = (property: string) => (event: React.MouseEvent<unknown>) => {
     onRequestSort(event, property);
   };
 
@@ -190,9 +242,9 @@ const useToolbarStyles = makeStyles((theme: Theme) =>
 
 interface EnhancedTableToolbarProps {
   numSelected: number;
-  data: Course[];
-  update(): any;
-  updateNum(): any;
+  data: CourseTaken[];
+  update(courses: CourseTaken[]): any;
+  updateNum(courses: string[]): any;
 }
 
 function returnOptions(array) {
@@ -229,7 +281,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
   const deleteStuff = () => {
     for (let i = 0; i < selectedState.length; i++) {
       for (let j = 0; j < temp.length; j++) {
-        if (temp[j].course === selectedState[i]) {
+        if (temp[j].catalogCode === selectedState[i]) {
           temp.splice(j, 1);
         }
       }
@@ -244,14 +296,37 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
       setAdding(true);
       return;
     }
-    temp.push({ course: courseName, semester: year + ' ' + season, grade: grade });
+    let code;
+    switch (code) {
+      case 'Summer':
+        code = SemesterCode.u;
+        return;
+      case 'Spring':
+        code = SemesterCode.s;
+        return;
+      case 'Fall':
+        code = SemesterCode.f;
+        return;
+    }
+
+    temp.push({
+      id: 'A',
+      title: 'A',
+      catalogCode: courseName,
+      description: 'A',
+      creditHours: 0,
+      year: year,
+      semesterCode: code,
+      semester: year + ' ' + season,
+      grade: grade,
+    });
     update(temp);
     setAdding(false);
   };
 
-  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+  const handleChange = (event: React.ChangeEvent<{ value: unknown; name: string }>) => {
     if (event.target.name === 'Year') {
-      setYear(event.target.value as string);
+      setYear(event.target.value as number);
     }
     if (event.target.name === 'Season') {
       setSeason(event.target.value as string);
@@ -370,32 +445,6 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
   );
 };
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      width: '100%',
-    },
-    paper: {
-      width: '100%',
-      marginBottom: theme.spacing(2),
-    },
-    table: {
-      minWidth: 750,
-    },
-    visuallyHidden: {
-      border: 0,
-      clip: 'rect(0 0 0 0)',
-      height: 1,
-      margin: -1,
-      overflow: 'hidden',
-      padding: 0,
-      position: 'absolute',
-      top: 20,
-      width: 1,
-    },
-  }),
-);
-
 let denseState;
 export function toggleDense(compactState) {
   denseState = compactState;
@@ -422,14 +471,14 @@ function colorMeBlue(grade) {
 export default function EnhancedTable() {
   const classes = useStyles();
   const [order, setOrder] = React.useState<Order>('asc');
-  const [orderBy, setOrderBy] = React.useState<keyof Data>('semester');
+  const [orderBy, setOrderBy] = React.useState<string>('semester');
   const [selected, setSelected] = React.useState<string[]>([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [rows, setRows] = React.useState<Course>(tempData);
+  const [rows, setRows] = React.useState<CourseTaken[]>(tempData);
 
-  const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof Data) => {
+  const handleRequestSort = (event: React.MouseEvent<unknown>, property: string) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
@@ -437,7 +486,7 @@ export default function EnhancedTable() {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.name);
+      const newSelecteds = rows.map((n) => n.catalogCode);
       setSelected(newSelecteds);
       return;
     }
@@ -510,17 +559,17 @@ export default function EnhancedTable() {
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.course);
+                  const isItemSelected = isSelected(row.catalogCode);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.course)}
+                      onClick={(event) => handleClick(event, row.catalogCode)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.course}
+                      key={row.catalogCode}
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
@@ -530,7 +579,7 @@ export default function EnhancedTable() {
                         />
                       </TableCell>
                       <TableCell component="th" id={labelId} scope="row" padding="none">
-                        {row.course}
+                        {row.catalogCode}
                       </TableCell>
                       <TableCell align="left">{row.semester}</TableCell>
                       <TableCell align="left" style={{ color: colorMeBlue(row.grade) }}>
