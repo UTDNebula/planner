@@ -28,27 +28,16 @@ import FormControl from '@material-ui/core/FormControl';
 import {
   Course,
   SemesterCode,
+  Grade,
   GPA_MAPPINGS,
   SEMESTER_CODE_MAPPINGS,
 } from '../../../../modules/common/data';
+import { CourseAttempt } from '../../../../modules/auth/auth-context';
 
-let selectedState = [];
-let tempData: CourseTaken[] = [];
+const ROWS_PER_PAGE = [5, 10, 25];
 
-const letters = GPA_MAPPINGS;
-const semesters = { Spring: 3, Summer: 2, Fall: 1 };
-
-interface CourseTaken {
-  id: string;
-  title: string;
-  catalogCode: string;
-  description: string;
-  creditHours: number;
-  semesterCode: SemesterCode;
-  year: number;
-  semester: string;
-  grade: string;
-}
+const LETTERS = GPA_MAPPINGS;
+const SEMESTERS = { Spring: 3, Summer: 2, Fall: 1 };
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -75,18 +64,27 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   }),
 );
+/**
+ * Determines whether b is greater or less than a and returns -1, 0, or 1
+ * @param a - The first CourseAttempt
+ * @param b - The second CourseAttempt
+ * returns an integer which indicates whether b is greater or lesser than a
+ */
+type OrderBy = 'grade' | 'semester' | 'name';
 
-function descendingComparator<T>(a: T, b: T, orderBy: string) {
+function descendingComparator<CourseAttempt>(a: CourseAttempt, b: CourseAttempt, orderBy: OrderBy) {
   const bee = '' + b[orderBy]; //casting as string to pass type validation checks
   const ay = '' + a[orderBy];
 
+  //Compares the values based on GPA value instead of a by-character basis
   if (orderBy === 'grade') {
-    if (letters[bee] > letters[ay]) {
+    if (LETTERS[bee] > LETTERS[ay]) {
       return -1;
     }
-    if (letters[bee] < letters[ay]) {
+    if (LETTERS[bee] < LETTERS[ay]) {
       return 1;
     }
+    //Special case for A+ since the GPA is 4.0 but is sorted under A (which is also 4.0)
     if (bee === 'A+' && ay !== 'A+') {
       return -1;
     }
@@ -94,6 +92,8 @@ function descendingComparator<T>(a: T, b: T, orderBy: string) {
       return 1;
     }
   }
+  //First compares the year and then compares the seasons
+  //Semester format is [YEAR][SPACE][SEASON]
   if (orderBy === 'semester') {
     if (bee.split(' ')[0] < ay.split(' ')[0]) {
       return -1;
@@ -101,14 +101,15 @@ function descendingComparator<T>(a: T, b: T, orderBy: string) {
     if (bee.split(' ')[0] > ay.split(' ')[0]) {
       return 1;
     }
-    if (semesters[bee.split(' ')[1]] < semesters[ay.split(' ')[1]]) {
+    if (SEMESTERS[bee.split(' ')[1]] < SEMESTERS[ay.split(' ')[1]]) {
       return -1;
     }
-    if (semesters[bee.split(' ')[1]] > semesters[ay.split(' ')[1]]) {
+    if (SEMESTERS[bee.split(' ')[1]] > SEMESTERS[ay.split(' ')[1]]) {
       return 1;
     }
   }
 
+  //Catch case which includes sorting by name
   if (bee < ay) {
     return -1;
   }
@@ -118,17 +119,32 @@ function descendingComparator<T>(a: T, b: T, orderBy: string) {
   return 0;
 }
 
+/**
+ * Accounts for whether the user wishes to sort by ascending or descending
+ * If descending then do nothing but ascending flip the returned values from the comparator
+ * @param order - the type Order that determines whether it is descending or not
+ * @param orderBy - the category in which the user wishes to sort by
+ * returns the corrected value based on the preferred order
+ */
+
 type Order = 'asc' | 'desc';
 
 function getComparator<Key extends keyof any>(
   order: Order,
-  orderBy: string,
-): (a: CourseTaken, b: CourseTaken) => number {
+  orderBy: OrderBy,
+): (a: CourseAttempt, b: CourseAttempt) => number {
   return order === 'desc'
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
+/**
+ * Uses the descendingComparator and getComparator to actually sort the Array of type T
+ * Type T in this refers to CourseAttempt which contains the data the user will input and store
+ * @param array - Array of CourseAttempt
+ * @param comparator - comparator which must return a number and accounts for the user order
+ * returns the corrected order in which the two indices must be sorted
+ */
 function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
   const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
   stabilizedThis.sort((a, b) => {
@@ -139,6 +155,13 @@ function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
   return stabilizedThis.map((el) => el[0]);
 }
 
+/**
+ * Header of the categories
+ * disablePadding: used to determine whether to add padding or not in css
+ * id: used in the orderBy typing so additional parameters here must be accounted for in orderBy
+ * label: used to determine what text to display when rendering
+ * numeric: whether the column uses numbers as the data format
+ */
 interface HeadCell {
   disablePadding: boolean;
   id: string;
@@ -146,12 +169,23 @@ interface HeadCell {
   numeric: boolean;
 }
 
+//list of implemented columns
 const headCells: HeadCell[] = [
-  { id: 'catalogCode', numeric: false, disablePadding: true, label: 'Course Name' },
+  { id: 'name', numeric: false, disablePadding: true, label: 'Course Name' },
   { id: 'semester', numeric: true, disablePadding: false, label: 'Semester' },
   { id: 'grade', numeric: true, disablePadding: false, label: 'Grade' },
 ];
 
+/**
+ * Tools in the header of the table.
+ * classes: CSS stylesheet for the tools
+ * numSelected: the number of selected rows in the table
+ * onRequestSort: event handler that checks when the user wants to sort by a category
+ * onSelectAllClick: in case the user wants to select all the rows (UNUSED)
+ * order: the order the rows are currently in ('asc' | 'desc')
+ * orderBy: the category in which the rows are sorted from
+ * rowCount: the number of rows
+ */
 interface EnhancedTableProps {
   classes: ReturnType<typeof useStyles>;
   numSelected: number;
@@ -162,8 +196,16 @@ interface EnhancedTableProps {
   rowCount: number;
 }
 
-function EnhancedTableHead(props: EnhancedTableProps) {
-  const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
+//implemented tablehead
+function EnhancedTableHead({
+  classes,
+  onSelectAllClick,
+  order,
+  orderBy,
+  numSelected,
+  rowCount,
+  onRequestSort,
+}: EnhancedTableProps) {
   const createSortHandler = (property: string) => (event: React.MouseEvent<unknown>) => {
     onRequestSort(event, property);
   };
@@ -198,6 +240,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
   );
 }
 
+//stylesheet
 const useToolbarStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -240,13 +283,29 @@ const useToolbarStyles = makeStyles((theme: Theme) =>
   }),
 );
 
+/**
+ * Allows adding and deleting courses
+ * numSelected: the number of rows selected
+ * data: the array of CourseAttempt
+ * selectedState: the list of course names that have been selected
+ * update(CourseAttempt[]): updates the rows
+ * updateNum(string[]): updates the number selected
+ * updateSelectedState(string[]): updates the list of courses selected
+ */
 interface EnhancedTableToolbarProps {
   numSelected: number;
-  data: CourseTaken[];
-  update(courses: CourseTaken[]): any;
+  data: CourseAttempt[];
+  selectedState: string[];
+  update(courses: CourseAttempt[]): any;
   updateNum(courses: string[]): any;
+  updateSelectedState(courses: string[]): any;
 }
 
+/**
+ * Renders a list of MenuItem options for the user to select in the dropdowns
+ * @param array - an array of any type where the indices are rendered as separate options
+ * returns the rendered list of MenuItems
+ */
 function returnOptions(array) {
   const options = [];
   for (let i = 0; i < array.length; i++) {
@@ -255,6 +314,10 @@ function returnOptions(array) {
   return options;
 }
 
+/**
+ * Generates the year up to the next 5 years as an array of integers
+ * returns an integer array
+ */
 function returnYears() {
   const currentYear = new Date().getFullYear() + 5;
   const max = currentYear - 1970;
@@ -265,12 +328,16 @@ function returnYears() {
   return years.reverse();
 }
 
-const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
+//The implemented toolbar
+const EnhancedTableToolbar = ({
+  numSelected,
+  data,
+  update,
+  updateNum,
+  selectedState,
+  updateSelectedState,
+}: EnhancedTableToolbarProps) => {
   const classes = useToolbarStyles();
-  const { numSelected } = props;
-  const { data } = props;
-  const { update } = props;
-  const { updateNum } = props;
   const [adding, setAdding] = React.useState(false);
   const [courseName, setName] = React.useState('PLACEHOLDER');
   const [year, setYear] = React.useState(2020);
@@ -278,53 +345,46 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
   const [grade, setGrade] = React.useState('A+');
   const temp = data.slice();
 
+  //Deletes the selected items by iterating and splicing when the items are found
   const deleteStuff = () => {
     for (let i = 0; i < selectedState.length; i++) {
       for (let j = 0; j < temp.length; j++) {
-        if (temp[j].catalogCode === selectedState[i]) {
+        if (temp[j].course.catalogCode === selectedState[i]) {
           temp.splice(j, 1);
         }
       }
     }
-    selectedState = [];
+    updateSelectedState([]);
     update(temp);
-    updateNum(selectedState);
+    updateNum([]);
   };
 
+  //If the user isn't in the adding mode then enable it
+  //If the user is in the adding mode then push the values to the rows and data array
   const addStuff = () => {
     if (!adding) {
       setAdding(true);
       return;
     }
-    let code;
-    switch (code) {
-      case 'Summer':
-        code = SemesterCode.u;
-        return;
-      case 'Spring':
-        code = SemesterCode.s;
-        return;
-      case 'Fall':
-        code = SemesterCode.f;
-        return;
-    }
 
     temp.push({
-      id: 'A',
-      title: 'A',
-      catalogCode: courseName,
-      description: 'A',
-      creditHours: 0,
-      year: year,
-      semesterCode: code,
+      course: {
+        id: 'test',
+        title: 'test',
+        catalogCode: courseName,
+        description: 'test',
+        creditHours: 0,
+      },
       semester: year + ' ' + season,
-      grade: grade,
+      grade: grade as Grade,
     });
     update(temp);
     setAdding(false);
   };
 
-  const handleChange = (event: React.ChangeEvent<{ value: unknown; name: string }>) => {
+  //when the user clicks on or off the Select tag then it pushes the value to a state
+  //Sorts depending on the name of the Select tag and sets the state accordingly
+  const handleChange = (event: React.ChangeEvent<{ value: string | integer; name: string }>) => {
     if (event.target.name === 'Year') {
       setYear(event.target.value as number);
     }
@@ -376,7 +436,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
                   onChange={handleChange}
                   name={'Season'}
                 >
-                  {returnOptions(Object.keys(semesters))}
+                  {returnOptions(Object.keys(SEMESTERS))}
                 </Select>
               </FormControl>
               <FormControl className={classes.wider}>
@@ -390,7 +450,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
                   onChange={handleChange}
                   name={'Grade'}
                 >
-                  {returnOptions(Object.keys(letters))}
+                  {returnOptions(Object.keys(LETTERS))}
                 </Select>
               </FormControl>
             </div>
@@ -445,17 +505,10 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
   );
 };
 
-let denseState;
-export function toggleDense(compactState) {
-  denseState = compactState;
-}
-
-export function loadData(courseList) {
-  tempData = courseList;
-}
-
+//Colors the grade according to its GPA value
+//Calculates based on a rational function with a constant
 function colorMeBlue(grade) {
-  const index = letters[grade];
+  const index = LETTERS[grade];
   if (index === -1) {
     return 'rgb(0,0,0)';
   }
@@ -471,22 +524,30 @@ function colorMeBlue(grade) {
 export default function EnhancedTable() {
   const classes = useStyles();
   const [order, setOrder] = React.useState<Order>('asc');
-  const [orderBy, setOrderBy] = React.useState<string>('semester');
+  const [orderBy, setOrderBy] = React.useState<OrderBy>('semester');
   const [selected, setSelected] = React.useState<string[]>([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [rows, setRows] = React.useState<CourseTaken[]>(tempData);
+  const [rows, setRows] = React.useState<CourseAttempt[]>([]);
 
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: string) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
+    let orderType: OrderBy;
+    if (property === 'name') {
+      orderType = 'name';
+    } else if (property === 'semester') {
+      orderType = 'semester';
+    } else if (property === 'grade') {
+      orderType = 'grade';
+    }
+    setOrderBy(orderType);
   };
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.catalogCode);
+      const newSelecteds = rows.map((n) => n.course.catalogCode);
       setSelected(newSelecteds);
       return;
     }
@@ -509,11 +570,10 @@ export default function EnhancedTable() {
         selected.slice(selectedIndex + 1),
       );
     }
-    selectedState = newSelected;
     setSelected(newSelected);
   };
 
-  const handleChangePage = (event: unknown, newPage: number) => {
+  const handleChangePage = (event: React.ChangeEvent<HTMLInputElement>, newPage: number) => {
     setPage(newPage);
   };
 
@@ -536,6 +596,8 @@ export default function EnhancedTable() {
         <EnhancedTableToolbar
           numSelected={selected.length}
           data={rows}
+          selectedState={selected}
+          updateSelectedState={setSelected}
           update={setRows}
           updateNum={setSelected}
         />
@@ -543,7 +605,7 @@ export default function EnhancedTable() {
           <Table
             className={classes.table}
             aria-labelledby="tableTitle"
-            size={denseState ? 'small' : 'medium'}
+            size={dense ? 'small' : 'medium'}
             aria-label="enhanced table"
           >
             <EnhancedTableHead
@@ -559,17 +621,17 @@ export default function EnhancedTable() {
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.catalogCode);
+                  const isItemSelected = isSelected(row.course.catalogCode);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.catalogCode)}
+                      onClick={(event) => handleClick(event, row.course.catalogCode)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.catalogCode}
+                      key={row.course.catalogCode}
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
@@ -579,7 +641,7 @@ export default function EnhancedTable() {
                         />
                       </TableCell>
                       <TableCell component="th" id={labelId} scope="row" padding="none">
-                        {row.catalogCode}
+                        {row.course.catalogCode}
                       </TableCell>
                       <TableCell align="left">{row.semester}</TableCell>
                       <TableCell align="left" style={{ color: colorMeBlue(row.grade) }}>
@@ -589,7 +651,7 @@ export default function EnhancedTable() {
                   );
                 })}
               {emptyRows > 0 && (
-                <TableRow style={{ height: (denseState ? 33 : 53) * emptyRows }}>
+                <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
                   <TableCell colSpan={6} />
                 </TableRow>
               )}
@@ -597,7 +659,7 @@ export default function EnhancedTable() {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={ROWS_PER_PAGE}
           component="div"
           count={rows.length}
           rowsPerPage={rowsPerPage}
