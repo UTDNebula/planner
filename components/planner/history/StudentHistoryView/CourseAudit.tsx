@@ -39,6 +39,7 @@ const ROWS_PER_PAGE = [5, 10, 25];
 const LETTERS = GPA_MAPPINGS;
 const SEMESTERS = { Spring: 3, Summer: 2, Fall: 1 };
 
+//stylehseet
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -49,7 +50,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginBottom: theme.spacing(2),
     },
     table: {
-      minWidth: 750,
+      width: '100%',
     },
     visuallyHidden: {
       border: 0,
@@ -109,7 +110,17 @@ function descendingComparator<CourseAttempt>(a: CourseAttempt, b: CourseAttempt,
     }
   }
 
-  //Catch case which includes sorting by name
+  //If the orderBy is for the name then the directory of the name is different than the other two
+  if (orderBy === 'name') {
+    if (b['course'].catalogCode < a['course'].catalogCode) {
+      return -1;
+    }
+    if (b['course'].catalogCode > a['course'].catalogCode) {
+      return 1;
+    }
+  }
+
+  //A catch case when the table is expanded
   if (bee < ay) {
     return -1;
   }
@@ -126,7 +137,6 @@ function descendingComparator<CourseAttempt>(a: CourseAttempt, b: CourseAttempt,
  * @param orderBy - the category in which the user wishes to sort by
  * returns the corrected value based on the preferred order
  */
-
 type Order = 'asc' | 'desc';
 
 function getComparator<Key extends keyof any>(
@@ -228,9 +238,9 @@ function EnhancedTableHead({
             >
               {headCell.label}
               {orderBy === headCell.id ? (
-                <span className={classes.visuallyHidden}>
+                <div className={classes.visuallyHidden}>
                   {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                </span>
+                </div>
               ) : null}
             </TableSortLabel>
           </TableCell>
@@ -274,11 +284,11 @@ const useToolbarStyles = makeStyles((theme: Theme) =>
       width: '100%',
     },
     wider: {
-      width: '10vw',
+      width: '10%',
     },
     course: {
       paddingTop: '22px',
-      width: '20vw',
+      width: '20%',
     },
   }),
 );
@@ -384,7 +394,7 @@ const EnhancedTableToolbar = ({
 
   //when the user clicks on or off the Select tag then it pushes the value to a state
   //Sorts depending on the name of the Select tag and sets the state accordingly
-  const handleChange = (event: React.ChangeEvent<{ value: string | integer; name: string }>) => {
+  const handleChange = (event: React.ChangeEvent<{ value: string | number; name: string }>) => {
     if (event.target.name === 'Year') {
       setYear(event.target.value as number);
     }
@@ -573,7 +583,10 @@ export default function EnhancedTable() {
     setSelected(newSelected);
   };
 
-  const handleChangePage = (event: React.ChangeEvent<HTMLInputElement>, newPage: number) => {
+  const handleChangePage = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    newPage: number,
+  ) => {
     setPage(newPage);
   };
 
