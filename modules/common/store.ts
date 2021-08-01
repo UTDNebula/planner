@@ -1,6 +1,8 @@
 import { useMemo } from 'react';
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import thunkMiddleware from 'redux-thunk';
 import reducers from './rootReducer';
 
@@ -28,6 +30,11 @@ export type RootState = ReturnType<typeof reducers>;
 // >;
 
 let store;
+
+const persistConfig = {
+  key: 'root',
+  storage,
+};
 
 function initStore(initialState) {
   return createStore(reducers, initialState, composeWithDevTools(applyMiddleware(thunkMiddleware)));
@@ -60,7 +67,21 @@ export const initializeStore = (preloadedState) => {
   return _store;
 };
 
-export function useStore(initialState) {
+/**
+ * Initialize the data store.
+ *
+ * This uses the redux-persist library to populate store data using the
+ * browser's Local Storage.
+ *
+ * @param initialState The state to populate the data store
+ *
+ * @returns An initialized Redux store and persistor function
+ */
+export function useStore(initialState: RootState) {
   const store = useMemo(() => initializeStore(initialState), [initialState]);
-  return store;
+  const persistor = persistStore(store);
+  return {
+    store,
+    persistor,
+  };
 }
