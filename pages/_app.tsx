@@ -1,5 +1,6 @@
 import firebase from 'firebase/app';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 import { useRouter } from 'next/router';
 import { AnimateSharedLayout } from 'framer-motion';
 import React from 'react';
@@ -52,7 +53,7 @@ function SidebarLayout({ Component, pageProps }) {
  * page routes.
  */
 export default function NebulaApp({ Component, pageProps }: AppProps): JSX.Element {
-  const store = useStore(pageProps.initialReduxState);
+  const { store, persistor } = useStore(pageProps.initialReduxState);
 
   return (
     <AuthProvider>
@@ -78,7 +79,9 @@ export default function NebulaApp({ Component, pageProps }: AppProps): JSX.Eleme
         <meta name="theme-color" content="#317EFB" />
       </Head>
       <Provider store={store}>
-        <AnimateSharedLayout>{SidebarLayout({ Component, pageProps })}</AnimateSharedLayout>
+        <PersistGate loading={null} persistor={persistor}>
+          <AnimateSharedLayout>{SidebarLayout({ Component, pageProps })}</AnimateSharedLayout>
+        </PersistGate>
       </Provider>
     </AuthProvider>
   );
