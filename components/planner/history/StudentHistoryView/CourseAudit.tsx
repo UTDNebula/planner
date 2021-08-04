@@ -19,7 +19,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
-import CheckIcon from '@material-ui/icons/Check';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -35,11 +34,17 @@ import {
 import { CourseAttempt } from '../../../../modules/auth/auth-context';
 
 const ROWS_PER_PAGE = [5, 10, 25];
+const NOT_DENSE_PADDING = 53;
+const DENSE_PADDING = 33;
+const YEAR_RANGE = 10;
+const CURRENT_YEAR = new Date().getFullYear();
 
 const LETTERS = GPA_MAPPINGS;
-const SEMESTERS = { Spring: 3, Summer: 2, Fall: 1 };
+const SEMESTERS = { Spring: 1, Summer: 2, Fall: 3 };
 
-//stylehseet
+/**
+ * Component styles for EnchancedTable
+ */
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -65,6 +70,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   }),
 );
+
 /**
  * Determines whether b is greater or less than a and returns -1, 0, or 1
  * @param a - The first CourseAttempt
@@ -74,38 +80,38 @@ const useStyles = makeStyles((theme: Theme) =>
 type OrderBy = 'grade' | 'semester' | 'name';
 
 function descendingComparator<CourseAttempt>(a: CourseAttempt, b: CourseAttempt, orderBy: OrderBy) {
-  const bee = '' + b[orderBy]; //casting as string to pass type validation checks
-  const ay = '' + a[orderBy];
+  const stringB = b[orderBy] as string;
+  const stringA = a[orderBy] as string;
 
   //Compares the values based on GPA value instead of a by-character basis
   if (orderBy === 'grade') {
-    if (LETTERS[bee] > LETTERS[ay]) {
+    if (LETTERS[stringB] > LETTERS[stringA]) {
       return -1;
     }
-    if (LETTERS[bee] < LETTERS[ay]) {
+    if (LETTERS[stringB] < LETTERS[stringA]) {
       return 1;
     }
     //Special case for A+ since the GPA is 4.0 but is sorted under A (which is also 4.0)
-    if (bee === 'A+' && ay !== 'A+') {
+    if (stringB === 'A+' && stringA !== 'A+') {
       return -1;
     }
-    if (bee !== 'A+' && ay === 'A+') {
+    if (stringB !== 'A+' && stringA === 'A+') {
       return 1;
     }
   }
   //First compares the year and then compares the seasons
-  //Semester format is [YEAR][SPACE][SEASON]
+  //Semester format is [YEAR] [SEASON]
   if (orderBy === 'semester') {
-    if (bee.split(' ')[0] < ay.split(' ')[0]) {
+    if (stringB.split(' ')[0] < stringA.split(' ')[0]) {
       return -1;
     }
-    if (bee.split(' ')[0] > ay.split(' ')[0]) {
+    if (stringB.split(' ')[0] > stringA.split(' ')[0]) {
       return 1;
     }
-    if (SEMESTERS[bee.split(' ')[1]] < SEMESTERS[ay.split(' ')[1]]) {
+    if (SEMESTERS[stringB.split(' ')[1]] < SEMESTERS[stringA.split(' ')[1]]) {
       return -1;
     }
-    if (SEMESTERS[bee.split(' ')[1]] > SEMESTERS[ay.split(' ')[1]]) {
+    if (SEMESTERS[stringB.split(' ')[1]] > SEMESTERS[stringA.split(' ')[1]]) {
       return 1;
     }
   }
@@ -121,10 +127,10 @@ function descendingComparator<CourseAttempt>(a: CourseAttempt, b: CourseAttempt,
   }
 
   //A catch case when the table is expanded
-  if (bee < ay) {
+  if (stringB < stringA) {
     return -1;
   }
-  if (bee > ay) {
+  if (stringB > stringA) {
     return 1;
   }
   return 0;
@@ -151,6 +157,7 @@ function getComparator<Key extends keyof any>(
 /**
  * Uses the descendingComparator and getComparator to actually sort the Array of type T
  * Type T in this refers to CourseAttempt which contains the data the user will input and store
+ *
  * @param array - Array of CourseAttempt
  * @param comparator - comparator which must return a number and accounts for the user order
  * returns the corrected order in which the two indices must be sorted
@@ -166,20 +173,30 @@ function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
 }
 
 /**
- * Header of the categories
- * disablePadding: used to determine whether to add padding or not in css
- * id: used in the orderBy typing so additional parameters here must be accounted for in orderBy
- * label: used to determine what text to display when rendering
- * numeric: whether the column uses numbers as the data format
+ * Header of the categories found within the rows and are displayed as the column headers.
  */
 interface HeadCell {
+  /*
+   * Used to determine the size of row padding with the DENSE_PADDING and NOT_DENSE_PADDING
+   */
   disablePadding: boolean;
-  id: string;
+  /*
+   * Tag to identify which column the rows are being sorted by.
+   */
+  id: OrderBy;
+  /*
+   * The name that will be displayed in the column header.
+   */
   label: string;
+  /*
+   * Whether the values are numbers. Only changes the alignment of the text.
+   */
   numeric: boolean;
 }
 
-//list of implemented columns
+/**
+ * Array of implemented HeadCells used to categorize the user's Course History
+ */
 const headCells: HeadCell[] = [
   { id: 'name', numeric: false, disablePadding: true, label: 'Course Name' },
   { id: 'semester', numeric: true, disablePadding: false, label: 'Semester' },
@@ -187,26 +204,42 @@ const headCells: HeadCell[] = [
 ];
 
 /**
- * Tools in the header of the table.
- * classes: CSS stylesheet for the tools
- * numSelected: the number of selected rows in the table
- * onRequestSort: event handler that checks when the user wants to sort by a category
- * onSelectAllClick: in case the user wants to select all the rows (UNUSED)
- * order: the order the rows are currently in ('asc' | 'desc')
- * orderBy: the category in which the rows are sorted from
- * rowCount: the number of rows
+ * Tools in the header of the table used for selections and sorting.
  */
 interface EnhancedTableProps {
+  /*
+   * Styling that will be used for this component.
+   */
   classes: ReturnType<typeof useStyles>;
+  /*
+   * The number of selected rows in the table.
+   */
   numSelected: number;
+  /*
+   * Event handler that checks when the user wants to sort by a category.
+   */
   onRequestSort: (event: React.MouseEvent<unknown>, property: string) => void;
+  /*
+   * Event handler for when the user wants to select all the rows.
+   */
   onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  /*
+   * String that indicates whether the order is ascending or descending.
+   */
   order: Order;
+  /*
+   * The category in which the rows are being sorted by.
+   */
   orderBy: string;
+  /*
+   * The total number of rows in the table.
+   */
   rowCount: number;
 }
 
-//implemented tablehead
+/**
+ * Implemented EnchancedTableHead which allows selection of table rows and sorting
+ */
 function EnhancedTableHead({
   classes,
   onSelectAllClick,
@@ -250,7 +283,9 @@ function EnhancedTableHead({
   );
 }
 
-//stylesheet
+/**
+ * Component styles for EnchancedTableToolbarProps
+ */
 const useToolbarStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -292,51 +327,62 @@ const useToolbarStyles = makeStyles((theme: Theme) =>
 );
 
 /**
- * Allows adding and deleting courses
- * numSelected: the number of rows selected
- * data: the array of CourseAttempt
- * selectedState: the list of course names that have been selected
- * update(CourseAttempt[]): updates the rows
- * updateNum(string[]): updates the number selected
- * updateSelectedState(string[]): updates the list of courses selected
+ * Component properties for EnchancedTableToolbar
  */
 interface EnhancedTableToolbarProps {
+  /*
+   * The number of rows selected.
+   */
   numSelected: number;
+  /*
+   * List of all the CourseAttempts in the table at the moment.
+   */
   data: CourseAttempt[];
+  /*
+   * The full name of the selected rows. Format is [NAME] [DATE] [GRADE]
+   */
   selectedState: string[];
-  update(courses: CourseAttempt[]): any;
-  updateNum(courses: string[]): any;
-  updateSelectedState(courses: string[]): any;
+  /*
+   * Function used to update the list of CourseAttempts in the table.
+   */
+  update: (courses: CourseAttempt[]) => void;
+  /*
+   * Function used to update the number of selected CourseAttempts.
+   */
+  updateNum: (courses: string[]) => void;
+  /*
+   * Function used to update the list of selected CourseAttempts.
+   */
+  updateSelectedState: (courses: string[]) => void;
 }
 
 /**
- * Renders a list of MenuItem options for the user to select in the dropdowns
- * @param array - an array of any type where the indices are rendered as separate options
- * returns the rendered list of MenuItems
+ * Renders a list of MenuItem options for the user to select in the dropdowns.
+ *
+ * @param array An array of any type where the indices are rendered as separate options
+ * @return The rendered list of MenuItems
  */
-function returnOptions(array) {
-  const options = [];
-  for (let i = 0; i < array.length; i++) {
-    options.push(<MenuItem value={array[i]}>{array[i]}</MenuItem>);
-  }
-  return options;
+function returnMenuItems<MenuItem>(menuOptions: string[] | number[]) {
+  return menuOptions.map((option) => (
+    <MenuItem key={option} value={option}>
+      {option}
+    </MenuItem>
+  ));
 }
 
 /**
  * Generates the year up to the next 5 years as an array of integers
- * returns an integer array
+ *
+ * @return An integer array from 1970 to the current year.
  */
 function returnYears() {
-  const currentYear = new Date().getFullYear() + 5;
-  const max = currentYear - 1970;
-  const years = Array.from(Array(max).keys());
-  for (let i = 0; i < years.length; i++) {
-    years[i] = years[i] + 1970;
-  }
-  return years.reverse();
+  return Array.from(Array(YEAR_RANGE).keys()).map((value) => CURRENT_YEAR - value);
 }
 
-//The implemented toolbar
+/**
+ * Implemented EnchancedTableToolbar which mainly provides adding and deleting courses.
+ * Also shows the number of selected rows if the selected count is more than 0.
+ */
 const EnhancedTableToolbar = ({
   numSelected,
   data,
@@ -346,67 +392,193 @@ const EnhancedTableToolbar = ({
   updateSelectedState,
 }: EnhancedTableToolbarProps) => {
   const classes = useToolbarStyles();
-  const [adding, setAdding] = React.useState(false);
-  const [courseName, setName] = React.useState('PLACEHOLDER');
-  const [year, setYear] = React.useState(2020);
-  const [season, setSeason] = React.useState('Spring');
-  const [grade, setGrade] = React.useState('A+');
-  const temp = data.slice();
+  const [newCourse, setNewCourse] = React.useState({
+    courseName: '',
+    year: CURRENT_YEAR,
+    season: 'Spring',
+    grade: 'A+' as Grade,
+  });
+  const [error, setError] = React.useState({
+    isError: false,
+    message: '',
+  });
+  const copiedData = data.slice();
+
+  //When the user clicks on or off the Select tag then it pushes the value to a state
+  //Sorts depending on the name of the Select tag and sets the state accordingly
+  const handleChange = (event: React.ChangeEvent<{ value: string | number; name: string }>) => {
+    setNewCourse((prevState) => ({
+      ...prevState,
+      [event.target.name]: event.target.value,
+    }));
+  };
+
+  //The header which contains the fields to add a new course to EnchancedTable.
+  const addingComponent = (
+    <div className={classes.wrapper}>
+      {
+        // Textfield for the course's name
+      }
+      <TextField
+        className={classes.course}
+        id="course"
+        type="course"
+        name="courseName"
+        value={newCourse.courseName}
+        placeholder="Enter Course Name"
+        onChange={handleChange}
+        error={error.isError}
+        helperText={error.isError ? error.message : ''}
+      />
+      {
+        //Dropdown menu for the year the course was taken.
+        //Only provides the past YEAR_RANGE years.
+      }
+      <FormControl className={classes.wider}>
+        <InputLabel shrink={true} id="year">
+          Year
+        </InputLabel>
+        <Select
+          labelId="year"
+          id="year"
+          value={newCourse.year}
+          onChange={handleChange}
+          name={'year'}
+        >
+          {returnMenuItems(returnYears())}
+        </Select>
+      </FormControl>
+      {
+        //Dropdown menu for the Spring, Summer, and Fall seasons.
+      }
+      <FormControl className={classes.wider}>
+        <InputLabel shrink={true} id="season">
+          Season
+        </InputLabel>
+        <Select
+          labelId="season"
+          id="season"
+          value={newCourse.season}
+          onChange={handleChange}
+          name="season"
+        >
+          {returnMenuItems(Object.keys(SEMESTERS))}
+        </Select>
+      </FormControl>
+      {
+        //Dropdown for the possible grades. Data pulled from GPA_MAPPINGS and Grade
+      }
+      <FormControl className={classes.wider}>
+        <InputLabel shrink={true} id="grade">
+          Grade
+        </InputLabel>
+        <Select
+          labelId="grade"
+          id="grade"
+          value={newCourse.grade}
+          onChange={handleChange}
+          name="grade"
+        >
+          {returnMenuItems(Object.keys(LETTERS))}
+        </Select>
+      </FormControl>
+    </div>
+  );
+
+  const numSelectedComponent = (
+    <Typography className={classes.wrapper} color="inherit" variant="subtitle1" component="div">
+      {selectedState.length} selected
+    </Typography>
+  );
 
   //Deletes the selected items by iterating and splicing when the items are found
-  const deleteStuff = () => {
+  //Stored selected data is in format: [NAME] [SEMESTER] [GRADE]
+  const deleteSelectedCourses = () => {
     for (let i = 0; i < selectedState.length; i++) {
-      for (let j = 0; j < temp.length; j++) {
-        if (temp[j].course.catalogCode === selectedState[i]) {
-          temp.splice(j, 1);
+      for (let j = 0; j < copiedData.length; j++) {
+        const courseName = copiedData[j].course.catalogCode;
+        const courseSem = copiedData[j].semester;
+        const courseGrade = copiedData[j].grade;
+        if (courseName + ' ' + courseSem + ' ' + courseGrade === selectedState[i]) {
+          copiedData.splice(j, 1);
         }
       }
     }
     updateSelectedState([]);
-    update(temp);
+    update(copiedData);
     updateNum([]);
   };
 
-  //If the user isn't in the adding mode then enable it
   //If the user is in the adding mode then push the values to the rows and data array
-  const addStuff = () => {
-    if (!adding) {
-      setAdding(true);
+  const addCourse = () => {
+    //Checks to see if the course has a name
+    if (newCourse.courseName === '') {
+      setError({
+        isError: true,
+        message: 'Enter a course name!',
+      });
       return;
     }
 
-    temp.push({
+    //Checks to see if the course already exists in the semester specified
+    const newFullName = newCourse.courseName + ' ' + newCourse.year + ' ' + newCourse.season;
+    if (data.some((index) => index.course.catalogCode + ' ' + index.semester === newFullName)) {
+      setError({
+        isError: true,
+        message: 'This course already exists in that semester!',
+      });
+      return;
+    }
+
+    //Pushes the new couse to the cloned array and updates the data state with the cloned array.
+    copiedData.push({
       course: {
         id: 'test',
         title: 'test',
-        catalogCode: courseName,
+        catalogCode: newCourse.courseName,
         description: 'test',
         creditHours: 0,
       },
-      semester: year + ' ' + season,
-      grade: grade as Grade,
+      semester: newCourse.year + ' ' + newCourse.season,
+      grade: newCourse.grade as Grade,
     });
-    update(temp);
-    setAdding(false);
+
+    update(copiedData);
+    setError({
+      isError: false,
+      message: '',
+    });
+    setNewCourse((prevState) => ({
+      ...prevState,
+      courseName: '',
+    }));
   };
 
-  //when the user clicks on or off the Select tag then it pushes the value to a state
-  //Sorts depending on the name of the Select tag and sets the state accordingly
-  const handleChange = (event: React.ChangeEvent<{ value: string | number; name: string }>) => {
-    if (event.target.name === 'Year') {
-      setYear(event.target.value as number);
-    }
-    if (event.target.name === 'Season') {
-      setSeason(event.target.value as string);
-    }
-    if (event.target.name === 'Grade') {
-      setGrade(event.target.value as string);
-    }
-    if (event.target.name === 'Course') {
-      setName(event.target.value as string);
-    }
-  };
+  //Button which pushes the values in the respective fields to the data in EnchancedTable.
+  const addButtonComponent = (
+    <Tooltip title="Add Course">
+      <IconButton aria-label="add" onClick={addCourse}>
+        <AddIcon />
+      </IconButton>
+    </Tooltip>
+  );
 
+  //Button which deletes the selected courses in selectedState from the data in EnchancedTable.
+  const deleteButtonComponent = (
+    <Tooltip title="Delete Course">
+      <IconButton aria-label="delete" onClick={deleteSelectedCourses}>
+        <DeleteIcon />
+      </IconButton>
+    </Tooltip>
+  );
+
+  /*
+   * Returns 2 parts:
+   *     The Header - If the user is not adding a course it displays the number of selected courses.
+   *                  If the user is adding a course then the adding course ui is shown instead.
+   *     The Button - Adding and Done do the same action just in different components.
+   *                  Delete deletes all the courses that are selected.
+   */
   return (
     <Toolbar
       className={clsx(classes.root, {
@@ -414,108 +586,30 @@ const EnhancedTableToolbar = ({
       })}
     >
       {(() => {
-        if (adding) {
-          return (
-            <div className={classes.wrapper}>
-              <TextField
-                className={classes.course}
-                id="course"
-                type="course"
-                name="Course"
-                placeholder="Enter Course Name"
-                onChange={handleChange}
-              ></TextField>
-              <FormControl className={classes.wider}>
-                <InputLabel shrink={true} id="year">
-                  Year
-                </InputLabel>
-                <Select labelId="year" id="year" value={year} onChange={handleChange} name={'Year'}>
-                  {returnOptions(returnYears())}
-                </Select>
-              </FormControl>
-              <FormControl className={classes.wider}>
-                <InputLabel shrink={true} id="season">
-                  Season
-                </InputLabel>
-                <Select
-                  labelId="season"
-                  id="season"
-                  value={season}
-                  onChange={handleChange}
-                  name={'Season'}
-                >
-                  {returnOptions(Object.keys(SEMESTERS))}
-                </Select>
-              </FormControl>
-              <FormControl className={classes.wider}>
-                <InputLabel shrink={true} id="grade">
-                  Grade
-                </InputLabel>
-                <Select
-                  labelId="grade"
-                  id="grade"
-                  value={grade}
-                  onChange={handleChange}
-                  name={'Grade'}
-                >
-                  {returnOptions(Object.keys(LETTERS))}
-                </Select>
-              </FormControl>
-            </div>
-          );
-        } else if (selectedState.length > 0) {
-          return (
-            <Typography
-              className={classes.title}
-              color="inherit"
-              variant="subtitle1"
-              component="div"
-            >
-              {selectedState.length} selected
-            </Typography>
-          );
+        if (selectedState.length > 0) {
+          return numSelectedComponent;
         } else {
-          return (
-            <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-              Course History
-            </Typography>
-          );
+          return addingComponent;
         }
       })()}
       {(() => {
-        if (adding) {
-          return (
-            <Tooltip title="Done">
-              <IconButton aria-label="done" onClick={addStuff}>
-                <CheckIcon />
-              </IconButton>
-            </Tooltip>
-          );
-        } else if (selectedState.length > 0) {
-          return (
-            <Tooltip title="Delete Course">
-              <IconButton aria-label="delete" onClick={deleteStuff}>
-                <DeleteIcon />
-              </IconButton>
-            </Tooltip>
-          );
+        if (selectedState.length > 0) {
+          return deleteButtonComponent;
         } else {
-          return (
-            <Tooltip title="Add Course">
-              <IconButton aria-label="add" onClick={addStuff}>
-                <AddIcon />
-              </IconButton>
-            </Tooltip>
-          );
+          return addButtonComponent;
         }
       })()}
     </Toolbar>
   );
 };
 
-//Colors the grade according to its GPA value
-//Calculates based on a rational function with a constant
-function colorMeBlue(grade) {
+/*
+ * Calculates a color based on the grade given.
+ *
+ * @param grade The grade which was given
+ * @return A string which serves as the color styling for the specific grade.
+ */
+function colorGrade(grade: Grade) {
   const index = LETTERS[grade];
   if (index === -1) {
     return 'rgb(0,0,0)';
@@ -529,6 +623,12 @@ function colorMeBlue(grade) {
     ',64)'
   );
 }
+
+/**
+ * The table which the user directly interacts with.
+ * Uses EnhancedTableHead and EnchancedTableToolbar to allow more functionality.
+ * Also uses userStyles as the stylesheet
+ */
 export default function EnhancedTable() {
   const classes = useStyles();
   const [order, setOrder] = React.useState<Order>('asc');
@@ -562,12 +662,13 @@ export default function EnhancedTable() {
     setSelected([]);
   };
 
-  const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
-    const selectedIndex = selected.indexOf(name);
+  const handleClick = (event: React.MouseEvent<unknown>, course: CourseAttempt) => {
+    const fullCourse = course.course.catalogCode + ' ' + course['semester'] + ' ' + course['grade'];
+    const selectedIndex = selected.indexOf(fullCourse);
     let newSelected: string[] = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
+      newSelected = newSelected.concat(selected, fullCourse);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -597,7 +698,8 @@ export default function EnhancedTable() {
     setDense(event.target.checked);
   };
 
-  const isSelected = (name: string) => selected.indexOf(name) !== -1;
+  const isSelected = (course: CourseAttempt) =>
+    selected.indexOf(course.course.catalogCode + ' ' + course.semester + ' ' + course.grade) !== -1;
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
@@ -632,17 +734,17 @@ export default function EnhancedTable() {
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.course.catalogCode);
+                  const isItemSelected = isSelected(row);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.course.catalogCode)}
+                      onClick={(event) => handleClick(event, row)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.course.catalogCode}
+                      key={row.course.catalogCode + ' ' + row.semester + ' ' + row.grade}
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
@@ -655,14 +757,16 @@ export default function EnhancedTable() {
                         {row.course.catalogCode}
                       </TableCell>
                       <TableCell align="left">{row.semester}</TableCell>
-                      <TableCell align="left" style={{ color: colorMeBlue(row.grade) }}>
+                      <TableCell align="left" style={{ color: colorGrade(row.grade) }}>
                         {row.grade}
                       </TableCell>
                     </TableRow>
                   );
                 })}
               {emptyRows > 0 && (
-                <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
+                <TableRow
+                  style={{ height: (dense ? DENSE_PADDING : NOT_DENSE_PADDING) * emptyRows }}
+                >
                   <TableCell colSpan={6} />
                 </TableRow>
               )}

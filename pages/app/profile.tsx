@@ -29,7 +29,7 @@ export default function ProfilePage(): JSX.Element {
         </section>
         <section className="p-4">
           <div className="text-headline5 font-bold">Course History</div>
-          {CourseAudit()}
+          <CourseAudit />
         </section>
       </div>
     </main>
