@@ -267,9 +267,6 @@ const useToolbarStyles = makeStyles((theme: Theme) =>
             color: theme.palette.text.primary,
             backgroundColor: theme.palette.secondary.dark,
           },
-    title: {
-      flex: '1 1 100%',
-    },
     formControl: {
       margin: theme.spacing(1),
       minWidth: 120,
@@ -285,10 +282,11 @@ const useToolbarStyles = makeStyles((theme: Theme) =>
     },
     wider: {
       width: '10%',
+      marginLeft: '-24px',
     },
     course: {
       paddingTop: '22px',
-      width: '20%',
+      width: '25%',
     },
   }),
 );
