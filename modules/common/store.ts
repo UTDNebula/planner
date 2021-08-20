@@ -2,7 +2,8 @@ import { useMemo } from 'react';
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { persistReducer, persistStore } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+//import storage from 'redux-persist/lib/storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import thunkMiddleware from 'redux-thunk';
 import reducers from './rootReducer';
 
@@ -33,11 +34,15 @@ let store;
 
 const persistConfig = {
   key: 'root',
-  storage,
+  storage: AsyncStorage,
 };
 
 function initStore(initialState) {
-  return createStore(reducers, initialState, composeWithDevTools(applyMiddleware(thunkMiddleware)));
+  return createStore(
+    persistReducer(persistConfig, reducers),
+    initialState,
+    composeWithDevTools(applyMiddleware(thunkMiddleware)),
+  );
 }
 
 export const initializeStore = (preloadedState) => {

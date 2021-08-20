@@ -79,7 +79,7 @@ export default function NebulaApp({ Component, pageProps }: AppProps): JSX.Eleme
         <meta name="theme-color" content="#317EFB" />
       </Head>
       <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
+        <PersistGate loading={<p>Loading...</p>} persistor={persistor}>
           <AnimateSharedLayout>{SidebarLayout({ Component, pageProps })}</AnimateSharedLayout>
         </PersistGate>
       </Provider>
