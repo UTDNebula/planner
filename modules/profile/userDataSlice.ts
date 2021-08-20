@@ -37,8 +37,7 @@ const userDataSlice = createSlice({
       state.user = action.payload;
       return state;
     },
-    updateCourseAudit(state, action: CourseAttempt[]) {
-      //console.log(action);
+    updateCourseAudit(state, action: PayloadAction<CourseAttempt[]>) {
       return {
         ...state,
         courses: action.payload,
