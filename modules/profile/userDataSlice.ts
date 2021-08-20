@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ServiceUser, users } from '../auth/auth-context';
+import { ServiceUser, users, CourseAttempt } from '../auth/auth-context';
 import { StudentPlan, createSamplePlan } from '../common/data';
 
 export interface PlannerDataState {
@@ -10,15 +10,22 @@ export interface PlannerDataState {
   planIds: string[];
 }
 
+export interface CourseHistoryState {
+  courses: CourseAttempt[];
+}
+
+export type AcademicDataState = PlannerDataState & CourseHistoryState;
+
 // TODO: Load from local storage
 const samplePlan = createSamplePlan();
 
-const initialState: PlannerDataState = {
+const initialState: AcademicDataState = {
   user: users.guest,
   plans: {
     [samplePlan.id]: samplePlan,
   },
   planIds: [samplePlan.id],
+  courses: [],
 };
 
 const userDataSlice = createSlice({
@@ -30,9 +37,16 @@ const userDataSlice = createSlice({
       state.user = action.payload;
       return state;
     },
+    updateCourseAudit(state, action: CourseAttempt[]) {
+      //console.log(action);
+      return {
+        ...state,
+        courses: action.payload,
+      };
+    },
   },
 });
 
-export const { updateUser } = userDataSlice.actions;
+export const { updateUser, updateCourseAudit } = userDataSlice.actions;
 
 export default userDataSlice.reducer;

@@ -32,6 +32,8 @@ import {
   SEMESTER_CODE_MAPPINGS,
 } from '../../../../modules/common/data';
 import { CourseAttempt } from '../../../../modules/auth/auth-context';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateCourseAudit } from '../../../../modules/profile/userDataSlice';
 
 const ROWS_PER_PAGE = [5, 10, 25];
 const NOT_DENSE_PADDING = 53;
@@ -403,6 +405,7 @@ const EnhancedTableToolbar = ({
     message: '',
   });
   const copiedData = data.slice();
+  const dispatch = useDispatch();
 
   //When the user clicks on or off the Select tag then it pushes the value to a state
   //Sorts depending on the name of the Select tag and sets the state accordingly
@@ -507,6 +510,7 @@ const EnhancedTableToolbar = ({
     updateSelectedState([]);
     update(copiedData);
     updateNum([]);
+    dispatch(updateCourseAudit(copiedData));
   };
 
   //If the user is in the adding mode then push the values to the rows and data array
@@ -552,6 +556,7 @@ const EnhancedTableToolbar = ({
       ...prevState,
       courseName: '',
     }));
+    dispatch(updateCourseAudit(copiedData));
   };
 
   //Button which pushes the values in the respective fields to the data in EnchancedTable.
@@ -637,7 +642,8 @@ export default function EnhancedTable() {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [rows, setRows] = React.useState<CourseAttempt[]>([]);
+  const initialState = useSelector((state) => state.userData.courses) ?? rows;
+  const [rows, setRows] = React.useState<CourseAttempt[]>(initialState);
 
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: string) => {
     const isAsc = orderBy === property && order === 'asc';
