@@ -1,23 +1,9 @@
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
 import { Button, Link, TextField } from '@material-ui/core';
 import Head from 'next/head';
 import React from 'react';
 import Disclaimer from '../../components/onboarding/Disclaimer';
 import { useAuthContext } from '../../modules/auth/auth-context';
 import { HonorsIndicator } from '../../modules/common/types';
-import PageOne from '../Onboarding_Pages/pg_1';
-import PageTwo from '../Onboarding_Pages/pg_2';
-import PageThree from '../Onboarding_Pages/pg_3';
-import PageFour from '../Onboarding_Pages/pg_4';
-
-/**
- * The first onboarding page for the application.
- *
- * This will help students set up nebula according to their needs.
- */
 
 /**
  * A goal to pursue after graduation.
@@ -194,7 +180,6 @@ function useUserSetup(studentDefaultName = 'Comet') {
 export default function OnboardingPage(): JSX.Element {
   const { user } = useAuthContext();
   const { data, setData, consentData, setConsentData } = useUserSetup();
-  const [page, setPage] = React.useState(0);
 
   if (user === null) {
     // TODO: Do something useful
@@ -222,41 +207,65 @@ export default function OnboardingPage(): JSX.Element {
     console.log('Saving user information from onboarding:', data);
   };
 
-  const jsxElem = [
-    <PageOne key={0}></PageOne>,
-    <PageTwo key={1}></PageTwo>,
-    <PageThree key={2}></PageThree>,
-    <PageFour key={3}></PageFour>,
-  ];
-  const incrementPage = () => {
-    setPage(Math.min(page + 1, jsxElem.length - 1));
-  };
-  const decrementPage = () => {
-    setPage(Math.max(page - 1, 0));
-  };
-
   // TODO: Find better way to structure this glorified form.
   return (
-    <>
-      {jsxElem[page]}
-      <div className="flex items-center justify-center bg-blue-400 -mt-20">
-        <div className="bg-white  rounded shadow-2xl w-2/3 mb-10">
-          <div className="flex items-center justify-center">
-            <button
-              onClick={decrementPage}
-              className="mr-10 text-blue-500 hover:text-yellow-500 font-bold rounded"
-            >
-              BACK
-            </button>
-            <button
-              onClick={incrementPage}
-              className="text-blue-500 hover:text-yellow-500 font-bold rounded"
-            >
-              NEXT
-            </button>
-          </div>
+    <div className="h-full w-full py-8">
+      <Head>
+        <title>Nebula - Getting Started</title>
+        <meta
+          name="description"
+          content="Getting started wtih Nebula. Onboarding to set up your experience."
+        />
+      </Head>
+      <section className="">
+        <div className="max-w-4xl mx-auto p-8 bg-white">
+          <div className="text-headline4 pt-4 pb-2">Before we start...</div>
+          <Disclaimer onConsent={setConsentData} />
         </div>
-      </div>
-    </>
+      </section>
+      {consentData.disclaimer && (
+        <>
+          <section className="max-w-4xl mx-auto p-8">
+            <div className="text-headline4 font-bold mb-4">Tell us about yourself.</div>
+            <TextField
+              id="studentName"
+              label="Preferred name"
+              variant="filled"
+              value={data.preferredName}
+              onChange={handleChange}
+            />
+            <div className="text-headline6 font-bold mt-4 mb-4">
+              Are you recieving financial student aid?
+            </div>
+            <div className="text-headline6 font-bold mb-4">
+              Are you recieving any school-provided scholarships?
+            </div>
+          </section>
+          <section className="max-w-4xl mx-auto p-8">
+            <div className="text-headline4 font-bold mb-4">What are you studying?</div>
+          </section>
+          <section className="max-w-4xl mx-auto p-8">
+            <div className="text-headline4 font-bold mb-4">
+              What would you like to do after graduation?
+            </div>
+          </section>
+          <section className="max-w-4xl mx-auto p-8">
+            <div className="text-headline4 font-bold mb-4">
+              Are you a part of any special honors programs?
+            </div>
+          </section>
+          <section className="max-w-4xl mx-auto p-8">
+            <div className="text-headline4 font-bold mb-4">
+              What would you like to do during your time at UTD?
+            </div>
+          </section>
+          <section className="max-w-4xl mx-auto p-8">
+            <Button color="primary" variant="contained" onClick={handleSubmit}>
+              <Link href={onboardingRedirect}>Generate plan</Link>
+            </Button>
+          </section>
+        </>
+      )}
+    </div>
   );
 }
