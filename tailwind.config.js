@@ -100,6 +100,15 @@ module.exports = {
           },
         ],
       },
+      keyframes: {
+        fadeIn: {
+          '0%': { transform: 'translateX(1rem)', opacity: '0' },
+          '100%': { transform: 'translateX(0)', opacity: '100' },
+        },
+      },
+      animation: {
+        intro: 'fadeIn 1.5s ease-in-out',
+      },
     },
     fontFamily: {
       sans: ['Roboto', 'ui-sans-serif', 'system-ui'],
