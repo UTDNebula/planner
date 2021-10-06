@@ -18,7 +18,7 @@ export default function Disclaimer(): JSX.Element {
 
           <div>
             <blockquote>
-              <p className="text-lg font-semibold">
+              <p className="text-lg">
                 All the information on Nebula-Web is published in good faith and for general
                 information purposes only. As fellow UTDallas students, the Project Nebula team
                 strives to ensure that the content on the site is up-to-date and accurate. However,

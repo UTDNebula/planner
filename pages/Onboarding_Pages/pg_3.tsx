@@ -3,8 +3,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import React from 'react';
+import { useRouter } from 'next/router';
 
 export default function PageThree(): JSX.Element {
+  const router = useRouter();
   return (
     <div className="min-h-screen flex items-center justify-center bg-blue-400">
       <div className="bg-white p-16 rounded shadow-2xl w-2/3">
@@ -37,6 +39,21 @@ export default function PageThree(): JSX.Element {
 
           <button className="w-3/5 h-10 px-6 text-gray-700 bg-blue-100 block border-0 border-b-2 border-blue-500 hover:bg-yellow-500 text-gray-800 transition-colors duration-150 rounded-lg focus:shadow-outline mb-6">
             None
+          </button>
+        </div>
+        <div className="mt-10 flex items-center justify-center">
+          <button
+            className="mr-10 text-blue-500 hover:text-yellow-500 font-bold rounded"
+            onClick={() => router.push('/Onboarding_Pages/welcome')}
+          >
+            BACK
+          </button>
+          <button
+            className="text-blue-500 hover:text-yellow-500 font-bold rounded disabled:opacity-50"
+            disabled={false} // TODO: Disable button till all options are selected
+            onClick={() => router.push('/Onboarding_Pages/pg_4')}
+          >
+            NEXT
           </button>
         </div>
       </div>

@@ -3,6 +3,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import React from 'react';
+import router from 'next/router';
 
 //Array of Majors/Minors to chose from
 const subjects = ['Computer Science', 'Biology', 'Gender Studies'];
@@ -177,6 +178,21 @@ export default function PageOne(): JSX.Element {
               </div>
             </div>
           </div>
+        </div>
+        <div className="mt-10 flex items-center justify-center">
+          <button
+            className="mr-10 text-blue-500 hover:text-yellow-500 font-bold rounded"
+            onClick={() => router.push('/Onboarding_Pages/welcome')}
+          >
+            BACK
+          </button>
+          <button
+            className="text-blue-500 hover:text-yellow-500 font-bold rounded disabled:opacity-50"
+            disabled={false} // TODO: Disable button till all options are selected
+            onClick={() => router.push('/Onboarding_Pages/pg_2')}
+          >
+            NEXT
+          </button>
         </div>
       </div>
     </div>
