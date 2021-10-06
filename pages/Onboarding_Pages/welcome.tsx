@@ -19,7 +19,7 @@ export default function Welcome(): JSX.Element {
 
         <button
           className="text-blue-500 hover:text-yellow-500 font-bold rounded "
-          onClick={() => router.push('/Onboarding_Pages/disclaimer')}
+          onClick={() => router.push('/Onboarding_Pages/disclaimers')}
         >
           NEXT
         </button>
