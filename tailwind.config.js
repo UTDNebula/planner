@@ -15,6 +15,11 @@ module.exports = {
           DEFAULT: '#11D08D',
           dark: '#0C9766',
         },
+        navigation: {
+          DEFAULT: '#878FD6',
+          dark: '#5159A3',
+          line: '#C8D1F3',
+        },
         light: '#F9F9FA',
         dark: '#1F201F',
       },
