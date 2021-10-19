@@ -28,9 +28,11 @@ if (!firebase.apps.length) {
 
 function SidebarLayout({ Component, pageProps }) {
   const router = useRouter();
+  const isOnboarding = router.route.startsWith('/Onboarding_Pages');
   const isLanding = router.route === '/';
   const isPlanner = router.route.startsWith('/app/plans/'); // TODO: Make this routing more robust.
   const content = (isLanding && <Component {...pageProps} />) ||
+    (isOnboarding && <Component {...pageProps} />) ||
     (isPlanner && <Component {...pageProps} />) || (
       <div className="flex w-full min-h-full">
         <div className="h-full flex-1 max-w-2xl">

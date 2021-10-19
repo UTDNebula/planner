@@ -11,7 +11,7 @@ import { HonorsIndicator } from '../../modules/common/types';
 import PageOne from '../Onboarding_Pages/pg_1';
 import PageTwo from '../Onboarding_Pages/pg_2';
 import PageThree from '../Onboarding_Pages/pg_3';
-import PageFour from '../Onboarding_Pages/pg_4';
+// import PageFour from '../Onboarding_Pages/pg_4';
 
 /**
  * The first onboarding page for the application.
@@ -226,7 +226,7 @@ export default function OnboardingPage(): JSX.Element {
     <PageOne key={0}></PageOne>,
     <PageTwo key={1}></PageTwo>,
     <PageThree key={2}></PageThree>,
-    <PageFour key={3}></PageFour>,
+    // <PageFour key={3}></PageFour>,
   ];
   const incrementPage = () => {
     setPage(Math.min(page + 1, jsxElem.length - 1));

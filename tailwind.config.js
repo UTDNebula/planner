@@ -114,6 +114,9 @@ module.exports = {
       animation: {
         intro: 'fadeIn 1.5s ease-in-out',
       },
+      gridTemplateColumns: {
+        onboardingHonors: '40px minmax(0, 1fr)',
+      },
     },
     fontFamily: {
       sans: ['Roboto', 'ui-sans-serif', 'system-ui'],
