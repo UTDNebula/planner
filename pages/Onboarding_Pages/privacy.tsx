@@ -9,8 +9,18 @@ export default function Privacy(): JSX.Element {
   const router = useRouter();
 
   // Checkbox validation to ensure user checks all boxes before moving on
-  const [checked, setChecked] = React.useState([false, false, false]);
-  const checkChecked = (check: boolean) => check;
+  const [consentState, setConsentState] = React.useState({
+    personalization: false,
+    analytics: false,
+    performance: false,
+  });
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(event.target);
+    setConsentState({ ...consentState, [event.target.name]: event.target.checked });
+  };
+
+  const { personalization, analytics, performance } = consentState;
 
   return (
     <>
@@ -26,8 +36,9 @@ export default function Privacy(): JSX.Element {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={checked[0]}
-                  onChange={() => setChecked([!checked[0], checked[1], checked[2]])}
+                  name="personalization"
+                  checked={personalization}
+                  onChange={handleChange}
                 />
               }
               label="User Experience"
@@ -39,12 +50,7 @@ export default function Privacy(): JSX.Element {
 
           <div className="flex-col items-center">
             <FormControlLabel
-              control={
-                <Checkbox
-                  checked={checked[1]}
-                  onChange={() => setChecked([checked[0], !checked[1], checked[2]])}
-                />
-              }
+              control={<Checkbox name="analytics" checked={analytics} onChange={handleChange} />}
               label="Analytics Collection"
             />
             <h2 className="ml-9 mb-5 text-gray-700 text-sm">
@@ -55,10 +61,7 @@ export default function Privacy(): JSX.Element {
           <div className="flex-col items-center">
             <FormControlLabel
               control={
-                <Checkbox
-                  checked={checked[2]}
-                  onChange={() => setChecked([checked[0], checked[1], !checked[2]])}
-                />
+                <Checkbox name="performance" checked={performance} onChange={handleChange} />
               }
               label="Performance Data Collection"
             />
@@ -76,7 +79,6 @@ export default function Privacy(): JSX.Element {
             </button>
             <button
               className="text-blue-500 hover:text-yellow-500 font-bold rounded disabled:opacity-50"
-              disabled={!checked.every(checkChecked)}
               onClick={() => router.push('/Onboarding_Pages/pg_1')}
             >
               NEXT

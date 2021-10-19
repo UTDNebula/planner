@@ -12,7 +12,7 @@ export type NavigationStateProps = {
 
 export default function Navigation({ navigationProps }: NavigationProps): JSX.Element {
   return (
-    <div className="h-30 flex justify-center m-0 text-white">
+    <div className="h-24 mb-8 flex justify-center  text-white">
       <div
         className={`flex flex-col items-center border-4 border-navigation-dark ${
           navigationProps.personal ? 'bg-navigation-dark' : 'bg-navigation'
