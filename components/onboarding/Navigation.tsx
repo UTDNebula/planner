@@ -1,8 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
+import router from 'next/router';
 
 export interface NavigationProps {
   navigationProps: NavigationStateProps;
+  sendData: (data: any) => void;
+  data: any;
 }
 export type NavigationStateProps = {
   personal: boolean;
@@ -10,42 +13,61 @@ export type NavigationStateProps = {
   credits: boolean;
 };
 
-export default function Navigation({ navigationProps }: NavigationProps): JSX.Element {
+export default function Navigation({
+  navigationProps,
+  sendData,
+  data,
+}: NavigationProps): JSX.Element {
   return (
-    <div className="h-24 mb-8 flex justify-center  text-white">
-      <div
+    <div className="h-28 mb-8 flex justify-center items-center text-white ">
+      <button
         className={`flex flex-col items-center border-4 border-navigation-dark ${
           navigationProps.personal ? 'bg-navigation-dark' : 'bg-navigation'
-        } rounded-full w-20 h-20`}
+        } rounded-full w-24 h-24`}
+        onClick={() => {
+          sendData(data);
+          router.push('/Onboarding_Pages/pg_1');
+        }}
       >
-        <div className="text-sm p-top mt-2"> Step 1 </div>
-        <div className="text-xs m-0 p-0"> Personal </div>
-        <div className="text-xs -my-1 p-0"> Information </div>
-      </div>
+        <div className="text-base p-top mt-2"> Step 1 </div>
+        <div className="text-sm m-0 p-0"> Personal </div>
+        <div className="text-sm -my-1 p-0"> Information </div>
+      </button>
+
       <svg width="150">
-        <line x1="0" y1="40" x2="150" y2="40" stroke="#C8D1F3" strokeWidth="6" />
+        <line x1="0" y1="75" x2="150" y2="75" stroke="#C8D1F3" strokeWidth="6" />
       </svg>
-      <div
+
+      <button
         className={`flex flex-col items-center border-4 border-navigation-dark ${
           navigationProps.honors ? 'bg-navigation-dark' : 'bg-navigation'
-        } rounded-full w-20 h-20`}
+        } rounded-full w-24 h-24`}
+        onClick={() => {
+          sendData(data);
+          router.push('/Onboarding_Pages/pg_2');
+        }}
       >
-        <div className="text-sm p-top mt-2"> Step 2 </div>
-        <div className="text-xs m-0 p-0"> Scholarships </div>
-        <div className="text-xs -my-1 p-0"> & Honors </div>
-      </div>
+        <div className="text-base p-top mt-2"> Step 2 </div>
+        <div className="text-sm m-0 p-0"> Scholarships </div>
+        <div className="text-sm -my-1 p-0"> & Honors </div>
+      </button>
+
       <svg width="150">
-        <line x1="0" y1="40" x2="150" y2="40" stroke="#C8D1F3" strokeWidth="6" />
+        <line x1="0" y1="75" x2="150" y2="75" stroke="#C8D1F3" strokeWidth="6" />
       </svg>
-      <div
+      <button
         className={`flex flex-col items-center border-4 border-navigation-dark ${
           navigationProps.credits ? 'bg-navigation-dark' : 'bg-navigation'
-        } rounded-full w-20 h-20`}
+        } rounded-full w-24 h-24`}
+        onClick={() => {
+          sendData(data);
+          router.push('/Onboarding_Pages/pg_3');
+        }}
       >
-        <div className="text-sm p-top mt-2"> Step 3 </div>
-        <div className="text-xs m-0 p-0"> Transferred </div>
-        <div className="text-xs -my-1 p-0"> Credits </div>
-      </div>
+        <div className="text-base p-top mt-2"> Step 3 </div>
+        <div className="text-sm m-0 p-0"> Transferred </div>
+        <div className="text-sm -my-1 p-0"> Credits </div>
+      </button>
     </div>
   );
 }

@@ -86,7 +86,7 @@ export default function DegreePicker({
                   options={degrees}
                   style={{ width: 300 }}
                   renderInput={(params) => (
-                    <TextField {...params} label="Controllable" variant="outlined" />
+                    <TextField {...params} label="Degree Name" variant="outlined" />
                   )}
                 />
 

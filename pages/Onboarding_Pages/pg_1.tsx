@@ -109,7 +109,7 @@ export default function PageOne(): JSX.Element {
   return (
     <div className="min-h-screen flex items-center justify-center bg-blue-400 ">
       <div className="py-16 px-32 rounded shadow-2xl w-2/3 bg-white animate-intro">
-        <Navigation navigationProps={navState} />
+        <Navigation navigationProps={navState} sendData={sendData} data={personalInfo} />
         <h2 className="text-4xl text-left font-bold mb-10 text-gray-800">Tell us about Yourself</h2>
         <div className="grid grid-cols-2">
           <h3 className="text-xl mb-10 text-gray-800">What is your name?</h3>

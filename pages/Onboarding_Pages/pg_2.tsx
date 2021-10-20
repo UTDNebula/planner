@@ -108,7 +108,7 @@ export default function PageTwo(): JSX.Element {
   return (
     <div className="min-h-screen flex items-center justify-center bg-blue-400">
       <div className="py-16 px-32 rounded shadow-2xl w-2/3 bg-white animate-intro">
-        <Navigation navigationProps={navState} />
+        <Navigation navigationProps={navState} sendData={sendData} data={scholarshipHonors} />
         <h2 className="text-4xl text-left font-bold mb-10 text-gray-800">Honors & Scholarships</h2>
         <div className="grid grid-cols-2">
           <h3 className="text-xl mb-10 text-gray-800 mr-10">
@@ -119,7 +119,7 @@ export default function PageTwo(): JSX.Element {
               onClick={() => setScholarshipHonors({ ...scholarshipHonors, scholarship: true })}
               className={`${
                 scholarship ? 'bg-yellow-400' : null
-              } bg-transparent mr-5  hover:bg-yellow-400 text-grey-700 font-medium hover:text-white py-1.5 px-16 border border-blue-600 hover:border-transparent rounded`}
+              }  mr-5  hover:bg-yellow-400 text-grey-700 font-medium hover:text-white py-1.5 px-16 border border-blue-600 hover:border-transparent rounded`}
             >
               YES
             </button>
@@ -128,7 +128,7 @@ export default function PageTwo(): JSX.Element {
               onClick={() => setScholarshipHonors({ ...scholarshipHonors, scholarship: false })}
               className={`${
                 scholarship == false ? 'bg-yellow-400' : null
-              } bg-transparent ml-5 hover:bg-yellow-400 text-grey-700 font-medium hover:text-white py-1.5 px-16 border border-blue-600 hover:border-transparent rounded`}
+              }  ml-5 hover:bg-yellow-400 text-grey-700 font-medium hover:text-white py-1.5 px-16 border border-blue-600 hover:border-transparent rounded`}
             >
               NO
             </button>
@@ -159,7 +159,7 @@ export default function PageTwo(): JSX.Element {
               onClick={() => setScholarshipHonors({ ...scholarshipHonors, finaid: true })}
               className={`${
                 finaid ? 'bg-yellow-400' : null
-              } bg-transparent mr-5  hover:bg-yellow-400 text-grey-700 font-medium hover:text-white py-1.5 px-16 border border-blue-600 hover:border-transparent rounded`}
+              }  mr-5  hover:bg-yellow-400 text-grey-700 font-medium hover:text-white py-1.5 px-16 border border-blue-600 hover:border-transparent rounded`}
             >
               YES
             </button>
@@ -167,7 +167,7 @@ export default function PageTwo(): JSX.Element {
               onClick={() => setScholarshipHonors({ ...scholarshipHonors, finaid: false })}
               className={`${
                 finaid == false ? 'bg-yellow-400' : null
-              } bg-transparent ml-5 hover:bg-yellow-400 text-grey-700 font-medium hover:text-white py-1.5 px-16 border border-blue-600 hover:border-transparent rounded`}
+              }  ml-5 hover:bg-yellow-400 text-grey-700 font-medium hover:text-white py-1.5 px-16 border border-blue-600 hover:border-transparent rounded`}
             >
               NO
             </button>
@@ -180,7 +180,7 @@ export default function PageTwo(): JSX.Element {
               onClick={() => setScholarshipHonors({ ...scholarshipHonors, fastTrack: true })}
               className={`${
                 fastTrack ? 'bg-yellow-400' : null
-              } bg-transparent mr-5 hover:bg-yellow-400 text-grey-700 font-medium hover:text-white py-1.5 px-16 border border-blue-600 hover:border-transparent rounded`}
+              }  mr-5 hover:bg-yellow-400 text-grey-700 font-medium hover:text-white py-1.5 px-16 border border-blue-600 hover:border-transparent rounded`}
             >
               YES
             </button>
@@ -189,7 +189,7 @@ export default function PageTwo(): JSX.Element {
               onClick={() => setScholarshipHonors({ ...scholarshipHonors, fastTrack: false })}
               className={`${
                 fastTrack == false ? 'bg-yellow-400' : null
-              } bg-transparent ml-5 hover:bg-yellow-400 text-grey-700 font-medium hover:text-white py-1.5 px-16 border border-blue-600 hover:border-transparent rounded`}
+              }  ml-5 hover:bg-yellow-400 text-grey-700 font-medium hover:text-white py-1.5 px-16 border border-blue-600 hover:border-transparent rounded`}
             >
               NO
             </button>
@@ -205,7 +205,7 @@ export default function PageTwo(): JSX.Element {
                 options={majors}
                 style={{ width: 300 }}
                 renderInput={(params) => (
-                  <TextField {...params} label="Degree Name" variant="outlined" />
+                  <TextField {...params} label="Major Name" variant="outlined" />
                 )}
               />
             </div>
@@ -214,7 +214,7 @@ export default function PageTwo(): JSX.Element {
           {fastTrack && (
             <div className="mb-10">
               <FormControl className="w-32">
-                <InputLabel id="demo-simple-select-autowidth-label">Future Plans</InputLabel>
+                <InputLabel id="demo-simple-select-autowidth-label">Select Year</InputLabel>
                 <Select
                   labelId="demo-simple-select-autowidth-label"
                   id="demo-simple-select-autowidth"

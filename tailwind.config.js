@@ -112,7 +112,7 @@ module.exports = {
         },
       },
       animation: {
-        intro: 'fadeIn 1.5s ease-in-out',
+        intro: 'fadeIn 0.75s ease-in-out',
       },
       gridTemplateColumns: {
         onboardingHonors: '40px minmax(0, 1fr)',
