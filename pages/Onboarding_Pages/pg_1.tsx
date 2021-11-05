@@ -66,7 +66,7 @@ export default function PageOne(): JSX.Element {
   // Contains the index of all degree entries & is used to render DegreePicker
   const [degreeCount, setDegreeCount] = useState([0]);
 
-  const [validate, setValidate] = useState(true); // Set to false once form validation implemented
+  const [validate, setValidate] = useState(false);
 
   // Handles all form data except DegreePicker
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -75,6 +75,9 @@ export default function PageOne(): JSX.Element {
 
   // Handles DegreePicker
   const handleDegreeChange = (formID: number, degreeState: DegreeState) => {
+    // Validate degreeState
+    degreeState.valid =
+      degreeState.degree !== '' && degreeState.degree !== null && degreeState.degreeType !== '';
     let index = 0;
     for (let i = 0; i < degree.length; i++) {
       if (degree[i].id === formID) {
@@ -90,9 +93,22 @@ export default function PageOne(): JSX.Element {
     });
   };
 
-  // TODO: Implement form validation
-  const checkValidate = (): void => {
-    console.log('Implement form validation here');
+  const pickerValidate = () => {
+    if (degree.length < 1) {
+      return false;
+    }
+    let element: DegreeState;
+    for (element of degree) {
+      if (!element.valid) {
+        return false;
+      }
+    }
+    return true;
+  };
+
+  const checkValidate = async () => {
+    const isValid = name && classification && future && pickerValidate() ? true : false;
+    setValidate(isValid);
   };
 
   // TODO: After DegreePicker removed, remove the DegreePicker entry in degree
@@ -165,6 +181,7 @@ export default function PageOne(): JSX.Element {
                       id: counter,
                       degree: 'Select degree',
                       degreeType: 'Select a type',
+                      valid: false,
                     },
                   ],
                 });

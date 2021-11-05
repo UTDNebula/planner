@@ -13,6 +13,7 @@ export type DegreeState = {
   id: number;
   degree: string;
   degreeType: string;
+  valid: boolean;
 };
 
 /**
@@ -36,8 +37,8 @@ export default function DegreePicker({
   removePicker,
 }: DegreePickerProps): JSX.Element {
   // TODO: Populate with real degree values
-  const degrees = ['Computer Science', 'History', 'Select degree'];
-  const degreeTypes = ['Select type', 'Major', 'Minor', 'Other'];
+  const degrees = ['Computer Science', 'History', ''];
+  const degreeTypes = ['Major', 'Minor', 'Other'];
 
   // Manages if component stays rendered
   const [unmount, setUnmount] = useState(false);
@@ -45,8 +46,9 @@ export default function DegreePicker({
   // Manages data stored in degree picker
   const [degreeState, setDegreeState] = React.useState<DegreeState>({
     id: id,
-    degree: 'Select degree',
-    degreeType: 'Select type',
+    degree: '',
+    degreeType: '',
+    valid: false,
   });
 
   // Manages input state in Autocomplete
@@ -77,6 +79,7 @@ export default function DegreePicker({
                 <Autocomplete
                   size={'small'}
                   value={degree}
+                  defaultValue={''}
                   onChange={handleAutocompleteChange}
                   inputValue={inputValue}
                   onInputChange={(event, newInputValue) => {

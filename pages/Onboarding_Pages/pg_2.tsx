@@ -9,7 +9,7 @@ import { useRouter } from 'next/router';
 import Navigation, { NavigationStateProps } from '../../components/onboarding/Navigation';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormLabel from '@material-ui/core/FormLabel';
-import { FormGroup, FormControlLabel } from '@material-ui/core';
+import { FormGroup, FormControlLabel, Button } from '@material-ui/core';
 
 // Array of values to choose from for form
 const scholarships = [
@@ -21,9 +21,9 @@ const scholarships = [
   'Academic Excellence Scholarship',
 ];
 
-const fastTrackYears = ['Fall 202x', 'Spring 202x', 'Fall 202x', 'Spring 202x'];
+const fastTrackYears = ['Fall 202x', 'Spring 202x'];
 
-const majors = ['Computer Science', 'History', 'Select major'];
+const majors = ['Computer Science', 'History', ''];
 
 export type HonorsType = {
   eugene: boolean;
@@ -71,17 +71,33 @@ export default function PageTwo(): JSX.Element {
 
   const [scholarshipHonors, setScholarshipHonors] = useState<PageTwoTypes>({
     scholarship: null,
-    scholarshipType: 'Select Scholarship Type',
+    scholarshipType: '',
     finaid: null,
     fastTrack: null,
-    fastTrackMajor: 'Select major',
-    fastTrackYear: null,
+    fastTrackMajor: '',
+    fastTrackYear: '',
     honors: { eugene: false, terry: false, national: false, diversity: false, aes: false },
   });
 
-  // Handles change for Yes/No Buttons & Select
+  const [validate, setValidate] = useState(false);
+
+  const checkValidate = () => {
+    const isPrimaryValid =
+      scholarship !== null && finaid !== null && fastTrack !== null ? true : false;
+    const scholarshipTypeValid = (scholarship && scholarshipType) || !scholarship;
+    const fastTrackValid = (fastTrack && fastTrackMajor && fastTrackYear) || !fastTrack;
+    const isValid = isPrimaryValid && scholarshipTypeValid && fastTrackValid ? true : false;
+    setValidate(isValid);
+  };
+
+  // Handles change for Select
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setScholarshipHonors({ ...scholarshipHonors, [event.target.name]: event.target.value });
+  };
+
+  // Handles change for Button
+  const handleButtonChange = (event, buttonName: string, value: boolean) => {
+    setScholarshipHonors({ ...scholarshipHonors, [buttonName]: value });
   };
 
   // Handles change for Autocomplete
@@ -100,6 +116,9 @@ export default function PageTwo(): JSX.Element {
     });
   };
 
+  React.useEffect(() => {
+    checkValidate();
+  });
   const { scholarship, scholarshipType, finaid, fastTrack, fastTrackMajor, fastTrackYear, honors } =
     scholarshipHonors;
 
@@ -116,7 +135,7 @@ export default function PageTwo(): JSX.Element {
           </h3>
           <div className="flex items-center mb-10 justify-center">
             <button
-              onClick={() => setScholarshipHonors({ ...scholarshipHonors, scholarship: true })}
+              onClick={(event) => handleButtonChange(event, 'scholarship', true)}
               className={`${
                 scholarship ? 'bg-yellow-400' : null
               }  mr-5  hover:bg-yellow-400 text-grey-700 font-medium hover:text-white py-1.5 px-16 border border-blue-600 hover:border-transparent rounded`}
@@ -125,7 +144,7 @@ export default function PageTwo(): JSX.Element {
             </button>
 
             <button
-              onClick={() => setScholarshipHonors({ ...scholarshipHonors, scholarship: false })}
+              onClick={(event) => handleButtonChange(event, 'scholarship', false)}
               className={`${
                 scholarship == false ? 'bg-yellow-400' : null
               }  ml-5 hover:bg-yellow-400 text-grey-700 font-medium hover:text-white py-1.5 px-16 border border-blue-600 hover:border-transparent rounded`}
@@ -156,7 +175,7 @@ export default function PageTwo(): JSX.Element {
           <h3 className="text-xl mr-10 mb-10 text-gray-800">Are you recieving financial aid?</h3>
           <div className="flex items-center mb-10 justify-center">
             <button
-              onClick={() => setScholarshipHonors({ ...scholarshipHonors, finaid: true })}
+              onClick={(event) => handleButtonChange(event, 'finaid', true)}
               className={`${
                 finaid ? 'bg-yellow-400' : null
               }  mr-5  hover:bg-yellow-400 text-grey-700 font-medium hover:text-white py-1.5 px-16 border border-blue-600 hover:border-transparent rounded`}
@@ -164,7 +183,7 @@ export default function PageTwo(): JSX.Element {
               YES
             </button>
             <button
-              onClick={() => setScholarshipHonors({ ...scholarshipHonors, finaid: false })}
+              onClick={(event) => handleButtonChange(event, 'finaid', false)}
               className={`${
                 finaid == false ? 'bg-yellow-400' : null
               }  ml-5 hover:bg-yellow-400 text-grey-700 font-medium hover:text-white py-1.5 px-16 border border-blue-600 hover:border-transparent rounded`}
@@ -177,7 +196,7 @@ export default function PageTwo(): JSX.Element {
           </h3>
           <div className="flex items-center mb-10 justify-center">
             <button
-              onClick={() => setScholarshipHonors({ ...scholarshipHonors, fastTrack: true })}
+              onClick={(event) => handleButtonChange(event, 'fastTrack', true)}
               className={`${
                 fastTrack ? 'bg-yellow-400' : null
               }  mr-5 hover:bg-yellow-400 text-grey-700 font-medium hover:text-white py-1.5 px-16 border border-blue-600 hover:border-transparent rounded`}
@@ -186,7 +205,7 @@ export default function PageTwo(): JSX.Element {
             </button>
 
             <button
-              onClick={() => setScholarshipHonors({ ...scholarshipHonors, fastTrack: false })}
+              onClick={(event) => handleButtonChange(event, 'fastTrack', false)}
               className={`${
                 fastTrack == false ? 'bg-yellow-400' : null
               }  ml-5 hover:bg-yellow-400 text-grey-700 font-medium hover:text-white py-1.5 px-16 border border-blue-600 hover:border-transparent rounded`}
@@ -271,7 +290,7 @@ export default function PageTwo(): JSX.Element {
           </button>
           <button
             className="text-blue-500 hover:text-yellow-500 font-bold rounded disabled:opacity-50"
-            disabled={false} // TODO: Disable button till all options are selected
+            disabled={!validate} // TODO: Disable button till all options are selected
             onClick={() => {
               sendData(scholarshipHonors);
               router.push('/Onboarding_Pages/pg_3');
