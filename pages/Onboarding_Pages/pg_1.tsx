@@ -45,7 +45,7 @@ function returnMenuItems<MenuItem>(menuOptions: string[]) {
 /**
  * TODO: Create method to relay this data to Firebase
  */
-function sendData(data) {
+function sendData(data: PageOneTypes) {
   console.log('Page 1 data:', data);
 }
 
@@ -75,7 +75,7 @@ export default function PageOne(): JSX.Element {
 
   // Handles DegreePicker
   const handleDegreeChange = (formID: number, degreeState: DegreeState) => {
-    // Validate degreeState
+    // Determines if DegreePicker component is valid
     degreeState.valid =
       degreeState.degree !== '' && degreeState.degree !== null && degreeState.degreeType !== '';
     let index = 0;
@@ -93,6 +93,7 @@ export default function PageOne(): JSX.Element {
     });
   };
 
+  // Validates DegreePicker component
   const pickerValidate = () => {
     if (degree.length < 1) {
       return false;
@@ -222,7 +223,7 @@ export default function PageOne(): JSX.Element {
           </button>
           <button
             className="text-blue-500 hover:text-yellow-500 font-bold rounded disabled:opacity-50"
-            disabled={!validate} // TODO: Disable button till all options are selected
+            disabled={!validate}
             onClick={() => {
               sendData(personalInfo);
               router.push('/Onboarding_Pages/pg_2');

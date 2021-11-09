@@ -46,7 +46,7 @@ export type PageTwoTypes = {
 /**
  * TODO: Create method to relay this data to Firebase
  */
-function sendData(data) {
+function sendData(data: PageTwoTypes) {
   console.log('Page 2 data:', data);
 }
 
@@ -295,7 +295,7 @@ export default function PageTwo(): JSX.Element {
           </button>
           <button
             className="text-blue-500 hover:text-yellow-500 font-bold rounded disabled:opacity-50"
-            disabled={!validate} // TODO: Disable button till all options are selected
+            disabled={!validate}
             onClick={() => {
               sendData(scholarshipHonors);
               router.push('/Onboarding_Pages/pg_3');

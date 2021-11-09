@@ -74,7 +74,7 @@ export type CreditState = {
 /**
  * TODO: Create method to relay this data to Firebase
  */
-function sendData(data) {
+function sendData(data: CreditState) {
   console.log('Page 3 data:', data);
 }
 const data = 0;
