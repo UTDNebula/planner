@@ -127,7 +127,12 @@ export default function PageTwo(): JSX.Element {
   return (
     <div className="min-h-screen flex items-center justify-center bg-blue-400">
       <div className="py-16 px-32 rounded shadow-2xl w-2/3 bg-white animate-intro">
-        <Navigation navigationProps={navState} sendData={sendData} data={scholarshipHonors} />
+        <Navigation
+          navigationProps={navState}
+          sendData={sendData}
+          data={scholarshipHonors}
+          validate={validate}
+        />
         <h2 className="text-4xl text-left font-bold mb-10 text-gray-800">Honors & Scholarships</h2>
         <div className="grid grid-cols-2">
           <h3 className="text-xl mb-10 text-gray-800 mr-10">

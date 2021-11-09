@@ -33,12 +33,19 @@ function sendData(data) {
 const data = 0;
 
 export default function PageFour(): JSX.Element {
+  const validate = true; // No form validation needed for this page
+
   const router = useRouter();
   const navState: NavigationStateProps = { personal: false, honors: false, credits: true };
   return (
     <div className="min-h-screen flex items-center justify-center bg-blue-400">
       <div className="py-16 px-32 rounded shadow-2xl w-2/3 bg-white animate-intro">
-        <Navigation navigationProps={navState} sendData={sendData} data={data} />
+        <Navigation
+          navigationProps={navState}
+          sendData={sendData}
+          data={data}
+          validate={validate}
+        />
         <h2 className="text-4xl text-left font-bold mb-10 text-gray-800">Any Transfer Credits?</h2>
         <div className="column-flex">
           <div className="flex items-center justify-center">

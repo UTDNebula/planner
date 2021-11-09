@@ -6,6 +6,7 @@ export interface NavigationProps {
   navigationProps: NavigationStateProps;
   sendData: (data: any) => void;
   data: any;
+  validate: boolean;
 }
 export type NavigationStateProps = {
   personal: boolean;
@@ -17,6 +18,7 @@ export default function Navigation({
   navigationProps,
   sendData,
   data,
+  validate,
 }: NavigationProps): JSX.Element {
   return (
     <div className="h-28 mb-8 flex justify-center items-center text-white ">
@@ -26,7 +28,11 @@ export default function Navigation({
         } rounded-full w-24 h-24`}
         onClick={() => {
           sendData(data);
-          router.push('/Onboarding_Pages/pg_1');
+          if (validate) {
+            router.push('/Onboarding_Pages/pg_1');
+          } else {
+            alert('Warning: 1 or more fields missing');
+          }
         }}
       >
         <div className="text-base p-top mt-2"> Step 1 </div>
@@ -44,7 +50,11 @@ export default function Navigation({
         } rounded-full w-24 h-24`}
         onClick={() => {
           sendData(data);
-          router.push('/Onboarding_Pages/pg_2');
+          if (validate) {
+            router.push('/Onboarding_Pages/pg_2');
+          } else {
+            alert('Warning: 1 or more fields missing');
+          }
         }}
       >
         <div className="text-base p-top mt-2"> Step 2 </div>
@@ -61,7 +71,11 @@ export default function Navigation({
         } rounded-full w-24 h-24`}
         onClick={() => {
           sendData(data);
-          router.push('/Onboarding_Pages/pg_3');
+          if (validate) {
+            router.push('/Onboarding_Pages/pg_3');
+          } else {
+            alert('Warning: 1 or more fields missing');
+          }
         }}
       >
         <div className="text-base p-top mt-2"> Step 3 </div>
