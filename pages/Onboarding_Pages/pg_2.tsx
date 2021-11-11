@@ -10,20 +10,13 @@ import Navigation, { NavigationStateProps } from '../../components/onboarding/Na
 import Checkbox from '@material-ui/core/Checkbox';
 import FormLabel from '@material-ui/core/FormLabel';
 import { FormGroup, FormControlLabel, Button } from '@material-ui/core';
+import DummyData from '../../data/dummy_onboarding.json';
 
 // Array of values to choose from for form
-const scholarships = [
-  'Select Scholarship Type',
-  'Euguene McDermott Scholars',
-  'Terry Foundation Future Scholars',
-  'National Merit Scholarship',
-  'Diversity Scholars',
-  'Academic Excellence Scholarship',
-];
+const scholarships = DummyData.scholarships;
 
-const fastTrackYears = ['Fall 202x', 'Spring 202x'];
-
-const majors = ['Computer Science', 'History', ''];
+const fastTrackYears = DummyData.fastTrackYears;
+const majors = DummyData.majors;
 
 export type HonorsType = {
   eugene: boolean;

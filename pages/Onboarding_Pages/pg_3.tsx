@@ -8,24 +8,25 @@ import Navigation, { NavigationStateProps } from '../../components/onboarding/Na
 import { Autocomplete } from '@material-ui/lab';
 import { TextField } from '@material-ui/core';
 import TransferCreditCard from '../../components/onboarding/TransferCreditCard';
+import DummyData from '../../data/dummy_onboarding.json';
 
-// Array of values to choose from for form
-const courses = ['RHET 1302', 'ECS 1100', 'CS 3345', ''];
-const subjects = ['ECS', 'EPPS', 'MATH', ''];
-const types = ['Transfer', 'AP', 'IB', 'CLEP', 'UTD'];
+// Variables that store values used in onboarding form
+const courses = DummyData.courses;
+const subjects = DummyData.subjects;
+const types = DummyData.types;
 
 // AP
-const apTests = ['Biology', 'Chemistry', 'Computer Science A'];
-const apScores = ['1', '2', '3', '4', '5'];
+const apTests = DummyData.apTests;
+const apScores = DummyData.apScores;
 
 // IB
-const ibTests = ['Biology', 'Chemistry', 'Computer Science A'];
-const ibLevels = ['Standard', 'Higher'];
-const ibScores = ['1', '2', '3', '4', '5'];
+const ibTests = DummyData.ibTests;
+const ibLevels = DummyData.ibLevels;
+const ibScores = DummyData.ibScores;
 
 // CLEP
-const clepTests = ['Biology', 'Chemistry', 'Computer Science A'];
-const clepScores = ['1', '2', '3', '4', '5'];
+const clepTests = DummyData.clepTests;
+const clepScores = DummyData.clepScores;
 
 const clearCreditFields = {
   id: 0,

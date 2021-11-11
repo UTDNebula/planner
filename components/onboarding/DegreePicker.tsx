@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
+import DummyData from '../../data/dummy_onboarding.json';
 
 export interface DegreePickerProps {
   id: number;
@@ -37,8 +38,8 @@ export default function DegreePicker({
   removePicker,
 }: DegreePickerProps): JSX.Element {
   // TODO: Populate with real degree values
-  const degrees = ['Computer Science', 'History', ''];
-  const degreeTypes = ['Major', 'Minor', 'Other'];
+  const degrees = DummyData.degrees;
+  const degreeTypes = DummyData.degreeTypes;
 
   // Manages if component stays rendered
   const [unmount, setUnmount] = useState(false);

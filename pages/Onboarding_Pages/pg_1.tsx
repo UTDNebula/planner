@@ -6,18 +6,11 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import Navigation, { NavigationStateProps } from '../../components/onboarding/Navigation';
 import DegreePicker, { DegreeState } from '../../components/onboarding/DegreePicker';
+import DummyData from '../../data/dummy_onboarding.json';
 
 // Array of values to choose from for form
-const classificationTypes = ['freshman', 'sophomore', 'junior', 'senior', 'super senior'];
-const futureTypes = [
-  'law',
-  'medical',
-  'graduate',
-  'industry',
-  'entrepreneurship',
-  'military',
-  'undecided',
-];
+const classificationTypes = DummyData.classificationTypes;
+const futureTypes = DummyData.futureTypes;
 
 export type PageOneTypes = {
   name: string;
