@@ -2,11 +2,12 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
-import React, { useState } from 'react';
+import React, { SetStateAction, useState } from 'react';
 import { useRouter } from 'next/router';
 import Navigation, { NavigationStateProps } from '../../components/onboarding/Navigation';
 import DegreePicker, { DegreeState } from '../../components/onboarding/DegreePicker';
 import DummyData from '../../data/dummy_onboarding.json';
+import { CareerGoal } from '../app/onboarding';
 
 // Array of values to choose from for form
 const classificationTypes = DummyData.classificationTypes;
@@ -16,7 +17,7 @@ export type PageOneTypes = {
   name: string;
   classification: string;
   degree: DegreeState[];
-  future: string;
+  future: string; // CareerGoal;
 };
 
 /**
@@ -45,25 +46,32 @@ function sendData(data: PageOneTypes) {
 // Used to create index to add entries to degree in personal info
 let counter = 0;
 
-export default function PageOne(): JSX.Element {
+export type Page1Props = {
+  handleChange: React.Dispatch<React.SetStateAction<PageOneTypes>>;
+  props: PageOneTypes;
+  isValid: boolean;
+  handleValidate: (value: boolean) => void;
+};
+
+export default function PageOne({
+  handleChange,
+  props,
+  isValid,
+  handleValidate,
+}: Page1Props): JSX.Element {
   const router = useRouter();
 
   const navState: NavigationStateProps = { personal: true, honors: false, credits: false };
-  const [personalInfo, setPersonalInfo] = useState<PageOneTypes>({
-    name: '',
-    classification: '',
-    degree: [],
-    future: '',
-  });
 
   // Contains the index of all degree entries & is used to render DegreePicker
   const [degreeCount, setDegreeCount] = useState([0]);
 
-  const [validate, setValidate] = useState(false);
+  // Controls state of degreePicker
+  // const [degree, setDegree] = useState<DegreeState[]>([]);
 
   // Handles all form data except DegreePicker
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPersonalInfo({ ...personalInfo, [event.target.name]: event.target.value });
+  const handleStandardChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    handleChange({ ...props, [event.target.name]: event.target.value });
   };
 
   // Handles DegreePicker
@@ -78,11 +86,27 @@ export default function PageOne(): JSX.Element {
         break;
       }
     }
-
     degree[index] = degreeState;
-    setPersonalInfo({
-      ...personalInfo,
-      degree: degree,
+    // setDegree(degree);
+    // let asdf = degreeToPlan();
+    // handleChange('plan', asdf);
+    handleChange({ ...props, degree: degree });
+  };
+
+  const addNewDegree = () => {
+    counter += 1;
+    setDegreeCount([...degreeCount, counter]);
+    handleChange({
+      ...props,
+      degree: [
+        ...degree,
+        {
+          id: counter,
+          degree: 'Select degree',
+          degreeType: 'Select a type',
+          valid: false,
+        },
+      ],
     });
   };
 
@@ -100,132 +124,98 @@ export default function PageOne(): JSX.Element {
     return true;
   };
 
-  const checkValidate = async () => {
+  const checkValidate = () => {
     const isValid = name && classification && future && pickerValidate() ? true : false;
-    setValidate(isValid);
+    console.log('checkValidate', isValid);
+    handleValidate(isValid);
   };
 
   // TODO: After DegreePicker removed, remove the DegreePicker entry in degree
   const removePicker = (id: number) => {
-    setPersonalInfo({ ...personalInfo, degree: degree.filter((value) => value.id !== id) });
+    handleChange({ ...props, degree: degree.filter((value) => value.id !== id) });
+    // let newDegree = degree.filter((value) => value.id !== id);
+    // setDegree(newDegree);
+    // handleChange('plan', degreeToPlan());
   };
 
   React.useEffect(() => {
     checkValidate();
-  }, [personalInfo]);
+  }, [props]);
 
-  const { name, classification, degree, future } = personalInfo;
+  const { name, classification, degree, future } = props;
+  const validate = isValid;
+  // const validate = false;
+  // const [ name, classification, future, plan, validate] = props;
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-blue-400 ">
-      <div className="py-16 px-32 rounded shadow-2xl w-2/3 bg-white animate-intro">
-        <Navigation
-          navigationProps={navState}
-          sendData={sendData}
-          data={personalInfo}
-          validate={validate}
-        />
-        <h2 className="text-4xl text-left font-bold mb-10 text-gray-800">Tell us about Yourself</h2>
-        <div className="grid grid-cols-2">
-          <h3 className="text-xl mb-10 text-gray-800">What is your name?</h3>
-          <div className="flex items-center justify-center">
-            <input
-              type="text"
-              className="mb-10 border bg-blue-100 py-2 px-4 w-96 outline-none focus:ring-2 focus:ring-blue-600 rounded"
-              placeholder="Your name"
-              name="name"
-              value={name}
-              onChange={handleChange}
-            />
-          </div>
-
-          <h3 className="text-xl mb-10 text-gray-800">Student Classification?</h3>
-
-          <FormControl>
-            <InputLabel id="demo-simple-select-autowidth-label">Classification</InputLabel>
-            <Select
-              labelId="demo-simple-select-autowidth-label"
-              id="demo-simple-select-autowidth"
-              value={classification}
-              onChange={handleChange}
-              fullWidth={true}
-              name="classification"
-            >
-              {returnMenuItems(classificationTypes)}
-            </Select>
-          </FormControl>
-
-          <h3 className="text-xl mb-10 text-gray-800">What are you studying?</h3>
-
-          <div className="flex flex-col">
-            {degreeCount.map((index) => (
-              <div key={index}>
-                <DegreePicker
-                  id={index}
-                  updateChange={handleDegreeChange}
-                  removePicker={removePicker}
-                />
-              </div>
-            ))}
-            <button
-              className="mr-10 text-blue-500 hover:text-yellow-500 font-bold rounded"
-              onClick={() => {
-                counter += 1;
-                setDegreeCount([...degreeCount, counter]);
-                setPersonalInfo({
-                  ...personalInfo,
-                  degree: [
-                    ...degree,
-                    {
-                      id: counter,
-                      degree: 'Select degree',
-                      degreeType: 'Select a type',
-                      valid: false,
-                    },
-                  ],
-                });
-              }}
-            >
-              {' '}
-              Add Degree{' '}
-            </button>
-          </div>
-
-          <h1 className="text-xl ">What do you plan on doing after graduation?</h1>
-
-          <FormControl>
-            <InputLabel id="demo-simple-select-autowidth-label">Future Plans</InputLabel>
-            <Select
-              labelId="demo-simple-select-autowidth-label"
-              id="demo-simple-select-autowidth"
-              value={future}
-              onChange={handleChange}
-              name="future"
-            >
-              {returnMenuItems(futureTypes)}
-            </Select>
-          </FormControl>
+    <>
+      <Navigation navigationProps={navState} sendData={sendData} data={props} validate={validate} />
+      <h2 className="text-4xl text-left font-bold mb-10 text-gray-800">Tell us about Yourself</h2>
+      <div className="grid grid-cols-2">
+        <h3 className="text-xl mb-10 text-gray-800">What is your name?</h3>
+        <div className="flex items-center justify-center">
+          <input
+            type="text"
+            className="mb-10 border bg-blue-100 py-2 px-4 w-96 outline-none focus:ring-2 focus:ring-blue-600 rounded"
+            placeholder="Your name"
+            name="name"
+            value={name}
+            onChange={handleStandardChange}
+          />
         </div>
 
-        <div className="mt-10 flex items-center justify-center">
-          <button
-            className="mr-10 text-blue-500 hover:text-yellow-300 font-bold rounded"
-            onClick={() => router.push('/Onboarding_Pages/privacy')}
+        <h3 className="text-xl mb-10 text-gray-800">Student Classification?</h3>
+
+        <FormControl>
+          <InputLabel id="demo-simple-select-autowidth-label">Classification</InputLabel>
+          <Select
+            labelId="demo-simple-select-autowidth-label"
+            id="demo-simple-select-autowidth"
+            value={classification}
+            onChange={handleStandardChange}
+            fullWidth={true}
+            name="classification"
           >
-            BACK
-          </button>
+            {returnMenuItems(classificationTypes)}
+          </Select>
+        </FormControl>
+
+        <h3 className="text-xl mb-10 text-gray-800">What are you studying?</h3>
+
+        <div className="flex flex-col">
+          {degreeCount.map((index) => (
+            <div key={index}>
+              <DegreePicker
+                id={index}
+                updateChange={handleDegreeChange}
+                removePicker={removePicker}
+              />
+            </div>
+          ))}
           <button
-            className="text-blue-500 hover:text-yellow-500 font-bold rounded disabled:opacity-50"
-            disabled={!validate}
-            onClick={() => {
-              sendData(personalInfo);
-              router.push('/Onboarding_Pages/pg_2');
-            }}
+            className="mr-10 text-blue-500 hover:text-yellow-500 font-bold rounded"
+            onClick={addNewDegree}
           >
-            NEXT
+            {' '}
+            Add Degree{' '}
           </button>
         </div>
+
+        <h1 className="text-xl ">What do you plan on doing after graduation?</h1>
+
+        <FormControl>
+          <InputLabel id="demo-simple-select-autowidth-label">Future Plans</InputLabel>
+          <Select
+            labelId="demo-simple-select-autowidth-label"
+            id="demo-simple-select-autowidth"
+            value={future}
+            onChange={handleStandardChange}
+            name="future"
+          >
+            {returnMenuItems(futureTypes)}
+          </Select>
+        </FormControl>
       </div>
-    </div>
+    </>
   );
 }

@@ -1,5 +1,5 @@
 {
-  "classificationTypes": ["freshman", "sophomore", "junior", "senior", "super senior"],
+  "classificationTypes": ["freshman", "sophomore", "junior", "senior", "super senior", "none"],
   "futureTypes": [
     "law",
     "medical",
@@ -10,7 +10,7 @@
     "undecided"
   ],
   "degrees": ["Computer Science", "History", ""],
-  "degreeTypes": ["Major", "Minor", "Other"],
+  "degreeTypes": ["Major", "Minor"],
 
   "scholarships": [
     "Select Scholarship Type",

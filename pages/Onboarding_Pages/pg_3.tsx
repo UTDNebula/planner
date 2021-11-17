@@ -56,6 +56,10 @@ function returnMenuItems<MenuItem>(menuOptions: string[]) {
   ));
 }
 
+export type PageThreeTypes = {
+  creditState: CreditState[];
+};
+
 export type CreditState = {
   id: number;
   subject: string;
@@ -80,15 +84,21 @@ function sendData(data: CreditState) {
 }
 const data = 0;
 
-export default function PageFour(): JSX.Element {
-  const validate = true;
+export type Page3Props = {
+  handleChange: React.Dispatch<React.SetStateAction<PageThreeTypes>>;
+  props: PageThreeTypes;
+  isValid: boolean;
+  handleValidate: (value: boolean) => void;
+};
 
-  const [creditState, setCreditState] = useState<CreditState[]>([]);
+export default function PageThree({ handleChange, props, isValid }: Page3Props): JSX.Element {
+  // const [creditState, setCreditState] = useState<CreditState[]>([]);
 
+  const { creditState } = props;
   const [creditFields, setCreditFields] = useState<CreditState>({ ...clearCreditFields });
 
   // Handles all form data except DegreePicker
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleStandardChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCreditFields({ ...creditFields, [event.target.name]: event.target.value });
   };
 
@@ -111,7 +121,7 @@ export default function PageFour(): JSX.Element {
   const [inputSubjectValue, setInputSubjectValue] = React.useState('');
   const [inputCourseValue, setInputCourseValue] = React.useState('');
 
-  useEffect(() => console.log(creditState));
+  useEffect(() => console.log(creditState, creditFields));
 
   // validation variables
   const primary =
@@ -132,7 +142,8 @@ export default function PageFour(): JSX.Element {
     // Validate Transfer Credit card
     if (primary && ap && ib && clep) {
       // add card to creditState
-      setCreditState([...creditState, creditFields]);
+      console.log([...creditState, creditFields]);
+      handleChange({ creditState: [...creditState, creditFields] });
       // clear setCreditFields
       setCreditFields({ ...clearCreditFields, id: creditFields.id + 1 });
     } else {
@@ -141,219 +152,209 @@ export default function PageFour(): JSX.Element {
   };
 
   const removeCard = (removeID) => {
-    setCreditState(creditState.filter((element) => element.id !== removeID));
+    handleChange({ creditState: creditState.filter((element) => element.id !== removeID) });
   };
   const router = useRouter();
   const navState: NavigationStateProps = { personal: false, honors: false, credits: true };
   return (
-    <div className="min-h-screen flex items-center justify-center bg-blue-400">
-      <div className="py-16 px-32 rounded shadow-2xl w-2/3 bg-white animate-intro">
-        <Navigation
-          navigationProps={navState}
-          sendData={sendData}
-          data={data}
-          validate={validate}
-        />
-        <h2 className="text-4xl text-left font-bold mb-10 text-gray-800">Any Transfer Credits?</h2>
-        <div className="column-flex">
-          <div className="flex items-center justify-center">
-            <div className="w-full rounded-lg shadow-lg p-4 colum-flex md:flex-row flex-col">
-              <h2 className="text-xl text-center font-semibold m-5 mb-10 text-gray-800">
-                Transfer Credit Conversion Tool
-              </h2>
-              <div className="grid grid-cols-2 gap-10 items-center mb-10 justify-center ">
-                <div className="inline-flex flex-col">
-                  <FormControl>
-                    <Autocomplete
-                      size={'small'}
-                      value={creditFields.subject}
-                      defaultValue={''}
-                      onChange={handleAutocompleteChange}
-                      inputValue={inputSubjectValue}
-                      onInputChange={(event, newInputValue) => {
-                        setInputSubjectValue(newInputValue);
-                      }}
-                      id="subject"
-                      options={subjects}
-                      style={{ width: 300 }}
-                      renderInput={(params) => (
-                        <TextField {...params} label="Subject" variant="outlined" />
-                      )}
-                    />
-                  </FormControl>
-                  <FormControl>
-                    <Autocomplete
-                      size={'small'}
-                      value={creditFields.course}
-                      defaultValue={''}
-                      onChange={handleAutocompleteChange}
-                      inputValue={inputCourseValue}
-                      onInputChange={(event, newInputValue) => {
-                        setInputCourseValue(newInputValue);
-                      }}
-                      id="course"
-                      options={courses}
-                      style={{ width: 300 }}
-                      renderInput={(params) => (
-                        <TextField {...params} label="Course" variant="outlined" />
-                      )}
-                    />
-                  </FormControl>
-                  <FormControl>
-                    <InputLabel id="demo-simple-select-autowidth-label">Type</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-autowidth-label"
-                      id="demo-simple-select-autowidth"
-                      value={creditFields.type}
-                      onChange={handleChange}
-                      fullWidth={true}
-                      name="type"
-                    >
-                      {returnMenuItems(types)}
-                    </Select>
-                  </FormControl>
-                  {creditFields['type'] === 'AP' && (
-                    <>
-                      <FormControl>
-                        <InputLabel id="demo-simple-select-autowidth-label">AP Tests</InputLabel>
-                        <Select
-                          labelId="demo-simple-select-autowidth-label"
-                          id="demo-simple-select-autowidth"
-                          value={creditFields.apTest}
-                          onChange={handleChange}
-                          fullWidth={true}
-                          name="apTest"
-                        >
-                          {returnMenuItems(apTests)}
-                        </Select>
-                      </FormControl>
-                      <FormControl>
-                        <InputLabel id="demo-simple-select-autowidth-label">
-                          AP Test Score
-                        </InputLabel>
-                        <Select
-                          labelId="demo-simple-select-autowidth-label"
-                          id="demo-simple-select-autowidth"
-                          value={creditFields.apScore}
-                          onChange={handleChange}
-                          fullWidth={true}
-                          name="apScore"
-                        >
-                          {returnMenuItems(apScores)}
-                        </Select>
-                      </FormControl>
-                    </>
-                  )}
-
-                  {creditFields['type'] === 'CLEP' && (
-                    <>
-                      <FormControl>
-                        <InputLabel id="demo-simple-select-autowidth-label">CLEP Tests</InputLabel>
-                        <Select
-                          labelId="demo-simple-select-autowidth-label"
-                          id="demo-simple-select-autowidth"
-                          value={creditFields.clepTest}
-                          onChange={handleChange}
-                          fullWidth={true}
-                          name="clepTest"
-                        >
-                          {returnMenuItems(clepTests)}
-                        </Select>
-                      </FormControl>
-                      <FormControl>
-                        <InputLabel id="demo-simple-select-autowidth-label">
-                          CLEP Test Score
-                        </InputLabel>
-                        <Select
-                          labelId="demo-simple-select-autowidth-label"
-                          id="demo-simple-select-autowidth"
-                          value={creditFields.clepScore}
-                          onChange={handleChange}
-                          fullWidth={true}
-                          name="clepScore"
-                        >
-                          {returnMenuItems(clepScores)}
-                        </Select>
-                      </FormControl>
-                    </>
-                  )}
-
-                  {creditFields['type'] === 'IB' && (
-                    <>
-                      <FormControl>
-                        <InputLabel id="demo-simple-select-autowidth-label">IB Tests</InputLabel>
-                        <Select
-                          labelId="demo-simple-select-autowidth-label"
-                          id="demo-simple-select-autowidth"
-                          value={creditFields.ibTest}
-                          onChange={handleChange}
-                          fullWidth={true}
-                          name="ibTest"
-                        >
-                          {returnMenuItems(ibTests)}
-                        </Select>
-                      </FormControl>
-                      <FormControl>
-                        <InputLabel id="demo-simple-select-autowidth-label">IB Level</InputLabel>
-                        <Select
-                          labelId="demo-simple-select-autowidth-label"
-                          id="demo-simple-select-autowidth"
-                          value={creditFields.ibLevel}
-                          onChange={handleChange}
-                          fullWidth={true}
-                          name="ibLevel"
-                        >
-                          {returnMenuItems(ibLevels)}
-                        </Select>
-                      </FormControl>
-                      <FormControl>
-                        <InputLabel id="demo-simple-select-autowidth-label">
-                          IB Test Score
-                        </InputLabel>
-                        <Select
-                          labelId="demo-simple-select-autowidth-label"
-                          id="demo-simple-select-autowidth"
-                          value={creditFields.ibScore}
-                          onChange={handleChange}
-                          fullWidth={true}
-                          name="ibScore"
-                        >
-                          {returnMenuItems(ibScores)}
-                        </Select>
-                      </FormControl>
-                    </>
-                  )}
-                  <button
-                    className="mr-10 text-blue-500 hover:text-yellow-500 font-bold rounded"
-                    onClick={() => {
-                      addTransferCredit();
+    <>
+      <Navigation navigationProps={navState} sendData={sendData} data={data} validate={!isValid} />
+      <h2 className="text-4xl text-left font-bold mb-10 text-gray-800">Any Transfer Credits?</h2>
+      <div className="column-flex">
+        <div className="flex items-center justify-center">
+          <div className="w-full rounded-lg shadow-lg p-4 colum-flex md:flex-row flex-col">
+            <h2 className="text-xl text-center font-semibold m-5 mb-10 text-gray-800">
+              Transfer Credit Conversion Tool
+            </h2>
+            <div className="grid grid-cols-2 gap-10 items-center mb-10 justify-center ">
+              <div className="inline-flex flex-col">
+                <FormControl>
+                  <Autocomplete
+                    size={'small'}
+                    value={creditFields.subject}
+                    defaultValue={''}
+                    onChange={handleAutocompleteChange}
+                    inputValue={inputSubjectValue}
+                    onInputChange={(event, newInputValue) => {
+                      setInputSubjectValue(newInputValue);
                     }}
+                    id="subject"
+                    options={subjects}
+                    style={{ width: 200 }}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Subject" variant="outlined" />
+                    )}
+                  />
+                </FormControl>
+                <FormControl>
+                  <Autocomplete
+                    size={'small'}
+                    value={creditFields.course}
+                    defaultValue={''}
+                    onChange={handleAutocompleteChange}
+                    inputValue={inputCourseValue}
+                    onInputChange={(event, newInputValue) => {
+                      setInputCourseValue(newInputValue);
+                    }}
+                    id="course"
+                    options={courses}
+                    style={{ width: 200 }}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Course" variant="outlined" />
+                    )}
+                  />
+                </FormControl>
+                <FormControl>
+                  <InputLabel id="demo-simple-select-autowidth-label">Type</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-autowidth-label"
+                    id="demo-simple-select-autowidth"
+                    value={creditFields.type}
+                    onChange={handleStandardChange}
+                    fullWidth={true}
+                    name="type"
                   >
-                    Add Credit
-                  </button>
-                </div>
+                    {returnMenuItems(types)}
+                  </Select>
+                </FormControl>
+                {creditFields['type'] === 'AP' && (
+                  <>
+                    <FormControl>
+                      <InputLabel id="demo-simple-select-autowidth-label">AP Tests</InputLabel>
+                      <Select
+                        labelId="demo-simple-select-autowidth-label"
+                        id="demo-simple-select-autowidth"
+                        value={creditFields.apTest}
+                        onChange={handleStandardChange}
+                        fullWidth={true}
+                        name="apTest"
+                      >
+                        {returnMenuItems(apTests)}
+                      </Select>
+                    </FormControl>
+                    <FormControl>
+                      <InputLabel id="demo-simple-select-autowidth-label">AP Test Score</InputLabel>
+                      <Select
+                        labelId="demo-simple-select-autowidth-label"
+                        id="demo-simple-select-autowidth"
+                        value={creditFields.apScore}
+                        onChange={handleStandardChange}
+                        fullWidth={true}
+                        name="apScore"
+                      >
+                        {returnMenuItems(apScores)}
+                      </Select>
+                    </FormControl>
+                  </>
+                )}
 
-                <div className="flex flex-col">
-                  <div className="bg-blue-900 text-white">
-                    <h2> My Credits </h2>
-                  </div>
-                  <div className="overflow-y-scroll h-72">
-                    {creditState.map((element, index) => (
-                      <div key={index.toString()}>
-                        <TransferCreditCard
-                          id={element.id}
-                          course={element.course}
-                          removeCard={() => removeCard(element.id)}
-                        />
-                      </div>
-                    ))}
-                  </div>
+                {creditFields['type'] === 'CLEP' && (
+                  <>
+                    <FormControl>
+                      <InputLabel id="demo-simple-select-autowidth-label">CLEP Tests</InputLabel>
+                      <Select
+                        labelId="demo-simple-select-autowidth-label"
+                        id="demo-simple-select-autowidth"
+                        value={creditFields.clepTest}
+                        onChange={handleStandardChange}
+                        fullWidth={true}
+                        name="clepTest"
+                      >
+                        {returnMenuItems(clepTests)}
+                      </Select>
+                    </FormControl>
+                    <FormControl>
+                      <InputLabel id="demo-simple-select-autowidth-label">
+                        CLEP Test Score
+                      </InputLabel>
+                      <Select
+                        labelId="demo-simple-select-autowidth-label"
+                        id="demo-simple-select-autowidth"
+                        value={creditFields.clepScore}
+                        onChange={handleStandardChange}
+                        fullWidth={true}
+                        name="clepScore"
+                      >
+                        {returnMenuItems(clepScores)}
+                      </Select>
+                    </FormControl>
+                  </>
+                )}
+
+                {creditFields['type'] === 'IB' && (
+                  <>
+                    <FormControl>
+                      <InputLabel id="demo-simple-select-autowidth-label">IB Tests</InputLabel>
+                      <Select
+                        labelId="demo-simple-select-autowidth-label"
+                        id="demo-simple-select-autowidth"
+                        value={creditFields.ibTest}
+                        onChange={handleStandardChange}
+                        fullWidth={true}
+                        name="ibTest"
+                      >
+                        {returnMenuItems(ibTests)}
+                      </Select>
+                    </FormControl>
+                    <FormControl>
+                      <InputLabel id="demo-simple-select-autowidth-label">IB Level</InputLabel>
+                      <Select
+                        labelId="demo-simple-select-autowidth-label"
+                        id="demo-simple-select-autowidth"
+                        value={creditFields.ibLevel}
+                        onChange={handleStandardChange}
+                        fullWidth={true}
+                        name="ibLevel"
+                      >
+                        {returnMenuItems(ibLevels)}
+                      </Select>
+                    </FormControl>
+                    <FormControl>
+                      <InputLabel id="demo-simple-select-autowidth-label">IB Test Score</InputLabel>
+                      <Select
+                        labelId="demo-simple-select-autowidth-label"
+                        id="demo-simple-select-autowidth"
+                        value={creditFields.ibScore}
+                        onChange={handleStandardChange}
+                        fullWidth={true}
+                        name="ibScore"
+                      >
+                        {returnMenuItems(ibScores)}
+                      </Select>
+                    </FormControl>
+                  </>
+                )}
+                <button
+                  className="mr-10 text-blue-500 hover:text-yellow-500 font-bold rounded"
+                  onClick={() => {
+                    addTransferCredit();
+                  }}
+                >
+                  Add Credit
+                </button>
+              </div>
+
+              <div className="flex flex-col">
+                <div className="bg-blue-900 text-white">
+                  <h2> My Credits </h2>
+                </div>
+                <div className="overflow-y-scroll h-72">
+                  {creditState.map((element, index) => (
+                    <div key={index.toString()}>
+                      <TransferCreditCard
+                        id={element.id}
+                        course={element.course}
+                        removeCard={() => removeCard(element.id)}
+                      />
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="mt-10 flex items-center justify-center">
+      </div>
+      {/* <div className="mt-10 flex items-center justify-center">
           <button
             className="mr-10 text-blue-500 hover:text-yellow-500 font-bold rounded"
             onClick={() => router.push('/Onboarding_Pages/pg_2')}
@@ -367,8 +368,7 @@ export default function PageFour(): JSX.Element {
           >
             NEXT
           </button>
-        </div>
-      </div>
-    </div>
+        </div> */}
+    </>
   );
 }

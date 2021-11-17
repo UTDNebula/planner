@@ -1,17 +1,13 @@
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import { Button, Link, TextField } from '@material-ui/core';
-import Head from 'next/head';
-import React from 'react';
-import Disclaimer from '../../components/onboarding/Disclaimer';
+import React, { useEffect, useState } from 'react';
+import { DegreeState } from '../../components/onboarding/DegreePicker';
 import { useAuthContext } from '../../modules/auth/auth-context';
 import { HonorsIndicator } from '../../modules/common/types';
-import PageOne from '../Onboarding_Pages/pg_1';
-import PageTwo from '../Onboarding_Pages/pg_2';
-import PageThree from '../Onboarding_Pages/pg_3';
-// import PageFour from '../Onboarding_Pages/pg_4';
+import Disclaimer from '../Onboarding_Pages/disclaimer';
+import PageOne, { PageOneTypes } from '../Onboarding_Pages/pg_1';
+import PageTwo, { PageTwoTypes } from '../Onboarding_Pages/pg_2';
+import PageThree, { CreditState, PageThreeTypes } from '../Onboarding_Pages/pg_3';
+import Privacy from '../Onboarding_Pages/privacy';
+import Welcome from '../Onboarding_Pages/welcome';
 
 /**
  * The first onboarding page for the application.
@@ -22,7 +18,7 @@ import PageThree from '../Onboarding_Pages/pg_3';
 /**
  * A goal to pursue after graduation.
  */
-type CareerGoal =
+export type CareerGoal =
   /**
    * Law school or some legal profession.
    */
@@ -72,9 +68,16 @@ type StudentAttributes = {
  */
 type ScholarshipType = 'MCDERMOTT' | 'TERRY' | 'NATIONAL_MERIT' | 'DIVERSITY' | 'AES' | 'NONE';
 
+type FastTrackType = {
+  status: boolean;
+  major: string;
+  year: string;
+};
+
 type PrestigeAttributes = {
-  honors: HonorsIndicator;
-  scholarship: ScholarshipType;
+  honors: HonorsIndicator[];
+  scholarship: string; // ScholarshipType;
+  fastTrack: FastTrackType;
 };
 
 /**
@@ -104,10 +107,28 @@ type PlanData = {
    */
   minors: string[];
 
+  // /**
+  //  * Flags for any special planning modifiers.
+  //  */
+  // programs: SpecialPrograms;
+};
+
+/**
+ * Information about transfer credits
+ */
+type CreditAttributes = {
   /**
-   * Flags for any special planning modifiers.
+   * TODO: Create more descriptive type for credits
+   * Stores credit information
    */
-  programs: SpecialPrograms;
+  credits: CreditState[];
+};
+
+type ConsentData = {
+  disclaimer: boolean;
+  personalization: boolean;
+  analytics: boolean;
+  performance: boolean;
 };
 
 /**
@@ -115,14 +136,25 @@ type PlanData = {
  */
 type OnboardingFormData = {
   /**
+   * Store user consent data
+   */
+
+  consent: ConsentData;
+  /**
    * A name used for personalization, may be different from authenticated user name.
    */
   preferredName: string;
 
   /**
+   * A student's current grade by credits
+   */
+
+  classification: string;
+
+  /**
    * A long-term career path.
    */
-  goal: CareerGoal;
+  future: string; //CareerGoal;
 
   /**
    * Metadata used to geenrate an initial customized StudentPlan.
@@ -138,6 +170,8 @@ type OnboardingFormData = {
    * Flags for special academic/scholarship programs a student is a part of.
    */
   prestige: PrestigeAttributes;
+
+  credits: CreditAttributes;
 };
 
 /**
@@ -146,43 +180,43 @@ type OnboardingFormData = {
  * @param studentDefaultName A personalized name to prepopulate the name field.
  */
 function useUserSetup(studentDefaultName = 'Comet') {
+  // TODO: Check if user already exists; if true, use user values
   const [consentData, setConsentData] = React.useState({
     disclaimer: false,
     personalization: false,
     analytics: false,
     performance: false,
-  }); // TODO: Reduce redundancy
-  const [data, setData] = React.useState<OnboardingFormData>({
-    preferredName: studentDefaultName,
-    goal: 'UNDECIDED',
-    plan: {
-      majors: [],
-      minors: [],
-      programs: {
-        fastTrack: false,
-      },
-    },
-    studentAttributes: {
-      onCampus: false,
-      traditional: false,
-      receivingAid: false,
-    },
-    prestige: {
-      honors: 'none',
-      scholarship: 'NONE',
-    },
+  });
+  const [pageOneData, setPageOneData] = useState<PageOneTypes>({
+    name: '',
+    classification: '',
+    degree: [],
+    future: '',
   });
 
-  const setScholarship = (scholarship: ScholarshipType) => {
-    console.log('Selecting scholarship: ', scholarship);
-  };
+  const [pageTwoData, setPageTwoData] = useState<PageTwoTypes>({
+    scholarship: null,
+    scholarshipType: '',
+    receivingAid: null,
+    fastTrack: null,
+    fastTrackMajor: '',
+    fastTrackYear: '',
+    honors: { eugene: false, terry: false, national: false, diversity: false, aes: false },
+  });
+
+  const [pageThreeData, setPageThreeData] = useState({
+    creditState: [],
+  });
 
   return {
-    data,
-    setData,
+    pageOneData,
+    setPageOneData,
+    pageTwoData,
+    setPageTwoData,
+    pageThreeData,
+    setPageThreeData,
     consentData,
     setConsentData,
-    setScholarship,
   };
 }
 
@@ -193,67 +227,159 @@ function useUserSetup(studentDefaultName = 'Comet') {
  */
 export default function OnboardingPage(): JSX.Element {
   const { user } = useAuthContext();
-  const { data, setData, consentData, setConsentData } = useUserSetup();
-  const [page, setPage] = React.useState(0);
+  const {
+    pageOneData,
+    setPageOneData,
+    pageTwoData,
+    setPageTwoData,
+    pageThreeData,
+    setPageThreeData,
+    consentData,
+    setConsentData,
+  } = useUserSetup();
+  const [page, setPage] = useState(0);
+  const [validate, setValidate] = useState([true, true, true, false, false, true]);
+
+  const [test, setTest] = useState(false);
 
   if (user === null) {
     // TODO: Do something useful
   }
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setData({
-      ...data,
-      preferredName: event.currentTarget.value,
-    });
+  const validateForm = (value: boolean) => {
+    const temp = validate;
+    temp[page] = value;
+    setValidate(temp);
   };
 
-  function generateRedirect({ plan }: OnboardingFormData): string {
-    // const modifiers = Object.entries(plan.programs).reduce((acc, (key, value)) => {
-    //   acc += `${key}=${value}`;
-    //   return acc;
-    // }, '');
+  function generateRedirect({ plan, prestige }: OnboardingFormData): string {
     const coursePlans = plan.majors.concat(plan.minors).join('&');
-    return `?coursePlans=${coursePlans}&fastTrack=${plan.programs.fastTrack}`;
+    return `?coursePlans=${coursePlans}&fastTrack=${prestige.fastTrack}`;
   }
 
-  const onboardingRedirect = `/app/plans/new${generateRedirect(data)}`;
-
   const handleSubmit = () => {
-    console.log('Saving user information from onboarding:', data);
+    const data = organizeOnboardingData();
+    // TODO: Send data to firebase if creating account
+    console.log('Send data to firebase & go to /app', data);
+
+    // TODO: Figure out functionality for guest users
+
+    // TODO: Redirect to home page
+    const onboardingRedirect = `/app/plans/new${generateRedirect(data)}`;
+  };
+
+  const organizeOnboardingData = () => {
+    const plan = degreeToPlan();
+    const studentAttributes = {
+      onCampus: false,
+      traditional: false,
+      receivingAid: pageTwoData.receivingAid,
+    };
+    const prestige: PrestigeAttributes = {
+      honors: [],
+      scholarship: pageTwoData.scholarshipType,
+      fastTrack: {
+        status: pageTwoData.fastTrack,
+        major: pageTwoData.fastTrackMajor,
+        year: pageTwoData.fastTrackYear,
+      },
+    };
+    const data: OnboardingFormData = {
+      consent: consentData,
+      preferredName: pageOneData.name,
+      classification: pageOneData.classification,
+      future: pageOneData.future,
+      plan: plan,
+      studentAttributes: studentAttributes,
+      prestige: prestige,
+      credits: { credits: pageThreeData.creditState },
+    };
+    return data;
+  };
+
+  const degreeToPlan = () => {
+    // Create new PlanData variable
+    const temp = {
+      majors: [],
+      minors: [],
+    };
+    pageOneData.degree.forEach((value) => {
+      console.log(value.degreeType, value.degreeType === 'Major');
+      if (value.degreeType === 'Major') {
+        temp.majors.push(value.degree);
+      } else {
+        temp.minors.push(value.degree);
+      }
+    });
+    return temp;
   };
 
   const jsxElem = [
-    <PageOne key={0}></PageOne>,
-    <PageTwo key={1}></PageTwo>,
-    <PageThree key={2}></PageThree>,
+    <Welcome key={0} />,
+    <Disclaimer key={1} />,
+    <Privacy key={2} />,
+    <PageOne
+      key={3}
+      handleChange={setPageOneData}
+      props={{ ...pageOneData }}
+      isValid={validate[0]}
+      handleValidate={validateForm}
+    ></PageOne>,
+    <PageTwo
+      key={4}
+      handleChange={setPageTwoData}
+      props={{ ...pageTwoData }}
+      isValid={validate[1]}
+      handleValidate={validateForm}
+    ></PageTwo>,
+    <PageThree
+      key={5}
+      handleChange={setPageThreeData}
+      props={{ ...pageThreeData }}
+      isValid={validate[2]}
+      handleValidate={validateForm}
+    ></PageThree>,
     // <PageFour key={3}></PageFour>,
   ];
   const incrementPage = () => {
-    setPage(Math.min(page + 1, jsxElem.length - 1));
+    if (page + 1 <= 5) {
+      setPage(Math.min(page + 1, jsxElem.length - 1));
+    } else {
+      handleSubmit();
+    }
   };
   const decrementPage = () => {
     setPage(Math.max(page - 1, 0));
   };
 
+  useEffect(() => {
+    console.log(page);
+    console.log(validate[page]);
+    setTest(validate[page]);
+  });
+
   // TODO: Find better way to structure this glorified form.
   return (
     <>
-      {jsxElem[page]}
-      <div className="flex items-center justify-center bg-blue-400 -mt-20">
-        <div className="bg-white  rounded shadow-2xl w-2/3 mb-10">
-          <div className="flex items-center justify-center">
-            <button
-              onClick={decrementPage}
-              className="mr-10 text-blue-500 hover:text-yellow-500 font-bold rounded"
-            >
-              BACK
-            </button>
-            <button
-              onClick={incrementPage}
-              className="text-blue-500 hover:text-yellow-500 font-bold rounded"
-            >
-              NEXT
-            </button>
+      <div className="min-h-screen flex items-center justify-center bg-blue-400">
+        <div className="py-16 px-32 rounded shadow-2xl w-2/3 bg-white">
+          <div className="flex flex-col items-center justify-center">
+            <div className="animate-intro">{jsxElem[page]}</div>
+            <div>
+              <button
+                onClick={decrementPage}
+                className="mr-10 text-blue-500 hover:text-yellow-500 font-bold rounded"
+              >
+                BACK
+              </button>
+              <button
+                onClick={incrementPage}
+                disabled={!test}
+                className="text-blue-500 hover:text-yellow-500 font-bold rounded disabled:opacity-50"
+              >
+                NEXT
+              </button>
+            </div>
           </div>
         </div>
       </div>

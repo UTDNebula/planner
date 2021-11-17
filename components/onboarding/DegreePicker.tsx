@@ -39,7 +39,7 @@ export default function DegreePicker({
 }: DegreePickerProps): JSX.Element {
   // TODO: Populate with real degree values
   const degrees = DummyData.degrees;
-  const degreeTypes = DummyData.degreeTypes;
+  const degreeTypes = DummyData.degreeTypes; // No need for other because med school in future
 
   // Manages if component stays rendered
   const [unmount, setUnmount] = useState(false);
