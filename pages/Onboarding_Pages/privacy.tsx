@@ -23,7 +23,7 @@ export default function Privacy(): JSX.Element {
   const { personalization, analytics, performance } = consentState;
 
   return (
-    <>
+    <div className="animate-intro">
       <h2 className="text-3xl text-center font-bold mb-2 text-gray-800">Privacy Setting</h2>
       <h3 className="text-lg text-center font-medium mb-10">
         Before we get started, help us answer a few questions so we can get your permission for...
@@ -60,6 +60,6 @@ export default function Privacy(): JSX.Element {
           Allow us to access your specific device information{' '}
         </h2>
       </div>
-    </>
+    </div>
   );
 }

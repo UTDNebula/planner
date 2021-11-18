@@ -127,7 +127,7 @@ export default function PageTwo({
   const { eugene, terry, national, diversity, aes } = honors;
 
   return (
-    <>
+    <div className="animate-intro">
       <h2 className="text-4xl text-left font-bold mb-10 text-gray-800">Honors & Scholarships</h2>
       <div className="grid grid-cols-2">
         <h3 className="text-xl mb-10 text-gray-800 mr-10">
@@ -278,6 +278,6 @@ export default function PageTwo({
           </FormGroup>
         </FormControl>
       </div>
-    </>
+    </div>
   );
 }

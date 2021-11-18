@@ -404,7 +404,7 @@ export default function OnboardingPage(): JSX.Element {
                 changePage={changePage}
               />
             )}
-            <div className="animate-intro">{jsxElem[page]}</div>
+            {jsxElem[page]}
             <div>
               <button
                 onClick={decrementPage}

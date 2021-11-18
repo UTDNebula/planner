@@ -157,7 +157,7 @@ export default function PageThree({ handleChange, props, isValid }: Page3Props):
   const router = useRouter();
   const navState: NavigationStateProps = { personal: false, honors: false, credits: true };
   return (
-    <>
+    <div className="animate-intro">
       <h2 className="text-4xl text-left font-bold mb-10 text-gray-800">Any Transfer Credits?</h2>
       <div className="column-flex">
         <div className="flex items-center justify-center">
@@ -353,21 +353,6 @@ export default function PageThree({ handleChange, props, isValid }: Page3Props):
           </div>
         </div>
       </div>
-      {/* <div className="mt-10 flex items-center justify-center">
-          <button
-            className="mr-10 text-blue-500 hover:text-yellow-500 font-bold rounded"
-            onClick={() => router.push('/Onboarding_Pages/pg_2')}
-          >
-            BACK
-          </button>
-          <button
-            className="text-blue-500 hover:text-yellow-500 font-bold rounded disabled:opacity-50"
-            disabled={false} // TODO: Disable button till all options are selected
-            onClick={() => router.push('/app')}
-          >
-            NEXT
-          </button>
-        </div> */}
-    </>
+    </div>
   );
 }

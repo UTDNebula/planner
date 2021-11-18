@@ -11,7 +11,7 @@ export default function Disclaimer(): JSX.Element {
   const [checked, setChecked] = React.useState(false);
 
   return (
-    <>
+    <div className="animate-intro">
       <h2 className="text-3xl text-center font-bold mb-10 text-gray-800">Disclaimer</h2>
 
       <div>
@@ -32,6 +32,6 @@ export default function Disclaimer(): JSX.Element {
         control={<Checkbox checked={checked} onChange={() => setChecked(!checked)} />}
         label="I agree to the terms and privacy."
       />
-    </>
+    </div>
   );
 }

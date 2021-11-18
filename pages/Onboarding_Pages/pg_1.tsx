@@ -142,7 +142,7 @@ export default function PageOne({
   }, [props]);
 
   return (
-    <>
+    <div className="animate-intro">
       <h2 className="text-4xl text-left font-bold mb-10 text-gray-800">Tell us about Yourself</h2>
       <div className="grid grid-cols-2">
         <h3 className="text-xl mb-10 text-gray-800">What is your name?</h3>
@@ -223,6 +223,6 @@ export default function PageOne({
           </Select>
         </FormControl>
       </div>
-    </>
+    </div>
   );
 }
