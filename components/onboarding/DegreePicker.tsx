@@ -6,12 +6,13 @@ import DummyData from '../../data/dummy_onboarding.json';
 
 export interface DegreePickerProps {
   id: number;
+  props: DegreeState;
   updateChange: (id: number, degreeState: DegreeState) => void; // Update values of DegreePicker in pg_1.tsx
   removePicker: (id: number) => void; // Remove DegreePicker data from pg_1.tsx
 }
 
 export type DegreeState = {
-  id: number;
+  // id: number;
   degree: string;
   degreeType: string;
   valid: boolean;
@@ -34,6 +35,7 @@ function returnMenuItems<MenuItem>(menuOptions: string[]) {
 
 export default function DegreePicker({
   id,
+  props,
   updateChange,
   removePicker,
 }: DegreePickerProps): JSX.Element {
@@ -45,12 +47,7 @@ export default function DegreePicker({
   const [unmount, setUnmount] = useState(false);
 
   // Manages data stored in degree picker
-  const [degreeState, setDegreeState] = React.useState<DegreeState>({
-    id: id,
-    degree: '',
-    degreeType: '',
-    valid: false,
-  });
+  const [degreeState, setDegreeState] = React.useState<DegreeState>(props);
 
   // Manages input state in Autocomplete
   const [inputValue, setInputValue] = React.useState('');

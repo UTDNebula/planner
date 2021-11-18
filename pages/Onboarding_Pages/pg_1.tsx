@@ -2,12 +2,10 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
-import React, { SetStateAction, useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import Navigation, { NavigationStateProps } from '../../components/onboarding/Navigation';
 import DegreePicker, { DegreeState } from '../../components/onboarding/DegreePicker';
 import DummyData from '../../data/dummy_onboarding.json';
-import { CareerGoal } from '../app/onboarding';
 
 // Array of values to choose from for form
 const classificationTypes = DummyData.classificationTypes;
@@ -36,16 +34,6 @@ function returnMenuItems<MenuItem>(menuOptions: string[]) {
   ));
 }
 
-/**
- * TODO: Create method to relay this data to Firebase
- */
-function sendData(data: PageOneTypes) {
-  console.log('Page 1 data:', data);
-}
-
-// Used to create index to add entries to degree in personal info
-let counter = 0;
-
 export type Page1Props = {
   handleChange: React.Dispatch<React.SetStateAction<PageOneTypes>>;
   props: PageOneTypes;
@@ -61,13 +49,16 @@ export default function PageOne({
 }: Page1Props): JSX.Element {
   const router = useRouter();
 
-  const navState: NavigationStateProps = { personal: true, honors: false, credits: false };
+  const { name, classification, degree, future } = props;
+  let count = 0;
 
   // Contains the index of all degree entries & is used to render DegreePicker
-  const [degreeCount, setDegreeCount] = useState([0]);
-
-  // Controls state of degreePicker
-  // const [degree, setDegree] = useState<DegreeState[]>([]);
+  const [degreeCount, setDegreeCount] = useState(
+    degree.map((value, index) => {
+      return index;
+    }),
+  );
+  const [removeIndex, setRemoveIndex] = useState([]);
 
   // Handles all form data except DegreePicker
   const handleStandardChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,33 +68,31 @@ export default function PageOne({
   // Handles DegreePicker
   const handleDegreeChange = (formID: number, degreeState: DegreeState) => {
     // Determines if DegreePicker component is valid
-    degreeState.valid =
-      degreeState.degree !== '' && degreeState.degree !== null && degreeState.degreeType !== '';
-    let index = 0;
-    for (let i = 0; i < degree.length; i++) {
-      if (degree[i].id === formID) {
-        index = i;
-        break;
+    if (!(formID in removeIndex)) {
+      degreeState.valid =
+        degreeState.degree !== '' && degreeState.degree !== null && degreeState.degreeType !== '';
+      let index = 0;
+      for (let i = 0; i < removeIndex.length; i++) {
+        if (formID < removeIndex[i]) {
+          break;
+        } else {
+          index += 1;
+        }
       }
+      degree[formID - index] = degreeState;
+      handleChange({ ...props, degree: degree });
     }
-    degree[index] = degreeState;
-    // setDegree(degree);
-    // let asdf = degreeToPlan();
-    // handleChange('plan', asdf);
-    handleChange({ ...props, degree: degree });
   };
 
   const addNewDegree = () => {
-    counter += 1;
-    setDegreeCount([...degreeCount, counter]);
+    setDegreeCount([...degreeCount, degreeCount[degreeCount.length - 1] + 1]);
     handleChange({
       ...props,
       degree: [
         ...degree,
         {
-          id: counter,
-          degree: 'Select degree',
-          degreeType: 'Select a type',
+          degree: '',
+          degreeType: '',
           valid: false,
         },
       ],
@@ -126,30 +115,34 @@ export default function PageOne({
 
   const checkValidate = () => {
     const isValid = name && classification && future && pickerValidate() ? true : false;
-    console.log('checkValidate', isValid);
+    // console.log('checkValidate', isValid);
     handleValidate(isValid);
   };
 
   // TODO: After DegreePicker removed, remove the DegreePicker entry in degree
   const removePicker = (id: number) => {
-    handleChange({ ...props, degree: degree.filter((value) => value.id !== id) });
-    // let newDegree = degree.filter((value) => value.id !== id);
-    // setDegree(newDegree);
-    // handleChange('plan', degreeToPlan());
+    console.log(id);
+    const temp = degree.filter((value, index) => {
+      let test = 0;
+      for (let i = 0; i < removeIndex.length; i++) {
+        if (id < removeIndex[i]) {
+          break;
+        } else {
+          test += 1;
+        }
+      }
+      return id - test !== index;
+    });
+    setRemoveIndex([...removeIndex, id]);
+    handleChange({ ...props, degree: temp });
   };
 
   React.useEffect(() => {
     checkValidate();
   }, [props]);
 
-  const { name, classification, degree, future } = props;
-  const validate = isValid;
-  // const validate = false;
-  // const [ name, classification, future, plan, validate] = props;
-
   return (
     <>
-      <Navigation navigationProps={navState} sendData={sendData} data={props} validate={validate} />
       <h2 className="text-4xl text-left font-bold mb-10 text-gray-800">Tell us about Yourself</h2>
       <div className="grid grid-cols-2">
         <h3 className="text-xl mb-10 text-gray-800">What is your name?</h3>
@@ -183,15 +176,29 @@ export default function PageOne({
         <h3 className="text-xl mb-10 text-gray-800">What are you studying?</h3>
 
         <div className="flex flex-col">
-          {degreeCount.map((index) => (
-            <div key={index}>
-              <DegreePicker
-                id={index}
-                updateChange={handleDegreeChange}
-                removePicker={removePicker}
-              />
-            </div>
-          ))}
+          {degreeCount.map((elm, index) => {
+            if (index in removeIndex) {
+              count += 1;
+
+              return (
+                <DegreePicker
+                  id={index}
+                  props={{ degree: '', degreeType: '', valid: false }}
+                  updateChange={handleDegreeChange}
+                  removePicker={removePicker}
+                />
+              );
+            } else {
+              return (
+                <DegreePicker
+                  id={index}
+                  props={degree[index - count]}
+                  updateChange={handleDegreeChange}
+                  removePicker={removePicker}
+                />
+              );
+            }
+          })}
           <button
             className="mr-10 text-blue-500 hover:text-yellow-500 font-bold rounded"
             onClick={addNewDegree}

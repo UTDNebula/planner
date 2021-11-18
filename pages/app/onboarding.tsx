@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { DegreeState } from '../../components/onboarding/DegreePicker';
+import Navigation, { NavigationStateProps } from '../../components/onboarding/Navigation';
 import { useAuthContext } from '../../modules/auth/auth-context';
 import { HonorsIndicator } from '../../modules/common/types';
 import Disclaimer from '../Onboarding_Pages/disclaimer';
@@ -190,7 +191,14 @@ function useUserSetup(studentDefaultName = 'Comet') {
   const [pageOneData, setPageOneData] = useState<PageOneTypes>({
     name: '',
     classification: '',
-    degree: [],
+    degree: [
+      {
+        // id: counter,
+        degree: '',
+        degreeType: '',
+        valid: false,
+      },
+    ],
     future: '',
   });
 
@@ -241,6 +249,27 @@ export default function OnboardingPage(): JSX.Element {
   const [validate, setValidate] = useState([true, true, true, false, false, true]);
 
   const [test, setTest] = useState(false);
+
+  const [navProps, setNavProps] = useState<NavigationStateProps>({
+    personal: true,
+    honors: false,
+    credits: false,
+  });
+
+  // TODO: Find cleaner way to do this
+  const setNavigationProps = (page: number) => {
+    switch (page) {
+      case 3:
+        setNavProps({ personal: true, honors: false, credits: false });
+        break;
+      case 4:
+        setNavProps({ personal: false, honors: true, credits: false });
+        break;
+      case 5:
+        setNavProps({ personal: false, honors: false, credits: true });
+        break;
+    }
+  };
 
   if (user === null) {
     // TODO: Do something useful
@@ -339,9 +368,9 @@ export default function OnboardingPage(): JSX.Element {
       isValid={validate[2]}
       handleValidate={validateForm}
     ></PageThree>,
-    // <PageFour key={3}></PageFour>,
   ];
   const incrementPage = () => {
+    setNavigationProps(page + 1);
     if (page + 1 <= 5) {
       setPage(Math.min(page + 1, jsxElem.length - 1));
     } else {
@@ -349,12 +378,16 @@ export default function OnboardingPage(): JSX.Element {
     }
   };
   const decrementPage = () => {
+    setNavigationProps(page - 1);
     setPage(Math.max(page - 1, 0));
   };
 
+  const changePage = (page: number) => {
+    setNavigationProps(page);
+    setPage(page);
+  };
+
   useEffect(() => {
-    console.log(page);
-    console.log(validate[page]);
     setTest(validate[page]);
   });
 
@@ -364,6 +397,13 @@ export default function OnboardingPage(): JSX.Element {
       <div className="min-h-screen flex items-center justify-center bg-blue-400">
         <div className="py-16 px-32 rounded shadow-2xl w-2/3 bg-white">
           <div className="flex flex-col items-center justify-center">
+            {page >= 3 && (
+              <Navigation
+                navigationProps={navProps}
+                validate={validate[page]}
+                changePage={changePage}
+              />
+            )}
             <div className="animate-intro">{jsxElem[page]}</div>
             <div>
               <button

@@ -1,12 +1,9 @@
 import React from 'react';
-import Link from 'next/link';
-import router from 'next/router';
 
 export interface NavigationProps {
   navigationProps: NavigationStateProps;
-  sendData: (data: any) => void;
-  data: any;
   validate: boolean;
+  changePage: React.Dispatch<React.SetStateAction<number>>;
 }
 export type NavigationStateProps = {
   personal: boolean;
@@ -16,9 +13,8 @@ export type NavigationStateProps = {
 
 export default function Navigation({
   navigationProps,
-  sendData,
-  data,
   validate,
+  changePage,
 }: NavigationProps): JSX.Element {
   return (
     <div className="h-28 mb-8 flex justify-center items-center text-white ">
@@ -27,9 +23,9 @@ export default function Navigation({
           navigationProps.personal ? 'bg-navigation-dark' : 'bg-navigation'
         } rounded-full w-24 h-24`}
         onClick={() => {
-          sendData(data);
           if (validate) {
-            router.push('/Onboarding_Pages/pg_1');
+            // TODO: Do not hardcode this
+            changePage(3);
           } else {
             alert('Warning: 1 or more fields missing');
           }
@@ -49,9 +45,8 @@ export default function Navigation({
           navigationProps.honors ? 'bg-navigation-dark' : 'bg-navigation'
         } rounded-full w-24 h-24`}
         onClick={() => {
-          sendData(data);
           if (validate) {
-            router.push('/Onboarding_Pages/pg_2');
+            changePage(4);
           } else {
             alert('Warning: 1 or more fields missing');
           }
@@ -70,9 +65,8 @@ export default function Navigation({
           navigationProps.credits ? 'bg-navigation-dark' : 'bg-navigation'
         } rounded-full w-24 h-24`}
         onClick={() => {
-          sendData(data);
           if (validate) {
-            router.push('/Onboarding_Pages/pg_3');
+            changePage(5);
           } else {
             alert('Warning: 1 or more fields missing');
           }

@@ -158,7 +158,6 @@ export default function PageThree({ handleChange, props, isValid }: Page3Props):
   const navState: NavigationStateProps = { personal: false, honors: false, credits: true };
   return (
     <>
-      <Navigation navigationProps={navState} sendData={sendData} data={data} validate={!isValid} />
       <h2 className="text-4xl text-left font-bold mb-10 text-gray-800">Any Transfer Credits?</h2>
       <div className="column-flex">
         <div className="flex items-center justify-center">
