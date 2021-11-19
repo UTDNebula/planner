@@ -172,7 +172,8 @@ type OnboardingFormData = {
    */
   prestige: PrestigeAttributes;
 
-  credits: CreditAttributes;
+  // TODO: Find more thorough way to get credit information
+  credits: CreditState[]; // CreditAttributes;
 };
 
 /**
@@ -208,7 +209,7 @@ function useUserSetup(studentDefaultName = 'Comet') {
     fastTrack: null,
     fastTrackMajor: '',
     fastTrackYear: '',
-    honors: { eugene: false, terry: false, national: false, diversity: false, aes: false },
+    honors: [],
   });
 
   const [pageThreeData, setPageThreeData] = useState({
@@ -246,9 +247,9 @@ export default function OnboardingPage(): JSX.Element {
   } = useUserSetup();
 
   const [page, setPage] = useState(0);
-  const [validate, setValidate] = useState([true, true, true, false, false, true]);
+  const [validate, setValidate] = useState([true, false, true, false, false, true]);
 
-  const [test, setTest] = useState(false);
+  const [validNextPage, setValidNextPage] = useState(false);
 
   const [navProps, setNavProps] = useState<NavigationStateProps>({
     personal: true,
@@ -305,7 +306,7 @@ export default function OnboardingPage(): JSX.Element {
       receivingAid: pageTwoData.receivingAid,
     };
     const prestige: PrestigeAttributes = {
-      honors: [],
+      honors: pageTwoData.honors,
       scholarship: pageTwoData.scholarshipType,
       fastTrack: {
         status: pageTwoData.fastTrack,
@@ -321,7 +322,7 @@ export default function OnboardingPage(): JSX.Element {
       plan: plan,
       studentAttributes: studentAttributes,
       prestige: prestige,
-      credits: { credits: pageThreeData.creditState },
+      credits: pageThreeData.creditState,
     };
     return data;
   };
@@ -345,27 +346,29 @@ export default function OnboardingPage(): JSX.Element {
 
   const jsxElem = [
     <Welcome key={0} />,
-    <Disclaimer key={1} />,
-    <Privacy key={2} />,
+    <Disclaimer
+      props={{ ...consentData }}
+      handleChange={setConsentData}
+      key={1}
+      handleValidate={validateForm}
+    />,
+    <Privacy props={{ ...consentData }} handleChange={setConsentData} key={2} />,
     <PageOne
       key={3}
       handleChange={setPageOneData}
       props={{ ...pageOneData }}
-      isValid={validate[0]}
       handleValidate={validateForm}
     ></PageOne>,
     <PageTwo
       key={4}
       handleChange={setPageTwoData}
       props={{ ...pageTwoData }}
-      isValid={validate[1]}
       handleValidate={validateForm}
     ></PageTwo>,
     <PageThree
       key={5}
       handleChange={setPageThreeData}
       props={{ ...pageThreeData }}
-      isValid={validate[2]}
       handleValidate={validateForm}
     ></PageThree>,
   ];
@@ -388,7 +391,8 @@ export default function OnboardingPage(): JSX.Element {
   };
 
   useEffect(() => {
-    setTest(validate[page]);
+    console.log(pageTwoData);
+    setValidNextPage(validate[page]);
   });
 
   // TODO: Find better way to structure this glorified form.
@@ -400,7 +404,8 @@ export default function OnboardingPage(): JSX.Element {
             {page >= 3 && (
               <Navigation
                 navigationProps={navProps}
-                validate={validate[page]}
+                currentPage={page}
+                validate={validate}
                 changePage={changePage}
               />
             )}
@@ -414,7 +419,7 @@ export default function OnboardingPage(): JSX.Element {
               </button>
               <button
                 onClick={incrementPage}
-                disabled={!test}
+                disabled={!validNextPage}
                 className="text-blue-500 hover:text-yellow-500 font-bold rounded disabled:opacity-50"
               >
                 NEXT

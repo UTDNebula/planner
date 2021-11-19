@@ -87,13 +87,10 @@ const data = 0;
 export type Page3Props = {
   handleChange: React.Dispatch<React.SetStateAction<PageThreeTypes>>;
   props: PageThreeTypes;
-  isValid: boolean;
   handleValidate: (value: boolean) => void;
 };
 
-export default function PageThree({ handleChange, props, isValid }: Page3Props): JSX.Element {
-  // const [creditState, setCreditState] = useState<CreditState[]>([]);
-
+export default function PageThree({ handleChange, props }: Page3Props): JSX.Element {
   const { creditState } = props;
   const [creditFields, setCreditFields] = useState<CreditState>({ ...clearCreditFields });
 
@@ -138,6 +135,7 @@ export default function PageThree({ handleChange, props, isValid }: Page3Props):
     creditFields.type === 'CLEP' &&
     (creditFields.clepScore == '' || creditFields.clepTest === '')
   );
+
   const addTransferCredit = async () => {
     // Validate Transfer Credit card
     if (primary && ap && ib && clep) {

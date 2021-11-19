@@ -4,19 +4,26 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import UpdatesDialog from '../../components/updates/UpdatesDialog';
+import { ConsentInfo } from '../../components/onboarding/Disclaimer';
 
-export default function Privacy(): JSX.Element {
+export type PrivacyProps = {
+  handleChange: React.Dispatch<React.SetStateAction<ConsentInfo>>;
+  props: ConsentInfo;
+};
+
+export default function Privacy({ props, handleChange }: PrivacyProps): JSX.Element {
   const router = useRouter();
 
   // Checkbox validation to ensure user checks all boxes before moving on
   const [consentState, setConsentState] = React.useState({
-    personalization: false,
-    analytics: false,
-    performance: false,
+    personalization: props.personalization,
+    analytics: props.analytics,
+    performance: props.performance,
   });
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target);
+  const handleConsentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(props, 'TEST');
+    handleChange({ ...props, [event.target.name]: event.target.checked });
     setConsentState({ ...consentState, [event.target.name]: event.target.checked });
   };
 
@@ -32,7 +39,11 @@ export default function Privacy(): JSX.Element {
       <div className="flex-col items-center">
         <FormControlLabel
           control={
-            <Checkbox name="personalization" checked={personalization} onChange={handleChange} />
+            <Checkbox
+              name="personalization"
+              checked={personalization}
+              onChange={handleConsentChange}
+            />
           }
           label="User Experience"
         />
@@ -43,7 +54,7 @@ export default function Privacy(): JSX.Element {
 
       <div className="flex-col items-center">
         <FormControlLabel
-          control={<Checkbox name="analytics" checked={analytics} onChange={handleChange} />}
+          control={<Checkbox name="analytics" checked={analytics} onChange={handleConsentChange} />}
           label="Analytics Collection"
         />
         <h2 className="ml-9 mb-5 text-gray-700 text-sm">
@@ -53,7 +64,9 @@ export default function Privacy(): JSX.Element {
 
       <div className="flex-col items-center">
         <FormControlLabel
-          control={<Checkbox name="performance" checked={performance} onChange={handleChange} />}
+          control={
+            <Checkbox name="performance" checked={performance} onChange={handleConsentChange} />
+          }
           label="Performance Data Collection"
         />
         <h2 className="ml-9 mb-7 text-gray-700 text-sm">

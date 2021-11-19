@@ -1,14 +1,34 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { ConsentInfo } from '../../components/onboarding/Disclaimer';
 
-export default function Disclaimer(): JSX.Element {
+export type DisclaimerProps = {
+  handleChange: React.Dispatch<React.SetStateAction<ConsentInfo>>;
+  props: ConsentInfo;
+  handleValidate: (value: boolean) => void;
+};
+
+export default function Disclaimer({
+  props,
+  handleChange,
+  handleValidate,
+}: DisclaimerProps): JSX.Element {
   const router = useRouter();
 
   // Checkbox validation to ensure user checks all boxes before moving on
-  const [checked, setChecked] = React.useState(false);
+  const [checked, setChecked] = React.useState(props.disclaimer);
+
+  const handleCheck = () => {
+    setChecked(!checked);
+    handleChange({ ...props, disclaimer: !checked });
+  };
+
+  useEffect(() => {
+    checked ? handleValidate(true) : handleValidate(false);
+  });
 
   return (
     <div className="animate-intro">
@@ -29,7 +49,8 @@ export default function Disclaimer(): JSX.Element {
       </div>
 
       <FormControlLabel
-        control={<Checkbox checked={checked} onChange={() => setChecked(!checked)} />}
+        name="disclaimer"
+        control={<Checkbox checked={checked} onChange={handleCheck} />}
         label="I agree to the terms and privacy."
       />
     </div>

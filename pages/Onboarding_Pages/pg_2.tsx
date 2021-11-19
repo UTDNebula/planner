@@ -4,27 +4,19 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
-import React, { useState } from 'react';
-import { useRouter } from 'next/router';
-import Navigation, { NavigationStateProps } from '../../components/onboarding/Navigation';
+import React, { useEffect, useState } from 'react';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormLabel from '@material-ui/core/FormLabel';
 import { FormGroup, FormControlLabel, Button } from '@material-ui/core';
 import DummyData from '../../data/dummy_onboarding.json';
+import { HonorsIndicator } from '../../modules/common/types';
+import { HONORS_INDICATOR_LABELS } from '../../modules/common/data-utils';
 
 // Array of values to choose from for form
 const scholarships = DummyData.scholarships;
 
 const fastTrackYears = DummyData.fastTrackYears;
 const majors = DummyData.majors;
-
-export type HonorsType = {
-  eugene: boolean;
-  terry: boolean;
-  national: boolean;
-  diversity: boolean;
-  aes: boolean;
-};
 
 export type PageTwoTypes = {
   scholarship: boolean;
@@ -33,15 +25,8 @@ export type PageTwoTypes = {
   fastTrack: boolean;
   fastTrackMajor: string;
   fastTrackYear: string;
-  honors: HonorsType;
+  honors: HonorsIndicator[];
 };
-
-/**
- * TODO: Create method to relay this data to Firebase
- */
-function sendData(data: PageTwoTypes) {
-  console.log('Page 2 data:', data);
-}
 
 /**
  * Renders a list of MenuItem options for the user to select in the dropdowns.
@@ -61,18 +46,37 @@ function returnMenuItems<MenuItem>(menuOptions: string[]) {
 export type Page2Props = {
   handleChange: React.Dispatch<React.SetStateAction<PageTwoTypes>>;
   props: PageTwoTypes;
-  isValid: boolean;
   handleValidate: (value: boolean) => void;
 };
 
-export default function PageTwo({
-  handleChange,
-  props,
-  isValid,
-  handleValidate,
-}: Page2Props): JSX.Element {
-  const router = useRouter();
-  const navState: NavigationStateProps = { personal: false, honors: true, credits: false };
+export default function PageTwo({ handleChange, props, handleValidate }: Page2Props): JSX.Element {
+  const {
+    scholarship,
+    scholarshipType,
+    receivingAid,
+    fastTrack,
+    fastTrackMajor,
+    fastTrackYear,
+    honors,
+  } = props;
+
+  const honorsCheck = {
+    cv: false,
+    cs2: false,
+    lahc: false,
+    bbs: false,
+    ah: false,
+    epps: false,
+    nsm: false,
+    atec: false,
+  };
+
+  for (const val of honors) {
+    const tempKeys = Object.keys(honorsCheck);
+    if (tempKeys.includes(val)) {
+      honorsCheck[val] = true;
+    }
+  }
 
   const checkValidate = () => {
     const isPrimaryValid =
@@ -85,13 +89,22 @@ export default function PageTwo({
 
   // Handles change for Select
   const handleStandardChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.name, event.target.value);
     handleChange({ ...props, [event.target.name]: event.target.value });
   };
 
   // Handles change for Button
-  const handleButtonChange = (event, buttonName: string, value: boolean) => {
-    handleChange({ ...props, [buttonName]: value });
+  const handleButtonChange = (
+    event,
+    buttonName: string,
+    value: boolean,
+    ...clearValues: string[]
+  ) => {
+    const clear = {};
+    for (const val of clearValues) {
+      clear[val] = '';
+    }
+
+    handleChange({ ...props, [buttonName]: value, ...clear });
   };
 
   // Handles change for Autocomplete
@@ -103,28 +116,19 @@ export default function PageTwo({
   };
 
   // Handles change for Checkboxes
-  const handleCheckChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // handleChange("honors",[...prestige,[...honors,event.target.checked]]);
+  const handleCheckChange = (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+    const temp: HonorsIndicator[] = checked
+      ? [...honors, event.target.name as HonorsIndicator]
+      : honors.filter((value) => value !== event.target.name);
     handleChange({
       ...props,
-      honors: { ...honors, [event.target.name]: event.target.checked },
+      honors: temp,
     });
   };
 
   React.useEffect(() => {
     checkValidate();
   });
-  const {
-    scholarship,
-    scholarshipType,
-    receivingAid,
-    fastTrack,
-    fastTrackMajor,
-    fastTrackYear,
-    honors,
-  } = props;
-
-  const { eugene, terry, national, diversity, aes } = honors;
 
   return (
     <div className="animate-intro">
@@ -144,7 +148,9 @@ export default function PageTwo({
           </button>
 
           <button
-            onClick={(event) => handleButtonChange(event, 'scholarship', false)}
+            onClick={(event) => {
+              handleButtonChange(event, 'scholarship', false, 'scholarshipType');
+            }}
             className={`${
               scholarship == false ? 'bg-yellow-400' : null
             }  ml-5 hover:bg-yellow-400 text-grey-700 font-medium hover:text-white py-1.5 px-16 border border-blue-600 hover:border-transparent rounded`}
@@ -205,7 +211,9 @@ export default function PageTwo({
           </button>
 
           <button
-            onClick={(event) => handleButtonChange(event, 'fastTrack', false)}
+            onClick={(event) => {
+              handleButtonChange(event, 'fastTrack', false, 'fastTrackMajor', 'fastTrackYear');
+            }}
             className={`${
               fastTrack == false ? 'bg-yellow-400' : null
             }  ml-5 hover:bg-yellow-400 text-grey-700 font-medium hover:text-white py-1.5 px-16 border border-blue-600 hover:border-transparent rounded`}
@@ -254,28 +262,54 @@ export default function PageTwo({
           <FormLabel component="legend">Select all that apply</FormLabel>
           <FormGroup>
             <FormControlLabel
-              control={<Checkbox checked={eugene} onChange={handleCheckChange} name="eugene" />}
-              label="The Eugene McDermott Scholars Program"
-            />
-            <FormControlLabel
-              control={<Checkbox checked={terry} onChange={handleCheckChange} name="terry" />}
-              label="The Terry Foundation Future Scholars"
-            />
-            <FormControlLabel
-              control={<Checkbox checked={national} onChange={handleCheckChange} name="national" />}
-              label="National Merit Scholarship Program"
+              control={
+                <Checkbox checked={honorsCheck['cv']} onChange={handleCheckChange} name="cv" />
+              }
+              label={HONORS_INDICATOR_LABELS['cv']}
             />
             <FormControlLabel
               control={
-                <Checkbox checked={diversity} onChange={handleCheckChange} name="diversity" />
+                <Checkbox checked={honorsCheck['cs2']} onChange={handleCheckChange} name="cs2" />
               }
-              label="Diversity Scholars Program"
+              label={HONORS_INDICATOR_LABELS['cs2']}
             />
             <FormControlLabel
-              control={<Checkbox checked={aes} onChange={handleCheckChange} name="aes" />}
-              label="Academic Excellence Scholarship"
+              control={
+                <Checkbox checked={honorsCheck['lahc']} onChange={handleCheckChange} name="lahc" />
+              }
+              label={HONORS_INDICATOR_LABELS['lahc']}
+            />
+            <FormControlLabel
+              control={
+                <Checkbox checked={honorsCheck['bbs']} onChange={handleCheckChange} name="bbs" />
+              }
+              label={HONORS_INDICATOR_LABELS['bbs']}
+            />
+            <FormControlLabel
+              control={
+                <Checkbox checked={honorsCheck['ah']} onChange={handleCheckChange} name="ah" />
+              }
+              label={HONORS_INDICATOR_LABELS['ah']}
             />
           </FormGroup>
+          <FormControlLabel
+            control={
+              <Checkbox checked={honorsCheck['epps']} onChange={handleCheckChange} name="epps" />
+            }
+            label={HONORS_INDICATOR_LABELS['epps']}
+          />
+          <FormControlLabel
+            control={
+              <Checkbox checked={honorsCheck['nsm']} onChange={handleCheckChange} name="nsm" />
+            }
+            label={HONORS_INDICATOR_LABELS['nsm']}
+          />
+          <FormControlLabel
+            control={
+              <Checkbox checked={honorsCheck['atec']} onChange={handleCheckChange} name="atec" />
+            }
+            label={HONORS_INDICATOR_LABELS['atec']}
+          />
         </FormControl>
       </div>
     </div>

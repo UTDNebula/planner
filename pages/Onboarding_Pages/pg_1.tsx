@@ -41,16 +41,10 @@ function returnMenuItems<MenuItem>(menuOptions: string[]) {
 export type Page1Props = {
   handleChange: React.Dispatch<React.SetStateAction<PageOneTypes>>;
   props: PageOneTypes;
-  isValid: boolean;
   handleValidate: (value: boolean) => void;
 };
 
-export default function PageOne({
-  handleChange,
-  props,
-  isValid,
-  handleValidate,
-}: Page1Props): JSX.Element {
+export default function PageOne({ handleChange, props, handleValidate }: Page1Props): JSX.Element {
   const router = useRouter();
 
   const { name, classification, degree, future } = props;

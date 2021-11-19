@@ -2,7 +2,8 @@ import React from 'react';
 
 export interface NavigationProps {
   navigationProps: NavigationStateProps;
-  validate: boolean;
+  validate: boolean[];
+  currentPage: number;
   changePage: React.Dispatch<React.SetStateAction<number>>;
 }
 export type NavigationStateProps = {
@@ -14,22 +15,34 @@ export type NavigationStateProps = {
 export default function Navigation({
   navigationProps,
   validate,
+  currentPage,
   changePage,
 }: NavigationProps): JSX.Element {
+  const canNavigate = (index: number) => {
+    // Check if current valid
+    if (index > currentPage) {
+      if (!validate[currentPage]) {
+        alert('Warning: 1 or more fields missing');
+        return false;
+      }
+      // Check if all previous pages valid
+      for (let i = currentPage + 1; i < index; i++) {
+        if (!validate[i]) {
+          alert("Warning: Can't go to this page");
+          return false;
+        }
+      }
+    }
+    changePage(index);
+    return true;
+  };
   return (
     <div className="h-28 mb-8 flex justify-center items-center text-white ">
       <button
         className={`flex flex-col items-center border-4 border-navigation-dark ${
           navigationProps.personal ? 'bg-navigation-dark' : 'bg-navigation'
         } rounded-full w-24 h-24`}
-        onClick={() => {
-          if (validate) {
-            // TODO: Do not hardcode this
-            changePage(3);
-          } else {
-            alert('Warning: 1 or more fields missing');
-          }
-        }}
+        onClick={() => canNavigate(3)}
       >
         <div className="text-base p-top mt-2"> Step 1 </div>
         <div className="text-sm m-0 p-0"> Personal </div>
@@ -44,13 +57,7 @@ export default function Navigation({
         className={`flex flex-col items-center border-4 border-navigation-dark ${
           navigationProps.honors ? 'bg-navigation-dark' : 'bg-navigation'
         } rounded-full w-24 h-24`}
-        onClick={() => {
-          if (validate) {
-            changePage(4);
-          } else {
-            alert('Warning: 1 or more fields missing');
-          }
-        }}
+        onClick={() => canNavigate(4)}
       >
         <div className="text-base p-top mt-2"> Step 2 </div>
         <div className="text-sm m-0 p-0"> Scholarships </div>
@@ -64,13 +71,7 @@ export default function Navigation({
         className={`flex flex-col items-center border-4 border-navigation-dark ${
           navigationProps.credits ? 'bg-navigation-dark' : 'bg-navigation'
         } rounded-full w-24 h-24`}
-        onClick={() => {
-          if (validate) {
-            changePage(5);
-          } else {
-            alert('Warning: 1 or more fields missing');
-          }
-        }}
+        onClick={() => canNavigate(5)}
       >
         <div className="text-base p-top mt-2"> Step 3 </div>
         <div className="text-sm m-0 p-0"> Transferred </div>
