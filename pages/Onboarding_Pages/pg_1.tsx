@@ -4,9 +4,13 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import DegreePicker, { DegreeState } from '../../components/onboarding/DegreePicker';
+import { DegreeState } from '../../components/onboarding/DegreePicker';
 import DummyData from '../../data/dummy_onboarding.json';
+import DegreePickerGallery, {
+  pickerValidate,
+} from '../../components/onboarding/DegreePickerGallery';
 
+// TODO: Populate w/ real values
 // Array of values to choose from for form
 const classificationTypes = DummyData.classificationTypes;
 const futureTypes = DummyData.futureTypes;
@@ -50,15 +54,6 @@ export default function PageOne({
   const router = useRouter();
 
   const { name, classification, degree, future } = props;
-  let count = 0;
-
-  // Contains the index of all degree entries & is used to render DegreePicker
-  const [degreeCount, setDegreeCount] = useState(
-    degree.map((value, index) => {
-      return index;
-    }),
-  );
-  const [removeIndex, setRemoveIndex] = useState([]);
 
   // Handles all form data except DegreePicker
   const handleStandardChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,75 +61,13 @@ export default function PageOne({
   };
 
   // Handles DegreePicker
-  const handleDegreeChange = (formID: number, degreeState: DegreeState) => {
-    // Determines if DegreePicker component is valid
-    if (!(formID in removeIndex)) {
-      degreeState.valid =
-        degreeState.degree !== '' && degreeState.degree !== null && degreeState.degreeType !== '';
-      let index = 0;
-      for (let i = 0; i < removeIndex.length; i++) {
-        if (formID < removeIndex[i]) {
-          break;
-        } else {
-          index += 1;
-        }
-      }
-      degree[formID - index] = degreeState;
-      handleChange({ ...props, degree: degree });
-    }
-  };
-
-  const addNewDegree = () => {
-    setDegreeCount([...degreeCount, degreeCount[degreeCount.length - 1] + 1]);
-    handleChange({
-      ...props,
-      degree: [
-        ...degree,
-        {
-          degree: '',
-          degreeType: '',
-          valid: false,
-        },
-      ],
-    });
-  };
-
-  // Validates DegreePicker component
-  const pickerValidate = () => {
-    if (degree.length < 1) {
-      return false;
-    }
-    let element: DegreeState;
-    for (element of degree) {
-      if (!element.valid) {
-        return false;
-      }
-    }
-    return true;
+  const handlePickerChange = (updateDegree: DegreeState[]) => {
+    handleChange({ ...props, degree: updateDegree });
   };
 
   const checkValidate = () => {
-    const isValid = name && classification && future && pickerValidate() ? true : false;
-    // console.log('checkValidate', isValid);
+    const isValid = name && classification && future && pickerValidate(degree) ? true : false;
     handleValidate(isValid);
-  };
-
-  // TODO: After DegreePicker removed, remove the DegreePicker entry in degree
-  const removePicker = (id: number) => {
-    console.log(id);
-    const temp = degree.filter((value, index) => {
-      let test = 0;
-      for (let i = 0; i < removeIndex.length; i++) {
-        if (id < removeIndex[i]) {
-          break;
-        } else {
-          test += 1;
-        }
-      }
-      return id - test !== index;
-    });
-    setRemoveIndex([...removeIndex, id]);
-    handleChange({ ...props, degree: temp });
   };
 
   React.useEffect(() => {
@@ -175,38 +108,7 @@ export default function PageOne({
 
         <h3 className="text-xl mb-10 text-gray-800">What are you studying?</h3>
 
-        <div className="flex flex-col">
-          {degreeCount.map((elm, index) => {
-            if (index in removeIndex) {
-              count += 1;
-
-              return (
-                <DegreePicker
-                  id={index}
-                  props={{ degree: '', degreeType: '', valid: false }}
-                  updateChange={handleDegreeChange}
-                  removePicker={removePicker}
-                />
-              );
-            } else {
-              return (
-                <DegreePicker
-                  id={index}
-                  props={degree[index - count]}
-                  updateChange={handleDegreeChange}
-                  removePicker={removePicker}
-                />
-              );
-            }
-          })}
-          <button
-            className="mr-10 text-blue-500 hover:text-yellow-500 font-bold rounded"
-            onClick={addNewDegree}
-          >
-            {' '}
-            Add Degree{' '}
-          </button>
-        </div>
+        <DegreePickerGallery degree={degree} handleChange={handlePickerChange} />
 
         <h1 className="text-xl ">What do you plan on doing after graduation?</h1>
 

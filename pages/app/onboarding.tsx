@@ -193,7 +193,6 @@ function useUserSetup(studentDefaultName = 'Comet') {
     classification: '',
     degree: [
       {
-        // id: counter,
         degree: '',
         degreeType: '',
         valid: false,
@@ -245,6 +244,7 @@ export default function OnboardingPage(): JSX.Element {
     consentData,
     setConsentData,
   } = useUserSetup();
+
   const [page, setPage] = useState(0);
   const [validate, setValidate] = useState([true, true, true, false, false, true]);
 
