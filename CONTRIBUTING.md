@@ -6,7 +6,7 @@ _Information on how to contribute to this project._
 
 If you want to make a non-code contribution to this project like design, writing,
 or other types of additions/modifications, contact
-[nebula-maintainers@acmutd.co](mailto:nebula-maintainers@acmutd.co)
+[core-maintainers@utdnebula.com](mailto:core-maintainers@utdnebula.com)
 with the subject line [nebula-web] and your proposed set of changes. If
 applicable, make sure to link specifically where in the project the changes
 should be made. More detail is better.
@@ -89,13 +89,13 @@ you commit to.
 Instead of doing this:
 
 ```shell script
-git clone https://github.com/acmutd/nebula-web.git
+git clone https://github.com/UTDNebula/planner.git
 ```
 
 You would do this:
 
 ```shell script
-git clone https://github.com/<your-username>/nebula-web.git
+git clone https://github.com/<your-username>/planner.git
 ```
 
 ### Branching Strategy
