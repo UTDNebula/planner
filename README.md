@@ -51,14 +51,14 @@ This project uses the MIT License.
 To get started, see the [contribution guide](./CONTRIBUTING.md). It'll tell you
 everything you need to know.
 
-Additionally, see the Project Nebula-wide contributors[guide](https://nebula.acmutd.co)
+Additionally, see the Project Nebula-wide contributors [guide](https://nebula.acmutd.co)
 for more info.
 
 Once you're ready to make some changes, see the
-[issues](https://github.com/acmutd/nebula-web/issues) for the repository.
+[issues](https://github.com/UTDNebula/planner/issues) for the repository.
 
 If you want to brainstorm, share ideas or ask questions, start a discussion in
-the [Discussions](https://github.com/acmutd/nebula-web/) section.
+the [Discussions](https://github.com/UTDNebula/planner/discussions) section.
 
 ### Set-up
 
