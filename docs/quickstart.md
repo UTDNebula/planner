@@ -13,7 +13,7 @@ Prerequisites:
 First, clone the repository.
 
 If you use SSH for cloning Git repositories, the URL is
-`git@github.com:acmutd/nebula-web.git`.
+`git@github.com:UTDNebula/planner.git`.
 
 If you use GitHub Desktop or some other GUI-based Git tool, consult your
 solution's documentation.
@@ -21,7 +21,7 @@ solution's documentation.
 Otherwise, on the command line, clone the repo:
 
 ```
-git clone https://github.com/acmutd/nebula-web
+git clone https://github.com/UTDNebula/planner.git
 ```
 
 Now install the dependencies:
