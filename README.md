@@ -67,7 +67,7 @@ installation. To start, clone the repository, and then run `npm start` to launch
 a local development server at [`localhost:3000`](https://localhost:3000) by default.
 
 ```bash
-git clone https://github.com/acmutd/nebula-web.git
+git clone https://github.com/UTDNebula/planner.git
 cd nebula-web
 npm start
 ```
@@ -78,6 +78,6 @@ This project is maintained by ACM Development, a division of ACM UTD. If you hav
 any questions about this project or Project Nebula, see the [#ask-nebula](https://discord.com/channels/692266201644007424/811419400753905714)
 channel on the ACM Discord server (accessible at [acmutd.co/discord](https://acmutd.co/discord)).
 
-For more formal inquiries, send us a message at nebula-maintainers@acmutd.co
+For more formal inquiries, send us a message at core-maintainers@utdnebula.com
 with "[nebula-web]" in the title. Please be as detailed as possible so we can
 best assist you.
