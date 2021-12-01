@@ -51,7 +51,7 @@ This project uses the MIT License.
 To get started, see the [contribution guide](./CONTRIBUTING.md). It'll tell you
 everything you need to know.
 
-Additionally, see the Project Nebula-wide contributors [guide](https://nebula.acmutd.co)
+Additionally, see the Project Nebula-wide contributors [guide](https://about.utdnebula.com/)
 for more info.
 
 Once you're ready to make some changes, see the
