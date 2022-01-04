@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import DraggableItemContainer, {
   getUpdatedSemesterData,
   useDraggableItemContainer,
@@ -10,11 +10,12 @@ import PlanningToolbar, {
 import SemesterNavigationDrawer, {
   useSemesterNavigation,
 } from '../../../components/planner/SemesterNavigationDrawer/SemesterNavigationDrawer';
-import { Semester, StudentPlan } from '../../../modules/common/data';
+import { Course, Semester, StudentPlan } from '../../../modules/common/data';
 import StudentHistoryView from '../../../components/planner/history/StudentHistoryView';
 import { CourseAttempt } from '../../../modules/auth/auth-context';
 import AddSemesterTrigger from '../../../components/planner/AddSemesterTrigger';
 import { usePlan } from '../../../modules/planner/hooks/usePlan';
+import CourseSelector from '../../../components/planner/CourseSelector/CourseSelector';
 
 const COURSE_ATTEMPTS: CourseAttempt[] = [
   {
@@ -223,10 +224,8 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
     usePlanningToolbar();
 
   console.log('Plan:', plan);
-  const { semesters, addList, updateSemesters, handleOnDragEnd } = useDraggableItemContainer(
-    plan.semesters,
-    persistChanges,
-  );
+  const { semesters, addList, updateSemesters, handleOnDragEnd, setTemp } =
+    useDraggableItemContainer(plan.semesters, persistChanges);
 
   const { exportPlan, handleSelectedPlanChange } = usePlan();
 
@@ -249,6 +248,34 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
 
   const showLeftSidebar = true;
 
+  const [coursesToAdd, setCoursesToAdd] = useState<Course[]>([]);
+  const [showAddCourseDroppable, setShowAddCourseDroppable] = useState(false);
+
+  /* These two functions handle adding courses into degree plan */
+  const coursesToAddHandler = (CoursesToAdd: Course[]) => {
+    setCoursesToAdd(CoursesToAdd);
+    setShowAddCourseDroppable(true);
+    setTemp(true);
+  };
+
+  const coursesAddedHandler = () => {
+    console.log('Courses have been added');
+    setCoursesToAdd([]);
+    setShowAddCourseDroppable(false);
+    setTemp(false);
+  };
+
+  useEffect(() => {
+    const tempSemester: Semester = {
+      title: 'Add courses to degree plan here',
+      code: 'Add',
+      courses: coursesToAdd,
+    };
+    showAddCourseDroppable
+      ? updateSemesters([tempSemester, ...semesters])
+      : updateSemesters(semesters.filter((elm) => elm.code !== 'Add'));
+  }, [showAddCourseDroppable]);
+
   let content;
   switch (section) {
     case 0: // Overview
@@ -258,15 +285,12 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
       content = (
         <div className="h-full md:grid md:grid-cols-12">
           {showLeftSidebar && (
-            <nav className="h-full md:col-start-1 md:col-end-3 bg-gray-200 ">
-              {semesters.map(({ title, code }: Semester) => {
-                return (
-                  <div className="p-4 bg-gray-300" key={code}>
-                    {title}
-                  </div>
-                );
-              })}
-            </nav>
+            <div className="md:col-span-3">
+              <CourseSelector
+                coursesToAddHandler={coursesToAddHandler}
+                coursesAddedHandler={coursesAddedHandler}
+              />
+            </div>
           )}
           <div className="h-full md:col-span-9">
             <DraggableItemContainer items={semesters} onDragEnd={handleOnDragEnd}>

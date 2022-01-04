@@ -21,12 +21,16 @@ export type CourseSelectedAction = 'Add' | 'Remove';
 
 export type CourseSelectorProps = {
   coursesToAddHandler: (cousesToAdd: Course[]) => void;
+  coursesAddedHandler: () => void;
 };
 
 /**
  * Sidebar that allows the user to add courses to their degree plan
  */
-export default function CourseSelector({ coursesToAddHandler }: CourseSelectorProps) {
+export default function CourseSelector({
+  coursesToAddHandler,
+  coursesAddedHandler,
+}: CourseSelectorProps) {
   /* Data needed:
     1. Degree Plan type
         - Categories in degree plan
@@ -50,6 +54,7 @@ export default function CourseSelector({ coursesToAddHandler }: CourseSelectorPr
   ];
 
   const [courseCount, setCourseCount] = useState(0);
+  const [otherButton, setOtherButton] = useState(false);
   const [addCourses, setAddCourses] = useState<Course[]>([]);
 
   // TODO: Pass down using useMemo instead
@@ -92,16 +97,31 @@ export default function CourseSelector({ coursesToAddHandler }: CourseSelectorPr
           toggleCourseSelected={toggleCourseSelected}
         />
       </div>
-      {courseCount > 0 && ( // TODO: Properly style FAB (position absolute & on right hand side)
-        <Fab
-          className="relative"
-          variant="extended"
-          color="primary"
-          aria-label="add"
-          onClick={() => coursesToAddHandler(addCourses)}
+      {courseCount > 0 &&
+        !otherButton && ( // TODO: Properly style FAB (position absolute & on right hand side)
+          <Fab
+            className="relative"
+            variant="extended"
+            color="primary"
+            aria-label="add"
+            onClick={() => {
+              coursesToAddHandler(addCourses);
+              setOtherButton(true);
+            }}
+          >
+            Add Courses
+          </Fab>
+        )}
+      {otherButton && (
+        <button
+          onClick={() => {
+            setOtherButton(false);
+            coursesAddedHandler();
+          }}
         >
-          Add Courses
-        </Fab>
+          {' '}
+          Done{' '}
+        </button>
       )}
     </div>
   );

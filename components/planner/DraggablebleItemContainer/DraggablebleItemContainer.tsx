@@ -120,13 +120,18 @@ export function useDraggableItemContainer(
     // allItems: [],
   });
 
+  // Determines whether or not to persist changes
+  const [temp, setTemp] = React.useState<boolean>(false);
+
   const addItemToList = (itemId: string, listId: string) => {
     const semesters = lists.semesters;
     // TODO: Implement me
     setLists({
       semesters,
     });
-    onPersistChanges(lists);
+    if (!temp) {
+      onPersistChanges(lists);
+    }
   };
 
   const removeItemFromList = (itemId: string, listId: string) => {
@@ -142,7 +147,9 @@ export function useDraggableItemContainer(
       semesters,
     });
 
-    onPersistChanges(lists);
+    if (!temp) {
+      onPersistChanges(lists);
+    }
   };
 
   const updateSemester = (
@@ -160,7 +167,9 @@ export function useDraggableItemContainer(
     setLists({
       semesters: newSemesters,
     });
-    onPersistChanges(lists);
+    if (!temp) {
+      onPersistChanges(lists);
+    }
   };
 
   /**
@@ -202,35 +211,38 @@ export function useDraggableItemContainer(
     setLists({
       semesters: newSemesters,
     });
-    onPersistChanges(lists);
+    if (!temp) {
+      onPersistChanges(lists);
+    }
   };
 
   const handleOnDragEnd = ({ source, destination }: DropResult) => {
-    const sourceId = source.droppableId;
-    const destinationId = destination.droppableId;
-    const sourceIndex = source.index;
-    const destinationIndex = destination.index;
+    if (destination) {
+      const sourceId = source.droppableId;
+      const destinationId = destination.droppableId;
+      const sourceIndex = source.index;
+      const destinationIndex = destination.index;
 
-    if (sourceId === destinationId && destinationIndex === sourceIndex) {
-      return;
-    }
+      if (sourceId === destinationId && destinationIndex === sourceIndex) {
+        return;
+      }
 
-    const sourceSemester = lists.semesters[sourceId];
-    const destinationSemester = lists.semesters[destinationId];
-    if (sourceId === destinationId) {
-      updateSemester(sourceSemester, sourceIndex, destinationIndex, sourceId);
-    } else {
-      moveItem(
-        sourceSemester,
-        destinationSemester,
-        sourceIndex,
-        destinationIndex,
-        sourceSemester.code,
-        destinationSemester.code,
-      );
+      const sourceSemester = lists.semesters[sourceId];
+      const destinationSemester = lists.semesters[destinationId];
+      if (sourceId === destinationId) {
+        updateSemester(sourceSemester, sourceIndex, destinationIndex, sourceId);
+      } else {
+        moveItem(
+          sourceSemester,
+          destinationSemester,
+          sourceIndex,
+          destinationIndex,
+          sourceSemester.code,
+          destinationSemester.code,
+        );
+      }
     }
   };
-
   /**
    * Reinitialize the semesters using the given list.
    */
@@ -242,6 +254,13 @@ export function useDraggableItemContainer(
       }, {}),
     });
   };
+
+  // Ensures that planner updates after "DONE" is selected
+  React.useEffect(() => {
+    if (!temp) {
+      onPersistChanges(lists);
+    }
+  }, [lists]);
 
   const addList = (newList: Semester, id: string) => {
     setLists({
@@ -261,6 +280,7 @@ export function useDraggableItemContainer(
     moveItem,
     addList,
     handleOnDragEnd,
+    setTemp,
     semesters,
     lists,
   };

@@ -1,0 +1,24 @@
+[
+    {
+      "id": "2331",
+      "title": "NewCourse Course 1 2021f",
+      "catalogCode": "NewCourse 1010",
+      "description": "Course description",
+      "creditHours": 0
+    },
+    {
+      "id": "1421",
+      "title": "NewCourse 2 2021f",
+      "catalogCode": "NewCourse 1011",
+      "description": "Course description",
+      "creditHours": 0
+    },
+    {
+      "id": "0897",
+      "title": "NewCourse 3 2021f",
+      "catalogCode": "NewCourse1012",
+      "description": "Course description",
+      "creditHours": 0
+    }
+    
+  ]
