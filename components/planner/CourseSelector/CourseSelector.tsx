@@ -8,21 +8,34 @@ import {
   Theme,
   Typography,
 } from '@material-ui/core';
-import DummyData from '../../../data/dummy_planner_course_data.json';
-
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { CardContainer } from './CardContainer';
 import { CourseCardProps } from '../../common/CourseCard';
 import AddIcon from '@material-ui/icons/Add';
 import { Course, Semester } from '../../../modules/common/data';
-
+import { AddNewCourseDialog } from '../AddCourseDialog/AddCourseDialog';
+import DummyData from '../../../data/dummy_planner_course_data.json';
 export type CourseSelectedAction = 'Add' | 'Remove';
+
+/**
+ *  List of courses a user is required or wants to take broken down into categories
+ * */
+export type CourseCategories = {
+  category: string;
+  courses: Course[];
+};
 
 export type CourseSelectorProps = {
   coursesToAddHandler: (cousesToAdd: Course[]) => void;
   coursesAddedHandler: () => void;
 };
+
+/**
+ * TODO: Anything that needs to be done
+ * 1. Add course validation
+ *  - this means graying out courses that are already on planner
+ */
 
 /**
  * Sidebar that allows the user to add courses to their degree plan
@@ -31,31 +44,12 @@ export default function CourseSelector({
   coursesToAddHandler,
   coursesAddedHandler,
 }: CourseSelectorProps) {
-  /* Data needed:
-    1. Degree Plan type
-        - Categories in degree plan
-        - Courses that need to be taken
-    2. Course data from user
-        - what user has taken already
-
-    Use dummy data for now; will convert to Nebula API once finished
-    */
-
-  // TODO: Replace with actual course data
-  // TODO: Figure out how to structure data
-
-  // Getting first 20 courses (REFACTOR LATER)
-
-  const DUMMY_COURSES: Course[] = DummyData;
-  const DUMMY_CATEGORIES: string[] = [
-    'Core Curriculum',
-    'Major Prepatory Courses',
-    'Upper Level Electives',
-  ];
+  const DUMMY_COURSES: CourseCategories[] = DummyData;
 
   const [courseCount, setCourseCount] = useState(0);
   const [otherButton, setOtherButton] = useState(false);
   const [addCourses, setAddCourses] = useState<Course[]>([]);
+  const [courses, setCourses] = useState<CourseCategories[]>(DUMMY_COURSES);
 
   // TODO: Pass down using useMemo instead
   const toggleCourseSelected = (course: Course, action: CourseSelectedAction) => {
@@ -74,29 +68,29 @@ export default function CourseSelector({
     }
   };
 
+  const [isOpen, setIsOpen] = useState(false);
+
+  const addUserCourses = (addCourses: Course[]) => {
+    // TODO: Put these courses inside pre-existing categories if possible
+    const newCourses = JSON.parse(JSON.stringify(courses));
+    newCourses[newCourses.length - 1].courses.push(...addCourses);
+    setCourses(newCourses);
+  };
+
   return (
     <div className="overflow-scroll h-screen">
       <div className="pt-px border-solid border-gray-200 border-2">
-        <CardContainer
-          category={DUMMY_CATEGORIES[0]}
-          courses={DUMMY_COURSES}
-          toggleCourseSelected={toggleCourseSelected}
-        />
+        {courses.map((elm, index) => (
+          <CardContainer
+            key={elm.category}
+            category={elm.category}
+            courses={elm.courses}
+            toggleCourseSelected={toggleCourseSelected}
+          />
+        ))}
       </div>
-      <div className="pt-px border-solid border-gray-200 border-2">
-        <CardContainer
-          category={DUMMY_CATEGORIES[1]}
-          courses={DUMMY_COURSES}
-          toggleCourseSelected={toggleCourseSelected}
-        />
-      </div>
-      <div className="pt-px border-solid border-gray-200 border-2">
-        <CardContainer
-          category={DUMMY_CATEGORIES[2]}
-          courses={DUMMY_COURSES}
-          toggleCourseSelected={toggleCourseSelected}
-        />
-      </div>
+      <AddNewCourseDialog isOpen={isOpen} enableFocus={setIsOpen} addUserCourses={addUserCourses} />
+      <button onClick={() => setIsOpen(!isOpen)}> Test </button>
       {courseCount > 0 &&
         !otherButton && ( // TODO: Properly style FAB (position absolute & on right hand side)
           <Fab
