@@ -3,7 +3,7 @@ import React from 'react';
 /**
  * The current state of new plan creation.
  */
-type NewPlanFlowState =
+export type NewPlanFlowState =
   | 'SELECT_MAJOR'
   | 'TRANSFER_COURSES'
   | 'SELECT_ADDITIONS'
