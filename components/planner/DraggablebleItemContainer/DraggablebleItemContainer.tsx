@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
-import { Course, Semester, SemesterCode } from '../../../modules/common/data';
+import {
+  Course,
+  Semester,
+  SemesterCode,
+  SEMESTER_CODE_MAPPINGS,
+} from '../../../modules/common/data';
 import { reorderList } from '../../../modules/planner/hooks/planManipulatorUtils';
 import CourseCard from '../../common/CourseCard';
 import AddSemesterTrigger from '../AddSemesterTrigger';
@@ -102,6 +107,7 @@ export function getUpdatedSemesterData(recentSemesterData: RecentSemester, onlyL
   };
 }
 
+// TODO: Find and fix all the state bugs
 export function useDraggableItemContainer(
   items: Semester[],
   onPersistChanges: (data: {
@@ -122,6 +128,39 @@ export function useDraggableItemContainer(
 
   // Determines whether or not to persist changes
   const [temp, setTemp] = React.useState<boolean>(false);
+
+  /**
+   * Allows users to add an additional semester to their schedule
+   */
+  const addSemester = () => {
+    // Get last semester metadata
+    // TODO: Put this into separate utils function
+    const lastSemester: Semester = semesters[semesters.length - 1];
+
+    const recentSemester: RecentSemester = {
+      year: parseInt(lastSemester.code.substring(0, lastSemester.code.length - 1)),
+      semester: lastSemester.code.substring(lastSemester.code.length - 1) as SemesterCode,
+    };
+    // console.log(recentSemester);
+    const { year, semester } = getUpdatedSemesterData(recentSemester);
+
+    const newSemester: Semester = {
+      title: `${SEMESTER_CODE_MAPPINGS[semester]} ${year}`,
+      code: (year + semester.toString()).toString(),
+      courses: [],
+    };
+    updateSemesters([...semesters, newSemester]);
+    if (!temp) {
+      onPersistChanges(lists);
+    }
+  };
+
+  const removeSemester = () => {
+    updateSemesters(semesters.slice(0, semesters.length - 1));
+    if (!temp) {
+      onPersistChanges(lists);
+    }
+  };
 
   const addItemToList = (itemId: string, listId: string) => {
     const semesters = lists.semesters;
@@ -246,6 +285,7 @@ export function useDraggableItemContainer(
   /**
    * Reinitialize the semesters using the given list.
    */
+  // TODO: items doesn't update after updateSemesters is called. Do something about it
   const updateSemesters = (newSemesters: Semester[]) => {
     setLists({
       semesters: newSemesters.reduce((acc, semester) => {
@@ -274,6 +314,8 @@ export function useDraggableItemContainer(
   const semesters = Object.entries(lists.semesters).map(([_, semester]) => semester);
 
   return {
+    addSemester,
+    removeSemester,
     addItemToList,
     updateSemesters,
     removeItemFromList,

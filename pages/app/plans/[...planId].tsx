@@ -224,8 +224,15 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
     usePlanningToolbar();
 
   console.log('Plan:', plan);
-  const { semesters, addList, updateSemesters, handleOnDragEnd, setTemp } =
-    useDraggableItemContainer(plan.semesters, persistChanges);
+  const {
+    semesters,
+    addSemester,
+    removeSemester,
+    addList,
+    updateSemesters,
+    handleOnDragEnd,
+    setTemp,
+  } = useDraggableItemContainer(plan.semesters, persistChanges);
 
   const { exportPlan, handleSelectedPlanChange } = usePlan();
 
@@ -265,6 +272,7 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
     setTemp(false);
   };
 
+  // TODO: Move updateSemesters logic into addSemesters to reduce mental complexity
   useEffect(() => {
     const tempSemester: Semester = {
       title: 'Add courses to degree plan here',
@@ -297,7 +305,14 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
               <AddSemesterTrigger
                 infoText={'Add another semester'}
                 onAddSemester={() => {
-                  // TODO: Put into hook
+                  addSemester();
+                }}
+              />{' '}
+              {/* Change component name */}
+              <AddSemesterTrigger
+                infoText={'Remove semester'}
+                onAddSemester={() => {
+                  removeSemester();
                 }}
               />
             </DraggableItemContainer>
