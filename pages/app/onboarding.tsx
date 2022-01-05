@@ -10,6 +10,7 @@ import PageTwo, { PageTwoTypes } from '../Onboarding_Pages/pg_2';
 import PageThree, { PageThreeTypes } from '../Onboarding_Pages/pg_3';
 import Privacy from '../Onboarding_Pages/privacy';
 import Welcome from '../Onboarding_Pages/welcome';
+import firebase from 'firebase';
 
 /**
  * The first onboarding page for the application.
@@ -290,10 +291,21 @@ export default function OnboardingPage(): JSX.Element {
 
   const handleSubmit = () => {
     const data = organizeOnboardingData();
-    // TODO: Send data to firebase if creating account
-    console.log('Send data to firebase & go to /app', data);
+    console.log('This is the data: ', data);
+    const firestore = firebase.firestore();
 
-    // TODO: Figure out functionality for guest users
+    // Guest user signup
+    firestore
+      .collection('users')
+      .add(data)
+      .then((docRef) => {
+        console.log('Document written with ID: ', docRef.id);
+      })
+      .catch((error) => {
+        console.error('Error adding document: ', error);
+      });
+
+    //TODO: Create an auth page so there can be guest and user
 
     // TODO: Redirect to home page
     const onboardingRedirect = `/app/plans/new${generateRedirect(data)}`;
