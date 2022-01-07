@@ -43,7 +43,7 @@ type QueryType = 'all' | 'professor' | 'code';
 /**
  * Data used to search and filter by courses.
  */
-interface SearchRequest {
+export interface SearchRequest {
   query: string;
   by: QueryType;
 }

@@ -9,6 +9,8 @@ import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import { ArrowRight } from '@material-ui/icons';
 import router from 'next/router';
 import { v4 as uuid } from 'uuid';
+import SearchBar from '../../search/SearchBar';
+import useSearch from '../../search/search';
 
 export type NavigationBarProps = {
   planState: NewPlanFlowState;
@@ -42,31 +44,42 @@ export function NavigationBar({ planState, goBack, goForward, finish }: Navigati
 }
 
 export type SelectMajorDialogScreenProps = {
-  handleSearchSelection: () => void; // TODO: Implement this function
-  majors: string[]; // TODO: Build a Major data type & replace
   selectedMajors: string[]; // TODO: Replace this w/ Major data type
   addMajor: (elm: string) => void; // TODO: Replace "elm" with Major data type
 };
 export function SelectMajorDialogScreen({
-  handleSearchSelection,
-  majors,
   selectedMajors,
   addMajor,
 }: SelectMajorDialogScreenProps) {
+  /* Search bar functionality */
+
+  const { results, updateQuery } = useSearch({ getData: getMajors });
+
+  const handleSearch = (query: string) => {
+    updateQuery(query);
+  };
+
+  // Run updateQuery on dialog screen load
+  React.useEffect(() => {
+    updateQuery('');
+  }, []);
+
   return (
     <div className="grid grid-cols-2">
+      {/* TODO: Put this into container component */}
       <div className="flex flex-col border-2">
-        <CourseSearchBox onItemSelected={handleSearchSelection} />
-        {}
-
+        <div className="m-2">
+          <SearchBar updateQuery={handleSearch} />
+        </div>
         <div className="overflow-scroll h-40 flex flex-col border-4 ml-4 items-start">
-          {majors.map((elm) => {
-            return (
-              <div key={elm} className="my-1">
-                <button onClick={() => addMajor(elm)}>{elm}</button>
-              </div>
-            );
-          })}
+          {results &&
+            results.map((elm) => {
+              return (
+                <div key={elm} className="my-1">
+                  <button onClick={() => addMajor(elm)}>{elm}</button>
+                </div>
+              );
+            })}
         </div>
       </div>
       <div className="flex flex-col p-2">
@@ -124,6 +137,12 @@ export function OtherDialogScreen() {
   );
 }
 
+export async function getMajors() {
+  const data = await import('../../../data/majors.json');
+  // TODO: Fix this!!!!
+  return Object.values(data).slice(0, 6);
+}
+
 /**
  * A dialog that allows a user to initialize a new CoursePlan.
  */
@@ -162,22 +181,17 @@ export default function NewPlanDialog({
 
     // Start generating degree plan
     // TODO: Aggregate all necessary data for generateDegreePlan
-    await generateDegreePlan();
-    // Generate route id
-    const routeID = uuid();
-    router.push(`/app/plans/${routeID}`);
+    if (planState === 'SELECT_ADDITIONS') {
+      await generateDegreePlan();
+      // Generate route id
+      const routeID = uuid();
+      router.push(`/app/plans/${routeID}`);
+    }
   };
 
   let contents;
   if (planState === 'SELECT_MAJOR') {
-    contents = (
-      <SelectMajorDialogScreen
-        handleSearchSelection={handleSearchSelection}
-        majors={majors}
-        selectedMajors={selectedMajors}
-        addMajor={addMajor}
-      />
-    );
+    contents = <SelectMajorDialogScreen selectedMajors={selectedMajors} addMajor={addMajor} />;
   } else if (planState === 'TRANSFER_COURSES') {
     contents = <TransferCreditDialogScreen />;
   } else {

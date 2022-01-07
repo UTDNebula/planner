@@ -23,7 +23,7 @@ export type CourseChipData = {
 /**
  * Component properties for a CourseSearchChip.
  */
-interface CourseSearchChipProps {
+export interface CourseSearchChipProps {
   /**
    * Data used to populate the CourseSearchChip.
    */

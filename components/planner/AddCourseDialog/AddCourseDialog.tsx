@@ -24,6 +24,8 @@ import { Course } from '../../../modules/common/data';
 import { DestinationData } from '../../../modules/planner/hooks/selectableCourseDialog';
 import DialogCard from './DialogCard';
 import { loadCourses } from '../../../modules/common/api/courses';
+import useSearch from '../../search/search';
+import SearchBar from '../../search/SearchBar';
 
 /**
  * Component properties for a AddCourseDialog.
@@ -204,9 +206,20 @@ export function SimpleTabs({ courses, selectedCourses, setSelectedCourses }: Sim
     setSelectedCourses(selectedCourses.filter((elm) => elm.id !== course.id));
   };
 
-  const handleSearchSelection = () => {
-    // TODO: Implement me
+  // TODO: Add chips to search
+  // TODO: Implement lazy loading
+  const chipsList = [];
+  const [chips, setChips] = useState(chipsList);
+  const { results, updateQuery } = useSearch({ getData: loadCourses, filterBy: 'catalogCode' });
+
+  const handleSearch = (query: string) => {
+    updateQuery(query);
   };
+
+  // Run updateQuery on dialog screen load
+  React.useEffect(() => {
+    updateQuery('');
+  }, []);
 
   return (
     <div className="p-">
@@ -224,7 +237,7 @@ export function SimpleTabs({ courses, selectedCourses, setSelectedCourses }: Sim
       <TabPanel value={value} index={0}>
         <div className="grid grid-cols-2">
           <div className="flex flex-col border-2 w-80">
-            <CourseSearchBox onItemSelected={handleSearchSelection} />
+            <SearchBar updateQuery={handleSearch} />
             <div className="flex flex-row">
               <div>Subject</div>
               <ButtonGroup variant="contained" aria-label="outlined primary button group">
@@ -242,7 +255,7 @@ export function SimpleTabs({ courses, selectedCourses, setSelectedCourses }: Sim
               </ButtonGroup>
             </div>
             <div className="overflow-scroll h-40">
-              {courses.map((elm, index) => (
+              {results.map((elm, index) => (
                 <DialogCard
                   key={elm.catalogCode}
                   course={elm}

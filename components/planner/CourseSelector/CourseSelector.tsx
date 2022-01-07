@@ -90,7 +90,7 @@ export default function CourseSelector({
         ))}
       </div>
       <AddNewCourseDialog isOpen={isOpen} enableFocus={setIsOpen} addUserCourses={addUserCourses} />
-      <button onClick={() => setIsOpen(!isOpen)}> Test </button>
+      <button onClick={() => setIsOpen(!isOpen)}> Search Courses </button>
       {courseCount > 0 &&
         !otherButton && ( // TODO: Properly style FAB (position absolute & on right hand side)
           <Fab

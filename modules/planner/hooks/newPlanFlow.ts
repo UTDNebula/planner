@@ -7,7 +7,7 @@ export type NewPlanFlowState =
   | 'SELECT_MAJOR'
   | 'TRANSFER_COURSES'
   | 'SELECT_ADDITIONS'
-  | 'FINALIZE_PLAN_GENERATION'
+  // | 'FINALIZE_PLAN_GENERATION'
   | 'DONE';
 
 // const NEW_PLAN_FLOW_STATES: { [key in NewPlanFlowState]: number } = {
@@ -51,14 +51,14 @@ export function useCreateNewPlanFlow(
         setPlanState('SELECT_ADDITIONS');
         break;
       case 'SELECT_ADDITIONS':
-        setPlanState('FINALIZE_PLAN_GENERATION');
+        //   setPlanState('FINALIZE_PLAN_GENERATION');
+        //   break;
+        // case 'FINALIZE_PLAN_GENERATION':
+        // setPlanState('DONE');
         break;
-      case 'FINALIZE_PLAN_GENERATION':
-        setPlanState('DONE');
-        break;
-      case 'DONE':
-        // TODO: Determine if this should be a no-op since the dialog should be closed anyway
-        break;
+      // case 'DONE':
+      //   // TODO: Determine if this should be a no-op since the dialog should be closed anyway
+      //   break;
     }
   };
 
@@ -73,12 +73,13 @@ export function useCreateNewPlanFlow(
       case 'SELECT_ADDITIONS':
         setPlanState('TRANSFER_COURSES');
         break;
-      case 'FINALIZE_PLAN_GENERATION':
-        setPlanState('SELECT_ADDITIONS');
-        break;
-      case 'DONE':
+        // case 'FINALIZE_PLAN_GENERATION':
+        //   setPlanState('SELECT_ADDITIONS');
+        //   break;
+        // case 'DONE':
         // TODO: Determine if this should be a no-op since the dialog should be closed anyway
-        setPlanState('FINALIZE_PLAN_GENERATION');
+        // setPlanState('FINALIZE_PLAN_GENERATION');
+        // setPlanState('SELECT_ADDITIONS');
         break;
     }
   };
