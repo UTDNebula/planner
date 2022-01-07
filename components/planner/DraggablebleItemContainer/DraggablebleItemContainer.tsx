@@ -107,7 +107,6 @@ export function getUpdatedSemesterData(recentSemesterData: RecentSemester, onlyL
   };
 }
 
-// TODO: Find and fix all the state bugs
 export function useDraggableItemContainer(
   items: Semester[],
   onPersistChanges: (data: {
@@ -127,7 +126,36 @@ export function useDraggableItemContainer(
   });
 
   // Determines whether or not to persist changes
-  const [temp, setTemp] = React.useState<boolean>(false);
+  const [persist, setPersist] = React.useState<boolean>(true);
+
+  // TODO: Move into addSemesters to reduce mental complexity
+  const [coursesToAdd, setCoursesToAdd] = React.useState<Course[]>([]);
+  const [showAddCourseDroppable, setShowAddCourseDroppable] = React.useState(false);
+
+  /* These two functions handle adding courses into degree plan */
+  const coursesToAddHandler = (CoursesToAdd: Course[]) => {
+    setCoursesToAdd(CoursesToAdd);
+    setShowAddCourseDroppable(true);
+    setPersist(false);
+  };
+
+  const coursesAddedHandler = () => {
+    console.log('Courses have been added');
+    setCoursesToAdd([]);
+    setShowAddCourseDroppable(false);
+    setPersist(true);
+  };
+
+  useEffect(() => {
+    const tempSemester: Semester = {
+      title: 'Add courses to degree plan here',
+      code: 'Add',
+      courses: coursesToAdd,
+    };
+    showAddCourseDroppable
+      ? updateSemesters([tempSemester, ...semesters])
+      : updateSemesters(semesters.filter((elm) => elm.code !== 'Add'));
+  }, [showAddCourseDroppable]);
 
   /**
    * Allows users to add an additional semester to their schedule
@@ -150,14 +178,17 @@ export function useDraggableItemContainer(
       courses: [],
     };
     updateSemesters([...semesters, newSemester]);
-    if (!temp) {
+    if (persist) {
       onPersistChanges(lists);
     }
   };
 
   const removeSemester = () => {
-    updateSemesters(semesters.slice(0, semesters.length - 1));
-    if (!temp) {
+    // Shouldn't run if user only has one semester
+    if (semesters.length > 1) {
+      updateSemesters(semesters.slice(0, semesters.length - 1));
+    }
+    if (persist) {
       onPersistChanges(lists);
     }
   };
@@ -168,7 +199,7 @@ export function useDraggableItemContainer(
     setLists({
       semesters,
     });
-    if (!temp) {
+    if (persist) {
       onPersistChanges(lists);
     }
   };
@@ -186,7 +217,7 @@ export function useDraggableItemContainer(
       semesters,
     });
 
-    if (!temp) {
+    if (persist) {
       onPersistChanges(lists);
     }
   };
@@ -206,7 +237,7 @@ export function useDraggableItemContainer(
     setLists({
       semesters: newSemesters,
     });
-    if (!temp) {
+    if (persist) {
       onPersistChanges(lists);
     }
   };
@@ -250,7 +281,7 @@ export function useDraggableItemContainer(
     setLists({
       semesters: newSemesters,
     });
-    if (!temp) {
+    if (persist) {
       onPersistChanges(lists);
     }
   };
@@ -297,7 +328,7 @@ export function useDraggableItemContainer(
 
   // Ensures that planner updates after "DONE" is selected
   React.useEffect(() => {
-    if (!temp) {
+    if (persist) {
       onPersistChanges(lists);
     }
   }, [lists]);
@@ -322,7 +353,10 @@ export function useDraggableItemContainer(
     moveItem,
     addList,
     handleOnDragEnd,
-    setTemp,
+    setPersist,
+    coursesToAddHandler,
+    coursesAddedHandler,
+    showAddCourseDroppable,
     semesters,
     lists,
   };
