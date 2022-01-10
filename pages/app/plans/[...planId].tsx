@@ -17,52 +17,16 @@ import AddSemesterTrigger from '../../../components/planner/AddSemesterTrigger';
 import { usePlan } from '../../../modules/planner/hooks/usePlan';
 import CourseSelector from '../../../components/planner/CourseSelector/CourseSelector';
 import DUMMY_PLAN from '../../../data/add_courses.json';
+import { loadCourseAttempts } from '../../../modules/common/api/courseAttempts';
 
 interface PlanDetailPageProps {
   loadedPlan: StudentPlan;
-}
-
-export async function loadCourseAttempts() {
-  // TODO: Replace with real user data pulled from firebase
-  const data = await import('../../../data/course_attempts.json');
-
-  const courseAttemptData: CourseAttempt[] = Object.values(data['default']).map((elm, index) => {
-    const { semester, grade, course } = elm;
-    return { semester, grade: grade as Grade, course };
-  });
-  return courseAttemptData;
-}
-
-export async function loadUserSemesters() {
-  // TODO: Replace with real user data pulled from firebase
-  const data = await import('../../../data/add_courses.json');
-  const testSemesters: Semester[] = Object.values(data['default']).map((elm, index) => {
-    const { title, code, courses } = elm;
-    return { title, code, courses };
-  });
-  return testSemesters;
-}
-
-function savePlan(planId: string, planState: StudentPlan) {
-  if (typeof window !== 'undefined') {
-    const planJson = JSON.stringify(planState);
-    window.localStorage.setItem(planId, planJson);
-  }
-}
-
-function fetchPlan(planId: string): StudentPlan {
-  if (typeof window !== 'undefined') {
-    const plan = window.localStorage.getItem(planId); // We're just going to assume the plan ID exists
-    return JSON.parse(plan);
-  }
 }
 
 /**
  * A page that displays the details of a specific student academic plan.
  */
 export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX.Element {
-  // TODO: Replace with custom styles
-
   const router = useRouter();
   const { planId: planQuery } = router.query;
   const planId = planQuery ? planQuery[0] : 'empty-plan';
@@ -70,19 +34,9 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
   // Load all required data
   const loadData = async () => {
     if (router.isReady) {
-      console.log('Loading data');
+      const newPlan = loadPlan(planId);
+      updateSemesters(newPlan.semesters);
       const courseAttempts: CourseAttempt[] = await loadCourseAttempts();
-      const userSemesters = await loadUserSemesters();
-      const tempPlan = {
-        id: planId,
-        title: 'Just a Degree Plan',
-        major: 'Computer Science',
-        semesters: userSemesters,
-      };
-
-      // Obtains correct plan for situation
-      const newPlan = fetchPlan(planId) ?? tempPlan;
-      updateLoadedPlan(newPlan);
       setCourseAttempts(courseAttempts);
     }
   };
@@ -92,32 +46,12 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
     loadData();
   }, [router.isReady]);
 
-  // Initial value for plan until data is properly loaded
-  const initialPlan = {
-    id: planId,
-    title: 'Just a Degree Plan',
-    major: 'Computer Science',
-    semesters: DUMMY_PLAN,
-  };
-
-  const [plan, setPlan] = React.useState<StudentPlan>(initialPlan);
   const [courseAttempts, setCourseAttempts] = React.useState<CourseAttempt[]>([]);
 
-  const { exportPlan, handleSelectedPlanChange } = usePlan();
+  const { plan, loadPlan, exportPlan, handleSelectedPlanChange, persistChanges } = usePlan();
 
   const { title, setTitle, section, setSection, showTabs, hideTabs, shouldShowTabs } =
     usePlanningToolbar();
-
-  // Function that updates plan when state changes in useDraggableItemContainer hook
-  const persistChanges = (data: {
-    semesters: Record<string, Semester>;
-    // allItems: Array<Course>,
-  }) => {
-    const semesterList = Object.values(data.semesters);
-    const savedPlan = plan;
-    savedPlan.semesters = semesterList;
-    savePlan(planId, savedPlan);
-  };
 
   const {
     semesters,
@@ -137,7 +71,6 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
    */
   const updateLoadedPlan = (newPlan: StudentPlan) => {
     console.log('Loading new plan in UI', newPlan);
-    setPlan(newPlan);
     updateSemesters(newPlan.semesters);
   };
 

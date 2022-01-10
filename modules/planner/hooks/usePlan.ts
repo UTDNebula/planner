@@ -1,4 +1,6 @@
-import { StudentPlan } from '../../common/data';
+import React from 'react';
+import { Semester, StudentPlan } from '../../common/data';
+import DUMMY_PLAN from '../../../data/add_courses.json';
 
 /**
  * A utility hook that exposes callbacks to handle StudentPlan imports and exports.
@@ -10,6 +12,38 @@ import { StudentPlan } from '../../common/data';
  * pass it to a callback that the planner can use to load a plan into memory.
  */
 export function usePlan() {
+  const [planId, setPlanId] = React.useState('empty-plan');
+
+  // Initial value for plan until data is properly loaded
+  const initialPlan: StudentPlan = {
+    id: planId,
+    title: 'Just a Degree Plan',
+    major: 'Computer Science',
+    semesters: DUMMY_PLAN,
+  };
+
+  // Manage plan state inside hook
+  const [plan, setPlan] = React.useState(initialPlan);
+
+  // Loads plan & returns new plan
+  const loadPlan = (userPlanId: string) => {
+    const userPlan = fetchPlan(userPlanId) ?? initialPlan;
+    console.log('what', userPlan);
+    setPlan(userPlan);
+    setPlanId(userPlanId);
+    return userPlan;
+  };
+
+  // // Loads in plan once planId is correct
+  // React.useEffect(() => {
+  //   if (planId !== "loading") {
+  //     let userPlan = fetchPlan(planId);
+  //     // alert("THIS RAN");
+  //     console.log(userPlan);
+  //     setPlan(userPlan);
+  //   }
+  // },[planId]);
+
   /**
    * Downloads a plan to the user's local machine.
    *
@@ -63,12 +97,53 @@ export function usePlan() {
       console.log('Uploaded plan:', plan);
 
       callback(JSON.parse(plan));
+      // Update plan
+      setPlan(JSON.parse(plan));
     };
+
     reader.readAsText(file);
   };
 
+  // TODO: Fetch from redux
+  function fetchPlan(planId: string): StudentPlan {
+    if (typeof window !== 'undefined') {
+      const plan = window.localStorage.getItem(planId); // We're just going to assume the plan ID exists
+      return JSON.parse(plan);
+    }
+  }
+
+  // TODO: Save to redux
+  function savePlan(planId: string, planState: StudentPlan) {
+    console.log('Save', planState, 'ID', planId);
+    if (typeof window !== 'undefined') {
+      const planJson = JSON.stringify(planState);
+      window.localStorage.setItem(planId, planJson);
+    }
+  }
+
+  // Function that updates plan when state changes in useDraggableItemContainer hook
+  const persistChanges = (data: {
+    semesters: Record<string, Semester>;
+    // allItems: Array<Course>,
+  }) => {
+    const semesterList = Object.values(data.semesters);
+    const savedPlan = JSON.parse(JSON.stringify(plan));
+    savedPlan.semesters = semesterList;
+    // Save plan to redux & in state
+    savePlan(planId, savedPlan);
+    setPlan(savedPlan);
+  };
+
+  // TESTING
+  React.useEffect(() => console.log('SAVE TEST', plan), [plan]);
+
   return {
+    plan,
+    loadPlan,
     exportPlan,
     handleSelectedPlanChange,
+    usePlan,
+    fetchPlan,
+    persistChanges,
   };
 }

@@ -125,6 +125,8 @@ export function useDraggableItemContainer(
     // allItems: [],
   });
 
+  const semesters = Object.entries(lists.semesters).map(([_, semester]) => semester);
+
   // Determines whether or not to persist changes
   const [persist, setPersist] = React.useState<boolean>(true);
 
@@ -341,8 +343,6 @@ export function useDraggableItemContainer(
       },
     });
   };
-
-  const semesters = Object.entries(lists.semesters).map(([_, semester]) => semester);
 
   return {
     addSemester,
