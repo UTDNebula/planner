@@ -1,13 +1,4 @@
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  createStyles,
-  Fab,
-  makeStyles,
-  Theme,
-  Typography,
-} from '@material-ui/core';
+import { Fab } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { CardContainer } from './CardContainer';
@@ -32,9 +23,11 @@ export type CourseSelectorProps = {
 };
 
 /**
- * TODO: Anything that needs to be done
- * 1. Add course validation
+ * TODOs
+ * 1. Refactor so that courses are pulled from Nebula API
+ * 2. Add course validation
  *  - this means graying out courses that are already on planner
+ * 3. Properly style CardContainer
  */
 
 /**

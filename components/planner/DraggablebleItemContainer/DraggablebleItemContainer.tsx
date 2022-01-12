@@ -8,9 +8,8 @@ import {
 } from '../../../modules/common/data';
 import { reorderList } from '../../../modules/planner/hooks/planManipulatorUtils';
 import CourseCard from '../../common/CourseCard';
-import AddSemesterTrigger from '../AddSemesterTrigger';
 
-interface DraggableItemContainerProps<T> {
+interface DraggableItemContainerProps {
   items: Semester[];
   onDragEnd: (result: DropResult) => void;
 }
@@ -20,13 +19,12 @@ interface DraggableItemContainerProps<T> {
  *
  * This is used to hold semester informaiton and renders courses accordingly.
  *
- * TODO(planner): Finalize abstraction and make separate semester-specific DraggableItemContainer.
  */
-export default function DraggableItemContainer<T>({
+export default function DraggableItemContainer({
   items,
   onDragEnd,
   children,
-}: React.PropsWithChildren<DraggableItemContainerProps<T>>) {
+}: React.PropsWithChildren<DraggableItemContainerProps>) {
   const listItems = items.map((item) => {
     return (
       <Droppable key={item.code} droppableId={item.code}>
@@ -107,40 +105,76 @@ export function getUpdatedSemesterData(recentSemesterData: RecentSemester, onlyL
   };
 }
 
+/**
+ * This function generates the metadata needed
+ * create a new semester inside the user plan
+ * @param semesters Array of semesters obtained from the user plan
+ * @returns metatdata to create a new semester
+ */
+export function getRecentSemesterMetadata(semesters: Semester[]) {
+  const lastSemester: Semester = semesters[semesters.length - 1];
+  const recentSemester: RecentSemester = {
+    year: parseInt(lastSemester.code.substring(0, lastSemester.code.length - 1)),
+    semester: lastSemester.code.substring(lastSemester.code.length - 1) as SemesterCode,
+  };
+  return recentSemester;
+}
+
+/**
+ * A hook that manages the state of the degree planner component.
+ *
+ * @param items Array of semesters obtained from the user plan
+ * @param onPersistChanges Function that saves the planner state across sessions (currently localStorage)
+ *
+ * @returns 'plans' which holds the planner state, as well as multiple utility functions
+ * Information about each function is documented inside the hook.
+ */
 export function useDraggableItemContainer(
   items: Semester[],
-  onPersistChanges: (data: {
-    semesters: Record<string, Semester>;
-    // allItems: Array<Course>,
-  }) => void,
+  onPersistChanges: (data: { semesters: Record<string, Semester> }) => void,
 ) {
+  // Object mapping semester code to each semester
+  // Used to maange state of the degree planner
+  // Warning: Do NOT use lists to get user semesters; use semesters instead
   const [lists, setLists] = React.useState<{
     semesters: Record<string, Semester>;
-    // allItems: Array<Course>,
   }>({
     semesters: items.reduce((acc, semester) => {
       acc[semester.code] = semester;
       return acc;
     }, {}),
-    // allItems: [],
   });
 
+  // Array of semesters (use this whenever you need to get user semesters)
   const semesters = Object.entries(lists.semesters).map(([_, semester]) => semester);
 
-  // Determines whether or not to persist changes
+  // Controls whether or not to persist changes
   const [persist, setPersist] = React.useState<boolean>(true);
 
-  // TODO: Move into addSemesters to reduce mental complexity
+  /* These variables and functions handle adding courses into the degree plan */
+
+  // Array of courses that the user plans on adding
   const [coursesToAdd, setCoursesToAdd] = React.useState<Course[]>([]);
+
+  // Controls whether or not to show Droppable for adding courses
   const [showAddCourseDroppable, setShowAddCourseDroppable] = React.useState(false);
 
-  /* These two functions handle adding courses into degree plan */
+  /**
+   * Runs whenever an event to add courses to the planner is called
+   *
+   * @param CoursesToAdd Array of courses that the user wants to add
+   *
+   * Note: changes are NOT persisted until {@link coursesAddedHandler} is called
+   */
   const coursesToAddHandler = (CoursesToAdd: Course[]) => {
     setCoursesToAdd(CoursesToAdd);
     setShowAddCourseDroppable(true);
     setPersist(false);
   };
 
+  /**
+   * Runs whenver an event to finish adding courses to the planner is called
+   */
   const coursesAddedHandler = () => {
     console.log('Courses have been added');
     setCoursesToAdd([]);
@@ -148,7 +182,10 @@ export function useDraggableItemContainer(
     setPersist(true);
   };
 
-  useEffect(() => {
+  /**
+   * This adds the Droppable for adding courses into the DraggableItemContainer
+   */
+  React.useEffect(() => {
     const tempSemester: Semester = {
       title: 'Add courses to degree plan here',
       code: 'Add',
@@ -163,15 +200,7 @@ export function useDraggableItemContainer(
    * Allows users to add an additional semester to their schedule
    */
   const addSemester = () => {
-    // Get last semester metadata
-    // TODO: Put this into separate utils function
-    const lastSemester: Semester = semesters[semesters.length - 1];
-
-    const recentSemester: RecentSemester = {
-      year: parseInt(lastSemester.code.substring(0, lastSemester.code.length - 1)),
-      semester: lastSemester.code.substring(lastSemester.code.length - 1) as SemesterCode,
-    };
-    // console.log(recentSemester);
+    const recentSemester = getRecentSemesterMetadata(semesters);
     const { year, semester } = getUpdatedSemesterData(recentSemester);
 
     const newSemester: Semester = {
@@ -180,32 +209,45 @@ export function useDraggableItemContainer(
       courses: [],
     };
     updateSemesters([...semesters, newSemester]);
-    if (persist) {
-      onPersistChanges(lists);
-    }
+    // if (persist) {
+    //   onPersistChanges(lists);
+    // }
   };
 
+  /**
+   * Allows users to remove a semester from their schedule
+   * Does not run if the user only has one semester
+   */
   const removeSemester = () => {
-    // Shouldn't run if user only has one semester
     if (semesters.length > 1) {
       updateSemesters(semesters.slice(0, semesters.length - 1));
     }
-    if (persist) {
-      onPersistChanges(lists);
-    }
+    // if (persist) {
+    //   onPersistChanges(lists);
+    // }
   };
 
+  /**
+   * Not used; {@link coursesToAddHandler} and {@link coursesAddedHandler}
+   * have implemented the functionality of this function
+   */
   const addItemToList = (itemId: string, listId: string) => {
     const semesters = lists.semesters;
     // TODO: Implement me
     setLists({
       semesters,
     });
-    if (persist) {
-      onPersistChanges(lists);
-    }
+    // if (persist) {
+    //   onPersistChanges(lists);
+    // }
   };
 
+  /**
+   * Allows users to remove courses from their schedule
+   * NOT IMPLEMENTED YET
+   * @param itemId
+   * @param listId
+   */
   const removeItemFromList = (itemId: string, listId: string) => {
     // TODO: Find in list
     // TODO: Use setLists to remove
@@ -219,11 +261,19 @@ export function useDraggableItemContainer(
       semesters,
     });
 
-    if (persist) {
-      onPersistChanges(lists);
-    }
+    // if (persist) {
+    //   onPersistChanges(lists);
+    // }
   };
 
+  /**
+   * Updates courses inside a semester after a drag and drop event is called
+   * Is called only when a course's starting and ending position is the same semester
+   * @param sourceSemester original semester
+   * @param sourceIndex original index of course
+   * @param destinationIndex final index of course
+   * @param sourceId semester Droppable id
+   */
   const updateSemester = (
     sourceSemester: Semester,
     sourceIndex: number,
@@ -239,9 +289,9 @@ export function useDraggableItemContainer(
     setLists({
       semesters: newSemesters,
     });
-    if (persist) {
-      onPersistChanges(lists);
-    }
+    // if (persist) {
+    //   onPersistChanges(lists);
+    // }
   };
 
   /**
@@ -283,11 +333,16 @@ export function useDraggableItemContainer(
     setLists({
       semesters: newSemesters,
     });
-    if (persist) {
-      onPersistChanges(lists);
-    }
+    // if (persist) {
+    //   onPersistChanges(lists);
+    // }
   };
 
+  /**
+   * Called on the end of each drag and drop event
+   * @param param0
+   * @returns
+   */
   const handleOnDragEnd = ({ source, destination }: DropResult) => {
     if (destination) {
       const sourceId = source.droppableId;
@@ -318,7 +373,6 @@ export function useDraggableItemContainer(
   /**
    * Reinitialize the semesters using the given list.
    */
-  // TODO: items doesn't update after updateSemesters is called. Do something about it
   const updateSemesters = (newSemesters: Semester[]) => {
     setLists({
       semesters: newSemesters.reduce((acc, semester) => {
@@ -335,15 +389,6 @@ export function useDraggableItemContainer(
     }
   }, [lists]);
 
-  const addList = (newList: Semester, id: string) => {
-    setLists({
-      semesters: {
-        ...lists.semesters,
-        [id]: newList,
-      },
-    });
-  };
-
   return {
     addSemester,
     removeSemester,
@@ -351,7 +396,6 @@ export function useDraggableItemContainer(
     updateSemesters,
     removeItemFromList,
     moveItem,
-    addList,
     handleOnDragEnd,
     setPersist,
     coursesToAddHandler,

@@ -27,7 +27,7 @@ export function CardContainer({
       <AccordionDetails>
         <div className="flex flex-col w-full">
           {courses.map((elm, index) => (
-            <Card key={index} props={elm} toggleCourseSelected={toggleCourseSelected} />
+            <Card key={elm.id} props={elm} toggleCourseSelected={toggleCourseSelected} />
           ))}
         </div>
       </AccordionDetails>
