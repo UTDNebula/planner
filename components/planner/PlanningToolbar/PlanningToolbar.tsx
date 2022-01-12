@@ -32,7 +32,7 @@ const useStyles = () => {
   return makeStyles((theme: Theme) => {
     return createStyles({
       root: {
-        zIndex: 9999,
+        zIndex: 10,
       },
       menuButton: {
         marginRight: theme.spacing(2),

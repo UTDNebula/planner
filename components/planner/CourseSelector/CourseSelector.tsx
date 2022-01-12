@@ -5,7 +5,7 @@ import { CardContainer } from './CardContainer';
 import { CourseCardProps } from '../../common/CourseCard';
 import AddIcon from '@material-ui/icons/Add';
 import { Course, Semester } from '../../../modules/common/data';
-import { AddNewCourseDialog } from '../AddCourseDialog/AddCourseDialog';
+import { AddNewCourseDialog } from '../AddCourseDialog/NewAddCourseDialog';
 import DummyData from '../../../data/dummy_planner_course_data.json';
 export type CourseSelectedAction = 'Add' | 'Remove';
 

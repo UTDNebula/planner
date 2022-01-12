@@ -17,6 +17,11 @@ export default function StudentHistoryView({ attempts }: StudentHistoryViewProps
     <div className="min-h-screen w-full p-8">
       <div className="max-w-6xl pb-8 mx-auto">
         <h1 className="mb-4 mt-8 text-headline4 font-bold">All Course Attempts</h1>
+        <div>
+          {attempts.map((elm, index) => {
+            return <div key={elm.course.id}>{elm.course.title}</div>;
+          })}
+        </div>
       </div>
       <div className="max-w-6xl pb-8 mx-auto">
         <h1 className="mb-4 mt-8 text-headline4 font-bold">Academic Career Statistics</h1>
