@@ -12,7 +12,6 @@ export interface DegreePickerProps {
 }
 
 export type DegreeState = {
-  // id: number;
   degree: string;
   degreeType: string;
   valid: boolean;

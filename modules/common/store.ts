@@ -2,33 +2,11 @@ import { useMemo } from 'react';
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { persistReducer, persistStore } from 'redux-persist';
-//import storage from 'redux-persist/lib/storage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import thunkMiddleware from 'redux-thunk';
 import reducers from './rootReducer';
 
-// const store = configureStore({
-//   reducer: rootReducer,
-// });
-
-// if (process.env.NODE_ENV === 'development' && module.hot) {
-//   module.hot.accept('./rootReducer', async () => {
-//     const newRootReducer = (await import('./rootReducer')).default;
-//     store.replaceReducer(newRootReducer);
-//   });
-// }
-
-// export type AppDispatch = typeof store.dispatch;
-
-// export default store;
-
 export type RootState = ReturnType<typeof reducers>;
-// export type AppThunk<ReturnType = void> = ThunkAction<
-//   ReturnType,
-//   RootState,
-//   unknown,
-//   Action<string>
-// >;
 
 let store;
 
