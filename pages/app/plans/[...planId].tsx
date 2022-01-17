@@ -35,6 +35,7 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
   const loadData = async () => {
     if (router.isReady) {
       const newPlan = loadPlan(planId);
+      setPersist(true);
       updateSemesters(newPlan.semesters);
       const courseAttempts: CourseAttempt[] = await loadCourseAttempts();
       setCourseAttempts(courseAttempts);
@@ -61,6 +62,7 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
     handleOnDragEnd,
     coursesToAddHandler,
     coursesAddedHandler,
+    setPersist,
     showAddCourseDroppable,
   } = useDraggableItemContainer(plan.semesters, persistChanges);
 

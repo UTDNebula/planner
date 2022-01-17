@@ -149,7 +149,7 @@ export function useDraggableItemContainer(
   const semesters = Object.entries(lists.semesters).map(([_, semester]) => semester);
 
   // Controls whether or not to persist changes
-  const [persist, setPersist] = React.useState<boolean>(true);
+  const [persist, setPersist] = React.useState<boolean>(false);
 
   /* These variables and functions handle adding courses into the degree plan */
 

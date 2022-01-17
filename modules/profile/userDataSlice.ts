@@ -43,9 +43,12 @@ const userDataSlice = createSlice({
         courses: action.payload,
       };
     },
+    updatePlan(state, action: PayloadAction<StudentPlan>) {
+      state.plans[action.payload.id] = action.payload;
+    },
   },
 });
 
-export const { updateUser, updateCourseAudit } = userDataSlice.actions;
+export const { updateUser, updateCourseAudit, updatePlan } = userDataSlice.actions;
 
 export default userDataSlice.reducer;

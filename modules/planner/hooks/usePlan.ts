@@ -1,6 +1,9 @@
 import React from 'react';
 import { Semester, StudentPlan } from '../../common/data';
 import DUMMY_PLAN from '../../../data/add_courses.json';
+import { useDispatch, useSelector, useStore } from 'react-redux';
+import { RootState } from '../../common/store';
+import { updatePlan } from '../../profile/userDataSlice';
 
 /**
  * A utility hook that exposes callbacks to handle manipulating the StudentPlan.
@@ -10,6 +13,10 @@ import DUMMY_PLAN from '../../../data/add_courses.json';
 export function usePlan() {
   // Manages planId
   const [planId, setPlanId] = React.useState('empty-plan');
+
+  const store = useStore();
+
+  const dispatch = useDispatch();
 
   // Initial value for plan until data is properly loaded
   const initialPlan: StudentPlan = {
@@ -31,7 +38,7 @@ export function usePlan() {
    * @returns A StudentPlan
    */
   const loadPlan = (userPlanId: string) => {
-    const userPlan = fetchPlan(userPlanId) ?? initialPlan;
+    const userPlan = fetchPlan(userPlanId);
     setPlan(userPlan);
     setPlanId(userPlanId);
     return userPlan;
@@ -100,8 +107,9 @@ export function usePlan() {
   };
 
   /**
-   * TODO: Get the StudentPlan from either Redux or Firebase as opposed
-   * to local storage.
+   * TODO: Get the StudentPlan from Firebase if exists
+   * TODO: After completing newPlanFow, automatically populate state.userData.plans[planId]
+   * with correct plan and remove initialPlan
    *
    * The fetchPlan function returns a StudentPlan from an external storage
    * given a planId.
@@ -110,24 +118,25 @@ export function usePlan() {
    * @returns a StudentPlan
    */
   function fetchPlan(planId: string): StudentPlan {
-    if (typeof window !== 'undefined') {
-      const plan = window.localStorage.getItem(planId); // We're just going to assume the plan ID exists
-      return JSON.parse(plan);
+    // Make copy of student plan from redux or get default plan if doesn't exist
+    const plan: StudentPlan = store.getState().userData.plans[planId] ?? initialPlan;
+    if (plan.id !== 'empty-plan') {
+      // Remove this logic once initialPlan deprecated
+      return JSON.parse(JSON.stringify(plan));
+    } else {
+      plan.id = planId;
+      return plan;
     }
   }
 
   /**
-   * TODO: Save to redux
    * The savePlan function saves the StudentPlan to an external storage
    * @param planId unique identifier for each plan
    * @param planState the user's plan
    */
   function savePlan(planId: string, planState: StudentPlan) {
     console.log('Save', planState, 'ID', planId);
-    if (typeof window !== 'undefined') {
-      const planJson = JSON.stringify(planState);
-      window.localStorage.setItem(planId, planJson);
-    }
+    dispatch(updatePlan(planState));
   }
 
   /**
