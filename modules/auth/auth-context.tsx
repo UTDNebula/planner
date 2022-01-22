@@ -242,7 +242,8 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
         // TODO: Update localStorage
         console.log('Signed out user; switched to guest.');
       })
-      .catch(() => {
+      .catch((error) => {
+        const { code, message } = error;
         console.error('Could not sign out.');
       });
   }
@@ -281,7 +282,7 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
       .createUserWithEmailAndPassword(email, password)
       .then(({ /* credential, */ user }) => {
         updateUser(user);
-        setRedirect('/app/onboarding');
+        setRedirect('/app/');
         setShouldRedirect(true);
       })
       .catch((error) => {
@@ -292,6 +293,7 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
         } else {
           console.log(message);
         }
+        alert(message);
         console.log(error);
       });
   }, []);
@@ -315,10 +317,13 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
           return;
         }
         updateUser(user);
+        setRedirect('/app/');
         setShouldRedirect(true);
       })
       .catch((error) => {
         console.error('Error when signing in', error);
+        const { code, message } = error;
+        alert(message);
         // TODO(auth): Handle error appropriately
       });
   }, []);
@@ -337,6 +342,7 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
           return;
         }
         updateUser(user);
+        setRedirect('/app/');
         setShouldRedirect(true);
       })
       .catch((error) => {

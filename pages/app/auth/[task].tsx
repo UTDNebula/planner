@@ -16,17 +16,18 @@ export default function AuthPage(): JSX.Element {
   const router = useRouter();
   const { task } = router.query;
 
-  const shouldSignOut = task === 'signOut';
-  if (shouldSignOut) {
-    signOut()
-      .then(() => {
-        console.debug('Succesfully signed out.');
-        router.push('/');
-      })
-      .catch((error) => {
-        console.error('Error signing out.', error);
-      });
-  }
+  React.useEffect(() => {
+    const shouldSignOut = task === 'signOut';
+    if (shouldSignOut) {
+      signOut()
+        .then(() => {
+          console.debug('Succesfully signed out.');
+        })
+        .catch((error) => {
+          console.error('Error signing out.', error);
+        });
+    }
+  }, []);
 
   const handleForgetPassword = (email: string) => {
     resetPassword(email);
@@ -38,7 +39,7 @@ export default function AuthPage(): JSX.Element {
 
   return (
     <>
-      <MarketingHeader />
+      {/* <MarketingHeader /> */}
       <div className="h-full w-full py-auto">
         <section className="max-w-xl mx-auto">
           <AuthCard

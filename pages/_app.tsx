@@ -30,9 +30,11 @@ function SidebarLayout({ Component, pageProps }) {
   const router = useRouter();
   const isOnboarding = router.route.startsWith('/app/onboarding');
   const isLanding = router.route === '/';
+  const isAuth = router.route.startsWith('/app/auth/');
   const isPlanner = router.route.startsWith('/app/plans/'); // TODO: Make this routing more robust.
   const content = (isLanding && <Component {...pageProps} />) ||
     (isOnboarding && <Component {...pageProps} />) ||
+    (isAuth && <Component {...pageProps} />) ||
     (isPlanner && <Component {...pageProps} />) || (
       <div className="flex w-full min-h-full">
         <div className="h-full flex-1 max-w-2xl">

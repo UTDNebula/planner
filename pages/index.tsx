@@ -28,11 +28,9 @@ export default function LandingPage(): JSX.Element {
             <ServiceName />
           </div>
           <div className="text-headline6">Tools to help you plan out your college career.</div>
-          <div className="my-2 text-body1 font-bold">Coming soon.</div>
           <div className="my-4">
-            <div className="text-body2 mb-2">Or, if you&apos;re curious:</div>
             <button className="p-2 rounded-md shadow-md hover:shadow-lg bg-secondary font-bold text-button uppercase">
-              <Link href="/app">Explore Nebula 🌌</Link>
+              <Link href="/app/auth/signin">Get Started 🌌</Link>
             </button>
           </div>
         </div>
