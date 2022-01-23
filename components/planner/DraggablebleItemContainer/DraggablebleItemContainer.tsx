@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
+import { loadCourses } from '../../../modules/common/api/courses';
 import {
   Course,
   Semester,
@@ -8,11 +9,31 @@ import {
 } from '../../../modules/common/data';
 import { reorderList } from '../../../modules/planner/hooks/planManipulatorUtils';
 import CourseCard from '../../common/CourseCard';
+import useSearch from '../../search/search';
+import CourseSelector from '../CourseSelector';
+import { v4 as uuid } from 'uuid';
+import { createStyles, Fab, makeStyles, Theme } from '@material-ui/core';
 
 interface DraggableItemContainerProps {
   items: Semester[];
   onDragEnd: (result: DropResult) => void;
+  results: any[];
+  updateQuery: (query: string) => void;
 }
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    fabContainer: {
+      position: 'absolute',
+      bottom: theme.spacing(2),
+      right: theme.spacing(2),
+    },
+    fab: {
+      width: '180px',
+      margin: '2px',
+    },
+  }),
+);
 
 /**
  * A container for lists of draggable items that can be moved between them.
@@ -23,6 +44,8 @@ interface DraggableItemContainerProps {
 export default function DraggableItemContainer({
   items,
   onDragEnd,
+  results,
+  updateQuery,
   children,
 }: React.PropsWithChildren<DraggableItemContainerProps>) {
   const listItems = items.map((item) => {
@@ -31,10 +54,12 @@ export default function DraggableItemContainer({
         {(provided) => (
           <div
             ref={provided.innerRef}
-            className="inline-block h-full w-[344px]"
+            className="inline-block w-[19rem] h-[37rem]"
             {...provided.droppableProps}
           >
-            <div className="m-2 p-2 bg-white rounded-md border-gray-200 border-2">{item.title}</div>
+            <div className="m-2 p-2 w-[18rem] bg-white rounded-md border-gray-200 border-2">
+              {item.title}
+            </div>
             <div>
               {item.courses.map(({ id, title, catalogCode, description, creditHours }, index) => {
                 return (
@@ -62,11 +87,17 @@ export default function DraggableItemContainer({
       </Droppable>
     );
   });
+  React.useEffect(() => console.log('Results', results));
+
+  const classes = useStyles();
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="h-full p-8 flex flex-nowrap overflow-x-auto">
-        {listItems}
+      <div className="relative h-full ">
+        <div className=" flex flex-row overflow-x-scroll">
+          <CourseSelector results={results} updateQuery={updateQuery} />
+          {listItems}
+        </div>
         {children}
       </div>
     </DragDropContext>
@@ -132,6 +163,7 @@ export function getRecentSemesterMetadata(semesters: Semester[]) {
 export function useDraggableItemContainer(
   items: Semester[],
   onPersistChanges: (data: { semesters: Record<string, Semester> }) => void,
+  getResults: () => any[],
 ) {
   // Object mapping semester code to each semester
   // Used to maange state of the degree planner
@@ -343,8 +375,28 @@ export function useDraggableItemContainer(
    * @param param0
    * @returns
    */
-  const handleOnDragEnd = ({ source, destination }: DropResult) => {
+  const handleOnDragEnd = ({ draggableId, source, destination }: DropResult) => {
+    console.log('TEST', draggableId);
     if (destination) {
+      // Check if dragged from CourseSelector
+      if (source.droppableId === 'selector') {
+        const results = getResults();
+        console.log(results, 'RESULTS');
+        const course = JSON.parse(JSON.stringify(results[source.index]));
+        course.id = uuid();
+        console.log('COURSE', course);
+
+        // Update the destination semester's courses
+        const newSemesters = lists.semesters;
+        const clonedDestination = Array.from(newSemesters[destination.droppableId].courses);
+        clonedDestination.splice(destination.index, 0, course);
+        newSemesters[destination.droppableId] = {
+          ...newSemesters[destination.droppableId],
+          courses: clonedDestination,
+        };
+        setLists({ semesters: newSemesters });
+        return;
+      }
       const sourceId = source.droppableId;
       const destinationId = destination.droppableId;
       const sourceIndex = source.index;

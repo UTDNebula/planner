@@ -115,7 +115,8 @@ function CourseCard(
   // TODO: Remove need for silly null/undefined checks
   const hoursText = pluralize(creditHours, 'credit hour', 3);
   const workloadText = pluralize(estimatedWorkload, 'hour');
-  const creditHoursText = `${hoursText} | Est. ${workloadText}/week`;
+  // const creditHoursText = `${hoursText} | Est. ${workloadText}/week`;
+  const creditHoursText = `${hoursText}`;
 
   // TODO: Find a more robust way of doing this.
   // TODO: Only show outlines on desktop.
@@ -132,8 +133,8 @@ function CourseCard(
     <article ref={ref} className={rootClasses} {...otherProps}>
       <div className="flex">
         <div className="flex-1">
-          <div className="text-headline6 font-bold">{code}</div>
-          <div className="text-subtitle1 font-bold">{title}</div>
+          <div className="text-lg font-bold">{code}</div>
+          <div className="text-sm font-bold">{title}</div>
         </div>
         <div className="flex-0">
           <IconButton onClick={showCardOptions}>
@@ -141,9 +142,9 @@ function CourseCard(
           </IconButton>
         </div>
       </div>
-      <div className="text-body2 break-words">{description}</div>
-      <div className="mt-1">
-        <span className="text-body2">{creditHoursText}</span>
+      {/* <div className="text-body2 break-words">{description}</div> */}
+      <div className="">
+        <span className="text-sm">{creditHoursText}</span>
         <span>
           <Tooltip title={tooltipReason} placement="right-end">
             <InfoIcon className={classes.popupIcon} />

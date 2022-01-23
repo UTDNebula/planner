@@ -19,10 +19,10 @@ export default function SearchBar({ updateQuery }: SearchBarProps): JSX.Element 
   };
 
   return (
-    <Paper className="py-2 px-4" component="form">
+    <Paper className="sticky top-0 w-[19rem] flex flex-row justify-between" component="form">
       <InputBase
-        className="flex-1"
-        placeholder="Search catalog for courses"
+        className="flex-1 "
+        placeholder="Search courses"
         inputProps={{ 'aria-label': 'Search courses' }}
         value={query}
         onChange={handleQueryUpdate}

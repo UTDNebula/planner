@@ -18,10 +18,27 @@ import { usePlan } from '../../../modules/planner/hooks/usePlan';
 import CourseSelector from '../../../components/planner/CourseSelector/CourseSelector';
 import DUMMY_PLAN from '../../../data/add_courses.json';
 import { loadCourseAttempts } from '../../../modules/common/api/courseAttempts';
+import useSearch from '../../../components/search/search';
+import { loadCourses } from '../../../modules/common/api/courses';
+import { createStyles, Fab, makeStyles, Theme } from '@material-ui/core';
 
 interface PlanDetailPageProps {
   loadedPlan: StudentPlan;
 }
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    fabContainer: {
+      position: 'absolute',
+      bottom: theme.spacing(2),
+      right: theme.spacing(2),
+    },
+    fab: {
+      width: '180px',
+      margin: '2px',
+    },
+  }),
+);
 
 /**
  * A page that displays the details of a specific student academic plan.
@@ -30,6 +47,11 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
   const router = useRouter();
   const { planId: planQuery } = router.query;
   const planId = planQuery ? planQuery[0] : 'empty-plan';
+
+  const { results, updateQuery, getResults } = useSearch({
+    getData: loadCourses,
+    filterBy: 'catalogCode',
+  });
 
   // Load all required data
   const loadData = async () => {
@@ -64,7 +86,7 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
     coursesAddedHandler,
     setPersist,
     showAddCourseDroppable,
-  } = useDraggableItemContainer(plan.semesters, persistChanges);
+  } = useDraggableItemContainer(plan.semesters, persistChanges, getResults);
 
   /**
    * Re-renders the planner UI with the given plan.
@@ -83,6 +105,8 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
     setSection(tabIndex);
   };
 
+  const classes = useStyles();
+
   // This controls what to render based on what tab state
   let content;
   switch (section) {
@@ -91,32 +115,32 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
       break;
     case 1: // Plan
       content = (
-        <div className="h-full md:grid md:grid-cols-12">
-          {showLeftSidebar && (
-            <div className="md:col-span-3">
-              <CourseSelector
-                coursesToAddHandler={coursesToAddHandler}
-                coursesAddedHandler={coursesAddedHandler}
-              />
+        <div className="">
+          <DraggableItemContainer
+            items={semesters}
+            onDragEnd={handleOnDragEnd}
+            results={results}
+            updateQuery={updateQuery}
+          >
+            <div className={classes.fabContainer}>
+              <Fab
+                color="primary"
+                variant="extended"
+                onClick={() => removeSemester()}
+                className={classes.fab}
+              >
+                Remove Semester
+              </Fab>
+              <Fab
+                color="primary"
+                variant="extended"
+                onClick={() => addSemester()}
+                className={classes.fab}
+              >
+                Add Semester
+              </Fab>
             </div>
-          )}
-          <div className="h-full md:col-span-9">
-            <DraggableItemContainer items={semesters} onDragEnd={handleOnDragEnd}>
-              <AddSemesterTrigger
-                infoText={'Add another semester'}
-                onAddSemester={() => {
-                  addSemester();
-                }}
-              />{' '}
-              {/* Change component name */}
-              <AddSemesterTrigger
-                infoText={'Remove semester'}
-                onAddSemester={() => {
-                  removeSemester();
-                }}
-              />
-            </DraggableItemContainer>
-          </div>
+          </DraggableItemContainer>
         </div>
       );
       break;
@@ -125,7 +149,7 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
       break;
     case 3: // History
       content = (
-        <div className="min-h-full">
+        <div className="">
           <StudentHistoryView attempts={courseAttempts} />
         </div>
       );
@@ -136,7 +160,7 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
   }
 
   return (
-    <div className="h-screen w-full flex flex-col">
+    <div className="h-screen w-screen flex flex-col">
       <div className="flex-none">
         <PlanningToolbar
           sectionIndex={section}

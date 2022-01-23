@@ -7,6 +7,13 @@ import AddIcon from '@material-ui/icons/Add';
 import { Course, Semester } from '../../../modules/common/data';
 import { AddNewCourseDialog } from '../AddCourseDialog/NewAddCourseDialog';
 import DummyData from '../../../data/dummy_planner_course_data.json';
+import { loadCourses } from '../../../modules/common/api/courses';
+import useSearch from '../../search/search';
+import SearchBar from '../../search/SearchBar';
+import { Card } from './Card';
+import { Draggable, Droppable } from 'react-beautiful-dnd';
+import { v4 as uuid } from 'uuid';
+
 export type CourseSelectedAction = 'Add' | 'Remove';
 
 /**
@@ -18,8 +25,10 @@ export type CourseCategories = {
 };
 
 export type CourseSelectorProps = {
-  coursesToAddHandler: (cousesToAdd: Course[]) => void;
-  coursesAddedHandler: () => void;
+  // coursesToAddHandler: (cousesToAdd: Course[]) => void;
+  // coursesAddedHandler: () => void;
+  results: Course[];
+  updateQuery: (query: string) => void;
 };
 
 /**
@@ -34,8 +43,10 @@ export type CourseSelectorProps = {
  * Sidebar that allows the user to add courses to their degree plan
  */
 export default function CourseSelector({
-  coursesToAddHandler,
-  coursesAddedHandler,
+  // coursesToAddHandler,
+  // coursesAddedHandler,
+  results,
+  updateQuery,
 }: CourseSelectorProps) {
   const DUMMY_COURSES: CourseCategories[] = DummyData;
 
@@ -70,46 +81,85 @@ export default function CourseSelector({
     setCourses(newCourses);
   };
 
+  /* Temporary Code */
+
+  const handleSearch = (query: string) => {
+    updateQuery(query);
+  };
+
+  // Run updateQuery on dialog screen load
+  React.useEffect(() => {
+    updateQuery('');
+  }, []);
+
   return (
-    <div className="overflow-scroll h-screen">
-      <div className="pt-px border-solid border-gray-200 border-2">
-        {courses.map((elm, index) => (
-          <CardContainer
-            key={elm.category}
-            category={elm.category}
-            courses={elm.courses}
-            toggleCourseSelected={toggleCourseSelected}
-          />
-        ))}
-      </div>
-      <AddNewCourseDialog isOpen={isOpen} enableFocus={setIsOpen} addUserCourses={addUserCourses} />
-      <button onClick={() => setIsOpen(!isOpen)}> Search Courses </button>
-      {courseCount > 0 &&
-        !otherButton && ( // TODO: Properly style FAB (position absolute & on right hand side)
-          <Fab
-            className="relative"
-            variant="extended"
-            color="primary"
-            aria-label="add"
-            onClick={() => {
-              coursesToAddHandler(addCourses);
-              setOtherButton(true);
-            }}
-          >
-            Add Courses
-          </Fab>
+    <div className="flex flex-col h-[37rem] min-w-[19rem] p-0 m-0 border-4 overflow-y-scroll">
+      <Droppable key={'selector'} droppableId={'selector'} isDropDisabled={true}>
+        {(provided) => (
+          <div ref={provided.innerRef} {...provided.droppableProps}>
+            <SearchBar updateQuery={handleSearch} />
+            {results.map((elm, index) => {
+              return (
+                <Draggable key={elm.id} draggableId={elm.id} index={index}>
+                  {(provided) => (
+                    <div
+                      ref={provided.innerRef}
+                      className=""
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                    >
+                      <Card key={elm.id} props={elm} toggleCourseSelected={toggleCourseSelected} />
+                    </div>
+                  )}
+                </Draggable>
+              );
+            })}
+
+            {provided.placeholder}
+          </div>
         )}
-      {otherButton && (
-        <button
-          onClick={() => {
-            setOtherButton(false);
-            coursesAddedHandler();
-          }}
-        >
-          {' '}
-          Done{' '}
-        </button>
-      )}
+      </Droppable>
     </div>
+
+    // <div className="overflow-scroll h-screen">
+    //   <div className="pt-px border-solid border-gray-200 border-2">
+    //     {courses.map((elm, index) => (
+    //       <CardContainer
+    //         key={elm.category}
+    //         category={elm.category}
+    //         courses={elm.courses}
+    //         toggleCourseSelected={toggleCourseSelected}
+    //       />
+    //     ))}
+    //   </div>
+    //   <AddNewCourseDialog isOpen={isOpen} enableFocus={setIsOpen} addUserCourses={addUserCourses} />
+    //   <button onClick={() => setIsOpen(!isOpen)}> Search Courses </button>
+    //   {courseCount > 0 &&
+    //     !otherButton && ( // TODO: Properly style FAB (position absolute & on right hand side)
+    //       <Fab
+    //         className="relative"
+    //         variant="extended"
+    //         color="primary"
+    //         aria-label="add"
+    //         onClick={() => {
+    //           coursesToAddHandler(addCourses);
+    //           setOtherButton(true);
+    //         }}
+    //       >
+    //         Add Courses
+    //       </Fab>
+    //     )}
+    //   {otherButton && (
+    //     <button
+    //       onClick={() => {
+    //         setOtherButton(false);
+    //         coursesAddedHandler();
+    //       }}
+    //     >
+    //       {' '}
+    //       Done{' '}
+    //     </button>
+    //   )}
+    // </div>
   );
 }

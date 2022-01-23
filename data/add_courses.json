@@ -1,83 +1,17 @@
 [
-    {
-      "title": "Fall 2021",
-      "code": "2021f",
-      "courses": [
-        {
-          "id": "0001",
-          "title": "Test Course 1 2021f",
-          "catalogCode": "UNIV 1010",
-          "description": "Course description",
-          "creditHours": 0
-        },
-        {
-          "id": "0002",
-          "title": "Test Course 2 2021f",
-          "catalogCode": "UNIV 1011",
-          "description": "Course description",
-          "creditHours": 0
-        },
-        {
-          "id": "0003",
-          "title": "Test Course 3 2021f",
-          "catalogCode": "UNIV 1012",
-          "description": "Course description",
-          "creditHours": 0
-        }
-      ]
-    },
-    {
-      "title": "Spring 2022",
-      "code": "2022s",
-      "courses": [
-        {
-          "id": "0011",
-          "title": "Test Course 1 2022s",
-          "catalogCode": "UNIV 2010",
-          "description": "Course description",
-          "creditHours": 0
-        },
-        {
-          "id": "0012",
-          "title": "Test Course 2 2022s",
-          "catalogCode": "UNIV 2011",
-          "description": "Course description",
-          "creditHours": 0
-        },
-        {
-          "id": "0013",
-          "title": "Test Course 3 2022s",
-          "catalogCode": "UNIV 2012",
-          "description": "Course description",
-          "creditHours": 0
-        }
-      ]
-    },
-    {
-      "title": "Fall 2022",
-      "code": "2022f",
-      "courses": [
-        {
-          "id": "0021",
-          "title": "Test Course 1 2022f",
-          "catalogCode": "UNIV 3010",
-          "description": "Course description",
-          "creditHours": 0
-        },
-        {
-          "id": "0022",
-          "title": "Test Course 2 2022f",
-          "catalogCode": "UNIV 3011",
-          "description": "Course description",
-          "creditHours": 0
-        },
-        {
-          "id": "0023",
-          "title": "Test Course 3 2022f",
-          "catalogCode": "UNIV 3012",
-          "description": "Course description",
-          "creditHours": 0
-        }
-      ]
-    }
-  ]
+  {
+    "title": "Fall 2021",
+    "code": "2021f",
+    "courses": []
+  },
+  {
+    "title": "Spring 2022",
+    "code": "2022s",
+    "courses": []
+  },
+  {
+    "title": "Fall 2022",
+    "code": "2022f",
+    "courses": []
+  }
+]
