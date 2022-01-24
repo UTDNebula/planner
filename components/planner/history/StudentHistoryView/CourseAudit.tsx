@@ -788,7 +788,7 @@ export default function EnhancedTable() {
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
           onPageChange={() => console.log('Add code here')}
         />
       </Paper>
