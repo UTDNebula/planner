@@ -53,7 +53,7 @@ const userDataSlice = createSlice({
     updatePlan(state, action: PayloadAction<StudentPlan>) {
       const unique_id = state.user.id || 'guest';
       state.plans[action.payload.id] = action.payload;
-      const userDataSlice = { userDataSlice: state };
+      const userDataSlice = { userDataSlice: JSON.parse(JSON.stringify(state)) };
       if (unique_id !== 'guest') {
         const firestore = firebase.firestore();
         firestore.collection('users').doc(unique_id).set(userDataSlice);
