@@ -361,7 +361,7 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
     setRedirect(redirect);
   };
 
-  const isSignedIn = user.id !== 'anonymous';
+  const isSignedIn = user.id !== ('anonymous' && 'guest');
 
   const authContextValue: AuthContextState = {
     user,

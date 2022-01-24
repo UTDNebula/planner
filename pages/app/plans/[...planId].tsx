@@ -74,7 +74,7 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
   const { plan, loadPlan, exportPlan, handleSelectedPlanChange, persistChanges } = usePlan();
 
   const { title, setTitle, section, setSection, showTabs, hideTabs, shouldShowTabs } =
-    usePlanningToolbar();
+    usePlanningToolbar(0, plan.title);
 
   const {
     semesters,

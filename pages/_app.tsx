@@ -37,9 +37,9 @@ function SidebarLayout({ Component, pageProps }) {
     (isAuth && <Component {...pageProps} />) ||
     (isPlanner && <Component {...pageProps} />) || (
       <div className="flex w-full min-h-full">
-        <div className="h-full flex-1 max-w-2xl">
+        {/* <div className="h-full flex-1 max-w-2xl">
           <AppNavigation />
-        </div>
+        </div> */}
         <main className="h-full flex-auto bg-gray-100">
           <Component {...pageProps} />
         </main>
