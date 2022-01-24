@@ -34,6 +34,7 @@ interface SearchResultProps {
 export default function SearchResult({ course }: SearchResultProps): JSX.Element {
   return (
     <CourseCard
+      id={course.id}
       // onClick={() => {
       //   onAction(course.id);
       // }}

@@ -137,6 +137,7 @@ function SemesterBlock(
 
   const contents = courses.map(({ id, catalogCode, title, description, creditHours }, index) => (
     <CourseCard
+      id={id}
       key={id}
       title={title}
       code={catalogCode}

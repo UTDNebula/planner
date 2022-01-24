@@ -30,6 +30,7 @@ function CourseList(courses: Course[]): JSX.Element[] {
   return courses.map(({ id, catalogCode, title, description, creditHours }) => {
     return (
       <CourseCard
+        id={id}
         key={id}
         code={catalogCode}
         title={title}

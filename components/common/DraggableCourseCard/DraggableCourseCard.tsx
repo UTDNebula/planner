@@ -43,6 +43,7 @@ export default function DraggableCourseCard(props: DraggableCourseCardProps): JS
         //   <div className="text-caption">{creditHours} credit hours</div>
         // </article>
         <CourseCard
+          id={id}
           ref={provided.innerRef}
           code={code}
           title={title}
