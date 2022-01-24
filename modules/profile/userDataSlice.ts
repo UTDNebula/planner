@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import firebase from 'firebase';
-import { useUserPlanData } from '../../components/common/userPlanData';
 import { ServiceUser, users, CourseAttempt, useAuthContext } from '../auth/auth-context';
 import { StudentPlan, createSamplePlan } from '../common/data';
 
