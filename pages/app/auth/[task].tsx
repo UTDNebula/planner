@@ -40,14 +40,14 @@ export default function AuthPage(): JSX.Element {
   return (
     <>
       {/* <MarketingHeader /> */}
-      <div className="h-full w-full py-auto">
+      {/* <div className="h-full w-full py-auto">
         <section className="max-w-xl mx-auto">
           <AuthCard
             onForgetPassword={handleForgetPassword}
             onGoogleSignIn={handleSignUpWithGoogle}
           />
         </section>
-      </div>
+      </div> */}
     </>
   );
 }
