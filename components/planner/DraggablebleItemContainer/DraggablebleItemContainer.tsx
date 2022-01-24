@@ -12,13 +12,14 @@ import CourseCard from '../../common/CourseCard';
 import useSearch from '../../search/search';
 import CourseSelector from '../CourseSelector';
 import { v4 as uuid } from 'uuid';
-import { createStyles, Fab, makeStyles, Theme } from '@material-ui/core';
+import { createStyles, Fab, makeStyles, Menu, MenuItem, Theme } from '@material-ui/core';
 
 interface DraggableItemContainerProps {
   items: Semester[];
   onDragEnd: (result: DropResult) => void;
   results: any[];
   updateQuery: (query: string) => void;
+  removeCourse: (courseId: string, droppableId: string) => void;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -47,6 +48,7 @@ export default function DraggableItemContainer({
   results,
   updateQuery,
   children,
+  removeCourse,
 }: React.PropsWithChildren<DraggableItemContainerProps>) {
   const listItems = items.map((item) => {
     return (
@@ -54,7 +56,7 @@ export default function DraggableItemContainer({
         {(provided) => (
           <div
             ref={provided.innerRef}
-            className="inline-block w-[19rem] h-[37rem]"
+            className="inline-block w-[19rem h-[37rem]"
             {...provided.droppableProps}
           >
             <div className="m-2 p-2 w-[18rem] bg-white rounded-md border-gray-200 border-2">
@@ -66,6 +68,7 @@ export default function DraggableItemContainer({
                   <Draggable key={id} draggableId={id} index={index}>
                     {(provided) => (
                       <CourseCard
+                        id={id}
                         key={catalogCode}
                         ref={provided.innerRef}
                         code={catalogCode}
@@ -73,6 +76,8 @@ export default function DraggableItemContainer({
                         description={description}
                         creditHours={creditHours}
                         enabled
+                        onOptionRemove={removeCourse}
+                        droppableCode={item.code}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                       />
@@ -276,21 +281,18 @@ export function useDraggableItemContainer(
 
   /**
    * Allows users to remove courses from their schedule
-   * NOT IMPLEMENTED YET
    * @param itemId
    * @param listId
    */
-  const removeItemFromList = (itemId: string, listId: string) => {
-    // TODO: Find in list
-    // TODO: Use setLists to remove
-    const semesters = lists.semesters;
-    const semester = semesters[listId];
+  const removeItemFromList = (itemId: string, droppableId: string) => {
+    const newSemesters = JSON.parse(JSON.stringify(lists.semesters));
+    const semester = newSemesters[droppableId];
     const courseIndex = semester.courses.findIndex(({ id }) => id === itemId);
-    delete semester.courses[courseIndex];
-    semesters[listId] = semester;
+    semester.courses.splice(courseIndex, 1);
+    newSemesters[droppableId] = semester;
 
     setLists({
-      semesters,
+      semesters: newSemesters,
     });
 
     // if (persist) {
@@ -376,9 +378,9 @@ export function useDraggableItemContainer(
    * @returns
    */
   const handleOnDragEnd = ({ draggableId, source, destination }: DropResult) => {
-    console.log('TEST', draggableId);
     if (destination) {
       // Check if dragged from CourseSelector
+      // TODO: PUT THIS INTO ITS OWN FUNCTION
       if (source.droppableId === 'selector') {
         const results = getResults();
         console.log(results, 'RESULTS');
