@@ -26,7 +26,7 @@ function a11yProps(index: number) {
   };
 }
 
-const TABS = ['Plan', 'More'] as const;
+const TABS = ['Plan'] as const;
 
 export type SectionType = typeof TABS[number];
 
@@ -38,7 +38,7 @@ const useStyles = () => {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        height: '17vh',
+        height: '16vh',
       },
       menuButton: {
         marginRight: theme.spacing(2),

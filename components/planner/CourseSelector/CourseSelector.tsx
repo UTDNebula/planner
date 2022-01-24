@@ -93,7 +93,7 @@ export default function CourseSelector({
   }, []);
 
   return (
-    <div className="flex flex-col ml-4 max-h-[83vh] min-h-[83vh] min-w-[19rem] max-w-[19rem] p-0 mt-2 overflow-y-scroll">
+    <div className="flex flex-col items-center mx-4 max-h-[83vh] min-h-[83vh] min-w-[19rem] max-w-[19rem] p-0 mt-2 overflow-y-scroll">
       <Droppable key={'selector'} droppableId={'selector'} isDropDisabled={true}>
         {(provided) => (
           <div ref={provided.innerRef} {...provided.droppableProps}>

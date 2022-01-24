@@ -148,8 +148,8 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
         </div>
       );
       break;
-    case 1:
-      content = <div className="p-2 text-center">More features coming soon!</div>;
+    // case 1:
+    //   content = <div className="p-2 text-center">More features coming soon!</div>;
     // case 2: // Requirements
     //   content = <div className="p-2 text-center">Requirements</div>;
     //   break;
@@ -167,7 +167,7 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
   }
 
   return (
-    <div className="h-screen w-screen flex flex-col overflow-x-hidden overflow-y-hidden">
+    <div className="h-screen w-screen flex flex-col overflow-x-hidden overflow-y-auto">
       <div className="flex-none">
         <PlanningToolbar
           setPlanTitle={setTitle}
