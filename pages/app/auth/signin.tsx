@@ -4,6 +4,7 @@ import Link from 'next/link';
 import React from 'react';
 import { useAuthContext } from '../../../modules/auth/auth-context';
 import logo from '../../../public/logo.png';
+import googleLogo from '../../../public/googleLogo.png';
 import Image from 'next/image';
 
 /**
@@ -122,19 +123,13 @@ export default function AuthCard({ onForgetPassword, onGoogleSignIn }: AuthCardP
             Sign in
           </button>
           <div className="items-center mx-auto -mb-6 pb-1">
-            <h1 className="text-center text-xs text-gray-700">or sign in with</h1>
+            <h1 className="text-center text-s text-gray-700">or</h1>
           </div>
           <button
             onClick={handleSignInWithGoogle}
             className="appearance-none flex items-center justify-center block w-full bg-gray-100 text-gray-700 shadow border border-gray-500 rounded-lg py-3 px-3 leading-tight hover:bg-gray-200 hover:text-gray-700 focus:outline-none"
           >
-            <svg className="h-4 w-4 fill-current text-gray-700">
-              <img
-                className="w-16 h-6 mr-4"
-                src="http://assets.stickpng.com/images/580b57fcd9996e24bc43c51f.png"
-                alt="Google"
-              ></img>
-            </svg>
+            <h1 className="text-center text-xl text-blue-700">Sign in with Google</h1>
           </button>
         </form>
       </div>
