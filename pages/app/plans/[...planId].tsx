@@ -167,7 +167,7 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
   }
 
   return (
-    <div className="h-screen w-screen flex flex-col">
+    <div className="h-screen w-screen flex flex-col overflow-x-hidden overflow-y-hidden">
       <div className="flex-none">
         <PlanningToolbar
           setPlanTitle={setTitle}
