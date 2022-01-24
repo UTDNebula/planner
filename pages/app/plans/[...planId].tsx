@@ -82,6 +82,7 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
     removeSemester,
     updateSemesters,
     handleOnDragEnd,
+    removeItemFromList,
     coursesToAddHandler,
     coursesAddedHandler,
     setPersist,
@@ -121,6 +122,7 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
             onDragEnd={handleOnDragEnd}
             results={results}
             updateQuery={updateQuery}
+            removeCourse={removeItemFromList}
           >
             <div className={classes.fabContainer}>
               <Fab

@@ -1,5 +1,14 @@
 import React from 'react';
-import { createStyles, makeStyles, Theme, colors, Tooltip, IconButton } from '@material-ui/core';
+import {
+  createStyles,
+  makeStyles,
+  Theme,
+  colors,
+  Tooltip,
+  IconButton,
+  MenuItem,
+  Menu,
+} from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import { MoreVert } from '@material-ui/icons';
 
@@ -7,6 +16,11 @@ import { MoreVert } from '@material-ui/icons';
  * Component properties for a {@link CourseCard}.
  */
 export interface CourseCardProps {
+  /**
+   * Id of element
+   */
+
+  id: string;
   /**
    * The subject and number for this course.
    *
@@ -42,7 +56,9 @@ export interface CourseCardProps {
   /**
    * A callback triggered when an a course should be removed from its container.
    */
-  onOptionRemove?: (key: string) => void;
+  onOptionRemove?: (key: string, droppableId: string) => void;
+
+  droppableCode?: string;
 
   /**
    * A callback triggered when a course should be swapped with another one
@@ -89,12 +105,15 @@ function pluralize(count?: number, item?: string, defaultCount = 0) {
  */
 function CourseCard(
   {
+    id,
     code,
     title,
     description,
     creditHours,
     estimatedWorkload,
+    droppableCode,
     enabled = false,
+    onOptionRemove,
     ...otherProps
   }: // onOptionRemove = () => undefined,
   // onOptionSwap = () => undefined,
@@ -120,17 +139,41 @@ function CourseCard(
 
   // TODO: Find a more robust way of doing this.
   // TODO: Only show outlines on desktop.
-  const rootClasses = `p-4 m-2 bg-white rounded-md hover:shadow-md border-gray-200 border-2 ${
+  const rootClasses = `p-4 m-2 w-[18rem] bg-white rounded-md hover:shadow-md border-gray-200 border-2 ${
     enabled ? 'shadow-sm' : 'shadow-none'
   }`;
 
-  const showCardOptions = () => {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  const showCardOptions = (event: React.MouseEvent<HTMLButtonElement>) => {
     console.debug('Showing course options');
     // TODO(planner): Show options for a course
+    setAnchorEl(event.currentTarget);
+  };
+
+  const removeCourseHandler = () => {
+    onOptionRemove(id, droppableCode);
+    alert('WTF');
+    handleClose();
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
   return (
     <article ref={ref} className={rootClasses} {...otherProps}>
+      <div>
+        <Menu
+          id="simple-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={removeCourseHandler}>Remove Course</MenuItem>
+        </Menu>
+      </div>
       <div className="flex">
         <div className="flex-1">
           <div className="text-lg font-bold">{code}</div>
