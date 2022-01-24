@@ -16,6 +16,8 @@ import ProfileIcon from '../../common/toolbar/ProfileIcon';
 import { useAuthContext } from '../../../modules/auth/auth-context';
 import { useRouter } from 'next/router';
 import styles from './PlanningToolbar.module.css';
+import SettingsIcon from '@material-ui/icons/Settings';
+import SettingsDialog from './PlannerSettings';
 
 function a11yProps(index: number) {
   return {
@@ -52,12 +54,15 @@ const useStyles = () => {
  * Component properties for a Planning Toolbar.
  */
 interface PlanningToolbarProps {
+  planId: string;
   /**
    * The currently active tab index.
    */
   sectionIndex: number;
 
   planTitle: string;
+
+  setPlanTitle: (title: string) => void;
 
   shouldShowTabs: boolean;
 
@@ -80,8 +85,10 @@ interface PlanningToolbarProps {
  * A toolbar used for planning mode.
  */
 export default function PlanningToolbar({
+  planId,
   sectionIndex,
   planTitle,
+  setPlanTitle,
   shouldShowTabs: showTabs,
   onTabChange,
   onImportPlan = () => undefined,
@@ -104,6 +111,11 @@ export default function PlanningToolbar({
   };
 
   const classes = useStyles();
+
+  const [dialog, setDialog] = React.useState(false);
+  const handleSettings = () => {
+    setDialog(!dialog);
+  };
 
   return (
     <AppBar position="relative" className={classes.root}>
@@ -141,8 +153,17 @@ export default function PlanningToolbar({
             Import plan
           </Button>
         </label>
+        <IconButton onClick={handleSettings} className="">
+          <SettingsIcon color="inherit" className="text-white" />
+        </IconButton>
         {/* <ProfileIcon onSignIn={handleSignIn} onSignOut={handleSignOut} /> */}
       </Toolbar>
+      <SettingsDialog
+        planId={planId}
+        isOpen={dialog}
+        setOpen={setDialog}
+        updatePlanTitle={setPlanTitle}
+      />
       {showTabs && (
         <Tabs
           className="flex"

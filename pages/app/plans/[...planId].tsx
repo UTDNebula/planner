@@ -167,6 +167,8 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
     <div className="h-screen w-screen flex flex-col">
       <div className="flex-none">
         <PlanningToolbar
+          setPlanTitle={setTitle}
+          planId={plan.id}
           sectionIndex={section}
           planTitle={title}
           shouldShowTabs={shouldShowTabs}
