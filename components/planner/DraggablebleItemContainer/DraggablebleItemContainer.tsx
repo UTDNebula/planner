@@ -221,16 +221,6 @@ export function useDraggableItemContainer(
   /**
    * This adds the Droppable for adding courses into the DraggableItemContainer
    */
-  React.useEffect(() => {
-    const tempSemester: Semester = {
-      title: 'Add courses to degree plan here',
-      code: 'Add',
-      courses: coursesToAdd,
-    };
-    showAddCourseDroppable
-      ? updateSemesters([tempSemester, ...semesters])
-      : updateSemesters(semesters.filter((elm) => elm.code !== 'Add'));
-  }, [showAddCourseDroppable]);
 
   /**
    * Allows users to add an additional semester to their schedule
@@ -427,6 +417,7 @@ export function useDraggableItemContainer(
    * Reinitialize the semesters using the given list.
    */
   const updateSemesters = (newSemesters: Semester[]) => {
+    console.log('newSemesters', newSemesters);
     setLists({
       semesters: newSemesters.reduce((acc, semester) => {
         acc[semester.code] = semester;
@@ -438,6 +429,7 @@ export function useDraggableItemContainer(
   // Ensures that planner updates after "DONE" is selected
   React.useEffect(() => {
     if (persist) {
+      console.log('Lists', lists);
       onPersistChanges(lists);
     }
   }, [lists]);

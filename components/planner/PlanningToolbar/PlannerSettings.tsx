@@ -32,7 +32,7 @@ export default function SettingsDialog({
       const { title, major } = plan;
       setTitle(title);
       setMajor(major);
-      //   updatePlanTitle(title);
+      updatePlanTitle(title);
     }
   }, [planId]);
 

@@ -149,8 +149,11 @@ export function usePlan() {
     // allItems: Array<Course>,
   }) => {
     const semesterList = Object.values(data.semesters);
+
+    console.log('Plan', plan);
     const savedPlan = JSON.parse(JSON.stringify(plan));
     savedPlan.semesters = semesterList;
+    console.log('SavedPlan', savedPlan);
     // Save plan to redux & in state
     savePlan(planId, savedPlan);
     setPlan(savedPlan);

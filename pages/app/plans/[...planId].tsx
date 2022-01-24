@@ -53,10 +53,13 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
     filterBy: 'catalogCode',
   });
 
+  console.log('ID', planId);
+
   // Load all required data
   const loadData = async () => {
     if (router.isReady) {
       const newPlan = loadPlan(planId);
+      console.log('NEW PLAN', newPlan);
       setPersist(true);
       updateSemesters(newPlan.semesters);
       const courseAttempts: CourseAttempt[] = await loadCourseAttempts();
