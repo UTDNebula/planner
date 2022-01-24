@@ -42,7 +42,7 @@ export function Card({ props, toggleCourseSelected }: CardProps) {
   };
 
   return (
-    <Accordion className="w-[19rem]">
+    <Accordion className="w-full">
       <AccordionSummary
         className="flex flex-row"
         expandIcon={<InfoIcon />}
@@ -54,9 +54,9 @@ export function Card({ props, toggleCourseSelected }: CardProps) {
       </AccordionSummary>
 
       <AccordionDetails className="flex flex-col">
-        <div>{title}</div>
-        <div>{description}</div>
-        <div>{creditHours}</div>
+        <div className="text-xl">{title}</div>
+        <div className="text-md"> Description: </div>
+        <div className="text-xs">{description}</div>
       </AccordionDetails>
     </Accordion>
   );

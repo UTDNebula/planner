@@ -116,33 +116,32 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
       // break;
       // case 1: // Plan
       content = (
-        <div className="">
+        <div className="relative">
           <DraggableItemContainer
             items={semesters}
             onDragEnd={handleOnDragEnd}
             results={results}
             updateQuery={updateQuery}
             removeCourse={removeItemFromList}
-          >
-            <div className={classes.fabContainer}>
-              <Fab
-                color="primary"
-                variant="extended"
-                onClick={() => removeSemester()}
-                className={classes.fab}
-              >
-                Remove Semester
-              </Fab>
-              <Fab
-                color="primary"
-                variant="extended"
-                onClick={() => addSemester()}
-                className={classes.fab}
-              >
-                Add Semester
-              </Fab>
-            </div>
-          </DraggableItemContainer>
+          ></DraggableItemContainer>
+          <div className={classes.fabContainer}>
+            <Fab
+              color="primary"
+              variant="extended"
+              onClick={() => removeSemester()}
+              className={classes.fab}
+            >
+              Remove Semester
+            </Fab>
+            <Fab
+              color="primary"
+              variant="extended"
+              onClick={() => addSemester()}
+              className={classes.fab}
+            >
+              Add Semester
+            </Fab>
+          </div>
         </div>
       );
       break;

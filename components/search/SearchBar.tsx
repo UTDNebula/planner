@@ -19,7 +19,7 @@ export default function SearchBar({ updateQuery }: SearchBarProps): JSX.Element 
   };
 
   return (
-    <Paper className="sticky top-0 w-[19rem] flex flex-row justify-between" component="form">
+    <Paper className="sticky top-0 w-full flex flex-row justify-between z-20" component="form">
       <InputBase
         className="flex-1 "
         placeholder="Search courses"

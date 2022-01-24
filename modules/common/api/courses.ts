@@ -8,7 +8,7 @@ import { Course } from '../data';
  *
  * @param year The catalog year from which to load course data
  */
-export async function loadCourses(year = 2020): Promise<Course[]> {
+export async function loadDummyCourses(year = 2020): Promise<Course[]> {
   const courseData: { [key: string]: JSONCourseType } = await import(
     `../../../data/${year}-courses.json`
   );
@@ -23,6 +23,27 @@ export async function loadCourses(year = 2020): Promise<Course[]> {
       creditHours: Number(creditHours),
     };
   });
+}
+
+export async function loadCourses(): Promise<Course[]> {
+  const courses = await fetch('https://api.utdnebula.com/course/search')
+    .then((res) => res.json())
+    .then((data) => {
+      return data.map((course) => {
+        const { _id, title, credit_hours, description, subject_prefix, course_number } = course;
+        const catalogCode = subject_prefix + ' ' + course_number;
+        return {
+          id: _id,
+          title,
+          creditHours: credit_hours,
+          description,
+          catalogCode,
+        };
+      });
+    })
+    .catch((error) => alert('An error has occured'));
+
+  return courses;
 }
 
 type JSONCourseType = {
