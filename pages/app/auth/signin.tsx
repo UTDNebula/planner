@@ -80,9 +80,9 @@ export default function AuthCard({ onForgetPassword, onGoogleSignIn }: AuthCardP
   };
 
   return (
-    <div className="h-screen bg-white relative flex flex-col space-y-10 justify-center items-center">
+    <div className="h-screen bg-gradient-to-r from-purple-500 to-blue-500 relative flex flex-col space-y-10 justify-center items-center">
       <div className="bg-white md:shadow-lg shadow-none rounded p-6 w-96 ">
-        <div className="flex justify-center items-center">
+        <div className="mb-4 flex justify-center items-center">
           <Image src={logo} alt="Logo" width="80px" height="80px" className="rounded-full" />
         </div>
         <h1 className="text-center text-3xl mb-2 font-semibold leading-normal">Sign in</h1>
@@ -131,18 +131,18 @@ export default function AuthCard({ onForgetPassword, onGoogleSignIn }: AuthCardP
           >
             <h1 className="text-center text-xl text-blue-700">Sign in with Google</h1>
           </button>
+          <div className="flex place-content-center">
+            <p>
+              New to Nebula?
+              <a
+                className="ml-2 text-blue-700 font-semibold hover:bg-blue-200 hover:rounded-lg"
+                href="/app/auth/signup"
+              >
+                Sign Up
+              </a>
+            </p>
+          </div>
         </form>
-      </div>
-      <div className="flex place-content-center">
-        <p>
-          New to Nebula?
-          <a
-            className="text-blue-700 font-semibold hover:bg-blue-200 hover:p-5 p-2 rounded-lg"
-            href="/app/auth/signup"
-          >
-            Sign Up
-          </a>
-        </p>
       </div>
     </div>
   );
