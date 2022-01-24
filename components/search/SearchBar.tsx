@@ -27,7 +27,7 @@ export default function SearchBar({ updateQuery }: SearchBarProps): JSX.Element 
         value={query}
         onChange={handleQueryUpdate}
       />
-      <IconButton className="p-2" type="submit" aria-label="search">
+      <IconButton className="p-2" aria-label="search">
         <SearchIcon />
       </IconButton>
     </Paper>

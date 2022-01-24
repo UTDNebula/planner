@@ -153,7 +153,6 @@ function CourseCard(
 
   const removeCourseHandler = () => {
     onOptionRemove(id, droppableCode);
-    alert('WTF');
     handleClose();
   };
 

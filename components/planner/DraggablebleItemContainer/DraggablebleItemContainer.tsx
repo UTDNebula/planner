@@ -56,7 +56,7 @@ export default function DraggableItemContainer({
         {(provided) => (
           <div
             ref={provided.innerRef}
-            className="inline-block w-[19rem h-[37rem]"
+            className="inline-block w-[19rem]"
             {...provided.droppableProps}
           >
             <div className="m-2 p-2 w-[18rem] bg-white rounded-md border-gray-200 border-2">
@@ -98,11 +98,10 @@ export default function DraggableItemContainer({
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="relative h-full ">
-        <div className=" flex flex-row overflow-x-scroll">
-          <CourseSelector results={results} updateQuery={updateQuery} />
-          {listItems}
-        </div>
+      <div className="relative flex flex-row overflow-x-scroll">
+        <CourseSelector results={results} updateQuery={updateQuery} />
+        {listItems}
+
         {children}
       </div>
     </DragDropContext>

@@ -24,7 +24,7 @@ function a11yProps(index: number) {
   };
 }
 
-const TABS = ['Overview', 'Plan', 'Requirements', 'History'] as const;
+const TABS = ['Plan', 'More'] as const;
 
 export type SectionType = typeof TABS[number];
 
@@ -33,6 +33,10 @@ const useStyles = () => {
     return createStyles({
       root: {
         zIndex: 10,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        height: '17vh',
       },
       menuButton: {
         marginRight: theme.spacing(2),
@@ -103,13 +107,13 @@ export default function PlanningToolbar({
 
   return (
     <AppBar position="relative" className={classes.root}>
-      <Toolbar>
+      <Toolbar className="flex">
         <IconButton
           edge="start"
           className={classes.menuButton}
           color="inherit"
           aria-label="menu"
-          onClick={() => router.back()}
+          onClick={() => router.push('/app')}
         >
           <MenuIcon />
         </IconButton>
@@ -122,7 +126,7 @@ export default function PlanningToolbar({
             onExportPlan();
           }}
         >
-          Save plan
+          Export plan
         </Button>
         <input
           id="planUpload"
@@ -140,7 +144,12 @@ export default function PlanningToolbar({
         {/* <ProfileIcon onSignIn={handleSignIn} onSignOut={handleSignOut} /> */}
       </Toolbar>
       {showTabs && (
-        <Tabs value={sectionIndex} onChange={handleTabChange} aria-label="Degree plan sections">
+        <Tabs
+          className="flex"
+          value={sectionIndex}
+          onChange={handleTabChange}
+          aria-label="Degree plan sections"
+        >
           {TABS.map((tab, index) => {
             return <Tab key={tab + '-' + index} label={tab} {...a11yProps(index)} />;
           })}

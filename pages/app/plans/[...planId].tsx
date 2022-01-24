@@ -112,9 +112,9 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
   let content;
   switch (section) {
     case 0: // Overview
-      content = <div className="p-2 text-center">Plan Overview</div>;
-      break;
-    case 1: // Plan
+      // content = <div className="p-2 text-center">Plan Overview</div>;
+      // break;
+      // case 1: // Plan
       content = (
         <div className="">
           <DraggableItemContainer
@@ -146,16 +146,19 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
         </div>
       );
       break;
-    case 2: // Requirements
-      content = <div className="p-2 text-center">Requirements</div>;
-      break;
-    case 3: // History
-      content = (
-        <div className="">
-          <StudentHistoryView attempts={courseAttempts} />
-        </div>
-      );
-      break;
+    case 1:
+      content = <div className="p-2 text-center">More features coming soon!</div>;
+    // case 2: // Requirements
+    //   content = <div className="p-2 text-center">Requirements</div>;
+    //   break;
+    // case 3: // History
+    //   content = (
+    //     <div className="">
+    //       <StudentHistoryView attempts={courseAttempts} />
+    //     </div>
+    //   );
+    //   break;
+
     default:
       console.error('Unknown tab index');
       break;
