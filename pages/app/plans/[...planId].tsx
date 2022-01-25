@@ -122,7 +122,7 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
       // break;
       // case 1: // Plan
       content = (
-        <div className="relative">
+        <div className="relative overflow-x-hidden">
           <DraggableItemContainer
             items={semesters}
             onDragEnd={handleOnDragEnd}
