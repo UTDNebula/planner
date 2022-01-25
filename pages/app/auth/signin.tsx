@@ -3,7 +3,7 @@ import 'firebase/auth';
 import Link from 'next/link';
 import React from 'react';
 import { useAuthContext } from '../../../modules/auth/auth-context';
-import logo from '../../../public/logo.png';
+import logo from '../../../public/Nebula_Planner_Logo.png';
 import googleLogo from '../../../public/googleLogo.png';
 import Image from 'next/image';
 
@@ -83,7 +83,7 @@ export default function AuthCard({ onForgetPassword, onGoogleSignIn }: AuthCardP
     <div className="h-screen bg-gradient-to-r from-purple-500 to-blue-500 relative flex flex-col space-y-10 justify-center items-center">
       <div className="bg-white md:shadow-lg shadow-none rounded p-6 w-96 ">
         <div className="mb-4 flex justify-center items-center">
-          <Image src={logo} alt="Logo" width="80px" height="80px" className="rounded-full" />
+          <Image src={logo} alt="Logo" width="120px" height="120px" className="rounded-full" />
         </div>
         <h1 className="text-center text-3xl mb-2 font-semibold leading-normal">Sign in</h1>
         <p className="text-sm leading-normal">
