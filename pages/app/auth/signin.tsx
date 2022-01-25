@@ -76,11 +76,10 @@ export default function AuthCard({ onForgetPassword, onGoogleSignIn }: AuthCardP
   const router = useRouter();
 
   React.useEffect(() => {
-    alert(user.id);
     if (user.id !== 'guest') {
       router.push('/app');
     }
-  });
+  }, []);
   // const [inForgetPasswordFlow, setInForgetPasswordFlow] = React.useState(false);
 
   const handleEmailSignIn = (event) => {
