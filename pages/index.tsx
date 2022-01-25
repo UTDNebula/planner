@@ -20,7 +20,6 @@ export default function LandingPage(): JSX.Element {
           name="description"
           content="Nebula Web is a tool that lets you plan out your academic career."
         />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="p-8 bg-gray-200">
         <div className="max-w-4xl bg-white my-16 p-8 mx-auto shadow-md rounded-md text-center">

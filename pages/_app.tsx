@@ -74,7 +74,7 @@ export default function NebulaApp({ Component, pageProps }: AppProps): JSX.Eleme
         />
         <meta name="keywords" content="UTD, UT Dallas, degree planner" />
         <title>Nebula Web</title>
-
+        <link rel="icon" href="/Nebula_Planner_Logo.png" />
         <link rel="manifest" href="/manifest.json" />
 
         <link href="/icons/favicon-16x16.png" rel="icon" type="image/png" sizes="16x16" />
