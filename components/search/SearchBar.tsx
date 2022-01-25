@@ -22,7 +22,7 @@ export default function SearchBar({ updateQuery }: SearchBarProps): JSX.Element 
   return (
     <Paper className="sticky top-0 mx-1 flex flex-row justify-between z-20">
       <InputBase
-        className="flex-1 "
+        className="flex-1 px-4"
         placeholder="Search courses"
         inputProps={{ 'aria-label': 'Search courses' }}
         value={query}
