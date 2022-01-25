@@ -21,6 +21,8 @@ import { loadCourseAttempts } from '../../../modules/common/api/courseAttempts';
 import useSearch from '../../../components/search/search';
 import { loadCourses } from '../../../modules/common/api/courses';
 import { createStyles, Fab, makeStyles, Theme } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
 
 interface PlanDetailPageProps {
   loadedPlan: StudentPlan;
@@ -30,12 +32,13 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     fabContainer: {
       position: 'absolute',
-      bottom: theme.spacing(2),
+      top: theme.spacing(10),
       right: theme.spacing(2),
+      display: 'flex',
+      flexDirection: 'column',
     },
     fab: {
-      width: '180px',
-      margin: '2px',
+      margin: '8px',
     },
   }),
 );
@@ -128,21 +131,11 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
             removeCourse={removeItemFromList}
           ></DraggableItemContainer>
           <div className={classes.fabContainer}>
-            <Fab
-              color="primary"
-              variant="extended"
-              onClick={() => removeSemester()}
-              className={classes.fab}
-            >
-              Remove Semester
+            <Fab color="primary" onClick={() => addSemester()} className={classes.fab}>
+              <AddIcon />
             </Fab>
-            <Fab
-              color="primary"
-              variant="extended"
-              onClick={() => addSemester()}
-              className={classes.fab}
-            >
-              Add Semester
+            <Fab color="primary" onClick={() => removeSemester()} className={classes.fab}>
+              <RemoveIcon />
             </Fab>
           </div>
         </div>
@@ -167,7 +160,7 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
   }
 
   return (
-    <div className="h-screen w-screen flex flex-col overflow-x-hidden overflow-y-auto">
+    <div className="h-full w-screen flex flex-col overflow-x-hidden overflow-y-auto">
       <div className="flex-none">
         <PlanningToolbar
           setPlanTitle={setTitle}
@@ -188,7 +181,7 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
       <div className="flex-1">
         {/* <Toolbar /> */}
         {/* TODO: Fix margin*/}
-        <div className="h-full">{content}</div>
+        <div className="h-screen">{content}</div>
       </div>
     </div>
   );

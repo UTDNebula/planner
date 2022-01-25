@@ -38,7 +38,6 @@ const useStyles = () => {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        height: '16vh',
       },
       menuButton: {
         marginRight: theme.spacing(2),
@@ -164,7 +163,7 @@ export default function PlanningToolbar({
         setOpen={setDialog}
         updatePlanTitle={setPlanTitle}
       />
-      {showTabs && (
+      {/* {showTabs && (
         <Tabs
           className="flex"
           value={sectionIndex}
@@ -175,7 +174,7 @@ export default function PlanningToolbar({
             return <Tab key={tab + '-' + index} label={tab} {...a11yProps(index)} />;
           })}
         </Tabs>
-      )}
+      )} */}
     </AppBar>
   );
 }
