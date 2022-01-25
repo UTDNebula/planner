@@ -84,9 +84,9 @@ export default function AuthCard({ onForgetPassword, onGoogleSignIn }: AuthCardP
   const titleText = `${inSignUp ? 'Sign up for ' : 'Sign into '} Comet Planning`;
 
   return (
-    <div className="h-screen bg-white relative flex flex-col space-y-10 justify-center items-center">
+    <div className="h-screen bg-gradient-to-r from-purple-500 to-blue-500 relative flex flex-col space-y-10 justify-center items-center">
       <div className="bg-white md:shadow-lg shadow-none rounded p-6 w-96">
-        <div className="flex justify-center items-center">
+        <div className="mb-4 flex justify-center items-center">
           <Image src={logo} alt="Logo" width="80px" height="80px" className="rounded-full" />
         </div>
         <h1 className="text-center text-3xl mb-2 font-semibold leading-normal">
@@ -121,7 +121,7 @@ export default function AuthCard({ onForgetPassword, onGoogleSignIn }: AuthCardP
             <p>
               Already have an account?
               <a
-                className="text-blue-700 font-semibold hover:bg-blue-200 hover:p-5 p-2 rounded-lg"
+                className="ml-2 text-blue-700 font-semibold hover:bg-blue-200 hover:rounded-lg"
                 href="/app/auth/signin"
               >
                 Sign In
