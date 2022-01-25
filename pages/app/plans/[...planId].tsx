@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     fabContainer: {
       position: 'absolute',
-      top: theme.spacing(10),
+      top: theme.spacing(8),
       right: theme.spacing(2),
       display: 'flex',
       flexDirection: 'column',
@@ -160,7 +160,7 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
   }
 
   return (
-    <div className="h-full w-screen flex flex-col overflow-x-hidden overflow-y-auto">
+    <div className="h-full flex flex-col overflow-x-hidden overflow-y-auto">
       <div className="flex-none">
         <PlanningToolbar
           setPlanTitle={setTitle}
@@ -181,7 +181,7 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
       <div className="flex-1">
         {/* <Toolbar /> */}
         {/* TODO: Fix margin*/}
-        <div className="h-screen">{content}</div>
+        <div className="">{content}</div>
       </div>
     </div>
   );

@@ -6,6 +6,7 @@ import { useAuthContext } from '../../../modules/auth/auth-context';
 import logo from '../../../public/Nebula_Planner_Logo.png';
 import googleLogo from '../../../public/googleLogo.png';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 /**
  * Generate ARIA element attributes for a11y.
@@ -62,7 +63,7 @@ function TabPanel(props: TabPanelProps) {
  * A dialog that exposes different sign-in/sign-up methods.
  */
 export default function AuthCard({ onForgetPassword, onGoogleSignIn }: AuthCardProps): JSX.Element {
-  const { signInWithEmail, signInWithGoogle } = useAuthContext();
+  const { user, signInWithEmail, signInWithGoogle } = useAuthContext();
 
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -72,6 +73,14 @@ export default function AuthCard({ onForgetPassword, onGoogleSignIn }: AuthCardP
     signInWithGoogle();
   };
 
+  const router = useRouter();
+
+  React.useEffect(() => {
+    alert(user.id);
+    if (user.id !== 'guest') {
+      router.push('/app');
+    }
+  });
   // const [inForgetPasswordFlow, setInForgetPasswordFlow] = React.useState(false);
 
   const handleEmailSignIn = (event) => {
