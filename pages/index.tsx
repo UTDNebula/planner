@@ -29,7 +29,7 @@ export default function LandingPage(): JSX.Element {
           <div className="text-headline6">Tools to help you plan out your college career.</div>
           <div className="my-4">
             <button className="p-2 rounded-md shadow-md hover:shadow-lg bg-secondary font-bold text-button uppercase">
-              <Link href="/app/auth/signin">Get Started 🌌</Link>
+              <Link href="/app/auth/login">Get Started 🌌</Link>
             </button>
           </div>
         </div>
