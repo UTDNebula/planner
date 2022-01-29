@@ -2,13 +2,13 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
-import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { DegreeState } from '../../components/onboarding/DegreePicker';
 import DummyData from '../../data/dummy_onboarding.json';
 import DegreePickerGallery, {
   pickerValidate,
 } from '../../components/onboarding/DegreePickerGallery';
+import React from 'react';
 
 // TODO: Populate w/ real values
 // Array of values to choose from for form

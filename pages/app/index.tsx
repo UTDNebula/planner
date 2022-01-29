@@ -1,33 +1,17 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import { motion } from 'framer-motion';
-import Head from 'next/head';
-import { NoticeBlock } from '../../components/home/announcements/NoticeBlock';
-import UserWelcome from '../../components/home/UserWelcome';
-import UserPlanSheet from '../../components/home/UserPlanSheet';
-import useUserPlanSheetTransition from '../../components/home/userPlanSheetTransition';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../modules/common/store';
-import NavigationBar from '../../components/home/NavigationBar';
-import PlanCard from './PlanCard';
-import { v4 as uuid } from 'uuid';
-import { useRouter } from 'next/router';
 import AddIcon from '@material-ui/icons/Add';
-import { updateUser, updateAllUserData } from '../../modules/profile/userDataSlice';
-import { useAuthContext } from '../../modules/auth/auth-context';
 import firebase from 'firebase';
-
-const SHEET_START_ANIMATION = {
-  y: 0,
-  width: '100vw',
-  height: '100%',
-};
-
-const SHEET_END_ANIMATION = {
-  y: 'auto',
-  width: '72rem',
-  height: 'auto',
-};
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { v4 as uuid } from 'uuid';
+import NavigationBar from '../../components/home/NavigationBar';
+import useUserPlanSheetTransition from '../../components/home/userPlanSheetTransition';
+import UserWelcome from '../../components/home/UserWelcome';
+import { useAuthContext } from '../../modules/auth/auth-context';
+import { RootState } from '../../modules/common/store';
+import { updateAllUserData, updateUser } from '../../modules/profile/userDataSlice';
+import PlanCard from './PlanCard';
 
 /**
  * The home screen for the app.

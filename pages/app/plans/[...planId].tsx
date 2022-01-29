@@ -1,28 +1,21 @@
+import { createStyles, Fab, makeStyles, Theme } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import DraggableItemContainer, {
-  getUpdatedSemesterData,
   useDraggableItemContainer,
 } from '../../../components/planner/DraggablebleItemContainer';
 import PlanningToolbar, {
   usePlanningToolbar,
 } from '../../../components/planner/PlanningToolbar/PlanningToolbar';
-import SemesterNavigationDrawer, {
-  useSemesterNavigation,
-} from '../../../components/planner/SemesterNavigationDrawer/SemesterNavigationDrawer';
-import { Course, Grade, Semester, StudentPlan } from '../../../modules/common/data';
-import StudentHistoryView from '../../../components/planner/history/StudentHistoryView';
-import { CourseAttempt } from '../../../modules/auth/auth-context';
-import AddSemesterTrigger from '../../../components/planner/AddSemesterTrigger';
-import { usePlan } from '../../../modules/planner/hooks/usePlan';
-import CourseSelector from '../../../components/planner/CourseSelector/CourseSelector';
-import DUMMY_PLAN from '../../../data/add_courses.json';
-import { loadCourseAttempts } from '../../../modules/common/api/courseAttempts';
+import { useSemesterNavigation } from '../../../components/planner/SemesterNavigationDrawer/SemesterNavigationDrawer';
 import useSearch from '../../../components/search/search';
+import { CourseAttempt } from '../../../modules/auth/auth-context';
+import { loadCourseAttempts } from '../../../modules/common/api/courseAttempts';
 import { loadCourses } from '../../../modules/common/api/courses';
-import { createStyles, Fab, makeStyles, Theme } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
-import RemoveIcon from '@material-ui/icons/Remove';
+import { StudentPlan } from '../../../modules/common/data';
+import { usePlan } from '../../../modules/planner/hooks/usePlan';
 
 interface PlanDetailPageProps {
   loadedPlan: StudentPlan;
@@ -49,6 +42,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX.Element {
   const router = useRouter();
   const { planId: planQuery } = router.query;
+
   const planId = planQuery ? planQuery[0] : 'empty-plan';
 
   const { results, updateQuery, getResults } = useSearch({

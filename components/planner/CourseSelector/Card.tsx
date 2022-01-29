@@ -1,16 +1,5 @@
-import {
-  AccordionActions,
-  AccordionSummary,
-  Typography,
-  AccordionDetails,
-  Checkbox,
-  ButtonGroup,
-  makeStyles,
-  withStyles,
-} from '@material-ui/core';
+import { AccordionSummary, AccordionDetails, withStyles } from '@material-ui/core';
 import MuiAccordion from '@material-ui/core/Accordion';
-import { CourseCardProps } from '../../common/CourseCard';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { useState } from 'react';
 import InfoIcon from '@material-ui/icons/Info';
 import { CourseSelectedAction } from './CourseSelector';

@@ -1,9 +1,7 @@
 import React from 'react';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
-import UpdatesDialog from '../../components/updates/UpdatesDialog';
 import { ConsentInfo } from '../../components/onboarding/Disclaimer';
 
 export type PrivacyProps = {

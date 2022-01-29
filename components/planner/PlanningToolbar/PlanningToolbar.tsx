@@ -1,7 +1,5 @@
 import {
   AppBar,
-  Tabs,
-  Tab,
   IconButton,
   Toolbar,
   Typography,
@@ -12,7 +10,6 @@ import {
 } from '@material-ui/core';
 import React from 'react';
 import MenuIcon from '@material-ui/icons/ArrowBack';
-import ProfileIcon from '../../common/toolbar/ProfileIcon';
 import { useAuthContext } from '../../../modules/auth/auth-context';
 import { useRouter } from 'next/router';
 import styles from './PlanningToolbar.module.css';
@@ -102,7 +99,7 @@ export default function PlanningToolbar({
   const router = useRouter();
 
   const handleSignIn = () => {
-    router.push('/auth/signIn');
+    router.push('/auth/Login');
   };
 
   const handleSignOut = () => {

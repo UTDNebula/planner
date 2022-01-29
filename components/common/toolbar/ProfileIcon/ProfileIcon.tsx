@@ -112,7 +112,7 @@ export default function ProfileIcon(props: ProfileIconProps): JSX.Element {
             </MenuItem>,
           ]
         ) : (
-          <MenuItem component={Link} href="/app/auth/signIn">
+          <MenuItem component={Link} href="/app/auth/Login">
             <ListItemIcon>
               <ExitToApp />
             </ListItemIcon>

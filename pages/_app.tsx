@@ -10,7 +10,6 @@ import '@fontsource/roboto';
 import '../styles/globals.css';
 import { AuthProvider } from '../modules/auth/auth-context';
 import { useStore } from '../modules/common/store';
-import AppNavigation from '../components/common/AppNavigation';
 
 const config = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,

@@ -1,18 +1,9 @@
-import { Fab } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { CardContainer } from './CardContainer';
-import { CourseCardProps } from '../../common/CourseCard';
-import AddIcon from '@material-ui/icons/Add';
-import { Course, Semester } from '../../../modules/common/data';
-import { AddNewCourseDialog } from '../AddCourseDialog/NewAddCourseDialog';
+import React, { useState } from 'react';
+import { Course } from '../../../modules/common/data';
 import DummyData from '../../../data/dummy_planner_course_data.json';
-import { loadCourses } from '../../../modules/common/api/courses';
-import useSearch from '../../search/search';
 import SearchBar from '../../search/SearchBar';
 import { Card } from './Card';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
-import { v4 as uuid } from 'uuid';
 
 export type CourseSelectedAction = 'Add' | 'Remove';
 

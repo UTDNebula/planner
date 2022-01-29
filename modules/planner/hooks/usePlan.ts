@@ -1,8 +1,7 @@
 import React from 'react';
 import { Semester, StudentPlan } from '../../common/data';
 import DUMMY_PLAN from '../../../data/add_courses.json';
-import { useDispatch, useSelector, useStore } from 'react-redux';
-import { RootState } from '../../common/store';
+import { useDispatch, useStore } from 'react-redux';
 import { updatePlan } from '../../profile/userDataSlice';
 
 /**

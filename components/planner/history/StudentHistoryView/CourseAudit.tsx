@@ -15,8 +15,6 @@ import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import TextField from '@material-ui/core/TextField';
@@ -24,13 +22,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
-import {
-  Course,
-  SemesterCode,
-  Grade,
-  GPA_MAPPINGS,
-  SEMESTER_CODE_MAPPINGS,
-} from '../../../../modules/common/data';
+import { Grade, GPA_MAPPINGS } from '../../../../modules/common/data';
 import { CourseAttempt } from '../../../../modules/auth/auth-context';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateCourseAudit } from '../../../../modules/profile/userDataSlice';

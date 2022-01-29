@@ -62,7 +62,7 @@ export default function AppToolbar(props: AppToolbarProps): JSX.Element {
   };
 
   const handleSignIn = () => {
-    router.push('/auth/signIn');
+    router.push('/auth/login');
   };
 
   const handleBackButtonClick = () => {

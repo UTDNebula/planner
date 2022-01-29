@@ -1,5 +1,4 @@
 import { Box, Typography } from '@material-ui/core';
-import 'firebase/auth';
 import React from 'react';
 import { useAuthContext } from '../../modules/auth/auth-context';
 import Image from 'next/image';

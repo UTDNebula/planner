@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { DegreeState } from '../../components/onboarding/DegreePicker';
 import Navigation, { NavigationStateProps } from '../../components/onboarding/Navigation';
 import { CreditState } from '../../components/onboarding/TransferCreditGallery';
 import { useAuthContext } from '../../modules/auth/auth-context';
@@ -7,7 +6,7 @@ import { HonorsIndicator } from '../../modules/common/types';
 import Disclaimer from '../Onboarding_Pages/disclaimer';
 import PageOne, { PageOneTypes } from '../Onboarding_Pages/pg_1';
 import PageTwo, { PageTwoTypes } from '../Onboarding_Pages/pg_2';
-import PageThree, { PageThreeTypes } from '../Onboarding_Pages/pg_3';
+import PageThree from '../Onboarding_Pages/pg_3';
 import Privacy from '../Onboarding_Pages/privacy';
 import Welcome from '../Onboarding_Pages/welcome';
 

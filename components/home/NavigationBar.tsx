@@ -9,7 +9,7 @@ export default function HomeNavigationBar() {
   const router = useRouter();
 
   const authItem = {
-    route: isSignedIn ? '/app/auth/signOut' : '/app/auth/signIn',
+    route: isSignedIn ? '/app/auth/signOut' : '/app/auth/Login',
     label: isSignedIn ? 'Sign out' : 'Sign in',
   };
 

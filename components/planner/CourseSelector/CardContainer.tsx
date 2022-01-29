@@ -1,7 +1,6 @@
 import { Accordion, AccordionSummary, Typography, AccordionDetails } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Course } from '../../../modules/common/data';
-import { CourseCardProps } from '../../common/CourseCard';
 import { Card } from './Card';
 import { CourseSelectedAction } from './CourseSelector';
 

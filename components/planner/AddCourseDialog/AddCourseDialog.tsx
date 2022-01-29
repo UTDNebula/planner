@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import {
   Button,
   Checkbox,
@@ -15,6 +14,7 @@ import {
 import CourseSearchBox from '../../search/CourseSearchBox/CourseSearchBox';
 import { Course } from '../../../modules/common/data';
 import { DestinationData } from '../../../modules/planner/hooks/selectableCourseDialog';
+import React from 'react';
 
 /**
  * Component properties for a AddCourseDialog.

@@ -1,6 +1,4 @@
-import React, { useEffect } from 'react';
 import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
-import { loadCourses } from '../../../modules/common/api/courses';
 import {
   Course,
   Semester,
@@ -9,10 +7,10 @@ import {
 } from '../../../modules/common/data';
 import { reorderList } from '../../../modules/planner/hooks/planManipulatorUtils';
 import CourseCard from '../../common/CourseCard';
-import useSearch from '../../search/search';
 import CourseSelector from '../CourseSelector';
 import { v4 as uuid } from 'uuid';
-import { createStyles, Fab, makeStyles, Menu, MenuItem, Theme } from '@material-ui/core';
+import { createStyles, makeStyles, Theme } from '@material-ui/core';
+import React from 'react';
 
 interface DraggableItemContainerProps {
   items: Semester[];
