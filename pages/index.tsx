@@ -9,6 +9,7 @@ import ServiceName from '../components/common/ServiceName';
  *
  * This is mostly for marketing.
  *
+ * TODO: Make landing page more exciting!
  * TODO: also show some lightweight interactive demos since why not.
  */
 export default function LandingPage(): JSX.Element {
@@ -34,7 +35,7 @@ export default function LandingPage(): JSX.Element {
           </div>
         </div>
       </div>
-      {/* <MaintainerSection /> */}
+      {/* TODO: Implement this <MaintainerSection /> */}
       <Footer />
     </div>
   );

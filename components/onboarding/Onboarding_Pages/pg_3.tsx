@@ -1,6 +1,4 @@
-import TransferCreditGallery, {
-  CreditState,
-} from '../../components/onboarding/TransferCreditGallery';
+import TransferCreditGallery, { CreditState } from '../TransferCreditGallery';
 
 export type PageThreeTypes = {
   creditState: CreditState[];

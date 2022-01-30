@@ -3,11 +3,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import { useRouter } from 'next/router';
-import { DegreeState } from '../../components/onboarding/DegreePicker';
-import DummyData from '../../data/dummy_onboarding.json';
-import DegreePickerGallery, {
-  pickerValidate,
-} from '../../components/onboarding/DegreePickerGallery';
+import { DegreeState } from '../DegreePicker';
+import DummyData from '../../../data/dummy_onboarding.json';
+import DegreePickerGallery, { pickerValidate } from '../DegreePickerGallery';
 import React from 'react';
 
 // TODO: Populate w/ real values

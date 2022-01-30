@@ -5,6 +5,7 @@ type Maintainer = {
   image: string;
 };
 
+// TODO: Update current maintainers
 const currentMaintainers = [
   {
     name: 'Willie Chalmers III',
@@ -41,6 +42,8 @@ const generateProfiles = (maintainers: Maintainer[]) => {
 };
 /**
  * A description and list of project maintainers.
+ * NOTE: This component is currently unused
+ * TODO: Either use or remove this component by Planner v1
  */
 export default function MaintainerSection() {
   return (

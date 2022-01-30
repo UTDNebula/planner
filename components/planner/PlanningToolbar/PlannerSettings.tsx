@@ -7,8 +7,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../modules/common/store';
-import { updatePlan } from '../../../modules/profile/userDataSlice';
+import { RootState } from '../../../modules/redux/store';
+import { updatePlan } from '../../../modules/redux/userDataSlice';
 
 export type SettingsDialogProps = {
   planId: string;

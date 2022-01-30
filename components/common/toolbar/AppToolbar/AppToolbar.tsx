@@ -34,6 +34,10 @@ interface AppToolbarProps {
   // TODO: Maybe use context for viewing/planning modes
 }
 
+/**
+ * Note: UNUSED component
+ * TODO: Either use or remove for Planner v1
+ */
 export default function AppToolbar(props: AppToolbarProps): JSX.Element {
   const { shouldShowProfile } = props;
 

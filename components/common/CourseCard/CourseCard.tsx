@@ -1,14 +1,5 @@
 import React from 'react';
-import {
-  createStyles,
-  makeStyles,
-  Theme,
-  colors,
-  Tooltip,
-  IconButton,
-  MenuItem,
-  Menu,
-} from '@material-ui/core';
+import { Tooltip, IconButton, MenuItem, Menu } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import { MoreVert } from '@material-ui/icons';
 
@@ -17,7 +8,7 @@ import { MoreVert } from '@material-ui/icons';
  */
 export interface CourseCardProps {
   /**
-   * Id of element
+   * Id of course
    */
 
   id: string;
@@ -66,29 +57,6 @@ export interface CourseCardProps {
   onOptionSwap?: (key: string) => void;
 }
 
-const useStyles = () => {
-  return makeStyles((theme: Theme) => {
-    return createStyles({
-      root: {
-        marginTop: theme.spacing(1),
-        marginBottom: theme.spacing(1),
-        padding: 2,
-      },
-      courseTitle: {
-        fontSize: 12,
-      },
-      courseCode: {
-        fontSize: 16,
-      },
-      popupIcon: {
-        marginLeft: theme.spacing(0.5),
-        fontSize: 16,
-        color: colors.grey[700],
-      },
-    });
-  })();
-};
-
 /**
  * Return a string version of the pluralized item based on a count.
  *
@@ -115,13 +83,9 @@ function CourseCard(
     enabled = false,
     onOptionRemove,
     ...otherProps
-  }: // onOptionRemove = () => undefined,
-  // onOptionSwap = () => undefined,
-  CourseCardProps,
+  }: CourseCardProps,
   ref: React.Ref<HTMLElement>,
 ) {
-  const classes = useStyles();
-
   let tooltipReason;
   if (estimatedWorkload === undefined) {
     estimatedWorkload = 3 * creditHours;
@@ -133,8 +97,6 @@ function CourseCard(
 
   // TODO: Remove need for silly null/undefined checks
   const hoursText = pluralize(creditHours, 'credit hour', 3);
-  const workloadText = pluralize(estimatedWorkload, 'hour');
-  // const creditHoursText = `${hoursText} | Est. ${workloadText}/week`;
   const creditHoursText = `${hoursText}`;
 
   // TODO: Find a more robust way of doing this.
@@ -189,7 +151,7 @@ function CourseCard(
         <span className="text-sm">{creditHoursText}</span>
         <span>
           <Tooltip title={tooltipReason} placement="right-end">
-            <InfoIcon className={classes.popupIcon} />
+            <InfoIcon className="mr-2 text-[16px] text-gray-700" />
           </Tooltip>
         </span>
       </div>

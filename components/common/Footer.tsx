@@ -3,6 +3,7 @@ import Link from 'next/link';
 import ServiceName from './ServiceName';
 
 /**
+ * TODO: Update links
  * A footer that displays useful site links.
  */
 export default function Footer(): JSX.Element {

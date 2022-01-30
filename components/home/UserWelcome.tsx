@@ -2,14 +2,6 @@ import React from 'react';
 import { useAuthContext } from '../../modules/auth/auth-context';
 
 /**
- * Return a greeting based on the current user state.
- */
-// function fetchGreeting() {
-//   // TODO: Return a dynamic, witty message.
-//   return 'Start planning your degree today!';
-// }
-
-/**
  * A component that displays a greeting and the user's name.
  */
 export default function UserWelcome(): JSX.Element {

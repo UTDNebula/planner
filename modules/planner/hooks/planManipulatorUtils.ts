@@ -1,35 +1,3 @@
-import { DraggableLocation } from 'react-beautiful-dnd';
-
-/**
- * Move a course between semesters.
- *
- * @param source
- * @param destination
- * @param droppableSource
- * @param droppableDestination
- */
-export function moveDroppableCourse<T>(
-  source: Array<T>,
-  destination: Array<T>,
-  droppableSource: DraggableLocation,
-  droppableDestination: DraggableLocation,
-): DroppableCourseData<T> {
-  const clonedSource = Array.from(source);
-  const clonedDestination = Array.from(destination);
-  const [removed] = clonedSource.splice(droppableSource.index, 1);
-
-  clonedDestination.splice(droppableDestination.index, 0, removed);
-
-  return {
-    [droppableSource.droppableId]: clonedSource,
-    [droppableDestination.droppableId]: clonedDestination,
-  };
-}
-
-type DroppableCourseData<T> = {
-  [droppableSourceId: string]: Array<T>;
-};
-
 /**
  * Move the item at the given start index to the given end index.
  *

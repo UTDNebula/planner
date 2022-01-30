@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { useRouter } from 'next/router';
-import { ConsentInfo } from '../../components/onboarding/Disclaimer';
+import { ConsentInfo } from '../Disclaimer';
 
 export type DisclaimerProps = {
   handleChange: React.Dispatch<React.SetStateAction<ConsentInfo>>;

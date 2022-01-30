@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
-import { ServiceUser } from '../../modules/auth/auth-context';
-import { StudentPlan } from '../../modules/common/data';
-import { RootState } from '../../modules/common/store';
+import { ServiceUser } from '../auth/auth-context';
+import { StudentPlan } from '../common/data';
+import { RootState } from './store';
 
 export default function useUserPlanData(user: ServiceUser): UserPlanData {
   const { plans, planIds } = useSelector((state: RootState) => state.userData);

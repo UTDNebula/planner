@@ -42,6 +42,10 @@ export type ConsentInfo = {
  * A preamble before onboarding that explains the limitations of the service.
  *
  * This contains a general disclaimer for the service.
+ *
+ * NOTE: CURRENTLY UNUSED. However, I am keeping this in the repo because
+ * the information here may be useful in the future.
+ * TODO: Either use or remove this component by Planner v1
  */
 export default function Disclaimer({ onConsent }: DisclaimerProps): JSX.Element {
   const [consentState, setConsentState] = React.useState({

@@ -5,6 +5,8 @@ import ServiceName from './ServiceName';
 /**
  * A header to be used on non-app pages.
  *
+ * Note: UNUSED
+ * TODO: Either use or remove for Planner v1
  * TODO: Unify with main AppToolbar
  */
 export default function MarketingHeader(): JSX.Element {

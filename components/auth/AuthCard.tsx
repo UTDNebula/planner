@@ -18,6 +18,7 @@ type AuthCardProps = {
 
 /**
  * A dialog that exposes different sign-in/sign-up methods.
+ * TODO: Add ability to reset passwords (do once Nebula Profile comes out)
  */
 export default function AuthCard({ authState }: AuthCardProps): JSX.Element {
   const router = useRouter();

@@ -2,7 +2,7 @@ import React from 'react';
 import { Semester, StudentPlan } from '../../common/data';
 import DUMMY_PLAN from '../../../data/add_courses.json';
 import { useDispatch, useStore } from 'react-redux';
-import { updatePlan } from '../../profile/userDataSlice';
+import { updatePlan } from '../../redux/userDataSlice';
 
 /**
  * A utility hook that exposes callbacks to handle manipulating the StudentPlan.

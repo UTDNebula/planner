@@ -25,7 +25,7 @@ import FormControl from '@material-ui/core/FormControl';
 import { Grade, GPA_MAPPINGS } from '../../../../modules/common/data';
 import { CourseAttempt } from '../../../../modules/auth/auth-context';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateCourseAudit } from '../../../../modules/profile/userDataSlice';
+import { updateCourseAudit } from '../../../../modules/redux/userDataSlice';
 
 const ROWS_PER_PAGE = [5, 10, 25];
 const NOT_DENSE_PADDING = 53;

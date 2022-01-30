@@ -9,8 +9,14 @@ import type { AppProps } from 'next/app';
 import '@fontsource/roboto';
 import '../styles/globals.css';
 import { AuthProvider } from '../modules/auth/auth-context';
-import { useStore } from '../modules/common/store';
+import { useStore } from '../modules/redux/store';
+import AppNavigation from '../components/common/AppNavigation';
 
+/**
+ * Firebase configuration info
+ * Note: You must have a .env.local file with
+ * your own Firebase keys in order to run this project
+ */
 const config = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
@@ -25,25 +31,43 @@ if (!firebase.apps.length) {
   firebase.initializeApp(config);
 }
 
-function SidebarLayout({ Component, pageProps }) {
+/**
+ * Determines if the page at a specific route needs the AppNavigation component
+ * @param pathname page route
+ * @returns boolean
+ */
+const needAppNav = (pathname: string): boolean => {
+  const routesList = ['/app/onboarding', '/app/auth', '/app/plans/'];
+  if (pathname === '/') {
+    return true;
+  }
+  for (let i = 0; i < routesList.length; i++) {
+    if (pathname.startsWith(routesList[i])) {
+      return true;
+    }
+  }
+  return false;
+};
+
+/**
+ * Renders page layout for all pages
+ * TODO: Consider unifying all NavigationBars here
+ */
+function PageLayout({ Component, pageProps }) {
   const router = useRouter();
-  const isOnboarding = router.route.startsWith('/app/onboarding');
-  const isLanding = router.route === '/';
-  const isAuth = router.route.startsWith('/app/auth/');
-  const isPlanner = router.route.startsWith('/app/plans/'); // TODO: Make this routing more robust.
-  const content = (isLanding && <Component {...pageProps} />) ||
-    (isOnboarding && <Component {...pageProps} />) ||
-    (isAuth && <Component {...pageProps} />) ||
-    (isPlanner && <Component {...pageProps} />) || (
-      <div className="flex w-full min-h-full">
-        {/* <div className="h-full flex-1 max-w-2xl">
-          <AppNavigation />
-        </div> */}
-        <main className="h-full flex-auto bg-gray-100">
-          <Component {...pageProps} />
-        </main>
+
+  const content = needAppNav(router.pathname) ? (
+    <Component {...pageProps} />
+  ) : (
+    <div className="flex w-full min-h-full">
+      <div className="h-full max-w-2xl">
+        <AppNavigation />
       </div>
-    );
+      <main className="h-full flex-1 bg-gray-100">
+        <Component {...pageProps} />
+      </main>
+    </div>
+  );
   return content;
 }
 
@@ -83,7 +107,7 @@ export default function NebulaApp({ Component, pageProps }: AppProps): JSX.Eleme
       </Head>
       <Provider store={store}>
         <PersistGate loading={<p>Loading...</p>} persistor={persistor}>
-          <AnimateSharedLayout>{SidebarLayout({ Component, pageProps })}</AnimateSharedLayout>
+          <AnimateSharedLayout>{PageLayout({ Component, pageProps })}</AnimateSharedLayout>
         </PersistGate>
       </Provider>
     </AuthProvider>

@@ -7,9 +7,9 @@ import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormLabel from '@material-ui/core/FormLabel';
 import { FormGroup, FormControlLabel } from '@material-ui/core';
-import DummyData from '../../data/dummy_onboarding.json';
-import { HonorsIndicator } from '../../modules/common/types';
-import { HONORS_INDICATOR_LABELS } from '../../modules/common/data-utils';
+import DummyData from '../../../data/dummy_onboarding.json';
+import { HonorsIndicator } from '../../../modules/common/types';
+import { HONORS_INDICATOR_LABELS } from '../../../modules/common/data-utils';
 import React from 'react';
 
 // Array of values to choose from for form

@@ -48,6 +48,7 @@ export interface UserDetailsBlockProps {
   gpa: number;
 }
 
+// TODO: UNUSED; either remove or use for Planner v1
 export default function UserDetailsBlock(props: UserDetailsBlockProps): JSX.Element {
   const {
     name,

@@ -3,12 +3,12 @@ import Navigation, { NavigationStateProps } from '../../components/onboarding/Na
 import { CreditState } from '../../components/onboarding/TransferCreditGallery';
 import { useAuthContext } from '../../modules/auth/auth-context';
 import { HonorsIndicator } from '../../modules/common/types';
-import Disclaimer from '../Onboarding_Pages/disclaimer';
-import PageOne, { PageOneTypes } from '../Onboarding_Pages/pg_1';
-import PageTwo, { PageTwoTypes } from '../Onboarding_Pages/pg_2';
-import PageThree from '../Onboarding_Pages/pg_3';
-import Privacy from '../Onboarding_Pages/privacy';
-import Welcome from '../Onboarding_Pages/welcome';
+import Disclaimer from '../../components/onboarding/Onboarding_Pages/disclaimer';
+import PageOne, { PageOneTypes } from '../../components/onboarding/Onboarding_Pages/pg_1';
+import PageTwo, { PageTwoTypes } from '../../components/onboarding/Onboarding_Pages/pg_2';
+import PageThree from '../../components/onboarding/Onboarding_Pages/pg_3';
+import Privacy from '../../components/onboarding/Onboarding_Pages/privacy';
+import Welcome from '../../components/onboarding/Onboarding_Pages/welcome';
 
 /**
  * The first onboarding page for the application.

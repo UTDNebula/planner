@@ -2,7 +2,7 @@ import React from 'react';
 import { Close, KeyboardArrowUp } from '@material-ui/icons';
 import { Button, IconButton } from '@material-ui/core';
 import Link from 'next/link';
-import useUserPlanData from '../common/userPlanData';
+import useUserPlanData from '../../modules/redux/userPlanData';
 import CourseCard from '../common/CourseCard';
 import { useAuthContext } from '../../modules/auth/auth-context';
 import { Course } from '../../modules/common/data';

@@ -1,9 +1,7 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import catalogDataReducer from '../planner/plannerDataSlice';
-import userDataReducer from '../profile/userDataSlice';
+import userDataReducer from './userDataSlice';
 
 const rootReducer = combineReducers({
-  catalogData: catalogDataReducer,
   userData: userDataReducer,
 });
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import Disclaimer, { ConsentInfo } from '../../components/onboarding/Disclaimer';
+import Disclaimer, { ConsentInfo } from '../Disclaimer';
 
 export default function Disclaimers(): JSX.Element {
   const router = useRouter();

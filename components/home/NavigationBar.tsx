@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useAuthContext } from '../../modules/auth/auth-context';
 import { useRouter } from 'next/router';
 
+// TODO: Unused; refactor navigationbar for Planner v1
 export default function HomeNavigationBar() {
   const { isSignedIn } = useAuthContext();
   const router = useRouter();
