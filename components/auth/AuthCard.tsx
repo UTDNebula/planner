@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { useAuthContext } from '../../modules/auth/auth-context';
+import { resetStore } from '../../modules/redux/userDataSlice';
 import Login from './Login';
 import Signup from './Signup';
 
@@ -23,14 +25,17 @@ type AuthCardProps = {
 export default function AuthCard({ authState }: AuthCardProps): JSX.Element {
   const router = useRouter();
 
-  const { signOut } = useAuthContext();
+  const { signOut, checkRedirect } = useAuthContext();
 
+  const dispatch = useDispatch();
   /**
    * Sign the user out of Planner
    */
   const handleSignOut = () => {
     signOut()
       .then(() => {
+        // Clear user data
+        dispatch(resetStore());
         console.debug('Succesfully signed out.');
       })
       .catch((error) => {
@@ -38,12 +43,16 @@ export default function AuthCard({ authState }: AuthCardProps): JSX.Element {
       });
   };
 
+  const handleLogin = () => {
+    checkRedirect();
+  };
+
   /**
    * List of possible side effects
    * to run based on auth state
    */
   const actionManager = {
-    login: emptyAction,
+    login: handleLogin,
     signup: emptyAction,
     reset: emptyAction,
     signOut: handleSignOut,
@@ -69,8 +78,8 @@ export default function AuthCard({ authState }: AuthCardProps): JSX.Element {
   const contentManager = {
     login: <Login />,
     signup: <Signup />,
-    reset: <div>Build reset password page</div>,
-    signOut: <div>Build sign out page</div>,
+    reset: <div></div>, // TODO: Build reset page
+    signOut: <div></div>,
   };
 
   // Displays page content based on auth state

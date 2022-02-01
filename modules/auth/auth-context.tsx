@@ -126,6 +126,11 @@ interface AuthContextState {
   authWithRedirect: (redirect: string) => void;
 
   /**
+   * Checks if a redirect needs to occur
+   */
+  checkRedirect: () => void;
+
+  /**
    * Signs in using Google OAuth pop-up.
    */
   signInWithGoogle: () => void;
@@ -160,6 +165,7 @@ const AuthContext = React.createContext<AuthContextState | undefined>(undefined)
 
 /**
  * A React hook that exposes
+ * Gr8 description xD
  */
 function useAuthContext(): AuthContextState {
   const context = React.useContext(AuthContext);
@@ -361,12 +367,18 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
     setRedirect(redirect);
   };
 
+  const checkRedirect = () => {
+    if (user.id !== 'guest') {
+      setShouldRedirect(true);
+    }
+  };
   const isSignedIn = user.id !== ('anonymous' && 'guest');
 
   const authContextValue: AuthContextState = {
     user,
     isSignedIn,
     authWithRedirect,
+    checkRedirect,
     signUpWithEmail,
     switchAccounts,
     signInWithGoogle,

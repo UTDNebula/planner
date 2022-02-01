@@ -48,7 +48,8 @@ function CourseList(courses: Course[]): JSX.Element[] {
 export default function UserPlanSheet({ isOpen, onExpandClick }: UserPlanSheetProps): JSX.Element {
   // TODO: Find out if this is the right place to put the reference to auth
   const { user } = useAuthContext();
-  const { plans, planIds } = useUserPlanData(user);
+  const { plans } = useUserPlanData(user);
+  const planIds = Object.keys(plans);
   const plan = plans[planIds[0]];
 
   const handlePlanToggle = () => {

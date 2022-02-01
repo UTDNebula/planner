@@ -1,6 +1,5 @@
 import React from 'react';
 import PlanCard from '../../../components/home/plans/PlanCard';
-import NewPlanDialog from '../../../components/planner/NewPlanDialog';
 import AddIcon from '@material-ui/icons/Add';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';

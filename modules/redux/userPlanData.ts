@@ -4,13 +4,14 @@ import { StudentPlan } from '../common/data';
 import { RootState } from './store';
 
 export default function useUserPlanData(user: ServiceUser): UserPlanData {
-  const { plans, planIds } = useSelector((state: RootState) => state.userData);
+  const { plans } = useSelector((state: RootState) => state.userData);
+  const planIds = Object.keys(plans);
 
   console.log('Using user data: ', user);
 
   return {
-    planIds,
     plans,
+    planIds,
   };
 }
 
