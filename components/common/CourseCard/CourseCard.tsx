@@ -151,7 +151,7 @@ function CourseCard(
         <span className="text-sm">{creditHoursText}</span>
         <span>
           <Tooltip title={tooltipReason} placement="right-end">
-            <InfoIcon className="mr-2 text-[16px] text-gray-700" />
+            <InfoIcon fontSize="inherit" color="inherit" className="ml-2 text-xs text-gray-600" />
           </Tooltip>
         </span>
       </div>
