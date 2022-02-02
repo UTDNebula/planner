@@ -43,30 +43,3 @@ export interface RecentSemester {
   year: number;
   semester: SemesterCode;
 }
-
-/**
- * Generate metadata for adding a new semester.
- *
- * @param onlyLong Whether or not to only output long (fall/spring) semesters.
- */
-export function getUpdatedSemesterData(recentSemesterData: RecentSemester, onlyLong = true) {
-  const { year, semester } = recentSemesterData;
-  let updatedYear;
-  let updatedSemester = semester;
-  if (semester === SemesterCode.f) {
-    updatedYear = year + 1;
-    updatedSemester = SemesterCode.s;
-  } else {
-    // Semester code is either spring or summer
-    updatedYear = year;
-    if (onlyLong || semester === SemesterCode.s) {
-      updatedSemester = SemesterCode.f;
-    } else {
-      updatedSemester = SemesterCode.u;
-    }
-  }
-  return {
-    year: updatedYear,
-    semester: updatedSemester,
-  };
-}

@@ -1,10 +1,8 @@
 import React from 'react';
 import { DropResult } from 'react-beautiful-dnd';
-import { getUpdatedSemesterData } from '../../../components/planner/PlannerContainer';
 import { Semester, Course, SEMESTER_CODE_MAPPINGS } from '../../common/data';
-import { reorderList } from './planManipulatorUtils';
 import { v4 as uuid } from 'uuid';
-import { getRecentSemesterMetadata } from '../plannerUtils';
+import { getRecentSemesterMetadata, getUpdatedSemesterData, reorderList } from '../plannerUtils';
 
 /**
  * A hook that manages the state of the degree planner component.

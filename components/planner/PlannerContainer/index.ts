@@ -1,2 +1,2 @@
-export { default, getUpdatedSemesterData } from './PlannerContainer';
+export { default } from './PlannerContainer';
 export type { RecentSemester } from './PlannerContainer';

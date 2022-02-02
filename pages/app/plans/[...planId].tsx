@@ -45,17 +45,11 @@ export default function PlanDetailPage(): JSX.Element {
 
   const [courseAttempts, setCourseAttempts] = React.useState<CourseAttempt[]>([]);
 
-  /**
-   *
-   */
   const { results, updateQuery, getResults } = useSearch({
     getData: loadCourses,
     filterBy: 'catalogCode',
   });
 
-  /**
-   *
-   */
   const { plan, loadPlan, exportPlan, handleSelectedPlanChange, persistChanges } = usePlan();
 
   const { title, setTitle, section, setSection, showTabs, hideTabs, shouldShowTabs } =
