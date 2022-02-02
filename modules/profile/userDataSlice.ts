@@ -17,7 +17,7 @@ export interface CourseHistoryState {
 
 export type AcademicDataState = PlannerDataState & CourseHistoryState;
 
-const samplePlan = createSamplePlan();
+export const samplePlan = createSamplePlan();
 
 const initialState: AcademicDataState = {
   user: users.anonymous,

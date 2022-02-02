@@ -13,7 +13,7 @@ import PlanCard from './PlanCard';
 import { v4 as uuid } from 'uuid';
 import { useRouter } from 'next/router';
 import AddIcon from '@material-ui/icons/Add';
-import { updateUser, updateAllUserData } from '../../modules/profile/userDataSlice';
+import { updateUser, updateAllUserData, samplePlan } from '../../modules/profile/userDataSlice';
 import { useAuthContext } from '../../modules/auth/auth-context';
 import firebase from 'firebase';
 
@@ -49,10 +49,22 @@ export default function Home(): JSX.Element {
       .doc(user.id)
       .get()
       .then((userDoc) => {
-        console.log('doc exists');
-        if (userDoc) {
+        if (userDoc.exists) {
+          console.log('doc exists');
           const userData = userDoc.data();
           const userSlice = userData.userDataSlice;
+          dispatch(updateAllUserData(userSlice));
+        } else {
+          // creates sample data if there is no record in firebase
+          // no need to save it in firebase as it will save later if the user edits their plan
+          const userSlice = {
+            user: user,
+            plans: {
+              [samplePlan.id]: samplePlan,
+            },
+            planIds: [samplePlan.id],
+            courses: [],
+          };
           dispatch(updateAllUserData(userSlice));
         }
       })
