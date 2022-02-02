@@ -18,8 +18,11 @@ export type CardProps = {
   props: Course;
   toggleCourseSelected: (course: Course, action: CourseSelectedAction) => void;
 };
-// Handle all of Card State inside Card
-// except isDisabled (occurs once card is placed inside Droppable)
+
+/**
+ * Card displayed in CourseSelector.tsx
+ * TODO: Figure out final functionality of this component
+ */
 export function Card({ props, toggleCourseSelected }: CardProps) {
   const { catalogCode, title, description, creditHours } = props;
   const [checkboxState, setCheckboxState] = useState(false);

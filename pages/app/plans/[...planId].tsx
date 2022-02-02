@@ -3,9 +3,7 @@ import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import { useRouter } from 'next/router';
 import React from 'react';
-import DraggableItemContainer, {
-  useDraggableItemContainer,
-} from '../../../components/planner/DraggablebleItemContainer';
+import PlannerContainer from '../../../components/planner/PlannerContainer';
 import PlanningToolbar, {
   usePlanningToolbar,
 } from '../../../components/planner/PlanningToolbar/PlanningToolbar';
@@ -16,11 +14,11 @@ import { loadCourseAttempts } from '../../../modules/common/api/courseAttempts';
 import { loadCourses } from '../../../modules/common/api/courses';
 import { StudentPlan } from '../../../modules/common/data';
 import { usePlan } from '../../../modules/planner/hooks/usePlan';
+import { usePlannerContainer } from '../../../modules/planner/hooks/usePlannerContainer';
 
-interface PlanDetailPageProps {
-  loadedPlan: StudentPlan;
-}
-
+/**
+ * Styling for the add & remove semesters buttons
+ */
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     fabContainer: {
@@ -38,43 +36,30 @@ const useStyles = makeStyles((theme: Theme) =>
 
 /**
  * A page that displays the details of a specific student academic plan.
+ * // TODO: Decide planner navigation UX
  */
-export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX.Element {
+export default function PlanDetailPage(): JSX.Element {
   const router = useRouter();
   const { planId: planQuery } = router.query;
-
   const planId = planQuery ? planQuery[0] : 'empty-plan';
 
+  const [courseAttempts, setCourseAttempts] = React.useState<CourseAttempt[]>([]);
+
+  /**
+   *
+   */
   const { results, updateQuery, getResults } = useSearch({
     getData: loadCourses,
     filterBy: 'catalogCode',
   });
 
-  console.log('ID', planId);
-
-  // Load all required data
-  const loadData = async () => {
-    if (router.isReady) {
-      const newPlan = loadPlan(planId);
-      console.log('NEW PLAN', newPlan);
-      setPersist(true);
-      updateSemesters(newPlan.semesters);
-      const courseAttempts: CourseAttempt[] = await loadCourseAttempts();
-      setCourseAttempts(courseAttempts);
-    }
-  };
-
-  // Load data
-  React.useEffect(() => {
-    loadData();
-  }, [router.isReady]);
-
-  const [courseAttempts, setCourseAttempts] = React.useState<CourseAttempt[]>([]);
-
+  /**
+   *
+   */
   const { plan, loadPlan, exportPlan, handleSelectedPlanChange, persistChanges } = usePlan();
 
   const { title, setTitle, section, setSection, showTabs, hideTabs, shouldShowTabs } =
-    usePlanningToolbar(0, plan.title);
+    usePlanningToolbar(0);
 
   const {
     semesters,
@@ -83,11 +68,24 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
     updateSemesters,
     handleOnDragEnd,
     removeItemFromList,
-    coursesToAddHandler,
-    coursesAddedHandler,
     setPersist,
-    showAddCourseDroppable,
-  } = useDraggableItemContainer(plan.semesters, persistChanges, getResults);
+  } = usePlannerContainer(persistChanges, getResults);
+
+  // Load data
+  React.useEffect(() => {
+    if (router.isReady) {
+      const loadData = async () => {
+        const newPlan = loadPlan(planId);
+        setPersist(true);
+        updateSemesters(newPlan.semesters);
+        // TODO: Move this logic to custom hook for CourseA
+        const courseAttempts: CourseAttempt[] = await loadCourseAttempts();
+        setCourseAttempts(courseAttempts);
+        setTitle(newPlan.title);
+      };
+      loadData();
+    }
+  }, [router.isReady]);
 
   /**
    * Re-renders the planner UI with the given plan.
@@ -97,7 +95,8 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
     updateSemesters(newPlan.semesters);
   };
 
-  /* Tab Navigation code */
+  // TODO: Maybe integrate this with current degree planner
+  // if not, then remove
   const navSemesters = plan.semesters;
   const { scrollToSemseter, ...navProps } = useSemesterNavigation(navSemesters);
 
@@ -108,50 +107,26 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
 
   const classes = useStyles();
 
-  // This controls what to render based on what tab state
-  let content;
-  switch (section) {
-    case 0: // Overview
-      // content = <div className="p-2 text-center">Plan Overview</div>;
-      // break;
-      // case 1: // Plan
-      content = (
-        <div className="relative overflow-x-hidden">
-          <DraggableItemContainer
-            items={semesters}
-            onDragEnd={handleOnDragEnd}
-            results={results}
-            updateQuery={updateQuery}
-            removeCourse={removeItemFromList}
-          ></DraggableItemContainer>
-          <div className={classes.fabContainer}>
-            <Fab color="primary" onClick={() => addSemester()} className={classes.fab}>
-              <AddIcon />
-            </Fab>
-            <Fab color="primary" onClick={() => removeSemester()} className={classes.fab}>
-              <RemoveIcon />
-            </Fab>
-          </div>
+  const content = (
+    <div className="relative overflow-x-hidden">
+      <PlannerContainer
+        items={semesters}
+        onDragEnd={handleOnDragEnd}
+        results={results}
+        updateQuery={updateQuery}
+        removeCourse={removeItemFromList}
+      >
+        <div className={classes.fabContainer}>
+          <Fab color="primary" onClick={() => addSemester()} className={classes.fab}>
+            <AddIcon />
+          </Fab>
+          <Fab color="primary" onClick={() => removeSemester()} className={classes.fab}>
+            <RemoveIcon />
+          </Fab>
         </div>
-      );
-      break;
-    // case 1:
-    //   content = <div className="p-2 text-center">More features coming soon!</div>;
-    // case 2: // Requirements
-    //   content = <div className="p-2 text-center">Requirements</div>;
-    //   break;
-    // case 3: // History
-    //   content = (
-    //     <div className="">
-    //       <StudentHistoryView attempts={courseAttempts} />
-    //     </div>
-    //   );
-    //   break;
-
-    default:
-      console.error('Unknown tab index');
-      break;
-  }
+      </PlannerContainer>
+    </div>
+  );
 
   return (
     <div className="h-full flex flex-col overflow-x-hidden overflow-y-auto">
@@ -173,8 +148,6 @@ export default function PlanDetailPage({ loadedPlan }: PlanDetailPageProps): JSX
         />
       </div>
       <div className="flex-1">
-        {/* <Toolbar /> */}
-        {/* TODO: Fix margin*/}
         <div className="">{content}</div>
       </div>
     </div>

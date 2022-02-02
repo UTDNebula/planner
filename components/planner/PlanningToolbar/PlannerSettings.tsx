@@ -16,6 +16,11 @@ export type SettingsDialogProps = {
   setOpen: (isOpen: boolean) => void;
   updatePlanTitle: (title: string) => void;
 };
+
+/**
+ * Component that allows the user to change their plan settings.
+ * Currently in PlanningToolbar.tsx.
+ */
 export default function SettingsDialog({
   planId,
   isOpen,
@@ -34,7 +39,7 @@ export default function SettingsDialog({
       setMajor(major);
       updatePlanTitle(title);
     }
-  }, [planId]);
+  }, [plan]);
 
   const [title, setTitle] = React.useState('');
   const [major, setMajor] = React.useState('');

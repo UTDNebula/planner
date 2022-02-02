@@ -2,7 +2,9 @@ import { Course } from '../../../modules/common/data';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 /* TODO: Properly style this component */
-
+/**
+ * Course Card displayed in AddCourseDialog.tsx
+ */
 export type DialogCardProps = {
   course: Course;
   setSelectedCourse: (course: Course) => void;

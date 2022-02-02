@@ -24,7 +24,7 @@ export type CourseSelectorProps = {
 
 /**
  * TODOs
- * 1. Refactor so that courses are pulled from Nebula API
+ * 1. Figure out CourseSelector functionality & refactor
  * 2. Add course validation
  *  - this means graying out courses that are already on planner
  * 3. Properly style CardContainer
@@ -33,12 +33,7 @@ export type CourseSelectorProps = {
 /**
  * Sidebar that allows the user to add courses to their degree plan
  */
-export default function CourseSelector({
-  // coursesToAddHandler,
-  // coursesAddedHandler,
-  results,
-  updateQuery,
-}: CourseSelectorProps) {
+export default function CourseSelector({ results, updateQuery }: CourseSelectorProps) {
   const DUMMY_COURSES: CourseCategories[] = DummyData;
 
   const [courseCount, setCourseCount] = useState(0);
@@ -62,8 +57,6 @@ export default function CourseSelector({
         );
     }
   };
-
-  const [isOpen, setIsOpen] = useState(false);
 
   const addUserCourses = (addCourses: Course[]) => {
     // TODO: Put these courses inside pre-existing categories if possible

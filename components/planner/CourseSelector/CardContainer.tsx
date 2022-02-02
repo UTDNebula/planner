@@ -9,6 +9,11 @@ export type SidebarCourseContainerProps = {
   courses: Course[];
   toggleCourseSelected: (course: Course, action: CourseSelectedAction) => void;
 };
+
+/**
+ * Contains a list of courses from CourseSelector
+ * that are part of the same category
+ */
 export function CardContainer({
   category,
   courses,

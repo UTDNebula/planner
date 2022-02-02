@@ -19,6 +19,9 @@ export type NavigationBarProps = {
 
 // TODO: Make NewPlan data type
 
+/**
+ * Bottom navigation bar for NewPlanDialog
+ */
 export function NavigationBar({ planState, goBack, goForward, finish }: NavigationBarProps) {
   // TODO: Create a way to indicate how far the user is in NewPlanDialog
   return (
@@ -45,6 +48,11 @@ export type SelectMajorDialogScreenProps = {
   selectedMajors: string[]; // TODO: Replace this w/ Major data type
   addMajor: (elm: string) => void; // TODO: Replace "elm" with Major data type
 };
+
+/**
+ * Screen in NewPlanDialog flow that allows the user
+ * to choose their plan major
+ */
 export function SelectMajorDialogScreen({
   selectedMajors,
   addMajor,
@@ -141,13 +149,14 @@ export async function getMajors() {
   return Object.values(data).slice(0, 6);
 }
 
-/**
- * A dialog that allows a user to initialize a new CoursePlan.
- */
 export type NewPlanDialogProps = {
   openDialog: boolean;
   setOpenDialog: (open: boolean) => void;
 };
+
+/**
+ * A dialog that allows a user to initialize a new CoursePlan.
+ */
 export default function NewPlanDialog({
   openDialog,
   setOpenDialog,

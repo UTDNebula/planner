@@ -176,9 +176,9 @@ export default function PlanningToolbar({
   );
 }
 
-export function usePlanningToolbar(initialSection = 0, initialTitle = 'Your plan') {
+export function usePlanningToolbar(initialSection = 0) {
   const [section, setSection] = React.useState(initialSection);
-  const [title, setTitle] = React.useState(initialTitle);
+  const [title, setTitle] = React.useState('');
   const [shouldShowTabs, setShouldShowTabs] = React.useState(true);
 
   const hideTabs = () => {

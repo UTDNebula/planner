@@ -69,6 +69,8 @@ const useStyles = (drawerWidth = 240) =>
 
 /**
  * A navigation drawer that exposes shortcuts for quickly jumping to semesters.
+ * Note: Unused component
+ * TODO: Either use or remove this component for planner v1
  */
 export default function SemesterNavigationDrawer(
   props: SemesterNavigationDrawerProps,
