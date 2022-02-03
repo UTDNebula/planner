@@ -12,6 +12,16 @@ import { AuthProvider } from '../modules/auth/auth-context';
 import { useStore } from '../modules/redux/store';
 import AppNavigation from '../components/common/AppNavigation';
 
+import { ThemeProvider, createMuiTheme, makeStyles } from '@material-ui/core/styles';
+
+const theme = createMuiTheme();
+
+const useStyles = makeStyles((theme) => {
+  root: {
+    // some CSS that access to theme
+  }
+});
+
 /**
  * Firebase configuration info
  * Note: You must have a .env.local file with
@@ -107,7 +117,10 @@ export default function NebulaApp({ Component, pageProps }: AppProps): JSX.Eleme
       </Head>
       <Provider store={store}>
         <PersistGate loading={<p>Loading...</p>} persistor={persistor}>
-          <AnimateSharedLayout>{PageLayout({ Component, pageProps })}</AnimateSharedLayout>
+          <AnimateSharedLayout>
+            {' '}
+            <ThemeProvider theme={theme}>{PageLayout({ Component, pageProps })}</ThemeProvider>
+          </AnimateSharedLayout>
         </PersistGate>
       </Provider>
     </AuthProvider>
