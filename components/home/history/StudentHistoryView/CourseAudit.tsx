@@ -2,7 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import { lighten, Theme } from '@mui/material/styles';
 import createStyles from '@mui/styles/createStyles';
-import makeStyles from '@mui/styles/makeStyles';
+import { makeStyles } from 'tss-react/mui';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -41,8 +41,8 @@ const SEMESTERS = { Spring: 1, Summer: 2, Fall: 3 };
 /**
  * Component styles for EnchancedTable
  */
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
+const useStyles = makeStyles()((theme: Theme) => {
+  return {
     root: {
       width: '100%',
     },
@@ -64,8 +64,8 @@ const useStyles = makeStyles((theme: Theme) =>
       top: 20,
       width: 1,
     },
-  }),
-);
+  };
+});
 
 /**
  * Determines whether b is greater or less than a and returns -1, 0, or 1
@@ -205,8 +205,9 @@ const headCells: HeadCell[] = [
 interface EnhancedTableProps {
   /*
    * Styling that will be used for this component.
+   * TODO: Fix this smelly type check
    */
-  classes: ReturnType<typeof useStyles>;
+  classes: Record<any, string>;
   /*
    * The number of selected rows in the table.
    */
@@ -280,49 +281,6 @@ function EnhancedTableHead({
 }
 
 /**
- * Component styles for EnchancedTableToolbarProps
- */
-const useToolbarStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(1),
-    },
-    highlight:
-      theme.palette.mode === 'light'
-        ? {
-            color: theme.palette.secondary.main,
-            backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-          }
-        : {
-            color: theme.palette.text.primary,
-            backgroundColor: theme.palette.secondary.dark,
-          },
-    formControl: {
-      margin: theme.spacing(1),
-      minWidth: 120,
-    },
-    selectEmpty: {
-      marginTop: theme.spacing(2),
-    },
-    wrapper: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      flexWrap: 'wrap',
-      width: '100%',
-    },
-    wider: {
-      width: '10%',
-      marginLeft: '-24px',
-    },
-    course: {
-      paddingTop: '22px',
-      width: '25%',
-    },
-  }),
-);
-
-/**
  * Component properties for EnchancedTableToolbar
  */
 interface EnhancedTableToolbarProps {
@@ -387,7 +345,7 @@ const EnhancedTableToolbar = ({
   selectedState,
   updateSelectedState,
 }: EnhancedTableToolbarProps) => {
-  const classes = useToolbarStyles();
+  const { classes } = useToolbarStyles();
   const [newCourse, setNewCourse] = React.useState({
     courseName: '',
     year: CURRENT_YEAR,
@@ -417,6 +375,7 @@ const EnhancedTableToolbar = ({
         // Textfield for the course's name
       }
       <TextField
+        variant="standard"
         className={classes.course}
         id="course"
         type="course"
@@ -436,6 +395,7 @@ const EnhancedTableToolbar = ({
           Year
         </InputLabel>
         <Select
+          variant="standard"
           labelId="year"
           id="year"
           value={newCourse.year}
@@ -453,6 +413,7 @@ const EnhancedTableToolbar = ({
           Season
         </InputLabel>
         <Select
+          variant="standard"
           labelId="season"
           id="season"
           value={newCourse.season}
@@ -470,6 +431,7 @@ const EnhancedTableToolbar = ({
           Grade
         </InputLabel>
         <Select
+          variant="standard"
           labelId="grade"
           id="grade"
           value={newCourse.grade}
@@ -624,12 +586,56 @@ function colorGrade(grade: Grade) {
 }
 
 /**
+ * Component styles for EnchancedTableToolbarProps
+ */
+const useToolbarStyles = makeStyles()((theme: Theme) => {
+  return {
+    root: {
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(1),
+    },
+    highlight:
+      theme.palette.mode === 'light'
+        ? {
+            color: theme.palette.secondary.main,
+            backgroundColor: lighten(theme.palette.secondary.light, 0.85),
+          }
+        : {
+            color: theme.palette.text.primary,
+            backgroundColor: theme.palette.secondary.dark,
+          },
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 120,
+    },
+    selectEmpty: {
+      marginTop: theme.spacing(2),
+    },
+    wrapper: {
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      flexWrap: 'wrap',
+      width: '100%',
+    },
+    wider: {
+      width: '10%',
+      marginLeft: '-24px',
+    },
+    course: {
+      width: '25%',
+    },
+  };
+});
+
+/**
  * The table which the user directly interacts with.
  * Uses EnhancedTableHead and EnchancedTableToolbar to allow more functionality.
  * Also uses userStyles as the stylesheet
  */
 export default function EnhancedTable() {
-  const classes = useStyles();
+  const { classes } = useStyles();
   const [order, setOrder] = React.useState<Order>('asc');
   const [orderBy, setOrderBy] = React.useState<OrderBy>('semester');
   const [selected, setSelected] = React.useState<string[]>([]);

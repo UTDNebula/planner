@@ -1,6 +1,6 @@
 import { Theme, Drawer, List, ListItemText, Toolbar, Typography, MenuItem } from '@mui/material';
 import createStyles from '@mui/styles/createStyles';
-import makeStyles from '@mui/styles/makeStyles';
+import { makeStyles } from 'tss-react/mui';
 import React from 'react';
 
 /**
@@ -38,9 +38,9 @@ interface SemesterNavigationDrawerProps {
  *
  * @param drawerWidth The horizontal width of the drawer when rendered.
  */
-const useStyles = (drawerWidth = 240) =>
-  makeStyles((theme: Theme) =>
-    createStyles({
+const useStyles = (drawerWidth = 240) => {
+  return makeStyles()((theme: Theme) => {
+    return {
       root: {
         height: '100%',
 
@@ -56,8 +56,9 @@ const useStyles = (drawerWidth = 240) =>
       drawerTitle: {
         padding: theme.spacing(2),
       },
-    }),
-  )();
+    };
+  })();
+};
 
 /**
  * A navigation drawer that exposes shortcuts for quickly jumping to semesters.
@@ -83,7 +84,7 @@ export default function SemesterNavigationDrawer(
     );
   });
 
-  const classes = useStyles();
+  const { classes } = useStyles();
 
   return (
     <Drawer

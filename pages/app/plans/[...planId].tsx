@@ -1,6 +1,6 @@
 import { Fab, Theme } from '@mui/material';
 import createStyles from '@mui/styles/createStyles';
-import makeStyles from '@mui/styles/makeStyles';
+import { makeStyles } from 'tss-react/mui';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { useRouter } from 'next/router';
@@ -21,8 +21,8 @@ import { usePlannerContainer } from '../../../modules/planner/hooks/usePlannerCo
 /**
  * Styling for the add & remove semesters buttons
  */
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
+const useStyles = makeStyles()((theme: Theme) => {
+  return {
     fabContainer: {
       position: 'absolute',
       top: theme.spacing(8),
@@ -33,8 +33,8 @@ const useStyles = makeStyles((theme: Theme) =>
     fab: {
       margin: '8px',
     },
-  }),
-);
+  };
+});
 
 /**
  * A page that displays the details of a specific student academic plan.
@@ -101,7 +101,7 @@ export default function PlanDetailPage(): JSX.Element {
     setSection(tabIndex);
   };
 
-  const classes = useStyles();
+  const { classes } = useStyles();
 
   const content = (
     <div className="relative overflow-x-hidden">

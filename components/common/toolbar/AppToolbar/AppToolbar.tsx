@@ -1,7 +1,6 @@
 import React from 'react';
 import { AppBar, IconButton, Toolbar, Typography } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
-import createStyles from '@mui/styles/createStyles';
+import { makeStyles } from 'tss-react/mui';
 import MenuIcon from '@mui/icons-material/Menu';
 import BackIcon from '@mui/icons-material/ArrowBack';
 import Link from 'next/link';
@@ -9,8 +8,8 @@ import { useRouter } from 'next/router';
 import ProfileIcon from '../ProfileIcon/ProfileIcon';
 import { useAuthContext } from '../../../../modules/auth/auth-context';
 
-const useStyles = makeStyles((theme) =>
-  createStyles({
+const useStyles = makeStyles()((theme) => {
+  return {
     root: {
       zIndex: theme.zIndex.drawer + 1,
     },
@@ -20,8 +19,8 @@ const useStyles = makeStyles((theme) =>
     title: {
       flexGrow: 1,
     },
-  }),
-);
+  };
+});
 
 interface AppToolbarProps {
   title?: string;
@@ -38,7 +37,7 @@ export default function AppToolbar(props: AppToolbarProps): JSX.Element {
 
   const title = 'Nebula';
 
-  const classes = useStyles();
+  const { classes } = useStyles();
 
   const { signOut } = useAuthContext();
 

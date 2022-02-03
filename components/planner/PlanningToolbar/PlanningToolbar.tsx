@@ -1,5 +1,5 @@
 import { AppBar, IconButton, Toolbar, Typography, Theme, Button } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
+import { makeStyles } from 'tss-react/mui';
 import createStyles from '@mui/styles/createStyles';
 import React from 'react';
 import MenuIcon from '@mui/icons-material/ArrowBack';
@@ -21,8 +21,8 @@ const TABS = ['Plan'] as const;
 export type SectionType = typeof TABS[number];
 
 const useStyles = () => {
-  return makeStyles((theme: Theme) => {
-    return createStyles({
+  return makeStyles()((theme: Theme) => {
+    return {
       root: {
         zIndex: 10,
         display: 'flex',
@@ -35,7 +35,7 @@ const useStyles = () => {
       title: {
         flexGrow: 1,
       },
-    });
+    };
   })();
 };
 
@@ -99,7 +99,7 @@ export default function PlanningToolbar({
     signOut();
   };
 
-  const classes = useStyles();
+  const { classes } = useStyles();
 
   const [dialog, setDialog] = React.useState(false);
   const handleSettings = () => {

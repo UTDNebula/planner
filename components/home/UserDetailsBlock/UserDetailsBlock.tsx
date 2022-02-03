@@ -1,20 +1,19 @@
 import React from 'react';
 import { Theme, Typography } from '@mui/material';
-import createStyles from '@mui/styles/createStyles';
-import makeStyles from '@mui/styles/makeStyles';
+import { makeStyles } from 'tss-react/mui';
 import { convertSemesterToData } from '../../../modules/common/data-utils';
 import { HonorsIndicator } from '../../../modules/common/types';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
+const useStyles = makeStyles()((theme: Theme) => {
+  return {
     root: {
       padding: theme.spacing(2),
       backgroundColor: theme.palette.primary.main,
       color: theme.palette.primary.contrastText,
     },
     attemptedHours: {},
-  }),
-);
+  };
+});
 
 /**
  * Component properties for a UserDetailsBlock.
@@ -81,7 +80,7 @@ export default function UserDetailsBlock(props: UserDetailsBlockProps): JSX.Elem
 
   console.log('Starting year: ' + startingYear + ', starting semester: ' + startingSemester);
 
-  const classes = useStyles();
+  const { classes } = useStyles();
 
   return (
     <div className={classes.root}>
