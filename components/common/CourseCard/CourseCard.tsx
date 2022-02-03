@@ -1,7 +1,7 @@
 import React from 'react';
-import { Tooltip, IconButton, MenuItem, Menu } from '@material-ui/core';
-import InfoIcon from '@material-ui/icons/Info';
-import { MoreVert } from '@material-ui/icons';
+import { Tooltip, IconButton, MenuItem, Menu } from '@mui/material';
+import InfoIcon from '@mui/icons-material/Info';
+import { MoreVert } from '@mui/icons-material';
 
 /**
  * Component properties for a {@link CourseCard}.
@@ -141,7 +141,7 @@ function CourseCard(
           <div className="text-sm font-bold">{title}</div>
         </div>
         <div className="flex-0">
-          <IconButton onClick={showCardOptions}>
+          <IconButton onClick={showCardOptions} size="large">
             <MoreVert />
           </IconButton>
         </div>

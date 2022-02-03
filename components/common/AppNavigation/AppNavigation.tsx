@@ -1,6 +1,6 @@
 import React from 'react';
-import { Divider, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
-import { AccountBox, ExitToApp, Home, ListAlt, School } from '@material-ui/icons';
+import { Divider, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import { AccountBox, ExitToApp, Home, ListAlt, School } from '@mui/icons-material';
 import HomeUserInfo from '../../home/HomeUserInfo';
 import Link from 'next/link';
 import { useAuthContext } from '../../../modules/auth/auth-context';

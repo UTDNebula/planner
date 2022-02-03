@@ -1,7 +1,8 @@
-import { AccordionSummary, AccordionDetails, withStyles } from '@material-ui/core';
-import MuiAccordion from '@material-ui/core/Accordion';
+import { AccordionSummary, AccordionDetails } from '@mui/material';
+import withStyles from '@mui/styles/withStyles';
+import MuiAccordion from '@mui/material/Accordion';
 import { useState } from 'react';
-import InfoIcon from '@material-ui/icons/Info';
+import InfoIcon from '@mui/icons-material/Info';
 import { CourseSelectedAction } from './CourseSelector';
 import { Course } from '../../../modules/common/data';
 

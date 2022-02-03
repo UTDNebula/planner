@@ -1,4 +1,4 @@
-import { Button, Checkbox, FormControlLabel } from '@material-ui/core';
+import { Button, Checkbox, FormControlLabel } from '@mui/material';
 import React from 'react';
 import Link from 'next/link';
 import ServiceName from '../common/ServiceName';

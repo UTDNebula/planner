@@ -1,19 +1,12 @@
-import {
-  AppBar,
-  IconButton,
-  Toolbar,
-  Typography,
-  makeStyles,
-  Theme,
-  createStyles,
-  Button,
-} from '@material-ui/core';
+import { AppBar, IconButton, Toolbar, Typography, Theme, Button } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import createStyles from '@mui/styles/createStyles';
 import React from 'react';
-import MenuIcon from '@material-ui/icons/ArrowBack';
+import MenuIcon from '@mui/icons-material/ArrowBack';
 import { useAuthContext } from '../../../modules/auth/auth-context';
 import { useRouter } from 'next/router';
 import styles from './PlanningToolbar.module.css';
-import SettingsIcon from '@material-ui/icons/Settings';
+import SettingsIcon from '@mui/icons-material/Settings';
 import SettingsDialog from './PlannerSettings';
 
 function a11yProps(index: number) {
@@ -122,6 +115,7 @@ export default function PlanningToolbar({
           color="inherit"
           aria-label="menu"
           onClick={() => router.push('/app')}
+          size="large"
         >
           <MenuIcon />
         </IconButton>
@@ -149,7 +143,7 @@ export default function PlanningToolbar({
             Import plan
           </Button>
         </label>
-        <IconButton onClick={handleSettings} className="">
+        <IconButton onClick={handleSettings} className="" size="large">
           <SettingsIcon color="inherit" className="text-white" />
         </IconButton>
         {/* <ProfileIcon onSignIn={handleSignIn} onSignOut={handleSignOut} /> */}

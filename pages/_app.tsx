@@ -12,9 +12,16 @@ import { AuthProvider } from '../modules/auth/auth-context';
 import { useStore } from '../modules/redux/store';
 import AppNavigation from '../components/common/AppNavigation';
 
-import { ThemeProvider, createMuiTheme, makeStyles } from '@material-ui/core/styles';
+import { ThemeProvider, Theme, StyledEngineProvider, createTheme } from '@mui/material/styles';
 
-const theme = createMuiTheme();
+import makeStyles from '@mui/styles/makeStyles';
+
+declare module '@mui/styles/defaultTheme' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface DefaultTheme extends Theme {}
+}
+
+const theme = createTheme();
 
 const useStyles = makeStyles((theme) => {
   root: {
@@ -119,7 +126,9 @@ export default function NebulaApp({ Component, pageProps }: AppProps): JSX.Eleme
         <PersistGate loading={<p>Loading...</p>} persistor={persistor}>
           <AnimateSharedLayout>
             {' '}
-            <ThemeProvider theme={theme}>{PageLayout({ Component, pageProps })}</ThemeProvider>
+            <StyledEngineProvider injectFirst>
+              <ThemeProvider theme={theme}>{PageLayout({ Component, pageProps })}</ThemeProvider>
+            </StyledEngineProvider>
           </AnimateSharedLayout>
         </PersistGate>
       </Provider>

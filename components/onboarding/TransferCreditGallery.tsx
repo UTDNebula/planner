@@ -1,5 +1,5 @@
-import { FormControl, TextField, InputLabel, Select, MenuItem } from '@material-ui/core';
-import { Autocomplete } from '@material-ui/lab';
+import { FormControl, TextField, InputLabel, Select, MenuItem } from '@mui/material';
+import { Autocomplete } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import DummyData from '../../data/dummy_onboarding.json';

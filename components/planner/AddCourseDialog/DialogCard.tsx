@@ -1,5 +1,5 @@
 import { Course } from '../../../modules/common/data';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 /* TODO: Properly style this component */
 /**

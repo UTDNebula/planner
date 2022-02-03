@@ -1,4 +1,4 @@
-import { AppBar, Button, IconButton, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, Button, IconButton, Toolbar, Typography } from '@mui/material';
 import logo from '../../public/logo.png';
 import Image from 'next/image';
 import { useAuthContext } from '../../modules/auth/auth-context';
@@ -21,7 +21,7 @@ export default function HomeNavigationBar() {
   return (
     <AppBar position="relative">
       <Toolbar className="flex flex-row">
-        <IconButton onClick={() => router.push('/')} className="">
+        <IconButton onClick={() => router.push('/')} className="" size="large">
           <Image src={logo} alt="Logo" width="40px" height="40px" className="rounded-full" />
         </IconButton>
         <div className="flex-1"></div>

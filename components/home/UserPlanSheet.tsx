@@ -1,6 +1,6 @@
 import React from 'react';
-import { Close, KeyboardArrowUp } from '@material-ui/icons';
-import { Button, IconButton } from '@material-ui/core';
+import { Close, KeyboardArrowUp } from '@mui/icons-material';
+import { Button, IconButton } from '@mui/material';
 import Link from 'next/link';
 import useUserPlanData from '../../modules/redux/userPlanData';
 import CourseCard from '../common/CourseCard';
@@ -140,6 +140,7 @@ export default function UserPlanSheet({ isOpen, onExpandClick }: UserPlanSheetPr
             // component={Link}
             // to="/app/plans/new"
             onClick={handlePlanToggle}
+            size="large"
           >
             {icon}
           </IconButton>

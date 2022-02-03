@@ -1,14 +1,6 @@
-import {
-  createStyles,
-  makeStyles,
-  Theme,
-  Drawer,
-  List,
-  ListItemText,
-  Toolbar,
-  Typography,
-  MenuItem,
-} from '@material-ui/core';
+import { Theme, Drawer, List, ListItemText, Toolbar, Typography, MenuItem } from '@mui/material';
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 
 /**
@@ -85,7 +77,6 @@ export default function SemesterNavigationDrawer(
           onSemesterSelection(code);
         }}
         selected={focusedSemester === code}
-        button
       >
         <ListItemText primary={title} />
       </MenuItem>

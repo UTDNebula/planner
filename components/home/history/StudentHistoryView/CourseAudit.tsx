@@ -1,27 +1,29 @@
 import React from 'react';
 import clsx from 'clsx';
-import { createStyles, lighten, makeStyles, Theme } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
-import TableRow from '@material-ui/core/TableRow';
-import TableSortLabel from '@material-ui/core/TableSortLabel';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
-import DeleteIcon from '@material-ui/icons/Delete';
-import AddIcon from '@material-ui/icons/Add';
-import TextField from '@material-ui/core/TextField';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
+import { lighten, Theme } from '@mui/material/styles';
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TablePagination from '@mui/material/TablePagination';
+import TableRow from '@mui/material/TableRow';
+import TableSortLabel from '@mui/material/TableSortLabel';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
+import Checkbox from '@mui/material/Checkbox';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
+import TextField from '@mui/material/TextField';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
 import { Grade, GPA_MAPPINGS } from '../../../../modules/common/data';
 import { CourseAttempt } from '../../../../modules/auth/auth-context';
 import { useSelector, useDispatch } from 'react-redux';
@@ -255,7 +257,7 @@ function EnhancedTableHead({
           <TableCell
             key={headCell.id}
             align={headCell.numeric ? 'left' : 'left'}
-            padding={headCell.disablePadding ? 'none' : 'default'}
+            padding={headCell.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
@@ -287,7 +289,7 @@ const useToolbarStyles = makeStyles((theme: Theme) =>
       paddingRight: theme.spacing(1),
     },
     highlight:
-      theme.palette.type === 'light'
+      theme.palette.mode === 'light'
         ? {
             color: theme.palette.secondary.main,
             backgroundColor: lighten(theme.palette.secondary.light, 0.85),
@@ -401,7 +403,7 @@ const EnhancedTableToolbar = ({
 
   //When the user clicks on or off the Select tag then it pushes the value to a state
   //Sorts depending on the name of the Select tag and sets the state accordingly
-  const handleChange = (event: React.ChangeEvent<{ value: string | number; name: string }>) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNewCourse((prevState) => ({
       ...prevState,
       [event.target.name]: event.target.value,
@@ -554,7 +556,7 @@ const EnhancedTableToolbar = ({
   //Button which pushes the values in the respective fields to the data in EnchancedTable.
   const addButtonComponent = (
     <Tooltip title="Add Course">
-      <IconButton aria-label="add" onClick={addCourse}>
+      <IconButton aria-label="add" onClick={addCourse} size="large">
         <AddIcon />
       </IconButton>
     </Tooltip>
@@ -563,7 +565,7 @@ const EnhancedTableToolbar = ({
   //Button which deletes the selected courses in selectedState from the data in EnchancedTable.
   const deleteButtonComponent = (
     <Tooltip title="Delete Course">
-      <IconButton aria-label="delete" onClick={deleteSelectedCourses}>
+      <IconButton aria-label="delete" onClick={deleteSelectedCourses} size="large">
         <DeleteIcon />
       </IconButton>
     </Tooltip>
@@ -779,9 +781,8 @@ export default function EnhancedTable() {
           count={rows.length}
           rowsPerPage={rowsPerPage}
           page={page}
-          onChangePage={handleChangePage}
+          onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
-          onPageChange={() => console.log('Add code here')}
         />
       </Paper>
     </div>

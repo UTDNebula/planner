@@ -9,7 +9,7 @@ import {
   Dialog,
   DialogTitle,
   DialogActions,
-} from '@material-ui/core';
+} from '@mui/material';
 import React, { useState } from 'react';
 import { loadCourses } from '../../../modules/common/api/courses';
 import { Course } from '../../../modules/common/data';

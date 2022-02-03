@@ -1,6 +1,6 @@
 import React from 'react';
 import PlanCard from '../../../components/home/plans/PlanCard';
-import AddIcon from '@material-ui/icons/Add';
+import AddIcon from '@mui/icons-material/Add';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../modules/redux/store';

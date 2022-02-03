@@ -1,6 +1,8 @@
-import { createStyles, Fab, makeStyles, Theme } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
-import RemoveIcon from '@material-ui/icons/Remove';
+import { Fab, Theme } from '@mui/material';
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 import { useRouter } from 'next/router';
 import React from 'react';
 import PlannerContainer from '../../../components/planner/PlannerContainer';

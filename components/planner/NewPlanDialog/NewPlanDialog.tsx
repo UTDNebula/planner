@@ -1,10 +1,10 @@
-import { Checkbox, Dialog, DialogTitle, Select } from '@material-ui/core';
+import { Checkbox, Dialog, DialogTitle, Select } from '@mui/material';
 import React from 'react';
 import { NewPlanFlowState, useCreateNewPlanFlow } from '../../../modules/planner/hooks/newPlanFlow';
 import DummyData from '../../../data/majors.json';
-import Switch from '@material-ui/core/Switch';
-import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
-import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+import Switch from '@mui/material/Switch';
+import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import router from 'next/router';
 import { v4 as uuid } from 'uuid';
 import SearchBar from '../../search/SearchBar';

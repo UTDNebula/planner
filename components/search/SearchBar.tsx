@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { IconButton, InputBase, Paper } from '@material-ui/core';
-import { Search as SearchIcon } from '@material-ui/icons';
+import { IconButton, InputBase, Paper } from '@mui/material';
+import { Search as SearchIcon } from '@mui/icons-material';
 
 /**
  * A search bar that allows for filtering of queries.
@@ -28,7 +28,7 @@ export default function SearchBar({ updateQuery }: SearchBarProps): JSX.Element 
         value={query}
         onChange={handleQueryUpdate}
       />
-      <IconButton className="p-2" aria-label="search">
+      <IconButton className="p-2" aria-label="search" size="large">
         <SearchIcon />
       </IconButton>
     </Paper>

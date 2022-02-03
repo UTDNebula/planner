@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import TextField from '@material-ui/core/TextField';
-import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import DummyData from '../../data/dummy_onboarding.json';
 
 export interface DegreePickerProps {

@@ -1,5 +1,7 @@
 import React from 'react';
-import { createStyles, makeStyles, Theme, Typography } from '@material-ui/core';
+import { Theme, Typography } from '@mui/material';
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
 import { HonorsIndicator } from './types';
 import { convertSemesterToData } from '../common/data-utils';
 
