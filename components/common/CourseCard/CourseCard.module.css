@@ -1,9 +1,0 @@
-.CourseCard-description {
-  /* word-break:break-all; */
-}
-
-.CourseCard {
-  @apply mt-2 p-4 bg-white border-gray-200 border rounded-md;
-  width: '100%';
-  max-width: 480px;
-}

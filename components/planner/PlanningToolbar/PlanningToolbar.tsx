@@ -1,21 +1,13 @@
-import {
-  AppBar,
-  Tabs,
-  Tab,
-  IconButton,
-  Toolbar,
-  Typography,
-  makeStyles,
-  Theme,
-  createStyles,
-  Button,
-} from '@material-ui/core';
+import { AppBar, IconButton, Toolbar, Typography, Theme, Button } from '@mui/material';
+import { makeStyles } from 'tss-react/mui';
+import createStyles from '@mui/styles/createStyles';
 import React from 'react';
-import MenuIcon from '@material-ui/icons/ArrowBack';
-import ProfileIcon from '../../common/toolbar/ProfileIcon';
+import MenuIcon from '@mui/icons-material/ArrowBack';
 import { useAuthContext } from '../../../modules/auth/auth-context';
 import { useRouter } from 'next/router';
 import styles from './PlanningToolbar.module.css';
+import SettingsIcon from '@mui/icons-material/Settings';
+import SettingsDialog from './PlannerSettings';
 
 function a11yProps(index: number) {
   return {
@@ -24,15 +16,18 @@ function a11yProps(index: number) {
   };
 }
 
-const TABS = ['Overview', 'Plan', 'Requirements', 'History'] as const;
+const TABS = ['Plan'] as const;
 
 export type SectionType = typeof TABS[number];
 
 const useStyles = () => {
-  return makeStyles((theme: Theme) => {
-    return createStyles({
+  return makeStyles()((theme: Theme) => {
+    return {
       root: {
-        zIndex: 9999,
+        zIndex: 10,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
       },
       menuButton: {
         marginRight: theme.spacing(2),
@@ -40,7 +35,7 @@ const useStyles = () => {
       title: {
         flexGrow: 1,
       },
-    });
+    };
   })();
 };
 
@@ -48,12 +43,15 @@ const useStyles = () => {
  * Component properties for a Planning Toolbar.
  */
 interface PlanningToolbarProps {
+  planId: string;
   /**
    * The currently active tab index.
    */
   sectionIndex: number;
 
   planTitle: string;
+
+  setPlanTitle: (title: string) => void;
 
   shouldShowTabs: boolean;
 
@@ -76,8 +74,10 @@ interface PlanningToolbarProps {
  * A toolbar used for planning mode.
  */
 export default function PlanningToolbar({
+  planId,
   sectionIndex,
   planTitle,
+  setPlanTitle,
   shouldShowTabs: showTabs,
   onTabChange,
   onImportPlan = () => undefined,
@@ -92,24 +92,30 @@ export default function PlanningToolbar({
   const router = useRouter();
 
   const handleSignIn = () => {
-    router.push('/auth/signIn');
+    router.push('/auth/Login');
   };
 
   const handleSignOut = () => {
     signOut();
   };
 
-  const classes = useStyles();
+  const { classes } = useStyles();
+
+  const [dialog, setDialog] = React.useState(false);
+  const handleSettings = () => {
+    setDialog(!dialog);
+  };
 
   return (
     <AppBar position="relative" className={classes.root}>
-      <Toolbar>
+      <Toolbar className="flex">
         <IconButton
           edge="start"
           className={classes.menuButton}
           color="inherit"
           aria-label="menu"
-          onClick={() => router.back()}
+          onClick={() => router.push('/app')}
+          size="large"
         >
           <MenuIcon />
         </IconButton>
@@ -122,7 +128,7 @@ export default function PlanningToolbar({
             onExportPlan();
           }}
         >
-          Save plan
+          Export plan
         </Button>
         <input
           id="planUpload"
@@ -137,22 +143,36 @@ export default function PlanningToolbar({
             Import plan
           </Button>
         </label>
+        <IconButton onClick={handleSettings} className="" size="large">
+          <SettingsIcon color="inherit" className="text-white" />
+        </IconButton>
         {/* <ProfileIcon onSignIn={handleSignIn} onSignOut={handleSignOut} /> */}
       </Toolbar>
-      {showTabs && (
-        <Tabs value={sectionIndex} onChange={handleTabChange} aria-label="Degree plan sections">
+      <SettingsDialog
+        planId={planId}
+        isOpen={dialog}
+        setOpen={setDialog}
+        updatePlanTitle={setPlanTitle}
+      />
+      {/* {showTabs && (
+        <Tabs
+          className="flex"
+          value={sectionIndex}
+          onChange={handleTabChange}
+          aria-label="Degree plan sections"
+        >
           {TABS.map((tab, index) => {
             return <Tab key={tab + '-' + index} label={tab} {...a11yProps(index)} />;
           })}
         </Tabs>
-      )}
+      )} */}
     </AppBar>
   );
 }
 
-export function usePlanningToolbar(initialSection = 0, initialTitle = 'Your plan') {
+export function usePlanningToolbar(initialSection = 0) {
   const [section, setSection] = React.useState(initialSection);
-  const [title, setTitle] = React.useState(initialTitle);
+  const [title, setTitle] = React.useState('');
   const [shouldShowTabs, setShouldShowTabs] = React.useState(true);
 
   const hideTabs = () => {

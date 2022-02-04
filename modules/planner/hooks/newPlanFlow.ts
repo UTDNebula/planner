@@ -3,22 +3,7 @@ import React from 'react';
 /**
  * The current state of new plan creation.
  */
-type NewPlanFlowState =
-  | 'SELECT_MAJOR'
-  | 'TRANSFER_COURSES'
-  | 'SELECT_ADDITIONS'
-  | 'FINALIZE_PLAN_GENERATION'
-  | 'DONE';
-
-// const NEW_PLAN_FLOW_STATES: { [key in NewPlanFlowState]: number } = {
-//   SELECT_MAJOR: 0,
-//   TRANSFER_COURSES: 1,
-//   SELECT_ADDITIONS: 2,
-//   FINALIZE_PLAN_GENERATION: 3,
-//   DONE: 4,
-// };
-
-// const FLOW_STEPS = Object.entries(NEW_PLAN_FLOW_STATES).length;
+export type NewPlanFlowState = 'SELECT_MAJOR' | 'TRANSFER_COURSES' | 'SELECT_ADDITIONS' | 'DONE';
 
 /**
  * A hook that keeps track of current state for a NewPlanDialog.
@@ -31,7 +16,6 @@ export function useCreateNewPlanFlow(
   shouldAdvance: (currentState: NewPlanFlowState) => boolean = () => true,
 ): CreateNewPlanFlowType {
   const [planState, setPlanState] = React.useState(startingState);
-  // const [step, setStep] = React.useState<number>(NEW_PLAN_FLOW_STATES[startingState]);
   const reset = () => {
     setPlanState('SELECT_MAJOR');
   };
@@ -51,13 +35,6 @@ export function useCreateNewPlanFlow(
         setPlanState('SELECT_ADDITIONS');
         break;
       case 'SELECT_ADDITIONS':
-        setPlanState('FINALIZE_PLAN_GENERATION');
-        break;
-      case 'FINALIZE_PLAN_GENERATION':
-        setPlanState('DONE');
-        break;
-      case 'DONE':
-        // TODO: Determine if this should be a no-op since the dialog should be closed anyway
         break;
     }
   };
@@ -72,13 +49,6 @@ export function useCreateNewPlanFlow(
         break;
       case 'SELECT_ADDITIONS':
         setPlanState('TRANSFER_COURSES');
-        break;
-      case 'FINALIZE_PLAN_GENERATION':
-        setPlanState('SELECT_ADDITIONS');
-        break;
-      case 'DONE':
-        // TODO: Determine if this should be a no-op since the dialog should be closed anyway
-        setPlanState('FINALIZE_PLAN_GENERATION');
         break;
     }
   };

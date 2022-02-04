@@ -1,55 +1,30 @@
-import React from 'react';
-import { motion } from 'framer-motion';
 import Head from 'next/head';
-import { NoticeBlock } from '../../components/home/announcements/NoticeBlock';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import UserWelcome from '../../components/home/UserWelcome';
-import UserPlanSheet from '../../components/home/UserPlanSheet';
-import useUserPlanSheetTransition from '../../components/home/userPlanSheetTransition';
-
-const SHEET_START_ANIMATION = {
-  y: 0,
-  width: '100vw',
-  height: '100%',
-};
-
-const SHEET_END_ANIMATION = {
-  y: 'auto',
-  width: '72rem',
-  height: 'auto',
-};
+import { useAuthContext } from '../../modules/auth/auth-context';
+import { loadUser } from '../../modules/redux/userDataSlice';
 
 /**
  * The home screen for the app.
+ * If the user has a valid Firebase id, then the data will be loaded.
  */
 export default function Home(): JSX.Element {
-  const { sheetIsOpen, togglePlan } = useUserPlanSheetTransition();
+  const { user } = useAuthContext();
+
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    console.info('User has changed.');
+    dispatch(loadUser(user));
+  }, [user]);
 
   return (
-    <>
+    <div className="flex flex-col w-full h-full">
       <Head>
         <title>Nebula - Home</title>
       </Head>
-      <div className="w-screen max-w-6xl mx-auto pt-16 p-4">
-        <UserWelcome />
-      </div>
-      <section className="w-screen max-w-6xl mx-auto md:grid min-h-full lg:grid-cols-12 mb-8">
-        <div className="lg:col-span-12 m-2 p-4 bg-white rounded-md border-2 border-gray-300">
-          <NoticeBlock />
-        </div>
-      </section>
-      <motion.section
-        layoutId="planSheet"
-        className="mx-auto md:flex shadow-md rounded-lg"
-        animate={sheetIsOpen ? SHEET_START_ANIMATION : SHEET_END_ANIMATION}
-        initial={{
-          y: 'auto',
-          width: '72rem',
-          height: 'auto',
-        }}
-        transition={{ duration: 0.33 }}
-      >
-        <UserPlanSheet isOpen={sheetIsOpen} onExpandClick={togglePlan} />
-      </motion.section>
-    </>
+      <UserWelcome />
+    </div>
   );
 }

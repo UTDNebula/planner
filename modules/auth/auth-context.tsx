@@ -126,6 +126,11 @@ interface AuthContextState {
   authWithRedirect: (redirect: string) => void;
 
   /**
+   * Checks if a redirect needs to occur
+   */
+  checkRedirect: () => void;
+
+  /**
    * Signs in using Google OAuth pop-up.
    */
   signInWithGoogle: () => void;
@@ -160,6 +165,7 @@ const AuthContext = React.createContext<AuthContextState | undefined>(undefined)
 
 /**
  * A React hook that exposes
+ * Gr8 description xD
  */
 function useAuthContext(): AuthContextState {
   const context = React.useContext(AuthContext);
@@ -242,7 +248,8 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
         // TODO: Update localStorage
         console.log('Signed out user; switched to guest.');
       })
-      .catch(() => {
+      .catch((error) => {
+        const { code, message } = error;
         console.error('Could not sign out.');
       });
   }
@@ -281,7 +288,7 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
       .createUserWithEmailAndPassword(email, password)
       .then(({ /* credential, */ user }) => {
         updateUser(user);
-        setRedirect('/app/onboarding');
+        setRedirect('/app/');
         setShouldRedirect(true);
       })
       .catch((error) => {
@@ -292,6 +299,7 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
         } else {
           console.log(message);
         }
+        alert(message);
         console.log(error);
       });
   }, []);
@@ -315,10 +323,13 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
           return;
         }
         updateUser(user);
+        setRedirect('/app/');
         setShouldRedirect(true);
       })
       .catch((error) => {
         console.error('Error when signing in', error);
+        const { code, message } = error;
+        alert(message);
         // TODO(auth): Handle error appropriately
       });
   }, []);
@@ -337,6 +348,7 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
           return;
         }
         updateUser(user);
+        setRedirect('/app/');
         setShouldRedirect(true);
       })
       .catch((error) => {
@@ -355,12 +367,18 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
     setRedirect(redirect);
   };
 
-  const isSignedIn = user.id !== 'anonymous';
+  const checkRedirect = () => {
+    if (user.id !== 'guest') {
+      setShouldRedirect(true);
+    }
+  };
+  const isSignedIn = user.id !== ('anonymous' && 'guest');
 
   const authContextValue: AuthContextState = {
     user,
     isSignedIn,
     authWithRedirect,
+    checkRedirect,
     signUpWithEmail,
     switchAccounts,
     signInWithGoogle,

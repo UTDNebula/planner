@@ -1,8 +1,8 @@
 import React from 'react';
-import { Close, KeyboardArrowUp } from '@material-ui/icons';
-import { Button, IconButton } from '@material-ui/core';
+import { Close, KeyboardArrowUp } from '@mui/icons-material';
+import { Button, IconButton } from '@mui/material';
 import Link from 'next/link';
-import useUserPlanData from '../common/userPlanData';
+import useUserPlanData from '../../modules/redux/userPlanData';
 import CourseCard from '../common/CourseCard';
 import { useAuthContext } from '../../modules/auth/auth-context';
 import { Course } from '../../modules/common/data';
@@ -30,6 +30,7 @@ function CourseList(courses: Course[]): JSX.Element[] {
   return courses.map(({ id, catalogCode, title, description, creditHours }) => {
     return (
       <CourseCard
+        id={id}
         key={id}
         code={catalogCode}
         title={title}
@@ -47,7 +48,8 @@ function CourseList(courses: Course[]): JSX.Element[] {
 export default function UserPlanSheet({ isOpen, onExpandClick }: UserPlanSheetProps): JSX.Element {
   // TODO: Find out if this is the right place to put the reference to auth
   const { user } = useAuthContext();
-  const { plans, planIds } = useUserPlanData(user);
+  const { plans } = useUserPlanData(user);
+  const planIds = Object.keys(plans);
   const plan = plans[planIds[0]];
 
   const handlePlanToggle = () => {
@@ -138,6 +140,7 @@ export default function UserPlanSheet({ isOpen, onExpandClick }: UserPlanSheetPr
             // component={Link}
             // to="/app/plans/new"
             onClick={handlePlanToggle}
+            size="large"
           >
             {icon}
           </IconButton>

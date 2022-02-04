@@ -1,7 +1,5 @@
 module.exports = {
-  mode: 'jit',
-  purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
-  darkMode: false, // or 'media' or 'class'
+  content: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       colors: {
@@ -14,6 +12,11 @@ module.exports = {
           light: '#2FEEAB',
           DEFAULT: '#11D08D',
           dark: '#0C9766',
+        },
+        navigation: {
+          DEFAULT: '#878FD6',
+          dark: '#5159A3',
+          line: '#C8D1F3',
         },
         light: '#F9F9FA',
         dark: '#1F201F',
@@ -100,13 +103,22 @@ module.exports = {
           },
         ],
       },
+      keyframes: {
+        fadeIn: {
+          '0%': { transform: 'translateX(1rem)', opacity: '0' },
+          '100%': { transform: 'translateX(0)', opacity: '100' },
+        },
+      },
+      animation: {
+        intro: 'fadeIn 0.75s ease-in-out',
+      },
+      gridTemplateColumns: {
+        onboardingHonors: '40px minmax(0, 1fr)',
+      },
     },
     fontFamily: {
       sans: ['Roboto', 'ui-sans-serif', 'system-ui'],
     },
-  },
-  variants: {
-    extend: {},
   },
   plugins: [],
 };

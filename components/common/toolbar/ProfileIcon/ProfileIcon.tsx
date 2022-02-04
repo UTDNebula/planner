@@ -1,8 +1,8 @@
 import React from 'react';
-import { Avatar, IconButton, ListItemIcon, ListItemText, Menu, MenuItem } from '@material-ui/core';
-import AccountIcon from '@material-ui/icons/AccountCircle';
-import AccountBox from '@material-ui/icons/AccountBox';
-import { ExitToApp } from '@material-ui/icons';
+import { Avatar, IconButton, ListItemIcon, ListItemText, Menu, MenuItem } from '@mui/material';
+import AccountIcon from '@mui/icons-material/AccountCircle';
+import AccountBox from '@mui/icons-material/AccountBox';
+import { ExitToApp } from '@mui/icons-material';
 import Link from 'next/link';
 import styles from './ProfileIcon.module.css';
 import { useAuthContext } from '../../../../modules/auth/auth-context';
@@ -66,6 +66,7 @@ export default function ProfileIcon(props: ProfileIconProps): JSX.Element {
         aria-haspopup="true"
         onClick={handleIconClick}
         color="inherit"
+        size="large"
       >
         {avatarIcon}
       </IconButton>
@@ -112,7 +113,7 @@ export default function ProfileIcon(props: ProfileIconProps): JSX.Element {
             </MenuItem>,
           ]
         ) : (
-          <MenuItem component={Link} href="/app/auth/signIn">
+          <MenuItem component={Link} href="/app/auth/Login">
             <ListItemIcon>
               <ExitToApp />
             </ListItemIcon>

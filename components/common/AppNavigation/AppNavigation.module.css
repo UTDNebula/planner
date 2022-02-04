@@ -1,5 +1,0 @@
-/* TODO: Make responsive across all screen sizes */
-.AppNavigation {
-  min-width: 360px;
-  @apply bg-white shadow-md;
-}

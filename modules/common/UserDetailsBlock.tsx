@@ -1,18 +1,20 @@
 import React from 'react';
-import { createStyles, makeStyles, Theme, Typography } from '@material-ui/core';
+import { Theme, Typography } from '@mui/material';
+import createStyles from '@mui/styles/createStyles';
+import { makeStyles } from 'tss-react/mui';
 import { HonorsIndicator } from './types';
 import { convertSemesterToData } from '../common/data-utils';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
+const useStyles = makeStyles()((theme: Theme) => {
+  return {
     root: {
       padding: theme.spacing(2),
       backgroundColor: theme.palette.primary.main,
       color: theme.palette.primary.contrastText,
     },
     attemptedHours: {},
-  }),
-);
+  };
+});
 
 /**
  * Component properties for a UserDetailsBlock.
@@ -48,6 +50,8 @@ export interface UserDetailsBlockProps {
   gpa: number;
 }
 
+// NOTE: UNUSED COMPONENT
+// TODO: Either use or remove for Planner v1
 export default function UserDetailsBlock(props: UserDetailsBlockProps): JSX.Element {
   const {
     name,
@@ -78,7 +82,7 @@ export default function UserDetailsBlock(props: UserDetailsBlockProps): JSX.Elem
 
   console.log('Starting year: ' + startingYear + ', starting semester: ' + startingSemester);
 
-  const classes = useStyles();
+  const { classes } = useStyles();
 
   return (
     <div className={classes.root}>

@@ -15,13 +15,8 @@ import {
 export default function HomeUserInfo(): JSX.Element {
   const { user } = useAuthContext();
   const { userInfo } = useUserProfileData(user.id);
-  const {
-    coursesTaken,
-    coursesRemaining,
-    hoursAttempted,
-    gpa,
-    estimatedGraduation,
-  } = useUserSummaryStatistics(/*user.id */);
+  const { coursesTaken, coursesRemaining, hoursAttempted, gpa, estimatedGraduation } =
+    useUserSummaryStatistics(/*user.id */);
 
   const { preferredName } = userInfo;
   const subtitleText = 'Junior studying Computer Science';

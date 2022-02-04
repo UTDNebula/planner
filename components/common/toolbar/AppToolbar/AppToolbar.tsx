@@ -1,21 +1,15 @@
 import React from 'react';
-import {
-  AppBar,
-  IconButton,
-  makeStyles,
-  createStyles,
-  Toolbar,
-  Typography,
-} from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
-import BackIcon from '@material-ui/icons/ArrowBack';
+import { AppBar, IconButton, Toolbar, Typography } from '@mui/material';
+import { makeStyles } from 'tss-react/mui';
+import MenuIcon from '@mui/icons-material/Menu';
+import BackIcon from '@mui/icons-material/ArrowBack';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import ProfileIcon from '../ProfileIcon/ProfileIcon';
 import { useAuthContext } from '../../../../modules/auth/auth-context';
 
-const useStyles = makeStyles((theme) =>
-  createStyles({
+const useStyles = makeStyles()((theme) => {
+  return {
     root: {
       zIndex: theme.zIndex.drawer + 1,
     },
@@ -25,8 +19,8 @@ const useStyles = makeStyles((theme) =>
     title: {
       flexGrow: 1,
     },
-  }),
-);
+  };
+});
 
 interface AppToolbarProps {
   title?: string;
@@ -34,12 +28,16 @@ interface AppToolbarProps {
   // TODO: Maybe use context for viewing/planning modes
 }
 
+/**
+ * Note: UNUSED component
+ * TODO: Either use or remove for Planner v1
+ */
 export default function AppToolbar(props: AppToolbarProps): JSX.Element {
   const { shouldShowProfile } = props;
 
   const title = 'Nebula';
 
-  const classes = useStyles();
+  const { classes } = useStyles();
 
   const { signOut } = useAuthContext();
 
@@ -62,7 +60,7 @@ export default function AppToolbar(props: AppToolbarProps): JSX.Element {
   };
 
   const handleSignIn = () => {
-    router.push('/auth/signIn');
+    router.push('/auth/login');
   };
 
   const handleBackButtonClick = () => {
@@ -79,6 +77,7 @@ export default function AppToolbar(props: AppToolbarProps): JSX.Element {
           edge="start"
           color="inherit"
           aria-label={determineLeftButtonLabel()}
+          size="large"
         >
           {leftButtonIcon}
         </IconButton>

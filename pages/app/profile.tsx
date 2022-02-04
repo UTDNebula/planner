@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import { useAuthContext } from '../../modules/auth/auth-context';
 import { useUserProfileData } from '../../modules/profile/userProfileData';
+import CourseAudit from '../../components/home/history/StudentHistoryView/CourseAudit';
 
 /**
  * A page containing student attributes and other account settings.
@@ -25,6 +26,10 @@ export default function ProfilePage(): JSX.Element {
         </section>
         <section className="p-4">
           <div className="text-headline5 font-bold">Account management</div>
+        </section>
+        <section className="p-4">
+          <div className="text-headline5 font-bold">Course History</div>
+          <CourseAudit />
         </section>
       </div>
     </main>

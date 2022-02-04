@@ -1,17 +1,51 @@
-import { StudentPlan } from '../../common/data';
+import React from 'react';
+import { Semester, StudentPlan } from '../../common/data';
+import DUMMY_PLAN from '../../../data/add_courses.json';
+import { useDispatch, useStore } from 'react-redux';
+import { updatePlan } from '../../redux/userDataSlice';
 
 /**
- * A utility hook that exposes callbacks to handle StudentPlan imports and exports.
- *
- * The exportPlan function downloads a plan to a user's local machine and is the
- * primary means of downloading a file from the planner.
- *
- * The handleSelectedPlanChange function is used to import and parse a plan to
- * pass it to a callback that the planner can use to load a plan into memory.
+ * A utility hook that exposes callbacks to handle manipulating the StudentPlan.
+ * This includes StudentPlan imports and exports, as well as modifying its content
+ * and persisting changes between sessions.
  */
 export function usePlan() {
+  // Manages planId
+  const [planId, setPlanId] = React.useState('empty-plan');
+
+  const store = useStore();
+
+  const dispatch = useDispatch();
+
+  // Initial value for plan until data is properly loaded
+  const initialPlan: StudentPlan = {
+    id: planId,
+    title: 'Just a Degree Plan',
+    major: 'Computer Science',
+    semesters: DUMMY_PLAN,
+  };
+
+  // Manages plan state
+  const [plan, setPlan] = React.useState<StudentPlan>(initialPlan);
+
   /**
-   * Downloads a plan to the user's local machine.
+   * The loadPlan function returns the user plan from an external storage given
+   * a planId and updates the plan & planId state inside the usePlan hook.
+   * If no plan with a givenId exists, a temporary plan is subsequently returned.
+   *
+   * @param userPlanId unique identifier for each plan
+   * @returns A StudentPlan
+   */
+  const loadPlan = (userPlanId: string) => {
+    const userPlan = fetchPlan(userPlanId);
+    setPlan(userPlan);
+    setPlanId(userPlanId);
+    return userPlan;
+  };
+
+  /**
+   * The exportPlan function downloads a plan to a user's local machine and is the
+   * primary means of downloading a file from the planner.
    *
    * @param plan The plan to write to file
    */
@@ -42,7 +76,8 @@ export function usePlan() {
   };
 
   /**
-   * Imports a plan from JSON and converts it to a JavaScript object.
+   * The handleSelectedPlanChange function is used to import and parse a plan to
+   * pass it to a callback that the planner can use to load a plan into memory.
    *
    * This only handles inputs that accept one file. Files after the first index
    * (index 0) will be ignored.
@@ -63,12 +98,73 @@ export function usePlan() {
       console.log('Uploaded plan:', plan);
 
       callback(JSON.parse(plan));
+      // Update plan
+      setPlan(JSON.parse(plan));
     };
+
     reader.readAsText(file);
   };
 
+  /**
+   * TODO: Get the StudentPlan from Firebase if exists
+   * TODO: After completing newPlanFow, automatically populate state.userData.plans[planId]
+   * with correct plan and remove initialPlan
+   *
+   * The fetchPlan function returns a StudentPlan from an external storage
+   * given a planId.
+   *
+   * @param planId unique identifier for each plan
+   * @returns a StudentPlan
+   */
+  function fetchPlan(planId: string): StudentPlan {
+    // Make copy of student plan from redux or get default plan if doesn't exist
+    const plan: StudentPlan = store.getState().userData.plans[planId] ?? initialPlan;
+    if (plan.id !== 'empty-plan') {
+      // Remove this logic once initialPlan deprecated
+      return JSON.parse(JSON.stringify(plan));
+    } else {
+      plan.id = planId;
+      return plan;
+    }
+  }
+
+  /**
+   * The savePlan function saves the StudentPlan to an external storage
+   * @param planId unique identifier for each plan
+   * @param planState the user's plan
+   */
+  function savePlan(planId: string, planState: StudentPlan) {
+    console.log('Save', planState, 'ID', planId);
+    dispatch(updatePlan(planState));
+  }
+
+  /**
+   * The persistChanges function updates plan when state changes
+   * inside the useDraggableItemContainer hook
+   * @param data
+   */
+  const persistChanges = (data: {
+    semesters: Record<string, Semester>;
+    // allItems: Array<Course>,
+  }) => {
+    const semesterList = Object.values(data.semesters);
+
+    console.log('Plan', plan);
+    const savedPlan = JSON.parse(JSON.stringify(plan));
+    savedPlan.semesters = semesterList;
+    console.log('SavedPlan', savedPlan);
+    // Save plan to redux & in state
+    savePlan(planId, savedPlan);
+    setPlan(savedPlan);
+  };
+
   return {
+    plan,
+    loadPlan,
     exportPlan,
     handleSelectedPlanChange,
+    usePlan,
+    fetchPlan,
+    persistChanges,
   };
 }

@@ -11,7 +11,7 @@ interface LandingAppBarProps {
 }
 
 /**
- * One
+ * TODO: Implement this component
  */
 function AppBarSection({ item }: { item: LandingBarItem }): JSX.Element {
   return <div className="inline-block p-4 font-bold">{item}</div>;

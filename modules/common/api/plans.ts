@@ -38,8 +38,4 @@ export async function loadCoursePlan(id: string, year = 2020): Promise<CoursePla
   } else {
     throw new Error('Invalid course plan ID');
   }
-  // return coursePlans.reduce((data: CoursePlan, plan) => {
-  //   data[plan.id] = plan;
-  //   return data;
-  // }, {});
 }

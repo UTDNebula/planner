@@ -9,6 +9,7 @@ import ServiceName from '../components/common/ServiceName';
  *
  * This is mostly for marketing.
  *
+ * TODO: Make landing page more exciting!
  * TODO: also show some lightweight interactive demos since why not.
  */
 export default function LandingPage(): JSX.Element {
@@ -20,7 +21,6 @@ export default function LandingPage(): JSX.Element {
           name="description"
           content="Nebula Web is a tool that lets you plan out your academic career."
         />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="p-8 bg-gray-200">
         <div className="max-w-4xl bg-white my-16 p-8 mx-auto shadow-md rounded-md text-center">
@@ -28,16 +28,14 @@ export default function LandingPage(): JSX.Element {
             <ServiceName />
           </div>
           <div className="text-headline6">Tools to help you plan out your college career.</div>
-          <div className="my-2 text-body1 font-bold">Coming soon.</div>
           <div className="my-4">
-            <div className="text-body2 mb-2">Or, if you&apos;re curious:</div>
             <button className="p-2 rounded-md shadow-md hover:shadow-lg bg-secondary font-bold text-button uppercase">
-              <Link href="/app">Explore Nebula 🌌</Link>
+              <Link href="/app/auth/login">Get Started 🌌</Link>
             </button>
           </div>
         </div>
       </div>
-      {/* <MaintainerSection /> */}
+      {/* TODO: Implement this <MaintainerSection /> */}
       <Footer />
     </div>
   );

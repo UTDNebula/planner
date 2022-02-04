@@ -1,0 +1,68 @@
+[
+    {
+      "semester": "2019f",
+      "grade": "A-",
+      "course": {
+        "id": "0001",
+        "title": "Introduction to Engineering and Computer Science",
+        "catalogCode": "ECS 1100",
+        "description": "Course description",
+        "creditHours": 1
+      }
+    },
+    {
+      "semester": "2019f",
+      "grade": "A-",
+      "course": {
+        "id": "0002",
+        "title": "Introduction to Computer Science and Software Engineering",
+        "catalogCode": "CS 1200",
+        "description": "Course description",
+        "creditHours": 2
+      }
+    },
+    {
+      "semester": "2019f",
+      "grade": "A-",
+      "course": {
+        "id": "0003",
+        "title": "Discrete Mathematics for Computing I",
+        "catalogCode": "CS 2305",
+        "description": "Course description",
+        "creditHours": 3
+      }
+    },
+    {
+      "semester": "2019f",
+      "grade": "B",
+      "course": {
+        "id": "0004",
+        "title": "Computer Science II",
+        "catalogCode": "CS 2337",
+        "description": "Course description",
+        "creditHours": 3
+      }
+    },
+    {
+      "semester": "2019f",
+      "grade": "B",
+      "course": {
+        "id": "0006",
+        "title": "Calculus I",
+        "catalogCode": "MATH 2417",
+        "description": "Course description",
+        "creditHours": 4
+      }
+    },
+    {
+      "semester": "2019f",
+      "grade": "B-",
+      "course": {
+        "id": "0005",
+        "title": "State and Local Government",
+        "catalogCode": "GOVT 2306",
+        "description": "Course description",
+        "creditHours": 3
+      }
+    }
+  ]

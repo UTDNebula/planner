@@ -3,6 +3,7 @@ import { useUpdateService } from '../../modules/updates/updateService';
 
 /**
  * A dialog shown to the user when there is an update to the app.
+ * TODO: Implement this!
  */
 export default function UpdatesDialog(): JSX.Element {
   const { newestUpdate, performUpdate } = useUpdateService();
