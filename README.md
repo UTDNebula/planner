@@ -51,14 +51,14 @@ This project uses the MIT License.
 To get started, see the [contribution guide](./CONTRIBUTING.md). It'll tell you
 everything you need to know.
 
-Additionally, see the Project Nebula-wide contributors[guide](https://nebula.acmutd.co)
+Additionally, see the Project Nebula-wide contributors [guide](https://about.utdnebula.com/)
 for more info.
 
 Once you're ready to make some changes, see the
-[issues](https://github.com/acmutd/nebula-web/issues) for the repository.
+[issues](https://github.com/UTDNebula/planner/issues) for the repository.
 
 If you want to brainstorm, share ideas or ask questions, start a discussion in
-the [Discussions](https://github.com/acmutd/nebula-web/) section.
+the [Discussions](https://github.com/UTDNebula/planner/discussions) section.
 
 ### Set-up
 
@@ -67,8 +67,8 @@ installation. To start, clone the repository, and then run `npm start` to launch
 a local development server at [`localhost:3000`](https://localhost:3000) by default.
 
 ```bash
-git clone https://github.com/acmutd/nebula-web.git
-cd nebula-web
+git clone https://github.com/UTDNebula/planner.git
+cd planner
 npm start
 ```
 
@@ -78,6 +78,6 @@ This project is maintained by ACM Development, a division of ACM UTD. If you hav
 any questions about this project or Project Nebula, see the [#ask-nebula](https://discord.com/channels/692266201644007424/811419400753905714)
 channel on the ACM Discord server (accessible at [acmutd.co/discord](https://acmutd.co/discord)).
 
-For more formal inquiries, send us a message at nebula-maintainers@acmutd.co
+For more formal inquiries, send us a message at core-maintainers@utdnebula.com
 with "[nebula-web]" in the title. Please be as detailed as possible so we can
 best assist you.

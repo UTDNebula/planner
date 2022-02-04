@@ -2,7 +2,7 @@
 *   @rajmeet2001
 
 # Request all Project Nebula Maintainers to review other pull requests
-components/**/*   @acmutd/nebula-maintainers
-modules/**/*   @acmutd/nebula-maintainers
-pages/**/*   @acmutd/nebula-maintainers
-styles/**/*   @acmutd/nebula-maintainers
+components/**/*   @UTDNebula/planner
+modules/**/*   @UTDNebula/planner
+pages/**/*   @UTDNebula/planner
+styles/**/*   @UTDNebula/planner

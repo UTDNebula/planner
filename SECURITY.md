@@ -17,11 +17,11 @@ vulnerabilities patched:
 ## Reporting a Vulnerability
 
 If you notice a service vulnerability detectable in the user-facing portions
-of this app, contact the Nebula maintainers at nebula-maintainers@acmutd.co
+of this app, contact the Nebula maintainers at core-maintainers@utdnebula.com
 with the subject line `[nebula]: User-Facing Security Vulnerability`.
 
 If the issue is due to something internal - like a vulnerability in the
-library's dependencies, open an [issue](https://github.com/acmutd/nebula-web/issues/new/choose)
+library's dependencies, open an [issue](https://github.com/UTDNebula/planner/issues/new/choose)
 and tag it with the `Type: Security Vulnerability` label.
 
 One a maintainer triages the issue and determines it to be an actual vulnerability,
