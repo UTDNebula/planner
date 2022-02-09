@@ -9,6 +9,7 @@ import PageTwo, { PageTwoTypes } from '../../components/onboarding/Onboarding_Pa
 import PageThree from '../../components/onboarding/Onboarding_Pages/pg_3';
 import Privacy from '../../components/onboarding/Onboarding_Pages/privacy';
 import Welcome from '../../components/onboarding/Onboarding_Pages/welcome';
+import { useRouter } from 'next/router';
 
 /**
  * The first onboarding page for the application.
@@ -257,6 +258,8 @@ export default function OnboardingPage(): JSX.Element {
     credits: false,
   });
 
+  const router = useRouter();
+
   // TODO: Find cleaner way to do this
   const setNavigationProps = (page: number) => {
     switch (page) {
@@ -295,7 +298,9 @@ export default function OnboardingPage(): JSX.Element {
     // TODO: Figure out functionality for guest users
 
     // TODO: Redirect to home page
-    const onboardingRedirect = `/app/plans/new${generateRedirect(data)}`;
+    const onboardingRedirect = `/app`;
+
+    router.push(onboardingRedirect);
   };
 
   const organizeOnboardingData = () => {
@@ -399,18 +404,18 @@ export default function OnboardingPage(): JSX.Element {
   return (
     <>
       <div className="min-h-screen flex items-center justify-center bg-blue-400">
-        <div className="py-16 px-32 rounded shadow-2xl w-2/3 bg-white">
+        <div className="my-16 py-16 px-32 rounded shadow-2xl w-3/4 bg-white">
           <div className="flex flex-col items-center justify-center">
-            {page >= 3 && (
+            {/* {page >= 3 && (
               <Navigation
                 navigationProps={navProps}
                 currentPage={page}
                 validate={validate}
                 changePage={changePage}
               />
-            )}
+            )} */}
             {jsxElem[page]}
-            <div>
+            <div className="justify-start">
               <button
                 onClick={decrementPage}
                 className="mr-10 text-blue-500 hover:text-yellow-500 font-bold rounded"

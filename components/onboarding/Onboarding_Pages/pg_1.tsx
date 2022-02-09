@@ -7,6 +7,7 @@ import { DegreeState } from '../DegreePicker';
 import DummyData from '../../../data/dummy_onboarding.json';
 import DegreePickerGallery, { pickerValidate } from '../DegreePickerGallery';
 import React from 'react';
+import { TextField } from '@mui/material';
 
 // TODO: Populate w/ real values
 // Array of values to choose from for form
@@ -66,56 +67,77 @@ export default function PageOne({ handleChange, props, handleValidate }: Page1Pr
     checkValidate();
   }, [props]);
 
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
-    <div className="animate-intro">
-      <h2 className="text-4xl text-left font-bold mb-10 text-gray-800">Tell us about Yourself</h2>
-      <div className="grid grid-cols-2">
-        <h3 className="text-xl mb-10 text-gray-800">What is your name?</h3>
-        <div className="flex items-center justify-center">
-          <input
-            type="text"
-            className="mb-10 border bg-blue-100 py-2 px-4 w-96 outline-none focus:ring-2 focus:ring-blue-600 rounded"
-            placeholder="Your name"
-            name="name"
-            value={name}
-            onChange={handleStandardChange}
-          />
+    <div className="animate-intro w-full">
+      <h2 className="text-4xl text-left font-bold mb-10 text-gray-800">
+        <div>Personal </div>
+        <div> Information</div>
+      </h2>
+      <div className="grid grid-cols-2 gap-x-32">
+        <div>
+          <div className="mb-10 flex flex-col">
+            {/* <h3 className="text-xl  text-gray-800">Name</h3> */}
+
+            <TextField
+              name="name"
+              id="outlined-basic"
+              className="w-72"
+              label="Name"
+              variant="outlined"
+              value={name}
+              onChange={handleStandardChange}
+            />
+          </div>
+
+          <div className="mb-10">
+            {/* <h3 className="text-xl mb-2 text-gray-800">Student Classification</h3> */}
+
+            <FormControl variant="outlined">
+              <InputLabel id="demo-simple-select-autowidth-label">Grade</InputLabel>
+
+              <Select
+                labelId="demo-simple-select-autowidth-label"
+                name="classification"
+                value={classification}
+                onChange={handleStandardChange}
+                id="demo-simple-select-autowidth"
+                className="w-72"
+                label="grade"
+              >
+                {returnMenuItems(classificationTypes)}
+              </Select>
+            </FormControl>
+          </div>
+          <div className="mb-10">
+            {/* <h3 className="text-xl ">Post Graduation Plan</h3> */}
+
+            <FormControl variant="outlined">
+              <InputLabel disableAnimation={false} id="demo-simple-select-autowidth-label">
+                Future Plans
+              </InputLabel>
+
+              <Select
+                labelId="demo-simple-select-autowidth-label"
+                id="demo-simple-select-autowidth"
+                className="w-72"
+                value={future}
+                onChange={handleStandardChange}
+                name="future"
+                label="Future Plans"
+              >
+                {returnMenuItems(futureTypes)}
+              </Select>
+            </FormControl>
+          </div>
         </div>
-
-        <h3 className="text-xl mb-10 text-gray-800">Student Classification?</h3>
-
-        <FormControl>
-          <InputLabel id="demo-simple-select-autowidth-label">Classification</InputLabel>
-          <Select
-            labelId="demo-simple-select-autowidth-label"
-            id="demo-simple-select-autowidth"
-            value={classification}
-            onChange={handleStandardChange}
-            fullWidth={true}
-            name="classification"
-          >
-            {returnMenuItems(classificationTypes)}
-          </Select>
-        </FormControl>
-
-        <h3 className="text-xl mb-10 text-gray-800">What are you studying?</h3>
-
-        <DegreePickerGallery degree={degree} handleChange={handlePickerChange} />
-
-        <h1 className="text-xl ">What do you plan on doing after graduation?</h1>
-
-        <FormControl>
-          <InputLabel id="demo-simple-select-autowidth-label">Future Plans</InputLabel>
-          <Select
-            labelId="demo-simple-select-autowidth-label"
-            id="demo-simple-select-autowidth"
-            value={future}
-            onChange={handleStandardChange}
-            name="future"
-          >
-            {returnMenuItems(futureTypes)}
-          </Select>
-        </FormControl>
+        <div className="w-72">
+          {/* <h3 className="text-xl  text-gray-800">Degree</h3> */}
+          <DegreePickerGallery degree={degree} handleChange={handlePickerChange} />
+        </div>
       </div>
     </div>
   );

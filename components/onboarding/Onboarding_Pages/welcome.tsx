@@ -10,9 +10,7 @@ export default function Welcome(): JSX.Element {
       <h2 className="text-5xl font-bold mb-5 text-blue-400">Nebula</h2>
 
       <figcaption className="font-small">
-        <div className="text-cyan-600 mb-10">
-          Tell us about yourself so we can generate your personal planner
-        </div>
+        <div className="mb-10">Tell us about yourself so we can generate your personal planner</div>
       </figcaption>
     </div>
   );

@@ -108,9 +108,14 @@ module.exports = {
           '0%': { transform: 'translateX(1rem)', opacity: '0' },
           '100%': { transform: 'translateX(0)', opacity: '100' },
         },
+        fadeDown: {
+          '0%': { transform: 'translateY(-1rem)', opacity: '0' },
+          '100%': { transform: 'translateX(0)', opacity: '100' },
+        },
       },
       animation: {
         intro: 'fadeIn 0.75s ease-in-out',
+        fadeDown: 'fadeDown 0.75s ease-in-out',
       },
       gridTemplateColumns: {
         onboardingHonors: '40px minmax(0, 1fr)',

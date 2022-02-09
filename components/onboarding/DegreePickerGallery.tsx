@@ -80,7 +80,7 @@ export default function DegreePickerGallery({ degree, handleChange }: DegreePick
 
   return (
     <>
-      <div className="flex flex-col">
+      <div className="">
         {degreeCount.map((elm, index) => {
           if (index in removeIndex) {
             count += 1;
@@ -105,7 +105,7 @@ export default function DegreePickerGallery({ degree, handleChange }: DegreePick
           }
         })}
         <button
-          className="mr-10 text-blue-500 hover:text-yellow-500 font-bold rounded"
+          className=" text-blue-500 ml-5 hover:text-yellow-500 font-bold rounded justify-start"
           onClick={addNewDegree}
         >
           {' '}
