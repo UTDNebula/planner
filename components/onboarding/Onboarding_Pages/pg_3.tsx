@@ -5,14 +5,6 @@ export type PageThreeTypes = {
   creditState: CreditState[];
 };
 
-/**
- * TODO: Create method to relay this data to Firebase
- */
-function sendData(data: CreditState) {
-  console.log('Page 3 data:', data);
-}
-const data = 0;
-
 export type Page3Props = {
   handleChange: React.Dispatch<React.SetStateAction<PageThreeTypes>>;
   props: PageThreeTypes;

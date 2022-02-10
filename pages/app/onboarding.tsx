@@ -10,6 +10,8 @@ import PageThree from '../../components/onboarding/Onboarding_Pages/pg_3';
 import Privacy from '../../components/onboarding/Onboarding_Pages/privacy';
 import Welcome from '../../components/onboarding/Onboarding_Pages/welcome';
 import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
+import { updateOnboarding } from '../../modules/redux/userDataSlice';
 
 /**
  * The first onboarding page for the application.
@@ -250,6 +252,8 @@ export default function OnboardingPage(): JSX.Element {
   const [page, setPage] = useState(0);
   const [validate, setValidate] = useState([true, false, true, false, false, true]);
 
+  const dispatch = useDispatch();
+
   const [validNextPage, setValidNextPage] = useState(false);
 
   const [navProps, setNavProps] = useState<NavigationStateProps>({
@@ -297,8 +301,10 @@ export default function OnboardingPage(): JSX.Element {
 
     // TODO: Figure out functionality for guest users
 
-    // TODO: Redirect to home page
-    const onboardingRedirect = `/app`;
+    const onboardingRedirect = `/app/routes/route`;
+
+    // Mark onboarding done
+    dispatch(updateOnboarding(true));
 
     router.push(onboardingRedirect);
   };
@@ -339,7 +345,6 @@ export default function OnboardingPage(): JSX.Element {
       minors: [],
     };
     pageOneData.degree.forEach((value) => {
-      console.log(value.degreeType, value.degreeType === 'Major');
       if (value.degreeType === 'Major') {
         temp.majors.push(value.degree);
       } else {

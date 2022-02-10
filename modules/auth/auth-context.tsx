@@ -177,7 +177,7 @@ function useAuthContext(): AuthContextState {
 
 function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element {
   const [user, setUser] = React.useState<ServiceUser>(users.anonymous);
-  const [redirect, setRedirect] = React.useState('/app');
+  const [redirect, setRedirect] = React.useState('/app/routes/route');
   const [shouldRedirect, setShouldRedirect] = React.useState(false);
 
   const history = useRouter();
@@ -286,9 +286,10 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
     return firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(({ /* credential, */ user }) => {
+      .then(async ({ /* credential, */ user }) => {
+        setRedirect('/app/routes/route');
+
         updateUser(user);
-        setRedirect('/app/');
         setShouldRedirect(true);
       })
       .catch((error) => {
@@ -322,8 +323,9 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
           console.error("The signed-in user is null? That doesn't seem right.");
           return;
         }
+
+        setRedirect('/app/routes/route');
         updateUser(user);
-        setRedirect('/app/');
         setShouldRedirect(true);
       })
       .catch((error) => {
@@ -348,7 +350,8 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
           return;
         }
         updateUser(user);
-        setRedirect('/app/');
+
+        setRedirect('/app/routes/route');
         setShouldRedirect(true);
       })
       .catch((error) => {
