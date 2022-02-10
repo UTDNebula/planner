@@ -26,6 +26,7 @@ export default function Routing() {
     }
   }, [user]);
 
+  // TODO: Find a better way to know when dispatch(loadUser(user)) is done
   // Runs whenever Redux state is updated
   React.useEffect(() => {
     if (sync) {

@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import firebase from 'firebase';
+import { OnboardingFormData } from '../../pages/app/onboarding';
 import { ServiceUser, users, CourseAttempt } from '../auth/auth-context';
-import { StudentPlan, createSamplePlan } from '../common/data';
+import { StudentPlan, createSamplePlan, createSampleOnboarding } from '../common/data';
 
 /**
  * Manages user plans
@@ -22,6 +23,7 @@ export interface CourseHistoryState {
 
 export interface UserState {
   doneOnboarding: boolean;
+  onboarding: OnboardingFormData;
 }
 
 /**
@@ -36,8 +38,11 @@ export type AcademicDataState = PlannerDataState & CourseHistoryState & UserStat
 
 const samplePlan = createSamplePlan();
 
+const sampleOnboarding = createSampleOnboarding();
+
 // Default data for application & guest users
 const initialState: AcademicDataState = {
+  onboarding: sampleOnboarding,
   doneOnboarding: false,
   user: users.anonymous,
   plans: {
@@ -46,8 +51,8 @@ const initialState: AcademicDataState = {
   courses: [],
 };
 
-// TODO: Move firebase logic to Redux middleware
-// to support error logging
+// TODO: Separate into multiple data slices
+// for better separation of concerns
 
 /**
  * This middleware function runs every time a
@@ -150,8 +155,9 @@ const userDataSlice = createSlice({
       state = { ...initialState };
       return state;
     },
-    updateOnboarding(state, action: PayloadAction<boolean>) {
-      state.doneOnboarding = action.payload;
+    updateOnboarding(state, action: PayloadAction<OnboardingFormData>) {
+      state.doneOnboarding = true;
+      state.onboarding = action.payload;
       const userDataSlice = { userDataSlice: JSON.parse(JSON.stringify(state)) };
       saveToFirebase(state.user.id, userDataSlice);
       return state;
@@ -159,7 +165,7 @@ const userDataSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(loadUser.fulfilled, (state, action: PayloadAction<any>) => {
+      .addCase(loadUser.fulfilled, (state, action: PayloadAction<AcademicDataState>) => {
         // Runs if loadUser(userId) is successful
         return action.payload;
       })

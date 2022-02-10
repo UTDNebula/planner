@@ -138,7 +138,7 @@ type ConsentData = {
 /**
  * Information obtained during onboarding.
  */
-type OnboardingFormData = {
+export type OnboardingFormData = {
   /**
    * Store user consent data
    */
@@ -184,7 +184,7 @@ type OnboardingFormData = {
  *
  * @param studentDefaultName A personalized name to prepopulate the name field.
  */
-function useUserSetup(studentDefaultName = 'Comet') {
+export function useUserSetup(studentDefaultName = 'Comet') {
   // TODO: Check if user already exists; if true, use user values
   const [consentData, setConsentData] = React.useState({
     disclaimer: false,
@@ -304,7 +304,7 @@ export default function OnboardingPage(): JSX.Element {
     const onboardingRedirect = `/app/routes/route`;
 
     // Mark onboarding done
-    dispatch(updateOnboarding(true));
+    dispatch(updateOnboarding(data));
 
     router.push(onboardingRedirect);
   };

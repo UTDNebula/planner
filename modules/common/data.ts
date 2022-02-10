@@ -1,4 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
+import { OnboardingFormData } from '../../pages/app/onboarding';
+import { HonorsIndicator } from '../../modules/common/types';
 
 /**
  * A topic of study.
@@ -146,6 +148,24 @@ export function createSamplePlan(
     semesters: generateSemesters(semesterCount, startYear, startSemester, useRandom),
   };
   return plan;
+}
+
+export function createSampleOnboarding() {
+  const data: OnboardingFormData = {
+    consent: { disclaimer: false, analytics: false, performance: false, personalization: false },
+    preferredName: '',
+    classification: '',
+    future: '',
+    plan: { majors: [], minors: [] },
+    studentAttributes: { onCampus: false, traditional: false, receivingAid: false },
+    prestige: {
+      honors: ['none' as HonorsIndicator],
+      scholarship: '',
+      fastTrack: { major: '', status: false, year: '' },
+    },
+    credits: [],
+  };
+  return data;
 }
 
 export function generateSemesters(
