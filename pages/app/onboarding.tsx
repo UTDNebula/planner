@@ -292,6 +292,20 @@ export default function OnboardingPage(): JSX.Element {
     // TODO: Send data to firebase if creating account
     console.log('Send data to firebase & go to /app', data);
 
+    console.log('This is the data: ', data);
+    const firestore = firebase.firestore();
+
+    // Guest user signup
+    firestore
+      .collection('users')
+      .add(data)
+      .then((docRef) => {
+        console.log('Document written with ID: ', docRef.id);
+      })
+      .catch((error) => {
+        console.error('Error adding document: ', error);
+      });
+
     // TODO: Figure out functionality for guest users
 
     // TODO: Redirect to home page
