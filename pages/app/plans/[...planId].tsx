@@ -113,10 +113,20 @@ export default function PlanDetailPage(): JSX.Element {
         removeCourse={removeItemFromList}
       >
         <div className={classes.fabContainer}>
-          <Fab color="primary" onClick={() => addSemester()} className={classes.fab}>
+          <Fab
+            color="primary"
+            style={{ backgroundColor: 'blue' }}
+            onClick={() => addSemester()}
+            className={classes.fab}
+          >
             <AddIcon />
           </Fab>
-          <Fab color="primary" onClick={() => removeSemester()} className={classes.fab}>
+          <Fab
+            color="primary"
+            style={{ backgroundColor: 'blue' }}
+            onClick={() => removeSemester()}
+            className={classes.fab}
+          >
             <RemoveIcon />
           </Fab>
         </div>
