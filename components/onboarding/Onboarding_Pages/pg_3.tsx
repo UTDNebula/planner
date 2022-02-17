@@ -1,16 +1,9 @@
+import React from 'react';
 import TransferCreditGallery, { CreditState } from '../TransferCreditGallery';
 
 export type PageThreeTypes = {
   creditState: CreditState[];
 };
-
-/**
- * TODO: Create method to relay this data to Firebase
- */
-function sendData(data: CreditState) {
-  console.log('Page 3 data:', data);
-}
-const data = 0;
 
 export type Page3Props = {
   handleChange: React.Dispatch<React.SetStateAction<PageThreeTypes>>;
@@ -25,14 +18,17 @@ export default function PageThree({ handleChange, props }: Page3Props): JSX.Elem
     handleChange({ creditState: credits });
   };
 
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
-    <div className="animate-intro">
-      <h2 className="text-4xl text-left font-bold mb-10 text-gray-800">Any Transfer Credits?</h2>
-      <div className="column-flex">
-        <div className="flex items-center justify-center">
-          <TransferCreditGallery creditState={creditState} handleChange={handleTransferChange} />
-        </div>
+    <div className="animate-intro w-full">
+      <div className="text-4xl text-left font-bold mb-10 text-gray-800">
+        <div className="">Transfer Credits </div>
       </div>
+
+      <TransferCreditGallery creditState={creditState} handleChange={handleTransferChange} />
     </div>
   );
 }

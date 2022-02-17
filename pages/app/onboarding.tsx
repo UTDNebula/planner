@@ -9,6 +9,9 @@ import PageTwo, { PageTwoTypes } from '../../components/onboarding/Onboarding_Pa
 import PageThree from '../../components/onboarding/Onboarding_Pages/pg_3';
 import Privacy from '../../components/onboarding/Onboarding_Pages/privacy';
 import Welcome from '../../components/onboarding/Onboarding_Pages/welcome';
+import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
+import { updateOnboarding } from '../../modules/redux/userDataSlice';
 
 /**
  * The first onboarding page for the application.
@@ -135,7 +138,7 @@ type ConsentData = {
 /**
  * Information obtained during onboarding.
  */
-type OnboardingFormData = {
+export type OnboardingFormData = {
   /**
    * Store user consent data
    */
@@ -181,7 +184,7 @@ type OnboardingFormData = {
  *
  * @param studentDefaultName A personalized name to prepopulate the name field.
  */
-function useUserSetup(studentDefaultName = 'Comet') {
+export function useUserSetup(studentDefaultName = 'Comet') {
   // TODO: Check if user already exists; if true, use user values
   const [consentData, setConsentData] = React.useState({
     disclaimer: false,
@@ -249,6 +252,8 @@ export default function OnboardingPage(): JSX.Element {
   const [page, setPage] = useState(0);
   const [validate, setValidate] = useState([true, false, true, false, false, true]);
 
+  const dispatch = useDispatch();
+
   const [validNextPage, setValidNextPage] = useState(false);
 
   const [navProps, setNavProps] = useState<NavigationStateProps>({
@@ -256,6 +261,8 @@ export default function OnboardingPage(): JSX.Element {
     honors: false,
     credits: false,
   });
+
+  const router = useRouter();
 
   // TODO: Find cleaner way to do this
   const setNavigationProps = (page: number) => {
@@ -294,8 +301,12 @@ export default function OnboardingPage(): JSX.Element {
 
     // TODO: Figure out functionality for guest users
 
-    // TODO: Redirect to home page
-    const onboardingRedirect = `/app/plans/new${generateRedirect(data)}`;
+    const onboardingRedirect = `/app/routes/route`;
+
+    // Mark onboarding done
+    dispatch(updateOnboarding(data));
+
+    router.push(onboardingRedirect);
   };
 
   const organizeOnboardingData = () => {
@@ -334,7 +345,6 @@ export default function OnboardingPage(): JSX.Element {
       minors: [],
     };
     pageOneData.degree.forEach((value) => {
-      console.log(value.degreeType, value.degreeType === 'Major');
       if (value.degreeType === 'Major') {
         temp.majors.push(value.degree);
       } else {
@@ -399,18 +409,18 @@ export default function OnboardingPage(): JSX.Element {
   return (
     <>
       <div className="min-h-screen flex items-center justify-center bg-blue-400">
-        <div className="py-16 px-32 rounded shadow-2xl w-2/3 bg-white">
+        <div className="my-16 py-16 px-32 rounded shadow-2xl w-3/4 bg-white">
           <div className="flex flex-col items-center justify-center">
-            {page >= 3 && (
+            {/* {page >= 3 && (
               <Navigation
                 navigationProps={navProps}
                 currentPage={page}
                 validate={validate}
                 changePage={changePage}
               />
-            )}
+            )} */}
             {jsxElem[page]}
-            <div>
+            <div className="justify-start">
               <button
                 onClick={decrementPage}
                 className="mr-10 text-blue-500 hover:text-yellow-500 font-bold rounded"

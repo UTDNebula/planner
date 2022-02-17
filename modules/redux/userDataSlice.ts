@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import firebase from 'firebase';
+import { OnboardingFormData } from '../../pages/app/onboarding';
 import { ServiceUser, users, CourseAttempt } from '../auth/auth-context';
-import { StudentPlan, createSamplePlan } from '../common/data';
+import { StudentPlan, createSamplePlan, createSampleOnboarding } from '../common/data';
 
 /**
  * Manages user plans
@@ -20,6 +21,11 @@ export interface CourseHistoryState {
   courses: CourseAttempt[];
 }
 
+export interface UserState {
+  doneOnboarding: boolean;
+  onboarding: OnboardingFormData;
+}
+
 /**
  * User data type that contains all
  * academic data.
@@ -28,12 +34,16 @@ export interface CourseHistoryState {
  * stored in Redux and Firebase.
  *
  */
-export type AcademicDataState = PlannerDataState & CourseHistoryState;
+export type AcademicDataState = PlannerDataState & CourseHistoryState & UserState;
 
 const samplePlan = createSamplePlan();
 
+const sampleOnboarding = createSampleOnboarding();
+
 // Default data for application & guest users
 const initialState: AcademicDataState = {
+  onboarding: sampleOnboarding,
+  doneOnboarding: false,
   user: users.anonymous,
   plans: {
     [samplePlan.id]: samplePlan,
@@ -41,8 +51,8 @@ const initialState: AcademicDataState = {
   courses: [],
 };
 
-// TODO: Move firebase logic to Redux middleware
-// to support error logging
+// TODO: Separate into multiple data slices
+// for better separation of concerns
 
 /**
  * This middleware function runs every time a
@@ -62,7 +72,7 @@ const initialState: AcademicDataState = {
 export const loadUser = createAsyncThunk<
   AcademicDataState,
   ServiceUser,
-  { state: AcademicDataState }
+  { state: { userData: AcademicDataState } }
 >('userData/loadUser', async (user: ServiceUser, { getState }) => {
   const firestore = firebase.firestore();
   if (user.id !== 'guest') {
@@ -71,27 +81,25 @@ export const loadUser = createAsyncThunk<
       .doc(user.id)
       .get()
       .then((userDoc) => {
+        let userSlice: AcademicDataState;
         if (userDoc.data() !== undefined) {
           // Return user data
           const userData = userDoc.data();
-          const userSlice = userData.userDataSlice;
-          return userSlice;
+          userSlice = userData.userDataSlice;
         } else {
           // Create new user data
-
-          const userSlice: AcademicDataState = JSON.parse(JSON.stringify(initialState));
-          userSlice.user = JSON.parse(JSON.stringify(user));
-
           // If the user was previously a guest, load all
           // guest created plans to new data
-          const { plans } = getState();
-          userSlice.plans = plans;
+          userSlice = JSON.parse(JSON.stringify(getState().userData));
+          userSlice.user = JSON.parse(JSON.stringify(user));
+          // userSlice.plans = plans;
 
           // Remove unncessary (and error-causing) field
           delete userSlice.user.requiresAuthentication;
           saveToFirebase(user.id, { userDataSlice: userSlice });
-          return userSlice;
         }
+
+        return userSlice;
       })
       .catch((error) => {
         console.log('error: ', error);
@@ -147,10 +155,17 @@ const userDataSlice = createSlice({
       state = { ...initialState };
       return state;
     },
+    updateOnboarding(state, action: PayloadAction<OnboardingFormData>) {
+      state.doneOnboarding = true;
+      state.onboarding = action.payload;
+      const userDataSlice = { userDataSlice: JSON.parse(JSON.stringify(state)) };
+      saveToFirebase(state.user.id, userDataSlice);
+      return state;
+    },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(loadUser.fulfilled, (state, action: PayloadAction<any>) => {
+      .addCase(loadUser.fulfilled, (state, action: PayloadAction<AcademicDataState>) => {
         // Runs if loadUser(userId) is successful
         return action.payload;
       })
@@ -163,7 +178,13 @@ const userDataSlice = createSlice({
   },
 });
 
-export const { updateUser, updateCourseAudit, updatePlan, updateAllUserData, resetStore } =
-  userDataSlice.actions;
+export const {
+  updateUser,
+  updateCourseAudit,
+  updatePlan,
+  updateAllUserData,
+  resetStore,
+  updateOnboarding,
+} = userDataSlice.actions;
 
 export default userDataSlice.reducer;

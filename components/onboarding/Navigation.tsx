@@ -61,7 +61,7 @@ export default function Navigation({
       >
         <div className="text-base p-top mt-2"> Step 2 </div>
         <div className="text-sm m-0 p-0"> Scholarships </div>
-        <div className="text-sm -my-1 p-0"> & Honors </div>
+        <div className="text-sm -my-1 p-0"> &quot; Honors </div>
       </button>
 
       <svg width="150">
