@@ -110,6 +110,7 @@ export const loadUser = createAsyncThunk<
 
 /**
  * Stores user data to firebase
+ * TODO: Have saveToFirebase automatically run each time a reducer is called
  * @param id user ID
  * @param data user's academic data
  */
@@ -135,7 +136,6 @@ const userDataSlice = createSlice({
       const resultingState = { ...state, courses: action.payload };
       const userDataSlice = { userDataSlice: resultingState };
       saveToFirebase(unique_id, userDataSlice);
-
       return resultingState;
     },
     updatePlan(state, action: PayloadAction<StudentPlan>) {
@@ -143,6 +143,12 @@ const userDataSlice = createSlice({
       state.plans[action.payload.id] = action.payload;
       const userDataSlice = { userDataSlice: JSON.parse(JSON.stringify(state)) };
       saveToFirebase(unique_id, userDataSlice);
+      return state;
+    },
+    deletePlan(state, action: PayloadAction<string>) {
+      delete state.plans[action.payload];
+      const userDataSlice = { userDataSlice: JSON.parse(JSON.stringify(state)) };
+      saveToFirebase(state.user.id, userDataSlice);
       return state;
     },
     updateAllUserData(state, action: PayloadAction<AcademicDataState>) {
@@ -182,6 +188,7 @@ export const {
   updateUser,
   updateCourseAudit,
   updatePlan,
+  deletePlan,
   updateAllUserData,
   resetStore,
   updateOnboarding,
