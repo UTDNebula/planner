@@ -8,7 +8,9 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../modules/redux/store';
-import { updatePlan } from '../../../modules/redux/userDataSlice';
+import { deletePlan, updatePlan } from '../../../modules/redux/userDataSlice';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useRouter } from 'next/router';
 
 export type SettingsDialogProps = {
   planId: string;
@@ -43,6 +45,7 @@ export default function SettingsDialog({
 
   const [title, setTitle] = React.useState('');
   const [major, setMajor] = React.useState('');
+  const router = useRouter();
 
   const handleClose = () => {
     setOpen(false);
@@ -55,6 +58,23 @@ export default function SettingsDialog({
     dispatch(updatePlan(newPlan));
     updatePlanTitle(title);
     setOpen(false);
+  };
+
+  // Open
+
+  const handleAlertOpen = () => {
+    setAlertOpen(true);
+  };
+
+  const handleDeletePlan = () => {
+    dispatch(deletePlan(planId));
+    handleAlertClose();
+    router.push('/app/plans');
+  };
+
+  const [alertOpen, setAlertOpen] = React.useState(false);
+  const handleAlertClose = () => {
+    setAlertOpen(false);
   };
 
   return (
@@ -83,6 +103,32 @@ export default function SettingsDialog({
             fullWidth
             onChange={(event) => setMajor(event.target.value)}
           />
+          <div className="col-span-2 flex justify-center items-center pt-2">
+            <Button className="w-30" onClick={handleAlertOpen}>
+              <DeleteIcon color="action" />
+              Delete Plan
+            </Button>
+          </div>
+
+          <Dialog
+            open={alertOpen}
+            onClose={handleAlertClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">{'Delete Plan'}</DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                Are you sure you want to delete this plan?
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleAlertClose}>No</Button>
+              <Button onClick={handleDeletePlan} autoFocus>
+                Yes
+              </Button>
+            </DialogActions>
+          </Dialog>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
