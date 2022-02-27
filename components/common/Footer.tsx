@@ -97,7 +97,7 @@ export default function Footer(): JSX.Element {
         </div>
       </div>
       <div className="p-4 font-semibold text-center text-caption bg-gray-800">
-        Built with ❤️ and 💻 by ACM Development
+        Built with ❤️ and 💻 by Project Nebula Maintainers
       </div>
     </footer>
   );
