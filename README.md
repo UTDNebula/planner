@@ -23,10 +23,8 @@ planning is the bane of any college student.
 
 UTD students have access to tools like [UTD Grades](https://utdgrades.com) and
 Rate My Professors to help them pick classes for a specific semeester, but
-Rate My Professors to help them pick classes for a specific semester, but
 there hasn't been a solution that allows a student to say, "I want to major in
 CS, minor in psychology, and do a few internships before grad school. Generate a
-CS, minor in psychology, and do a few internships before grad school. Generating a
 plan lets me do all of that with the professors I want."
 
 Until now, that is.
