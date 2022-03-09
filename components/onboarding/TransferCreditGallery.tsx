@@ -1,10 +1,16 @@
-import { FormControl, TextField, InputLabel, Select, MenuItem } from '@mui/material';
-import { Autocomplete } from '@mui/material';
-import React, { useEffect } from 'react';
-import { useState } from 'react';
-import DummyData from '../../data/dummy_onboarding.json';
-import TransferCreditCard from './TransferCreditCard';
-import Link from 'next/link';
+import {
+  FormControl,
+  TextField,
+  InputLabel,
+  Select,
+  MenuItem,
+} from "@mui/material";
+import { Autocomplete } from "@mui/material";
+import React, { useEffect } from "react";
+import { useState } from "react";
+import DummyData from "../../data/dummy_onboarding.json";
+import TransferCreditCard from "./TransferCreditCard";
+import Link from "next/link";
 
 type TransferCreditGalleryProps = {
   creditState: CreditState[];
@@ -47,16 +53,16 @@ const clepScores = DummyData.clepScores;
 
 const clearCreditFields = {
   id: 0,
-  subject: '',
-  course: '',
-  type: '',
-  apTest: '',
-  apScore: '',
-  ibTest: '',
-  ibLevel: '',
-  ibScore: '',
-  clepTest: '',
-  clepScore: '',
+  subject: "",
+  course: "",
+  type: "",
+  apTest: "",
+  apScore: "",
+  ibTest: "",
+  ibLevel: "",
+  ibScore: "",
+  clepTest: "",
+  clepScore: "",
 };
 
 function returnMenuItems<MenuItem>(menuOptions: string[]) {
@@ -68,15 +74,21 @@ function returnMenuItems<MenuItem>(menuOptions: string[]) {
     </MenuItem>
   ));
 }
+
 export default function TransferCreditGallery({
   creditState,
   handleChange,
 }: TransferCreditGalleryProps) {
-  const [creditFields, setCreditFields] = useState<CreditState>({ ...clearCreditFields });
+  const [creditFields, setCreditFields] = useState<CreditState>({
+    ...clearCreditFields,
+  });
 
   // Handles all form data except DegreePicker
   const handleStandardChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCreditFields({ ...creditFields, [event.target.name]: event.target.value });
+    setCreditFields({
+      ...creditFields,
+      [event.target.name]: event.target.value,
+    });
   };
 
   const handleSubjectChange = (event: any, value: string) => {
@@ -88,26 +100,28 @@ export default function TransferCreditGallery({
   };
 
   // For Autocomplete to update when user searches for values(use createFields to get user data)
-  const [inputSubjectValue, setInputSubjectValue] = React.useState('');
+  const [inputSubjectValue, setInputSubjectValue] = React.useState("");
 
   useEffect(() => console.log(creditState, creditFields));
 
   // validation variables
   const primary =
-    creditFields.subject !== '' &&
+    creditFields.subject !== "" &&
     // && creditFields.course !== ''
-    creditFields.type !== '';
+    creditFields.type !== "";
   const ap = !(
-    creditFields.type === 'AP' &&
-    (creditFields.apScore === '' || creditFields.apTest === '')
+    creditFields.type === "AP" &&
+    (creditFields.apScore === "" || creditFields.apTest === "")
   );
   const ib = !(
-    creditFields.type === 'IB' &&
-    (creditFields.ibLevel === '' || creditFields.ibScore === '' || creditFields.ibTest === '')
+    creditFields.type === "IB" &&
+    (creditFields.ibLevel === "" ||
+      creditFields.ibScore === "" ||
+      creditFields.ibTest === "")
   );
   const clep = !(
-    creditFields.type === 'CLEP' &&
-    (creditFields.clepScore == '' || creditFields.clepTest === '')
+    creditFields.type === "CLEP" &&
+    (creditFields.clepScore == "" || creditFields.clepTest === "")
   );
 
   const addTransferCredit = async () => {
@@ -118,7 +132,7 @@ export default function TransferCreditGallery({
       // clear setCreditFields
       setCreditFields({ ...clearCreditFields, id: creditFields.id + 1 });
     } else {
-      alert('One or more fields missing for credit');
+      alert("One or more fields missing for credit");
     }
   };
 
@@ -135,9 +149,9 @@ export default function TransferCreditGallery({
           <div className="mb-4 w-72 rounded-lg shadow-lg border border-blue-600 p-4 ">
             <FormControl>
               <Autocomplete
-                size={'small'}
+                size={"small"}
                 value={creditFields.subject}
-                defaultValue={''}
+                defaultValue={""}
                 onChange={handleSubjectChange}
                 inputValue={inputSubjectValue}
                 onInputChange={(event, newInputValue) => {
@@ -153,7 +167,9 @@ export default function TransferCreditGallery({
             </FormControl>
 
             <FormControl className="w-32">
-              <InputLabel id="demo-simple-select-autowidth-label">Type</InputLabel>
+              <InputLabel id="demo-simple-select-autowidth-label">
+                Type
+              </InputLabel>
               <Select
                 labelId="demo-simple-select-autowidth-label"
                 id="demo-simple-select-autowidth"
@@ -166,11 +182,13 @@ export default function TransferCreditGallery({
             </FormControl>
           </div>
 
-          {['AP', 'IB', 'CLEP'].includes(creditFields['type']) && (
+          {["AP", "IB", "CLEP"].includes(creditFields["type"]) && (
             <div className="animate-fadeDown border-4 p-4 pt-2 mb-2 flex flex-col justify-center ">
-              {creditFields['type'] === 'AP' && (
+              {creditFields["type"] === "AP" && (
                 <FormControl className="w-32">
-                  <InputLabel id="demo-simple-select-autowidth-label">AP Tests</InputLabel>
+                  <InputLabel id="demo-simple-select-autowidth-label">
+                    AP Tests
+                  </InputLabel>
                   <Select
                     labelId="demo-simple-select-autowidth-label"
                     label="ap tests"
@@ -183,9 +201,11 @@ export default function TransferCreditGallery({
                   </Select>
                 </FormControl>
               )}
-              {creditFields['type'] === 'AP' && (
+              {creditFields["type"] === "AP" && (
                 <FormControl className="w-32">
-                  <InputLabel id="demo-simple-select-autowidth-label">AP Test Score</InputLabel>
+                  <InputLabel id="demo-simple-select-autowidth-label">
+                    AP Test Score
+                  </InputLabel>
                   <Select
                     labelId="demo-simple-select-autowidth-label"
                     id="demo-simple-select-autowidth"
@@ -199,10 +219,12 @@ export default function TransferCreditGallery({
                 </FormControl>
               )}
 
-              {creditFields['type'] === 'CLEP' && (
+              {creditFields["type"] === "CLEP" && (
                 <>
                   <FormControl className="w-32">
-                    <InputLabel id="demo-simple-select-autowidth-label">CLEP Tests</InputLabel>
+                    <InputLabel id="demo-simple-select-autowidth-label">
+                      CLEP Tests
+                    </InputLabel>
                     <Select
                       labelId="demo-simple-select-autowidth-label"
                       id="demo-simple-select-autowidth"
@@ -215,7 +237,9 @@ export default function TransferCreditGallery({
                     </Select>
                   </FormControl>
                   <FormControl className="w-32">
-                    <InputLabel id="demo-simple-select-autowidth-label">CLEP Test Score</InputLabel>
+                    <InputLabel id="demo-simple-select-autowidth-label">
+                      CLEP Test Score
+                    </InputLabel>
                     <Select
                       labelId="demo-simple-select-autowidth-label"
                       id="demo-simple-select-autowidth"
@@ -230,10 +254,12 @@ export default function TransferCreditGallery({
                 </>
               )}
 
-              {creditFields['type'] === 'IB' && (
+              {creditFields["type"] === "IB" && (
                 <>
                   <FormControl className="w-32">
-                    <InputLabel id="demo-simple-select-autowidth-label">IB Tests</InputLabel>
+                    <InputLabel id="demo-simple-select-autowidth-label">
+                      IB Tests
+                    </InputLabel>
                     <Select
                       labelId="demo-simple-select-autowidth-label"
                       id="demo-simple-select-autowidth"
@@ -246,7 +272,9 @@ export default function TransferCreditGallery({
                     </Select>
                   </FormControl>
                   <FormControl className="w-32">
-                    <InputLabel id="demo-simple-select-autowidth-label">IB Level</InputLabel>
+                    <InputLabel id="demo-simple-select-autowidth-label">
+                      IB Level
+                    </InputLabel>
                     <Select
                       labelId="demo-simple-select-autowidth-label"
                       id="demo-simple-select-autowidth"
@@ -259,7 +287,9 @@ export default function TransferCreditGallery({
                     </Select>
                   </FormControl>
                   <FormControl className="w-32">
-                    <InputLabel id="demo-simple-select-autowidth-label">IB Test Score</InputLabel>
+                    <InputLabel id="demo-simple-select-autowidth-label">
+                      IB Test Score
+                    </InputLabel>
                     <Select
                       labelId="demo-simple-select-autowidth-label"
                       id="demo-simple-select-autowidth"

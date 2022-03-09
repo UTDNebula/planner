@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "CHOKIDAR_USEPOLLING=true next start",
     "lint": "eslint --fix .",
     "format": "prettier --write {pages,components,modules}/**/*.{tsx,ts,js}",
     "format:all": "prettier --write .",
@@ -36,6 +36,7 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
+    "tailwind-scrollbar-hide": "^1.1.7",
     "tss-react": "^3.3.6",
     "uuid": "^8.3.2"
   },

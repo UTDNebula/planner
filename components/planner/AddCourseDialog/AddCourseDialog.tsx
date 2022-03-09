@@ -9,13 +9,13 @@ import {
   Dialog,
   DialogTitle,
   DialogActions,
-} from '@mui/material';
-import React, { useState } from 'react';
-import { loadCourses } from '../../../modules/common/api/courses';
-import { Course } from '../../../modules/common/data';
-import useSearch from '../../search/search';
-import SearchBar from '../../search/SearchBar';
-import DialogCard from './DialogCard';
+} from "@mui/material";
+import React, { useState } from "react";
+import { loadCourses } from "../../../modules/common/api/courses";
+import { Course } from "../../../modules/common/data";
+import useSearch from "../../search/search";
+import SearchBar from "../../search/SearchBar";
+import DialogCard from "./DialogCard";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -50,7 +50,7 @@ function TabPanel(props: TabPanelProps) {
 function a11yProps(index: any) {
   return {
     id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
   };
 }
 export type SimpleTabsProps = {
@@ -60,7 +60,11 @@ export type SimpleTabsProps = {
 };
 
 /* TODO: Refactor this copy-paste Component */
-export function SimpleTabs({ courses, selectedCourses, setSelectedCourses }: SimpleTabsProps) {
+export function SimpleTabs({
+  courses,
+  selectedCourses,
+  setSelectedCourses,
+}: SimpleTabsProps) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.ChangeEvent, newValue: number) => {
@@ -79,7 +83,11 @@ export function SimpleTabs({ courses, selectedCourses, setSelectedCourses }: Sim
   // TODO: Implement lazy loading
   const chipsList = [];
   const [chips, setChips] = useState(chipsList);
-  const { results, updateQuery } = useSearch({ getData: loadCourses, filterBy: 'catalogCode' });
+  const { results, updateQuery } = useSearch({
+    getData: loadCourses,
+    filterBy: "catalogCode",
+    totalElements: 20,
+  });
 
   const handleSearch = (query: string) => {
     updateQuery(query);
@@ -87,7 +95,7 @@ export function SimpleTabs({ courses, selectedCourses, setSelectedCourses }: Sim
 
   // Run updateQuery on dialog screen load
   React.useEffect(() => {
-    updateQuery('');
+    updateQuery("");
   }, []);
 
   return (
@@ -109,7 +117,10 @@ export function SimpleTabs({ courses, selectedCourses, setSelectedCourses }: Sim
             <SearchBar updateQuery={handleSearch} />
             <div className="flex flex-row">
               <div>Subject</div>
-              <ButtonGroup variant="contained" aria-label="outlined primary button group">
+              <ButtonGroup
+                variant="contained"
+                aria-label="outlined primary button group"
+              >
                 <Button>One</Button>
                 <Button>Two</Button>
                 <Button>Three</Button>
@@ -117,7 +128,10 @@ export function SimpleTabs({ courses, selectedCourses, setSelectedCourses }: Sim
             </div>
             <div className="flex flex-row">
               <div>Type</div>
-              <ButtonGroup variant="contained" aria-label="outlined primary button group">
+              <ButtonGroup
+                variant="contained"
+                aria-label="outlined primary button group"
+              >
                 <Button>One</Button>
                 <Button>Two</Button>
                 <Button>Three</Button>
@@ -129,7 +143,7 @@ export function SimpleTabs({ courses, selectedCourses, setSelectedCourses }: Sim
                   key={elm.catalogCode}
                   course={elm}
                   setSelectedCourse={addSelectedCourse}
-                  type={'Add'}
+                  type={"Add"}
                 />
               ))}
             </div>
@@ -141,7 +155,7 @@ export function SimpleTabs({ courses, selectedCourses, setSelectedCourses }: Sim
                 key={elm.catalogCode}
                 course={elm}
                 setSelectedCourse={removeSelectedCourse}
-                type={'Remove'}
+                type={"Remove"}
               />
             ))}
           </div>
@@ -173,28 +187,32 @@ export default function AddCourseDialog({
 
   const fetchCourses = async () => {
     const courses = await loadCourses();
-    const reduced = courses.slice(0, 50).reduce((acc: { [key: string]: Course }, course) => {
-      acc[course.id] = course;
-      return acc;
-    }, {});
+    const reduced = courses
+      .slice(0, 50)
+      .reduce((acc: { [key: string]: Course }, course) => {
+        acc[course.id] = course;
+        return acc;
+      }, {});
     return reduced;
   };
 
-  const [allCourses, setAllCourses] = React.useState<{ [key: string]: Course }>({});
+  const [allCourses, setAllCourses] = React.useState<{ [key: string]: Course }>(
+    {}
+  );
   React.useEffect(() => {
     fetchCourses()
       .then((courses) => {
         setAllCourses(courses);
       })
       .catch((error) => {
-        console.error('Could not fetch courses', error);
+        console.error("Could not fetch courses", error);
       });
   }, []);
 
   const dialogCourses = Object.values(allCourses);
 
   const handleOnClose = () => {
-    console.log('Closed');
+    console.log("Closed");
     enableFocus(false);
   };
 
@@ -205,7 +223,7 @@ export default function AddCourseDialog({
 
   const isDone = selectedCourses.length > 0;
 
-  const destinationText = 'Select courses';
+  const destinationText = "Select courses";
 
   return (
     <Dialog
@@ -214,7 +232,7 @@ export default function AddCourseDialog({
       onClose={handleOnClose}
       aria-labelledby={destinationText}
       fullWidth={true}
-      maxWidth={'md'}
+      maxWidth={"md"}
       className="absolute z-20"
     >
       <DialogTitle className="bg-blue-800 text-white"> Add Courses</DialogTitle>
@@ -225,7 +243,12 @@ export default function AddCourseDialog({
       />
       <DialogActions>
         <Button onClick={handleOnClose}>Cancel</Button>
-        <Button color="primary" disabled={!isDone} onClick={handleAdd} autoFocus>
+        <Button
+          color="primary"
+          disabled={!isDone}
+          onClick={handleAdd}
+          autoFocus
+        >
           Add
         </Button>
       </DialogActions>

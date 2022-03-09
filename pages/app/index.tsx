@@ -1,9 +1,13 @@
-import Head from 'next/head';
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import UserWelcome from '../../components/home/UserWelcome';
-import { useAuthContext } from '../../modules/auth/auth-context';
-import { loadUser } from '../../modules/redux/userDataSlice';
+import Head from "next/head";
+import React from "react";
+import { useDispatch } from "react-redux";
+import UserWelcome from "../../components/home/UserWelcome";
+import { useAuthContext } from "../../modules/auth/auth-context";
+import { loadUser } from "../../modules/redux/userDataSlice";
+import AppBar from "../../components/home/Onboarding/AppBar";
+import IntroPage from "../../components/home/Onboarding/Overview/IntroductionPage";
+import { Button } from "@mui/material";
+import { Box } from "@mui/system";
 
 /**
  * The home screen for the app.
