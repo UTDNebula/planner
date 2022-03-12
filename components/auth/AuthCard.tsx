@@ -64,11 +64,11 @@ export default function AuthCard({ authState }: AuthCardProps): JSX.Element {
 
   /**
    * Runs whenever an invalid route is passed
-   * into /app/auth
+   * into /auth
    */
   function invalidAction() {
     console.error('Invalid route, returning to login screen.');
-    router.push('/app/auth/login');
+    router.push('/auth/login');
   }
 
   /**

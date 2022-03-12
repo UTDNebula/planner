@@ -19,7 +19,7 @@ export default function AppNavigation(): JSX.Element {
   /* Decides if the button should be login or 
   sign out based on the current auth state */
   const authItem = {
-    route: isUserSignedIn ? '/app/auth/signOut' : '/app/auth/login',
+    route: isUserSignedIn ? '/auth/signOut' : '/auth/login',
     label: isUserSignedIn ? 'Sign out' : 'Sign in',
   };
 

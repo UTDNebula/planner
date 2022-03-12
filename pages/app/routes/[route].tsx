@@ -16,10 +16,11 @@ export default function Routing() {
   const data = useSelector((state: RootState) => state.userData);
 
   // Runs whenever user is updated
+  // TODO: Handle edge case if user signs into actual account after using guest account
+  // i.e. find a way to smoothly save the data
   React.useEffect(() => {
     if (user) {
       console.info('User has changed.', user);
-
       // Sync Redux & Firebase
       dispatch(loadUser(user));
       setSync(true);

@@ -58,7 +58,7 @@ export default function AuthCard(): JSX.Element {
           ></input>
         </div>
         <div className="">
-          <Link href="/app/auth/reset">
+          <Link href="/auth/reset">
             <a className="font-semibold text-blue-700 hover:bg-blue-100 rounded-lg">
               Forgot password?
             </a>
@@ -82,7 +82,7 @@ export default function AuthCard(): JSX.Element {
         <div className="flex place-content-center">
           <p>
             New to Nebula?
-            <Link href="/app/auth/signup">
+            <Link href="/auth/signup">
               <a className="ml-2 text-blue-700 font-semibold hover:bg-blue-200 hover:rounded-lg">
                 Sign Up
               </a>

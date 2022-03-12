@@ -200,9 +200,6 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
 
   const updateUser = React.useCallback((firebaseUser: firebase.User | null) => {
     if (firebaseUser === null) {
-      // User is signed out
-      // TODO(auth): Determine if we want to remove user data from device on sign out
-      // setUser(ANONYMOUS_USER);
       return;
     }
     const { displayName, email, photoURL, uid, isAnonymous } = firebaseUser;
@@ -397,7 +394,8 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
   };
 
   const checkRedirect = () => {
-    if (user.id !== 'guest') {
+    console.log(user, 'USER');
+    if (user.id !== 'guest' && user.id !== 'unauthenticated') {
       setShouldRedirect(true);
     }
   };
@@ -407,6 +405,20 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
 
   const [loadAuthentication, setLoadAuthentication] = React.useState(false);
 
+  /**
+   * Update auth state on page load
+   */
+  React.useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      updateUser(user);
+      setLoadAuthentication(true);
+    });
+  }, []);
+
+  /**
+   * Once authentication is properly loaded, redirect the user to Home Page
+   * if they didn't meet the proper authentication requirements
+   */
   React.useEffect(() => {
     if (loadAuthentication) {
       if (user.id === 'unauthenticated' && router.pathname != '/') {
@@ -415,13 +427,9 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
     }
   }, [loadAuthentication]);
 
-  React.useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
-      updateUser(user);
-      setLoadAuthentication(true);
-    });
-  }, []);
-
+  /**
+   * Redirect user should the conditions for a redirect be met
+   */
   React.useEffect(() => {
     if (shouldRedirect) {
       if (redirect) {
