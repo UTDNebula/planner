@@ -43,7 +43,7 @@ export default function ProfileIcon(props: ProfileIconProps): JSX.Element {
 
   const { name, image } = user;
 
-  const isSignedIn = user.id !== 'guest';
+  const { isUserSignedIn } = useAuthContext();
 
   const userData = {
     classification: 'Junior',
@@ -51,7 +51,7 @@ export default function ProfileIcon(props: ProfileIconProps): JSX.Element {
   };
 
   const avatarIcon =
-    isSignedIn && image != null ? (
+    isUserSignedIn && image != null ? (
       <Avatar alt={image} src={image} />
     ) : (
       <Avatar alt={name}>
@@ -97,7 +97,7 @@ export default function ProfileIcon(props: ProfileIconProps): JSX.Element {
             </div>
           </div>
         </div>
-        {isSignedIn ? (
+        {isUserSignedIn ? (
           [
             <MenuItem component={Link} href="/app/profile" key="profile">
               <ListItemIcon>
