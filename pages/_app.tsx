@@ -41,7 +41,7 @@ if (!firebase.apps.length) {
  * @returns boolean
  */
 const needAppNav = (pathname: string): boolean => {
-  const routesList = ['/app/onboarding', '/app/auth', '/app/plans/'];
+  const routesList = ['/app/onboarding', '/auth', '/app/plans/'];
   if (pathname === '/') {
     return true;
   }

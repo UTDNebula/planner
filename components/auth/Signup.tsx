@@ -113,7 +113,7 @@ export default function AuthCard(): JSX.Element {
         <div className="flex place-content-center">
           <p>
             Already have an account?
-            <Link href="/app/auth/login">
+            <Link href="/auth/login">
               <a className="ml-2 text-blue-700 font-semibold hover:bg-blue-200 hover:rounded-lg">
                 Sign In
               </a>

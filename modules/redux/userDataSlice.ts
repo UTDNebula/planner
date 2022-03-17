@@ -44,7 +44,7 @@ const sampleOnboarding = createSampleOnboarding();
 const initialState: AcademicDataState = {
   onboarding: sampleOnboarding,
   doneOnboarding: false,
-  user: users.anonymous,
+  user: users.unauthenticated,
   plans: {
     [samplePlan.id]: samplePlan,
   },
@@ -75,13 +75,13 @@ export const loadUser = createAsyncThunk<
   { state: { userData: AcademicDataState } }
 >('userData/loadUser', async (user: ServiceUser, { getState }) => {
   const firestore = firebase.firestore();
+  let userSlice: AcademicDataState = JSON.parse(JSON.stringify(getState().userData));
   if (user.id !== 'guest') {
     const slice = await firestore
       .collection('users')
       .doc(user.id)
       .get()
       .then((userDoc) => {
-        let userSlice: AcademicDataState;
         if (userDoc.data() !== undefined) {
           // Return user data
           const userData = userDoc.data();
@@ -90,7 +90,6 @@ export const loadUser = createAsyncThunk<
           // Create new user data
           // If the user was previously a guest, load all
           // guest created plans to new data
-          userSlice = JSON.parse(JSON.stringify(getState().userData));
           userSlice.user = JSON.parse(JSON.stringify(user));
           // userSlice.plans = plans;
 
@@ -105,6 +104,11 @@ export const loadUser = createAsyncThunk<
         console.log('error: ', error);
       });
     return slice as AcademicDataState;
+  } else {
+    // Update authentication state for guest user
+    userSlice.user = user;
+    delete userSlice.user.requiresAuthentication;
+    return userSlice;
   }
 });
 

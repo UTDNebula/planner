@@ -14,13 +14,13 @@ import { useAuthContext } from '../../../modules/auth/auth-context';
  */
 export default function AppNavigation(): JSX.Element {
   // TODO: Highlight active item based on current location
-  const { isSignedIn } = useAuthContext();
+  const { isUserSignedIn } = useAuthContext();
 
   /* Decides if the button should be login or 
   sign out based on the current auth state */
   const authItem = {
-    route: isSignedIn ? '/app/auth/signOut' : '/app/auth/login',
-    label: isSignedIn ? 'Sign out' : 'Sign in',
+    route: isUserSignedIn ? '/auth/signOut' : '/auth/login',
+    label: isUserSignedIn ? 'Sign out' : 'Sign in',
   };
 
   return (

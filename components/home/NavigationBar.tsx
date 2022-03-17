@@ -6,12 +6,12 @@ import { useRouter } from 'next/router';
 
 // TODO: Unused; refactor navigationbar for Planner v1
 export default function HomeNavigationBar() {
-  const { isSignedIn } = useAuthContext();
+  const { isUserSignedIn } = useAuthContext();
   const router = useRouter();
 
   const authItem = {
-    route: isSignedIn ? '/app/auth/signOut' : '/app/auth/Login',
-    label: isSignedIn ? 'Sign out' : 'Sign in',
+    route: isUserSignedIn ? '/auth/signOut' : '/auth/Login',
+    label: isUserSignedIn ? 'Sign out' : 'Sign in',
   };
 
   const handleAuthUpdate = () => {
