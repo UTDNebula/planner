@@ -1,18 +1,19 @@
-import firebase from 'firebase/app';
-import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
-import { useRouter } from 'next/router';
-import { AnimateSharedLayout } from 'framer-motion';
-import React from 'react';
-import Head from 'next/head';
-import type { AppProps } from 'next/app';
 import '@fontsource/roboto';
 import '../styles/globals.css';
+
+import { createTheme, StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
+import firebase from 'firebase/app';
+import { AnimateSharedLayout } from 'framer-motion';
+import type { AppProps } from 'next/app';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+
+import AppNavigation from '../components/common/AppNavigation';
 import { AuthProvider } from '../modules/auth/auth-context';
 import { useStore } from '../modules/redux/store';
-import AppNavigation from '../components/common/AppNavigation';
-
-import { ThemeProvider, Theme, StyledEngineProvider, createTheme } from '@mui/material/styles';
 
 const theme = createTheme();
 

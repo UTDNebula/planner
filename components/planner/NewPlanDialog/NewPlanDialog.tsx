@@ -1,14 +1,15 @@
-import { Checkbox, Dialog, DialogTitle, Select } from '@mui/material';
-import React from 'react';
-import { NewPlanFlowState, useCreateNewPlanFlow } from '../../../modules/planner/hooks/newPlanFlow';
-import DummyData from '../../../data/majors.json';
-import Switch from '@mui/material/Switch';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import { Checkbox, Dialog, DialogTitle, Select } from '@mui/material';
+import Switch from '@mui/material/Switch';
 import router from 'next/router';
+import React from 'react';
 import { v4 as uuid } from 'uuid';
-import SearchBar from '../../search/SearchBar';
+
+import DummyData from '../../../data/majors.json';
+import { NewPlanFlowState, useCreateNewPlanFlow } from '../../../modules/planner/hooks/newPlanFlow';
 import useSearch from '../../search/search';
+import SearchBar from '../../search/SearchBar';
 
 export type NavigationBarProps = {
   planState: NewPlanFlowState;

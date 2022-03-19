@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import React from 'react';
+
 import AuthCard from '../../components/auth/AuthCard';
 
 /**

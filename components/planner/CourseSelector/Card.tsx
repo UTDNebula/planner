@@ -1,10 +1,11 @@
-import { AccordionSummary, AccordionDetails } from '@mui/material';
-import withStyles from '@mui/styles/withStyles';
-import MuiAccordion from '@mui/material/Accordion';
-import { useState } from 'react';
 import InfoIcon from '@mui/icons-material/Info';
-import { CourseSelectedAction } from './CourseSelector';
+import { AccordionDetails, AccordionSummary } from '@mui/material';
+import MuiAccordion from '@mui/material/Accordion';
+import withStyles from '@mui/styles/withStyles';
+import { useState } from 'react';
+
 import { Course } from '../../../modules/common/data';
+import { CourseSelectedAction } from './CourseSelector';
 
 const Accordion = withStyles({
   root: {

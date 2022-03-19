@@ -1,7 +1,8 @@
 import Head from 'next/head';
+
+import CourseAudit from '../../components/home/history/StudentHistoryView/CourseAudit';
 import { useAuthContext } from '../../modules/auth/auth-context';
 import { useUserProfileData } from '../../modules/profile/userProfileData';
-import CourseAudit from '../../components/home/history/StudentHistoryView/CourseAudit';
 
 /**
  * A page containing student attributes and other account settings.

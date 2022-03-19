@@ -1,4 +1,4 @@
-import { NoticeSource, Notice } from '../../../components/home/announcements/AnnouncementItem';
+import { Notice, NoticeSource } from '../../../components/home/announcements/AnnouncementItem';
 
 const SAMPLE_NOTICES = [
   {

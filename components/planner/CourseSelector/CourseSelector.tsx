@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Course } from '../../../modules/common/data';
+import { Draggable, Droppable } from 'react-beautiful-dnd';
+
 import DummyData from '../../../data/dummy_planner_course_data.json';
+import { Course } from '../../../modules/common/data';
 import SearchBar from '../../search/SearchBar';
 import { Card } from './Card';
-import { Draggable, Droppable } from 'react-beautiful-dnd';
 
 export type CourseSelectedAction = 'Add' | 'Remove';
 

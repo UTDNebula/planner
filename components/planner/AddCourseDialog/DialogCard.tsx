@@ -1,5 +1,6 @@
-import { Course } from '../../../modules/common/data';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+
+import { Course } from '../../../modules/common/data';
 
 /* TODO: Properly style this component */
 /**

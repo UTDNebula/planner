@@ -1,9 +1,10 @@
 import { useRouter } from 'next/router';
 import React from 'react';
-import { useDispatch, useSelector, useStore } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { useAuthContext } from '../../../modules/auth/auth-context';
 import { RootState } from '../../../modules/redux/store';
-import { AcademicDataState, loadUser } from '../../../modules/redux/userDataSlice';
+import { loadUser } from '../../../modules/redux/userDataSlice';
 
 // This page handles routing in the app
 export default function Routing() {

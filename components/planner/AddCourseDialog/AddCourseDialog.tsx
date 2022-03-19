@@ -1,16 +1,17 @@
 import {
-  Box,
-  Typography,
   AppBar,
-  Tabs,
-  Tab,
-  ButtonGroup,
+  Box,
   Button,
+  ButtonGroup,
   Dialog,
-  DialogTitle,
   DialogActions,
+  DialogTitle,
+  Tab,
+  Tabs,
+  Typography,
 } from '@mui/material';
 import React, { useState } from 'react';
+
 import { loadCourses } from '../../../modules/common/api/courses';
 import { Course } from '../../../modules/common/data';
 import useSearch from '../../search/search';

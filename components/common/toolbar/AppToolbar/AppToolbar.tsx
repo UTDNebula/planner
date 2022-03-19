@@ -1,12 +1,13 @@
-import React from 'react';
-import { AppBar, IconButton, Toolbar, Typography } from '@mui/material';
-import { makeStyles } from 'tss-react/mui';
-import MenuIcon from '@mui/icons-material/Menu';
 import BackIcon from '@mui/icons-material/ArrowBack';
+import MenuIcon from '@mui/icons-material/Menu';
+import { AppBar, IconButton, Toolbar, Typography } from '@mui/material';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import ProfileIcon from '../ProfileIcon/ProfileIcon';
+import React from 'react';
+import { makeStyles } from 'tss-react/mui';
+
 import { useAuthContext } from '../../../../modules/auth/auth-context';
+import ProfileIcon from '../ProfileIcon/ProfileIcon';
 
 const useStyles = makeStyles()((theme) => {
   return {

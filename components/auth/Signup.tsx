@@ -1,9 +1,10 @@
 import { Box, Typography } from '@mui/material';
-import React from 'react';
-import { useAuthContext } from '../../modules/auth/auth-context';
 import Image from 'next/image';
-import logo from '../../public/Nebula_Planner_Logo.png';
 import Link from 'next/link';
+import React from 'react';
+
+import { useAuthContext } from '../../modules/auth/auth-context';
+import logo from '../../public/Nebula_Planner_Logo.png';
 
 /**
  * Generate ARIA element attributes for a11y.

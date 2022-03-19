@@ -1,16 +1,17 @@
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import Navigation, { NavigationStateProps } from '../../components/onboarding/Navigation';
-import { CreditState } from '../../components/onboarding/TransferCreditGallery';
-import { useAuthContext } from '../../modules/auth/auth-context';
-import { HonorsIndicator } from '../../modules/common/types';
+import { useDispatch } from 'react-redux';
+
+import { NavigationStateProps } from '../../components/onboarding/Navigation';
 import Disclaimer from '../../components/onboarding/Onboarding_Pages/disclaimer';
 import PageOne, { PageOneTypes } from '../../components/onboarding/Onboarding_Pages/pg_1';
 import PageTwo, { PageTwoTypes } from '../../components/onboarding/Onboarding_Pages/pg_2';
 import PageThree from '../../components/onboarding/Onboarding_Pages/pg_3';
 import Privacy from '../../components/onboarding/Onboarding_Pages/privacy';
 import Welcome from '../../components/onboarding/Onboarding_Pages/welcome';
-import { useRouter } from 'next/router';
-import { useDispatch } from 'react-redux';
+import { CreditState } from '../../components/onboarding/TransferCreditGallery';
+import { useAuthContext } from '../../modules/auth/auth-context';
+import { HonorsIndicator } from '../../modules/common/types';
 import { updateOnboarding } from '../../modules/redux/userDataSlice';
 
 /**

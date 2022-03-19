@@ -1,9 +1,10 @@
+import { useRouter } from 'next/router';
 import React from 'react';
-import { Semester, StudentPlan } from '../../common/data';
 import { useDispatch, useStore } from 'react-redux';
+
+import { Semester, StudentPlan } from '../../common/data';
 import { updatePlan } from '../../redux/userDataSlice';
 import { initialPlan } from '../plannerUtils';
-import { useRouter } from 'next/router';
 
 /**
  * A utility hook that exposes callbacks to handle manipulating the StudentPlan.
