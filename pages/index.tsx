@@ -6,9 +6,13 @@ import ServiceName from "../components/common/ServiceName";
 import { useDispatch } from "react-redux";
 import UserWelcome from "../components/home/UserWelcome";
 import AppBar from "../components/home/Onboarding/AppBar";
-import IntroPage from "../components/home/Onboarding/Overview/IntroductionPage";
 import { Button } from "@mui/material";
 import { Box } from "@mui/system";
+import DisplayLogoSection from "../components/home/Onboarding/DisplayLogoSection";
+import FeatureSection from "../components/home/Onboarding/FeatureSection";
+import DragAndDropSection from "../components/home/Onboarding/DragAndDropSection";
+import GetStartedSection from "../components/home/Onboarding/GetStartedSection";
+import LearnMoreSection from "../components/home/Onboarding/LearnMoreSection";
 
 /**
  * The primary landing page for the application.
@@ -28,38 +32,13 @@ export default function LandingPage(): JSX.Element {
   };
 
   return (
-    <div>
-      <div
-        style={{
-          backgroundImage: `url("../logo.png")`,
-          width: "55vw",
-          float: "right",
-          height: "100vh",
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-        }}
-      ></div>
-      <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-        <Button
-          key={"Log In"}
-          onClick={handleCloseNavMenu}
-          style={{ backgroundColor: "transparent" }}
-          sx={{
-            p: 2,
-            my: 2,
-            color: "white",
-            textTransform: "none",
-            border: "1px solid white",
-            top: 0,
-            right: 0,
-            position: "absolute",
-          }}
-        >
-          Log In
-        </Button>
-      </Box>
+    <div className="scrollbar-hide">
       <AppBar />
-      <IntroPage />
+      <DisplayLogoSection />
+      <FeatureSection />
+      <DragAndDropSection />
+      <GetStartedSection />
+      <LearnMoreSection />
     </div>
   );
 }

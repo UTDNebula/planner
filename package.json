@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "NODE_OPTIONS='--inspect' next dev",
+    "dev": "next dev",
     "build": "next build",
     "start": "CHOKIDAR_USEPOLLING=true next start",
     "lint": "eslint --fix .",
@@ -14,6 +14,7 @@
   "dependencies": {
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
+    "@fontsource/jost": "^4.5.4",
     "@fontsource/roboto": "^4.2.3",
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",

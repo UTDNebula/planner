@@ -11,8 +11,11 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
+import "@fontsource/jost";
+import { createTheme, ThemeProvider } from "@material-ui/core/styles";
 
-const pages = ["Overview", "Features", "Integrations", "Developers"];
+const pages = ["Overview", "Features", "Learn More"];
+const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 export default function ResponsiveAppBar(): JSX.Element {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -33,32 +36,68 @@ export default function ResponsiveAppBar(): JSX.Element {
     setAnchorElNav(null);
   };
 
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
   return (
-    <AppBar
-      position="relative"
-      style={{ background: "#ffffff", width: "45vw" }}
-    >
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar
+        position="absolute"
+        style={{
+          backgroundColor: "rgba(70, 89, 167, 0.25)",
+          boxShadow: "none",
+        }}
+      >
+        <Container maxWidth="xl">
+          <Toolbar>
+            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+              {pages.map((page) => (
+                <Button
+                  key={page}
+                  onClick={handleCloseNavMenu}
+                  sx={{
+                    p: 2,
+                    my: 2,
+                    color: "black",
+                    display: "block",
+                    textTransform: "none",
+                    fontSize: "24px",
+                    fontFamily: "Jost",
+                    letterSpacing: "-0.25px",
+                  }}
+                >
+                  {page}
+                </Button>
+              ))}
+            </Box>
+            <div className="flex flex-row space-x-5">
               <Button
-                key={page}
-                onClick={handleCloseNavMenu}
                 sx={{
-                  p: 2,
-                  my: 2,
                   color: "black",
-                  display: "block",
-                  textTransform: "none",
+                  fontFamily: "Jost",
+                  letterSpacing: "0px",
+                  fontSize: "18px",
+                  fontWeight: "bold",
                 }}
               >
-                {page}
+                LOG IN
               </Button>
-            ))}
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
+              <Button
+                variant="contained"
+                style={{
+                  borderRadius: "10px",
+                  backgroundColor: "#4659A7",
+                  fontFamily: "Jost",
+                  fontSize: "18px",
+                }}
+              >
+                GET STARTED
+              </Button>
+            </div>
+          </Toolbar>
+        </Container>
+      </AppBar>
+    </Box>
   );
 }
