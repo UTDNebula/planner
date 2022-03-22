@@ -1,12 +1,12 @@
-import React from 'react';
-import { AppBar, IconButton, Toolbar, Typography } from '@mui/material';
-import { makeStyles } from 'tss-react/mui';
-import MenuIcon from '@mui/icons-material/Menu';
-import BackIcon from '@mui/icons-material/ArrowBack';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import ProfileIcon from '../ProfileIcon/ProfileIcon';
-import { useAuthContext } from '../../../../modules/auth/auth-context';
+import React from "react";
+import { AppBar, IconButton, Toolbar, Typography } from "@mui/material";
+import { makeStyles } from "tss-react/mui";
+import MenuIcon from "@mui/icons-material/Menu";
+import BackIcon from "@mui/icons-material/ArrowBack";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import ProfileIcon from "../ProfileIcon/ProfileIcon";
+import { useAuthContext } from "../../../../modules/auth/auth-context";
 
 const useStyles = makeStyles()((theme) => {
   return {
@@ -35,7 +35,7 @@ interface AppToolbarProps {
 export default function AppToolbar(props: AppToolbarProps): JSX.Element {
   const { shouldShowProfile } = props;
 
-  const title = 'Nebula';
+  const title = "Nebula";
 
   const { classes } = useStyles();
 
@@ -48,26 +48,30 @@ export default function AppToolbar(props: AppToolbarProps): JSX.Element {
   const determineLeftButtonLabel = () => {
     if (inDetail) {
       // TODO: Determine based on viewing/planning context
-      return 'Menu';
+      return "Menu";
     }
-    return 'Back';
+    return "Back";
   };
 
   const handleSignOut = () => {
     signOut();
     // TODO: Verify success
-    router.replace('/');
+    router.replace("/");
   };
 
   const handleSignIn = () => {
-    router.push('/auth/login');
+    router.push("/auth/login");
   };
 
   const handleBackButtonClick = () => {
     setInDetail(false);
   };
 
-  const leftButtonIcon = inDetail ? <BackIcon onClick={handleBackButtonClick} /> : <MenuIcon />;
+  const leftButtonIcon = inDetail ? (
+    <BackIcon onClick={handleBackButtonClick} />
+  ) : (
+    <MenuIcon />
+  );
 
   return (
     <AppBar position="fixed" className={classes.root}>
@@ -86,7 +90,9 @@ export default function AppToolbar(props: AppToolbarProps): JSX.Element {
             {title}
           </Typography>
         </Link>
-        {shouldShowProfile && <ProfileIcon onSignIn={handleSignIn} onSignOut={handleSignOut} />}
+        {shouldShowProfile && (
+          <ProfileIcon onSignIn={handleSignIn} onSignOut={handleSignOut} />
+        )}
       </Toolbar>
     </AppBar>
   );

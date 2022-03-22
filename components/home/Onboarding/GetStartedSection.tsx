@@ -12,6 +12,8 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
+import "animate.css";
+import { useInView } from "react-intersection-observer";
 
 export default function NebFeatureDisplay(): JSX.Element {
   return (
@@ -64,7 +66,7 @@ export default function NebFeatureDisplay(): JSX.Element {
             minutes with minimal effort.
           </Typography>
         </Grid>
-        <Grid item sx={{ pt: 2 }}>
+        <Grid className="animate-pulse" item sx={{ pt: 2 }}>
           <Button
             variant="contained"
             style={{

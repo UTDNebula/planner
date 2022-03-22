@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Footer from "../components/common/Footer";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import ServiceName from "../components/common/ServiceName";
 import { useDispatch } from "react-redux";
@@ -13,6 +13,17 @@ import FeatureSection from "../components/home/Onboarding/FeatureSection";
 import DragAndDropSection from "../components/home/Onboarding/DragAndDropSection";
 import GetStartedSection from "../components/home/Onboarding/GetStartedSection";
 import LearnMoreSection from "../components/home/Onboarding/LearnMoreSection";
+import Reveal, {
+  AttentionSeeker,
+  Fade,
+  Hinge,
+  JackInTheBox,
+  Slide,
+} from "react-awesome-reveal";
+import { useInView } from "react-intersection-observer";
+import Scrollbars from "react-custom-scrollbars-2";
+import { useRef } from "react";
+import "animate.css";
 
 /**
  * The primary landing page for the application.
@@ -22,7 +33,11 @@ import LearnMoreSection from "../components/home/Onboarding/LearnMoreSection";
  * TODO: Make landing page more exciting!
  * TODO: also show some lightweight interactive demos since why not.
  */
+
 export default function LandingPage(): JSX.Element {
+  const { ref: appBarRef, inView: appBarVisible } = useInView({
+    triggerOnce: true,
+  });
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -31,14 +46,37 @@ export default function LandingPage(): JSX.Element {
     setAnchorElNav(null);
   };
 
+  // ref={dragAndDropRef}
+  // className={`${dragAndDropVisible ? "animate__animated animate__flipInX animate_slower": ""}`}
+  // ref={learnMoreRef} className={`${learnMoreVisible ? "flex animate__animated animate_fadeIn animate_slower": "flex"}`}
+  // ref={featRef} className={`${featVisible ? "animate__animated animate__backInRight animate_slower": ""}`}
   return (
-    <div className="scrollbar-hide">
-      <AppBar />
-      <DisplayLogoSection />
-      <FeatureSection />
-      <DragAndDropSection />
-      <GetStartedSection />
-      <LearnMoreSection />
+    <div>
+      <Scrollbars style={{ height: "100vh" }}>
+        <div
+          ref={appBarRef}
+          className={`${
+            appBarVisible && "animate__animated animate__bounce animate_slower"
+          }`}
+        >
+          <AppBar />
+        </div>
+        <div>
+          <DisplayLogoSection />
+        </div>
+        <div>
+          <FeatureSection />
+        </div>
+        <div>
+          <DragAndDropSection />
+        </div>
+        <div>
+          <GetStartedSection />
+        </div>
+        <div>
+          <LearnMoreSection />
+        </div>
+      </Scrollbars>
     </div>
   );
 }

@@ -1,6 +1,6 @@
-import React from 'react';
-import Link from 'next/link';
-import ServiceName from './ServiceName';
+import React from "react";
+import Link from "next/link";
+import ServiceName from "./ServiceName";
 
 /**
  * A header to be used on non-app pages.

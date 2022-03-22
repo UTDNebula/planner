@@ -1,9 +1,9 @@
-import React from 'react';
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import { useRouter } from 'next/router';
-import { Course, Grade } from '../common/data';
-import { YearClassification } from '../common/student';
+import React from "react";
+import firebase from "firebase/app";
+import "firebase/auth";
+import { useRouter } from "next/router";
+import { Course, Grade } from "../common/data";
+import { YearClassification } from "../common/student";
 
 /**
  * A user for this app.
@@ -52,7 +52,7 @@ export interface ServiceUser {
 export interface PlanData {
   id: string;
   title: string;
-  type: 'major' | 'minor' | 'certificate' | 'honors';
+  type: "major" | "minor" | "certificate" | "honors";
 }
 
 export interface CourseAttempt {
@@ -78,9 +78,9 @@ export interface StudentInfo {
 }
 
 const ANONYMOUS_USER = {
-  id: 'guest',
+  id: "guest",
   email: null,
-  name: 'Student',
+  name: "Student",
   image: null,
   requiresAuthentication(): boolean {
     return false;
@@ -93,10 +93,10 @@ const ANONYMOUS_USER = {
 export const users: { [key: string]: ServiceUser } = {
   anonymous: ANONYMOUS_USER,
   default: {
-    id: 'default',
+    id: "default",
     email: null,
-    name: 'Student',
-    image: 'https://picsum.photos/256',
+    name: "Student",
+    image: "https://picsum.photos/256",
     // TODO: Probably rethink this approach
     requiresAuthentication(): boolean {
       return false;
@@ -148,7 +148,7 @@ interface AuthContextState {
   /**
    * Switches the currently active account.
    */
-  switchAccounts: (accountId: 'guest' | 'default') => void;
+  switchAccounts: (accountId: "guest" | "default") => void;
 
   /**
    * Signs out of the current user session if active.
@@ -161,7 +161,9 @@ interface AuthContextState {
   resetPassword: (email: string) => void;
 }
 
-const AuthContext = React.createContext<AuthContextState | undefined>(undefined); // Find a better solution for this
+const AuthContext = React.createContext<AuthContextState | undefined>(
+  undefined
+); // Find a better solution for this
 
 /**
  * A React hook that exposes
@@ -170,14 +172,18 @@ const AuthContext = React.createContext<AuthContextState | undefined>(undefined)
 function useAuthContext(): AuthContextState {
   const context = React.useContext(AuthContext);
   if (context == null) {
-    throw new Error('useAuthState must be used in an AuthContextProvider');
+    throw new Error("useAuthState must be used in an AuthContextProvider");
   }
   return context;
 }
 
-function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element {
+function AuthProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}): JSX.Element {
   const [user, setUser] = React.useState<ServiceUser>(users.anonymous);
-  const [redirect, setRedirect] = React.useState('/app/routes/route');
+  const [redirect, setRedirect] = React.useState("/app/routes/route");
   const [shouldRedirect, setShouldRedirect] = React.useState(false);
 
   const history = useRouter();
@@ -192,7 +198,7 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
     const { displayName, email, photoURL, uid } = firebaseUser;
     setUser({
       id: uid,
-      name: displayName || 'Student',
+      name: displayName || "Student",
       email: email,
       image: photoURL,
       requiresAuthentication(): boolean {
@@ -214,7 +220,7 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
         history.push(redirect);
         setShouldRedirect(false);
       } else {
-        console.error('Redirect location is null');
+        console.error("Redirect location is null");
       }
     }
   }, [shouldRedirect]);
@@ -224,11 +230,11 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
    *
    * @param accountId The UID of the account to switch to
    */
-  function switchAccounts(accountId: 'guest' | 'default') {
+  function switchAccounts(accountId: "guest" | "default") {
     const user = users[accountId];
     setUser(user);
     // TODO: Update localStorage
-    console.log('Switched active account to ' + accountId);
+    console.log("Switched active account to " + accountId);
   }
 
   /**
@@ -243,14 +249,14 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
       .then(() => {
         const user = users.anonymous;
         setUser(user);
-        setRedirect('/');
+        setRedirect("/");
         setShouldRedirect(true);
         // TODO: Update localStorage
-        console.log('Signed out user; switched to guest.');
+        console.log("Signed out user; switched to guest.");
       })
       .catch((error) => {
         const { code, message } = error;
-        console.error('Could not sign out.');
+        console.error("Could not sign out.");
       });
   }
 
@@ -267,11 +273,11 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
       .auth()
       .sendPasswordResetEmail(email)
       .then(() => {
-        console.log('Password reset email sent.');
-        setRedirect('/app');
+        console.log("Password reset email sent.");
+        setRedirect("/app");
       })
       .catch((error) => {
-        console.error('Could not send password reset.', error);
+        console.error("Could not send password reset.", error);
         // TODO(auth): Handle error in UI
       });
   }, []);
@@ -282,28 +288,31 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
    * @param email The user's email
    * @param password The user's desired password
    */
-  const signUpWithEmail = React.useCallback(async (email: string, password: string) => {
-    return firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(async ({ /* credential, */ user }) => {
-        setRedirect('/app/routes/route');
+  const signUpWithEmail = React.useCallback(
+    async (email: string, password: string) => {
+      return firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then(async ({ /* credential, */ user }) => {
+          setRedirect("/app/routes/route");
 
-        updateUser(user);
-        setShouldRedirect(true);
-      })
-      .catch((error) => {
-        // Handle Errors here.
-        const { code, message } = error;
-        if (code == 'auth/weak-password') {
-          console.warn('The password is too weak.');
-        } else {
-          console.log(message);
-        }
-        alert(message);
-        console.log(error);
-      });
-  }, []);
+          updateUser(user);
+          setShouldRedirect(true);
+        })
+        .catch((error) => {
+          // Handle Errors here.
+          const { code, message } = error;
+          if (code == "auth/weak-password") {
+            console.warn("The password is too weak.");
+          } else {
+            console.log(message);
+          }
+          alert(message);
+          console.log(error);
+        });
+    },
+    []
+  );
 
   /**
    * Authenticates using an email and password.
@@ -311,30 +320,35 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
    * @param email The user's email
    * @param password The user's password
    */
-  const signInWithEmail = React.useCallback(async (email: string, password: string) => {
-    return firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(({ credential, user }) => {
-        console.log('Credential', credential);
-        console.log('User', user);
-        if (user === null) {
-          // Something really went wrong
-          console.error("The signed-in user is null? That doesn't seem right.");
-          return;
-        }
+  const signInWithEmail = React.useCallback(
+    async (email: string, password: string) => {
+      return firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password)
+        .then(({ credential, user }) => {
+          console.log("Credential", credential);
+          console.log("User", user);
+          if (user === null) {
+            // Something really went wrong
+            console.error(
+              "The signed-in user is null? That doesn't seem right."
+            );
+            return;
+          }
 
-        setRedirect('/app/routes/route');
-        updateUser(user);
-        setShouldRedirect(true);
-      })
-      .catch((error) => {
-        console.error('Error when signing in', error);
-        const { code, message } = error;
-        alert(message);
-        // TODO(auth): Handle error appropriately
-      });
-  }, []);
+          setRedirect("/app/routes/route");
+          updateUser(user);
+          setShouldRedirect(true);
+        })
+        .catch((error) => {
+          console.error("Error when signing in", error);
+          const { code, message } = error;
+          alert(message);
+          // TODO(auth): Handle error appropriately
+        });
+    },
+    []
+  );
 
   const signInWithGoogle = React.useCallback(async () => {
     const provider = new firebase.auth.GoogleAuthProvider();
@@ -342,8 +356,8 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
       .auth()
       .signInWithPopup(provider)
       .then(({ credential, user }) => {
-        console.log('Credential', credential);
-        console.log('User', user);
+        console.log("Credential", credential);
+        console.log("User", user);
         if (user === null) {
           // Something really went wrong
           console.error("The signed-in user is null? That doesn't seem right.");
@@ -351,11 +365,11 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
         }
         updateUser(user);
 
-        setRedirect('/app/routes/route');
+        setRedirect("/app/routes/route");
         setShouldRedirect(true);
       })
       .catch((error) => {
-        console.error('Error when signing in', error);
+        console.error("Error when signing in", error);
         // TODO(auth): Handle error appropriately
       });
   }, []);
@@ -366,16 +380,16 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
    * @param redirect The link to navigate back after a successfull sign-in
    */
   const authWithRedirect = (redirect: string) => {
-    history.push('/auth');
+    history.push("/auth");
     setRedirect(redirect);
   };
 
   const checkRedirect = () => {
-    if (user.id !== 'guest') {
+    if (user.id !== "guest") {
       setShouldRedirect(true);
     }
   };
-  const isSignedIn = user.id !== ('anonymous' && 'guest');
+  const isSignedIn = user.id !== ("anonymous" && "guest");
 
   const authContextValue: AuthContextState = {
     user,
@@ -390,7 +404,11 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
     resetPassword,
   };
 
-  return <AuthContext.Provider value={authContextValue}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={authContextValue}>
+      {children}
+    </AuthContext.Provider>
+  );
 }
 
 export { AuthContext, AuthProvider, useAuthContext };

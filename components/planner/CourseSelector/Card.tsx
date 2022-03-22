@@ -1,15 +1,15 @@
-import { AccordionSummary, AccordionDetails } from '@mui/material';
-import withStyles from '@mui/styles/withStyles';
-import MuiAccordion from '@mui/material/Accordion';
-import { useState } from 'react';
-import InfoIcon from '@mui/icons-material/Info';
-import { CourseSelectedAction } from './CourseSelector';
-import { Course } from '../../../modules/common/data';
+import { AccordionSummary, AccordionDetails } from "@mui/material";
+import withStyles from "@mui/styles/withStyles";
+import MuiAccordion from "@mui/material/Accordion";
+import { useState } from "react";
+import InfoIcon from "@mui/icons-material/Info";
+import { CourseSelectedAction } from "./CourseSelector";
+import { Course } from "../../../modules/common/data";
 
 const Accordion = withStyles({
   root: {
-    '&$expanded': {
-      margin: 'auto',
+    "&$expanded": {
+      margin: "auto",
     },
   },
   expanded: {},
@@ -30,7 +30,9 @@ export function Card({ props, toggleCourseSelected }: CardProps) {
 
   const handleChange = (event) => {
     event.stopPropagation();
-    checkboxState ? toggleCourseSelected(props, 'Remove') : toggleCourseSelected(props, 'Add');
+    checkboxState
+      ? toggleCourseSelected(props, "Remove")
+      : toggleCourseSelected(props, "Add");
     setCheckboxState(!checkboxState);
   };
 

@@ -1,7 +1,7 @@
-import React from 'react';
-import { Tooltip, IconButton, MenuItem, Menu } from '@mui/material';
-import InfoIcon from '@mui/icons-material/Info';
-import { MoreVert } from '@mui/icons-material';
+import React from "react";
+import { Tooltip, IconButton, MenuItem, Menu } from "@mui/material";
+import InfoIcon from "@mui/icons-material/Info";
+import { MoreVert } from "@mui/icons-material";
 
 /**
  * Component properties for a {@link CourseCard}.
@@ -64,7 +64,11 @@ export interface CourseCardProps {
  */
 function pluralize(count?: number, item?: string, defaultCount = 0) {
   const trueCount = count ? count : defaultCount;
-  const trueItemText = item ? (trueCount === 0 || trueCount > 1 ? item + 's' : item) : '';
+  const trueItemText = item
+    ? trueCount === 0 || trueCount > 1
+      ? item + "s"
+      : item
+    : "";
   return `${trueCount} ${trueItemText}`;
 }
 
@@ -84,7 +88,7 @@ function CourseCard(
     onOptionRemove,
     ...otherProps
   }: CourseCardProps,
-  ref: React.Ref<HTMLElement>,
+  ref: React.Ref<HTMLElement>
 ) {
   let tooltipReason;
   if (estimatedWorkload === undefined) {
@@ -92,23 +96,24 @@ function CourseCard(
     tooltipReason = `Estimated workload was determined by multiplying the number 
       of credit hours by 3.`;
   } else {
-    tooltipReason = 'Estimated workload was determined based from user feedback.';
+    tooltipReason =
+      "Estimated workload was determined based from user feedback.";
   }
 
   // TODO: Remove need for silly null/undefined checks
-  const hoursText = pluralize(creditHours, 'credit hour', 3);
+  const hoursText = pluralize(creditHours, "credit hour", 3);
   const creditHoursText = `${hoursText}`;
 
   // TODO: Find a more robust way of doing this.
   // TODO: Only show outlines on desktop.
   const rootClasses = `p-4 m-2 w-[18rem] bg-white rounded-md hover:shadow-md border-gray-200 border-2 ${
-    enabled ? 'shadow-sm' : 'shadow-none'
+    enabled ? "shadow-sm" : "shadow-none"
   }`;
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const showCardOptions = (event: React.MouseEvent<HTMLButtonElement>) => {
-    console.debug('Showing course options');
+    console.debug("Showing course options");
     // TODO(planner): Show options for a course
     setAnchorEl(event.currentTarget);
   };
@@ -151,7 +156,11 @@ function CourseCard(
         <span className="text-sm">{creditHoursText}</span>
         <span>
           <Tooltip title={tooltipReason} placement="right-end">
-            <InfoIcon fontSize="inherit" color="inherit" className="ml-2 text-xs text-gray-600" />
+            <InfoIcon
+              fontSize="inherit"
+              color="inherit"
+              className="ml-2 text-xs text-gray-600"
+            />
           </Tooltip>
         </span>
       </div>

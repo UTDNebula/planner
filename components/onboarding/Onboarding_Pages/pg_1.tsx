@@ -1,13 +1,13 @@
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
-import { useRouter } from 'next/router';
-import { DegreeState } from '../DegreePicker';
-import DummyData from '../../../data/dummy_onboarding.json';
-import DegreePickerGallery, { pickerValidate } from '../DegreePickerGallery';
-import React from 'react';
-import { TextField } from '@mui/material';
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import { useRouter } from "next/router";
+import { DegreeState } from "../DegreePicker";
+import DummyData from "../../../data/dummy_onboarding.json";
+import DegreePickerGallery, { pickerValidate } from "../DegreePickerGallery";
+import React from "react";
+import { TextField } from "@mui/material";
 
 // TODO: Populate w/ real values
 // Array of values to choose from for form
@@ -43,7 +43,11 @@ export type Page1Props = {
   handleValidate: (value: boolean) => void;
 };
 
-export default function PageOne({ handleChange, props, handleValidate }: Page1Props): JSX.Element {
+export default function PageOne({
+  handleChange,
+  props,
+  handleValidate,
+}: Page1Props): JSX.Element {
   const router = useRouter();
 
   const { name, classification, degree, future } = props;
@@ -59,7 +63,8 @@ export default function PageOne({ handleChange, props, handleValidate }: Page1Pr
   };
 
   const checkValidate = () => {
-    const isValid = name && classification && future && pickerValidate(degree) ? true : false;
+    const isValid =
+      name && classification && future && pickerValidate(degree) ? true : false;
     handleValidate(isValid);
   };
 
@@ -97,7 +102,9 @@ export default function PageOne({ handleChange, props, handleValidate }: Page1Pr
             {/* <h3 className="text-xl mb-2 text-gray-800">Student Classification</h3> */}
 
             <FormControl variant="outlined">
-              <InputLabel id="demo-simple-select-autowidth-label">Grade</InputLabel>
+              <InputLabel id="demo-simple-select-autowidth-label">
+                Grade
+              </InputLabel>
 
               <Select
                 labelId="demo-simple-select-autowidth-label"
@@ -116,7 +123,10 @@ export default function PageOne({ handleChange, props, handleValidate }: Page1Pr
             {/* <h3 className="text-xl ">Post Graduation Plan</h3> */}
 
             <FormControl variant="outlined">
-              <InputLabel disableAnimation={false} id="demo-simple-select-autowidth-label">
+              <InputLabel
+                disableAnimation={false}
+                id="demo-simple-select-autowidth-label"
+              >
                 Future Plans
               </InputLabel>
 
@@ -136,7 +146,10 @@ export default function PageOne({ handleChange, props, handleValidate }: Page1Pr
         </div>
         <div className="w-72">
           {/* <h3 className="text-xl  text-gray-800">Degree</h3> */}
-          <DegreePickerGallery degree={degree} handleChange={handlePickerChange} />
+          <DegreePickerGallery
+            degree={degree}
+            handleChange={handlePickerChange}
+          />
         </div>
       </div>
     </div>

@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { Course } from '../../../modules/common/data';
-import DummyData from '../../../data/dummy_planner_course_data.json';
-import SearchBar from '../../search/SearchBar';
-import { Card } from './Card';
-import { Draggable, Droppable } from 'react-beautiful-dnd';
+import React, { useState } from "react";
+import { Course } from "../../../modules/common/data";
+import DummyData from "../../../data/dummy_planner_course_data.json";
+import SearchBar from "../../search/SearchBar";
+import { Card } from "./Card";
+import { Draggable, Droppable } from "react-beautiful-dnd";
 
-export type CourseSelectedAction = 'Add' | 'Remove';
+export type CourseSelectedAction = "Add" | "Remove";
 
 /**
  *  List of courses a user is required or wants to take broken down into categories
@@ -33,7 +33,10 @@ export type CourseSelectorProps = {
 /**
  * Sidebar that allows the user to add courses to their degree plan
  */
-export default function CourseSelector({ results, updateQuery }: CourseSelectorProps) {
+export default function CourseSelector({
+  results,
+  updateQuery,
+}: CourseSelectorProps) {
   const DUMMY_COURSES: CourseCategories[] = DummyData;
 
   const [courseCount, setCourseCount] = useState(0);
@@ -42,18 +45,21 @@ export default function CourseSelector({ results, updateQuery }: CourseSelectorP
   const [courses, setCourses] = useState<CourseCategories[]>(DUMMY_COURSES);
 
   // TODO: Pass down using useMemo instead
-  const toggleCourseSelected = (course: Course, action: CourseSelectedAction) => {
+  const toggleCourseSelected = (
+    course: Course,
+    action: CourseSelectedAction
+  ) => {
     switch (action) {
-      case 'Add':
+      case "Add":
         setCourseCount(courseCount + 1);
         setAddCourses([...addCourses, course]);
         break;
-      case 'Remove':
+      case "Remove":
         setCourseCount(courseCount - 1);
         setAddCourses(
           addCourses.filter((elm) => {
             elm.catalogCode !== course.catalogCode;
-          }),
+          })
         );
     }
   };
@@ -73,12 +79,16 @@ export default function CourseSelector({ results, updateQuery }: CourseSelectorP
 
   // Run updateQuery on dialog screen load
   React.useEffect(() => {
-    updateQuery('');
+    updateQuery("");
   }, []);
 
   return (
     <div className="flex flex-col overflow-hidden items-center min-h-[100vh] mx-4 max-h-[100vh] min-w-[20rem] max-w-[20rem] p-0 mt-2 overflow-y-scroll">
-      <Droppable key={'selector'} droppableId={'selector'} isDropDisabled={true}>
+      <Droppable
+        key={"selector"}
+        droppableId={"selector"}
+        isDropDisabled={true}
+      >
         {(provided) => (
           <div ref={provided.innerRef} {...provided.droppableProps}>
             <SearchBar updateQuery={handleSearch} />
@@ -92,7 +102,11 @@ export default function CourseSelector({ results, updateQuery }: CourseSelectorP
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                     >
-                      <Card key={elm.id} props={elm} toggleCourseSelected={toggleCourseSelected} />
+                      <Card
+                        key={elm.id}
+                        props={elm}
+                        toggleCourseSelected={toggleCourseSelected}
+                      />
                     </div>
                   )}
                 </Draggable>

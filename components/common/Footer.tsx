@@ -1,6 +1,6 @@
-import React from 'react';
-import Link from 'next/link';
-import ServiceName from './ServiceName';
+import React from "react";
+import Link from "next/link";
+import ServiceName from "./ServiceName";
 
 /**
  * TODO: Update links
@@ -11,10 +11,14 @@ export default function Footer(): JSX.Element {
     <footer className="bg-gray-700 text-gray-200">
       <div className="max-w-6xl mx-auto md:grid md:grid-cols-3 md:grid-gap-2 lg:grid-gap-4 ">
         <div className="p-4">
-          <h1 className="text-subtitle1 py-2 font-semibold text-gray-100">Academic Resources</h1>
+          <h1 className="text-subtitle1 py-2 font-semibold text-gray-100">
+            Academic Resources
+          </h1>
           <ul className="mt-2">
             <li>
-              <a href="https://www.utdallas.edu/finaid/">Office of Financial Aid</a>
+              <a href="https://www.utdallas.edu/finaid/">
+                Office of Financial Aid
+              </a>
             </li>
             <li>
               <a href="https://bursar.utdallas.edu/">Bursar Office</a>
@@ -36,15 +40,21 @@ export default function Footer(): JSX.Element {
               <a href="https://nsm.utdallas.edu/advising/">NSM Advising</a>
             </li>
             <li>
-              <a href="https://is.utdallas.edu/contact/advisors/">IS Advising</a>
+              <a href="https://is.utdallas.edu/contact/advisors/">
+                IS Advising
+              </a>
             </li>
             <li>
-              <a href="https://atec.utdallas.edu/people/#_people-advisors">ATEC Advising</a>
+              <a href="https://atec.utdallas.edu/people/#_people-advisors">
+                ATEC Advising
+              </a>
             </li>
           </ul>
           <ul className="mt-2">
             <li>
-              <a href="https://www.utdallas.edu/veterans/">Military and Veteran Center</a>
+              <a href="https://www.utdallas.edu/veterans/">
+                Military and Veteran Center
+              </a>
             </li>
           </ul>
         </div>
@@ -71,22 +81,32 @@ export default function Footer(): JSX.Element {
           </ul>
         </div>
         <div className="p-4">
-          <h1 className="text-subtitle1 py-2 font-semibold text-gray-100">ACM and Co.</h1>
+          <h1 className="text-subtitle1 py-2 font-semibold text-gray-100">
+            ACM and Co.
+          </h1>
           <ul>
             <li>
-              <a href="https://github.com/acmutd">Other ACM Development Projects</a>
+              <a href="https://github.com/acmutd">
+                Other ACM Development Projects
+              </a>
             </li>
             <li>
-              <a href="https://github.com/acmutd/nebula-web">Nebula Web on GitHub</a>
+              <a href="https://github.com/acmutd/nebula-web">
+                Nebula Web on GitHub
+              </a>
             </li>
             <li>
-              <a href="https://github.com/acmutd/nebula-data-service">The Nebula Data Service</a>
+              <a href="https://github.com/acmutd/nebula-data-service">
+                The Nebula Data Service
+              </a>
             </li>
             <li>
               <a href="https://acmutd.co">ACM UTD website</a>
             </li>
             <li>
-              <a href="https://apply.acmutd.co/">Application to join the team</a>
+              <a href="https://apply.acmutd.co/">
+                Application to join the team
+              </a>
             </li>
             <li>
               <a href="https://github.com/acmutd/nebula-planning/blob/develop/CONTRIBUTING.md">

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 /**
  * Metadata for action to be taken for a Notice.
@@ -24,7 +24,7 @@ export type NoticeAction = {
  * - An 'app' source indicates a notice came from the client based on some
  *  automated or user-triggered functionality.
  */
-export type NoticeSource = 'service' | 'app';
+export type NoticeSource = "service" | "app";
 
 /**
  * An announcement for the user.
@@ -75,7 +75,9 @@ export default function AnnouncementItem({
 }: AnnouncementItemProps): JSX.Element {
   return (
     <div className="py-2">
-      <span className="block text-subtitle1 font-bold text-blue-700">{title}</span>
+      <span className="block text-subtitle1 font-bold text-blue-700">
+        {title}
+      </span>
       <span className="block my-1 text-subtitle2">{description}</span>
       {action && (
         <a

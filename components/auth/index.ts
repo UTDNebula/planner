@@ -1,1 +1,1 @@
-export { default } from './AuthCard';
+export { default } from "./AuthCard";

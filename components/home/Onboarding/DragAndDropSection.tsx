@@ -12,9 +12,12 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import ClassCard from "./ClassCard";
+import "animate.css";
+import { useInView } from "react-intersection-observer";
 
 export default function DragAndDrop(): JSX.Element {
+  const { ref: dragAndDropRef, inView: dragAndDropVisible } = useInView();
+
   return (
     <Grid
       sx={{ mt: -20 }}
@@ -37,6 +40,7 @@ export default function DragAndDrop(): JSX.Element {
         </Typography>
       </Grid>
       <CardMedia
+        className="animate__animated animate__flipInX animate_slower"
         width="100vw"
         style={{ height: "60vh" }}
         component="iframe"

@@ -1,5 +1,5 @@
-import router from 'next/router';
-import { StudentPlan } from '../../../modules/common/data';
+import router from "next/router";
+import { StudentPlan } from "../../../modules/common/data";
 
 export type PlanCardProps = {
   id: string;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 /**
  * Data access from a student's profile.
@@ -37,7 +37,7 @@ export function useUserProfileData(userId: string): UserProfileHandle {
   return React.useMemo(() => {
     return {
       userInfo: {
-        preferredName: 'Student',
+        preferredName: "Student",
       },
       serviceInfo: {
         onboarded: false,
@@ -87,6 +87,6 @@ export function useUserSummaryStatistics(/* userId: string */): UserSummary {
     coursesRemaining: 0,
     hoursAttempted: 0,
     gpa: 0,
-    estimatedGraduation: '2023s',
+    estimatedGraduation: "2023s",
   };
 }

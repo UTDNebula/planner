@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 // TODO: Implement this component
 export default function MaintainerProfile(): JSX.Element {

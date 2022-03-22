@@ -5,58 +5,58 @@ export type HonorsIndicator =
   /**
    * Collegium V Honors
    */
-  | 'cv'
+  | "cv"
 
   /**
    * Computer Science Scholar
    */
-  | 'cs2'
+  | "cs2"
 
   /**
    * Liberal Arts Honors
    */
-  | 'lahc'
+  | "lahc"
 
   /**
    * Behavioral and Brain Sciences Honors
    */
-  | 'bbs'
+  | "bbs"
 
   /**
    * Arts and Humanities Honors
    */
-  | 'ah'
+  | "ah"
 
   /**
    * Economic, Political & Policy Sciences Honors
    */
-  | 'epps'
+  | "epps"
 
   /**
    * Natural Sciences and Mathematics Honors
    */
-  | 'nsm'
+  | "nsm"
 
   /**
    * Arts & Technology Honors
    */
-  | 'atec'
+  | "atec"
 
   /**
    * Interdisciplinary Studies Honors
    */
-  | 'is'
+  | "is"
 
   /**
    * Not in any honors program.
    */
-  | 'none';
+  | "none";
 
 /**
  * A degree plan descriptor.
  */
 export interface PlanInfo {
-  type: 'BS' | 'BA' | 'MS' | 'MFA' | 'PhD' | 'AuD';
+  type: "BS" | "BA" | "MS" | "MFA" | "PhD" | "AuD";
   title: string;
 }
 

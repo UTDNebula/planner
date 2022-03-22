@@ -1,1 +1,1 @@
-export { default } from './SemesterNavigationDrawer';
+export { default } from "./SemesterNavigationDrawer";

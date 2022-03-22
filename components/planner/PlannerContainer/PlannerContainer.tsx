@@ -1,8 +1,8 @@
-import { DragDropContext, DropResult } from 'react-beautiful-dnd';
-import { Semester, SemesterCode } from '../../../modules/common/data';
-import CourseSelector from '../CourseSelector';
-import React from 'react';
-import SemesterContainer from '../Semester/SemesterContainer';
+import { DragDropContext, DropResult } from "react-beautiful-dnd";
+import { Semester, SemesterCode } from "../../../modules/common/data";
+import CourseSelector from "../CourseSelector";
+import React from "react";
+import SemesterContainer from "../Semester/SemesterContainer";
 
 interface PlannerContainerProps {
   items: Semester[];
@@ -31,7 +31,11 @@ export default function PlannerContainer({
       <div className="relative flex flex-row overflow-x-scroll">
         <CourseSelector results={results} updateQuery={updateQuery} />
         {items.map((item) => (
-          <SemesterContainer key={item.code} item={item} removeCourse={removeCourse} />
+          <SemesterContainer
+            key={item.code}
+            item={item}
+            removeCourse={removeCourse}
+          />
         ))}
         {children}
       </div>

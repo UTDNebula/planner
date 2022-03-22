@@ -1,8 +1,8 @@
-import React from 'react';
-import { Theme, Typography } from '@mui/material';
-import { makeStyles } from 'tss-react/mui';
-import { convertSemesterToData } from '../../../modules/common/data-utils';
-import { HonorsIndicator } from '../../../modules/common/types';
+import React from "react";
+import { Theme, Typography } from "@mui/material";
+import { makeStyles } from "tss-react/mui";
+import { convertSemesterToData } from "../../../modules/common/data-utils";
+import { HonorsIndicator } from "../../../modules/common/types";
 
 const useStyles = makeStyles()((theme: Theme) => {
   return {
@@ -50,7 +50,9 @@ export interface UserDetailsBlockProps {
 }
 
 // TODO: UNUSED; either remove or use for Planner v1
-export default function UserDetailsBlock(props: UserDetailsBlockProps): JSX.Element {
+export default function UserDetailsBlock(
+  props: UserDetailsBlockProps
+): JSX.Element {
   const {
     name,
     planTitle,
@@ -69,16 +71,22 @@ export default function UserDetailsBlock(props: UserDetailsBlockProps): JSX.Elem
           .reduce((acc, indicator, index) => {
             let result = acc.concat(`${indicator}`);
             if (index < honorsIndicators.length - 1) {
-              result = result.concat(', ');
+              result = result.concat(", ");
             }
             return result;
-          }, 'A ')
-          .concat(' scholar')
-      : '';
+          }, "A ")
+          .concat(" scholar")
+      : "";
 
-  const { year: startingYear, semester: startingSemester } = convertSemesterToData(start);
+  const { year: startingYear, semester: startingSemester } =
+    convertSemesterToData(start);
 
-  console.log('Starting year: ' + startingYear + ', starting semester: ' + startingSemester);
+  console.log(
+    "Starting year: " +
+      startingYear +
+      ", starting semester: " +
+      startingSemester
+  );
 
   const { classes } = useStyles();
 
@@ -91,12 +99,18 @@ export default function UserDetailsBlock(props: UserDetailsBlockProps): JSX.Elem
         <Typography variant="caption">{honorsIndicatorText}</Typography>
       </div>
       <div>
-        <Typography variant="caption">GPA: {gpa.toFixed(3)}</Typography> | &nbsp;
+        <Typography variant="caption">GPA: {gpa.toFixed(3)}</Typography> |
+        &nbsp;
         <Typography variant="caption">
-          {coursesCompleted}/{coursesCompleted + coursesRemaining} courses fulfilled
-        </Typography>{' '}
+          {coursesCompleted}/{coursesCompleted + coursesRemaining} courses
+          fulfilled
+        </Typography>{" "}
         | &nbsp;
-        <Typography variant="caption" component="span" className={classes.attemptedHours}>
+        <Typography
+          variant="caption"
+          component="span"
+          className={classes.attemptedHours}
+        >
           {attemptedHours} attmpted hours
         </Typography>
       </div>

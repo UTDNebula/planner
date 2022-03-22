@@ -1,7 +1,15 @@
-import { Theme, Drawer, List, ListItemText, Toolbar, Typography, MenuItem } from '@mui/material';
-import createStyles from '@mui/styles/createStyles';
-import { makeStyles } from 'tss-react/mui';
-import React from 'react';
+import {
+  Theme,
+  Drawer,
+  List,
+  ListItemText,
+  Toolbar,
+  Typography,
+  MenuItem,
+} from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import { makeStyles } from "tss-react/mui";
+import React from "react";
 
 /**
  * A containing type for a displayed semester item.
@@ -42,13 +50,13 @@ const useStyles = (drawerWidth = 240) => {
   return makeStyles()((theme: Theme) => {
     return {
       root: {
-        height: '100%',
+        height: "100%",
 
         width: 240,
         flexShrink: 0,
       },
       drawerContainer: {
-        overflow: 'auto',
+        overflow: "auto",
       },
       drawerPaper: {
         width: drawerWidth,
@@ -66,7 +74,7 @@ const useStyles = (drawerWidth = 240) => {
  * TODO: Either use or remove this component for planner v1
  */
 export default function SemesterNavigationDrawer(
-  props: SemesterNavigationDrawerProps,
+  props: SemesterNavigationDrawerProps
 ): JSX.Element {
   const { semesters, onSemesterSelection, focusedSemester } = props;
 
@@ -110,7 +118,9 @@ export default function SemesterNavigationDrawer(
  * @param semesters The semester information displayed on the sidebar
  */
 export function useSemesterNavigation(semesters: NavDrawerSemester[]) {
-  const [focusedSemester, setFocusedSemester] = React.useState(semesters[0].code);
+  const [focusedSemester, setFocusedSemester] = React.useState(
+    semesters[0].code
+  );
 
   const scrollToSemseter = (semesterCode: string) => {
     setFocusedSemester(semesterCode);

@@ -1,10 +1,10 @@
-import { useRouter } from 'next/router';
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import { useAuthContext } from '../../modules/auth/auth-context';
-import { resetStore } from '../../modules/redux/userDataSlice';
-import Login from './Login';
-import Signup from './Signup';
+import { useRouter } from "next/router";
+import React from "react";
+import { useDispatch } from "react-redux";
+import { useAuthContext } from "../../modules/auth/auth-context";
+import { resetStore } from "../../modules/redux/userDataSlice";
+import Login from "./Login";
+import Signup from "./Signup";
 
 /**
  * Props for AuthCard
@@ -36,10 +36,10 @@ export default function AuthCard({ authState }: AuthCardProps): JSX.Element {
       .then(() => {
         // Clear user data
         dispatch(resetStore());
-        console.debug('Succesfully signed out.');
+        console.debug("Succesfully signed out.");
       })
       .catch((error) => {
-        console.error('Error signing out.', error);
+        console.error("Error signing out.", error);
       });
   };
 
@@ -59,7 +59,7 @@ export default function AuthCard({ authState }: AuthCardProps): JSX.Element {
   };
 
   function emptyAction() {
-    console.log('No side effect run');
+    console.log("No side effect run");
   }
 
   /**
@@ -67,8 +67,8 @@ export default function AuthCard({ authState }: AuthCardProps): JSX.Element {
    * into /app/auth
    */
   function invalidAction() {
-    console.error('Invalid route, returning to login screen.');
-    router.push('/app/auth/login');
+    console.error("Invalid route, returning to login screen.");
+    router.push("/app/auth/login");
   }
 
   /**
@@ -93,5 +93,7 @@ export default function AuthCard({ authState }: AuthCardProps): JSX.Element {
     }
   }, [authState]);
 
-  return <div className="m-2 bg-white md:rounded-md md:shadow-md">{content}</div>;
+  return (
+    <div className="m-2 bg-white md:rounded-md md:shadow-md">{content}</div>
+  );
 }

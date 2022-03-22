@@ -30,8 +30,8 @@ export function useUpdateService(): UpdateServiceUsable {
   // TODO: Check update form some source
   const updateAvailable = false;
   const newestUpdate = {
-    version: 'v0.1.0', // TODO: Find programmatically
-    title: 'Comet Planning Open Beta',
+    version: "v0.1.0", // TODO: Find programmatically
+    title: "Comet Planning Open Beta",
     changelog: `The first public release of Comet Planning`,
   };
 

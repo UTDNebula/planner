@@ -1,7 +1,7 @@
-import React from 'react';
-import { fetchNotices } from '../../../modules/common/api/notices';
-import { Notice } from './AnnouncementItem';
-import NoticeList from './NoticeList';
+import React from "react";
+import { fetchNotices } from "../../../modules/common/api/notices";
+import { Notice } from "./AnnouncementItem";
+import NoticeList from "./NoticeList";
 
 /**
  * A hook to provide notices and announcements.
@@ -15,7 +15,7 @@ function useNotices(): NoticeAnnouncementGroup {
 
   const refresh = () => {
     // TODO: Make observable
-    console.log('Refresh to be implemented');
+    console.log("Refresh to be implemented");
   };
 
   return {

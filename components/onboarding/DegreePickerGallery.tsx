@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import DegreePicker, { DegreeState } from './DegreePicker';
+import React, { useState } from "react";
+import DegreePicker, { DegreeState } from "./DegreePicker";
 
 export type DegreePickerGalleryProps = {
   degree: DegreeState[];
@@ -20,14 +20,17 @@ const pickerValidate = (degree: DegreeState[]) => {
   return true;
 };
 
-export default function DegreePickerGallery({ degree, handleChange }: DegreePickerGalleryProps) {
+export default function DegreePickerGallery({
+  degree,
+  handleChange,
+}: DegreePickerGalleryProps) {
   let count = 0;
 
   // Contains the index of all degree entries & is used to render DegreePicker
   const [degreeCount, setDegreeCount] = useState(
     degree.map((value, index) => {
       return index;
-    }),
+    })
   );
   const [removeIndex, setRemoveIndex] = useState([]);
 
@@ -36,8 +39,8 @@ export default function DegreePickerGallery({ degree, handleChange }: DegreePick
     handleChange([
       ...degree,
       {
-        degree: '',
-        degreeType: '',
+        degree: "",
+        degreeType: "",
         valid: false,
       },
     ]);
@@ -48,7 +51,9 @@ export default function DegreePickerGallery({ degree, handleChange }: DegreePick
     // Determines if DegreePicker component is valid
     if (!(formID in removeIndex)) {
       degreeState.valid =
-        degreeState.degree !== '' && degreeState.degree !== null && degreeState.degreeType !== '';
+        degreeState.degree !== "" &&
+        degreeState.degree !== null &&
+        degreeState.degreeType !== "";
       let index = 0;
       for (let i = 0; i < removeIndex.length; i++) {
         if (formID < removeIndex[i]) {
@@ -88,7 +93,7 @@ export default function DegreePickerGallery({ degree, handleChange }: DegreePick
             return (
               <DegreePicker
                 id={index}
-                props={{ degree: '', degreeType: '', valid: false }}
+                props={{ degree: "", degreeType: "", valid: false }}
                 updateChange={handleDegreeChange}
                 removePicker={removePicker}
               />
@@ -108,8 +113,8 @@ export default function DegreePickerGallery({ degree, handleChange }: DegreePick
           className=" text-blue-500 ml-5 hover:text-yellow-500 font-bold rounded justify-start"
           onClick={addNewDegree}
         >
-          {' '}
-          Add Degree{' '}
+          {" "}
+          Add Degree{" "}
         </button>
       </div>
     </>

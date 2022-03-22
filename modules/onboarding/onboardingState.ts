@@ -5,7 +5,7 @@
  * TODO: Track what features the user has used to enable nudges later.
  */
 export function useOnboardingState(): OnboardingState {
-  const isOnboarded = Boolean(localStorage.getItem('onboarded')) || false;
+  const isOnboarded = Boolean(localStorage.getItem("onboarded")) || false;
   return {
     isOnboarded,
   };

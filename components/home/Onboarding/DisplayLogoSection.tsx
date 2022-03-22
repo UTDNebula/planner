@@ -12,6 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
+import "animate.css";
 
 export default function NebPlannerDisplay(): JSX.Element {
   return (
@@ -33,7 +34,7 @@ export default function NebPlannerDisplay(): JSX.Element {
             />
           </Grid>
         </div>
-        <div>
+        <div className="animate__animated animate__fadeInRight animate_slower">
           <Grid item>
             <Typography
               variant="h1"

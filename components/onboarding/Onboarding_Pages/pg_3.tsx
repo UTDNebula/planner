@@ -1,5 +1,5 @@
-import React from 'react';
-import TransferCreditGallery, { CreditState } from '../TransferCreditGallery';
+import React from "react";
+import TransferCreditGallery, { CreditState } from "../TransferCreditGallery";
 
 export type PageThreeTypes = {
   creditState: CreditState[];
@@ -11,7 +11,10 @@ export type Page3Props = {
   handleValidate: (value: boolean) => void;
 };
 
-export default function PageThree({ handleChange, props }: Page3Props): JSX.Element {
+export default function PageThree({
+  handleChange,
+  props,
+}: Page3Props): JSX.Element {
   const { creditState } = props;
 
   const handleTransferChange = (credits: CreditState[]) => {
@@ -28,7 +31,10 @@ export default function PageThree({ handleChange, props }: Page3Props): JSX.Elem
         <div className="">Transfer Credits </div>
       </div>
 
-      <TransferCreditGallery creditState={creditState} handleChange={handleTransferChange} />
+      <TransferCreditGallery
+        creditState={creditState}
+        handleChange={handleTransferChange}
+      />
     </div>
   );
 }

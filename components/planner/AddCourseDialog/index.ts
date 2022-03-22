@@ -1,1 +1,1 @@
-export { default } from './AddCourseDialog';
+export { default } from "./AddCourseDialog";

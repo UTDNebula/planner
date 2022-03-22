@@ -1,9 +1,13 @@
-import React from 'react';
+import React from "react";
 
 /**
  * The current state of new plan creation.
  */
-export type NewPlanFlowState = 'SELECT_MAJOR' | 'TRANSFER_COURSES' | 'SELECT_ADDITIONS' | 'DONE';
+export type NewPlanFlowState =
+  | "SELECT_MAJOR"
+  | "TRANSFER_COURSES"
+  | "SELECT_ADDITIONS"
+  | "DONE";
 
 /**
  * A hook that keeps track of current state for a NewPlanDialog.
@@ -12,43 +16,43 @@ export type NewPlanFlowState = 'SELECT_MAJOR' | 'TRANSFER_COURSES' | 'SELECT_ADD
  * @param shouldAdvance True if the next button is enabled at the current step
  */
 export function useCreateNewPlanFlow(
-  startingState: NewPlanFlowState = 'SELECT_MAJOR',
-  shouldAdvance: (currentState: NewPlanFlowState) => boolean = () => true,
+  startingState: NewPlanFlowState = "SELECT_MAJOR",
+  shouldAdvance: (currentState: NewPlanFlowState) => boolean = () => true
 ): CreateNewPlanFlowType {
   const [planState, setPlanState] = React.useState(startingState);
   const reset = () => {
-    setPlanState('SELECT_MAJOR');
+    setPlanState("SELECT_MAJOR");
   };
 
-  const inNewPlanFlow = planState !== 'DONE';
+  const inNewPlanFlow = planState !== "DONE";
 
   const goForward = () => {
     if (!shouldAdvance(planState)) {
       return;
     }
     switch (planState) {
-      case 'SELECT_MAJOR':
+      case "SELECT_MAJOR":
         // no-op: Can't go back further
-        setPlanState('TRANSFER_COURSES');
+        setPlanState("TRANSFER_COURSES");
         break;
-      case 'TRANSFER_COURSES':
-        setPlanState('SELECT_ADDITIONS');
+      case "TRANSFER_COURSES":
+        setPlanState("SELECT_ADDITIONS");
         break;
-      case 'SELECT_ADDITIONS':
+      case "SELECT_ADDITIONS":
         break;
     }
   };
 
   const goBack = () => {
     switch (planState) {
-      case 'SELECT_MAJOR':
+      case "SELECT_MAJOR":
         // no-op: Can't go back further
         break;
-      case 'TRANSFER_COURSES':
-        setPlanState('SELECT_MAJOR');
+      case "TRANSFER_COURSES":
+        setPlanState("SELECT_MAJOR");
         break;
-      case 'SELECT_ADDITIONS':
-        setPlanState('TRANSFER_COURSES');
+      case "SELECT_ADDITIONS":
+        setPlanState("TRANSFER_COURSES");
         break;
     }
   };

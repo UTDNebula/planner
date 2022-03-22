@@ -1,7 +1,7 @@
 /**
  * The registrar-determined year classification based on credit hours.
  */
-export type YearClassification = 'fr' | 'so' | 'ju' | 'se' | 'gr';
+export type YearClassification = "fr" | "so" | "ju" | "se" | "gr";
 
 /**
  * All the valid year classifications.
@@ -10,11 +10,11 @@ export type YearClassification = 'fr' | 'so' | 'ju' | 'se' | 'gr';
  * @enum {string}
  */
 export const CLASSIFICATIONS: { [key in YearClassification]: string } = {
-  fr: 'Freshman',
-  so: 'Sophomore',
-  ju: 'Junior',
-  se: 'Senior',
-  gr: 'Graduate',
+  fr: "Freshman",
+  so: "Sophomore",
+  ju: "Junior",
+  se: "Senior",
+  gr: "Graduate",
 };
 
 /**
