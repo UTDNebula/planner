@@ -24,6 +24,7 @@
     "@mui/styles": "^5.3.0",
     "@react-native-async-storage/async-storage": "^1.15.5",
     "@reduxjs/toolkit": "^1.6.0",
+    "alpinejs": "^3.9.2",
     "eslint": "^8.8.0",
     "firebase": "^8.4.1",
     "framer-motion": "^6.2.3",
