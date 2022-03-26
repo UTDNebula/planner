@@ -122,7 +122,8 @@ module.exports = {
       },
     },
     fontFamily: {
-      sans: ['Roboto', 'ui-sans-serif', 'system-ui'],
+      roboto: ['Roboto', 'ui-sans-serif', 'system-ui'],
+      jost: ['Jost', 'Roboto', 'ui-sans-serif', 'system-ui'],
     },
   },
   plugins: [],

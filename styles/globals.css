@@ -11,6 +11,18 @@ body {
 }
 
 @layer base {
+  h1 {
+    @apply font-jost font-medium text-[64px];
+  }
+  h3 {
+    @apply font-roboto font-medium text-[20px];
+  }
+  h4 {
+    @apply font-roboto font-bold text-[18px];
+  }
+  p {
+    @apply font-roboto font-normal text-[12px];
+  }
   a {
     @apply cursor-pointer;
   }
