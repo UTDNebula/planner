@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import ClassCard from "./ClassCard";
+import DegreePlanWrapper from "./ClassCard";
 
 interface FeatureProps {
   ref2: any;
@@ -145,7 +146,7 @@ export default function NebFeatureDisplay({ ref2 }: FeatureProps): JSX.Element {
           justifyContent="center"
           lg={false}
         >
-          <ClassCard />
+          <DegreePlanWrapper />
         </Grid>
       </div>
       <div

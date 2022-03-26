@@ -9,9 +9,8 @@ import "animate.css";
 import { useInView } from "react-intersection-observer";
 import { Fade } from "react-awesome-reveal";
 
-export default function ClassCard() {
-  // const featRef = React.useRef();
-  // const [featVisible, setFeatVisible] = React.useState(false);
+// Purpose of this component is to display all semesters and course information from each respective semester.
+export default function DegreePlanWrapper() {
   const { ref: featRef, inView: featVisible } = useInView({
     threshold: 0,
   });
