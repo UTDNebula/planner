@@ -7,6 +7,7 @@ import {
   Card,
   CardContent,
   CardMedia,
+  Container,
   Grid,
   IconButton,
   Typography,
@@ -14,14 +15,22 @@ import {
 import { Box } from "@mui/system";
 import ClassCard from "./ClassCard";
 
-export default function NebFeatureDisplay(): JSX.Element {
+interface FeatureProps {
+  ref2: any;
+}
+
+export default function NebFeatureDisplay({ ref2 }: FeatureProps): JSX.Element {
   return (
     <div
+      ref={ref2}
       className="h-screen"
       style={{
         background: "linear-gradient(#f5a75e, #ffffff)",
-        transform: "translateY(-29%)",
+        transform: "translateY(-15%)",
+        // transform: "translateY(-300px)",
+        scrollBehavior: "smooth",
       }}
+      id="Features"
     >
       <div
         style={{
@@ -129,12 +138,12 @@ export default function NebFeatureDisplay(): JSX.Element {
           </Box>
         </Grid>
         <Grid
-          sx={{ mt: 2, ml: -20 }}
+          sx={{ mt: 2, ml: -20, display: { xs: "none", lg: "block" } }}
           container
           direction="column"
           alignItems="center"
           justifyContent="center"
-          style={{ height: "540px" }}
+          lg={false}
         >
           <ClassCard />
         </Grid>

@@ -22,7 +22,7 @@ export default function NebFeatureDisplay(): JSX.Element {
         height: "100vh",
         background:
           "linear-gradient(rgba(98, 226, 168, 0.2), rgba(135, 143, 214, 0.8))",
-        transform: "translateY(-29%)",
+        transform: "translateY(-300px)",
       }}
     >
       <div
@@ -43,18 +43,21 @@ export default function NebFeatureDisplay(): JSX.Element {
         alignItems="center"
         justifyContent="center"
       >
-        <Grid item sx={{ pb: 3, mt: -6 }}>
+        <Grid item>
           <Typography
+            variant="h1"
             color="black"
             fontSize="55px"
             fontWeight="bold"
             fontFamily="Jost"
             letterSpacing="1px"
+            paddingBottom="20px"
+            textAlign="center"
           >
             Make your plans come true
           </Typography>
         </Grid>
-        <Grid item sx={{ width: "900px" }}>
+        <Grid item sx={{ width: { md: "850px", lg: "900px" } }}>
           <Typography
             textAlign="center"
             color="black"
@@ -75,6 +78,7 @@ export default function NebFeatureDisplay(): JSX.Element {
               fontFamily: "Jost",
               fontSize: "18px",
             }}
+            href="/app/auth/signup"
           >
             GET STARTED
           </Button>

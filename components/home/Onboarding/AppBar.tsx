@@ -13,37 +13,42 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import "@fontsource/jost";
 import { createTheme, ThemeProvider } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
+import AuthPage from "../../../pages/app/auth/[task]";
+import { styled } from "@material-ui/core/styles";
 
 const pages = ["Overview", "Features", "Learn More"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
-export default function ResponsiveAppBar(): JSX.Element {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null
-  );
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
+interface Props {
+  ref1: any;
+  ref2: any;
+  ref3: any;
+}
 
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
-  };
+export default function ResponsiveAppBar({
+  ref1,
+  ref2,
+  ref3,
+}: Props): JSX.Element {
+  const refHolder = [ref1, ref2, ref3];
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
+  const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+  function scrollTo(ref) {
+    if (!ref.current) return;
+    ref.current.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+      inline: "center",
+    });
+  }
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    // <div className="h-10 w-screen bg-purple-900">Hi Bye</div>
+    <Box sx={{ flexGrow: 1 }} className="bg-white">
       <AppBar
-        position="absolute"
+        position="relative"
         style={{
           backgroundColor: "rgba(70, 89, 167, 0.25)",
           boxShadow: "none",
@@ -55,7 +60,9 @@ export default function ResponsiveAppBar(): JSX.Element {
               {pages.map((page) => (
                 <Button
                   key={page}
-                  onClick={handleCloseNavMenu}
+                  onClick={() => scrollTo(refHolder[pages.indexOf(page)])}
+                  ref={refHolder[pages.indexOf(page)]}
+                  // href={`#${page}`}
                   sx={{
                     p: 2,
                     my: 2,
@@ -80,6 +87,7 @@ export default function ResponsiveAppBar(): JSX.Element {
                   fontSize: "18px",
                   fontWeight: "bold",
                 }}
+                href="/app/auth/login"
               >
                 LOG IN
               </Button>
@@ -91,6 +99,7 @@ export default function ResponsiveAppBar(): JSX.Element {
                   fontFamily: "Jost",
                   fontSize: "18px",
                 }}
+                href="/app/auth/signup"
               >
                 GET STARTED
               </Button>

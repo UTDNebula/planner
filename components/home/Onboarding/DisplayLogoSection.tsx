@@ -21,7 +21,7 @@ export default function NebPlannerDisplay(): JSX.Element {
       direction="column"
       alignItems="center"
       justifyContent="center"
-      style={{ height: "100vh" }}
+      style={{ height: "750px" }}
       sx={{ backgroundColor: "white" }}
     >
       <div className="flex flex-col-2 gap-x-5">
@@ -34,7 +34,7 @@ export default function NebPlannerDisplay(): JSX.Element {
             />
           </Grid>
         </div>
-        <div className="animate__animated animate__fadeInRight animate_slower">
+        <div className="animate__animated animate__fadeInRight animate__slow">
           <Grid item>
             <Typography
               variant="h1"
@@ -81,6 +81,7 @@ export default function NebPlannerDisplay(): JSX.Element {
                 fontFamily: "Jost",
                 fontSize: "15px",
               }}
+              href="/app/auth/signup"
             >
               GET STARTED
             </Button>

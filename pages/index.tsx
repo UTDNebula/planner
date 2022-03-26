@@ -38,13 +38,10 @@ export default function LandingPage(): JSX.Element {
   const { ref: appBarRef, inView: appBarVisible } = useInView({
     triggerOnce: true,
   });
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null
-  );
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
+  const ref1 = React.useRef();
+  const ref2 = React.useRef();
+  const ref3 = React.useRef();
 
   // ref={dragAndDropRef}
   // className={`${dragAndDropVisible ? "animate__animated animate__flipInX animate_slower": ""}`}
@@ -55,17 +52,17 @@ export default function LandingPage(): JSX.Element {
       <Scrollbars style={{ height: "100vh" }}>
         <div
           ref={appBarRef}
-          className={`${
-            appBarVisible && "animate__animated animate__bounce animate_slower"
+          className={`sticky top-0 z-10 ${
+            appBarVisible && "animate__animated animate__bounce animate__slow"
           }`}
         >
-          <AppBar />
+          <AppBar ref1={ref1} ref2={ref2} ref3={ref3} />
         </div>
-        <div>
+        <div ref={ref1}>
           <DisplayLogoSection />
         </div>
         <div>
-          <FeatureSection />
+          <FeatureSection ref2={ref2} />
         </div>
         <div>
           <DragAndDropSection />
@@ -73,7 +70,7 @@ export default function LandingPage(): JSX.Element {
         <div>
           <GetStartedSection />
         </div>
-        <div>
+        <div ref={ref3}>
           <LearnMoreSection />
         </div>
       </Scrollbars>

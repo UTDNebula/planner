@@ -16,11 +16,9 @@ import "animate.css";
 import { useInView } from "react-intersection-observer";
 
 export default function DragAndDrop(): JSX.Element {
-  const { ref: dragAndDropRef, inView: dragAndDropVisible } = useInView();
-
   return (
     <Grid
-      sx={{ mt: -20 }}
+      sx={{ mt: -9 }}
       container
       direction="column"
       alignItems="center"
@@ -35,6 +33,7 @@ export default function DragAndDrop(): JSX.Element {
           fontFamily="Jost"
           letterSpacing="1px"
           paddingBottom="20px"
+          textAlign="center"
         >
           Drag and Drop in Action
         </Typography>
@@ -46,7 +45,7 @@ export default function DragAndDrop(): JSX.Element {
         component="iframe"
         src="https://www.youtube.com/embed/bxqLsrlakK8"
       ></CardMedia>
-      <Box width="98vw" height="40vh"></Box>
+      <Box width="98vw" height="300px"></Box>
     </Grid>
   );
 }
