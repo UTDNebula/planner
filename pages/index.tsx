@@ -1,7 +1,8 @@
 import Head from 'next/head';
-import Footer from '../components/common/Footer';
-import React from 'react';
 import Link from 'next/link';
+import React from 'react';
+
+import Footer from '../components/common/Footer';
 import ServiceName from '../components/common/ServiceName';
 import { useAuthContext } from '../modules/auth/auth-context';
 

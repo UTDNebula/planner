@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import firebase from 'firebase';
+
 import { OnboardingFormData } from '../../pages/app/onboarding';
-import { ServiceUser, users, CourseAttempt } from '../auth/auth-context';
-import { StudentPlan, createSamplePlan, createSampleOnboarding } from '../common/data';
+import { CourseAttempt, ServiceUser, users } from '../auth/auth-context';
+import { createSampleOnboarding, createSamplePlan, StudentPlan } from '../common/data';
 
 /**
  * Manages user plans

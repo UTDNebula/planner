@@ -1,6 +1,7 @@
-import React from 'react';
 import { Theme, Typography } from '@mui/material';
+import React from 'react';
 import { makeStyles } from 'tss-react/mui';
+
 import { convertSemesterToData } from '../../../modules/common/data-utils';
 import { HonorsIndicator } from '../../../modules/common/types';
 

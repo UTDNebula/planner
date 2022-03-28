@@ -1,2 +1,2 @@
-export { default } from './CourseCard';
 export type { CourseCardProps } from './CourseCard';
+export { default } from './CourseCard';

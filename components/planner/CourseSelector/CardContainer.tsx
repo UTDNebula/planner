@@ -1,5 +1,6 @@
-import { Accordion, AccordionSummary, Typography, AccordionDetails } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Accordion, AccordionDetails, AccordionSummary, Typography } from '@mui/material';
+
 import { Course } from '../../../modules/common/data';
 import { Card } from './Card';
 import { CourseSelectedAction } from './CourseSelector';

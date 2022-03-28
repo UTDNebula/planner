@@ -1,7 +1,7 @@
-import React from 'react';
-import { Tooltip, IconButton, MenuItem, Menu } from '@mui/material';
-import InfoIcon from '@mui/icons-material/Info';
 import { MoreVert } from '@mui/icons-material';
+import InfoIcon from '@mui/icons-material/Info';
+import { IconButton, Menu, MenuItem, Tooltip } from '@mui/material';
+import React from 'react';
 
 /**
  * Component properties for a {@link CourseCard}.

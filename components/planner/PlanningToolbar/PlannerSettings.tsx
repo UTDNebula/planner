@@ -1,16 +1,17 @@
-import React from 'react';
+import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import TextField from '@mui/material/TextField';
+import { useRouter } from 'next/router';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { RootState } from '../../../modules/redux/store';
 import { deletePlan, updatePlan } from '../../../modules/redux/userDataSlice';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { useRouter } from 'next/router';
 
 export type SettingsDialogProps = {
   planId: string;

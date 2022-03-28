@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { fetchNotices } from '../../../modules/common/api/notices';
 import { Notice } from './AnnouncementItem';
 import NoticeList from './NoticeList';

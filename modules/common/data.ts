@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
-import { OnboardingFormData } from '../../pages/app/onboarding';
+
 import { HonorsIndicator } from '../../modules/common/types';
+import { OnboardingFormData } from '../../pages/app/onboarding';
 
 /**
  * A topic of study.

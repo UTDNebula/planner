@@ -1,11 +1,12 @@
-import React from 'react';
-import { Avatar, IconButton, ListItemIcon, ListItemText, Menu, MenuItem } from '@mui/material';
-import AccountIcon from '@mui/icons-material/AccountCircle';
-import AccountBox from '@mui/icons-material/AccountBox';
 import { ExitToApp } from '@mui/icons-material';
+import AccountBox from '@mui/icons-material/AccountBox';
+import AccountIcon from '@mui/icons-material/AccountCircle';
+import { Avatar, IconButton, ListItemIcon, ListItemText, Menu, MenuItem } from '@mui/material';
 import Link from 'next/link';
-import styles from './ProfileIcon.module.css';
+import React from 'react';
+
 import { useAuthContext } from '../../../../modules/auth/auth-context';
+import styles from './ProfileIcon.module.css';
 
 /**
  * Component properties for a {@link ProfileIcon}.
