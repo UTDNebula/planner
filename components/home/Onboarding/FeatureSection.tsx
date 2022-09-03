@@ -1,7 +1,7 @@
-import Head from "next/head";
-import React from "react";
-import Link from "next/link";
-import { useDispatch } from "react-redux";
+import Head from 'next/head';
+import React from 'react';
+import Link from 'next/link';
+import { useDispatch } from 'react-redux';
 import {
   Button,
   Card,
@@ -11,10 +11,10 @@ import {
   Grid,
   IconButton,
   Typography,
-} from "@mui/material";
-import { Box } from "@mui/system";
-import ClassCard from "./ClassCard";
-import DegreePlanWrapper from "./ClassCard";
+} from '@mui/material';
+import { Box } from '@mui/system';
+import ClassCard from './ClassCard';
+import DegreePlanWrapper from './ClassCard';
 
 interface FeatureProps {
   ref2: any;
@@ -26,22 +26,22 @@ export default function NebFeatureDisplay({ ref2 }: FeatureProps): JSX.Element {
       ref={ref2}
       className="h-screen"
       style={{
-        background: "linear-gradient(#f5a75e, #ffffff)",
-        transform: "translateY(-15%)",
+        background: 'linear-gradient(#f5a75e, #ffffff)',
+        transform: 'translateY(-15%)',
         // transform: "translateY(-300px)",
-        scrollBehavior: "smooth",
+        scrollBehavior: 'smooth',
       }}
       id="Features"
     >
       <div
         style={{
-          width: "100%",
-          height: "20vh",
-          borderTopRightRadius: "0",
-          borderTopLeftRadius: "0",
-          borderBottomRightRadius: "100%",
-          borderBottomLeftRadius: "5%",
-          background: "white",
+          width: '100%',
+          height: '20vh',
+          borderTopRightRadius: '0',
+          borderTopLeftRadius: '0',
+          borderBottomRightRadius: '100%',
+          borderBottomLeftRadius: '5%',
+          background: 'white',
         }}
       ></div>
       <div className="flex flex-col-2">
@@ -50,7 +50,7 @@ export default function NebFeatureDisplay({ ref2 }: FeatureProps): JSX.Element {
           direction="column"
           alignItems="center"
           justifyContent="center"
-          style={{ height: "70vh" }}
+          style={{ height: '70vh' }}
         >
           <Box>
             <Grid item>
@@ -139,7 +139,7 @@ export default function NebFeatureDisplay({ ref2 }: FeatureProps): JSX.Element {
           </Box>
         </Grid>
         <Grid
-          sx={{ mt: 2, ml: -20, display: { xs: "none", lg: "block" } }}
+          sx={{ mt: 2, ml: -20, display: { xs: 'none', lg: 'block' } }}
           container
           direction="column"
           alignItems="center"
@@ -151,13 +151,13 @@ export default function NebFeatureDisplay({ ref2 }: FeatureProps): JSX.Element {
       </div>
       <div
         style={{
-          width: "100%",
-          height: "10vh",
-          borderTopRightRadius: "10%",
-          borderTopLeftRadius: "100%",
-          borderBottomRightRadius: "0%",
-          borderBottomLeftRadius: "0%",
-          background: "white",
+          width: '100%',
+          height: '10vh',
+          borderTopRightRadius: '10%',
+          borderTopLeftRadius: '100%',
+          borderBottomRightRadius: '0%',
+          borderBottomLeftRadius: '0%',
+          background: 'white',
         }}
       ></div>
     </div>

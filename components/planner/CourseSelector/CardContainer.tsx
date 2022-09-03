@@ -1,13 +1,8 @@
-import {
-  Accordion,
-  AccordionSummary,
-  Typography,
-  AccordionDetails,
-} from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Course } from "../../../modules/common/data";
-import { Card } from "./Card";
-import { CourseSelectedAction } from "./CourseSelector";
+import { Accordion, AccordionSummary, Typography, AccordionDetails } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Course } from '../../../modules/common/data';
+import { Card } from './Card';
+import { CourseSelectedAction } from './CourseSelector';
 
 export type SidebarCourseContainerProps = {
   category: string; // TODO: Update to be more comprehensive
@@ -36,11 +31,7 @@ export function CardContainer({
       <AccordionDetails>
         <div className="flex flex-col w-full">
           {courses.map((elm, index) => (
-            <Card
-              key={elm.id}
-              props={elm}
-              toggleCourseSelected={toggleCourseSelected}
-            />
+            <Card key={elm.id} props={elm} toggleCourseSelected={toggleCourseSelected} />
           ))}
         </div>
       </AccordionDetails>

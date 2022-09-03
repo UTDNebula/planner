@@ -1,7 +1,7 @@
-import { Button, Checkbox, FormControlLabel } from "@mui/material";
-import React from "react";
-import Link from "next/link";
-import ServiceName from "../common/ServiceName";
+import { Button, Checkbox, FormControlLabel } from '@mui/material';
+import React from 'react';
+import Link from 'next/link';
+import ServiceName from '../common/ServiceName';
 
 /**
  * Component properties for a Disclaimer.
@@ -47,9 +47,7 @@ export type ConsentInfo = {
  * the information here may be useful in the future.
  * TODO: Either use or remove this component by Planner v1
  */
-export default function Disclaimer({
-  onConsent,
-}: DisclaimerProps): JSX.Element {
+export default function Disclaimer({ onConsent }: DisclaimerProps): JSX.Element {
   const [consentState, setConsentState] = React.useState({
     disclaimer: false,
     personalization: false,
@@ -75,46 +73,31 @@ export default function Disclaimer({
     <article>
       <div className="max-w-4xl mx-auto py-2">
         <p className="text-body1 my-2">
-          <ServiceName /> is a student-built project maintained by the
-          Development team at&nbsp;
+          <ServiceName /> is a student-built project maintained by the Development team at&nbsp;
           <a className="text-blue-500 font-bold" href="https://acmutd.co">
             ACM UTD
           </a>
-          , a registered student organization at The University of Texas at
-          Dallas.
+          , a registered student organization at The University of Texas at Dallas.
         </p>
         <p className="text-body2 my-2">
           <b className="font-bold">
-            This is an unofficial tool only to be used to supplement other
-            campus resources.{" "}
+            This is an unofficial tool only to be used to supplement other campus resources.{' '}
           </b>
-          <ServiceName /> tries its best to help you plan out college, but
-          sometimes it may not be up-to-date. When in doubt, check the academic{" "}
-          <a
-            className="text-blue-500 font-bold"
-            href="https://catalog.utdallas.edu/now"
-          >
+          <ServiceName /> tries its best to help you plan out college, but sometimes it may not be
+          up-to-date. When in doubt, check the academic{' '}
+          <a className="text-blue-500 font-bold" href="https://catalog.utdallas.edu/now">
             Catalog
-          </a>{" "}
-          for the most current information on academic policies, and ask your
-          academic advisors and/or financial aid counselors and/or scholarship
-          office when you have a question that could impact your academic
-          career.
+          </a>{' '}
+          for the most current information on academic policies, and ask your academic advisors
+          and/or financial aid counselors and/or scholarship office when you have a question that
+          could impact your academic career.
         </p>
         <FormControlLabel
-          control={
-            <Checkbox
-              checked={disclaimer}
-              onChange={handleChange}
-              name="disclaimer"
-            />
-          }
+          control={<Checkbox checked={disclaimer} onChange={handleChange} name="disclaimer" />}
           label="I understand that Nebula is a student-maintained project not maintained or officially endorsed by The University of Texas at Dallas or any of its departments."
         />
         {disclaimer && (
-          <p className="text-body1 my-2">
-            With that out of the way, let&apos;s get started!
-          </p>
+          <p className="text-body1 my-2">With that out of the way, let&apos;s get started!</p>
         )}
       </div>
 
@@ -126,8 +109,8 @@ export default function Disclaimer({
               <div className="my-4">
                 <h1 className="text-headline5">Personalization</h1>
                 <p className="text-body1 py-1">
-                  Nebula supports some functionality that lets you back up
-                  information to an account:
+                  Nebula supports some functionality that lets you back up information to an
+                  account:
                 </p>
                 <ul className="text-body1 list-disc list-inside my-1">
                   <li>Customized degree plans</li>
@@ -135,8 +118,7 @@ export default function Disclaimer({
                   <li>Course recommendations</li>
                 </ul>
                 <p className="text-body1 py-1">
-                  You do not have to enable personalization to use the following
-                  features:
+                  You do not have to enable personalization to use the following features:
                 </p>
                 <ul className="text-body1 list-disc list-inside my-1">
                   <li>Course planning</li>
@@ -158,37 +140,29 @@ export default function Disclaimer({
               <div className="my-4">
                 <h1 className="text-headline5">Analytics</h1>
                 <p className="text-body1 py-1">
-                  We want to make planning your college experience as easy and
-                  useful as possible. Collecting anonymous analytics helps us
-                  power features like:
+                  We want to make planning your college experience as easy and useful as possible.
+                  Collecting anonymous analytics helps us power features like:
                 </p>
                 <ul className="text-body1 list-disc list-inside my-1">
                   <li>Grade distributions</li>
                   <li>Class popularity estimates</li>
                 </ul>
                 <p>
-                  Analytics help us understand which features are most used.
-                  Nebula does not track you across the web. All data you give is
-                  kept within the service and not shared with third-parties. By
-                  opting in, you&apos;ll help us keep updating Nebula with new
-                  features based on your input.
+                  Analytics help us understand which features are most used. Nebula does not track
+                  you across the web. All data you give is kept within the service and not shared
+                  with third-parties. By opting in, you&apos;ll help us keep updating Nebula with
+                  new features based on your input.
                 </p>
                 <p className="text-body1 py-1">
-                  For more inforation, see our{" "}
+                  For more inforation, see our{' '}
                   <Link href="/privacy">
-                    <span className="text-blue-500 font-bold">
-                      Privacy Policy
-                    </span>
+                    <span className="text-blue-500 font-bold">Privacy Policy</span>
                   </Link>
                   .
                 </p>
                 <FormControlLabel
                   control={
-                    <Checkbox
-                      checked={analytics}
-                      onChange={handleChange}
-                      name="analytics"
-                    />
+                    <Checkbox checked={analytics} onChange={handleChange} name="analytics" />
                   }
                   label="I opt into analytics collection for Nebula."
                 />
@@ -196,24 +170,17 @@ export default function Disclaimer({
               <div className="my-4">
                 <h1 className="text-headline5">Performance</h1>
                 <p className="text-body1">
-                  By opting into performance monitoring, the Nebula maintainers
-                  will:
+                  By opting into performance monitoring, the Nebula maintainers will:
                 </p>
                 <ul className="text-body1 list-disc list-inside my-1">
-                  <li>
-                    Be able to better diagnose errors that take place in the app
-                  </li>
+                  <li>Be able to better diagnose errors that take place in the app</li>
                   <li>Understand which app features are being used.</li>
                   <li>Class popularity estimates</li>
                   <li>Know how to guide future development of the project</li>
                 </ul>
                 <FormControlLabel
                   control={
-                    <Checkbox
-                      checked={performance}
-                      onChange={handleChange}
-                      name="performance"
-                    />
+                    <Checkbox checked={performance} onChange={handleChange} name="performance" />
                   }
                   label="I opt into performance monitoring for Nebula."
                 />
@@ -223,12 +190,7 @@ export default function Disclaimer({
         </div>
       )}
       <div className="my-2">
-        <Button
-          color="primary"
-          variant="contained"
-          onClick={handleDone}
-          disabled={!disclaimer}
-        >
+        <Button color="primary" variant="contained" onClick={handleDone} disabled={!disclaimer}>
           Start planning
         </Button>
       </div>

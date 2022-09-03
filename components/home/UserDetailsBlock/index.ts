@@ -1,1 +1,1 @@
-export { default } from "./UserDetailsBlock";
+export { default } from './UserDetailsBlock';

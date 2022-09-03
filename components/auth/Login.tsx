@@ -1,8 +1,8 @@
-import Image from "next/image";
-import Link from "next/link";
-import React from "react";
-import { useAuthContext } from "../../modules/auth/auth-context";
-import logo from "../../public/Nebula_Planner_Logo.png";
+import Image from 'next/image';
+import Link from 'next/link';
+import React from 'react';
+import { useAuthContext } from '../../modules/auth/auth-context';
+import logo from '../../public/Nebula_Planner_Logo.png';
 
 /**
  * A dialog that exposes different sign-in/sign-up methods.
@@ -10,8 +10,8 @@ import logo from "../../public/Nebula_Planner_Logo.png";
 export default function AuthCard(): JSX.Element {
   const { signInWithEmail, signInWithGoogle } = useAuthContext();
 
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
 
   const handleEmailSignIn = () => {
     signInWithEmail(email, password);
@@ -32,17 +32,9 @@ export default function AuthCard(): JSX.Element {
   return (
     <div className="bg-white md:shadow-lg shadow-none rounded p-6 w-96 ">
       <div className="mb-4 flex justify-center items-center">
-        <Image
-          src={logo}
-          alt="Logo"
-          width="120px"
-          height="120px"
-          className="rounded-full"
-        />
+        <Image src={logo} alt="Logo" width="120px" height="120px" className="rounded-full" />
       </div>
-      <h1 className="text-center text-3xl mb-2 font-semibold leading-normal">
-        Sign in
-      </h1>
+      <h1 className="text-center text-3xl mb-2 font-semibold leading-normal">Sign in</h1>
       <p className="text-sm leading-normal">
         Log in to your Nebula Profile to continue to Planner.
       </p>
@@ -85,9 +77,7 @@ export default function AuthCard(): JSX.Element {
           onClick={handleSignInWithGoogle}
           className="appearance-none items-center justify-center block w-full bg-gray-100 text-gray-700 shadow border border-gray-500 rounded-lg py-3 px-3 leading-tight hover:bg-gray-200 hover:text-gray-700 focus:outline-none"
         >
-          <h1 className="text-center text-xl text-blue-700">
-            Sign in with Google
-          </h1>
+          <h1 className="text-center text-xl text-blue-700">Sign in with Google</h1>
         </button>
         <div className="flex place-content-center">
           <p>

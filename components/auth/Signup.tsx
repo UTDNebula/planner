@@ -1,9 +1,9 @@
-import { Box, Typography } from "@mui/material";
-import React from "react";
-import { useAuthContext } from "../../modules/auth/auth-context";
-import Image from "next/image";
-import logo from "../../public/Nebula_Planner_Logo.png";
-import Link from "next/link";
+import { Box, Typography } from '@mui/material';
+import React from 'react';
+import { useAuthContext } from '../../modules/auth/auth-context';
+import Image from 'next/image';
+import logo from '../../public/Nebula_Planner_Logo.png';
+import Link from 'next/link';
 
 /**
  * Generate ARIA element attributes for a11y.
@@ -11,7 +11,7 @@ import Link from "next/link";
 function generateA11yProps(index: number) {
   return {
     id: `auth-dialog-tab-${index}`,
-    "aria-controls": `auth-dialog-controls-${index}`,
+    'aria-controls': `auth-dialog-controls-${index}`,
   };
 }
 
@@ -62,8 +62,8 @@ function TabPanel(props: TabPanelProps) {
 export default function AuthCard(): JSX.Element {
   const { signUpWithEmail } = useAuthContext();
 
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
 
   const handleEmailSignUp = () => {
     signUpWithEmail(email, password);
@@ -80,13 +80,7 @@ export default function AuthCard(): JSX.Element {
   return (
     <div className="bg-white md:shadow-lg shadow-none rounded p-6 w-96">
       <div className="mb-4 flex justify-center items-center">
-        <Image
-          src={logo}
-          alt="Logo"
-          width="120px"
-          height="120px"
-          className="rounded-full"
-        />
+        <Image src={logo} alt="Logo" width="120px" height="120px" className="rounded-full" />
       </div>
       <h1 className="text-center text-3xl mb-2 font-semibold leading-normal">
         Sign Up with Nebula

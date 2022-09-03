@@ -1,16 +1,16 @@
-import React from "react";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../modules/redux/store";
-import { deletePlan, updatePlan } from "../../../modules/redux/userDataSlice";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { useRouter } from "next/router";
+import React from 'react';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../modules/redux/store';
+import { deletePlan, updatePlan } from '../../../modules/redux/userDataSlice';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useRouter } from 'next/router';
 
 export type SettingsDialogProps = {
   planId: string;
@@ -43,8 +43,8 @@ export default function SettingsDialog({
     }
   }, [plan]);
 
-  const [title, setTitle] = React.useState("");
-  const [major, setMajor] = React.useState("");
+  const [title, setTitle] = React.useState('');
+  const [major, setMajor] = React.useState('');
   const router = useRouter();
 
   const handleClose = () => {
@@ -69,7 +69,7 @@ export default function SettingsDialog({
   const handleDeletePlan = () => {
     dispatch(deletePlan(planId));
     handleAlertClose();
-    router.push("/app/plans");
+    router.push('/app/plans');
   };
 
   const [alertOpen, setAlertOpen] = React.useState(false);
@@ -79,12 +79,7 @@ export default function SettingsDialog({
 
   return (
     <div>
-      <Dialog
-        maxWidth="xl"
-        open={isOpen}
-        onClose={handleClose}
-        aria-labelledby="form-dialog-title"
-      >
+      <Dialog maxWidth="xl" open={isOpen} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Plan Settings</DialogTitle>
         <DialogContent className="grid grid-cols-2 gap-x-10">
           <DialogContentText className="col-span-2">
@@ -121,7 +116,7 @@ export default function SettingsDialog({
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
           >
-            <DialogTitle id="alert-dialog-title">{"Delete Plan"}</DialogTitle>
+            <DialogTitle id="alert-dialog-title">{'Delete Plan'}</DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
                 Are you sure you want to delete this plan?

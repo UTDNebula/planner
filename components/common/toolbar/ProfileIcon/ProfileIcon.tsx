@@ -1,18 +1,11 @@
-import React from "react";
-import {
-  Avatar,
-  IconButton,
-  ListItemIcon,
-  ListItemText,
-  Menu,
-  MenuItem,
-} from "@mui/material";
-import AccountIcon from "@mui/icons-material/AccountCircle";
-import AccountBox from "@mui/icons-material/AccountBox";
-import { ExitToApp } from "@mui/icons-material";
-import Link from "next/link";
-import styles from "./ProfileIcon.module.css";
-import { useAuthContext } from "../../../../modules/auth/auth-context";
+import React from 'react';
+import { Avatar, IconButton, ListItemIcon, ListItemText, Menu, MenuItem } from '@mui/material';
+import AccountIcon from '@mui/icons-material/AccountCircle';
+import AccountBox from '@mui/icons-material/AccountBox';
+import { ExitToApp } from '@mui/icons-material';
+import Link from 'next/link';
+import styles from './ProfileIcon.module.css';
+import { useAuthContext } from '../../../../modules/auth/auth-context';
 
 /**
  * Component properties for a {@link ProfileIcon}.
@@ -30,9 +23,7 @@ export default function ProfileIcon(props: ProfileIconProps): JSX.Element {
   const { user, authWithRedirect } = useAuthContext();
 
   const [dialogIsOpen, setDialogIsOpen] = React.useState(false);
-  const [profileAnchor, setProfileAnchor] = React.useState<null | HTMLElement>(
-    null
-  );
+  const [profileAnchor, setProfileAnchor] = React.useState<null | HTMLElement>(null);
 
   const handleClose = () => {
     setProfileAnchor(null);
@@ -41,7 +32,7 @@ export default function ProfileIcon(props: ProfileIconProps): JSX.Element {
 
   const handleSignInClick = () => {
     // TODO: Just use current route
-    authWithRedirect("/app");
+    authWithRedirect('/app');
     setDialogIsOpen(false);
   };
 
@@ -52,11 +43,11 @@ export default function ProfileIcon(props: ProfileIconProps): JSX.Element {
 
   const { name, image } = user;
 
-  const isSignedIn = user.id !== "guest";
+  const isSignedIn = user.id !== 'guest';
 
   const userData = {
-    classification: "Junior",
-    major: "Computer Science", // TODO: Fetch from store
+    classification: 'Junior',
+    major: 'Computer Science', // TODO: Fetch from store
   };
 
   const avatarIcon =
@@ -84,13 +75,13 @@ export default function ProfileIcon(props: ProfileIconProps): JSX.Element {
         className={styles.dialog}
         anchorEl={profileAnchor}
         anchorOrigin={{
-          vertical: "top",
-          horizontal: "right",
+          vertical: 'top',
+          horizontal: 'right',
         }}
         keepMounted
         transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
+          vertical: 'top',
+          horizontal: 'right',
         }}
         open={dialogIsOpen}
         onClose={handleClose}
@@ -102,8 +93,7 @@ export default function ProfileIcon(props: ProfileIconProps): JSX.Element {
           <div className="mx-4">
             <div className="text-headline6 font-bold">{name}</div>
             <div className="text-subtitle1 font-bold">
-              <span className="">{userData.classification}</span>,{" "}
-              <span>{userData.major}</span>
+              <span className="">{userData.classification}</span>, <span>{userData.major}</span>
             </div>
           </div>
         </div>
@@ -127,10 +117,7 @@ export default function ProfileIcon(props: ProfileIconProps): JSX.Element {
             <ListItemIcon>
               <ExitToApp />
             </ListItemIcon>
-            <ListItemText
-              primary="Sign in"
-              secondary="Log in for more functionality"
-            />
+            <ListItemText primary="Sign in" secondary="Log in for more functionality" />
           </MenuItem>
         )}
         <div className="p-2 text-center">

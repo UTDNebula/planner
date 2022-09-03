@@ -1,13 +1,13 @@
-import { useSelector } from "react-redux";
-import { ServiceUser } from "../auth/auth-context";
-import { StudentPlan } from "../common/data";
-import { RootState } from "./store";
+import { useSelector } from 'react-redux';
+import { ServiceUser } from '../auth/auth-context';
+import { StudentPlan } from '../common/data';
+import { RootState } from './store';
 
 export default function useUserPlanData(user: ServiceUser): UserPlanData {
   const { plans } = useSelector((state: RootState) => state.userData);
   const planIds = Object.keys(plans);
 
-  console.log("Using user data: ", user);
+  console.log('Using user data: ', user);
 
   return {
     plans,

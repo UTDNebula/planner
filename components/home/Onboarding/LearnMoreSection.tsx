@@ -1,19 +1,11 @@
-import Head from "next/head";
-import React from "react";
-import Link from "next/link";
-import { useDispatch } from "react-redux";
-import {
-  Button,
-  Card,
-  CardContent,
-  CardMedia,
-  Grid,
-  IconButton,
-  Typography,
-} from "@mui/material";
-import "animate.css";
-import { useInView } from "react-intersection-observer";
-import { Fade } from "react-awesome-reveal";
+import Head from 'next/head';
+import React from 'react';
+import Link from 'next/link';
+import { useDispatch } from 'react-redux';
+import { Button, Card, CardContent, CardMedia, Grid, IconButton, Typography } from '@mui/material';
+import 'animate.css';
+import { useInView } from 'react-intersection-observer';
+import { Fade } from 'react-awesome-reveal';
 
 export default function NebFeatureDisplay(): JSX.Element {
   const { ref: learnMoreRef, inView: learnMoreVisible } = useInView({
@@ -23,7 +15,7 @@ export default function NebFeatureDisplay(): JSX.Element {
   return (
     <div id="Learn More">
       <Grid
-        sx={{ mt: -10, transform: "translateY(-150px )" }}
+        sx={{ mt: -10, transform: 'translateY(-150px )' }}
         container
         direction="column"
         alignItems="center"
@@ -64,11 +56,11 @@ export default function NebFeatureDisplay(): JSX.Element {
                     <Button
                       //className="animate__animated animate_fadeIn animate_slower"
                       variant="contained"
-                      sx={{ textTransform: "none", width: "18vw" }}
+                      sx={{ textTransform: 'none', width: '18vw' }}
                       style={{
                         background:
-                          "linear-gradient(to right, rgba(150, 236, 197, 1), rgba(150, 236, 197, 0.3))",
-                        borderRadius: "10px",
+                          'linear-gradient(to right, rgba(150, 236, 197, 1), rgba(150, 236, 197, 0.3))',
+                        borderRadius: '10px',
                       }}
                       href="https://github.com/UTDNebula/athena"
                     >
@@ -88,11 +80,11 @@ export default function NebFeatureDisplay(): JSX.Element {
                   <Grid item>
                     <Button
                       variant="contained"
-                      sx={{ textTransform: "none", width: "18vw" }}
+                      sx={{ textTransform: 'none', width: '18vw' }}
                       style={{
                         background:
-                          "linear-gradient(to right, rgba(71, 87, 155, 0.7), rgba(69, 85, 153, 0.3))",
-                        borderRadius: "10px",
+                          'linear-gradient(to right, rgba(71, 87, 155, 0.7), rgba(69, 85, 153, 0.3))',
+                        borderRadius: '10px',
                       }}
                       href="https://github.com/UTDNebula/nebula-api"
                     >
@@ -114,11 +106,10 @@ export default function NebFeatureDisplay(): JSX.Element {
                   <Grid item sx={{ mb: 3 }}>
                     <Button
                       variant="contained"
-                      sx={{ textTransform: "none", width: "18vw" }}
+                      sx={{ textTransform: 'none', width: '18vw' }}
                       style={{
-                        background:
-                          "linear-gradient(to right, #FBBB78, rgba(252, 210, 166, 0.3))",
-                        borderRadius: "10px",
+                        background: 'linear-gradient(to right, #FBBB78, rgba(252, 210, 166, 0.3))',
+                        borderRadius: '10px',
                       }}
                       href="https://github.com/UTDNebula/survival-guide"
                     >
@@ -138,11 +129,11 @@ export default function NebFeatureDisplay(): JSX.Element {
                   <Grid item>
                     <Button
                       variant="contained"
-                      sx={{ textTransform: "none", width: "18vw" }}
+                      sx={{ textTransform: 'none', width: '18vw' }}
                       style={{
                         background:
-                          "linear-gradient(to right, rgba(209, 218, 254, 1), rgba(209, 218, 254, 0.3))",
-                        borderRadius: "10px",
+                          'linear-gradient(to right, rgba(209, 218, 254, 1), rgba(209, 218, 254, 0.3))',
+                        borderRadius: '10px',
                       }}
                       href="https://about.utdnebula.com/"
                     >

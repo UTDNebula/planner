@@ -1,29 +1,22 @@
-import {
-  AppBar,
-  IconButton,
-  Toolbar,
-  Typography,
-  Theme,
-  Button,
-} from "@mui/material";
-import { makeStyles } from "tss-react/mui";
-import createStyles from "@mui/styles/createStyles";
-import React from "react";
-import MenuIcon from "@mui/icons-material/ArrowBack";
-import { useAuthContext } from "../../../modules/auth/auth-context";
-import { useRouter } from "next/router";
-import styles from "./PlanningToolbar.module.css";
-import SettingsIcon from "@mui/icons-material/Settings";
-import SettingsDialog from "./PlannerSettings";
+import { AppBar, IconButton, Toolbar, Typography, Theme, Button } from '@mui/material';
+import { makeStyles } from 'tss-react/mui';
+import createStyles from '@mui/styles/createStyles';
+import React from 'react';
+import MenuIcon from '@mui/icons-material/ArrowBack';
+import { useAuthContext } from '../../../modules/auth/auth-context';
+import { useRouter } from 'next/router';
+import styles from './PlanningToolbar.module.css';
+import SettingsIcon from '@mui/icons-material/Settings';
+import SettingsDialog from './PlannerSettings';
 
 function a11yProps(index: number) {
   return {
     id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
   };
 }
 
-const TABS = ["Plan"] as const;
+const TABS = ['Plan'] as const;
 
 export type SectionType = typeof TABS[number];
 
@@ -32,9 +25,9 @@ const useStyles = () => {
     return {
       root: {
         zIndex: 10,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
       },
       menuButton: {
         marginRight: theme.spacing(2),
@@ -99,7 +92,7 @@ export default function PlanningToolbar({
   const router = useRouter();
 
   const handleSignIn = () => {
-    router.push("/auth/Login");
+    router.push('/auth/Login');
   };
 
   const handleSignOut = () => {
@@ -121,7 +114,7 @@ export default function PlanningToolbar({
           className={classes.menuButton}
           color="inherit"
           aria-label="menu"
-          onClick={() => router.push("/app")}
+          onClick={() => router.push('/app')}
           size="large"
         >
           <MenuIcon />
@@ -179,7 +172,7 @@ export default function PlanningToolbar({
 
 export function usePlanningToolbar(initialSection = 0) {
   const [section, setSection] = React.useState(initialSection);
-  const [title, setTitle] = React.useState("");
+  const [title, setTitle] = React.useState('');
   const [shouldShowTabs, setShouldShowTabs] = React.useState(true);
 
   const hideTabs = () => {

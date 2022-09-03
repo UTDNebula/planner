@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import Autocomplete from "@mui/material/Autocomplete";
-import TextField from "@mui/material/TextField";
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import DummyData from "../../data/dummy_onboarding.json";
+import React, { useState } from 'react';
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import DummyData from '../../data/dummy_onboarding.json';
 
 export interface DegreePickerProps {
   id: number;
@@ -49,14 +49,11 @@ export default function DegreePicker({
   const [degreeState, setDegreeState] = React.useState<DegreeState>(props);
 
   // Manages input state in Autocomplete
-  const [inputValue, setInputValue] = React.useState("");
+  const [inputValue, setInputValue] = React.useState('');
 
   const { degree, degreeType } = degreeState;
 
-  const handleAutocompleteChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    value: string
-  ) => {
+  const handleAutocompleteChange = (event: React.ChangeEvent<HTMLInputElement>, value: string) => {
     setDegreeState({ ...degreeState, degree: value });
   };
 
@@ -77,9 +74,9 @@ export default function DegreePicker({
             <div className="grid grid-cols-1 divide-y divide-blue-600 mb-2">
               <div className="flex justify-between">
                 <Autocomplete
-                  size={"small"}
+                  size={'small'}
                   value={degree}
-                  defaultValue={""}
+                  defaultValue={''}
                   onChange={handleAutocompleteChange}
                   inputValue={inputValue}
                   onInputChange={(event, newInputValue) => {
@@ -89,11 +86,7 @@ export default function DegreePicker({
                   options={degrees}
                   style={{ width: 300 }}
                   renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Degree Name"
-                      variant="outlined"
-                    />
+                    <TextField {...params} label="Degree Name" variant="outlined" />
                   )}
                 />
 
@@ -120,9 +113,7 @@ export default function DegreePicker({
               <div className="text-xs text-grey-800"> </div>
             </div>
             <FormControl className="w-32 mb-4">
-              <InputLabel id="demo-simple-select-autowidth-label">
-                Degree Type
-              </InputLabel>
+              <InputLabel id="demo-simple-select-autowidth-label">Degree Type</InputLabel>
               <Select
                 labelId="demo-simple-select-autowidth-label"
                 name="degreeType"

@@ -1,13 +1,13 @@
-import * as React from "react";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-import { Button, CardActionArea, CardActions, Divider } from "@mui/material";
-import { Box } from "@material-ui/core";
-import "animate.css";
-import { useInView } from "react-intersection-observer";
-import { Fade } from "react-awesome-reveal";
+import * as React from 'react';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import { Button, CardActionArea, CardActions, Divider } from '@mui/material';
+import { Box } from '@material-ui/core';
+import 'animate.css';
+import { useInView } from 'react-intersection-observer';
+import { Fade } from 'react-awesome-reveal';
 
 // Purpose of this component is to display all semesters and course information from each respective semester.
 export default function DegreePlanWrapper() {
@@ -18,7 +18,7 @@ export default function DegreePlanWrapper() {
   return (
     <>
       <Fade direction="left">
-        <Card sx={{ background: "#4659A7", borderRadius: 2, width: "50vw" }}>
+        <Card sx={{ background: '#4659A7', borderRadius: 2, width: '50vw' }}>
           <div ref={featRef}>
             {featVisible ? (
               <CardContent sx={{ width: { lg: 0.725 }, pl: 2 }}>
@@ -28,23 +28,18 @@ export default function DegreePlanWrapper() {
                 >
                   {[1, 2, 3].map((elem, index) => (
                     <CardContent key={index}>
-                      <Typography
-                        variant="h4"
-                        color="white"
-                        fontFamily="Jost"
-                        sx={{ mt: -2 }}
-                      >
+                      <Typography variant="h4" color="white" fontFamily="Jost" sx={{ mt: -2 }}>
                         Fall 2021
                       </Typography>
                       <Divider
                         sx={{ borderBottomWidth: 3, borderRadius: 2 }}
-                        style={{ background: "white" }}
+                        style={{ background: 'white' }}
                       />
                       <Typography
                         variant="h6"
                         color="white"
                         fontFamily="Jost"
-                        style={{ float: "right" }}
+                        style={{ float: 'right' }}
                       >
                         18 hours
                       </Typography>
@@ -54,12 +49,12 @@ export default function DegreePlanWrapper() {
                         sx={{ mt: -2, mr: 2.6, mb: 1, py: 0, px: 3 }}
                         variant="contained"
                         style={{
-                          borderRadius: "10px",
-                          backgroundColor: "white",
-                          color: "black",
-                          fontFamily: "Jost",
-                          fontWeight: "bold",
-                          fontSize: "15px",
+                          borderRadius: '10px',
+                          backgroundColor: 'white',
+                          color: 'black',
+                          fontFamily: 'Jost',
+                          fontWeight: 'bold',
+                          fontSize: '15px',
                         }}
                       >
                         CS 1336
@@ -68,12 +63,12 @@ export default function DegreePlanWrapper() {
                         sx={{ mt: -2, mr: 2.6, mb: 1, py: 0, px: 3 }}
                         variant="contained"
                         style={{
-                          borderRadius: "10px",
-                          backgroundColor: "white",
-                          color: "black",
-                          fontFamily: "Jost",
-                          fontWeight: "bold",
-                          fontSize: "15px",
+                          borderRadius: '10px',
+                          backgroundColor: 'white',
+                          color: 'black',
+                          fontFamily: 'Jost',
+                          fontWeight: 'bold',
+                          fontSize: '15px',
                         }}
                       >
                         CS 1336
@@ -82,12 +77,12 @@ export default function DegreePlanWrapper() {
                         sx={{ mt: -2, mr: 0, mb: 1, py: 0, px: 3 }}
                         variant="contained"
                         style={{
-                          borderRadius: "10px",
-                          backgroundColor: "white",
-                          color: "black",
-                          fontFamily: "Jost",
-                          fontWeight: "bold",
-                          fontSize: "15px",
+                          borderRadius: '10px',
+                          backgroundColor: 'white',
+                          color: 'black',
+                          fontFamily: 'Jost',
+                          fontWeight: 'bold',
+                          fontSize: '15px',
                         }}
                       >
                         CS 1336
@@ -96,12 +91,12 @@ export default function DegreePlanWrapper() {
                         sx={{ mr: 2.6, mb: 1, py: 0, px: 3 }}
                         variant="contained"
                         style={{
-                          borderRadius: "10px",
-                          backgroundColor: "white",
-                          color: "black",
-                          fontFamily: "Jost",
-                          fontWeight: "bold",
-                          fontSize: "15px",
+                          borderRadius: '10px',
+                          backgroundColor: 'white',
+                          color: 'black',
+                          fontFamily: 'Jost',
+                          fontWeight: 'bold',
+                          fontSize: '15px',
                         }}
                       >
                         CS 1336
@@ -110,12 +105,12 @@ export default function DegreePlanWrapper() {
                         sx={{ mr: 2.6, mb: 1, py: 0, px: 3 }}
                         variant="contained"
                         style={{
-                          borderRadius: "10px",
-                          backgroundColor: "white",
-                          color: "black",
-                          fontFamily: "Jost",
-                          fontWeight: "bold",
-                          fontSize: "15px",
+                          borderRadius: '10px',
+                          backgroundColor: 'white',
+                          color: 'black',
+                          fontFamily: 'Jost',
+                          fontWeight: 'bold',
+                          fontSize: '15px',
                         }}
                       >
                         CS 1336
@@ -124,12 +119,12 @@ export default function DegreePlanWrapper() {
                         sx={{ mr: 0, mb: 1, py: 0, px: 3 }}
                         variant="contained"
                         style={{
-                          borderRadius: "10px",
-                          backgroundColor: "white",
-                          color: "black",
-                          fontFamily: "Jost",
-                          fontWeight: "bold",
-                          fontSize: "15px",
+                          borderRadius: '10px',
+                          backgroundColor: 'white',
+                          color: 'black',
+                          fontFamily: 'Jost',
+                          fontWeight: 'bold',
+                          fontSize: '15px',
                         }}
                       >
                         CS 1336
@@ -139,7 +134,7 @@ export default function DegreePlanWrapper() {
                 </div>
               </CardContent>
             ) : (
-              ""
+              ''
             )}
           </div>
         </Card>

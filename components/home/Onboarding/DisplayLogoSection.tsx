@@ -1,18 +1,10 @@
-import Head from "next/head";
-import React from "react";
-import Link from "next/link";
-import { useDispatch } from "react-redux";
-import {
-  Button,
-  Card,
-  CardContent,
-  CardMedia,
-  Grid,
-  IconButton,
-  Typography,
-} from "@mui/material";
-import { Box } from "@mui/system";
-import "animate.css";
+import Head from 'next/head';
+import React from 'react';
+import Link from 'next/link';
+import { useDispatch } from 'react-redux';
+import { Button, Card, CardContent, CardMedia, Grid, IconButton, Typography } from '@mui/material';
+import { Box } from '@mui/system';
+import 'animate.css';
 
 export default function NebPlannerDisplay(): JSX.Element {
   return (
@@ -21,8 +13,8 @@ export default function NebPlannerDisplay(): JSX.Element {
       direction="column"
       alignItems="center"
       justifyContent="center"
-      style={{ height: "750px" }}
-      sx={{ backgroundColor: "white" }}
+      style={{ height: '750px' }}
+      sx={{ backgroundColor: 'white' }}
     >
       <div className="flex flex-col-2 gap-x-5">
         <div>
@@ -30,7 +22,7 @@ export default function NebPlannerDisplay(): JSX.Element {
             <img
               src="/Nebula_Planner_Logo.png"
               alt="Nebula Planner Logo"
-              style={{ width: "200px", height: "200px" }}
+              style={{ width: '200px', height: '200px' }}
             />
           </Grid>
         </div>
@@ -76,10 +68,10 @@ export default function NebPlannerDisplay(): JSX.Element {
             <Button
               variant="contained"
               style={{
-                borderRadius: "10px",
-                backgroundColor: "#4659A7",
-                fontFamily: "Jost",
-                fontSize: "15px",
+                borderRadius: '10px',
+                backgroundColor: '#4659A7',
+                fontFamily: 'Jost',
+                fontSize: '15px',
               }}
               href="/app/auth/signup"
             >

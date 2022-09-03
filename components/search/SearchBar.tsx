@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { IconButton, InputBase, Paper } from "@mui/material";
-import { Search as SearchIcon } from "@mui/icons-material";
+import React, { useState } from 'react';
+import { IconButton, InputBase, Paper } from '@mui/material';
+import { Search as SearchIcon } from '@mui/icons-material';
 
 /**
  * A search bar that allows for filtering of queries.
@@ -10,10 +10,8 @@ export type SearchBarProps = {
   updateQuery: (query: string) => void;
 };
 
-export default function SearchBar({
-  updateQuery,
-}: SearchBarProps): JSX.Element {
-  const [query, setQuery] = useState<string>("");
+export default function SearchBar({ updateQuery }: SearchBarProps): JSX.Element {
+  const [query, setQuery] = useState<string>('');
 
   const handleQueryUpdate = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -26,7 +24,7 @@ export default function SearchBar({
       <InputBase
         className="flex-1 px-4"
         placeholder="Search majors"
-        inputProps={{ "aria-label": "Search courses" }}
+        inputProps={{ 'aria-label': 'Search courses' }}
         value={query}
         onChange={handleQueryUpdate}
       />

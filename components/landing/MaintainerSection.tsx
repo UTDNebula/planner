@@ -8,16 +8,16 @@ type Maintainer = {
 // TODO: Update current maintainers
 const currentMaintainers = [
   {
-    name: "Willie Chalmers III",
-    role: "Project Lead",
-    link: "https://www.linkedin.com/in/willie-chalmers-iii/",
-    image: "/img/contributor-willie-chalmers-iii.jpg",
+    name: 'Willie Chalmers III',
+    role: 'Project Lead',
+    link: 'https://www.linkedin.com/in/willie-chalmers-iii/',
+    image: '/img/contributor-willie-chalmers-iii.jpg',
   },
   {
-    name: "Sunny Guan",
-    role: "Back-end Developer",
-    link: "https://www.linkedin.com/in/sunny-guan/",
-    image: "/img/contributor-sunny-guan.jpg",
+    name: 'Sunny Guan',
+    role: 'Back-end Developer',
+    link: 'https://www.linkedin.com/in/sunny-guan/',
+    image: '/img/contributor-sunny-guan.jpg',
   },
 ];
 
@@ -57,9 +57,7 @@ export default function MaintainerSection() {
           </div>
         </div>
         <div>
-          <div className="text-headline6 font-bold mt-8 mb-4">
-            Current maintainers
-          </div>
+          <div className="text-headline6 font-bold mt-8 mb-4">Current maintainers</div>
           <div className="md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-4 lg:gap-8 xl:gap-16">
             {generateProfiles(currentMaintainers)}
           </div>
@@ -72,23 +70,17 @@ export default function MaintainerSection() {
       <section className="px-32 py-16 flex-1 flex flex-col justify-center bg-gray-200">
         <div className="my-auto">
           <div className="text-body1">
-            Nebula is maintained by ACM Development, a division of ACM UTD, a
-            registered student organization. Nebula is not an official platform
-            of UT Dallas and does not represent the views of the university or
-            its officers.
+            Nebula is maintained by ACM Development, a division of ACM UTD, a registered student
+            organization. Nebula is not an official platform of UT Dallas and does not represent the
+            views of the university or its officers.
           </div>
           <div className="text-body1 font-bold my-8">
-            The Nebula team highly recommends that students consult their
-            academic advisors, financial aid counselors, when planning their
-            studies.
+            The Nebula team highly recommends that students consult their academic advisors,
+            financial aid counselors, when planning their studies.
           </div>
           <div className="text-subtitle1 my-8">
-            To contribute to this project and others, consider applying as a
-            developer for{" "}
-            <a
-              className="font-bold text-blue-400 underline"
-              href="https://acmutd.co/apply"
-            >
+            To contribute to this project and others, consider applying as a developer for{' '}
+            <a className="font-bold text-blue-400 underline" href="https://acmutd.co/apply">
               ACM Development
             </a>
             !

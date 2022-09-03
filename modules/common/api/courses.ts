@@ -1,4 +1,4 @@
-import { Course } from "../data";
+import { Course } from '../data';
 
 /**
  * Load all supported courses from file.
@@ -26,19 +26,12 @@ export async function loadDummyCourses(year = 2020): Promise<Course[]> {
 }
 
 export async function loadCourses(): Promise<Course[]> {
-  const courses = await fetch("https://api.utdnebula.com/course/search")
+  const courses = await fetch('https://api.utdnebula.com/course/search')
     .then((res) => res.json())
     .then((data) => {
       return data.map((course) => {
-        const {
-          _id,
-          title,
-          credit_hours,
-          description,
-          subject_prefix,
-          course_number,
-        } = course;
-        const catalogCode = subject_prefix + " " + course_number;
+        const { _id, title, credit_hours, description, subject_prefix, course_number } = course;
+        const catalogCode = subject_prefix + ' ' + course_number;
         return {
           id: _id,
           title,
@@ -48,7 +41,7 @@ export async function loadCourses(): Promise<Course[]> {
         };
       });
     })
-    .catch((_error) => alert("An error has occured"));
+    .catch((_error) => alert('An error has occured'));
 
   return courses;
 }

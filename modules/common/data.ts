@@ -1,6 +1,6 @@
-import { v4 as uuidv4 } from "uuid";
-import { OnboardingFormData } from "../../pages/app/onboarding";
-import { HonorsIndicator } from "../../modules/common/types";
+import { v4 as uuidv4 } from 'uuid';
+import { OnboardingFormData } from '../../pages/app/onboarding';
+import { HonorsIndicator } from '../../modules/common/types';
 
 /**
  * A topic of study.
@@ -36,51 +36,51 @@ export interface StudentPlan {
  * A season when courses can be taken.
  */
 export enum SemesterCode {
-  "f" = "f",
-  "s" = "s",
-  "u" = "u",
+  'f' = 'f',
+  's' = 's',
+  'u' = 'u',
 }
 
 /**
  * A grade received for a course, used for record-keeping.
  */
 export type Grade =
-  | "A+"
-  | "A"
-  | "A-"
-  | "B+"
-  | "B"
-  | "B-"
-  | "C+"
-  | "C"
-  | "C-"
-  | "D+"
-  | "D"
-  | "D-"
-  | "F"
-  | "CR"
-  | "NC"
-  | "P"
-  | "NR"
-  | "I";
+  | 'A+'
+  | 'A'
+  | 'A-'
+  | 'B+'
+  | 'B'
+  | 'B-'
+  | 'C+'
+  | 'C'
+  | 'C-'
+  | 'D+'
+  | 'D'
+  | 'D-'
+  | 'F'
+  | 'CR'
+  | 'NC'
+  | 'P'
+  | 'NR'
+  | 'I';
 
 /**
  * A value of -1 indicates the course for which the letter grade was recieved
  * should not have its attmpted hours used in GPA calculations.
  */
 export const GPA_MAPPINGS: { [key in Grade]: number } = {
-  "A+": 4.0,
+  'A+': 4.0,
   A: 4.0,
-  "A-": 3.666,
-  "B+": 3.333,
+  'A-': 3.666,
+  'B+': 3.333,
   B: 3.0,
-  "B-": 2.666,
-  "C+": 2.333,
+  'B-': 2.666,
+  'C+': 2.333,
   C: 2.0,
-  "C-": 1.333,
-  "D+": 1.0,
+  'C-': 1.333,
+  'D+': 1.0,
   D: 0.666,
-  "D-": 0.333,
+  'D-': 0.333,
   F: 0,
   CR: -1,
   NC: -1,
@@ -93,9 +93,9 @@ export const GPA_MAPPINGS: { [key in Grade]: number } = {
  * A mapping of {@link SemesterCode}s to human-readable titles.
  */
 export const SEMESTER_CODE_MAPPINGS = {
-  [SemesterCode.f]: "Fall",
-  [SemesterCode.s]: "Spring",
-  [SemesterCode.u]: "Summer",
+  [SemesterCode.f]: 'Fall',
+  [SemesterCode.s]: 'Spring',
+  [SemesterCode.u]: 'Summer',
 };
 
 /**
@@ -109,15 +109,13 @@ export function generateCourses(amount = 5): Course[] {
     const difficulty = Math.floor(Math.random() * (5 - 1) + 1);
     const finalPart = Math.floor(Math.random() * (10 - 1) + 1);
     const courseNumber =
-      1_000 * Math.floor(Math.random() * (5 - 1) + 1) +
-      100 * difficulty +
-      finalPart;
+      1_000 * Math.floor(Math.random() * (5 - 1) + 1) + 100 * difficulty + finalPart;
     courses.push({
       id: uuidv4(),
-      title: "A course with a code.",
+      title: 'A course with a code.',
       catalogCode: `CS ${courseNumber}`,
       description:
-        "Just another course. What can we say? It has a title and a description long enough to be believable.",
+        'Just another course. What can we say? It has a title and a description long enough to be believable.',
       creditHours: Number(courseNumber.toString().slice(1, 2)),
     });
   }
@@ -136,23 +134,18 @@ export function generateCourses(amount = 5): Course[] {
  */
 export function createSamplePlan(
   semesterCount = 4,
-  planId = "test-plan",
+  planId = 'test-plan',
   startYear = 2020,
   startSemester = SemesterCode.f,
-  title = "My degree plan",
-  major = "Computer Science",
-  useRandom = true
+  title = 'My degree plan',
+  major = 'Computer Science',
+  useRandom = true,
 ): StudentPlan {
   const plan = {
     id: planId,
     title: title,
     major: major,
-    semesters: generateSemesters(
-      semesterCount,
-      startYear,
-      startSemester,
-      useRandom
-    ),
+    semesters: generateSemesters(semesterCount, startYear, startSemester, useRandom),
   };
   return plan;
 }
@@ -165,9 +158,9 @@ export function createSampleOnboarding() {
       performance: false,
       personalization: false,
     },
-    preferredName: "",
-    classification: "",
-    future: "",
+    preferredName: '',
+    classification: '',
+    future: '',
     plan: { majors: [], minors: [] },
     studentAttributes: {
       onCampus: false,
@@ -175,9 +168,9 @@ export function createSampleOnboarding() {
       receivingAid: false,
     },
     prestige: {
-      honors: ["none" as HonorsIndicator],
-      scholarship: "",
-      fastTrack: { major: "", status: false, year: "" },
+      honors: ['none' as HonorsIndicator],
+      scholarship: '',
+      fastTrack: { major: '', status: false, year: '' },
     },
     credits: [],
   };
@@ -191,7 +184,7 @@ export function generateSemesters(
   useRandom = false,
   courses: Course[] = [],
   coursesPerSemester = 5,
-  onlyLong = true
+  onlyLong = true,
 ): Semester[] {
   const result = [];
   let semester = startSemester;

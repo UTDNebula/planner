@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export interface NavigationProps {
   navigationProps: NavigationStateProps;
@@ -22,7 +22,7 @@ export default function Navigation({
     // Check if current valid
     if (index > currentPage) {
       if (!validate[currentPage]) {
-        alert("Warning: 1 or more fields missing");
+        alert('Warning: 1 or more fields missing');
         return false;
       }
       // Check if all previous pages valid
@@ -40,7 +40,7 @@ export default function Navigation({
     <div className="h-28 mb-8 flex justify-center items-center text-white ">
       <button
         className={`flex flex-col items-center border-4 border-navigation-dark ${
-          navigationProps.personal ? "bg-navigation-dark" : "bg-navigation"
+          navigationProps.personal ? 'bg-navigation-dark' : 'bg-navigation'
         } rounded-full w-24 h-24`}
         onClick={() => canNavigate(3)}
       >
@@ -50,19 +50,12 @@ export default function Navigation({
       </button>
 
       <svg width="150">
-        <line
-          x1="0"
-          y1="75"
-          x2="150"
-          y2="75"
-          stroke="#C8D1F3"
-          strokeWidth="6"
-        />
+        <line x1="0" y1="75" x2="150" y2="75" stroke="#C8D1F3" strokeWidth="6" />
       </svg>
 
       <button
         className={`flex flex-col items-center border-4 border-navigation-dark ${
-          navigationProps.honors ? "bg-navigation-dark" : "bg-navigation"
+          navigationProps.honors ? 'bg-navigation-dark' : 'bg-navigation'
         } rounded-full w-24 h-24`}
         onClick={() => canNavigate(4)}
       >
@@ -72,18 +65,11 @@ export default function Navigation({
       </button>
 
       <svg width="150">
-        <line
-          x1="0"
-          y1="75"
-          x2="150"
-          y2="75"
-          stroke="#C8D1F3"
-          strokeWidth="6"
-        />
+        <line x1="0" y1="75" x2="150" y2="75" stroke="#C8D1F3" strokeWidth="6" />
       </svg>
       <button
         className={`flex flex-col items-center border-4 border-navigation-dark ${
-          navigationProps.credits ? "bg-navigation-dark" : "bg-navigation"
+          navigationProps.credits ? 'bg-navigation-dark' : 'bg-navigation'
         } rounded-full w-24 h-24`}
         onClick={() => canNavigate(5)}
       >

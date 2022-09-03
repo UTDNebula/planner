@@ -1,11 +1,11 @@
-import React from "react";
-import { Close, KeyboardArrowUp } from "@mui/icons-material";
-import { Button, IconButton } from "@mui/material";
-import Link from "next/link";
-import useUserPlanData from "../../modules/redux/userPlanData";
-import CourseCard from "../common/CourseCard";
-import { useAuthContext } from "../../modules/auth/auth-context";
-import { Course } from "../../modules/common/data";
+import React from 'react';
+import { Close, KeyboardArrowUp } from '@mui/icons-material';
+import { Button, IconButton } from '@mui/material';
+import Link from 'next/link';
+import useUserPlanData from '../../modules/redux/userPlanData';
+import CourseCard from '../common/CourseCard';
+import { useAuthContext } from '../../modules/auth/auth-context';
+import { Course } from '../../modules/common/data';
 /**
  * Component props for a UserPlanSheet.
  */
@@ -45,10 +45,7 @@ function CourseList(courses: Course[]): JSX.Element[] {
 /**
  * A sheet that displays the current semester and upcoming semesters.
  */
-export default function UserPlanSheet({
-  isOpen,
-  onExpandClick,
-}: UserPlanSheetProps): JSX.Element {
+export default function UserPlanSheet({ isOpen, onExpandClick }: UserPlanSheetProps): JSX.Element {
   // TODO: Find out if this is the right place to put the reference to auth
   const { user } = useAuthContext();
   const { plans } = useUserPlanData(user);
@@ -77,14 +74,9 @@ export default function UserPlanSheet({
       <>
         <div className="p-2 flex-0">
           <div className="text-headline6 mx-4">This semester</div>
-          <div
-            className="max-w-sm w-full rounded-md"
-            key={currentSemester.code}
-          >
+          <div className="max-w-sm w-full rounded-md" key={currentSemester.code}>
             <header className="px-4 py-2 mx-2 mt-2 border-gray-200 border rounded-md">
-              <span className="text-subtitle1 font-bold">
-                {currentSemester.title}
-              </span>
+              <span className="text-subtitle1 font-bold">{currentSemester.title}</span>
             </header>
             <div className="px-2">{CourseList(currentSemester.courses)}</div>
           </div>
@@ -93,25 +85,20 @@ export default function UserPlanSheet({
           <div className="text-headline6 mx-4">What&apos;s next</div>
           <div
             style={{
-              overflowX: "auto",
-              gridAutoFlow: "column",
-              display: "grid",
-              gridGap: "4px",
-              gridAutoColumns: "calc(50% - 24px)",
-              padding: "2px",
+              overflowX: 'auto',
+              gridAutoFlow: 'column',
+              display: 'grid',
+              gridGap: '4px',
+              gridAutoColumns: 'calc(50% - 24px)',
+              padding: '2px',
             }}
           >
             {laterSemesters.map((semester) => {
               return (
-                <div
-                  key={semester.code}
-                  className="max-h-full inline-block align-top"
-                >
+                <div key={semester.code} className="max-h-full inline-block align-top">
                   <div className="max-w-sm w-full rounded-md">
                     <header className="px-4 py-2 mx-2 mt-2 border-gray-200 border rounded-md">
-                      <span className="text-subtitle1 font-bold">
-                        {semester.title}
-                      </span>
+                      <span className="text-subtitle1 font-bold">{semester.title}</span>
                     </header>
                     <div className="px-2">{CourseList(semester.courses)}</div>
                   </div>
@@ -141,14 +128,14 @@ export default function UserPlanSheet({
 
   const icon = isOpen ? <Close /> : <KeyboardArrowUp />;
 
-  const planLink = plan ? `/app/plans/${plan.id}` : "";
+  const planLink = plan ? `/app/plans/${plan.id}` : '';
 
   return (
     <div className="bg-white w-full">
       <header className="flex p-2">
         <div className="inline-block">
           <IconButton
-            aria-label={isOpen ? "Close plan" : "Open plan"}
+            aria-label={isOpen ? 'Close plan' : 'Open plan'}
             color="primary"
             // component={Link}
             // to="/app/plans/new"

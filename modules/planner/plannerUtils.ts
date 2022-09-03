@@ -1,5 +1,5 @@
-import { RecentSemester } from "../../components/planner/PlannerContainer";
-import { Semester, SemesterCode } from "../common/data";
+import { RecentSemester } from '../../components/planner/PlannerContainer';
+import { Semester, SemesterCode } from '../common/data';
 
 /**
  * This function generates the metadata needed
@@ -10,12 +10,8 @@ import { Semester, SemesterCode } from "../common/data";
 export function getRecentSemesterMetadata(semesters: Semester[]) {
   const lastSemester: Semester = semesters[semesters.length - 1];
   const recentSemester: RecentSemester = {
-    year: parseInt(
-      lastSemester.code.substring(0, lastSemester.code.length - 1)
-    ),
-    semester: lastSemester.code.substring(
-      lastSemester.code.length - 1
-    ) as SemesterCode,
+    year: parseInt(lastSemester.code.substring(0, lastSemester.code.length - 1)),
+    semester: lastSemester.code.substring(lastSemester.code.length - 1) as SemesterCode,
   };
   return recentSemester;
 }
@@ -25,10 +21,7 @@ export function getRecentSemesterMetadata(semesters: Semester[]) {
  *
  * @param onlyLong Whether or not to only output long (fall/spring) semesters.
  */
-export function getUpdatedSemesterData(
-  recentSemesterData: RecentSemester,
-  onlyLong = true
-) {
+export function getUpdatedSemesterData(recentSemesterData: RecentSemester, onlyLong = true) {
   const { year, semester } = recentSemesterData;
   let updatedYear;
   let updatedSemester = semester;
@@ -57,22 +50,14 @@ export function getUpdatedSemesterData(
  * @param startIndex The starting index of the item to move
  * @param endIndex The destination index of the item to move
  */
-export function reorderSemester(
-  courses: string[],
-  startIndex: number,
-  endIndex: number
-): string[] {
+export function reorderSemester(courses: string[], startIndex: number, endIndex: number): string[] {
   const result = Array.from(courses);
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
   return result;
 }
 
-export function reorderList<T>(
-  list: T[],
-  startIndex: number,
-  endIndex: number
-) {
+export function reorderList<T>(list: T[], startIndex: number, endIndex: number) {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);

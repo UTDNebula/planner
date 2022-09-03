@@ -1,7 +1,7 @@
-import React from "react";
-import Footer from "../components/common/Footer";
-import MarketingHeader from "../components/common/MarketingHeader";
-import ServiceName from "../components/common/ServiceName";
+import React from 'react';
+import Footer from '../components/common/Footer';
+import MarketingHeader from '../components/common/MarketingHeader';
+import ServiceName from '../components/common/ServiceName';
 
 /**
  * A page that details how to get support for using the app.
@@ -20,15 +20,10 @@ export default function SupportPage(): JSX.Element {
             </span>
           </header>
           <main className="pt-2 px-4 pb-4 md:pt-4 md:px-8 md:pb-8">
-            <div className="py-4 text-headline6 text-center">
-              Coming soon(tm)!
-            </div>
+            <div className="py-4 text-headline6 text-center">Coming soon(tm)!</div>
             <p className="py-2 text-body1">
-              In the meantime, you can contact the maintainers at{" "}
-              <a
-                className="text-blue-500 font-bold"
-                href="mailto:nebula-maintainers@acmutd.co"
-              >
+              In the meantime, you can contact the maintainers at{' '}
+              <a className="text-blue-500 font-bold" href="mailto:nebula-maintainers@acmutd.co">
                 nebula-maintainers@acmutd.co
               </a>
               .

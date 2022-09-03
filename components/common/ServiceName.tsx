@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 /**
  * Component properties for a ServiceName.
@@ -13,9 +13,7 @@ interface ServiceNameProps {
 /**
  * A re-usable component to abstract styling for the logomark.
  */
-export default function ServiceName({
-  titleClassName = "",
-}: ServiceNameProps): JSX.Element {
+export default function ServiceName({ titleClassName = '' }: ServiceNameProps): JSX.Element {
   // TODO: Finalize styles
   return (
     <span>

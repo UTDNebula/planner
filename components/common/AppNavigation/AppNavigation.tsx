@@ -1,21 +1,9 @@
-import React from "react";
-import {
-  Divider,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-} from "@mui/material";
-import {
-  AccountBox,
-  ExitToApp,
-  Home,
-  ListAlt,
-  School,
-} from "@mui/icons-material";
-import HomeUserInfo from "../../home/HomeUserInfo";
-import Link from "next/link";
-import { useAuthContext } from "../../../modules/auth/auth-context";
+import React from 'react';
+import { Divider, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import { AccountBox, ExitToApp, Home, ListAlt, School } from '@mui/icons-material';
+import HomeUserInfo from '../../home/HomeUserInfo';
+import Link from 'next/link';
+import { useAuthContext } from '../../../modules/auth/auth-context';
 
 /**
  * A navigation drawer that links to various screens in the app.
@@ -31,8 +19,8 @@ export default function AppNavigation(): JSX.Element {
   /* Decides if the button should be login or 
   sign out based on the current auth state */
   const authItem = {
-    route: isSignedIn ? "/app/auth/signOut" : "/app/auth/login",
-    label: isSignedIn ? "Sign out" : "Sign in",
+    route: isSignedIn ? '/app/auth/signOut' : '/app/auth/login',
+    label: isSignedIn ? 'Sign out' : 'Sign in',
   };
 
   return (

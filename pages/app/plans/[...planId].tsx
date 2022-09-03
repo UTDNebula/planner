@@ -1,22 +1,22 @@
-import { Fab, Theme } from "@mui/material";
-import createStyles from "@mui/styles/createStyles";
-import { makeStyles } from "tss-react/mui";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
-import { useRouter } from "next/router";
-import React from "react";
-import PlannerContainer from "../../../components/planner/PlannerContainer";
+import { Fab, Theme } from '@mui/material';
+import createStyles from '@mui/styles/createStyles';
+import { makeStyles } from 'tss-react/mui';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+import { useRouter } from 'next/router';
+import React from 'react';
+import PlannerContainer from '../../../components/planner/PlannerContainer';
 import PlanningToolbar, {
   usePlanningToolbar,
-} from "../../../components/planner/PlanningToolbar/PlanningToolbar";
-import { useSemesterNavigation } from "../../../components/planner/SemesterNavigationDrawer/SemesterNavigationDrawer";
-import useSearch from "../../../components/search/search";
-import { CourseAttempt } from "../../../modules/auth/auth-context";
-import { loadCourseAttempts } from "../../../modules/common/api/courseAttempts";
-import { loadCourses } from "../../../modules/common/api/courses";
-import { StudentPlan } from "../../../modules/common/data";
-import { usePlan } from "../../../modules/planner/hooks/usePlan";
-import { usePlannerContainer } from "../../../modules/planner/hooks/usePlannerContainer";
+} from '../../../components/planner/PlanningToolbar/PlanningToolbar';
+import { useSemesterNavigation } from '../../../components/planner/SemesterNavigationDrawer/SemesterNavigationDrawer';
+import useSearch from '../../../components/search/search';
+import { CourseAttempt } from '../../../modules/auth/auth-context';
+import { loadCourseAttempts } from '../../../modules/common/api/courseAttempts';
+import { loadCourses } from '../../../modules/common/api/courses';
+import { StudentPlan } from '../../../modules/common/data';
+import { usePlan } from '../../../modules/planner/hooks/usePlan';
+import { usePlannerContainer } from '../../../modules/planner/hooks/usePlannerContainer';
 
 /**
  * Styling for the add & remove semesters buttons
@@ -24,14 +24,14 @@ import { usePlannerContainer } from "../../../modules/planner/hooks/usePlannerCo
 const useStyles = makeStyles()((theme: Theme) => {
   return {
     fabContainer: {
-      position: "absolute",
+      position: 'absolute',
       top: theme.spacing(8),
       right: theme.spacing(2),
-      display: "flex",
-      flexDirection: "column",
+      display: 'flex',
+      flexDirection: 'column',
     },
     fab: {
-      margin: "8px",
+      margin: '8px',
     },
   };
 });
@@ -43,35 +43,20 @@ const useStyles = makeStyles()((theme: Theme) => {
 export default function PlanDetailPage(): JSX.Element {
   const router = useRouter();
   const { planId: planQuery } = router.query;
-  const planId = planQuery ? planQuery[0] : "empty-plan";
+  const planId = planQuery ? planQuery[0] : 'empty-plan';
 
-  const [courseAttempts, setCourseAttempts] = React.useState<CourseAttempt[]>(
-    []
-  );
+  const [courseAttempts, setCourseAttempts] = React.useState<CourseAttempt[]>([]);
 
   const { results, updateQuery, getResults } = useSearch({
     getData: loadCourses,
-    filterBy: "catalogCode",
+    filterBy: 'catalogCode',
     totalElements: 20,
   });
 
-  const {
-    plan,
-    loadPlan,
-    exportPlan,
-    handleSelectedPlanChange,
-    persistChanges,
-  } = usePlan();
+  const { plan, loadPlan, exportPlan, handleSelectedPlanChange, persistChanges } = usePlan();
 
-  const {
-    title,
-    setTitle,
-    section,
-    setSection,
-    showTabs,
-    hideTabs,
-    shouldShowTabs,
-  } = usePlanningToolbar(0);
+  const { title, setTitle, section, setSection, showTabs, hideTabs, shouldShowTabs } =
+    usePlanningToolbar(0);
 
   const {
     semesters,
@@ -103,7 +88,7 @@ export default function PlanDetailPage(): JSX.Element {
    * Re-renders the planner UI with the given plan.
    */
   const updateLoadedPlan = (newPlan: StudentPlan) => {
-    console.log("Loading new plan in UI", newPlan);
+    console.log('Loading new plan in UI', newPlan);
     updateSemesters(newPlan.semesters);
   };
 
@@ -129,18 +114,10 @@ export default function PlanDetailPage(): JSX.Element {
         removeCourse={removeItemFromList}
       >
         <div className={classes.fabContainer}>
-          <Fab
-            color="primary"
-            onClick={() => addSemester()}
-            className={classes.fab}
-          >
+          <Fab color="primary" onClick={() => addSemester()} className={classes.fab}>
             <AddIcon />
           </Fab>
-          <Fab
-            color="primary"
-            onClick={() => removeSemester()}
-            className={classes.fab}
-          >
+          <Fab color="primary" onClick={() => removeSemester()} className={classes.fab}>
             <RemoveIcon />
           </Fab>
         </div>
@@ -159,7 +136,7 @@ export default function PlanDetailPage(): JSX.Element {
           shouldShowTabs={shouldShowTabs}
           onTabChange={handleTabChange}
           onExportPlan={() => {
-            console.log("Exporting plan");
+            console.log('Exporting plan');
             exportPlan(plan);
           }}
           onImportPlan={(event) => {

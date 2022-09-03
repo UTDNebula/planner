@@ -1,12 +1,8 @@
-import React from "react";
-import { DropResult } from "react-beautiful-dnd";
-import { Semester, Course, SEMESTER_CODE_MAPPINGS } from "../../common/data";
-import { v4 as uuid } from "uuid";
-import {
-  getRecentSemesterMetadata,
-  getUpdatedSemesterData,
-  reorderList,
-} from "../plannerUtils";
+import React from 'react';
+import { DropResult } from 'react-beautiful-dnd';
+import { Semester, Course, SEMESTER_CODE_MAPPINGS } from '../../common/data';
+import { v4 as uuid } from 'uuid';
+import { getRecentSemesterMetadata, getUpdatedSemesterData, reorderList } from '../plannerUtils';
 
 /**
  * A hook that manages the state of the degree planner component.
@@ -19,7 +15,7 @@ import {
  */
 export function usePlannerContainer(
   onPersistChanges: (data: { semesters: Record<string, Semester> }) => void,
-  getResults: () => any[]
+  getResults: () => any[],
 ) {
   // Object mapping semester code to each semester
   // Used to maange state of the degree planner
@@ -29,9 +25,7 @@ export function usePlannerContainer(
   }>({ semesters: {} });
 
   // Array of semesters (use this whenever you need to get user semesters)
-  const semesters = Object.entries(lists.semesters).map(
-    ([_, semester]) => semester
-  );
+  const semesters = Object.entries(lists.semesters).map(([_, semester]) => semester);
 
   // Controls whether or not to persist changes
   const [persist, setPersist] = React.useState<boolean>(false);
@@ -40,8 +34,7 @@ export function usePlannerContainer(
   const [coursesToAdd, setCoursesToAdd] = React.useState<Course[]>([]);
 
   // Controls whether or not to show Droppable for adding courses
-  const [showAddCourseDroppable, setShowAddCourseDroppable] =
-    React.useState(false);
+  const [showAddCourseDroppable, setShowAddCourseDroppable] = React.useState(false);
 
   /**
    * Runs whenever an event to add courses to the planner is called
@@ -94,11 +87,7 @@ export function usePlannerContainer(
    * Not used; {@link coursesToAddHandler} and {@link coursesAddedHandler}
    * have implemented the functionality of this function
    */
-  const addItemToList = (
-    sourceIndex: number,
-    destinationId: string,
-    destinationIndex: number
-  ) => {
+  const addItemToList = (sourceIndex: number, destinationId: string, destinationIndex: number) => {
     const semesters = lists.semesters;
     const results = getResults();
     const course = JSON.parse(JSON.stringify(results[sourceIndex]));
@@ -144,13 +133,9 @@ export function usePlannerContainer(
     sourceSemester: Semester,
     sourceIndex: number,
     destinationIndex: number,
-    sourceId: string
+    sourceId: string,
   ) => {
-    const items = reorderList<Course>(
-      sourceSemester.courses,
-      sourceIndex,
-      destinationIndex
-    );
+    const items = reorderList<Course>(sourceSemester.courses, sourceIndex, destinationIndex);
     const newSemesters = lists.semesters;
     newSemesters[sourceId] = {
       ...sourceSemester,
@@ -174,7 +159,7 @@ export function usePlannerContainer(
     sourceIndex: number,
     destinationIndex: number,
     sourceId: string,
-    destinationId: string
+    destinationId: string,
   ) => {
     const clonedSource = Array.from(sourceSemester.courses);
     const clonedDestination = Array.from(destinationSemester.courses);
@@ -215,7 +200,7 @@ export function usePlannerContainer(
       const destinationIndex = destination.index;
 
       // Check if item is dragged from CourseSelector
-      if (source.droppableId === "selector") {
+      if (source.droppableId === 'selector') {
         addItemToList(source.index, destinationId, destinationIndex);
         return;
       }
@@ -237,7 +222,7 @@ export function usePlannerContainer(
           sourceIndex,
           destinationIndex,
           sourceSemester.code,
-          destinationSemester.code
+          destinationSemester.code,
         );
       }
     }

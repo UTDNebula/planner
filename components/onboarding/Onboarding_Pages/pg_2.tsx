@@ -1,16 +1,16 @@
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import InputLabel from "@mui/material/InputLabel";
-import FormControl from "@mui/material/FormControl";
-import Autocomplete from "@mui/material/Autocomplete";
-import TextField from "@mui/material/TextField";
-import Checkbox from "@mui/material/Checkbox";
-import FormLabel from "@mui/material/FormLabel";
-import { FormGroup, FormControlLabel } from "@mui/material";
-import DummyData from "../../../data/dummy_onboarding.json";
-import { HonorsIndicator } from "../../../modules/common/types";
-import { HONORS_INDICATOR_LABELS } from "../../../modules/common/data-utils";
-import React from "react";
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
+import Checkbox from '@mui/material/Checkbox';
+import FormLabel from '@mui/material/FormLabel';
+import { FormGroup, FormControlLabel } from '@mui/material';
+import DummyData from '../../../data/dummy_onboarding.json';
+import { HonorsIndicator } from '../../../modules/common/types';
+import { HONORS_INDICATOR_LABELS } from '../../../modules/common/data-utils';
+import React from 'react';
 
 // Array of values to choose from for form
 const scholarships = DummyData.scholarships;
@@ -49,11 +49,7 @@ export type Page2Props = {
   handleValidate: (value: boolean) => void;
 };
 
-export default function PageTwo({
-  handleChange,
-  props,
-  handleValidate,
-}: Page2Props): JSX.Element {
+export default function PageTwo({ handleChange, props, handleValidate }: Page2Props): JSX.Element {
   const {
     scholarship,
     scholarshipType,
@@ -84,15 +80,10 @@ export default function PageTwo({
 
   const checkValidate = () => {
     const isPrimaryValid =
-      scholarship !== null && receivingAid !== null && fastTrack !== null
-        ? true
-        : false;
-    const scholarshipTypeValid =
-      (scholarship && scholarshipType) || !scholarship;
-    const fastTrackValid =
-      (fastTrack && fastTrackMajor && fastTrackYear) || !fastTrack;
-    const valid =
-      isPrimaryValid && scholarshipTypeValid && fastTrackValid ? true : false;
+      scholarship !== null && receivingAid !== null && fastTrack !== null ? true : false;
+    const scholarshipTypeValid = (scholarship && scholarshipType) || !scholarship;
+    const fastTrackValid = (fastTrack && fastTrackMajor && fastTrackYear) || !fastTrack;
+    const valid = isPrimaryValid && scholarshipTypeValid && fastTrackValid ? true : false;
     handleValidate(valid);
   };
 
@@ -110,17 +101,14 @@ export default function PageTwo({
   ) => {
     const clear = {};
     for (const val of clearValues) {
-      clear[val] = "";
+      clear[val] = '';
     }
 
     handleChange({ ...props, [buttonName]: value, ...clear });
   };
 
   // Handles change for Autocomplete
-  const handleAutocompleteChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    value: string
-  ) => {
+  const handleAutocompleteChange = (event: React.ChangeEvent<HTMLInputElement>, value: string) => {
     handleChange({
       ...props,
       fastTrackMajor: value,
@@ -128,10 +116,7 @@ export default function PageTwo({
   };
 
   // Handles change for Checkboxes
-  const handleCheckChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    checked: boolean
-  ) => {
+  const handleCheckChange = (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
     const temp: HonorsIndicator[] = checked
       ? [...honors, event.target.name as HonorsIndicator]
       : honors.filter((value) => value !== event.target.name);
@@ -153,20 +138,16 @@ export default function PageTwo({
     <div className="animate-intro w-full">
       <h2 className="text-4xl text-left font-bold mb-10 text-gray-800">
         <div>Scholarships </div>
-        <div> &#38; Honors</div>{" "}
+        <div> &#38; Honors</div>{' '}
       </h2>
       <div className="grid grid-cols-2 gap-x-32">
         <div>
-          <h3 className="text-xl  text-gray-800 ">
-            Are you receiving any scholarships?
-          </h3>
+          <h3 className="text-xl  text-gray-800 ">Are you receiving any scholarships?</h3>
           <div className="flex mt-2 mb-6 ">
             <button
-              onClick={(event) =>
-                handleButtonChange(event, "scholarship", true)
-              }
+              onClick={(event) => handleButtonChange(event, 'scholarship', true)}
               className={`${
-                scholarship ? "bg-yellow-400" : null
+                scholarship ? 'bg-yellow-400' : null
               }    hover:bg-yellow-400 text-left text-grey-700 text-sm font-medium hover:text-white h-8  px-6 border border-blue-600 hover:border-transparent rounded`}
             >
               YES
@@ -174,15 +155,10 @@ export default function PageTwo({
 
             <button
               onClick={(event) => {
-                handleButtonChange(
-                  event,
-                  "scholarship",
-                  false,
-                  "scholarshipType"
-                );
+                handleButtonChange(event, 'scholarship', false, 'scholarshipType');
               }}
               className={`${
-                scholarship == false ? "bg-yellow-400" : null
+                scholarship == false ? 'bg-yellow-400' : null
               }  ml-5 hover:bg-yellow-400 text-left text-grey-700 text-sm font-medium hover:text-white h-8  px-6 border border-blue-600 hover:border-transparent rounded`}
             >
               NO
@@ -191,15 +167,11 @@ export default function PageTwo({
         </div>
         <div>
           {scholarship && (
-            <h3 className="text-xl text-gray-800">
-              What type of scholarship did you receive?
-            </h3>
+            <h3 className="text-xl text-gray-800">What type of scholarship did you receive?</h3>
           )}
           {scholarship && (
             <FormControl variant="outlined">
-              <InputLabel id="demo-simple-select-autowidth-label">
-                Scholarship Type
-              </InputLabel>
+              <InputLabel id="demo-simple-select-autowidth-label">Scholarship Type</InputLabel>
               <Select
                 labelId="demo-simple-select-autowidth-label"
                 id="demo-simple-select-autowidth"
@@ -215,26 +187,20 @@ export default function PageTwo({
           )}
         </div>
         <div>
-          <h3 className="text-xl text-gray-800">
-            Are you recieving financial aid?
-          </h3>
+          <h3 className="text-xl text-gray-800">Are you recieving financial aid?</h3>
           <div className="flex mt-2 items-center mb-10 ">
             <button
-              onClick={(event) =>
-                handleButtonChange(event, "receivingAid", true)
-              }
+              onClick={(event) => handleButtonChange(event, 'receivingAid', true)}
               className={`${
-                receivingAid ? "bg-yellow-400" : null
+                receivingAid ? 'bg-yellow-400' : null
               }  hover:bg-yellow-400 text-left text-grey-700 text-sm font-medium hover:text-white h-8  px-6 border border-blue-600 hover:border-transparent rounded`}
             >
               YES
             </button>
             <button
-              onClick={(event) =>
-                handleButtonChange(event, "receivingAid", false)
-              }
+              onClick={(event) => handleButtonChange(event, 'receivingAid', false)}
               className={`${
-                receivingAid == false ? "bg-yellow-400" : null
+                receivingAid == false ? 'bg-yellow-400' : null
               }  ml-5 hover:bg-yellow-400 text-left text-grey-700 text-sm font-medium hover:text-white h-8  px-6 border border-blue-600 hover:border-transparent rounded`}
             >
               NO
@@ -248,9 +214,9 @@ export default function PageTwo({
           </h3>
           <div className="flex mt-2 items-center mb-10 ">
             <button
-              onClick={(event) => handleButtonChange(event, "fastTrack", true)}
+              onClick={(event) => handleButtonChange(event, 'fastTrack', true)}
               className={`${
-                fastTrack ? "bg-yellow-400" : null
+                fastTrack ? 'bg-yellow-400' : null
               } hover:bg-yellow-400 text-left text-grey-700 text-sm font-medium hover:text-white h-8  px-6 border border-blue-600 hover:border-transparent rounded`}
             >
               YES
@@ -258,16 +224,10 @@ export default function PageTwo({
 
             <button
               onClick={(event) => {
-                handleButtonChange(
-                  event,
-                  "fastTrack",
-                  false,
-                  "fastTrackMajor",
-                  "fastTrackYear"
-                );
+                handleButtonChange(event, 'fastTrack', false, 'fastTrackMajor', 'fastTrackYear');
               }}
               className={`${
-                fastTrack == false ? "bg-yellow-400" : null
+                fastTrack == false ? 'bg-yellow-400' : null
               }  ml-5 hover:bg-yellow-400 text-left text-grey-700 text-sm font-medium hover:text-white h-8  px-6 border border-blue-600 hover:border-transparent rounded`}
             >
               NO
@@ -275,16 +235,12 @@ export default function PageTwo({
           </div>
         </div>
         <div>
-          {fastTrack && (
-            <h3 className="text-xl mb-4 text-gray-800">
-              For what major and year?
-            </h3>
-          )}
+          {fastTrack && <h3 className="text-xl mb-4 text-gray-800">For what major and year?</h3>}
           {fastTrack && (
             <div className="mb-4 max-w-lg h-32 w-84 rounded-lg shadow-lg border border-blue-600 p-4 ">
               <div className="mb-2">
                 <Autocomplete
-                  size={"small"}
+                  size={'small'}
                   value={fastTrackMajor}
                   className="w-72"
                   onChange={handleAutocompleteChange}
@@ -299,9 +255,7 @@ export default function PageTwo({
 
               <div className="">
                 <FormControl className="w-32">
-                  <InputLabel id="demo-simple-select-autowidth-label">
-                    Year
-                  </InputLabel>
+                  <InputLabel id="demo-simple-select-autowidth-label">Year</InputLabel>
                   <Select
                     label="year"
                     labelId="demo-simple-select-autowidth-label"
@@ -319,93 +273,63 @@ export default function PageTwo({
           )}
         </div>
         <div>
-          <h3 className="text-xl mb-2  text-gray-800">
-            Are you in any honors programs?
-          </h3>
+          <h3 className="text-xl mb-2  text-gray-800">Are you in any honors programs?</h3>
 
           <FormControl margin="none" component="fieldset">
             <FormLabel component="legend">Select all that apply</FormLabel>
             <FormGroup>
               <FormControlLabel
                 control={
-                  <Checkbox
-                    checked={honorsCheck["cv"]}
-                    onChange={handleCheckChange}
-                    name="cv"
-                  />
+                  <Checkbox checked={honorsCheck['cv']} onChange={handleCheckChange} name="cv" />
                 }
-                label={HONORS_INDICATOR_LABELS["cv"]}
+                label={HONORS_INDICATOR_LABELS['cv']}
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox checked={honorsCheck['cs2']} onChange={handleCheckChange} name="cs2" />
+                }
+                label={HONORS_INDICATOR_LABELS['cs2']}
               />
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={honorsCheck["cs2"]}
-                    onChange={handleCheckChange}
-                    name="cs2"
-                  />
-                }
-                label={HONORS_INDICATOR_LABELS["cs2"]}
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={honorsCheck["lahc"]}
+                    checked={honorsCheck['lahc']}
                     onChange={handleCheckChange}
                     name="lahc"
                   />
                 }
-                label={HONORS_INDICATOR_LABELS["lahc"]}
+                label={HONORS_INDICATOR_LABELS['lahc']}
               />
               <FormControlLabel
                 control={
-                  <Checkbox
-                    checked={honorsCheck["bbs"]}
-                    onChange={handleCheckChange}
-                    name="bbs"
-                  />
+                  <Checkbox checked={honorsCheck['bbs']} onChange={handleCheckChange} name="bbs" />
                 }
-                label={HONORS_INDICATOR_LABELS["bbs"]}
+                label={HONORS_INDICATOR_LABELS['bbs']}
               />
               <FormControlLabel
                 control={
-                  <Checkbox
-                    checked={honorsCheck["ah"]}
-                    onChange={handleCheckChange}
-                    name="ah"
-                  />
+                  <Checkbox checked={honorsCheck['ah']} onChange={handleCheckChange} name="ah" />
                 }
-                label={HONORS_INDICATOR_LABELS["ah"]}
+                label={HONORS_INDICATOR_LABELS['ah']}
               />
             </FormGroup>
             <FormControlLabel
               control={
-                <Checkbox
-                  checked={honorsCheck["epps"]}
-                  onChange={handleCheckChange}
-                  name="epps"
-                />
+                <Checkbox checked={honorsCheck['epps']} onChange={handleCheckChange} name="epps" />
               }
-              label={HONORS_INDICATOR_LABELS["epps"]}
+              label={HONORS_INDICATOR_LABELS['epps']}
             />
             <FormControlLabel
               control={
-                <Checkbox
-                  checked={honorsCheck["nsm"]}
-                  onChange={handleCheckChange}
-                  name="nsm"
-                />
+                <Checkbox checked={honorsCheck['nsm']} onChange={handleCheckChange} name="nsm" />
               }
-              label={HONORS_INDICATOR_LABELS["nsm"]}
+              label={HONORS_INDICATOR_LABELS['nsm']}
             />
             <FormControlLabel
               control={
-                <Checkbox
-                  checked={honorsCheck["atec"]}
-                  onChange={handleCheckChange}
-                  name="atec"
-                />
+                <Checkbox checked={honorsCheck['atec']} onChange={handleCheckChange} name="atec" />
               }
-              label={HONORS_INDICATOR_LABELS["atec"]}
+              label={HONORS_INDICATOR_LABELS['atec']}
             />
           </FormControl>
         </div>

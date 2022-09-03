@@ -1,17 +1,17 @@
-import { useMemo } from "react";
-import { createStore, applyMiddleware } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
-import { persistReducer, persistStore } from "redux-persist";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import thunkMiddleware from "redux-thunk";
-import reducers from "./rootReducer";
+import { useMemo } from 'react';
+import { createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import { persistReducer, persistStore } from 'redux-persist';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import thunkMiddleware from 'redux-thunk';
+import reducers from './rootReducer';
 
 export type RootState = ReturnType<typeof reducers>;
 
 let store;
 
 const persistConfig = {
-  key: "root",
+  key: 'root',
   storage: AsyncStorage,
 };
 
@@ -19,7 +19,7 @@ function initStore(initialState) {
   return createStore(
     persistReducer(persistConfig, reducers),
     initialState,
-    composeWithDevTools(applyMiddleware(thunkMiddleware))
+    composeWithDevTools(applyMiddleware(thunkMiddleware)),
   );
 }
 
@@ -38,7 +38,7 @@ export const initializeStore = (preloadedState) => {
   }
 
   // For SSG and SSR always create a new store
-  if (typeof window === "undefined") {
+  if (typeof window === 'undefined') {
     return _store;
   }
 

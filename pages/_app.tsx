@@ -1,23 +1,18 @@
-import firebase from "firebase/app";
-import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
-import { useRouter } from "next/router";
-import { AnimateSharedLayout } from "framer-motion";
-import React from "react";
-import Head from "next/head";
-import type { AppProps } from "next/app";
-import "@fontsource/roboto";
-import "../styles/globals.css";
-import { AuthProvider } from "../modules/auth/auth-context";
-import { useStore } from "../modules/redux/store";
-import AppNavigation from "../components/common/AppNavigation";
+import firebase from 'firebase/app';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { useRouter } from 'next/router';
+import { AnimateSharedLayout } from 'framer-motion';
+import React from 'react';
+import Head from 'next/head';
+import type { AppProps } from 'next/app';
+import '@fontsource/roboto';
+import '../styles/globals.css';
+import { AuthProvider } from '../modules/auth/auth-context';
+import { useStore } from '../modules/redux/store';
+import AppNavigation from '../components/common/AppNavigation';
 
-import {
-  ThemeProvider,
-  Theme,
-  StyledEngineProvider,
-  createTheme,
-} from "@mui/material/styles";
+import { ThemeProvider, Theme, StyledEngineProvider, createTheme } from '@mui/material/styles';
 
 const theme = createTheme();
 
@@ -46,8 +41,8 @@ if (!firebase.apps.length) {
  * @returns boolean
  */
 const needAppNav = (pathname: string): boolean => {
-  const routesList = ["/app/onboarding", "/app/auth", "/app/plans/"];
-  if (pathname === "/") {
+  const routesList = ['/app/onboarding', '/app/auth', '/app/plans/'];
+  if (pathname === '/') {
     return true;
   }
   for (let i = 0; i < routesList.length; i++) {
@@ -88,10 +83,7 @@ function PageLayout({ Component, pageProps }) {
  * This wrapper handles conditional rendering for certain layouts for non-landing
  * page routes.
  */
-export default function NebulaApp({
-  Component,
-  pageProps,
-}: AppProps): JSX.Element {
+export default function NebulaApp({ Component, pageProps }: AppProps): JSX.Element {
   const { store, persistor } = useStore(pageProps.initialReduxState);
 
   return (
@@ -112,29 +104,17 @@ export default function NebulaApp({
         <link rel="icon" href="/Nebula_Planner_Logo.png" />
         <link rel="manifest" href="/manifest.json" />
 
-        <link
-          href="/icons/favicon-16x16.png"
-          rel="icon"
-          type="image/png"
-          sizes="16x16"
-        />
-        <link
-          href="/icons/favicon-32x32.png"
-          rel="icon"
-          type="image/png"
-          sizes="32x32"
-        />
+        <link href="/icons/favicon-16x16.png" rel="icon" type="image/png" sizes="16x16" />
+        <link href="/icons/favicon-32x32.png" rel="icon" type="image/png" sizes="32x32" />
         <link rel="apple-touch-icon" href="/apple-icon.png"></link>
         <meta name="theme-color" content="#317EFB" />
       </Head>
       <Provider store={store}>
         <PersistGate loading={<p>Loading...</p>} persistor={persistor}>
           <AnimateSharedLayout>
-            {" "}
+            {' '}
             <StyledEngineProvider injectFirst>
-              <ThemeProvider theme={theme}>
-                {PageLayout({ Component, pageProps })}
-              </ThemeProvider>
+              <ThemeProvider theme={theme}>{PageLayout({ Component, pageProps })}</ThemeProvider>
             </StyledEngineProvider>
           </AnimateSharedLayout>
         </PersistGate>

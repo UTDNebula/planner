@@ -1,5 +1,5 @@
-import React from "react";
-import AnnouncementItem, { Notice } from "./AnnouncementItem";
+import React from 'react';
+import AnnouncementItem, { Notice } from './AnnouncementItem';
 
 /**
  * Component properties for a NoticeList.
@@ -21,11 +21,7 @@ export default function NoticeList({ notices }: NoticeListProps): JSX.Element {
   return (
     <div>
       <div>{noticeItems}</div>
-      {isEmpty && (
-        <div className="align-center text-subtitle1 font-bold">
-          No announcements!
-        </div>
-      )}
+      {isEmpty && <div className="align-center text-subtitle1 font-bold">No announcements!</div>}
     </div>
   );
 }

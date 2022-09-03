@@ -1,4 +1,4 @@
-import { Notice } from "../../components/home/announcements/AnnouncementItem";
+import { Notice } from '../../components/home/announcements/AnnouncementItem';
 
 /**
  * A hook used to access service notices for the current user.

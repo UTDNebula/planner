@@ -1,30 +1,27 @@
-import {
-  NoticeSource,
-  Notice,
-} from "../../../components/home/announcements/AnnouncementItem";
+import { NoticeSource, Notice } from '../../../components/home/announcements/AnnouncementItem';
 
 const SAMPLE_NOTICES = [
   {
-    title: "Upcoming degree audit",
+    title: 'Upcoming degree audit',
     description:
-      "You are approaching 45 completed credit hours. Check your email for an email from your academic advisor.",
+      'You are approaching 45 completed credit hours. Check your email for an email from your academic advisor.',
     action: {
-      link: "https://example.com",
-      actionText: "Email advisor",
+      link: 'https://example.com',
+      actionText: 'Email advisor',
     },
     issueDate: new Date(),
-    source: "app" as NoticeSource,
+    source: 'app' as NoticeSource,
   },
   {
-    title: "Collegium V GPA warning",
+    title: 'Collegium V GPA warning',
     description:
-      "By the end of your sophomore year, you need to have a 3.3 GPA. Make sure to keep up with your coursework.",
+      'By the end of your sophomore year, you need to have a 3.3 GPA. Make sure to keep up with your coursework.',
     action: {
-      link: "https://honors.utdallas.edu/cv/program-requirements",
-      actionText: "Email advisor",
+      link: 'https://honors.utdallas.edu/cv/program-requirements',
+      actionText: 'Email advisor',
     },
     issueDate: new Date(),
-    source: "app" as NoticeSource,
+    source: 'app' as NoticeSource,
   },
 ];
 

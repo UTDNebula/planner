@@ -10,24 +10,21 @@ import {
   Typography,
   Grid,
   Button,
-} from "@mui/material";
-import React, { useState } from "react";
-import { ArrowBack, ArrowForward } from "@mui/icons-material";
-import {
-  NewPlanFlowState,
-  useCreateNewPlanFlow,
-} from "../../../modules/planner/hooks/newPlanFlow";
-import DummyData from "../../../data/dummy_onboarding.json";
-import Switch from "@mui/material/Switch";
-import router from "next/router";
-import { v4 as uuid } from "uuid";
-import SearchBar from "../../search/SearchBar";
-import useSearch from "../../search/search";
-import { Close } from "@mui/icons-material";
-import { DegreeState } from "./NewPlanDegreePicker";
-import NewPlanDegreeGallery, { pickerValidate } from "./NewPlanDegreeGallery";
-import NewPlanTransferGallery, { CreditState } from "./NewPlanTransferGallery";
-import { HonorsIndicator } from "../../../modules/common/types";
+} from '@mui/material';
+import React, { useState } from 'react';
+import { ArrowBack, ArrowForward } from '@mui/icons-material';
+import { NewPlanFlowState, useCreateNewPlanFlow } from '../../../modules/planner/hooks/newPlanFlow';
+import DummyData from '../../../data/dummy_onboarding.json';
+import Switch from '@mui/material/Switch';
+import router from 'next/router';
+import { v4 as uuid } from 'uuid';
+import SearchBar from '../../search/SearchBar';
+import useSearch from '../../search/search';
+import { Close } from '@mui/icons-material';
+import { DegreeState } from './NewPlanDegreePicker';
+import NewPlanDegreeGallery, { pickerValidate } from './NewPlanDegreeGallery';
+import NewPlanTransferGallery, { CreditState } from './NewPlanTransferGallery';
+import { HonorsIndicator } from '../../../modules/common/types';
 
 export type NewPlanProps = {
   degree: DegreeState[];
@@ -74,37 +71,28 @@ export function SelectMajorDialogScreen({
 
   // Run updateQuery on dialog screen load
   React.useEffect(() => {
-    updateQuery("");
+    updateQuery('');
     checkValidate();
   }, [props]);
 
   return (
     <div>
-      <div
-        className="grid grid-cols-2"
-        style={{ height: "75vh", maxWidth: "100vw" }}
-      >
+      <div className="grid grid-cols-2" style={{ height: '75vh', maxWidth: '100vw' }}>
         <div>
-          <Box
-            sx={{ width: "75%", paddingLeft: "4rem" }}
-            style={{ flexDirection: "column" }}
-          >
+          <Box sx={{ width: '75%', paddingLeft: '4rem' }} style={{ flexDirection: 'column' }}>
             <Typography variant="h2" component="div">
               What&apos;s your degree?
             </Typography>
           </Box>
           <Container
             style={{
-              paddingTop: "4rem",
-              width: "35vw",
-              paddingLeft: "4rem",
-              position: "absolute",
+              paddingTop: '4rem',
+              width: '35vw',
+              paddingLeft: '4rem',
+              position: 'absolute',
             }}
           >
-            <div
-              className="flex flex-col border-2"
-              style={{ height: "40vh", width: "25vw" }}
-            >
+            <div className="flex flex-col border-2" style={{ height: '40vh', width: '25vw' }}>
               <div className="m-2">
                 <SearchBar updateQuery={handleSearch} />
               </div>
@@ -126,7 +114,7 @@ export function SelectMajorDialogScreen({
             const tempDegreeType = [
               {
                 degree: elm,
-                degreeType: "Major",
+                degreeType: 'Major',
                 valid: true,
               },
             ];
@@ -160,19 +148,13 @@ export function TransferDialogScreen({
   };
 
   return (
-    <div className="grid grid-cols-2" style={{ height: "75vh" }}>
-      <Box
-        sx={{ width: "75%", paddingLeft: "4rem" }}
-        style={{ flexDirection: "column" }}
-      >
+    <div className="grid grid-cols-2" style={{ height: '75vh' }}>
+      <Box sx={{ width: '75%', paddingLeft: '4rem' }} style={{ flexDirection: 'column' }}>
         <Typography variant="h2" component="div" fontWeight="bold">
           Any transfer credits?
         </Typography>
       </Box>
-      <NewPlanTransferGallery
-        creditState={creditState}
-        handleChange={handleTransferChange}
-      />
+      <NewPlanTransferGallery creditState={creditState} handleChange={handleTransferChange} />
     </div>
   );
 }
@@ -206,7 +188,7 @@ export function OtherDialogScreen() {
 }
 
 export async function getMajors() {
-  const data = await import("../../../data/majors.json");
+  const data = await import('../../../data/majors.json');
 
   // TODO: Fix this!!!!
   return Object.values(data).slice(0, 78);
@@ -229,8 +211,8 @@ export default function NewPlanDialog({
   const [major, setMajor] = useState<NewPlanProps>({
     degree: [
       {
-        degree: "",
-        degreeType: "",
+        degree: '',
+        degreeType: '',
         valid: false,
       },
     ],
@@ -240,16 +222,16 @@ export default function NewPlanDialog({
     creditState: [
       {
         id: 0,
-        subject: "",
-        course: "",
-        type: "",
-        apTest: "",
-        apScore: "",
-        ibTest: "",
-        ibLevel: "",
-        ibScore: "",
-        clepTest: "",
-        clepScore: "",
+        subject: '',
+        course: '',
+        type: '',
+        apTest: '',
+        apScore: '',
+        ibTest: '',
+        ibLevel: '',
+        ibScore: '',
+        clepTest: '',
+        clepScore: '',
       },
     ],
   });
@@ -259,7 +241,7 @@ export default function NewPlanDialog({
   // };
 
   const handleSearchSelection = () => {
-    console.log("Not yet implemented");
+    console.log('Not yet implemented');
   };
 
   const [selectedMajors, setSelectedMajors] = React.useState<string[]>([]);
@@ -270,7 +252,7 @@ export default function NewPlanDialog({
 
   // Replace w/ Ben's degree plan generation algorithm
   const generateDegreePlan = async () => {
-    console.log("Replace me");
+    console.log('Replace me');
   };
 
   /**
@@ -284,7 +266,7 @@ export default function NewPlanDialog({
 
     // Start generating degree plan
     // TODO: Aggregate all necessary data for generateDegreePlan
-    if (planState === "SELECT_ADDITIONS") {
+    if (planState === 'SELECT_ADDITIONS') {
       await generateDegreePlan();
       // Generate route id
       const routeID = uuid();
@@ -293,7 +275,7 @@ export default function NewPlanDialog({
   };
 
   let contents;
-  if (planState === "SELECT_MAJOR") {
+  if (planState === 'SELECT_MAJOR') {
     contents = (
       <SelectMajorDialogScreen
         selectedMajors={selectedMajors}
@@ -302,21 +284,14 @@ export default function NewPlanDialog({
         handleChange={setMajor}
       />
     );
-  } else if (planState === "TRANSFER_COURSES") {
-    contents = (
-      <TransferDialogScreen
-        props={transferData}
-        handleChange={setTransferData}
-      />
-    );
+  } else if (planState === 'TRANSFER_COURSES') {
+    contents = <TransferDialogScreen props={transferData} handleChange={setTransferData} />;
   } else {
     contents = (
       <div>
         <OtherDialogScreen />
         <div className="flex justify-end items-end">
-          {planState === "SELECT_ADDITIONS" && (
-            <button onClick={finish}>Done</button>
-          )}
+          {planState === 'SELECT_ADDITIONS' && <button onClick={finish}>Done</button>}
         </div>
       </div>
     );
@@ -327,11 +302,11 @@ export default function NewPlanDialog({
   return (
     <div>
       <Dialog
-        style={{ backgroundColor: "#1E634D" }}
+        style={{ backgroundColor: '#1E634D' }}
         open={openDialog}
         onClose={finish}
         fullWidth={true}
-        maxWidth={"lg"}
+        maxWidth={'lg'}
         disableEnforceFocus={true}
       >
         <div className="flex">
@@ -341,7 +316,7 @@ export default function NewPlanDialog({
           <IconButton
             onClick={goBack}
             sx={{
-              position: "absolute",
+              position: 'absolute',
               right: 50,
             }}
             className="p-4"
@@ -352,7 +327,7 @@ export default function NewPlanDialog({
           <IconButton
             onClick={goForward}
             sx={{
-              position: "absolute",
+              position: 'absolute',
               right: 8,
             }}
             className="p-4"

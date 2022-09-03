@@ -1,1 +1,1 @@
-export { default } from "./StudentHistoryView";
+export { default } from './StudentHistoryView';

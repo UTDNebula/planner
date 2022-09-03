@@ -1,8 +1,8 @@
-import React from "react";
-import { Semester, StudentPlan } from "../../common/data";
-import DUMMY_PLAN from "../../../data/add_courses.json";
-import { useDispatch, useStore } from "react-redux";
-import { updatePlan } from "../../redux/userDataSlice";
+import React from 'react';
+import { Semester, StudentPlan } from '../../common/data';
+import DUMMY_PLAN from '../../../data/add_courses.json';
+import { useDispatch, useStore } from 'react-redux';
+import { updatePlan } from '../../redux/userDataSlice';
 
 /**
  * A utility hook that exposes callbacks to handle manipulating the StudentPlan.
@@ -11,7 +11,7 @@ import { updatePlan } from "../../redux/userDataSlice";
  */
 export function usePlan() {
   // Manages planId
-  const [planId, setPlanId] = React.useState("empty-plan");
+  const [planId, setPlanId] = React.useState('empty-plan');
 
   const store = useStore();
 
@@ -20,8 +20,8 @@ export function usePlan() {
   // Initial value for plan until data is properly loaded
   const initialPlan: StudentPlan = {
     id: planId,
-    title: "Just a Degree Plan",
-    major: "Computer Science",
+    title: 'Just a Degree Plan',
+    major: 'Computer Science',
     semesters: DUMMY_PLAN,
   };
 
@@ -52,10 +52,10 @@ export function usePlan() {
   const exportPlan = (plan: StudentPlan) => {
     const planFileContents = JSON.stringify(plan, null, 2);
     const blob = new Blob([planFileContents], {
-      type: "application/json;charset=utf-8;",
+      type: 'application/json;charset=utf-8;',
     });
-    const link = document.createElement("a");
-    console.log("Plan file contents", planFileContents);
+    const link = document.createElement('a');
+    console.log('Plan file contents', planFileContents);
     if (link.download === undefined) {
       // TODO(planner): Figure out how to gracefully handle lack of API support
       return;
@@ -64,17 +64,17 @@ export function usePlan() {
     // downloads a blob containing the file.
     const url = URL.createObjectURL(blob);
     const planFileName =
-      plan.title !== ""
+      plan.title !== ''
         ? `${plan.title} Degree Plan.json`
         : `Nebula Degree Plan ${new Date().toISOString()}.json`;
 
-    link.style.visibility = "hidden";
-    link.setAttribute("download", planFileName);
-    link.setAttribute("href", url);
+    link.style.visibility = 'hidden';
+    link.setAttribute('download', planFileName);
+    link.setAttribute('href', url);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    console.log("Plan downloaded");
+    console.log('Plan downloaded');
   };
 
   /**
@@ -89,15 +89,15 @@ export function usePlan() {
    */
   const handleSelectedPlanChange = (
     event: React.ChangeEvent<HTMLInputElement>,
-    callback: (plan: StudentPlan) => void
+    callback: (plan: StudentPlan) => void,
   ) => {
     const file = event.target.files[0];
-    console.log("Uploading plan");
+    console.log('Uploading plan');
 
     const reader = new FileReader();
     reader.onload = (event) => {
       const plan = event.target.result as string;
-      console.log("Uploaded plan:", plan);
+      console.log('Uploaded plan:', plan);
 
       callback(JSON.parse(plan));
       // Update plan
@@ -120,9 +120,8 @@ export function usePlan() {
    */
   function fetchPlan(planId: string): StudentPlan {
     // Make copy of student plan from redux or get default plan if doesn't exist
-    const plan: StudentPlan =
-      store.getState().userData.plans[planId] ?? initialPlan;
-    if (plan.id !== "empty-plan") {
+    const plan: StudentPlan = store.getState().userData.plans[planId] ?? initialPlan;
+    if (plan.id !== 'empty-plan') {
       // Remove this logic once initialPlan deprecated
       return JSON.parse(JSON.stringify(plan));
     } else {
@@ -137,7 +136,7 @@ export function usePlan() {
    * @param planState the user's plan
    */
   function savePlan(planId: string, planState: StudentPlan) {
-    console.log("Save", planState, "ID", planId);
+    console.log('Save', planState, 'ID', planId);
     dispatch(updatePlan(planState));
   }
 
@@ -152,10 +151,10 @@ export function usePlan() {
   }) => {
     const semesterList = Object.values(data.semesters);
 
-    console.log("Plan", plan);
+    console.log('Plan', plan);
     const savedPlan = JSON.parse(JSON.stringify(plan));
     savedPlan.semesters = semesterList;
-    console.log("SavedPlan", savedPlan);
+    console.log('SavedPlan', savedPlan);
     // Save plan to redux & in state
     savePlan(planId, savedPlan);
     setPlan(savedPlan);

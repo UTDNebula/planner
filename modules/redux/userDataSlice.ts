@@ -1,12 +1,8 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import firebase from "firebase";
-import { OnboardingFormData } from "../../pages/app/onboarding";
-import { ServiceUser, users, CourseAttempt } from "../auth/auth-context";
-import {
-  StudentPlan,
-  createSamplePlan,
-  createSampleOnboarding,
-} from "../common/data";
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import firebase from 'firebase';
+import { OnboardingFormData } from '../../pages/app/onboarding';
+import { ServiceUser, users, CourseAttempt } from '../auth/auth-context';
+import { StudentPlan, createSamplePlan, createSampleOnboarding } from '../common/data';
 
 /**
  * Manages user plans
@@ -38,9 +34,7 @@ export interface UserState {
  * stored in Redux and Firebase.
  *
  */
-export type AcademicDataState = PlannerDataState &
-  CourseHistoryState &
-  UserState;
+export type AcademicDataState = PlannerDataState & CourseHistoryState & UserState;
 
 const samplePlan = createSamplePlan();
 
@@ -79,11 +73,11 @@ export const loadUser = createAsyncThunk<
   AcademicDataState,
   ServiceUser,
   { state: { userData: AcademicDataState } }
->("userData/loadUser", async (user: ServiceUser, { getState }) => {
+>('userData/loadUser', async (user: ServiceUser, { getState }) => {
   const firestore = firebase.firestore();
-  if (user.id !== "guest") {
+  if (user.id !== 'guest') {
     const slice = await firestore
-      .collection("users")
+      .collection('users')
       .doc(user.id)
       .get()
       .then((userDoc) => {
@@ -108,7 +102,7 @@ export const loadUser = createAsyncThunk<
         return userSlice;
       })
       .catch((error) => {
-        console.log("error: ", error);
+        console.log('error: ', error);
       });
     return slice as AcademicDataState;
   }
@@ -120,35 +114,32 @@ export const loadUser = createAsyncThunk<
  * @param id user ID
  * @param data user's academic data
  */
-function saveToFirebase(
-  id: string,
-  data: { userDataSlice: AcademicDataState }
-) {
-  if (id !== "guest") {
+function saveToFirebase(id: string, data: { userDataSlice: AcademicDataState }) {
+  if (id !== 'guest') {
     const firestore = firebase.firestore();
-    firestore.collection("users").doc(id).set(data);
+    firestore.collection('users').doc(id).set(data);
   }
 }
 const userDataSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState,
   //Any change made in the redux store will also be stored in the respective firebase firestore.
   reducers: {
     updateUser(state, action: PayloadAction<ServiceUser>) {
       //TODO: hydrate app with different values
-      console.log("Seeting user");
+      console.log('Seeting user');
       state.user = action.payload;
       return state;
     },
     updateCourseAudit(state, action: PayloadAction<CourseAttempt[]>) {
-      const unique_id = state.user.id || "guest";
+      const unique_id = state.user.id || 'guest';
       const resultingState = { ...state, courses: action.payload };
       const userDataSlice = { userDataSlice: resultingState };
       saveToFirebase(unique_id, userDataSlice);
       return resultingState;
     },
     updatePlan(state, action: PayloadAction<StudentPlan>) {
-      const unique_id = state.user.id || "guest";
+      const unique_id = state.user.id || 'guest';
       state.plans[action.payload.id] = action.payload;
       const userDataSlice = {
         userDataSlice: JSON.parse(JSON.stringify(state)),
@@ -170,7 +161,7 @@ const userDataSlice = createSlice({
     },
     resetStore(state) {
       // Runs whenever user signs out
-      console.log("Running signout code");
+      console.log('Running signout code');
       state = { ...initialState };
       return state;
     },
@@ -186,13 +177,10 @@ const userDataSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(
-        loadUser.fulfilled,
-        (state, action: PayloadAction<AcademicDataState>) => {
-          // Runs if loadUser(userId) is successful
-          return action.payload;
-        }
-      )
+      .addCase(loadUser.fulfilled, (state, action: PayloadAction<AcademicDataState>) => {
+        // Runs if loadUser(userId) is successful
+        return action.payload;
+      })
       .addCase(loadUser.rejected, (state, action) => {
         // Runs if loadUser(userId) fails
         // TODO: Figure out more robust error handling
