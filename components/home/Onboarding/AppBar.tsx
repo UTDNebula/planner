@@ -13,7 +13,6 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import '@fontsource/jost';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
 import AuthPage from '../../../pages/app/auth/[task]';
 import { styled } from '@material-ui/core/styles';
 
