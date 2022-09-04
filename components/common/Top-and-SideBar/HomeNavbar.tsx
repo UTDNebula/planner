@@ -101,8 +101,8 @@ export default function HomeNavbar({ open, setOpen, router }: HomeNavbarProps) {
         </button>
       </div>
       <div>
-        <a
-          href="#"
+        <button
+          onClick={() => router.push('/app/credits', undefined, { shallow: true })}
           className="flex items-center justify-center w-40 px-4 py-4 mt-2 space-x-1 text-md text-white transition-colors hover:bg-gray-600 hover:bg-gray-700 hover:underline"
         >
           <svg
@@ -124,7 +124,7 @@ export default function HomeNavbar({ open, setOpen, router }: HomeNavbarProps) {
           <span className="text-md font-semibold self-end text-white dark:text-gray-200">
             Credits
           </span>
-        </a>
+        </button>
       </div>
     </div>
   );
