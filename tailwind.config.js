@@ -3,6 +3,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        general: {
+          primary: '#4659A7',
+          secondary: '#BCC9FD',
+          accentOne: '#FBBB78',
+          accentTwo: '#A7EDE9',
+        },
         primary: {
           light: '#BCC9FD',
           DEFAULT: '#7486CE',
