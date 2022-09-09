@@ -74,9 +74,8 @@ npm start
 
 ### Contact
 
-This project is maintained by ACM Development, a division of ACM UTD. If you have
-any questions about this project or Project Nebula, see the [#ask-nebula](https://discord.com/channels/692266201644007424/811419400753905714)
-channel on the ACM Discord server (accessible at [acmutd.co/discord](https://acmutd.co/discord)).
+This project is maintained by Nebula Labs, which is an open-source initiative to build projects that improve student life at UTD. If you have
+any questions about this project or Project Nebula, join the Nebula Labs [discord](https://discord.gg/9Mefvj72).
 
 For more formal inquiries, send us a message at core-maintainers@utdnebula.com
 with "[nebula-web]" in the title. Please be as detailed as possible so we can
