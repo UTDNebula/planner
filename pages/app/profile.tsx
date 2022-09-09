@@ -28,8 +28,9 @@ export default function ProfilePage(): JSX.Element {
                 <IconButton
                   color="inherit"
                   onClick={(e) => {
+                    // TODO: Implement Me
                     e.stopPropagation();
-                    alert('HI');
+                    console.log('Edit icon clicked');
                   }}
                 >
                   <EditIcon />
@@ -60,8 +61,9 @@ export default function ProfilePage(): JSX.Element {
               <IconButton
                 color="inherit"
                 onClick={(e) => {
+                  // TODO: Implement Me
                   e.stopPropagation();
-                  alert('HI');
+                  console.log('Edit icon clicked');
                 }}
               >
                 <EditIcon />
@@ -76,8 +78,9 @@ export default function ProfilePage(): JSX.Element {
               <IconButton
                 color="inherit"
                 onClick={(e) => {
+                  // TODO: Implement Me
                   e.stopPropagation();
-                  alert('HI');
+                  console.log('Edit icon clicked');
                 }}
               >
                 <EditIcon />
@@ -92,8 +95,9 @@ export default function ProfilePage(): JSX.Element {
               <IconButton
                 color="inherit"
                 onClick={(e) => {
+                  // TODO: Implement Me
                   e.stopPropagation();
-                  alert('HI');
+                  console.log('Edit icon clicked');
                 }}
               >
                 <EditIcon />
@@ -108,8 +112,9 @@ export default function ProfilePage(): JSX.Element {
               <IconButton
                 color="inherit"
                 onClick={(e) => {
+                  // TODO: Implement Me
                   e.stopPropagation();
-                  alert('HI');
+                  console.log('Edit icon clicked');
                 }}
               >
                 <EditIcon />
@@ -124,8 +129,9 @@ export default function ProfilePage(): JSX.Element {
               <IconButton
                 color="inherit"
                 onClick={(e) => {
+                  // TODO: Implement Me
                   e.stopPropagation();
-                  alert('HI');
+                  console.log('Edit icon clicked');
                 }}
               >
                 <EditIcon />
@@ -140,8 +146,9 @@ export default function ProfilePage(): JSX.Element {
               <IconButton
                 color="inherit"
                 onClick={(e) => {
+                  // TODO: Implement Me
                   e.stopPropagation();
-                  alert('HI');
+                  console.log('Edit icon clicked');
                 }}
               >
                 <EditIcon />

@@ -26,8 +26,9 @@ export default function PlanCard({ id, plan }: PlanCardProps) {
           <IconButton
             color="inherit"
             onClick={(e) => {
+              // TODO: Implement Me
               e.stopPropagation();
-              alert('HI');
+              console.log('Edit Icon clicked');
             }}
           >
             <EditIcon />
