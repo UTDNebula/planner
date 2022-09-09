@@ -1,6 +1,6 @@
 import { RecentSemester } from '../../components/planner/PlannerContainer';
-import { Semester, SemesterCode, StudentPlan } from '../common/data';
 import DUMMY_PLAN from '../../data/add_courses.json';
+import { Semester, SemesterCode, StudentPlan } from '../common/data';
 
 // Initial value for plan until data is properly loaded
 export const initialPlan: StudentPlan = {

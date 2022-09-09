@@ -1,9 +1,9 @@
-import React from 'react';
 import { Theme, Typography } from '@mui/material';
-import createStyles from '@mui/styles/createStyles';
+import React from 'react';
 import { makeStyles } from 'tss-react/mui';
-import { HonorsIndicator } from './types';
+
 import { convertSemesterToData } from '../common/data-utils';
+import { HonorsIndicator } from './types';
 
 const useStyles = makeStyles()((theme: Theme) => {
   return {

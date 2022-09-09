@@ -1,7 +1,6 @@
-import { Theme, Drawer, List, ListItemText, Toolbar, Typography, MenuItem } from '@mui/material';
-import createStyles from '@mui/styles/createStyles';
-import { makeStyles } from 'tss-react/mui';
+import { Drawer, List, ListItemText, MenuItem, Theme, Toolbar, Typography } from '@mui/material';
 import React from 'react';
+import { makeStyles } from 'tss-react/mui';
 
 /**
  * A containing type for a displayed semester item.

@@ -1,7 +1,9 @@
-import React from 'react';
-import firebase from 'firebase/app';
 import 'firebase/auth';
+
+import firebase from 'firebase/app';
 import { useRouter } from 'next/router';
+import React from 'react';
+
 import { Course, Grade } from '../common/data';
 import { YearClassification } from '../common/student';
 

@@ -1,4 +1,5 @@
-import { Droppable, Draggable } from 'react-beautiful-dnd';
+import { Draggable, Droppable } from 'react-beautiful-dnd';
+
 import { Semester } from '../../../modules/common/data';
 import CourseCard from '../../common/CourseCard';
 

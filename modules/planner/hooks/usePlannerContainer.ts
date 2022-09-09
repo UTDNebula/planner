@@ -1,7 +1,8 @@
 import React from 'react';
 import { DropResult } from 'react-beautiful-dnd';
-import { Semester, Course, SEMESTER_CODE_MAPPINGS } from '../../common/data';
 import { v4 as uuid } from 'uuid';
+
+import { Course, Semester, SEMESTER_CODE_MAPPINGS } from '../../common/data';
 import { getRecentSemesterMetadata, getUpdatedSemesterData, reorderList } from '../plannerUtils';
 
 /**

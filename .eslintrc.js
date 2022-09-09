@@ -8,6 +8,8 @@ module.exports = {
     },
     // project: ['./tsconfig.json'],
   },
+  plugins: ['simple-import-sort', 'unused-imports'],
+
   extends: [
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended', // Uses the recommended rules from the @typescript-eslint/eslint-plugin
@@ -16,8 +18,15 @@ module.exports = {
   rules: {
     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
     // e.g. '@typescript-eslint/explicit-function-return-type': 'off',
-
+    'simple-import-sort/imports': 'error',
+    'simple-import-sort/exports': 'error',
     'react/react-in-jsx-scope': 'off',
+    'no-unused-vars': 'off', // or "@typescript-eslint/no-unused-vars": "off",
+    'unused-imports/no-unused-imports': 'error',
+    'unused-imports/no-unused-vars': [
+      'warn',
+      { vars: 'all', varsIgnorePattern: '^_', args: 'after-used', argsIgnorePattern: '^_' },
+    ],
   },
   settings: {
     react: {

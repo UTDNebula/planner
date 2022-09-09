@@ -1,12 +1,13 @@
-import React from 'react';
-import PlanCard from '../../../components/home/plans/PlanCard';
 import AddIcon from '@mui/icons-material/Add';
 import { useRouter } from 'next/router';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../modules/redux/store';
 import { v4 as uuid } from 'uuid';
-import { updatePlan } from '../../../modules/redux/userDataSlice';
+
+import PlanCard from '../../../components/home/plans/PlanCard';
 import { initialPlan } from '../../../modules/planner/plannerUtils';
+import { RootState } from '../../../modules/redux/store';
+import { updatePlan } from '../../../modules/redux/userDataSlice';
 
 /**
  * A list of the user's plans
