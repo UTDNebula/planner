@@ -1,5 +1,4 @@
-import React, { ComponentProps } from 'react';
-import { ReactComponent } from 'tss-react/tools/ReactComponent';
+import React from 'react';
 
 export default function TopAndSidebar({
   children,
