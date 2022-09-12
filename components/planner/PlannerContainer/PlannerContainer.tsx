@@ -1,7 +1,8 @@
+import React from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
+
 import { Semester, SemesterCode } from '../../../modules/common/data';
 import CourseSelector from '../CourseSelector';
-import React from 'react';
 import SemesterContainer from '../Semester/SemesterContainer';
 
 interface PlannerContainerProps {

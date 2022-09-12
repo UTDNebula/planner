@@ -1,13 +1,13 @@
-import { AppBar, IconButton, Toolbar, Typography, Theme, Button } from '@mui/material';
-import { makeStyles } from 'tss-react/mui';
-import createStyles from '@mui/styles/createStyles';
-import React from 'react';
 import MenuIcon from '@mui/icons-material/ArrowBack';
-import { useAuthContext } from '../../../modules/auth/auth-context';
-import { useRouter } from 'next/router';
-import styles from './PlanningToolbar.module.css';
 import SettingsIcon from '@mui/icons-material/Settings';
+import { AppBar, Button, IconButton, Theme, Toolbar, Typography } from '@mui/material';
+import { useRouter } from 'next/router';
+import React from 'react';
+import { makeStyles } from 'tss-react/mui';
+
+import { useAuthContext } from '../../../modules/auth/auth-context';
 import SettingsDialog from './PlannerSettings';
+import styles from './PlanningToolbar.module.css';
 
 function a11yProps(index: number) {
   return {

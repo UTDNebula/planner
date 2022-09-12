@@ -1,10 +1,13 @@
-import React from 'react';
-import PlanCard from '../../../components/home/plans/PlanCard';
 import AddIcon from '@mui/icons-material/Add';
 import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../modules/redux/store';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuid } from 'uuid';
+
+import PlanCard from '../../../components/home/plans/PlanCard';
+import { initialPlan } from '../../../modules/planner/plannerUtils';
+import { RootState } from '../../../modules/redux/store';
+import { updatePlan } from '../../../modules/redux/userDataSlice';
 
 /**
  * A list of the user's plans
@@ -15,6 +18,8 @@ export default function PlansPage(): JSX.Element {
 
   const router = useRouter();
 
+  const dispatch = useDispatch();
+
   // TODO: Write function to get user plans
   const { plans: userPlans } = useSelector((state: RootState) => state.userData);
   const plans = Object.values(userPlans);
@@ -22,6 +27,9 @@ export default function PlansPage(): JSX.Element {
   const handleCreatePlan = async () => {
     // Generate route id
     const routeID = uuid();
+    const newPlan = initialPlan;
+    newPlan.id = routeID;
+    dispatch(updatePlan(newPlan));
     router.push(`/app/plans/${routeID}`);
   };
 

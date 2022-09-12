@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { CourseAttempt } from '../../../../modules/auth/auth-context';
 /**
  * Component properties for a StudentHistoryView.

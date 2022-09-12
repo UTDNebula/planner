@@ -1,8 +1,8 @@
 # Request project lead by default
-*   @rajmeet2001
+*   @ZzRanger
 
 # Request all Project Nebula Maintainers to review other pull requests
-components/**/*   @UTDNebula/planner
-modules/**/*   @UTDNebula/planner
-pages/**/*   @UTDNebula/planner
-styles/**/*   @UTDNebula/planner
+components/**/*   @UTDNebula/nebula-planner
+modules/**/*   @UTDNebula/nebula-planner
+pages/**/*   @UTDNebula/nebula-planner
+styles/**/*   @UTDNebula/nebula-planner

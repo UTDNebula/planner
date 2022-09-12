@@ -1,13 +1,14 @@
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
-import { useRouter } from 'next/router';
-import { DegreeState } from '../DegreePicker';
-import DummyData from '../../../data/dummy_onboarding.json';
-import DegreePickerGallery, { pickerValidate } from '../DegreePickerGallery';
-import React from 'react';
 import { TextField } from '@mui/material';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import { useRouter } from 'next/router';
+import React from 'react';
+
+import DummyData from '../../../data/dummy_onboarding.json';
+import { DegreeState } from '../DegreePicker';
+import DegreePickerGallery, { pickerValidate } from '../DegreePickerGallery';
 
 // TODO: Populate w/ real values
 // Array of values to choose from for form

@@ -1,9 +1,10 @@
-import React from 'react';
-import { Divider, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import { AccountBox, ExitToApp, Home, ListAlt, School } from '@mui/icons-material';
-import HomeUserInfo from '../../home/HomeUserInfo';
+import { Divider, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import Link from 'next/link';
+import React from 'react';
+
 import { useAuthContext } from '../../../modules/auth/auth-context';
+import HomeUserInfo from '../../home/HomeUserInfo';
 
 /**
  * A navigation drawer that links to various screens in the app.

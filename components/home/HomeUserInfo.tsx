@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { useAuthContext } from '../../modules/auth/auth-context';
 import { SEMESTER_CODE_MAPPINGS } from '../../modules/common/data';
 import { convertSemesterToData } from '../../modules/common/data-utils';

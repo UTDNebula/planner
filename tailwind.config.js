@@ -3,23 +3,27 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        general: {
+          primary: '#4659A7',
+          secondary: '#BCC9FD',
+          accentOne: '#FBBB78',
+          accentTwo: '#A7EDE9',
+        },
         primary: {
-          light: '#6470F7',
-          DEFAULT: '#2F3FF4',
-          dark: '#0B1CD5',
+          light: '#BCC9FD',
+          DEFAULT: '#7486CE',
+          dark: '#4659A7',
         },
-        secondary: {
-          light: '#2FEEAB',
-          DEFAULT: '#11D08D',
-          dark: '#0C9766',
+        secondary1: {
+          light: '#FFE2C5',
+          DEFAULT: '#FFCF9D',
+          dark: '#FBBB78',
         },
-        navigation: {
-          DEFAULT: '#878FD6',
-          dark: '#5159A3',
-          line: '#C8D1F3',
+        secondary2: {
+          light: '#A7EDE9',
+          DEFAULT: '#69CCC6',
+          dark: '#4BA6A0',
         },
-        light: '#F9F9FA',
-        dark: '#1F201F',
       },
       fontSize: {
         headline1: [
@@ -122,7 +126,8 @@ module.exports = {
       },
     },
     fontFamily: {
-      sans: ['Roboto', 'ui-sans-serif', 'system-ui'],
+      roboto: ['Roboto', 'ui-sans-serif', 'system-ui'],
+      jost: ['Jost', 'Roboto', 'ui-sans-serif', 'system-ui'],
     },
   },
   plugins: [],
