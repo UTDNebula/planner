@@ -11,7 +11,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
-import AppNavigation from '../components/common/AppNavigation';
+import TopAndSidebar from '../components/common/Top-and-SideBar/TopAndSidebar';
 import { AuthProvider } from '../modules/auth/auth-context';
 import { useStore } from '../modules/redux/store';
 
@@ -44,14 +44,14 @@ if (!firebase.apps.length) {
 const needAppNav = (pathname: string): boolean => {
   const routesList = ['/app/onboarding', '/auth', '/app/plans/', '/app/test'];
   if (pathname === '/') {
-    return true;
+    return false;
   }
   for (let i = 0; i < routesList.length; i++) {
     if (pathname.startsWith(routesList[i])) {
-      return true;
+      return false;
     }
   }
-  return false;
+  return true;
 };
 
 /**
@@ -62,16 +62,11 @@ function PageLayout({ Component, pageProps }) {
   const router = useRouter();
 
   const content = needAppNav(router.pathname) ? (
-    <Component {...pageProps} />
+    <TopAndSidebar>
+      <Component {...pageProps} />
+    </TopAndSidebar>
   ) : (
-    <div className="flex w-full min-h-full">
-      <div className="h-full max-w-2xl">
-        <AppNavigation />
-      </div>
-      <main className="h-full flex-1 bg-gray-100">
-        <Component {...pageProps} />
-      </main>
-    </div>
+    <Component {...pageProps} />
   );
   return content;
 }

@@ -34,11 +34,12 @@ export default function PlansPage(): JSX.Element {
   };
 
   return (
-    <div className="flex flex-1 justify-center items-center bg-white">
-      <section className="grid grid-cols-3 mx-40 my-20">
+    <div className="flex flex-col mx-4 my-12">
+      <div className="text-white text-3xl ml-10">Degree Plans </div>
+      <section className="grid grid-cols-3">
         <button
           onClick={handleCreatePlan}
-          className="w-60 h-40 m-10 flex p-4 border justify-center items-center hover:bg-gray-100 border-gray-400 rounded-md shadow-xl"
+          className="text-white justify-center items-center space-y-4 w-64 h-44 m-10 flex p-4 border bg-[#6372AE] hover:bg-blue-700 border-gray-400 rounded-md flex-col shadow-xl"
         >
           <div className="flex flex-col justify-center items-center">
             <div className="text-3xl">
