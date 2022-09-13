@@ -1,14 +1,9 @@
-import Head from 'next/head';
-import { useAuthContext } from '../../modules/auth/auth-context';
-import { useUserProfileData } from '../../modules/profile/userProfileData';
-import CourseAudit from '../../components/home/history/StudentHistoryView/CourseAudit';
-import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
-import EditIcon from '@mui/icons-material/Edit';
-import Switch from '@mui/material/Switch';
-import Select from '@mui/material/Select';
 import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
+import IconButton from '@mui/material/IconButton';
 import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import Head from 'next/head';
 
 /**
  * A page containing student attributes and other account settings.

@@ -11,14 +11,9 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
-import AppNavigation from '../components/common/AppNavigation';
+import TopAndSidebar from '../components/common/Top-and-SideBar/TopAndSidebar';
 import { AuthProvider } from '../modules/auth/auth-context';
 import { useStore } from '../modules/redux/store';
-import AppNavigation from '../components/common/AppNavigation';
-
-import { ThemeProvider, Theme, StyledEngineProvider, createTheme } from '@mui/material/styles';
-import TopAndSidebar from '../components/common/Top-and-SideBar/TopAndSidebar';
-
 
 const theme = createTheme();
 

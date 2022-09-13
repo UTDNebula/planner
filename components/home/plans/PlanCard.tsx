@@ -1,6 +1,7 @@
-import router from 'next/router';
-import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
+import IconButton from '@mui/material/IconButton';
+import router from 'next/router';
+
 import { StudentPlan } from '../../../modules/common/data';
 
 export type PlanCardProps = {
@@ -18,7 +19,7 @@ export default function PlanCard({ id, plan }: PlanCardProps) {
   return (
     <button
       onClick={handlePlanClick}
-      className=" text-white w-64 h-44 m-10 flex flex-col py-4 space-y-6 px-12 border bg-[#6372AE] hover:bg-blue-700 border-gray-400 rounded-md shadow-xl"
+      className=" text-white w-68 h-44 m-10 flex flex-col py-4 space-y-4 px-12 border bg-[#6372AE] hover:bg-blue-700 border-gray-400 rounded-md shadow-xl"
     >
       <div className="relative">
         <div className="text-headline6">{title}</div>
