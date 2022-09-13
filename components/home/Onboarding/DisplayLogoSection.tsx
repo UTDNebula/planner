@@ -70,7 +70,7 @@ export default function NebPlannerDisplay(): JSX.Element {
                 fontFamily: 'Jost',
                 fontSize: '15px',
               }}
-              href="/app/auth/signup"
+              href="/auth/signup"
             >
               GET STARTED
             </Button>

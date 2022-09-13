@@ -74,7 +74,7 @@ export default function ResponsiveAppBar({ ref1, ref2, ref3 }: Props): JSX.Eleme
                   fontSize: '18px',
                   fontWeight: 'bold',
                 }}
-                href="/app/auth/login"
+                href="/auth/login"
               >
                 LOG IN
               </Button>
@@ -86,7 +86,7 @@ export default function ResponsiveAppBar({ ref1, ref2, ref3 }: Props): JSX.Eleme
                   fontFamily: 'Jost',
                   fontSize: '18px',
                 }}
-                href="/app/auth/signup"
+                href="/auth/signup"
               >
                 GET STARTED
               </Button>
