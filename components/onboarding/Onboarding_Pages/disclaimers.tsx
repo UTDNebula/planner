@@ -1,5 +1,6 @@
-import React from 'react';
 import { useRouter } from 'next/router';
+import React from 'react';
+
 import Disclaimer, { ConsentInfo } from '../Disclaimer';
 
 export default function Disclaimers(): JSX.Element {

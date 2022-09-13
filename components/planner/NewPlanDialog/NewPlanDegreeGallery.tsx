@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import DegreePicker, { DegreeState } from './NewPlanDegreePicker';
 
 export type DegreePickerGalleryProps = {

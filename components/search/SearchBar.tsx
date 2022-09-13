@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { IconButton, InputBase, Paper } from '@mui/material';
 import { Search as SearchIcon } from '@mui/icons-material';
+import { IconButton, InputBase, Paper } from '@mui/material';
+import React, { useState } from 'react';
 
 /**
  * A search bar that allows for filtering of queries.

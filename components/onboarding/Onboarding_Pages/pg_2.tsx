@@ -1,16 +1,17 @@
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
+import { FormControlLabel, FormGroup } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
-import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
+import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-import { FormGroup, FormControlLabel } from '@mui/material';
-import DummyData from '../../../data/dummy_onboarding.json';
-import { HonorsIndicator } from '../../../modules/common/types';
-import { HONORS_INDICATOR_LABELS } from '../../../modules/common/data-utils';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import TextField from '@mui/material/TextField';
 import React from 'react';
+
+import DummyData from '../../../data/dummy_onboarding.json';
+import { HONORS_INDICATOR_LABELS } from '../../../modules/common/data-utils';
+import { HonorsIndicator } from '../../../modules/common/types';
 
 // Array of values to choose from for form
 const scholarships = DummyData.scholarships;

@@ -1,13 +1,12 @@
-import * as React from 'react';
+import 'animate.css';
+
+import { Button, Divider } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { Button, CardActionArea, CardActions, Divider } from '@mui/material';
-import { Box } from '@material-ui/core';
-import 'animate.css';
-import { useInView } from 'react-intersection-observer';
+import * as React from 'react';
 import { Fade } from 'react-awesome-reveal';
+import { useInView } from 'react-intersection-observer';
 
 // Purpose of this component is to display all semesters and course information from each respective semester.
 export default function DegreePlanWrapper() {

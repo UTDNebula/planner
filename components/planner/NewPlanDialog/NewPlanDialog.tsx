@@ -1,30 +1,17 @@
-import {
-  Checkbox,
-  Container,
-  Dialog,
-  DialogTitle,
-  IconButton,
-  Paper,
-  Select,
-  Box,
-  Typography,
-  Grid,
-  Button,
-} from '@mui/material';
-import React, { useState } from 'react';
 import { ArrowBack, ArrowForward } from '@mui/icons-material';
-import { NewPlanFlowState, useCreateNewPlanFlow } from '../../../modules/planner/hooks/newPlanFlow';
-import DummyData from '../../../data/dummy_onboarding.json';
-import Switch from '@mui/material/Switch';
-import router from 'next/router';
-import { v4 as uuid } from 'uuid';
-import SearchBar from '../../search/SearchBar';
-import useSearch from '../../search/search';
 import { Close } from '@mui/icons-material';
-import { DegreeState } from './NewPlanDegreePicker';
+import { Box, Container, Dialog, IconButton, Select, Typography } from '@mui/material';
+import router from 'next/router';
+import React, { useState } from 'react';
+import React from 'react';
+import { v4 as uuid } from 'uuid';
+
+import { useCreateNewPlanFlow } from '../../../modules/planner/hooks/newPlanFlow';
+import useSearch from '../../search/search';
+import SearchBar from '../../search/SearchBar';
 import NewPlanDegreeGallery, { pickerValidate } from './NewPlanDegreeGallery';
+import { DegreeState } from './NewPlanDegreePicker';
 import NewPlanTransferGallery, { CreditState } from './NewPlanTransferGallery';
-import { HonorsIndicator } from '../../../modules/common/types';
 
 export type NewPlanProps = {
   degree: DegreeState[];

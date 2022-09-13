@@ -1,19 +1,14 @@
-import React from 'react';
-import PlanCard from '../../../components/home/plans/PlanCard';
 import AddIcon from '@mui/icons-material/Add';
 import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../modules/redux/store';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuid } from 'uuid';
-import NewPlanDialog from '../../../components/planner/NewPlanDialog';
-import { useCreateNewPlanFlow } from '../../../modules/planner/hooks/newPlanFlow';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import { Button, TextField } from '@mui/material';
-import { maxWidth } from '@mui/system';
+
+import PlanCard from '../../../components/home/plans/PlanCard';
+import { initialPlan } from '../../../modules/planner/plannerUtils';
+import { RootState } from '../../../modules/redux/store';
+import { updatePlan } from '../../../modules/redux/userDataSlice';
+
 /**
  * A list of the user's plans
  */
@@ -23,6 +18,8 @@ export default function PlansPage(): JSX.Element {
   const [title, setTitle] = React.useState('');
   const [major, setMajor] = React.useState('');
   const router = useRouter();
+
+  const dispatch = useDispatch();
 
   // TODO: Write function to get user plans
   const { plans: userPlans } = useSelector((state: RootState) => state.userData);
@@ -35,16 +32,19 @@ export default function PlansPage(): JSX.Element {
   const handleCreatePlan = async () => {
     // Generate route id ${routeID}
     const routeID = uuid();
-    console.log(router);
+    const newPlan = initialPlan;
+    newPlan.id = routeID;
+    dispatch(updatePlan(newPlan));
     router.push(`/app/plans/${routeID}`);
   };
 
   return (
-    <div className="flex flex-1 justify-center items-center bg-white">
-      <section className="grid grid-cols-3 mx-40 my-20">
+    <div className="flex flex-col mx-4 my-12">
+      <div className="text-white text-3xl ml-10">Degree Plans </div>
+      <section className="grid grid-cols-3">
         <button
-          onClick={handleOpen}
-          className="w-60 h-40 m-10 flex p-4 border justify-center items-center hover:bg-gray-100 border-gray-400 rounded-md shadow-xl"
+          onClick={handleCreatePlan}
+          className="text-white justify-center items-center space-y-4 w-64 h-44 m-10 flex p-4 border bg-[#6372AE] hover:bg-blue-700 border-gray-400 rounded-md flex-col shadow-xl"
         >
           <div className="flex flex-col justify-center items-center">
             <div className="text-3xl">
@@ -57,7 +57,6 @@ export default function PlansPage(): JSX.Element {
           <PlanCard key={plan.id} id={plan.id} plan={plan} />
         ))}
       </section>
-      <NewPlanDialog openDialog={open} setOpenDialog={setOpen}></NewPlanDialog>
     </div>
   );
 }

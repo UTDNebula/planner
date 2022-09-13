@@ -1,9 +1,10 @@
-import React from 'react';
-import { Divider, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import { AccountBox, ExitToApp, Home, ListAlt, School } from '@mui/icons-material';
-import HomeUserInfo from '../../home/HomeUserInfo';
+import { Divider, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import Link from 'next/link';
+import React from 'react';
+
 import { useAuthContext } from '../../../modules/auth/auth-context';
+import HomeUserInfo from '../../home/HomeUserInfo';
 
 /**
  * A navigation drawer that links to various screens in the app.
@@ -14,13 +15,13 @@ import { useAuthContext } from '../../../modules/auth/auth-context';
  */
 export default function AppNavigation(): JSX.Element {
   // TODO: Highlight active item based on current location
-  const { isSignedIn } = useAuthContext();
+  const { isUserSignedIn } = useAuthContext();
 
   /* Decides if the button should be login or 
   sign out based on the current auth state */
   const authItem = {
-    route: isSignedIn ? '/app/auth/signOut' : '/app/auth/login',
-    label: isSignedIn ? 'Sign out' : 'Sign in',
+    route: isUserSignedIn ? '/auth/signOut' : '/auth/login',
+    label: isUserSignedIn ? 'Sign out' : 'Sign in',
   };
 
   return (

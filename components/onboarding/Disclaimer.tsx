@@ -1,6 +1,7 @@
 import { Button, Checkbox, FormControlLabel } from '@mui/material';
-import React from 'react';
 import Link from 'next/link';
+import React from 'react';
+
 import ServiceName from '../common/ServiceName';
 
 /**

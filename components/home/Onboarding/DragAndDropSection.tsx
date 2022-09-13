@@ -1,11 +1,8 @@
-import Head from 'next/head';
-import React from 'react';
-import Link from 'next/link';
-import { useDispatch } from 'react-redux';
-import { Button, Card, CardContent, CardMedia, Grid, IconButton, Typography } from '@mui/material';
-import { Box } from '@mui/system';
 import 'animate.css';
-import { useInView } from 'react-intersection-observer';
+
+import { CardMedia, Grid, Typography } from '@mui/material';
+import { Box } from '@mui/system';
+import React from 'react';
 
 export default function DragAndDrop(): JSX.Element {
   return (

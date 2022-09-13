@@ -1,11 +1,9 @@
-import Head from 'next/head';
-import React from 'react';
-import Link from 'next/link';
-import { useDispatch } from 'react-redux';
-import { Button, Card, CardContent, CardMedia, Grid, IconButton, Typography } from '@mui/material';
 import 'animate.css';
-import { useInView } from 'react-intersection-observer';
+
+import { Button, Grid, Typography } from '@mui/material';
+import React from 'react';
 import { Fade } from 'react-awesome-reveal';
+import { useInView } from 'react-intersection-observer';
 
 export default function NebFeatureDisplay(): JSX.Element {
   const { ref: learnMoreRef, inView: learnMoreVisible } = useInView({

@@ -1,8 +1,10 @@
+import { useRouter } from 'next/router';
 import React from 'react';
-import { Semester, StudentPlan } from '../../common/data';
-import DUMMY_PLAN from '../../../data/add_courses.json';
 import { useDispatch, useStore } from 'react-redux';
+
+import { Semester, StudentPlan } from '../../common/data';
 import { updatePlan } from '../../redux/userDataSlice';
+import { initialPlan } from '../plannerUtils';
 
 /**
  * A utility hook that exposes callbacks to handle manipulating the StudentPlan.
@@ -17,13 +19,7 @@ export function usePlan() {
 
   const dispatch = useDispatch();
 
-  // Initial value for plan until data is properly loaded
-  const initialPlan: StudentPlan = {
-    id: planId,
-    title: 'Just a Degree Plan',
-    major: 'Computer Science',
-    semesters: DUMMY_PLAN,
-  };
+  const router = useRouter();
 
   // Manages plan state
   const [plan, setPlan] = React.useState<StudentPlan>(initialPlan);
@@ -108,12 +104,10 @@ export function usePlan() {
   };
 
   /**
-   * TODO: Get the StudentPlan from Firebase if exists
-   * TODO: After completing newPlanFow, automatically populate state.userData.plans[planId]
-   * with correct plan and remove initialPlan
-   *
    * The fetchPlan function returns a StudentPlan from an external storage
    * given a planId.
+   *
+   * If no such plan exists, redirect the user back to the plans page
    *
    * @param planId unique identifier for each plan
    * @returns a StudentPlan
@@ -122,10 +116,10 @@ export function usePlan() {
     // Make copy of student plan from redux or get default plan if doesn't exist
     const plan: StudentPlan = store.getState().userData.plans[planId] ?? initialPlan;
     if (plan.id !== 'empty-plan') {
-      // Remove this logic once initialPlan deprecated
       return JSON.parse(JSON.stringify(plan));
     } else {
-      plan.id = planId;
+      // Redirect back to '/app/plans'
+      router.push('/app/plans');
       return plan;
     }
   }

@@ -1,9 +1,10 @@
 import { useRouter } from 'next/router';
 import React from 'react';
-import { useDispatch, useSelector, useStore } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { useAuthContext } from '../../../modules/auth/auth-context';
 import { RootState } from '../../../modules/redux/store';
-import { AcademicDataState, loadUser } from '../../../modules/redux/userDataSlice';
+import { loadUser } from '../../../modules/redux/userDataSlice';
 
 // This page handles routing in the app
 export default function Routing() {
@@ -16,10 +17,11 @@ export default function Routing() {
   const data = useSelector((state: RootState) => state.userData);
 
   // Runs whenever user is updated
+  // TODO: Handle edge case if user signs into actual account after using guest account
+  // i.e. find a way to smoothly save the data
   React.useEffect(() => {
     if (user) {
       console.info('User has changed.', user);
-
       // Sync Redux & Firebase
       dispatch(loadUser(user));
       setSync(true);

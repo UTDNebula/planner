@@ -1,17 +1,18 @@
 import { AppBar, Button, IconButton, Toolbar, Typography } from '@mui/material';
-import logo from '../../public/logo.png';
 import Image from 'next/image';
-import { useAuthContext } from '../../modules/auth/auth-context';
 import { useRouter } from 'next/router';
+
+import { useAuthContext } from '../../modules/auth/auth-context';
+import logo from '../../public/logo.png';
 
 // TODO: Unused; refactor navigationbar for Planner v1
 export default function HomeNavigationBar() {
-  const { isSignedIn } = useAuthContext();
+  const { isUserSignedIn } = useAuthContext();
   const router = useRouter();
 
   const authItem = {
-    route: isSignedIn ? '/app/auth/signOut' : '/app/auth/Login',
-    label: isSignedIn ? 'Sign out' : 'Sign in',
+    route: isUserSignedIn ? '/auth/signOut' : '/auth/Login',
+    label: isUserSignedIn ? 'Sign out' : 'Sign in',
   };
 
   const handleAuthUpdate = () => {

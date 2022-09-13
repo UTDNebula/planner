@@ -1,9 +1,10 @@
 import { Box, Typography } from '@mui/material';
-import React from 'react';
-import { useAuthContext } from '../../modules/auth/auth-context';
 import Image from 'next/image';
-import logo from '../../public/Nebula_Planner_Logo.png';
 import Link from 'next/link';
+import React from 'react';
+
+import { useAuthContext } from '../../modules/auth/auth-context';
+import logo from '../../public/Nebula_Planner_Logo.png';
 
 /**
  * Generate ARIA element attributes for a11y.
@@ -113,7 +114,7 @@ export default function AuthCard(): JSX.Element {
         <div className="flex place-content-center">
           <p>
             Already have an account?
-            <Link href="/app/auth/login">
+            <Link href="/auth/login">
               <a className="ml-2 text-blue-700 font-semibold hover:bg-blue-200 hover:rounded-lg">
                 Sign In
               </a>

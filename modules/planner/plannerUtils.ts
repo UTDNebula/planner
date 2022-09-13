@@ -1,5 +1,14 @@
 import { RecentSemester } from '../../components/planner/PlannerContainer';
-import { Semester, SemesterCode } from '../common/data';
+import DUMMY_PLAN from '../../data/add_courses.json';
+import { Semester, SemesterCode, StudentPlan } from '../common/data';
+
+// Initial value for plan until data is properly loaded
+export const initialPlan: StudentPlan = {
+  id: 'empty-plan',
+  title: 'Just a Degree Plan',
+  major: 'Computer Science',
+  semesters: DUMMY_PLAN,
+};
 
 /**
  * This function generates the metadata needed

@@ -1,19 +1,7 @@
-import Head from 'next/head';
-import React from 'react';
-import Link from 'next/link';
-import { useDispatch } from 'react-redux';
-import {
-  Button,
-  Card,
-  CardContent,
-  CardMedia,
-  Container,
-  Grid,
-  IconButton,
-  Typography,
-} from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import { Box } from '@mui/system';
-import ClassCard from './ClassCard';
+import React from 'react';
+
 import DegreePlanWrapper from './ClassCard';
 
 interface FeatureProps {

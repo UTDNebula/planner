@@ -1,11 +1,12 @@
-import React from 'react';
 import { Close, KeyboardArrowUp } from '@mui/icons-material';
 import { Button, IconButton } from '@mui/material';
 import Link from 'next/link';
-import useUserPlanData from '../../modules/redux/userPlanData';
-import CourseCard from '../common/CourseCard';
+import React from 'react';
+
 import { useAuthContext } from '../../modules/auth/auth-context';
 import { Course } from '../../modules/common/data';
+import useUserPlanData from '../../modules/redux/userPlanData';
+import CourseCard from '../common/CourseCard';
 /**
  * Component props for a UserPlanSheet.
  */

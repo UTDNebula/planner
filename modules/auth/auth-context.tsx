@@ -1,7 +1,9 @@
-import React from 'react';
-import firebase from 'firebase/app';
 import 'firebase/auth';
+
+import firebase from 'firebase/app';
 import { useRouter } from 'next/router';
+import React from 'react';
+
 import { Course, Grade } from '../common/data';
 import { YearClassification } from '../common/student';
 
@@ -92,6 +94,15 @@ const ANONYMOUS_USER = {
  */
 export const users: { [key: string]: ServiceUser } = {
   anonymous: ANONYMOUS_USER,
+  unauthenticated: {
+    id: 'unauthenticated',
+    email: null,
+    name: null,
+    image: null,
+    requiresAuthentication(): boolean {
+      return false;
+    },
+  },
   default: {
     id: 'default',
     email: null,
@@ -116,7 +127,7 @@ interface AuthContextState {
   /**
    * Returns whether a user is currently signed in to the Service.
    */
-  isSignedIn: boolean;
+  isUserSignedIn: boolean;
 
   /**
    * Forces a sign-in and redirects to the given link after success.
@@ -129,6 +140,11 @@ interface AuthContextState {
    * Checks if a redirect needs to occur
    */
   checkRedirect: () => void;
+
+  /**
+   * Signs in as guest
+   */
+  signInAsGuest: () => void;
 
   /**
    * Signs in using Google OAuth pop-up.
@@ -176,7 +192,9 @@ function useAuthContext(): AuthContextState {
 }
 
 function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element {
-  const [user, setUser] = React.useState<ServiceUser>(users.anonymous);
+  const router = useRouter();
+
+  const [user, setUser] = React.useState<ServiceUser>(users.unauthenticated);
   const [redirect, setRedirect] = React.useState('/app/routes/route');
   const [shouldRedirect, setShouldRedirect] = React.useState(false);
 
@@ -184,14 +202,15 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
 
   const updateUser = React.useCallback((firebaseUser: firebase.User | null) => {
     if (firebaseUser === null) {
-      // User is signed out
-      // TODO(auth): Determine if we want to remove user data from device on sign out
-      setUser(ANONYMOUS_USER);
       return;
     }
-    const { displayName, email, photoURL, uid } = firebaseUser;
+    const { displayName, email, photoURL, uid, isAnonymous } = firebaseUser;
+    let id = uid;
+    if (isAnonymous) {
+      id = 'guest';
+    }
     setUser({
-      id: uid,
+      id: id,
       name: displayName || 'Student',
       email: email,
       image: photoURL,
@@ -201,23 +220,6 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
       },
     });
   }, []);
-
-  React.useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
-      updateUser(user);
-    });
-  }, []);
-
-  React.useEffect(() => {
-    if (shouldRedirect) {
-      if (redirect) {
-        history.push(redirect);
-        setShouldRedirect(false);
-      } else {
-        console.error('Redirect location is null');
-      }
-    }
-  }, [shouldRedirect]);
 
   /**
    * Switches the currently active user session.
@@ -241,7 +243,7 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
       .auth()
       .signOut()
       .then(() => {
-        const user = users.anonymous;
+        const user = users.unauthenticated;
         setUser(user);
         setRedirect('/');
         setShouldRedirect(true);
@@ -277,6 +279,30 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
   }, []);
 
   /**
+   * Signs the user into Planner as a guest
+   */
+  const signInAsGuest = () => {
+    firebase
+      .auth()
+      .signInAnonymously()
+      .then(({ user }) => {
+        updateUser(user);
+        setShouldRedirect(true);
+        setRedirect('/app/routes/route');
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const { code, message } = error;
+        if (code == 'auth/weak-password') {
+          console.warn('The password is too weak.');
+        } else {
+          console.log(message);
+        }
+        alert(message);
+        console.log(error);
+      });
+  };
+  /**
    * Tries creating an account using the email and password provided.
    *
    * @param email The user's email
@@ -288,7 +314,6 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
       .createUserWithEmailAndPassword(email, password)
       .then(async ({ /* credential, */ user }) => {
         setRedirect('/app/routes/route');
-
         updateUser(user);
         setShouldRedirect(true);
       })
@@ -371,19 +396,61 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
   };
 
   const checkRedirect = () => {
-    if (user.id !== 'guest') {
+    console.log(user, 'USER');
+    if (user.id !== 'guest' && user.id !== 'unauthenticated') {
       setShouldRedirect(true);
     }
   };
-  const isSignedIn = user.id !== ('anonymous' && 'guest');
+
+  // Boolean for if a user account is signed in (anonymous users are not counted)
+  const isUserSignedIn = user.id !== ('unauthenticated' && 'guest');
+
+  const [loadAuthentication, setLoadAuthentication] = React.useState(false);
+
+  /**
+   * Update auth state on page load
+   */
+  React.useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      updateUser(user);
+      setLoadAuthentication(true);
+    });
+  }, []);
+
+  /**
+   * Once authentication is properly loaded, redirect the user to Home Page
+   * if they didn't meet the proper authentication requirements
+   */
+  React.useEffect(() => {
+    if (loadAuthentication) {
+      if (user.id === 'unauthenticated' && router.pathname != '/') {
+        router.push('/');
+      }
+    }
+  }, [loadAuthentication]);
+
+  /**
+   * Redirect user should the conditions for a redirect be met
+   */
+  React.useEffect(() => {
+    if (shouldRedirect) {
+      if (redirect) {
+        history.push(redirect);
+        setShouldRedirect(false);
+      } else {
+        console.error('Redirect location is null');
+      }
+    }
+  }, [shouldRedirect]);
 
   const authContextValue: AuthContextState = {
     user,
-    isSignedIn,
+    isUserSignedIn,
     authWithRedirect,
     checkRedirect,
     signUpWithEmail,
     switchAccounts,
+    signInAsGuest,
     signInWithGoogle,
     signInWithEmail,
     signOut,

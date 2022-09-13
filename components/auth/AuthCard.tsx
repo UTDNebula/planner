@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useDispatch } from 'react-redux';
+
 import { useAuthContext } from '../../modules/auth/auth-context';
 import { resetStore } from '../../modules/redux/userDataSlice';
 import Login from './Login';
@@ -64,11 +65,11 @@ export default function AuthCard({ authState }: AuthCardProps): JSX.Element {
 
   /**
    * Runs whenever an invalid route is passed
-   * into /app/auth
+   * into /auth
    */
   function invalidAction() {
     console.error('Invalid route, returning to login screen.');
-    router.push('/app/auth/login');
+    router.push('/auth/login');
   }
 
   /**

@@ -1,20 +1,12 @@
-import * as React from 'react';
+import '@fontsource/jost';
+
+import { styled } from '@material-ui/core/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
-import '@fontsource/jost';
-import { createTheme, ThemeProvider } from '@material-ui/core/styles';
-import AuthPage from '../../../pages/app/auth/[task]';
-import { styled } from '@material-ui/core/styles';
+import Container from '@mui/material/Container';
+import Toolbar from '@mui/material/Toolbar';
+import * as React from 'react';
 
 const pages = ['Overview', 'Features', 'Learn More'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];

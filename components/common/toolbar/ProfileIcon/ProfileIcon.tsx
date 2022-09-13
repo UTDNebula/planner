@@ -1,11 +1,12 @@
-import React from 'react';
-import { Avatar, IconButton, ListItemIcon, ListItemText, Menu, MenuItem } from '@mui/material';
-import AccountIcon from '@mui/icons-material/AccountCircle';
-import AccountBox from '@mui/icons-material/AccountBox';
 import { ExitToApp } from '@mui/icons-material';
+import AccountBox from '@mui/icons-material/AccountBox';
+import AccountIcon from '@mui/icons-material/AccountCircle';
+import { Avatar, IconButton, ListItemIcon, ListItemText, Menu, MenuItem } from '@mui/material';
 import Link from 'next/link';
-import styles from './ProfileIcon.module.css';
+import React from 'react';
+
 import { useAuthContext } from '../../../../modules/auth/auth-context';
+import styles from './ProfileIcon.module.css';
 
 /**
  * Component properties for a {@link ProfileIcon}.
@@ -43,7 +44,7 @@ export default function ProfileIcon(props: ProfileIconProps): JSX.Element {
 
   const { name, image } = user;
 
-  const isSignedIn = user.id !== 'guest';
+  const { isUserSignedIn } = useAuthContext();
 
   const userData = {
     classification: 'Junior',
@@ -51,7 +52,7 @@ export default function ProfileIcon(props: ProfileIconProps): JSX.Element {
   };
 
   const avatarIcon =
-    isSignedIn && image != null ? (
+    isUserSignedIn && image != null ? (
       <Avatar alt={image} src={image} />
     ) : (
       <Avatar alt={name}>
@@ -97,7 +98,7 @@ export default function ProfileIcon(props: ProfileIconProps): JSX.Element {
             </div>
           </div>
         </div>
-        {isSignedIn ? (
+        {isUserSignedIn ? (
           [
             <MenuItem component={Link} href="/app/profile" key="profile">
               <ListItemIcon>
@@ -105,7 +106,7 @@ export default function ProfileIcon(props: ProfileIconProps): JSX.Element {
               </ListItemIcon>
               <ListItemText primary="Manage profile" />
             </MenuItem>,
-            <MenuItem component={Link} href="/app/auth/signOut" key="auth">
+            <MenuItem component={Link} href="/auth/signOut" key="auth">
               <ListItemIcon>
                 <ExitToApp />
               </ListItemIcon>
@@ -113,7 +114,7 @@ export default function ProfileIcon(props: ProfileIconProps): JSX.Element {
             </MenuItem>,
           ]
         ) : (
-          <MenuItem component={Link} href="/app/auth/Login">
+          <MenuItem component={Link} href="/auth/Login">
             <ListItemIcon>
               <ExitToApp />
             </ListItemIcon>
