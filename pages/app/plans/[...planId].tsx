@@ -13,7 +13,7 @@ import { useSemesterNavigation } from '../../../components/planner/SemesterNavig
 import useSearch from '../../../components/search/search';
 import { CourseAttempt } from '../../../modules/auth/auth-context';
 import { loadCourseAttempts } from '../../../modules/common/api/courseAttempts';
-import { loadCourses } from '../../../modules/common/api/courses';
+import { loadDummyCourses } from '../../../modules/common/api/courses';
 import { StudentPlan } from '../../../modules/common/data';
 import { usePlan } from '../../../modules/planner/hooks/usePlan';
 import { usePlannerContainer } from '../../../modules/planner/hooks/usePlannerContainer';
@@ -32,6 +32,7 @@ const useStyles = makeStyles()((theme: Theme) => {
     },
     fab: {
       margin: '8px',
+      backgroundColor: '#1976d2',
     },
   };
 });
@@ -48,7 +49,7 @@ export default function PlanDetailPage(): JSX.Element {
   const [courseAttempts, setCourseAttempts] = React.useState<CourseAttempt[]>([]);
 
   const { results, updateQuery, getResults } = useSearch({
-    getData: loadCourses,
+    getData: loadDummyCourses,
     filterBy: 'catalogCode',
   });
 
