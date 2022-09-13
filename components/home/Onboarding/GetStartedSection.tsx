@@ -65,7 +65,7 @@ export default function NebFeatureDisplay(): JSX.Element {
               fontFamily: 'Jost',
               fontSize: '18px',
             }}
-            href="/app/auth/signup"
+            href="/auth/signup"
           >
             GET STARTED
           </Button>

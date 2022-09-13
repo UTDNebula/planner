@@ -3,7 +3,6 @@ import { Close } from '@mui/icons-material';
 import { Box, Container, Dialog, IconButton, Select, Typography } from '@mui/material';
 import router from 'next/router';
 import React, { useState } from 'react';
-import React from 'react';
 import { v4 as uuid } from 'uuid';
 
 import { useCreateNewPlanFlow } from '../../../modules/planner/hooks/newPlanFlow';
