@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useMemo } from 'react';
 import { applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { persistReducer, persistStore } from 'redux-persist';
+import { PersistorOptions, persistReducer, persistStore } from 'redux-persist';
 import thunkMiddleware from 'redux-thunk';
 
 import reducers from './rootReducer';
@@ -63,7 +63,10 @@ export const initializeStore = (preloadedState) => {
  */
 export function useStore(initialState: RootState) {
   const store = useMemo(() => initializeStore(initialState), [initialState]);
-  const persistor = persistStore(store);
+
+  // init presistor with paused persistence, see: https://github.com/UTDNebula/planner/issues/80
+  const persistor = persistStore(store, { manualPersist: true } as PersistorOptions);
+
   return {
     store,
     persistor,
