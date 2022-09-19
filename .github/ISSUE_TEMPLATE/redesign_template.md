@@ -3,7 +3,7 @@ name: Redesign
 about: 'Fill this out if you believe certain designs or functionality could be improved'
 title: '[Redesign]'
 labels: 'Type: Redesign, Status: Awaiting Triage'
-assignees: ''
+assignees: 'ZzRanger'
 ---
 
 # Background
