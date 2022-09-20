@@ -7,7 +7,7 @@ import { AnimateSharedLayout } from 'framer-motion';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
@@ -81,6 +81,9 @@ function PageLayout({ Component, pageProps }) {
  */
 export default function NebulaApp({ Component, pageProps }: AppProps): JSX.Element {
   const { store, persistor } = useStore(pageProps.initialReduxState);
+
+  // manually resume persistence, see: https://github.com/UTDNebula/planner/issues/80
+  useEffect(persistor.persist, []);
 
   return (
     <AuthProvider>
