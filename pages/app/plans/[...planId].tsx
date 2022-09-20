@@ -50,7 +50,8 @@ export default function PlanDetailPage(): JSX.Element {
 
   const { results, updateQuery, getResults } = useSearch({
     getData: loadDummyCourses,
-    filterBy: 'catalogCode',
+    initialQuery: '',
+    filterFn: (elm, query) => elm['catalogCode'].toLowerCase().includes(query.toLowerCase()),
   });
 
   const { plan, loadPlan, exportPlan, handleSelectedPlanChange, persistChanges } = usePlan();

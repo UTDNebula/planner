@@ -60,16 +60,15 @@ export function SelectMajorDialogScreen({
 }: SelectMajorDialogScreenProps) {
   /* Search bar functionality */
 
-  const { results, updateQuery } = useSearch({ getData: getMajors });
+  const { results, updateQuery } = useSearch({
+    getData: getMajors,
+    initialQuery: '',
+    filterFn: (elm, query) => elm.toLowerCase().includes(query.toLowerCase()),
+  });
 
   const handleSearch = (query: string) => {
     updateQuery(query);
   };
-
-  // Run updateQuery on dialog screen load
-  React.useEffect(() => {
-    updateQuery('');
-  }, []);
 
   return (
     <div className="grid grid-cols-2">
@@ -147,7 +146,7 @@ export function OtherDialogScreen() {
 export async function getMajors() {
   const data = await import('../../../data/majors.json');
   // TODO: Fix this!!!!
-  return Object.values(data).slice(0, 6);
+  return Object.values(data).slice(0, 6) as unknown as string[];
 }
 
 export type NewPlanDialogProps = {
