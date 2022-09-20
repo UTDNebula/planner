@@ -4,4 +4,4 @@ the engineering workflow tutorial.
 
 # Contributors
 1. Caleb Lim
-2. Isaac Do
+2. Isaac D
