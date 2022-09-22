@@ -80,11 +80,11 @@ export function SimpleTabs({ courses, selectedCourses, setSelectedCourses }: Sim
   // TODO: Implement lazy loading
   const chipsList = [];
   const [chips, setChips] = useState(chipsList);
+
   const { results, updateQuery } = useSearch({
     getData: loadCourses,
     initialQuery: '',
     filterFn: (elm, query) => elm['catalogCode'].toLowerCase().includes(query.toLowerCase()),
-    chips,
   });
 
   const handleSearch = (query: string) => {

@@ -2,7 +2,6 @@ import React from 'react';
 
 interface SearchParams<T, K> {
   getData: () => Promise<T[]>;
-  chips?: any[];
   initialQuery: K;
   filterFn: (element: T, query: K) => boolean;
   constraints?: [number, number];
@@ -23,7 +22,6 @@ const useSearch = <T, K>({
   initialQuery,
   filterFn,
   constraints = [0, 20],
-  chips = [],
 }: SearchParams<T, K>): SearchReturn<T, K> => {
   const [results, setResults] = React.useState<T[]>([]);
   const [err, setErr] = React.useState<unknown>();
