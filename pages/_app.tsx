@@ -1,8 +1,8 @@
 import '@fontsource/roboto';
 import '../styles/globals.css';
 
+import firebase from '@firebase/app';
 import { createTheme, StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
-import firebase from 'firebase/app';
 import { AnimateSharedLayout } from 'framer-motion';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
