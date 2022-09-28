@@ -3,7 +3,7 @@
     "short_name": "Planner",
     "background_color": "#4659A7",
     "theme_color": "#4659A7",
-    "start_url": "/app",
+    "start_url": "/",
     "icons": [
       {
         "src": "Nebula_Planner_Logo.png",
