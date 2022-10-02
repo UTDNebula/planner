@@ -23,7 +23,7 @@ const RowLayout: FC<RowLayoutProps> = ({
 
 interface DataGridColumn<T, K> {
   title: string;
-  key: K;
+  key?: K;
   valueGetter?: (value: T) => string;
 }
 
@@ -79,7 +79,6 @@ const DataGrid = <T extends { [key: string]: unknown }, K extends keyof T>({
         ))}
       </RowLayout>
       {rows.map((row, i) => {
-        console.log(i);
         return (
           <RowLayout key={`row-${i}`} {...rowProps}>
             {columns.map(({ key, title, valueGetter }, i) => (

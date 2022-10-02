@@ -1,19 +1,20 @@
-import SearchIcon from '@mui/icons-material/Search';
-import Autocomplete from '@mui/material/Autocomplete';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
+import MenuItem from '@mui/material/MenuItem';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import TextField from '@mui/material/TextField';
-import { FC, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import Select from '@mui/material/Select';
+import { FC, useMemo, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { loadDummyCourses } from '../../modules/common/api/courses';
+import { generateSemesters, SemesterCode } from '../../modules/common/data';
+import { convertSemesterToData } from '../../modules/common/data-utils';
 import { addCredit } from '../../modules/redux/creditsSlice';
-import { RootState } from '../../modules/redux/store';
 import useSearch from '../search/search';
+import SearchBar from './SearchBar';
 
 const Layout: FC = ({ children }) => (
   <section className="p-20 flex flex-col bg-white rounded-lg gap-10 shadow-lg">{children}</section>
@@ -21,13 +22,18 @@ const Layout: FC = ({ children }) => (
 
 const CreditsForm: FC = () => {
   const [credit, setCredit] = useState<string | null>();
-  const [isTransfer, setAreTransfer] = useState(false);
-  const creditsData = useSelector((store: RootState) => store.creditsData);
-  console.log(creditsData.credits);
+  const [isTransfer, setIsTransfer] = useState(false);
+
+  const semesters = useMemo(
+    () => generateSemesters(8, new Date().getFullYear() - 4, SemesterCode.f).reverse(),
+    [],
+  );
+
+  const [semester, setSemester] = useState<string>(semesters[0].code);
 
   const dispatch = useDispatch();
 
-  const { results, err, updateQuery } = useSearch({
+  const { results, updateQuery } = useSearch({
     getData: loadDummyCourses,
     initialQuery: '',
     filterFn: (course, query) => course.catalogCode.includes(query),
@@ -35,7 +41,12 @@ const CreditsForm: FC = () => {
 
   const submit = () => {
     if (credit) {
-      dispatch(addCredit({ utdCourseCode: credit, isTransfer }));
+      dispatch(
+        addCredit({
+          utdCourseCode: credit,
+          semester: isTransfer ? undefined : convertSemesterToData(semester),
+        }),
+      );
     }
   };
 
@@ -43,42 +54,34 @@ const CreditsForm: FC = () => {
     <Layout>
       <h1 className="text-black text-4xl font-semibold">Add Credits</h1>
 
-      <div className="flex items-center gap-5 border-2 border-black rounded-full py-2 px-5">
-        <SearchIcon className="text-black" />
-        <Autocomplete
-          style={{ width: '100%' }}
-          onChange={(_, value) => setCredit(value)}
-          onInputChange={(_, query) => updateQuery(query)}
-          options={results.map((course) => course.catalogCode)}
-          fullWidth
-          renderInput={(params) => {
-            return (
-              <TextField
-                {...params}
-                variant="standard"
-                inputProps={{
-                  style: {},
-                  ...params.inputProps,
-                }}
-                placeholder="Course Code"
-                InputProps={{
-                  ...params.InputProps,
-                  disableUnderline: true,
-                }}
-              />
-            );
-          }}
-        />
-      </div>
+      <SearchBar
+        onChange={(value) => setCredit(value)}
+        onInputChange={(query) => updateQuery(query)}
+        options={results.map((course) => course.catalogCode)}
+      />
 
-      <FormControl>
+      <FormControl className="flex flex-col gap-3">
         <FormLabel className="text-black" style={{ color: 'black' }} required>
           Is Transfer Credit?
         </FormLabel>
-        <RadioGroup row onChange={(_, value) => setAreTransfer(value === 'yes')}>
+        <RadioGroup defaultValue={'no'} row onChange={(_, value) => setIsTransfer(value === 'yes')}>
           <FormControlLabel value="yes" control={<Radio />} label="Yes" />
           <FormControlLabel value="no" control={<Radio />} label="No" />
         </RadioGroup>
+        {!isTransfer && (
+          <>
+            <FormLabel className="text-black" style={{ color: 'black' }}>
+              Semester
+            </FormLabel>
+            <Select value={semester} label="" onChange={(e) => setSemester(e.target.value)}>
+              {semesters.map(({ title, code }, i) => (
+                <MenuItem value={code} key={code + i}>
+                  {title}
+                </MenuItem>
+              ))}
+            </Select>
+          </>
+        )}
       </FormControl>
       <Button
         onClick={submit}

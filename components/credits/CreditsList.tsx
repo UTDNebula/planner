@@ -2,6 +2,7 @@ import Box from '@mui/material/Box';
 import { FC } from 'react';
 import { useSelector } from 'react-redux';
 
+import { SEMESTER_CODE_MAPPINGS } from '../../modules/common/data';
 import { RootState } from '../../modules/redux/store';
 import DataGrid1 from './DataGrid';
 
@@ -25,8 +26,14 @@ const CreditsList: FC = () => {
             },
             {
               title: 'Transfer',
-              key: 'isTransfer',
-              valueGetter: (credit) => (credit.isTransfer ? 'Yes' : 'No'),
+              valueGetter: (credit) => (typeof credit.semester === 'undefined' ? 'Yes' : 'No'),
+            },
+            {
+              title: 'Semester',
+              valueGetter: (credit) =>
+                credit.semester
+                  ? `${SEMESTER_CODE_MAPPINGS[credit.semester.semester]} ${credit.semester.year}`
+                  : 'Transfered in',
             },
           ]}
           childrenProps={{
