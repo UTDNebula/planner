@@ -62,23 +62,12 @@ const creditsSlice = createSlice({
     removeCredit: (state, { payload: creditToRemove }: PayloadAction<Credit>) => {
       return {
         ...state,
-        credits: state.credits.filter(
-          (credit) => credit.utdCourseCode !== creditToRemove.utdCourseCode,
-        ),
-      };
-    },
-    flagAsTransfer: (state, { payload: creditToFlag }: PayloadAction<Credit>) => {
-      return {
-        ...state,
-        credits: state.credits.map(
-          (credit) =>
-            credit.utdCourseCode === creditToFlag.utdCourseCode && { isTransfer: true, ...credit },
-        ),
+        credits: state.credits.filter((credit) => !areEqual(credit, creditToRemove)),
       };
     },
   },
 });
 
-export const { addCredit, flagAsTransfer, removeCredit } = creditsSlice.actions;
+export const { addCredit, removeCredit } = creditsSlice.actions;
 
 export default creditsSlice.reducer;

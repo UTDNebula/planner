@@ -1,10 +1,10 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import Box from '@mui/material/Box';
 import { FC, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { SEMESTER_CODE_MAPPINGS } from '../../modules/common/data';
-import { Credit } from '../../modules/redux/creditsSlice';
+import { Credit, removeCredit } from '../../modules/redux/creditsSlice';
 import { RootState } from '../../modules/redux/store';
 import SearchBar from '../search/SearchBar';
 import DataGrid1 from './DataGrid';
@@ -15,6 +15,7 @@ const Layout: FC = ({ children }) => (
 
 const CreditsList: FC = () => {
   const allCredits = useSelector((store: RootState) => store.creditsData.credits);
+  const dispatch = useDispatch();
 
   const searchable = allCredits.map((credit) => {
     const { utdCourseCode, semester } = credit;
@@ -74,15 +75,18 @@ const CreditsList: FC = () => {
                 borderTop: '1px solid #000',
                 padding: '10px',
               },
-              injectedComponent: () => (
-                <DeleteIcon className="text-black absolute right-5 top-1/2 -translate-y-1/2" />
-              ),
+              injectedComponent: {
+                Element: () => (
+                  <DeleteIcon className="text-black cursor-pointer absolute right-5 top-1/2 -translate-y-1/2" />
+                ),
+                onClick: (_, row) => dispatch(removeCredit(row)),
+              },
             },
           }}
           rows={matchingCredits.reverse()}
-          rowCellComponent={({ children }) => <div className="text-black">{children}</div>}
-          titleComponent={({ children }) => <span className="text-black">{children}</span>}
-          loadingComponent={() => <h2 className="text-black">Loading...</h2>}
+          RowCellComponent={({ children }) => <div className="text-black">{children}</div>}
+          TitleComponent={({ children }) => <span className="text-black">{children}</span>}
+          LoadingComponent={() => <h2 className="text-black">Loading...</h2>}
         />
       </Box>
     </Layout>
