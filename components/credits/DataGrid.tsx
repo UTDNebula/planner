@@ -8,7 +8,7 @@ type RowLayoutProps = React.ComponentPropsWithoutRef<'li'> & {
 
 const RowLayout: FC<RowLayoutProps> = ({
   children,
-  injectedComponent: InjectedComponent = () => <></>,
+  injectedComponent: InjectedComponent = () => null,
   ...props
 }) => {
   return (
@@ -72,25 +72,32 @@ const DataGrid = <T extends { [key: string]: unknown }, K extends keyof T>({
   }, [lazyLoad]);
 
   return (
-    <section {...gridProps} style={{ maxHeight: '200px', overflowY: 'scroll' }} onScroll={onScroll}>
+    <div>
       <RowLayout {...headerProps}>
         {columns.map(({ title }, i) => (
           <Title key={`data-grid-title-${title}-${i}`}>{title}</Title>
         ))}
       </RowLayout>
-      {rows.map((row, i) => {
-        return (
-          <RowLayout key={`row-${i}`} {...rowProps}>
-            {columns.map(({ key, title, valueGetter }, i) => (
-              <RowCell key={`data-grid-row-cell-${title}-${i}`}>
-                {valueGetter ? valueGetter(row) : row[key]}
-              </RowCell>
-            ))}
-          </RowLayout>
-        );
-      })}
-      {isFetching && <Loading />}
-    </section>
+
+      <section
+        {...gridProps}
+        style={{ maxHeight: '200px', overflowY: 'scroll' }}
+        onScroll={onScroll}
+      >
+        {rows.map((row, i) => {
+          return (
+            <RowLayout key={`row-${i}`} {...rowProps}>
+              {columns.map(({ key, title, valueGetter }, i) => (
+                <RowCell key={`data-grid-row-cell-${title}-${i}`}>
+                  {valueGetter ? valueGetter(row) : row[key]}
+                </RowCell>
+              ))}
+            </RowLayout>
+          );
+        })}
+        {isFetching && <Loading />}
+      </section>
+    </div>
   );
 };
 
