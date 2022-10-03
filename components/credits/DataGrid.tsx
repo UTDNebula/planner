@@ -20,7 +20,6 @@ const RowLayout = <T extends { [key: string]: unknown }>({
   },
   ...props
 }: InternalRowLayoutProps<T>) => {
-  console.log({ InjectedComponent });
   return (
     <li className="w-full grid grid-flow-col auto-cols-fr justify-items-start relative" {...props}>
       <>

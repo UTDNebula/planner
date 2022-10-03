@@ -1,13 +1,13 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import Box from '@mui/material/Box';
-import { FC, useState } from 'react';
+import { FC, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { SEMESTER_CODE_MAPPINGS } from '../../modules/common/data';
 import { Credit, removeCredit } from '../../modules/redux/creditsSlice';
 import { RootState } from '../../modules/redux/store';
 import SearchBar from '../search/SearchBar';
-import DataGrid1 from './DataGrid';
+import DataGrid from './DataGrid';
 
 const Layout: FC = ({ children }) => (
   <section className="flex flex-col bg-white rounded-lg gap-10 shadow-lg p-10">{children}</section>
@@ -17,24 +17,30 @@ const CreditsList: FC = () => {
   const allCredits = useSelector((store: RootState) => store.creditsData.credits);
   const dispatch = useDispatch();
 
-  const searchable = allCredits.map((credit) => {
-    const { utdCourseCode, semester } = credit;
-    return {
-      matchString: (semester
-        ? utdCourseCode + `${SEMESTER_CODE_MAPPINGS[semester.semester]} ${semester.year}`
-        : utdCourseCode
-      )
-        .replace(/ /g, '')
-        .toLowerCase(),
-      data: credit,
-    };
-  });
+  const searchable = useMemo(
+    () =>
+      allCredits.map((credit) => {
+        const { utdCourseCode, semester } = credit;
+        return {
+          matchString: (semester
+            ? utdCourseCode + `${SEMESTER_CODE_MAPPINGS[semester.semester]} ${semester.year}`
+            : utdCourseCode + 'transfer'
+          ).toLowerCase(),
+          data: credit,
+        };
+      }),
+    [allCredits],
+  );
 
   const [query, setQuery] = useState('');
 
-  const matchingCredits: Credit[] = searchable
-    .filter(({ matchString }) => matchString.includes(query.toLowerCase()))
-    .map((d) => d.data);
+  const matchingCredits: Credit[] = useMemo(
+    () =>
+      searchable
+        .filter(({ matchString }) => matchString.includes(query.toLowerCase()))
+        .map((d) => d.data),
+    [searchable, query],
+  );
 
   return (
     <Layout>
@@ -46,7 +52,7 @@ const CreditsList: FC = () => {
       </div>
 
       <Box sx={{ width: 'auto' }}>
-        <DataGrid1
+        <DataGrid
           columns={[
             {
               title: 'Course Number',
