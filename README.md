@@ -82,7 +82,7 @@ a local development server at [`localhost:3000`](https://localhost:3000) by defa
 ```bash
 git clone https://github.com/UTDNebula/planner.git
 cd planner
-npm start
+npm run dev
 ```
 
 Check out this [document](https://docs.google.com/document/d/1GLCdm314WjbUAgFMB_dFU6aQhgmwzXOn-ywWCr9A0Jg/edit?usp=sharing) for more information.
