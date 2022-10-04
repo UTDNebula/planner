@@ -8,3 +8,4 @@ the engineering workflow tutorial.
 3. An Nguyen
 4. Hayden Rogers
 5. Che Blankenship (Shuhei)
+6. Will Horiszny
