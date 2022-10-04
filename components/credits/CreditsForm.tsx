@@ -15,9 +15,7 @@ import { addCredit } from '../../modules/redux/creditsSlice';
 import useSearch from '../search/search';
 import SearchBar from './SearchBar';
 
-const Layout: FC = ({ children }) => (
-  <section className="p-20 flex flex-col bg-white rounded-lg gap-10 shadow-lg">{children}</section>
-);
+const Layout: FC = ({ children }) => <section className="flex flex-col gap-10">{children}</section>;
 
 const CreditsForm: FC = () => {
   const [credit, setCredit] = useState<string | null>();
@@ -96,9 +94,9 @@ const CreditsForm: FC = () => {
       <Button
         onClick={submit}
         variant="contained"
-        className="bg-primary-dark rounded-full w-80 h-12"
+        className="bg-primary-dark rounded-full w-3/4 min-w-52 max-w-[300px] h-12"
       >
-        Add credits
+        <span className="font-semibold">Add credits</span>
       </Button>
     </Layout>
   );

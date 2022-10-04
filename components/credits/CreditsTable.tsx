@@ -8,9 +8,7 @@ import { RootState } from '../../modules/redux/store';
 import SearchBar from '../search/SearchBar';
 import DataGrid from './DataGrid';
 
-const Layout: FC = ({ children }) => (
-  <section className="flex flex-col bg-white rounded-lg gap-10 shadow-lg p-10">{children}</section>
-);
+const Layout: FC = ({ children }) => <section className="flex flex-col gap-10">{children}</section>;
 
 const CreditsTable: FC = () => {
   const allCredits = useSelector((store: RootState) => store.creditsData.credits);
@@ -72,13 +70,13 @@ const CreditsTable: FC = () => {
           childrenProps={{
             headerProps: {
               style: {
-                padding: '10px 0',
+                padding: '20px 0',
               },
             },
             rowProps: {
               style: {
-                borderTop: '1px solid #000',
-                padding: '10px 0',
+                borderTop: '1px solid #DEDFE1',
+                padding: '20px 0',
               },
               injectedComponent: {
                 Element: () => (
@@ -89,8 +87,8 @@ const CreditsTable: FC = () => {
             },
           }}
           rows={matchingCredits.reverse()}
-          RowCellComponent={({ children }) => <div className="text-black">{children}</div>}
-          TitleComponent={({ children }) => <span className="text-black">{children}</span>}
+          RowCellComponent={({ children }) => <span className="text-black">{children}</span>}
+          TitleComponent={({ children }) => <h4 className="text-black">{children}</h4>}
           LoadingComponent={() => <h2 className="text-black">Loading...</h2>}
         />
       </div>

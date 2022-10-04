@@ -12,12 +12,13 @@ export default function CreditsPage(): JSX.Element {
       <Head>
         <title>Nebula - Your credits</title>
       </Head>
-      <div
-        className="max-w-6xl text-white flex flex-col px-20 py-10 gap-10"
-        style={{ overflowY: 'scroll' }}
-      >
-        <CreditsForm />
-        <CreditsTable />
+      <div className="text-white flex flex-col lg:grid lg:grid-cols-2 sm:px-10 lg:px-20 py-10 gap-10 w-full lg:w-auto overflow-y-scroll">
+        <div className="p-20 bg-white rounded-lg">
+          <CreditsForm />
+        </div>
+        <div className="p-20 bg-white rounded-lg">
+          <CreditsTable />
+        </div>
       </div>
     </main>
   );
