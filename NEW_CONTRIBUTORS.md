@@ -10,3 +10,4 @@ the engineering workflow tutorial.
 5. Che Blankenship (Shuhei)
 6. Will Horiszny
 7. Mollik Rahman
+8. Nathan Adam
