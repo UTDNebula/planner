@@ -4,4 +4,6 @@ the engineering workflow tutorial.
 
 # Contributors
 1. Caleb Lim
-2. Hayden Rogers
+2. Peyton Barre 
+3. An Nguyen
+4. Hayden Rogers
