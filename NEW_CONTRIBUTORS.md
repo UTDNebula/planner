@@ -3,4 +3,6 @@ Welcome to the Nebula Planner repo! Add your name underneath "Contributors" to c
 the engineering workflow tutorial.
 
 # Contributors
-1.Peyton Barre 
+1. Caleb Lim
+2.Peyton Barre 
+3. An Nguyen
