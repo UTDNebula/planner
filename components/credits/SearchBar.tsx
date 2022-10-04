@@ -22,7 +22,7 @@ const SearchBar: FC<SearchBarProps> = ({ onChange, onInputChange, options }) => 
       return (
         <Popper
           {...props}
-          placement="auto"
+          placement="bottom"
           anchorEl={containerRef.current}
           className="rounded-lg overflow-hidden shadow-lg"
           style={{
