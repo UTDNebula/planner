@@ -1,5 +1,4 @@
 import DeleteIcon from '@mui/icons-material/Delete';
-import Box from '@mui/material/Box';
 import { FC, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -13,11 +12,11 @@ const Layout: FC = ({ children }) => (
   <section className="flex flex-col bg-white rounded-lg gap-10 shadow-lg p-10">{children}</section>
 );
 
-const CreditsList: FC = () => {
+const CreditsTable: FC = () => {
   const allCredits = useSelector((store: RootState) => store.creditsData.credits);
   const dispatch = useDispatch();
 
-  const searchable = useMemo(
+  const searchableCredits = useMemo(
     () =>
       allCredits.map((credit) => {
         const { utdCourseCode, semester } = credit;
@@ -36,10 +35,10 @@ const CreditsList: FC = () => {
 
   const matchingCredits: Credit[] = useMemo(
     () =>
-      searchable
+      searchableCredits
         .filter(({ matchString }) => matchString.includes(query.toLowerCase()))
         .map((d) => d.data),
-    [searchable, query],
+    [searchableCredits, query],
   );
 
   return (
@@ -51,7 +50,7 @@ const CreditsList: FC = () => {
         </div>
       </div>
 
-      <Box sx={{ width: 'auto' }}>
+      <div>
         <DataGrid
           columns={[
             {
@@ -73,13 +72,13 @@ const CreditsList: FC = () => {
           childrenProps={{
             headerProps: {
               style: {
-                padding: '10px',
+                padding: '10px 0',
               },
             },
             rowProps: {
               style: {
                 borderTop: '1px solid #000',
-                padding: '10px',
+                padding: '10px 0',
               },
               injectedComponent: {
                 Element: () => (
@@ -94,9 +93,9 @@ const CreditsList: FC = () => {
           TitleComponent={({ children }) => <span className="text-black">{children}</span>}
           LoadingComponent={() => <h2 className="text-black">Loading...</h2>}
         />
-      </Box>
+      </div>
     </Layout>
   );
 };
 
-export default CreditsList;
+export default CreditsTable;

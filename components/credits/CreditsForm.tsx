@@ -1,7 +1,6 @@
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import FormLabel from '@mui/material/FormLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -36,7 +35,7 @@ const CreditsForm: FC = () => {
   const { results, updateQuery } = useSearch({
     getData: loadDummyCourses,
     initialQuery: '',
-    filterFn: (course, query) => course.catalogCode.includes(query),
+    filterFn: (course, query) => course.catalogCode.toLowerCase().includes(query.toLowerCase()),
   });
 
   const submit = () => {
@@ -61,19 +60,30 @@ const CreditsForm: FC = () => {
       />
 
       <FormControl className="flex flex-col gap-3">
-        <FormLabel className="text-black" style={{ color: 'black' }} required>
+        <label htmlFor="transfer" className="text-black font-medium">
           Is Transfer Credit?
-        </FormLabel>
-        <RadioGroup defaultValue={'no'} row onChange={(_, value) => setIsTransfer(value === 'yes')}>
-          <FormControlLabel value="yes" control={<Radio />} label="Yes" />
-          <FormControlLabel value="no" control={<Radio />} label="No" />
+        </label>
+
+        <RadioGroup
+          id="transfer"
+          defaultValue={'no'}
+          row
+          onChange={(_, value) => setIsTransfer(value === 'yes')}
+        >
+          <FormControlLabel className="text-black" value="yes" control={<Radio />} label="Yes" />
+          <FormControlLabel className="text-black" value="no" control={<Radio />} label="No" />
         </RadioGroup>
         {!isTransfer && (
           <>
-            <FormLabel className="text-black" style={{ color: 'black' }}>
+            <label htmlFor="semester" className="text-black font-medium">
               Semester
-            </FormLabel>
-            <Select value={semester} label="" onChange={(e) => setSemester(e.target.value)}>
+            </label>
+            <Select
+              id="semester"
+              value={semester}
+              label=""
+              onChange={(e) => setSemester(e.target.value)}
+            >
               {semesters.map(({ title, code }, i) => (
                 <MenuItem value={code} key={code + i}>
                   {title}

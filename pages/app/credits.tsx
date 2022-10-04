@@ -1,7 +1,7 @@
 import Head from 'next/head';
 
 import CreditsForm from '../../components/credits/CreditsForm';
-import CreditsList from '../../components/credits/CreditsList';
+import CreditsTable from '../../components/credits/CreditsTable';
 
 /**
  * A page containing student attributes and other account settings.
@@ -17,7 +17,7 @@ export default function CreditsPage(): JSX.Element {
         style={{ overflowY: 'scroll' }}
       >
         <CreditsForm />
-        <CreditsList />
+        <CreditsTable />
       </div>
     </main>
   );
