@@ -7,3 +7,4 @@ the engineering workflow tutorial.
 2. Peyton Barre 
 3. An Nguyen
 4. Hayden Rogers
+5. Che Blankenship (Shuhei)
