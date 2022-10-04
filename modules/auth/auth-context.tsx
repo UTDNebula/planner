@@ -1,6 +1,6 @@
-import 'firebase/auth';
+import '@firebase/auth';
 
-import firebase from 'firebase/app';
+import firebase from '@firebase/app';
 import { useRouter } from 'next/router';
 import React from 'react';
 
@@ -200,7 +200,7 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
 
   const history = useRouter();
 
-  const updateUser = React.useCallback((firebaseUser: firebase.User | null) => {
+  const updateUser = React.useCallback((firebaseUser: firebase.default.User | null) => {
     if (firebaseUser === null) {
       return;
     }
