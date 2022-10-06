@@ -61,7 +61,6 @@ export default function CourseSelector({ results, updateQuery }: CourseSelectorP
 
   const addUserCourses = (addCourses: Course[]) => {
     // TODO: Put these courses inside pre-existing categories if possible
-    console.debug('shit added');
     const newCourses = JSON.parse(JSON.stringify(courses));
     newCourses[newCourses.length - 1].courses.push(...addCourses);
     setCourses(newCourses);
