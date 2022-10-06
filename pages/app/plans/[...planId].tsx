@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { makeStyles } from 'tss-react/mui';
 
+import { errorMessage } from '../../../components/common/ErrorMessage';
 import PlannerContainer from '../../../components/planner/PlannerContainer';
 import PlanningToolbar, {
   usePlanningToolbar,
@@ -48,7 +49,7 @@ export default function PlanDetailPage(): JSX.Element {
 
   const [courseAttempts, setCourseAttempts] = React.useState<CourseAttempt[]>([]);
 
-  const { results, updateQuery, getResults } = useSearch({
+  const { results, updateQuery, getResults, err } = useSearch({
     getData: loadDummyCourses,
     initialQuery: '',
     filterFn: (elm, query) => elm['catalogCode'].toLowerCase().includes(query.toLowerCase()),
@@ -125,10 +126,12 @@ export default function PlanDetailPage(): JSX.Element {
       </PlannerContainer>
     </div>
   );
+  console.debug('\nerror here: ', err);
 
   return (
     <div className="h-full flex flex-col overflow-x-hidden overflow-y-auto">
       <div className="flex-none">
+        {err != undefined && errorMessage(err)}
         <PlanningToolbar
           setPlanTitle={setTitle}
           planId={plan.id}

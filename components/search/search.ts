@@ -42,7 +42,8 @@ const useSearch = <T, K>({
       )
       .then((data) => setResults(data))
       .catch((error) => {
-        console.debug('error was catched here: ', error);
+        console.debug('error was catched here: ');
+        setErr(error);
       });
   };
 
