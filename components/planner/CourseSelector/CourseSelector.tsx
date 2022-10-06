@@ -1,4 +1,3 @@
-import Alert from '@mui/material/Alert';
 import React, { useState } from 'react';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 
@@ -8,10 +7,6 @@ import SearchBar from '../../search/SearchBar';
 import { Card } from './Card';
 
 export type CourseSelectedAction = 'Add' | 'Remove';
-
-function errorMessage() {
-  return <Alert severity="error">Something went wrong - please try again!</Alert>;
-}
 
 /**
  *  List of courses a user is required or wants to take broken down into categories
@@ -106,7 +101,7 @@ export default function CourseSelector({ results, updateQuery }: CourseSelectorP
               );
             })}
             <div className="w-[19rem] h-10"></div>
-            {results.length == 0 ? errorMessage() : provided.placeholder}
+            {provided.placeholder}
           </div>
         )}
       </Droppable>
