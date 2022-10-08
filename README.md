@@ -31,25 +31,15 @@ Some non-leaf nodes:
 Stacking these together makes it pretty robust in determining whether a course is capable of filling a constraint. 
 
 #### Representing electives as constraints
-In the current model, electives match any course. So, an upper-level elective would just be a basic `LevelMatcher`. 
+Any constraint can be represented by a comprehensive name list, but this is not very scalable. Instead, electives are 
+represented with the "Not" matcher. For example, CS guided electives are "Not" CS preparatory courses "Or" CS core 
+courses, while also being ("And") "Level" 3 or 4 CS "Department" classes. 
 
-Why does this work? The non-elective constraints must be filled by some list of courses, so they'll absorb all of 
-those courses. Then, the elective constraint is only able to pick courses out of those which were unfilled. 
+As seen above, matchers can be re-used as components of other matchers, because everything is a tree :)
 
-When does this not work? Say we have a requirement to take 30 hours out of a list of courses totalling 33 hours, yet 
-you're prohibited from using any of these courses as electives. In other words, taking an additional class is 
-useless in terms of graduation. But let's say you do take it. In this case, the model will incorrectly pick up that 
-additional class as an elective, because it has no notion of "This course MUST NOT match anything else". 
-
-When else does this not work? Say you have an incomplete degree plan that you want to validate, and you haven't 
-chosen enough elective classes. In that case, there are not enough classes which will only fill the elective 
-constraint, and it might get "hungry" and gobble up courses from the non-elective constraint. 
-
-This can of course be fixed in 2 ways:
-  - Create explicit "elective constraints" that only match courses which did _not_ match any existing constraints. 
-  - Provide a comprehensive name list of all possible elective courses.
-
-Both solutions introduce complexity to handle some edge cases, and are left unimplemented for now.  
+One potential optimization is to cache the results of each matcher with each course, so that the same sub-tree does 
+not need to be traversed multiple times across different checks. This optimization is left un-implemented because 
+the matching algorithm is already quite fast. 
 
 ### Constraint groups
 We also know that some courses cannot be repeated between constraint groups. For example, a 010 cannot be 

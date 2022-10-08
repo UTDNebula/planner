@@ -50,7 +50,7 @@ class Constraint:
 
 
 class AndMatcher:
-    def __init__(self, matchers):
+    def __init__(self, *matchers):
         self.matchers = matchers
 
     def match(self, course):
@@ -58,15 +58,23 @@ class AndMatcher:
 
 
 class OrMatcher:
-    def __init__(self, matchers):
+    def __init__(self, *matchers):
         self.matchers = matchers
 
     def match(self, course):
         return any(m.match(course) for m in self.matchers)
 
 
+class NotMatcher:
+    def __init__(self, matcher):
+        self.matcher = matcher
+
+    def match(self, course):
+        return not self.matcher.match(course)
+
+
 class NameListMatcher:
-    def __init__(self, name_list):
+    def __init__(self, *name_list):
         self.name_list = name_list
 
     def match(self, course):
@@ -82,7 +90,7 @@ class RegexMatcher:
 
 
 class LevelMatcher:
-    def __init__(self, levels):
+    def __init__(self, *levels):
         self.levels = levels
 
     def match(self, course):
@@ -103,114 +111,20 @@ class AnyMatcher:
         return True
 
 
-def get_courses():
-    course_names = [
-        'RHET 1302',
-        'ECS 3390',
-        'MATH 2413',
-        'MATH 2417',
-        'PHYS 2325',
-        'PHYS 2326',
-        'GOVT 2305',
-        'GOVT 2306',
-        'MATH 2413',
-        'MATH 2417',
-        'MATH 2419',
-        'PHYS 2125',
-        'ECS 1100',
-        'CS 1200',
-        'CS 1136',
-        'CS 1336',
-        'CS 1337',
-        'CS 2305',
-        'CS 2336',
-        'CS 2340',
-        'MATH 2413',
-        'MATH 2414',
-        'MATH 2417',
-        'MATH 2419',
-        'MATH 2418',
-        'PHYS 2125',
-        'PHYS 2126',
-        'PHYS 2325',
-        'PHYS 2326',
-        'CS 3162',
-        'CS 3305',
-        'CS 3341',
-        'CS 3345',
-        'CS 3354',
-        'CS 3377',
-        'ECS 3390',
-        'CS 4141',
-        'CS 4337',
-        'CS 4341',
-        'CS 4347',
-        'CS 4348',
-        'CS 4349',
-        'CS 4384',
-        'CS 4485',
-        'CS 4314',
-        'CS 4315',
-        'CS 4334',
-        'CS 4336',
-        'CS 4352',
-        'CS 4353',
-        'CS 4361',
-        'CS 4365',
-        'CS 4375',
-        'CS 4376',
-        'CS 4386',
-        'CS 4389',
-        'CS 4390',
-        'CS 4391',
-        'CS 4392',
-        'CS 4393',
-        'CS 4394',
-        'CS 4395',
-        'CS 4396',
-        'CS 4397',
-        'CS 4398',
-        'CS 4399',
-        'EE 4325',
-        'SE 4351',
-        'SE 4352',
-        'SE 4367',
-        'SE 4381',
-        'ECS 1100',
-        'CS 2305',
-        'CS 2340',
-        'CS 3305',
-        'CS 3341',
-        'CS 3345',
-        'CS 3354',
-        'CS 4141',
-        'CS 4337',
-        'CS 4341',
-        'CS 4348',
-        'CS 4349',
-        'CS 4384',
-        'CS 4485',
-        'CS 1337',
-        'CS 2305',
-        'CS 2336',
-        'CS 3305',
-        'CS 3345',
-        'CS 3354',
-        'CS 4390',
-        'CS 1337',
-        'CS 2305',
-        'CS 2336',
-        'CS 3305',
-        'CS 3345',
-        'CS 4347',
-        'CS 4348',
-        'CS 4389',
-        'CS 4393',
-        'CS 4398',
-        'CS 4389',
-        'CS 4393',
-        'CS 4398',
-    ]
+def get_unrealistic_courses_1():
+    course_names = ['RHET 1302', 'ECS 3390', 'MATH 2413', 'MATH 2417', 'PHYS 2325', 'PHYS 2326', 'GOVT 2305',
+                    'GOVT 2306', 'MATH 2413', 'MATH 2417', 'MATH 2419', 'PHYS 2125', 'ECS 1100', 'CS 1200', 'CS 1136',
+                    'CS 1336', 'CS 1337', 'CS 2305', 'CS 2336', 'CS 2340', 'MATH 2413', 'MATH 2414', 'MATH 2417',
+                    'MATH 2419', 'MATH 2418', 'PHYS 2125', 'PHYS 2126', 'PHYS 2325', 'PHYS 2326', 'CS 3162', 'CS 3305',
+                    'CS 3341', 'CS 3345', 'CS 3354', 'CS 3377', 'ECS 3390', 'CS 4141', 'CS 4337', 'CS 4341', 'CS 4347',
+                    'CS 4348', 'CS 4349', 'CS 4384', 'CS 4485', 'CS 4314', 'CS 4315', 'CS 4334', 'CS 4336', 'CS 4352',
+                    'CS 4353', 'CS 4361', 'CS 4365', 'CS 4375', 'CS 4376', 'CS 4386', 'CS 4389', 'CS 4390', 'CS 4391',
+                    'CS 4392', 'CS 4393', 'CS 4394', 'CS 4395', 'CS 4396', 'CS 4397', 'CS 4398', 'CS 4399', 'EE 4325',
+                    'SE 4351', 'SE 4352', 'SE 4367', 'SE 4381', 'ECS 1100', 'CS 2305', 'CS 2340', 'CS 3305', 'CS 3341',
+                    'CS 3345', 'CS 3354', 'CS 4141', 'CS 4337', 'CS 4341', 'CS 4348', 'CS 4349', 'CS 4384', 'CS 4485',
+                    'CS 1337', 'CS 2305', 'CS 2336', 'CS 3305', 'CS 3345', 'CS 3354', 'CS 4390', 'CS 1337', 'CS 2305',
+                    'CS 2336', 'CS 3305', 'CS 3345', 'CS 4347', 'CS 4348', 'CS 4389', 'CS 4393', 'CS 4398', 'CS 4389',
+                    'CS 4393', 'CS 4398']
     courses = [Course(c, None) for c in set(course_names)]
 
     engl = Course('ENGL 1301', bypass_hours=3, bypass_constraints={'Core - Communication (010)'}, department='ENGL',
@@ -220,20 +134,91 @@ def get_courses():
     return courses
 
 
+def get_real_courses_ezhang():
+    course_names = ['CS 1200', 'CS 2336', 'CS 2340', 'CS 3341', 'ECS 1100', 'AMS 2341', 'UNIV 1010', 'CS 3305',
+                    'CS 4384', 'CS 3345', 'ECS 3390', 'CS 4337', 'CS 3377', 'CS 3354', 'CS 4348', 'CS 4349',
+                    'CS 4375', 'AHST 2331', 'CS 4390', 'CS 4341', 'CS 4141', 'CS 4485', 'CS 3162', 'CS 4365', 'CS 4V98',
+                    'CS 6378']
+    courses = [Course(c, None) for c in set(course_names)]
+
+    courses.append(Course('CS 6360', bypass_hours=3, bypass_constraints=['Major Core Courses'], department='CS',
+                          parse_name=False))
+
+    return courses
+
+
+def get_real_courses_sguan():
+    course_names = ['CHEM 1405', 'CS 1336', 'CS 1337', 'CS 2305', 'CS 2336', 'ECON 2301', 'ECON 2302', 'GOVT 2305',
+                    'HIST 1301', 'HIST 1302', 'MATH 2413', 'MATH 2414', 'MATH 2415', 'MATH 2418', 'MATH 2420',
+                    'MUSI 1306', 'PHIL 1306', 'PHYS 2125', 'PHYS 2325', 'RHET 1302', 'CS 1200', 'CS 3341', 'CS 3345',
+                    'ECS 1100', 'GOVT 2306', 'MATH 3323', 'MUSI 3120', 'UNIV 1010', 'CS 2340', 'CS 3305', 'CS 3377',
+                    'CS 4365', 'PHYS 2126', 'PHYS 2326', 'CS 4347', 'CS 4348', 'CS 3162', 'CS 3354', 'CS 4141',
+                    'CS 4337', 'CS 4341', 'CS 4384', 'ECS 3390', 'CS 4349', 'CS 4371', 'CS 4375', 'CS 4485']
+    courses = [Course(c, None) for c in set(course_names)]
+
+    courses.append(Course('CS 4390', bypass_constraints=['Computer Science Preparatory Courses']))
+
+    return courses
+
+
 def get_constraints():
+    computer_science_preparatory_courses_matcher = OrMatcher(
+        NameListMatcher('CS 1136', 'CS 1336', 'CS 1337', 'CS 2305', 'CS 2340', 'MATH 2418', 'PHYS 2125', 'PHYS 2126',
+                         'ECS 1100', 'CS 1200'),
+        OrMatcher(
+            NameListMatcher('CS 2336'),
+            NameListMatcher('CS 2337'),
+        ),
+        OrMatcher(
+            NameListMatcher('MATH 2413'),
+            NameListMatcher('MATH 2417'),
+        ),
+        OrMatcher(
+            NameListMatcher('MATH 2414'),
+            NameListMatcher('MATH 2419'),
+        ),
+        OrMatcher(
+            NameListMatcher('PHYS 2325'),
+            NameListMatcher('PHYS 2421'),
+        ),
+        OrMatcher(
+            NameListMatcher('PHYS 2326'),
+            NameListMatcher('PHYS 2422'),
+        ),
+    )
+
+    major_core_courses_matcher = NameListMatcher('CS 3305', 'CS 4337', 'CS 4349', 'CS 4384', 'CS 4485', 'ECS 3390',
+                                                  'CS 3341', 'CS 3345', 'CS 3354', 'CS 4141', 'CS 4348', 'CS 4341',
+                                                  'CS 3377', 'CS 4347', 'CS 3162')
+
+    free_electives_matcher = NotMatcher(OrMatcher(
+        computer_science_preparatory_courses_matcher,
+        major_core_courses_matcher
+    ))
+
+    major_guided_electives_matcher = AndMatcher(
+        LevelMatcher(4),
+        DepartmentMatcher('CS'),
+        free_electives_matcher
+    )
+
     lone_constraints = [
-        Constraint('Upper Level Hour Requirement', 51, LevelMatcher((3, 4))),
+        Constraint('Upper Level Hour Requirement', 51, LevelMatcher(3, 4)),
         Constraint('Minimum Cumulative Hours', 124, AnyMatcher()),
+        Constraint('Computer Science Preparatory Courses', 39, computer_science_preparatory_courses_matcher),
+        Constraint('Major Core Courses', 42, major_core_courses_matcher),
+        Constraint('Major Guided Electives', 9, major_guided_electives_matcher),
+        Constraint('Free Electives', 10, AnyMatcher()),
     ]
 
     cores = [
         Constraint('Core - Communication (010)', 6,
-                   NameListMatcher(('ATCM 2340', 'COMM 1311', 'COMM 1315', 'ECS 3390', 'RHET 1302', 'RHET 2302'))),
-        Constraint('Core - Mathematics (020)', 3, NameListMatcher(('MATH 1306', 'MATH 1314', 'MATH 1316', 'MATH 1325',
+                   NameListMatcher('ATCM 2340', 'COMM 1311', 'COMM 1315', 'ECS 3390', 'RHET 1302', 'RHET 2302')),
+        Constraint('Core - Mathematics (020)', 3, NameListMatcher('MATH 1306', 'MATH 1314', 'MATH 1316', 'MATH 1325',
                                                                    'MATH 2306', 'MATH 2312', 'MATH 2413', 'MATH 2414',
                                                                    'MATH 2415', 'MATH 2417', 'PHIL 2303', 'PSY 2317',
-                                                                   'STAT 1342', 'STAT 2332'))),
-        Constraint('Core - Life and Physical Sciences (030)', 6, NameListMatcher(('BIOL 1300', 'BIOL 1318', 'BIOL 2311',
+                                                                   'STAT 1342', 'STAT 2332')),
+        Constraint('Core - Life and Physical Sciences (030)', 6, NameListMatcher('BIOL 1300', 'BIOL 1318', 'BIOL 2311',
                                                                                   'BIOL 2312', 'BIOL 2350', 'CGS 2301',
                                                                                   'CHEM 1311', 'CHEM 1312', 'CHEM 1315',
                                                                                   'CHEM 1316', 'ENVR 2302', 'GEOG 2302',
@@ -244,8 +229,8 @@ def get_constraints():
                                                                                   'NATS 2330', 'NATS 2333', 'PHIL 2304',
                                                                                   'PHYS 1301', 'PHYS 1302', 'PHYS 2125',
                                                                                   'PHYS 2325', 'PHYS 2326', 'PHYS 2421',
-                                                                                  'PHYS 2422', 'PSY 2364'))),
-        Constraint('Core - Language, Philosophy and Culture (040)', 3, NameListMatcher(('AMS 2300', 'AMS 2341',
+                                                                                  'PHYS 2422', 'PSY 2364')),
+        Constraint('Core - Language, Philosophy and Culture (040)', 3, NameListMatcher('AMS 2300', 'AMS 2341',
                                                                                         'ATCM 2300', 'FILM 1303',
                                                                                         'HIST 2340', 'HIST 2341',
                                                                                         'HIST 2350', 'HIST 2360',
@@ -254,23 +239,23 @@ def get_constraints():
                                                                                         'LIT 2329', 'LIT 2331',
                                                                                         'PHIL 1301', 'PHIL 1305',
                                                                                         'PHIL 1306', 'PHIL 2316',
-                                                                                        'PHIL 2317', 'RELS 1325'))),
-        Constraint('Core - Creative Arts (050)', 3, NameListMatcher(('AHST 1303', 'AHST 1304', 'AHST 2331', 'ARTS 1301',
+                                                                                        'PHIL 2317', 'RELS 1325')),
+        Constraint('Core - Creative Arts (050)', 3, NameListMatcher('AHST 1303', 'AHST 1304', 'AHST 2331', 'ARTS 1301',
                                                                      'DANC 1305', 'DANC 1310', 'FILM 2332', 'MUSI 1306',
                                                                      'MUSI 2321', 'MUSI 2322', 'PHIL 1307',
-                                                                     'THEA 1310'))),
+                                                                     'THEA 1310')),
         Constraint('Core - American History (060)', 6,
-                   NameListMatcher(('HIST 1301', 'HIST 1302', 'HIST 2301', 'HIST 2330', 'HIST 2381', 'HIST 2384'))),
+                   NameListMatcher('HIST 1301', 'HIST 1302', 'HIST 2301', 'HIST 2330', 'HIST 2381', 'HIST 2384')),
         Constraint('Core - Government/Political Science (070)', 6,
-                   NameListMatcher(('GOVT 2107', 'GOVT 2305', 'GOVT 2306'))),
-        Constraint('Core - Social and Behavioral Sciences (080)', 3, NameListMatcher(('BA 1310', 'BA 1320', 'CLDP 2314',
+                   NameListMatcher('GOVT 2107', 'GOVT 2305', 'GOVT 2306')),
+        Constraint('Core - Social and Behavioral Sciences (080)', 3, NameListMatcher('BA 1310', 'BA 1320', 'CLDP 2314',
                                                                                       'CRIM 1301', 'CRIM 1307',
                                                                                       'ECON 2301', 'ECON 2302',
                                                                                       'GEOG 2303', 'GST 2300',
                                                                                       'PA 2325', 'PSY 2301', 'PSY 2314',
                                                                                       'SOC 1301', 'SOC 2300', 'SOC 2320'
-                                                                                      ))),
-        Constraint('Core - Component Area Option (090)', 6, NameListMatcher(('ARAB 1311', 'ARAB 1312', 'ARAB 2311',
+                                                                                      )),
+        Constraint('Core - Component Area Option (090)', 6, NameListMatcher('ARAB 1311', 'ARAB 1312', 'ARAB 2311',
                                                                              'ARAB 2312', 'ARHM 2340', 'ARHM 2342',
                                                                              'ARHM 2343', 'ARHM 2344', 'CHEM 1111',
                                                                              'CHEM 1115', 'CHIN 2311', 'CHIN 2312',
@@ -312,53 +297,10 @@ def get_constraints():
                                                                              'HIST 1302', 'HIST 2301', 'HIST 2330',
                                                                              'HIST 2381', 'HIST 2384', 'BA 1310',
                                                                              'BA 1320', 'CLDP 2314', 'ECON 2301',
-                                                                             'ECON 2302', 'PSY 2301', 'PSY 2314'))),
+                                                                             'ECON 2302', 'PSY 2301', 'PSY 2314')),
     ]
 
-    cs_requirements = [
-        Constraint('Computer Science Preparatory Courses', 25, OrMatcher((
-            NameListMatcher(('CS 1136', 'CS 1336', 'CS 1337', 'CS 2305', 'CS 2340', 'MATH 2418', 'PHYS 2125',
-                             'PHYS 2126', 'ECS 1100', 'CS 1200')),
-            OrMatcher((
-                NameListMatcher(('CS 2336',)),
-                NameListMatcher(('CS 2337',)),
-            )),
-        ))),
-        Constraint('Major Core Courses', 42, NameListMatcher(('CS 3305', 'CS 4337', 'CS 4349', 'CS 4384', 'CS 4485',
-                                                              'ECS 3390', 'CS 3341', 'CS 3345', 'CS 3354', 'CS 4141',
-                                                              'CS 4348', 'CS 4341', 'CS 3377', 'CS 4347', 'CS 3162'))),
-        Constraint('Major Guided Electives', 9, AndMatcher((
-            LevelMatcher((4,)),
-            DepartmentMatcher('CS'),
-        ))),
-        Constraint('Free Electives', 10, AnyMatcher()),
-    ]
-
-    overlap_requirements = [
-        Constraint('Computer Science Preparatory Courses - MATH 2413 or MATH 2417', 4, OrMatcher((
-            NameListMatcher(('MATH 2413',)),
-            NameListMatcher(('MATH 2417',)),
-        ))),
-        Constraint('Computer Science Preparatory Courses - MATH 2414 or MATH 2419', 4, OrMatcher((
-            NameListMatcher(('MATH 2414',)),
-            NameListMatcher(('MATH 2419',)),
-        ))),
-        Constraint('Computer Science Preparatory Courses - PHYS 2325 or PHYS 2421', 3, OrMatcher((
-            NameListMatcher(('PHYS 2325',)),
-            NameListMatcher(('PHYS 2421',)),
-        ))),
-        Constraint('Computer Science Preparatory Courses - PHYS 2326 or PHYS 2422', 3, OrMatcher((
-            NameListMatcher(('PHYS 2326',)),
-            NameListMatcher(('PHYS 2422',)),
-        ))),
-    ]
-
-    return ([(constraint.name, [constraint]) for constraint in lone_constraints] +
-            [
-                ('Cores+CS Requirements', cores + cs_requirements),
-                ('CS Requirements overlapping with cores', overlap_requirements)
-            ]
-    )
+    return [(constraint.name, [constraint]) for constraint in lone_constraints] + [('Cores', cores)]
 
 
 def solve_one(courses, constraints):
@@ -390,7 +332,7 @@ def solve_one(courses, constraints):
             if constraint.match(course):
                 smf.add_arc_with_capacity(COURSE_OFFSET + i, CONSTRAINT_OFFSET + j, 1000)
 
-    # Solve max flow :)
+    # Solve max flow
     status = smf.solve(SOURCE, SINK)
 
     if status != smf.OPTIMAL:
@@ -402,7 +344,6 @@ def solve_one(courses, constraints):
     print('\nTotal hours assigned:', smf.optimal_flow())
     print('Optimal assignments:')
 
-    courses_to_constraints = defaultdict(set)
     constraints_to_courses = defaultdict(set)
 
     # Go through the arcs and aggregate them by course and constraint
@@ -411,7 +352,6 @@ def solve_one(courses, constraints):
             course_id = smf.tail(i) - COURSE_OFFSET
             constraint_id = smf.head(i) - CONSTRAINT_OFFSET
             hours = smf.flow(i)
-            courses_to_constraints[course_id].add((constraint_id, hours))
             constraints_to_courses[constraint_id].add((course_id, hours))
 
     # Show what courses were used for each constraint
@@ -431,13 +371,49 @@ def solve_one(courses, constraints):
                 hours_string = ''
             print(f'  {course.name}{hours_string}')
 
+    # Return solution graph
+    return constraints_to_courses
+
 
 def solve_all(course_fcn, constraint_fcn):
     courses = course_fcn()
     constraint_groups = constraint_fcn()
+
+    graph = defaultdict(list)
+    unfilled_constraints = []
     for name, constraints in constraint_groups:
         print(f'\n--------------------------------\nRunning on {name}...')
-        solve_one(courses, constraints)
+        constraints_to_courses = solve_one(courses, constraints)
+
+        # TODO: This is pretty redundant, just convert everything to numpy arrays representing adj matrix instead
+        for constraint_id in range(len(constraints)):
+            constraint = constraints[constraint_id]
+            course_hour_sum = 0
+            for course_id, hours in constraints_to_courses[constraint_id]:
+                course_name = courses[course_id].name
+                graph[course_name].append((constraint.name, hours))
+                course_hour_sum += hours
+            if course_hour_sum < constraint.hours:
+                unfilled_constraints.append((constraint, course_hour_sum))
 
 
-solve_all(get_courses, get_constraints)
+
+    print('\n--------------------------------\nFinal course assignments:')
+    for course in sorted(courses, key=lambda x: x.name):
+        if not graph[course.name]:
+            constraints_str = 'UNUSED'
+        else:
+            constraints_str = ', '.join(f'{constraint} ({hours} hrs)' for constraint, hours in graph[course.name])
+        print(f'{course.name}: {constraints_str}')
+
+    if unfilled_constraints:
+        print('\n--------------------------------\nUnsatisfied requirements (cannot graduate):')
+        for constraint, hours in unfilled_constraints:
+            print(f'  {constraint.name}: ({hours}/{constraint.hours})')
+
+    else:
+        print('\n--------------------------------\nAll requirements filled. You can graduate!')
+
+
+
+solve_all(get_real_courses_sguan, get_constraints)
