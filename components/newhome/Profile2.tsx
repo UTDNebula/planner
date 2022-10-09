@@ -26,7 +26,7 @@ export default function ProfilePage(): JSX.Element {
   const { classes } = useStyles();
   return (
     <div className={classes.container}>
-      <div className="flex justify-center items-center pt-10">
+      <div className="flex justify-center items-center pt-10 px-4">
         <main className="sm:flex sm:flex-col md:grid md:grid-cols-2 md:gap-x-20 md:gap-y-4">
           <div className="font-semibold text-[40px] col-span-full">Profile</div>
           <section className="">
