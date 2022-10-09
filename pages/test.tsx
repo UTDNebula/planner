@@ -61,7 +61,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function MiniDrawer() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
   const [page, setPage] = React.useState(0);
 
   const handleDrawerChange = () => {
@@ -80,7 +80,7 @@ export default function MiniDrawer() {
   return (
     <Box sx={{ display: 'flex' }}>
       <Drawer variant="permanent" open={open}>
-        <div className="flex flex-row w-full border-2 items-center pt-2 ml-0.5">
+        <div className="flex flex-row w-full items-center pt-2 ml-0.5">
           <IconButton
             onClick={handleDrawerChange}
             sx={{
