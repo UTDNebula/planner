@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const defaultTheme = require('tailwindcss/defaultTheme');
+
 module.exports = {
   content: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
   theme: {
@@ -128,6 +131,8 @@ module.exports = {
     fontFamily: {
       roboto: ['Roboto', 'ui-sans-serif', 'system-ui'],
       jost: ['Jost', 'Roboto', 'ui-sans-serif', 'system-ui'],
+
+      sans: ['Inter var', ...defaultTheme.fontFamily.sans],
     },
   },
   plugins: [],
