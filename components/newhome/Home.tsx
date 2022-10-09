@@ -1,7 +1,9 @@
 import AddIcon from '@mui/icons-material/Add';
+import { Theme } from '@mui/material';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { makeStyles } from 'tss-react/mui';
 import { v4 as uuid } from 'uuid';
 
 import PlanCard from '../../components/home/plans/PlanCard';
@@ -30,25 +32,42 @@ export default function PlansPage(): JSX.Element {
     router.push(`/app/plans/${routeID}`);
   };
 
+  const useStyles = makeStyles()((theme: Theme) => {
+    return {
+      container: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'start',
+        paddingTop: '80px',
+        height: '100%',
+        width: '100%',
+        background:
+          'linear-gradient(105deg, rgba(245,167,94,0.01) 0%, rgba(255,200,136,0.05) 25%, rgba(222,174,170,0.1) 50%, rgba(135,143,214,0.1) 75%, rgba(98,226,168,0.1) 100%)',
+      },
+    };
+  });
+
+  const { classes } = useStyles();
+
   return (
-    <div className="flex flex-col">
-      <div className="text-black text-[40px] font-sans font-semibold ">Plans</div>
-      <button
-        onClick={handleCreatePlan}
-        className="text-white w-32 h-12 flex justify-center items-center flex-row bg-[#3E61ED]"
-      >
-        <div className="flex flex-row">
-          <div className="text-3xl flex flex-col justify-center items-center">
-            <AddIcon fontSize="inherit" />
+    <main className={classes.container}>
+      <section className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-16 gap-y-10">
+        <div className="col-span-full text-black text-[40px] font-sans font-semibold">Plans</div>
+        <button
+          onClick={handleCreatePlan}
+          className="col-span-full text-white rounded-xl w-32 h-12 flex justify-center items-center flex-row bg-[#3E61ED]"
+        >
+          <div className="flex flex-row ">
+            <div className="text-3xl flex flex-col justify-center items-center">
+              <AddIcon fontSize="inherit" />
+            </div>
+            <div className="text-[20px] mr-2">New</div> {/* Hacky css to make it look centered */}
           </div>
-          <div className="text-[20px] mr-2">New</div> {/* Hacky css to make it look centered */}
-        </div>
-      </button>
-      <section className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 border-2 border-pink-500">
+        </button>
         {plans.map((plan) => (
           <PlanCard key={plan.id} id={plan.id} plan={plan} />
         ))}
       </section>
-    </div>
+    </main>
   );
 }
