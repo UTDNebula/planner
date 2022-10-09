@@ -50,7 +50,7 @@ export default function ProfilePage(): JSX.Element {
 
           <section className=" bg-white flex flex-col gap-y-4 rounded-2xl">
             <article className="">
-              <div className="grid grid-cols-2 gap-x-16 gap-y-16 px-6 py-4">
+              <div className="grid grid-cols-2 gap-x-16 gap-y-16 px-6 py-7">
                 <div className="font-semibold text-[20px] col-span-full">Update Profile</div>
                 <TextField
                   name="name"
