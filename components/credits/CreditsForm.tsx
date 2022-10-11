@@ -1,19 +1,18 @@
-import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import MenuItem from '@mui/material/MenuItem';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import Select from '@mui/material/Select';
 import { FC, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { loadDummyCourses } from '../../modules/common/api/courses';
-import { generateSemesters, SemesterCode } from '../../modules/common/data';
+import { generateSemesters, Semester, SemesterCode } from '../../modules/common/data';
 import { convertSemesterToData } from '../../modules/common/data-utils';
 import { addCredit } from '../../modules/redux/creditsSlice';
 import useSearch from '../search/search';
-import SearchBar from './SearchBar';
+import SearchBar from './AutoCompleteSearchBar';
+import Button from './Button';
+import DropdownSelect from './DropdownSelect';
 
 const Layout: FC = ({ children }) => <section className="flex flex-col gap-10">{children}</section>;
 
@@ -49,12 +48,13 @@ const CreditsForm: FC = () => {
 
   return (
     <Layout>
-      <h1 className="text-black text-4xl font-semibold">Add Credits</h1>
+      <h1 className="text-[#1C2A6D] text-4xl font-semibold">Add Credit</h1>
 
       <SearchBar
-        onChange={(value) => setCredit(value)}
+        onValueChange={(value) => setCredit(value)}
         onInputChange={(query) => updateQuery(query)}
         options={results.map((course) => course.catalogCode)}
+        style={{ maxWidth: '450px', minWidth: '350px' }}
       />
 
       <FormControl className="flex flex-col gap-3">
@@ -68,36 +68,52 @@ const CreditsForm: FC = () => {
           row
           onChange={(_, value) => setIsTransfer(value === 'yes')}
         >
-          <FormControlLabel className="text-black" value="yes" control={<Radio />} label="Yes" />
-          <FormControlLabel className="text-black" value="no" control={<Radio />} label="No" />
+          <FormControlLabel
+            className="text-black"
+            value="yes"
+            control={
+              <Radio
+                sx={{
+                  '&.Mui-checked': {
+                    color: '#3E61ED',
+                  },
+                }}
+              />
+            }
+            label="Yes"
+          />
+          <FormControlLabel
+            className="text-black"
+            value="no"
+            control={
+              <Radio
+                sx={{
+                  '&.Mui-checked': {
+                    color: '#3E61ED',
+                  },
+                }}
+              />
+            }
+            label="No"
+          />
         </RadioGroup>
         {!isTransfer && (
           <>
             <label htmlFor="semester" className="text-black font-medium">
               Semester
             </label>
-            <Select
+            <DropdownSelect
               id="semester"
               value={semester}
-              label=""
-              onChange={(e) => setSemester(e.target.value)}
-            >
-              {semesters.map(({ title, code }, i) => (
-                <MenuItem value={code} key={code + i}>
-                  {title}
-                </MenuItem>
-              ))}
-            </Select>
+              values={semesters as (Semester & { [key: string]: string })[]}
+              getValue={(semester) => semester.code}
+              getDisplayedValue={(semester) => semester.title}
+              onChange={(sem) => setSemester(sem)}
+            />
           </>
         )}
       </FormControl>
-      <Button
-        onClick={submit}
-        variant="contained"
-        className="bg-primary-dark rounded-full w-3/4 min-w-52 max-w-[300px] h-12"
-      >
-        <span className="font-semibold">Add credits</span>
-      </Button>
+      <Button onClick={submit}>{'Add Credit'}</Button>
     </Layout>
   );
 };

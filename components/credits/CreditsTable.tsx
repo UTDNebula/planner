@@ -1,12 +1,12 @@
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import { FC, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { SEMESTER_CODE_MAPPINGS } from '../../modules/common/data';
 import { Credit, removeCredit } from '../../modules/redux/creditsSlice';
 import { RootState } from '../../modules/redux/store';
-import SearchBar from '../search/SearchBar';
 import DataGrid from './DataGrid';
+import SearchBar from './SearchBar';
 
 const Layout: FC = ({ children }) => <section className="flex flex-col gap-10">{children}</section>;
 
@@ -41,10 +41,14 @@ const CreditsTable: FC = () => {
 
   return (
     <Layout>
-      <div className="grid grid-cols-2">
-        <h1 className="text-black text-4xl font-semibold">Credits</h1>
+      <div className="grid grid-rows-2 gap-5 md:gap-0 md:grid-cols-2">
+        <h1 className="text-[#1C2A6D] text-[30px] font-semibold">Existing Credits</h1>
         <div>
-          <SearchBar updateQuery={(query) => setQuery(query)} />
+          <SearchBar
+            updateQuery={(query) => setQuery(query)}
+            placeholder="Search by course, semester, transfer"
+            style={{ maxWidth: '450px' }}
+          />
         </div>
       </div>
 
@@ -80,7 +84,7 @@ const CreditsTable: FC = () => {
               },
               injectedComponent: {
                 Element: () => (
-                  <DeleteIcon className="text-black cursor-pointer absolute right-5 top-1/2 -translate-y-1/2" />
+                  <DeleteIcon className="text-red-500 cursor-pointer absolute right-5 top-1/2 -translate-y-1/2" />
                 ),
                 onClick: (_, row) => dispatch(removeCredit(row)),
               },
