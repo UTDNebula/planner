@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint --fix .",
+    "lint": "NODE_ENV=test eslint --fix .",
     "format": "prettier --write {pages,components,modules}/**/*.{tsx,ts,js}",
     "format:all": "prettier --write .",
     "postinstall": "husky install"
@@ -48,6 +48,7 @@
     "@types/react-beautiful-dnd": "^13.0.0",
     "@typescript-eslint/eslint-plugin": "^5.10.2",
     "autoprefixer": "^10.4.2",
+    "cross-env": "^7.0.3",
     "cz-conventional-changelog": "^3.3.0",
     "eslint-config-next": "^12.0.10",
     "eslint-config-prettier": "^8.3.0",
@@ -64,7 +65,7 @@
   },
   "lint-staged": {
     "*.{tsx,ts,js}": [
-      "eslint --cache --fix .",
+      "cross-env NODE_ENV=test eslint  --cache --fix . ",
       "prettier --write {pages,components,modules}/**/*.{tsx,ts,js}"
     ]
   },
