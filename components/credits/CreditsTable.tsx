@@ -8,7 +8,9 @@ import { RootState } from '../../modules/redux/store';
 import DataGrid from './DataGrid';
 import SearchBar from './SearchBar';
 
-const Layout: FC = ({ children }) => <section className="flex flex-col gap-10">{children}</section>;
+const Layout: FC = ({ children }) => (
+  <section className="flex flex-col gap-10 lg:gap-0">{children}</section>
+);
 
 const CreditsTable: FC = () => {
   const allCredits = useSelector((store: RootState) => store.creditsData.credits);
@@ -41,7 +43,7 @@ const CreditsTable: FC = () => {
 
   return (
     <Layout>
-      <div className="grid grid-rows-2 gap-5 md:gap-0 md:grid-cols-2">
+      <div className="grid grid-rows-2 gap-2 lg:gap-0 lg:grid-cols-2">
         <h1 className="text-[#1C2A6D] text-[30px] font-semibold">Existing Credits</h1>
         <div>
           <SearchBar

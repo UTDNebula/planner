@@ -18,7 +18,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ placeholder, updateQuery, ...prop
 
   return (
     <div
-      className="bg-white sticky top-0 mx-1 flex flex-row justify-between z-20 rounded-[10px] overflow-hidden h-[55px] border-[2px] border-[#EDEFF7]"
+      className="bg-white sticky top-0 flex flex-row justify-between z-20 rounded-[10px] overflow-hidden h-[55px] border-[2px] border-[#EDEFF7]"
       {...props}
     >
       <InputBase

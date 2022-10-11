@@ -19,9 +19,9 @@ export default function CreditsPage(): JSX.Element {
         <title>Nebula - Your credits</title>
       </Head>
 
-      <div className="w-full h-full sm:p-20 bg-white overflow-y-scroll flex flex-col gap-10">
+      <div className="w-full min-h-full p-5 lg:p-20 bg-white overflow-y-scroll flex flex-col gap-10">
         <h1 className="text-[40px] font-semibold text-[#1C2A6D]">Credits</h1>
-        <Button onClick={() => setOpenAddCredit(true)} icon={<AddIcon />} className="w-[150px]">
+        <Button onClick={() => setOpenAddCredit(true)} icon={<AddIcon />} className="w-[140px]">
           Add Credit
         </Button>
         <Modal
@@ -33,7 +33,7 @@ export default function CreditsPage(): JSX.Element {
             <CreditsForm />
           </div>
         </Modal>
-        <div className="shadow-md rounded-[25px] border-[#EDEFF7] border-[1px] p-20 bg-white max-w-[1000px]">
+        <div className="shadow-md rounded-[25px] border-[#EDEFF7] border-[1px] p-10 lg:p-20 bg-white max-w-[1000px]">
           <CreditsTable />
         </div>
       </div>
