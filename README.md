@@ -4,11 +4,23 @@ Degree validation logic for UTD.
 
 ## File Index
 
-`maxflow.py` contains a basically complete max flow solution, except it doesn't optimize to keep courses from being
-split up. It uses Google OR tools and is very speedy.
+`solver.py` contains a `GraduationRequirementsSolver` class which loads/parses a requirements definition file, then
+uses max flow to solve it.
+
+`solver_test.py` contains some example code on how to use the solver. 
+
+`maxflow.py` contains a POC complete max flow solution, except it doesn't optimize to keep courses from being split
+up. It uses Google OR tools and is very speedy. Note that this uses outdated hard-coded constraints from 
+`mock_data.py`. **This will eventually be removed.**
+
+`mock_data.py` contains `MockData`, which serves some mock courses (degree plans) and CS requirement set. The CS 
+requirement set is outdated. **This may eventually be removed.** 
+
+`utils.py` contains shared dependencies of `solver.py` and `maxflow.py`, i.e. container classes for courses and
+requirements, as well as Matcher logic.
 
 `logic.py` contains a bunch of ramblings for exhaustive search with pruning, but doesn't actually do anything right
-now.
+now. **This will eventually be removed.**
 
 ## Requirement design and limitations
 
@@ -55,9 +67,11 @@ double-dip courses into their own separate requirements from the "CS Preparatory
 
 Some examples to illustrate:
 
-- The set of core classes, major-required courses, guided electives, and free electives
+- The set of core curriculum classes, major-required courses (which are not allowed to overlap with core curriculum),
+  guided electives, and free electives. Note that we must extract stuff like MATH 2413/MATH 2417 and ECS 3390 to a 
+  separate requirement outside of the major requirements, because these are also used to satisfy the core curriculum. 
 - The Upper Level Hour Requirement states you must take, in total, 51 upper-level courses. This by itself is a
-  requirement group, because
+  requirement group, because classes used by this requirement can also be used by any other requirement.
 
 ## Max flow design and limitations
 
