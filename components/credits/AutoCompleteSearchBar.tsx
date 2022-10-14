@@ -30,7 +30,7 @@ const SearchBar: FC<SearchBarProps & React.ComponentPropsWithoutRef<'button'>> =
           {...props}
           placement="bottom"
           anchorEl={containerRef.current}
-          className="rounded-[10px] overflow-hidden shadow-lg"
+          className="rounded-[10px] overflow-hidden shadow-lg z-[9999]"
           style={{
             width: width,
             border: '1px solid #EDEFF7',
