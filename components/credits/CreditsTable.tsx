@@ -92,7 +92,7 @@ const CreditsTable: FC = () => {
               },
             },
           }}
-          rows={matchingCredits.reverse()}
+          rows={[...matchingCredits].reverse()}
           RowCellComponent={({ children }) => <span className="text-black">{children}</span>}
           TitleComponent={({ children }) => <h4 className="text-black">{children}</h4>}
           LoadingComponent={() => <h2 className="text-black">Loading...</h2>}
