@@ -5,9 +5,9 @@ import Modal from '@mui/material/Modal';
 import Head from 'next/head';
 import { useState } from 'react';
 
-import Button from '../../components/credits/Button';
-import CreditsForm from '../../components/credits/CreditsForm';
-import CreditsTable from '../../components/credits/CreditsTable';
+import Button from '../credits/Button';
+import CreditsForm from '../credits/CreditsForm';
+import CreditsTable from '../credits/CreditsTable';
 
 /**
  * A page containing student attributes and other account settings.

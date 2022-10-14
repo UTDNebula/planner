@@ -17,6 +17,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 
+import Credits from '../../components/newhome/Credits';
 import Home from '../../components/newhome/Home';
 import Profile from '../../components/newhome/Profile';
 import useMedia from '../../modules/common/media';
@@ -85,7 +86,11 @@ export default function MiniDrawer() {
     <LogoutIcon key={3} />,
   ];
 
-  const content = [<Home key={0} />, <Profile isDesktop={isDesktop} key={1} />];
+  const content = [
+    <Home key={0} />,
+    <Profile isDesktop={isDesktop} key={1} />,
+    <Credits key={2} />,
+  ];
 
   return (
     <Box sx={{ display: 'flex' }}>
