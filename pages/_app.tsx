@@ -15,7 +15,30 @@ import TopAndSidebar from '../components/common/Top-and-SideBar/TopAndSidebar';
 import { AuthProvider } from '../modules/auth/auth-context';
 import { useStore } from '../modules/redux/store';
 
-const theme = createTheme();
+const theme = createTheme({
+  typography: {
+    allVariants: {
+      color: '#1C2A6D',
+    },
+    fontFamily: [
+      'Inter var',
+      'ui-sans-serif',
+      'system-ui',
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      '"Noto Sans"',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+      '"Noto Color Emoji"',
+    ].join(','),
+  },
+});
 
 /**
  * Firebase configuration info

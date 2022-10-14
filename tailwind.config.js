@@ -129,10 +129,9 @@ module.exports = {
       },
     },
     fontFamily: {
+      sans: ['Inter var', ...defaultTheme.fontFamily.sans],
       roboto: ['Roboto', 'ui-sans-serif', 'system-ui'],
       jost: ['Jost', 'Roboto', 'ui-sans-serif', 'system-ui'],
-
-      sans: ['Inter var', ...defaultTheme.fontFamily.sans],
     },
   },
   plugins: [],
