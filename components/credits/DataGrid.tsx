@@ -3,7 +3,7 @@ import React, { useMemo, useState } from 'react';
 const SCROLL_THRESHOLD = 0.1;
 
 /**
- * @property {{Element: React.ElementType; onClick: ()=> void;}} columns - array of JSON objects that represent each column
+ * @property {{Element: React.ElementType; onClick: (e: React.MouseEvent) => void;}} injectedComponent - element to be injected for each row (used for utility UI like delete and update buttons)
  */
 type RowLayoutProps<T> = React.ComponentPropsWithoutRef<'li'> & {
   injectedComponent?: {

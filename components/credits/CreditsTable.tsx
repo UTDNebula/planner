@@ -27,7 +27,7 @@ const CreditsTable: FC = () => {
    *    data: Credit;
    * }
    * - if the credit is a UTD credit, matchString is a combination of the course code, semester, and year
-   * - if the credit is a transfer credit, matchString is the course code followed by the word 'transfer
+   * - if the credit is a transfer credit, matchString is the course code followed by the word 'transfer'
    */
   const searchableCredits = useMemo(
     () =>
