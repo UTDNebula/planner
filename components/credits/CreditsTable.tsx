@@ -16,6 +16,19 @@ const CreditsTable: FC = () => {
   const allCredits = useSelector((store: RootState) => store.creditsData.credits);
   const dispatch = useDispatch();
 
+  /**
+   * Naive search that compresses Credit object into a string so query string can matched against it
+   */
+
+  /**
+   * Maps Credit object to
+   * {
+   *    matchString: string;
+   *    data: Credit;
+   * }
+   * - if the credit is a UTD credit, matchString is a combination of the course code, semester, and year
+   * - if the credit is a transfer credit, matchString is the course code followed by the word 'transfer
+   */
   const searchableCredits = useMemo(
     () =>
       allCredits.map((credit) => {
@@ -33,6 +46,9 @@ const CreditsTable: FC = () => {
 
   const [query, setQuery] = useState('');
 
+  /**
+   * Filters for credits whose matchString includes the query string.
+   */
   const matchingCredits: Credit[] = useMemo(
     () =>
       searchableCredits
@@ -77,6 +93,11 @@ const CreditsTable: FC = () => {
             headerProps: {
               style: {
                 padding: '20px 0',
+              },
+            },
+            gridProps: {
+              style: {
+                maxHeight: '200px',
               },
             },
             rowProps: {
