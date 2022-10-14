@@ -1,7 +1,7 @@
 import { TextField } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import { purple } from '@mui/material/colors';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { useAuthContext } from '../../modules/auth/auth-context';
 
@@ -31,6 +31,10 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
     });
   };
 
+  const dumbInitialsParser = useMemo(() => {
+    console.log(name.split(' '));
+    return name.split(' ').reduce((prev, curr) => prev + curr[0], '');
+  }, [user.name]);
   return (
     <main className="h-screen w-full flex flex-col overflow-scroll">
       <div className="flex flex-col gap-y-4 self-center items-center">
@@ -47,10 +51,10 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
                 left: '20px',
               }}
             >
-              MK
+              {dumbInitialsParser}
             </Avatar>
           </article>
-          <article className="grid md:grid-cols-2 gap-x-32 gap-y-16 px-12 py-4">
+          <article className="grid md:grid-cols-2 md:gap-x-12 lg:gap-x-32 gap-y-16 px-8 py-4">
             <h1 className="mb-[-40px] col-span-full">Profile</h1>
             <TextField
               name="name"
@@ -100,7 +104,7 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
             </button>
           </article>
         </section>
-        <section className="bg-white flex flex-col w-full px-12 py-4 rounded-2xl">
+        <section className="bg-white flex flex-col w-full px-18 py-4 rounded-2xl">
           <h1>Reset Password</h1>
           <div className="text-sm ">Click this button to reset your password</div>
           <button
@@ -110,7 +114,7 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
             Reset
           </button>
         </section>
-        <section className="bg-white flex flex-col w-full px-12 py-4 rounded-2xl">
+        <section className="bg-white flex flex-col w-full px-8 py-4 rounded-2xl">
           <h1>Delete My Account</h1>
           <div className="text-sm ">Deleting your account will remove all user data</div>
           <button

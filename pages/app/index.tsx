@@ -19,7 +19,6 @@ import * as React from 'react';
 
 import Home from '../../components/newhome/Home';
 import Profile from '../../components/newhome/Profile';
-import Profile2 from '../../components/newhome/Profile2';
 import useMedia from '../../modules/common/media';
 import logo from '../../public/Nebula_Planner_Logo.png';
 
@@ -86,11 +85,7 @@ export default function MiniDrawer() {
     <LogoutIcon key={3} />,
   ];
 
-  const content = [
-    <Home key={0} />,
-    <Profile2 key={1} />,
-    <Profile isDesktop={isDesktop} key={2} />,
-  ];
+  const content = [<Home key={0} />, <Profile isDesktop={isDesktop} key={1} />];
 
   return (
     <Box sx={{ display: 'flex' }}>
