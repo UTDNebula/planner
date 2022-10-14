@@ -9,12 +9,14 @@ interface SearchBarProps extends React.ComponentPropsWithoutRef<'div'> {
   onValueChange: (value: string) => void;
   onInputChange: (query: string) => void;
   options: string[];
+  autoFocus?: boolean;
 }
 
 const SearchBar: FC<SearchBarProps & React.ComponentPropsWithoutRef<'button'>> = ({
   onValueChange,
   onInputChange,
   options,
+  autoFocus,
   ...props
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -69,6 +71,7 @@ const SearchBar: FC<SearchBarProps & React.ComponentPropsWithoutRef<'button'>> =
                 ...params.InputProps,
                 disableUnderline: true,
               }}
+              autoFocus={autoFocus}
             />
           );
         }}

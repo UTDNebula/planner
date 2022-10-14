@@ -10,7 +10,7 @@ import { generateSemesters, Semester, SemesterCode } from '../../modules/common/
 import { convertSemesterToData } from '../../modules/common/data-utils';
 import { addCredit } from '../../modules/redux/creditsSlice';
 import useSearch from '../search/search';
-import SearchBar from './AutoCompleteSearchBar';
+import AutoCompleteSearchBar from './AutoCompleteSearchBar';
 import Button from './Button';
 import DropdownSelect from './DropdownSelect';
 
@@ -50,11 +50,12 @@ const CreditsForm: FC = () => {
     <Layout>
       <h1 className="text-[#1C2A6D] text-4xl font-semibold">Add Credit</h1>
 
-      <SearchBar
+      <AutoCompleteSearchBar
         onValueChange={(value) => setCredit(value)}
         onInputChange={(query) => updateQuery(query)}
         options={results.map((course) => course.catalogCode)}
         style={{ maxWidth: '450px', minWidth: '350px' }}
+        autoFocus
       />
 
       <FormControl className="flex flex-col gap-3">
