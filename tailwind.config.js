@@ -6,6 +6,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        defaultText: '#1C2A6D', // use this as override if text color not working
         general: {
           primary: '#4659A7',
           secondary: '#BCC9FD',

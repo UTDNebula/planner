@@ -17,10 +17,10 @@ export default function PlanCard({ id, plan }: PlanCardProps) {
   return (
     <button
       onClick={handlePlanClick}
-      className="bg-white text-[#1C2A6D] text-left w-[300px] h-[100px] flex flex-col px-8 justify-center rounded-2xl shadow-2xl"
+      className="bg-white text-left w-[300px] h-[100px] flex flex-col px-8 justify-center rounded-2xl shadow-2xl"
     >
-      <div className="text-[20px] font-semibold ">{title}</div>
-      <div className="text-[16px]">B.S. in Computer Science</div>
+      <h4>{title}</h4>
+      <p>B.S. in Computer Science</p>
     </button>
   );
 }

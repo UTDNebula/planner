@@ -52,7 +52,7 @@ export default function PlansPage(): JSX.Element {
   return (
     <main className={classes.container}>
       <section className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-16 gap-y-10">
-        <div className="col-span-full text-[40px] font-semibold">Plans</div>
+        <h1 className="col-span-full">Plans</h1>
         <button
           onClick={handleCreatePlan}
           className="col-span-full text-white rounded-xl w-32 h-12 flex justify-center items-center flex-row bg-[#3E61ED]"
@@ -61,7 +61,7 @@ export default function PlansPage(): JSX.Element {
             <div className="text-3xl flex flex-col justify-center items-center mr-2">
               <AddIcon fontSize="inherit" />
             </div>
-            <div className="text-[20px] mr-2">New</div> {/* Hacky css to make it look centered */}
+            <h4 className="mr-2">New</h4> {/* Hacky css to make it look centered */}
           </div>
         </button>
         {plans.map((plan) => (

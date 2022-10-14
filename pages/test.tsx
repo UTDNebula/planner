@@ -1,6 +1,7 @@
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import HomeIcon from '@mui/icons-material/Home';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Box from '@mui/material/Box';
@@ -18,6 +19,7 @@ import * as React from 'react';
 import Home from '../components/newhome/Home';
 import Profile from '../components/newhome/Profile';
 import Profile2 from '../components/newhome/Profile2';
+import useMedia from '../modules/common/media';
 import logo from '../public/Nebula_Planner_Logo.png';
 
 const drawerWidth = 240;
@@ -64,6 +66,12 @@ export default function MiniDrawer() {
   const [open, setOpen] = React.useState(true);
   const [page, setPage] = React.useState(0);
 
+  const isDesktop = useMedia('(min-width: 768px)');
+
+  React.useEffect(() => {
+    setOpen(false);
+  }, [isDesktop]);
+
   const handleDrawerChange = () => {
     setOpen(!open);
   };
@@ -75,29 +83,33 @@ export default function MiniDrawer() {
     <LogoutIcon key={3} />,
   ];
 
-  const content = [<Home key={0} />, <Profile2 key={1} />, <Profile key={2} />];
+  const content = [
+    <Home key={0} />,
+    <Profile2 key={1} />,
+    <Profile isDesktop={isDesktop} key={2} />,
+  ];
 
   return (
     <Box sx={{ display: 'flex' }}>
       <Drawer variant="permanent" open={open}>
         <div className="flex flex-row w-full items-center pt-2 ml-0.5">
-          <IconButton
-            onClick={handleDrawerChange}
-            sx={{
-              justifyContent: open ? 'initial' : 'center',
-              '&:hover': {
-                backgroundColor: 'white',
-              },
-              '&:focus': {
-                backgroundColor: 'white',
-              },
-            }}
-          >
-            <Image src={logo} width="45px" height="45px" />
-          </IconButton>
-          {open && (
+          {open ? (
             <>
-              <div className="text-[20px] font-semibold ml-0.5 flex-grow">Planner</div>
+              <IconButton
+                onClick={handleDrawerChange}
+                sx={{
+                  justifyContent: open ? 'initial' : 'center',
+                  '&:hover': {
+                    backgroundColor: 'white',
+                  },
+                  '&:focus': {
+                    backgroundColor: 'white',
+                  },
+                }}
+              >
+                <Image src={logo} width="45px" height="45px" />
+              </IconButton>
+              <h4 className="text-defaultText ml-0.5 flex-grow">Planner</h4>
               <IconButton
                 onClick={handleDrawerChange}
                 sx={{
@@ -113,12 +125,29 @@ export default function MiniDrawer() {
                 <ChevronLeftIcon />
               </IconButton>
             </>
+          ) : (
+            isDesktop && (
+              <IconButton
+                onClick={handleDrawerChange}
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? 'initial' : 'center',
+                  px: 2.5,
+                }}
+              >
+                <ChevronRightIcon />
+              </IconButton>
+            )
           )}
         </div>
         <div className="flex flex-col justify-between h-full">
           <List>
             {['Home', 'Profile', 'Credits'].map((text, index) => (
-              <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+              <ListItem
+                key={text}
+                disablePadding
+                sx={{ display: 'block', bgcolor: index === page ? '#E0E0E0' : undefined }}
+              >
                 <ListItemButton
                   onClick={() => {
                     setPage(index);
@@ -168,9 +197,7 @@ export default function MiniDrawer() {
           </ListItem>
         </div>
       </Drawer>
-      <div className="font-sans w-full h-screen overflow-y-scroll bg-[#F5F5F5]">
-        {content[page]}
-      </div>
+      <div className="w-full h-screen overflow-y-scroll bg-[#F5F5F5]">{content[page]}</div>
     </Box>
   );
 }

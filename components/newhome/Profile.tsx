@@ -32,7 +32,7 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
             </Avatar>
           </article>
           <article className="grid md:grid-cols-2 gap-x-32 gap-y-16 px-6 py-4">
-            <div className="font-semibold text-[40px] mb-[-40px] col-span-full">Profile</div>
+            <h1 className="mb-[-40px] col-span-full">Profile</h1>
             <TextField
               name="name"
               id="outlined-basic"
@@ -96,7 +96,7 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
           </button>
         </section>
         <section className="bg-white flex flex-col w-full px-6 py-4 rounded-2xl">
-          <div className="font-semibold text-[40px]">Delete My Account</div>
+          <h1>Delete My Account</h1>
           <div className="text-sm ">Deleting your account will remove all user data</div>
           <button
             onClick={() => console.log('Hi')}
