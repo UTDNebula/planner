@@ -4,22 +4,25 @@ import { purple } from '@mui/material/colors';
 
 import { useAuthContext } from '../../modules/auth/auth-context';
 
+type ProfilePageProps = {
+  isDesktop: boolean;
+};
 /**
  * A page containing student attributes and other account settings.
  */
-export default function ProfilePage(): JSX.Element {
+export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Element {
   const { user } = useAuthContext();
   return (
     <main className="h-screen w-full flex flex-col overflow-scroll">
       <div className="flex flex-col gap-y-4 self-center items-center">
-        <section className="bg-white rounded-2xl">
+        <section className="bg-white rounded-2xl w-full">
           <article className="rounded-t-lg relative bg-gradient-to-r from-purple-500 to-blue-500 h-40 w-full z-10">
             <Avatar
               alt="Remy Sharp"
               sx={{
                 bgcolor: purple[300],
-                width: 120,
-                height: 120,
+                width: isDesktop ? 120 : 90,
+                height: isDesktop ? 120 : 90,
                 position: 'absolute',
                 bottom: '-20px',
                 left: '20px',
@@ -28,7 +31,7 @@ export default function ProfilePage(): JSX.Element {
               MK
             </Avatar>
           </article>
-          <article className="grid grid-cols-2 gap-x-32 gap-y-16 px-6 py-4">
+          <article className="grid md:grid-cols-2 gap-x-32 gap-y-16 px-6 py-4">
             <div className="font-semibold text-[40px] mb-[-40px] col-span-full">Profile</div>
             <TextField
               name="name"

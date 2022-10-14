@@ -38,7 +38,7 @@ export default function PlansPage(): JSX.Element {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'start',
-        paddingTop: '80px',
+        paddingTop: '40px',
         height: '100%',
         width: '100%',
         background:
@@ -52,13 +52,13 @@ export default function PlansPage(): JSX.Element {
   return (
     <main className={classes.container}>
       <section className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-16 gap-y-10">
-        <div className="col-span-full text-black text-[40px] font-sans font-semibold">Plans</div>
+        <div className="col-span-full text-[40px] font-semibold">Plans</div>
         <button
           onClick={handleCreatePlan}
           className="col-span-full text-white rounded-xl w-32 h-12 flex justify-center items-center flex-row bg-[#3E61ED]"
         >
-          <div className="flex flex-row ">
-            <div className="text-3xl flex flex-col justify-center items-center">
+          <div className="flex flex-row">
+            <div className="text-3xl flex flex-col justify-center items-center mr-2">
               <AddIcon fontSize="inherit" />
             </div>
             <div className="text-[20px] mr-2">New</div> {/* Hacky css to make it look centered */}
