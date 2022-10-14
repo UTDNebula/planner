@@ -1,207 +1,48 @@
 import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
+import Close from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
+import Modal from '@mui/material/Modal';
 import Head from 'next/head';
+import { useState } from 'react';
+
+import Button from '../../components/credits/Button';
+import CreditsForm from '../../components/credits/CreditsForm';
+import CreditsTable from '../../components/credits/CreditsTable';
 
 /**
  * A page containing student attributes and other account settings.
  */
 export default function CreditsPage(): JSX.Element {
+  const [openAddCredit, setOpenAddCredit] = useState(false);
+
   return (
     <main className="mx-auto">
       <Head>
         <title>Nebula - Your credits</title>
       </Head>
-      <div className="max-w-6xl text-white grid grid-cols-2 px-20 py-10">
-        <div className="flex flex-col px-8 space-y-20">
-          <div className="text-4xl">Add your credits</div>
-          <div className="flex flex-row space-x-4">
-            <div className="text-2xl">Type of Credit</div>
-            <Select
-              labelId="demo-simple-select-autowidth-label"
-              label="ap tests"
-              id="demo-simple-select-autowidth"
-              value={''}
-              sx={{
-                backgroundColor: 'white',
-                '&:hover': {
-                  backgroundColor: 'white',
-                },
-              }}
-              className="w-28 rounded-lg h-8"
-              variant="standard"
-              name="apTest"
-            >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
-          </div>
-          <div className="flex flex-row space-x-4">
-            <div className="text-2xl">Course</div>
-            <Select
-              labelId="demo-simple-select-autowidth-label"
-              label="ap tests"
-              id="demo-simple-select-autowidth"
-              value={''}
-              sx={{
-                backgroundColor: 'white',
-                '&:hover': {
-                  backgroundColor: 'white',
-                },
-              }}
-              className="w-28 rounded-lg h-8"
-              variant="standard"
-              name="apTest"
-            >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
-            <div className="text-2xl">Score</div>
-            <Select
-              labelId="demo-simple-select-autowidth-label"
-              label="ap tests"
-              id="demo-simple-select-autowidth"
-              value=""
-              sx={{
-                backgroundColor: 'white',
-                '&:hover': {
-                  backgroundColor: 'white',
-                },
-              }}
-              className="w-28 rounded-lg h-8"
-              variant="standard"
-              name="apTest"
-            >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
-          </div>
-          <div className="flex flex-row space-x-4">
-            <div className="text-2xl">Course Number</div>
-            <Select
-              labelId="demo-simple-select-autowidth-label"
-              label="ap tests"
-              id="demo-simple-select-autowidth"
-              value=""
-              sx={{
-                backgroundColor: 'white',
-                '&:hover': {
-                  backgroundColor: 'white',
-                },
-              }}
-              className="w-28 rounded-lg h-8"
-              variant="standard"
-              name="apTest"
-            >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
-          </div>
-          <div className="flex flex-row items-center space-x-2 self-end text-2xl">
-            <IconButton aria-label="add" size="medium" className="bg-white">
-              <AddIcon />
-            </IconButton>
-            <div>Add Credit</div>
-          </div>
-        </div>
 
-        <div className="flex flex-col space-y-8 px-8">
-          <div className="flex flex-col">
-            <div className="flex flex-row justify-between">
-              <div className="text-2xl font-bold">Course Credits</div>
-              <IconButton
-                color="inherit"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  alert('HI');
-                }}
-              >
-                <EditIcon />
-              </IconButton>
-            </div>
-            <hr className="text-white" />
-            <div className="self-end">heh</div>
-            <div className="grid grid-cols-3 gap-x-2 gap-y-5">
-              <div className="rounded-xl w-28 h-8 font-semibold bg-white text-black flex justify-center items-center">
-                CS 1336
-              </div>
-              <div className="rounded-xl w-28 h-8 font-semibold bg-white text-black flex justify-center items-center">
-                CS 1336
-              </div>
-              <div className="rounded-xl w-28 h-8 font-semibold bg-white text-black flex justify-center items-center">
-                CS 1336
-              </div>
-              <div className="rounded-xl w-28 h-8 font-semibold bg-white text-black flex justify-center items-center">
-                CS 1336
-              </div>
-              <div className="rounded-xl w-28 h-8 font-semibold bg-white text-black flex justify-center items-center">
-                CS 1336
-              </div>
-              <div className="rounded-xl w-28 h-8 font-semibold bg-white text-black flex justify-center items-center">
-                CS 1336
-              </div>
-              <div className="rounded-xl w-28 h-8 font-semibold bg-white text-black flex justify-center items-center">
-                CS 1336
-              </div>
-              <div className="rounded-xl w-28 h-8 font-semibold bg-white text-black flex justify-center items-center">
-                CS 1336
-              </div>
-              <div className="rounded-xl w-28 h-8 font-semibold bg-white text-black flex justify-center items-center">
-                CS 1336
-              </div>
-            </div>
+      <div className="w-full min-h-full p-5 lg:p-20 bg-white overflow-y-scroll flex flex-col gap-10">
+        <h1 className="text-[40px] font-semibold text-[#1C2A6D]">Credits</h1>
+        <Button onClick={() => setOpenAddCredit(true)} icon={<AddIcon />} className="w-[140px]">
+          Add Credit
+        </Button>
+        <Modal
+          open={openAddCredit}
+          onClose={() => setOpenAddCredit(false)}
+          className="flex items-center justify-center"
+        >
+          <div className="p-20 w-full sm:max-w-[500px] bg-white rounded-lg relative">
+            <IconButton
+              className="absolute right-10 top-10"
+              onClick={() => setOpenAddCredit(false)}
+            >
+              <Close />
+            </IconButton>
+            <CreditsForm />
           </div>
-          <div className="flex flex-col">
-            <div className="flex flex-row justify-between">
-              <div className="text-2xl font-bold">Transfer Credits</div>
-              <IconButton
-                color="inherit"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  alert('HI');
-                }}
-              >
-                <EditIcon />
-              </IconButton>
-            </div>
-            <hr className="text-white" />
-            <div className="self-end">heh</div>
-            <div className="grid grid-cols-3 gap-x-2 gap-y-5">
-              <div className="rounded-xl w-28 h-8 font-semibold bg-white text-black flex justify-center items-center">
-                CS 1336
-              </div>
-              <div className="rounded-xl w-28 h-8 font-semibold bg-white text-black flex justify-center items-center">
-                CS 1336
-              </div>
-              <div className="rounded-xl w-28 h-8 font-semibold bg-white text-black flex justify-center items-center">
-                CS 1336
-              </div>
-              <div className="rounded-xl w-28 h-8 font-semibold bg-white text-black flex justify-center items-center">
-                CS 1336
-              </div>
-              <div className="rounded-xl w-28 h-8 font-semibold bg-white text-black flex justify-center items-center">
-                CS 1336
-              </div>
-              <div className="rounded-xl w-28 h-8 font-semibold bg-white text-black flex justify-center items-center">
-                CS 1336
-              </div>
-              <div className="rounded-xl w-28 h-8 font-semibold bg-white text-black flex justify-center items-center">
-                CS 1336
-              </div>
-              <div className="rounded-xl w-28 h-8 font-semibold bg-white text-black flex justify-center items-center">
-                CS 1336
-              </div>
-              <div className="rounded-xl w-28 h-8 font-semibold bg-white text-black flex justify-center items-center">
-                CS 1336
-              </div>
-            </div>
-          </div>
+        </Modal>
+        <div className="shadow-md rounded-[25px] border-[#EDEFF7] border-[1px] p-10 lg:p-20 bg-white max-w-[1000px]">
+          <CreditsTable />
         </div>
       </div>
     </main>
