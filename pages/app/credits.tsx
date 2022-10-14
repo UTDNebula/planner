@@ -1,4 +1,6 @@
 import AddIcon from '@mui/icons-material/Add';
+import Close from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
 import Modal from '@mui/material/Modal';
 import Head from 'next/head';
 import { useState } from 'react';
@@ -29,7 +31,13 @@ export default function CreditsPage(): JSX.Element {
           onClose={() => setOpenAddCredit(false)}
           className="flex items-center justify-center"
         >
-          <div className="p-20 w-full sm:max-w-[500px] bg-white rounded-lg">
+          <div className="p-20 w-full sm:max-w-[500px] bg-white rounded-lg relative">
+            <IconButton
+              className="absolute right-10 top-10"
+              onClick={() => setOpenAddCredit(false)}
+            >
+              <Close />
+            </IconButton>
             <CreditsForm />
           </div>
         </Modal>
