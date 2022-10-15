@@ -2,8 +2,10 @@ import { TextField } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import { purple } from '@mui/material/colors';
 import { useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import { useAuthContext } from '../../modules/auth/auth-context';
+import { RootState } from '../../modules/redux/store';
 
 type ProfilePageProps = {
   isDesktop: boolean;
@@ -13,6 +15,8 @@ type ProfilePageProps = {
  */
 export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Element {
   const { user, updateName, resetPassword } = useAuthContext();
+
+  const { majors, minors } = useSelector((state: RootState) => state.userData.onboarding.plan);
 
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
@@ -82,7 +86,7 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
               className="w-60"
               label="Major"
               variant="outlined"
-              value=""
+              value={majors.join(', ') || 'None'}
               disabled={true}
               onChange={() => console.log('HI')}
             />
@@ -92,7 +96,7 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
               className="w-60"
               label="Minor"
               variant="outlined"
-              value=""
+              value={minors.join(', ') || 'None'}
               disabled={true}
               onChange={() => console.log('HI')}
             />
@@ -104,7 +108,7 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
             </button>
           </article>
         </section>
-        <section className="bg-white flex flex-col w-full px-18 py-4 rounded-2xl">
+        <section className="bg-white flex flex-col w-full px-8 py-4 rounded-2xl">
           <h1>Reset Password</h1>
           <div className="text-sm ">Click this button to reset your password</div>
           <button

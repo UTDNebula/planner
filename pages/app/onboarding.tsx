@@ -295,10 +295,13 @@ export default function OnboardingPage(): JSX.Element {
     return `?coursePlans=${coursePlans}&fastTrack=${prestige.fastTrack}`;
   }
 
+  const { updateName } = useAuthContext();
+
   const handleSubmit = () => {
     const data = organizeOnboardingData();
     // TODO: Send data to firebase if creating account
     console.log('Send data to firebase & go to /app', data);
+    updateName(data.preferredName);
 
     // TODO: Figure out functionality for guest users
 
