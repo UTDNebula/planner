@@ -18,26 +18,24 @@ class MockData:
                         'CS 1337', 'CS 2305', 'CS 2336', 'CS 3305', 'CS 3345', 'CS 3354', 'CS 4390', 'CS 1337',
                         'CS 2305', 'CS 2336', 'CS 3305', 'CS 3345', 'CS 4347', 'CS 4348', 'CS 4389', 'CS 4393',
                         'CS 4398', 'CS 4389', 'CS 4393', 'CS 4398']
-        courses = [Course(c, None) for c in set(course_names)]
+        courses = [Course.from_name(c) for c in set(course_names)]
+        courses.append(Course('ENGL 1301', hours=3))
 
-        engl = Course('ENGL 1301', bypass_hours=3, bypass_reqs={'Core - Communication (010)'}, department='ENGL',
-                      parse_name=False)
-        courses.append(engl)
+        bypasses = [SingleAssignment('ENGL 1301', 'Core - Communication (010)', 3)]
 
-        return courses
+        return courses, bypasses
 
     @staticmethod
     def get_real_courses_ezhang():
         course_names = ['CS 1200', 'CS 2336', 'CS 2340', 'CS 3341', 'ECS 1100', 'AMS 2341', 'UNIV 1010', 'CS 3305',
                         'CS 4384', 'CS 3345', 'ECS 3390', 'CS 4337', 'CS 3377', 'CS 3354', 'CS 4348', 'CS 4349',
                         'CS 4375', 'AHST 2331', 'CS 4390', 'CS 4341', 'CS 4141', 'CS 4485', 'CS 3162', 'CS 4365',
-                        'CS 4V98', 'CS 6378']
-        courses = [Course(c, None) for c in set(course_names)]
+                        'CS 4V98', 'CS 6378', 'CS 6360']
+        courses = [Course.from_name(c) for c in set(course_names)]
 
-        courses.append(Course('CS 6360', bypass_hours=3, bypass_reqs=['Major Core Courses'], department='CS',
-                              parse_name=False))
+        bypasses = [SingleAssignment('CS 6360', 'Major Core Courses', 3)]
 
-        return courses
+        return courses, bypasses
 
     @staticmethod
     def get_real_courses_sguan():
@@ -47,12 +45,12 @@ class MockData:
                         'CS 3345', 'ECS 1100', 'GOVT 2306', 'MATH 3323', 'MUSI 3120', 'UNIV 1010', 'CS 2340', 'CS 3305',
                         'CS 3377', 'CS 4365', 'PHYS 2126', 'PHYS 2326', 'CS 4347', 'CS 4348', 'CS 3162', 'CS 3354',
                         'CS 4141', 'CS 4337', 'CS 4341', 'CS 4384', 'ECS 3390', 'CS 4349', 'CS 4371', 'CS 4375',
-                        'CS 4485']
-        courses = [Course(c, None) for c in set(course_names)]
+                        'CS 4485', 'CS 4390']
+        courses = [Course.from_name(c) for c in set(course_names)]
 
-        courses.append(Course('CS 4390', bypass_reqs=['Computer Science Preparatory Courses']))
+        bypasses = [SingleAssignment('CS 4390', 'Computer Science Preparatory Courses', 1)]
 
-        return courses
+        return courses, bypasses
 
     @staticmethod
     def get_cs_reqs():

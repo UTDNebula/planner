@@ -1,6 +1,7 @@
 from __future__ import annotations
 import re
 from abc import ABC, abstractmethod
+from typing import NamedTuple
 
 # TODO: actually implement this exception to give good error messages
 ParseException = Exception
@@ -24,46 +25,32 @@ class NameDefinedClass(ABC):
 
 
 class Course(NameDefinedClass):
-    def __init__(self, name, prerequisites=None, bypass_hours=None, bypass_reqs=None, department=None,
-                 parse_name=True):
-        if prerequisites is None:
-            prerequisites = []
-        if bypass_reqs is None:
-            bypass_reqs = []
-
+    def __init__(self, name: str, level: int = 0, hours: float = 0, department: str = 'UNK'):
         self.name = name
-        self.prerequisites = prerequisites
-        self.reqs = {}
-        self.bypass_reqs = set(bypass_reqs)
+        self.level = level
+        self.hours = hours
+        self.department = department
 
-        if parse_name:
-            self.department, course_num = name.split()
-
-            if bypass_hours is None:
-                hr_str = course_num[1]
-                if hr_str == 'V':
-                    self.hours = 3
-                else:
-                    self.hours = int(hr_str)
-            else:
-                self.hours = bypass_hours
-
-            self.level = int(course_num[0])
+    @classmethod
+    def from_name(cls, name):
+        """Parse course properties from just the name. Mostly for testing/mock data"""
+        department, course_num = name.split()
+        level = int(course_num[0])
+        hr_str = course_num[1]
+        if hr_str == 'V':
+            hours = 3
         else:
-            self.department = department if department is not None else 'UNK'
-            self.hours = bypass_hours if bypass_hours is not None else 0
-            self.level = 0
+            hours = int(hr_str)
+        return cls(name, level, hours, department)
 
 
 class Requirement(NameDefinedClass):
-    def __init__(self, name, hours, course_matcher: Matcher):
+    def __init__(self, name: str, hours: float, course_matcher: Matcher):
         self.name = name
         self.hours = hours
         self.course_matcher = course_matcher
 
     def match(self, course):
-        if course.bypass_reqs:
-            return self.name in course.bypass_reqs
         return self.course_matcher.match(course)
 
 
@@ -208,3 +195,9 @@ class AnyMatcher(Matcher):
     def match(self, course):
         _ = course  # just to get linter to stop complaining
         return True
+
+
+class SingleAssignment(NamedTuple):
+    course: str
+    requirement: str
+    hours: float
