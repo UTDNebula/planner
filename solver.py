@@ -49,6 +49,8 @@ class AssignmentStore:
 
 
 class GraduationRequirementsSolver:
+    GRANULARITY_FACTOR = 100
+
     def __init__(self):
         self.requirements_dict: dict[str, Requirement] = {}
         self.groups: list[list[Requirement]] = []
@@ -161,6 +163,11 @@ class GraduationRequirementsSolver:
                     bypassed_hrs[course] += hours
                     bypassed_hrs[req] += hours
 
+        def get_adjusted_hours(entity: Course | Requirement):
+            remaining = entity.hours - bypassed_hrs[entity]
+            granulated = int(GraduationRequirementsSolver.GRANULARITY_FACTOR * remaining)
+            return max(0, granulated)
+
         # Define some IDs and ID offsets/prefixes to use for the graph
         SOURCE = 0
         SINK = 1
@@ -173,14 +180,14 @@ class GraduationRequirementsSolver:
         smf.add_arcs_with_capacity(
             np.repeat(SOURCE, len(courses)),
             np.array(range(COURSE_OFFSET, COURSE_OFFSET + len(courses))),
-            np.array([max(0., c.hours - bypassed_hrs[c]) for c in courses]),
+            np.array([get_adjusted_hours(c) for c in courses]),
         )
 
         # Add req -> sink nodes, with "assignable" hour capacity
         smf.add_arcs_with_capacity(
             np.array(range(REQ_OFFSET, REQ_OFFSET + len(reqs))),
             np.repeat(SINK, len(reqs)),
-            np.array([max(0., r.hours - bypassed_hrs[r]) for r in reqs]),
+            np.array([get_adjusted_hours(r) for r in reqs]),
         )
 
         # Add course -> req nodes, with "infinite" capacity
@@ -202,7 +209,10 @@ class GraduationRequirementsSolver:
                 course = courses[course_id]
                 req_id = smf.head(i) - REQ_OFFSET
                 req = reqs[req_id]
-                hours = smf.flow(i)
+                hours = smf.flow(i) / GraduationRequirementsSolver.GRANULARITY_FACTOR
+                # Convert back to integer if integer, to save some formatting pain later on
+                if hours == int(hours):
+                    hours = int(hours)
                 group_assignments.add(course, req, hours)
 
         # Return solution graph

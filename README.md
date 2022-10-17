@@ -103,7 +103,7 @@ about splitting course hours between requirements.
 
 > Note: Splitting is different from double-dipping.  
 > An example of splitting would be apply 1 hour from CS 2417 to Requirement A, and the other 3 to Requirement B.  
-> An example of double-dipping would be to apply all 4 hours from CS 2417 to Requirement A, and also to Requirement B. 
+> An example of double-dipping would be to apply all 4 hours from CS 2417 to Requirement A, and also to Requirement B.
 
 There's no hard rule on how much we can split courses, so the easy solution is to split each course into mutiple
 1-hour courses with the same properties. Then, simplify the network by joining equivalent nodes. This gives you the
@@ -129,10 +129,7 @@ THe modified push-relabel algorithm supported by Google OR tools only does integ
 have a fractional bypass, it may not come up with a full solution (unless the solution can be achieved with only
 integer flows).
 
-One quick fix to make the algorithm more granular is to multiply every capacity by some factor to make everything an
-integer (for example 100). Then, limit bypasses and hours to be an integer at this granularity (e.g. at most 2
-decimal places in the factor=100 case).
-
-This is unimplemented for now.
+The fix is to multiply every capacity by some granularity factor, turning all fractions into integers. The current
+granularity factor is 100, meaning any hour assignment with 2 or fewer decimal places is supported.
 
 In very preliminary tests, this works well and very quickly, without degrading course splitting performance. 
