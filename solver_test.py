@@ -1,13 +1,13 @@
 from mock_data import MockData
 from solver import *
 
-REQUIREMENTS_FILE = "requirements/computer_science_ug/definition.txt"
+REQUIREMENTS_FILE = "requirements/computer_science_ug.req"
 # MOCK_COURSES_FCN = MockData.get_real_courses_ezhang
 MOCK_COURSES_FCN = MockData.get_real_courses_sguan
 
 g = GraduationRequirementsSolver()
 g.load_requirements_from_file(REQUIREMENTS_FILE)
-result = g.solve(MOCK_COURSES_FCN())
+result = g.solve(*MOCK_COURSES_FCN())
 
 print(result)
 

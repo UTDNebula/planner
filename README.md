@@ -7,20 +7,13 @@ Degree validation logic for UTD.
 `solver.py` contains a `GraduationRequirementsSolver` class which loads/parses a requirements definition file, then
 uses max flow to solve it.
 
-`solver_test.py` contains some example code on how to use the solver. 
+`solver_test.py` contains some example code on how to use the solver.
 
-`maxflow.py` contains a POC complete max flow solution, except it doesn't optimize to keep courses from being split
-up. It uses Google OR tools and is very speedy. Note that this uses outdated hard-coded constraints from 
-`mock_data.py`. **This will eventually be removed.**
-
-`mock_data.py` contains `MockData`, which serves some mock courses (degree plans) and CS requirement set. The CS 
-requirement set is outdated. **This may eventually be removed.** 
+`mock_data.py` contains `MockData`, which serves some mock courses (degree plans) and CS requirement set. The CS
+requirement set is outdated. **This may eventually be removed.**
 
 `utils.py` contains shared dependencies of `solver.py` and `maxflow.py`, i.e. container classes for courses and
 requirements, as well as Matcher logic.
-
-`logic.py` contains a bunch of ramblings for exhaustive search with pruning, but doesn't actually do anything right
-now. **This will eventually be removed.**
 
 ## Requirement design and limitations
 
@@ -68,10 +61,32 @@ double-dip courses into their own separate requirements from the "CS Preparatory
 Some examples to illustrate:
 
 - The set of core curriculum classes, major-required courses (which are not allowed to overlap with core curriculum),
-  guided electives, and free electives. Note that we must extract stuff like MATH 2413/MATH 2417 and ECS 3390 to a 
-  separate requirement outside of the major requirements, because these are also used to satisfy the core curriculum. 
+  guided electives, and free electives. Note that we must extract stuff like MATH 2413/MATH 2417 and ECS 3390 to a
+  separate requirement outside of the major requirements, because these are also used to satisfy the core curriculum.
 - The Upper Level Hour Requirement states you must take, in total, 51 upper-level courses. This by itself is a
   requirement group, because classes used by this requirement can also be used by any other requirement.
+
+### Manual assignments (Bypasses)
+
+Sometimes, we may want to manually assign a course to a requirement. For example, to specify what would be an arbitrary
+choice to the algorithm, or to allow something that doesn't normally happen. One common example of this is replacing
+CS 1136 with hours from a different CS course.
+
+Each bypass is a triple containing a course, a requirement, and a number of hours to assign.
+
+Bypasses can be simply handled without changing the core assignment problem, by adding the below pre-processing and
+post-processing steps:
+
+1. Pre-process: For every bypass, remove the hours from both the course and the requirement.
+2. Solve the remaining problem normally
+3. Post-process: Add the bypass assignments to the solution
+
+> It is probably good design to add a lot of warnings when users want to bypass. For example, we might want to warn
+> users if they are manually assigning a course that doesn't satisfy the requirement's Matcher. Or, if they try to
+> assign more hours than are available in a course. Or if they try to assign more hours than are needed by a
+> requirement.   
+> For now, no warnings have been implemented. If users try to over-assign, the algorithm allows them to do so and
+> should not crash.
 
 ## Max flow design and limitations
 
@@ -86,8 +101,9 @@ https://www.zirayhao.com/posts/course-match
 However, Dartmouth works on a trimester system and all of their courses are 1 hour. So, they don't need to worry
 about splitting course hours between requirements.
 
-> Note: Splitting is different from double-dipping. What I'm saying here is you can apply 1 hour from CS 2417 to
-> one requirement, and 3 hours to a different one.
+> Note: Splitting is different from double-dipping.  
+> An example of splitting would be apply 1 hour from CS 2417 to Requirement A, and the other 3 to Requirement B.  
+> An example of double-dipping would be to apply all 4 hours from CS 2417 to Requirement A, and also to Requirement B.
 
 There's no hard rule on how much we can split courses, so the easy solution is to split each course into mutiple
 1-hour courses with the same properties. Then, simplify the network by joining equivalent nodes. This gives you the
@@ -105,5 +121,15 @@ same flow. In other words, maximiuze the course-requirement edges with 0 flow. I
 to each course-requirement edge used in the solution, and minimize the flow cost.
 
 Unfortunately, solving the Minimum-Edge Cost Flow (MECF) problem is NP-hard, even for bipartite matching with 0/1
-costs. More work needs to be done to optimize this second problem in an efficient manner.  
+costs. More work needs to be done to optimize this second problem in an efficient manner.
 
+### Fractional hours
+
+THe modified push-relabel algorithm supported by Google OR tools only does integer increments of flow, so if you
+have a fractional bypass, it may not come up with a full solution (unless the solution can be achieved with only
+integer flows).
+
+The fix is to multiply every capacity by some granularity factor, turning all fractions into integers. The current
+granularity factor is 100, meaning any hour assignment with 2 or fewer decimal places is supported.
+
+In very preliminary tests, this works well and very quickly, without degrading course splitting performance. 
