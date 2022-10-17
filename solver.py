@@ -54,7 +54,7 @@ class GraduationRequirementsSolver:
         self.groups: list[list[Requirement]] = []
 
     def validate(self):
-        """Ensures that all REQUIREMENT are used in GROUP"""
+        """Ensures that all REQUIRE are used in GROUP"""
         # TODO: ensure no duplicates
         requirements_names = set(self.requirements_dict.keys())
         groups_names = set(req.name for group in self.groups for req in group)
@@ -84,13 +84,13 @@ class GraduationRequirementsSolver:
                     v = GraduationRequirementsSolver._unpack_defines(defines, v)
                     defines[k] = v
 
-                case 'REQUIREMENT':
+                case 'REQUIRE':
                     # Split the requirement name with the rest of the args
                     if args[0] == '"':
                         # Handle req names wrapped in quotes (because they might have spaces)
                         end_quote_idx = args.index('"', 1)
                         if end_quote_idx == -1:
-                            raise ParseException("REQUIREMENT name contains start quote but no end quote found")
+                            raise ParseException("REQUIRE name contains start quote but no end quote found")
                         req_name, args = args[1:end_quote_idx], args[end_quote_idx + 1:].strip()
                     else:
                         req_name, args = args.split(maxsplit=1)
