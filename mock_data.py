@@ -53,6 +53,23 @@ class MockData:
         return courses, bypasses
 
     @staticmethod
+    def get_real_courses_missing_physics():
+        course_names = ['UNIV 1010', 'RHET 1302', 'GOVT 2305', 'GOVT 2306', 'HIST 1301', 'MATH 1314', 'MATH 2412',
+                        'CS 1336', 'CS 1337', 'CS 1136', 'ECS 1100', 'CS 1200', 'MATH 2413', 'HUMA 1301', 'MUSI 1306',
+                        'HIST 1302', 'CS 2305', 'CS 2336', 'PSY 2301', 'MATH 2414', 'PHYS 2325', 'PHYS 2125', 'CS 2340',
+                        'CS 3305', 'MATH 2418', 'CS 3341', 'CS 3345', 'CS 3377', 'ECS 3390', 'CS 3341', 'CS 3354',
+                        'CS 4141', 'CS 4341', 'CS 4337', 'CS 3162', 'CS 4349', 'CS 4348', 'CS 4347', 'CS 4384',
+                        'CS 4485']
+        courses = [Course.from_name(c) for c in set(course_names)]
+
+        courses.append(Course('Guided Elective 1', 4, 3, 'CS'))
+        courses.append(Course('Guided Elective 2', 4, 3, 'CS'))
+        courses.append(Course('Guided Elective 3', 4, 3, 'CS'))
+        courses.append(Course('Free Electives Placeholder (10 hrs)', hours=10))
+
+        return courses, []
+
+    @staticmethod
     def get_cs_reqs():
         print("WARNING: using outdated hard-coded constraints!")
         computer_science_preparatory_courses_matcher = OrMatcher(
