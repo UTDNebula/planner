@@ -10,15 +10,15 @@ const errorMessageStyle = {
   width: '375px',
   position: 'absolute',
   zIndex: '1000000',
-  height: '57px',
-  bottom: '30%',
+  padding: '10px',
+  bottom: '2%',
   left: '35%',
 } as React.CSSProperties;
 
-export function errorMessage(error) {
+export default function ErrorMessage(error) {
   return (
     <Alert id="errMess1" severity="error" style={errorMessageStyle}>
-      Something went wrong - {error.message}!
+      Something went wrong - {error}!
     </Alert>
   );
 }

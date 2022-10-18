@@ -35,16 +35,15 @@ const useSearch = <T, K>({
   // TODO: Insert logc for filtering w/ chips
   // TODO: Update filtering code to deal with data from Nebula API
   const updateQuery = (query: K) => {
-    console.debug('searching');
-    console.debug('searching');
     getData()
       .then((data) =>
         data.filter((el) => filterFn(el, query)).slice(constraints[0], constraints[1]),
       )
       .then((data) => setResults(data))
       .catch((error) => {
-        console.debug('error was catched here: ');
-        setErr(error);
+        console.log(error.message);
+        console.log('error was catched in updateQuery:', { error });
+        setErr(`error was catched in updateQuery: ${error.message}`);
       });
   };
 
