@@ -10,7 +10,7 @@ import { Course } from '../data';
  */
 export async function loadDummyCourses(year = 2020): Promise<Course[]> {
   const courseData: { [key: string]: JSONCourseType } = await import(
-    `../../../data/${year}-course.json`
+    `../../../data/${year}-courses.json`
   );
   return Object.entries(courseData).map((value) => {
     const [catalogCode, courseData] = value;

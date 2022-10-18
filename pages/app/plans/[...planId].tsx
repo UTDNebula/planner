@@ -127,9 +127,6 @@ export default function PlanDetailPage(): JSX.Element {
     </div>
   );
 
-  console.log('HI');
-  console.log(err);
-
   return (
     <div className="h-full flex flex-col overflow-x-hidden overflow-y-auto">
       <div className="flex-none">

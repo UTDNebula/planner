@@ -41,7 +41,6 @@ const useSearch = <T, K>({
       )
       .then((data) => setResults(data))
       .catch((error) => {
-        console.log(error.message);
         console.log('error was catched in updateQuery:', { error });
         setErr(`error was catched in updateQuery: ${error.message}`);
       });
