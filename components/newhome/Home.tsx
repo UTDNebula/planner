@@ -51,7 +51,7 @@ export default function PlansPage(): JSX.Element {
 
   return (
     <main className={classes.container}>
-      <section className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-16 gap-y-10">
+      <section className="grid sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-x-16 gap-y-10">
         <h1 className="col-span-full">Plans</h1>
         <button
           onClick={handleCreatePlan}

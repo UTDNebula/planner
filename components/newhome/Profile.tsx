@@ -41,7 +41,7 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
   }, [user.name]);
   return (
     <main className="h-screen w-full flex flex-col overflow-scroll">
-      <div className="flex flex-col gap-y-4 self-center items-center">
+      <div className="flex flex-col gap-y-4 mt-4 self-center items-center">
         <section className="bg-white rounded-2xl w-full">
           <article className="rounded-t-lg relative bg-gradient-to-r from-purple-500 to-blue-500 h-40 w-full z-10">
             <Avatar
