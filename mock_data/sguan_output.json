@@ -13,39 +13,45 @@
       "PHYS 2125": 1,
       "PHYS 2126": 1
     },
-    "hours": 25
+    "hours": 25,
+    "isfilled": true
   },
   "Computer Science Preparatory Courses - MATH 2413 or MATH 2417": {
     "courses": {
       "MATH 2413": 4
     },
-    "hours": 4
+    "hours": 4,
+    "isfilled": true
   },
   "Computer Science Preparatory Courses - MATH 2414 or MATH 2419": {
     "courses": {
       "MATH 2414": 4
     },
-    "hours": 4
+    "hours": 4,
+    "isfilled": true
   },
   "Computer Science Preparatory Courses - PHYS 2325 or PHYS 2421": {
     "courses": {
       "PHYS 2325": 3
     },
-    "hours": 3
+    "hours": 3,
+    "isfilled": true
   },
   "Core - American History (060)": {
     "courses": {
       "HIST 1301": 3,
       "HIST 1302": 3
     },
-    "hours": 6
+    "hours": 6,
+    "isfilled": true
   },
   "Core - Communication (010)": {
     "courses": {
       "ECS 3390": 3,
       "RHET 1302": 3
     },
-    "hours": 6
+    "hours": 6,
+    "isfilled": true
   },
   "Core - Component Area Option (090)": {
     "courses": {
@@ -53,45 +59,52 @@
       "MATH 2414": 1,
       "MATH 2415": 4
     },
-    "hours": 6
+    "hours": 6,
+    "isfilled": true
   },
   "Core - Creative Arts (050)": {
     "courses": {
       "MUSI 1306": 3
     },
-    "hours": 3
+    "hours": 3,
+    "isfilled": true
   },
   "Core - Government/Political Science (070)": {
     "courses": {
       "GOVT 2305": 3,
       "GOVT 2306": 3
     },
-    "hours": 6
+    "hours": 6,
+    "isfilled": true
   },
   "Core - Language, Philosophy and Culture (040)": {
     "courses": {
       "PHIL 1306": 3
     },
-    "hours": 3
+    "hours": 3,
+    "isfilled": true
   },
   "Core - Life and Physical Sciences (030)": {
     "courses": {
       "PHYS 2325": 3,
       "PHYS 2326": 3
     },
-    "hours": 6
+    "hours": 6,
+    "isfilled": true
   },
   "Core - Mathematics (020)": {
     "courses": {
       "MATH 2414": 3
     },
-    "hours": 3
+    "hours": 3,
+    "isfilled": true
   },
   "Core - Social and Behavioral Sciences (080)": {
     "courses": {
       "ECON 2301": 3
     },
-    "hours": 3
+    "hours": 3,
+    "isfilled": true
   },
   "Free Electives": {
     "courses": {
@@ -100,7 +113,8 @@
       "MATH 3323": 3,
       "MUSI 3120": 1
     },
-    "hours": 10
+    "hours": 10,
+    "isfilled": true
   },
   "Major Core Courses": {
     "courses": {
@@ -119,13 +133,15 @@
       "CS 4384": 3,
       "CS 4485": 4
     },
-    "hours": 39
+    "hours": 39,
+    "isfilled": true
   },
   "Major Core Courses - ECS 3390": {
     "courses": {
       "ECS 3390": 3
     },
-    "hours": 3
+    "hours": 3,
+    "isfilled": true
   },
   "Major Guided Electives": {
     "courses": {
@@ -133,7 +149,8 @@
       "CS 4371": 3,
       "CS 4375": 3
     },
-    "hours": 9
+    "hours": 9,
+    "isfilled": true
   },
   "Minimum Cumulative Hours": {
     "courses": {
@@ -181,7 +198,8 @@
       "PHYS 2325": 3,
       "PHYS 2326": 3
     },
-    "hours": 124
+    "hours": 124,
+    "isfilled": true
   },
   "Upper Level Hour Requirement": {
     "courses": {
@@ -205,6 +223,7 @@
       "MATH 3323": 3,
       "MUSI 3120": 1
     },
-    "hours": 51
+    "hours": 51,
+    "isfilled": true
   }
 }

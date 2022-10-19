@@ -42,6 +42,9 @@ class Course(NameDefinedClass):
         self.hours = hours
         self.department = department
 
+    def to_json(self):
+        return {'name': self.name, 'level': self.level, 'hours': self.hours, 'department': self.department}
+
     @classmethod
     def from_name(cls, name):
         """Parse course properties from just the name. Mostly for testing/mock data"""
@@ -222,6 +225,9 @@ class SingleAssignment(NamedTuple):
     course: str
     requirement: str
     hours: float
+
+    def to_json(self):
+        return {'course': self.course, 'requirement': self.requirement, 'hours': self.hours}
 
     @classmethod
     def from_json(cls, d):

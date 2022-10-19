@@ -3,6 +3,15 @@ from utils import *
 
 class MockData:
     @staticmethod
+    def input_to_api_json(version: str, degree: str, courses: list[Course], bypasses: list[SingleAssignment]):
+        return {
+            'version': version,
+            'degree': degree,
+            'courses': [c.to_json() for c in courses],
+            'bypasses': [b.to_json() for b in bypasses],
+        }
+
+    @staticmethod
     def get_unrealistic_courses_1():
         course_names = ['RHET 1302', 'ECS 3390', 'MATH 2413', 'MATH 2417', 'PHYS 2325', 'PHYS 2326', 'GOVT 2305',
                         'GOVT 2306', 'MATH 2413', 'MATH 2417', 'MATH 2419', 'PHYS 2125', 'ECS 1100', 'CS 1200',
