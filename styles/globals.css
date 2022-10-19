@@ -1,33 +1,24 @@
 @tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
-    Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-}
-
 @layer base {
+  html {
+    @apply text-[#1C2A6D];
+  } 
   h1 {
-    @apply font-jost font-medium text-[64px];
+    @apply text-[40px] font-semibold;
   }
   h3 {
-    @apply font-roboto font-medium text-[20px];
+    @apply text-[24px] font-semibold;
   }
   h4 {
-    @apply font-roboto font-bold text-[18px];
+    @apply text-[20px] font-semibold;
   }
   p {
-    @apply font-roboto font-normal text-[12px];
-  }
-  a {
-    @apply cursor-pointer;
+    @apply text-[16px];
   }
 }
+@tailwind components;
 
-* {
-  box-sizing: border-box;
-}
+
+@tailwind utilities;
+
+

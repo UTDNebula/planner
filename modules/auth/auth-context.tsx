@@ -161,6 +161,8 @@ interface AuthContextState {
    */
   signUpWithEmail: (email: string, password: string) => void;
 
+  updateName: (name: string) => Promise<void>;
+
   /**
    * Switches the currently active account.
    */
@@ -174,7 +176,7 @@ interface AuthContextState {
   /**
    * Attempts sending a password reset link to the user with the given email.
    */
-  resetPassword: (email: string) => void;
+  resetPassword: (email: string) => Promise<void>;
 }
 
 const AuthContext = React.createContext<AuthContextState | undefined>(undefined); // Find a better solution for this
@@ -385,6 +387,19 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
       });
   }, []);
 
+  const updateName = async (name: string) => {
+    const user = firebase.auth().currentUser;
+
+    await user
+      .updateProfile({
+        displayName: name,
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    updateUser(user);
+  };
+
   /**
    * Navigates to the AuthPage and forces a sign-in.
    *
@@ -446,6 +461,7 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
   const authContextValue: AuthContextState = {
     user,
     isUserSignedIn,
+    updateName,
     authWithRedirect,
     checkRedirect,
     signUpWithEmail,
