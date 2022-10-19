@@ -3,7 +3,7 @@ from solver import *
 
 REQUIREMENTS_FILE = "requirements/computer_science_ug.req"
 # MOCK_COURSES_FCN = MockData.get_real_courses_ezhang
-MOCK_COURSES_FCN = MockData.get_real_courses_sguan
+MOCK_COURSES_FCN = MockData.get_real_courses_missing_physics
 
 g = GraduationRequirementsSolver()
 g.load_requirements_from_file(REQUIREMENTS_FILE)

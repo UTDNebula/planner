@@ -1,0 +1,178 @@
+{
+  "Computer Science Preparatory Courses": {
+    "courses": {
+      "CS 1200": 2,
+      "CS 2336": 3,
+      "CS 2340": 3,
+      "ECS 1100": 1
+    },
+    "hours": 25,
+    "isfilled": false
+  },
+  "Computer Science Preparatory Courses - MATH 2413 or MATH 2417": {
+    "courses": {},
+    "hours": 4,
+    "isfilled": false
+  },
+  "Computer Science Preparatory Courses - MATH 2414 or MATH 2419": {
+    "courses": {},
+    "hours": 4,
+    "isfilled": false
+  },
+  "Computer Science Preparatory Courses - PHYS 2325 or PHYS 2421": {
+    "courses": {},
+    "hours": 3,
+    "isfilled": false
+  },
+  "Core - American History (060)": {
+    "courses": {},
+    "hours": 6,
+    "isfilled": false
+  },
+  "Core - Communication (010)": {
+    "courses": {
+      "ECS 3390": 3
+    },
+    "hours": 6,
+    "isfilled": false
+  },
+  "Core - Component Area Option (090)": {
+    "courses": {},
+    "hours": 6,
+    "isfilled": false
+  },
+  "Core - Creative Arts (050)": {
+    "courses": {
+      "AHST 2331": 2
+    },
+    "hours": 3,
+    "isfilled": false
+  },
+  "Core - Government/Political Science (070)": {
+    "courses": {},
+    "hours": 6,
+    "isfilled": false
+  },
+  "Core - Language, Philosophy and Culture (040)": {
+    "courses": {},
+    "hours": 3,
+    "isfilled": false
+  },
+  "Core - Life and Physical Sciences (030)": {
+    "courses": {},
+    "hours": 6,
+    "isfilled": false
+  },
+  "Core - Mathematics (020)": {
+    "courses": {},
+    "hours": 3,
+    "isfilled": false
+  },
+  "Core - Social and Behavioral Sciences (080)": {
+    "courses": {},
+    "hours": 3,
+    "isfilled": false
+  },
+  "Free Electives": {
+    "courses": {
+      "AHST 2331": 1,
+      "AMS 2341": 3,
+      "CS 4390": 3,
+      "CS 6378": 3
+    },
+    "hours": 10,
+    "isfilled": true
+  },
+  "Major Core Courses": {
+    "courses": {
+      "CS 3162": 1,
+      "CS 3305": 3,
+      "CS 3341": 3,
+      "CS 3345": 3,
+      "CS 3354": 3,
+      "CS 3377": 3,
+      "CS 4141": 1,
+      "CS 4337": 3,
+      "CS 4341": 3,
+      "CS 4348": 3,
+      "CS 4349": 3,
+      "CS 4384": 3,
+      "CS 4485": 4,
+      "CS 6360": 3
+    },
+    "hours": 39,
+    "isfilled": true
+  },
+  "Major Core Courses - ECS 3390": {
+    "courses": {
+      "ECS 3390": 3
+    },
+    "hours": 3,
+    "isfilled": true
+  },
+  "Major Guided Electives": {
+    "courses": {
+      "CS 4365": 3,
+      "CS 4375": 3,
+      "CS 4V98": 3
+    },
+    "hours": 9,
+    "isfilled": true
+  },
+  "Minimum Cumulative Hours": {
+    "courses": {
+      "AHST 2331": 3,
+      "AMS 2341": 3,
+      "CS 1200": 2,
+      "CS 2336": 3,
+      "CS 2340": 3,
+      "CS 3162": 1,
+      "CS 3305": 3,
+      "CS 3341": 3,
+      "CS 3345": 3,
+      "CS 3354": 3,
+      "CS 3377": 3,
+      "CS 4141": 1,
+      "CS 4337": 3,
+      "CS 4341": 3,
+      "CS 4348": 3,
+      "CS 4349": 3,
+      "CS 4365": 3,
+      "CS 4375": 3,
+      "CS 4384": 3,
+      "CS 4390": 3,
+      "CS 4485": 4,
+      "CS 4V98": 3,
+      "CS 6360": 3,
+      "CS 6378": 3,
+      "ECS 1100": 1,
+      "ECS 3390": 3
+    },
+    "hours": 124,
+    "isfilled": false
+  },
+  "Upper Level Hour Requirement": {
+    "courses": {
+      "CS 3162": 1,
+      "CS 3305": 3,
+      "CS 3341": 3,
+      "CS 3345": 3,
+      "CS 3354": 3,
+      "CS 3377": 3,
+      "CS 4141": 1,
+      "CS 4337": 3,
+      "CS 4341": 3,
+      "CS 4348": 3,
+      "CS 4349": 3,
+      "CS 4365": 3,
+      "CS 4375": 3,
+      "CS 4384": 3,
+      "CS 4390": 3,
+      "CS 4485": 4,
+      "CS 4V98": 3,
+      "ECS 3390": 3
+    },
+    "hours": 51,
+    "isfilled": true
+  }
+}

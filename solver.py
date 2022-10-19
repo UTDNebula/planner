@@ -11,6 +11,10 @@ class AssignmentStore:
         # req -> course -> hours
         self.reqs_to_courses: dict[Requirement, dict[Course, float]] = defaultdict(Counter)
 
+    def assert_requirement(self, requirement: Requirement):
+        """Initialize requirement in store if not already initialized"""
+        _ = self.reqs_to_courses[requirement]
+
     def add(self, course: Course, requirement: Requirement, hours: float, overwrite=False):
         if overwrite:
             self.reqs_to_courses[requirement][course] = hours
@@ -18,13 +22,15 @@ class AssignmentStore:
             self.reqs_to_courses[requirement][course] += hours
 
     def update(self, other: AssignmentStore):
+        """Merge another AssignmentStore into this one"""
         for req, req_fills in other.reqs_to_courses.items():
+            # Note: abuses Counter's .update() which adds instead of replacing
             self.reqs_to_courses[req].update(req_fills)
 
     def get_unfilled_reqs(self):
         unfilled_reqs = []
         for req, req_fills in self.reqs_to_courses.items():
-            hours_filled = sum(list(zip(*req_fills.items()))[1])
+            hours_filled = self._get_req_hours_filled(req)
             if hours_filled < req.hours:
                 unfilled_reqs.append((req, hours_filled))
         return unfilled_reqs
@@ -32,10 +38,28 @@ class AssignmentStore:
     def can_graduate(self):
         return len(self.get_unfilled_reqs()) == 0
 
+    def to_json(self):
+        return {
+            req.name: {
+                'hours': req.hours,
+                'isfilled': self._get_req_hours_filled(req) >= req.hours,
+                'courses': {
+                    c.name: hours
+                    for c, hours in req_fills.items()
+                },
+            }
+            for req, req_fills in self.reqs_to_courses.items()
+        }
+
+    def _get_req_hours_filled(self, req: Requirement):
+        """Returns sum of hours filled for a requirement"""
+        req_fills = self.reqs_to_courses[req]
+        return sum(list(zip(*req_fills.items()))[1]) if req_fills else 0
+
     def __str__(self):
         str_bldr = []
         for req, req_fills in self.reqs_to_courses.items():
-            hours_filled = sum(list(zip(*req_fills.items()))[1])
+            hours_filled = self._get_req_hours_filled(req)
             str_bldr.append(f'{req.name} ({hours_filled}/{req.hours} hrs filled)\n')
 
             for course, hours in sorted(req_fills.items()):
@@ -139,8 +163,12 @@ class GraduationRequirementsSolver:
             req = self.requirements_dict[req_name]
             bypass_assignments.add(course, req, hours)
 
-        # Run max flow on all groups and aggregate results
+        # Initialize assignment store with all requirements
         all_assignments = AssignmentStore()
+        for req in self.requirements_dict.values():
+            all_assignments.assert_requirement(req)
+
+        # Run max flow on all groups and aggregate results
         for i, reqs in enumerate(self.groups, start=1):
             print(f'\nRunning on requirement group {i}/{len(self.groups)}...')
             group_assignments = GraduationRequirementsSolver._solve_group(courses, reqs, bypass_assignments)

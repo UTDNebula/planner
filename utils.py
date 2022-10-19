@@ -26,10 +26,24 @@ class NameDefinedClass(ABC):
 
 class Course(NameDefinedClass):
     def __init__(self, name: str, level: int = 0, hours: float = 0, department: str = 'UNK'):
+        # Validate args
+        if type(name) != str:
+            raise ParseException('Course name must be a string')
+        if type(level) != int or not 0 <= level <= 9:
+            raise ParseException('Course level must be a single-digit integer')
+        if type(hours) not in (int, float):
+            raise ParseException('Course hours must be a float')
+        if type(department) != str:
+            raise ParseException('Course department must be a string')
+
+        # Save to class
         self.name = name
         self.level = level
         self.hours = hours
         self.department = department
+
+    def to_json(self):
+        return {'name': self.name, 'level': self.level, 'hours': self.hours, 'department': self.department}
 
     @classmethod
     def from_name(cls, name):
@@ -41,6 +55,16 @@ class Course(NameDefinedClass):
             hours = 3
         else:
             hours = int(hr_str)
+        return cls(name, level, hours, department)
+
+    @classmethod
+    def from_json(cls, d):
+        """Retrieve course properties from json dictionary"""
+        name = d['name']
+        level = d['level']
+        hours = d['hours']
+        department = d['department']
+
         return cls(name, level, hours, department)
 
 
@@ -201,3 +225,13 @@ class SingleAssignment(NamedTuple):
     course: str
     requirement: str
     hours: float
+
+    def to_json(self):
+        return {'course': self.course, 'requirement': self.requirement, 'hours': self.hours}
+
+    @classmethod
+    def from_json(cls, d):
+        course = d['course']
+        requirement = d['requirement']
+        hours = d['hours']
+        return cls(course, requirement, hours)

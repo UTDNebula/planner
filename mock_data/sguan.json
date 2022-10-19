@@ -1,0 +1,300 @@
+{
+  "degree": "computer_science_ug",
+  "courses": [
+    {
+      "name": "RHET 1302",
+      "level": 1,
+      "hours": 3,
+      "department": "RHET"
+    },
+    {
+      "name": "ECS 1100",
+      "level": 1,
+      "hours": 1,
+      "department": "ECS"
+    },
+    {
+      "name": "CS 4341",
+      "level": 4,
+      "hours": 3,
+      "department": "CS"
+    },
+    {
+      "name": "CS 4384",
+      "level": 4,
+      "hours": 3,
+      "department": "CS"
+    },
+    {
+      "name": "ECON 2302",
+      "level": 2,
+      "hours": 3,
+      "department": "ECON"
+    },
+    {
+      "name": "CS 3377",
+      "level": 3,
+      "hours": 3,
+      "department": "CS"
+    },
+    {
+      "name": "ECS 3390",
+      "level": 3,
+      "hours": 3,
+      "department": "ECS"
+    },
+    {
+      "name": "MATH 2413",
+      "level": 2,
+      "hours": 4,
+      "department": "MATH"
+    },
+    {
+      "name": "CS 1337",
+      "level": 1,
+      "hours": 3,
+      "department": "CS"
+    },
+    {
+      "name": "MUSI 1306",
+      "level": 1,
+      "hours": 3,
+      "department": "MUSI"
+    },
+    {
+      "name": "HIST 1301",
+      "level": 1,
+      "hours": 3,
+      "department": "HIST"
+    },
+    {
+      "name": "CS 4348",
+      "level": 4,
+      "hours": 3,
+      "department": "CS"
+    },
+    {
+      "name": "MATH 2420",
+      "level": 2,
+      "hours": 4,
+      "department": "MATH"
+    },
+    {
+      "name": "CS 2336",
+      "level": 2,
+      "hours": 3,
+      "department": "CS"
+    },
+    {
+      "name": "MATH 2418",
+      "level": 2,
+      "hours": 4,
+      "department": "MATH"
+    },
+    {
+      "name": "HIST 1302",
+      "level": 1,
+      "hours": 3,
+      "department": "HIST"
+    },
+    {
+      "name": "CHEM 1405",
+      "level": 1,
+      "hours": 4,
+      "department": "CHEM"
+    },
+    {
+      "name": "PHYS 2326",
+      "level": 2,
+      "hours": 3,
+      "department": "PHYS"
+    },
+    {
+      "name": "CS 1200",
+      "level": 1,
+      "hours": 2,
+      "department": "CS"
+    },
+    {
+      "name": "CS 4390",
+      "level": 4,
+      "hours": 3,
+      "department": "CS"
+    },
+    {
+      "name": "CS 4347",
+      "level": 4,
+      "hours": 3,
+      "department": "CS"
+    },
+    {
+      "name": "CS 1336",
+      "level": 1,
+      "hours": 3,
+      "department": "CS"
+    },
+    {
+      "name": "CS 4349",
+      "level": 4,
+      "hours": 3,
+      "department": "CS"
+    },
+    {
+      "name": "CS 4485",
+      "level": 4,
+      "hours": 4,
+      "department": "CS"
+    },
+    {
+      "name": "GOVT 2305",
+      "level": 2,
+      "hours": 3,
+      "department": "GOVT"
+    },
+    {
+      "name": "PHYS 2126",
+      "level": 2,
+      "hours": 1,
+      "department": "PHYS"
+    },
+    {
+      "name": "CS 2340",
+      "level": 2,
+      "hours": 3,
+      "department": "CS"
+    },
+    {
+      "name": "ECON 2301",
+      "level": 2,
+      "hours": 3,
+      "department": "ECON"
+    },
+    {
+      "name": "CS 3345",
+      "level": 3,
+      "hours": 3,
+      "department": "CS"
+    },
+    {
+      "name": "CS 2305",
+      "level": 2,
+      "hours": 3,
+      "department": "CS"
+    },
+    {
+      "name": "CS 4337",
+      "level": 4,
+      "hours": 3,
+      "department": "CS"
+    },
+    {
+      "name": "CS 4371",
+      "level": 4,
+      "hours": 3,
+      "department": "CS"
+    },
+    {
+      "name": "CS 3162",
+      "level": 3,
+      "hours": 1,
+      "department": "CS"
+    },
+    {
+      "name": "CS 3354",
+      "level": 3,
+      "hours": 3,
+      "department": "CS"
+    },
+    {
+      "name": "PHIL 1306",
+      "level": 1,
+      "hours": 3,
+      "department": "PHIL"
+    },
+    {
+      "name": "PHYS 2325",
+      "level": 2,
+      "hours": 3,
+      "department": "PHYS"
+    },
+    {
+      "name": "PHYS 2125",
+      "level": 2,
+      "hours": 1,
+      "department": "PHYS"
+    },
+    {
+      "name": "CS 3305",
+      "level": 3,
+      "hours": 3,
+      "department": "CS"
+    },
+    {
+      "name": "CS 4141",
+      "level": 4,
+      "hours": 1,
+      "department": "CS"
+    },
+    {
+      "name": "CS 3341",
+      "level": 3,
+      "hours": 3,
+      "department": "CS"
+    },
+    {
+      "name": "GOVT 2306",
+      "level": 2,
+      "hours": 3,
+      "department": "GOVT"
+    },
+    {
+      "name": "MATH 3323",
+      "level": 3,
+      "hours": 3,
+      "department": "MATH"
+    },
+    {
+      "name": "MUSI 3120",
+      "level": 3,
+      "hours": 1,
+      "department": "MUSI"
+    },
+    {
+      "name": "UNIV 1010",
+      "level": 1,
+      "hours": 0,
+      "department": "UNIV"
+    },
+    {
+      "name": "CS 4365",
+      "level": 4,
+      "hours": 3,
+      "department": "CS"
+    },
+    {
+      "name": "MATH 2415",
+      "level": 2,
+      "hours": 4,
+      "department": "MATH"
+    },
+    {
+      "name": "MATH 2414",
+      "level": 2,
+      "hours": 4,
+      "department": "MATH"
+    },
+    {
+      "name": "CS 4375",
+      "level": 4,
+      "hours": 3,
+      "department": "CS"
+    }
+  ],
+  "bypasses": [
+    {
+      "course": "CS 4390",
+      "requirement": "Computer Science Preparatory Courses",
+      "hours": 1
+    }
+  ]
+}

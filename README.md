@@ -2,7 +2,40 @@
 
 Degree validation logic for UTD.
 
+<!-- TOC -->
+
+* [Degree Validator](#degree-validator)
+    * [Getting Started](#getting-started)
+    * [File Index](#file-index)
+    * [Requirement design and limitations](#requirement-design-and-limitations)
+        * [Representing requirements](#representing-requirements)
+            * [Representing electives as requirements](#representing-electives-as-requirements)
+        * [Requirement groups](#requirement-groups)
+        * [Manual assignments (Bypasses)](#manual-assignments--bypasses-)
+    * [Max flow design and limitations](#max-flow-design-and-limitations)
+        * [Course Splitting](#course-splitting)
+        * [Fractional hours](#fractional-hours)
+
+<!-- TOC -->
+
+## Getting Started
+
+Developed using Python 3.10, on MacOS. `annotations` import probably no longer needed after 3.11.
+
+Redis is used as a shared, persistent storage solution for Flask-Limiter ratelimiting.
+
+| Steps/Actions                           | Command                                                                                                                    |
+|-----------------------------------------|----------------------------------------------------------------------------------------------------------------------------|
+| Install Redis                           | `brew install redis`                                                                                                       |
+| Create Python virtual environment       | `python3 -m virtualenv venv && source venv/bin/activate`                                                                   |
+| Install Python module dependencies      | `pip install -r requirements.txt`                                                                                          |
+| Run dev server (shows print statements) | `flask --app api run`                                                                                                      |
+| Run prod server with 4 workers          | `gunicorn -w 4 api:app`                                                                                                    |
+| Post mock data to server                | `curl -X POST -H "Content-Type: application/json" 'http://127.0.0.1:8000/validate-degree-plan' -d '@mock_data/ezhang.json` |
+
 ## File Index
+
+`api.py` contains Flask server code for the API. It consumes `solver.py`.
 
 `solver.py` contains a `GraduationRequirementsSolver` class which loads/parses a requirements definition file, then
 uses max flow to solve it.
