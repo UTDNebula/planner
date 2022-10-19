@@ -3,9 +3,8 @@ from utils import *
 
 class MockData:
     @staticmethod
-    def input_to_api_json(version: str, degree: str, courses: list[Course], bypasses: list[SingleAssignment]):
+    def input_to_api_json(degree: str, courses: list[Course], bypasses: list[SingleAssignment]):
         return {
-            'version': version,
             'degree': degree,
             'courses': [c.to_json() for c in courses],
             'bypasses': [b.to_json() for b in bypasses],
