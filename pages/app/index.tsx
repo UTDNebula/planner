@@ -19,7 +19,7 @@ export default function MiniDrawer() {
 
   return (
     <HomeDrawer page={page} setPage={setPage} isDesktop={isDesktop}>
-      <div className="w-full h-screen overflow-y-scroll bg-[#F5F5F5]">{content[page]}</div>
+      <div className="w-full h-screen bg-[#F5F5F5]">{content[page]}</div>
     </HomeDrawer>
   );
 }
