@@ -153,7 +153,12 @@ export function createSamplePlan(
 
 export function createSampleOnboarding() {
   const data: OnboardingFormData = {
-    consent: { disclaimer: false, analytics: false, performance: false, personalization: false },
+    consent: {
+      disclaimer: false,
+      analytics: false,
+      performance: false,
+      personalization: false,
+    },
     preferredName: '',
     classification: '',
     future: '',
