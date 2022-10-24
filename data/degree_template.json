@@ -1,42 +1,22 @@
 {
-  "CS": [
-    ["MATH 2413", "CS 1200", "CS 1337", "RHET 1302", "ECS 1100", "UNIV 1010", "HIST 1301"],
-    ["HIST 1302", "MATH 2414", "CS 2305", "CS 2336", "PHYS 2325", "PHYS 2125"],
-    ["AMS 2300", "GOVT 2305"],
-    ["MATH 2418", "CS 3341"],
-    ["CS 3354", "ECS 3390"],
-    ["CS 3162", "CS 4348"],
-    ["CS 4384", "CS 4347"],
-    ["CS 4485", "UNIV 2020"]
+  "Computer Science(BS)": [
+    ["MATH 2413", "CS 1200", "CS 1336", "RHET 1302", "ECS 1100", "UNIV 1010", "CS 1136", { "options": "060"}],
+    ["MATH 2414", "CS 2305", "CS 1337", "PHYS 2325", "PHYS 2125", { "options": "060"}],
+    ["CS 2305", "CS 2340", "PHYS 2326", "PHYS 2126", "CS 2336", { "options": "040"}, { "options": "070"}],
+    ["MATH 2418", "CS 3341", "CS 3345", "CS 3377", { "options": "070"}],
+    ["ECS 3390", "CS 3354", "CS 4337", "CS 4341", "CS 4141", "UNIV 2020", { "options": "050"}],
+    ["CS 4349", "CS 4348", "CS 3162", {"options": "030"}, { "options": "080"}],
+    ["CS 4347", "CS 4384", { "options": "Free Elective"}, { "options": "CS Guided Elective"}, {"options": "CS Guided Elective"}],
+    ["CS 4485", { "options": "Free Elective"}, { "options": "Free Elective"}, {"options": "CS Guided Elective"}]
   ],
-  "ACCT": [
-    ["CGS 3325", "CE 4V97"],
-    ["CGS 3325", "CE 4V97"],
-    ["CGS 3325", "CE 4V97"],
-    ["CGS 3325", "CE 4V97"]
-  ],
-  "BIOL": [
-    ["CGS 3325", "CE 4V97"],
-    ["CGS 3325", "CE 4V97"],
-    ["CGS 3325", "CE 4V97"],
-    ["CGS 3325", "CE 4V97"],
-    ["CGS 3325", "CE 4V97"]
-  ],
-  "JSOM": [
-    ["CGS 3325", "CE 4V97"],
-    ["CGS 3325", "CE 4V97"],
-    ["CGS 3325", "CE 4V97"],
-    ["CGS 3325", "CE 4V97"],
-    ["CGS 3325", "CE 4V97"]
-  ],
-  "PHY": [
-    ["CGS 3325", "CE 4V97"],
-    ["CGS 3325", "CE 4V97"],
-    ["CGS 3325", "CE 4V97"],
-    ["CGS 3325", "CE 4V97"],
-    ["CGS 3325", "CE 4V97"],
-    ["CGS 3325", "CE 4V97"],
-    ["CGS 3325", "CE 4V97"],
-    ["CGS 3325", "CE 4V97"]
+  "Psychology(BS)": [
+    ["PSY 2301", "BBSU 1100", "UNIV 1010", { "options": "020"}, { "options": "030"}, { "options": "050"}, {"options": "060"}],
+    ["PSY 2314", { "options": "010"}, { "options": "030"}, { "options": "040"}, {"options": "060"}],
+    ["GOVT 2306", "PSY 2317", "PSY 3310", { "options": "010"}, { "options": "Elective"}],
+    ["PSY 3331", "GOVT 2305", "PSY 3360", "PSY 3392", { "options": "Elective"}],
+    ["PSY 3393", "NSC 3361", "UNIV 2020", { "options": "Elective"}, { "options": "Elective"}, { "options": "PSY Independent Study"}],
+    [{"options":"PSY Elective"}, "NSC 3361", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}],
+    ["PSY 4343", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, {"options": "PSY Elective"}],
+    [{ "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, {"options": "PSY Elective"}]
   ]
 }

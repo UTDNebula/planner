@@ -1,8 +1,7 @@
 import AddIcon from '@mui/icons-material/Add';
 import { Theme } from '@mui/material';
-import { useRouter } from 'next/router';
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { makeStyles } from 'tss-react/mui';
 
 import PlanCard from '../../components/home/plans/PlanCard';
@@ -13,12 +12,8 @@ import TemplateModal from '../template/Modal';
  * A list of the user's plans
  */
 export default function PlansPage(): JSX.Element {
-  const router = useRouter();
-
-  const dispatch = useDispatch();
-
   const [openTemplateModal, setOpenTemplateModal] = useState(false);
-
+  const setModal = () => setOpenTemplateModal(!openTemplateModal);
   // TODO: Write function to get user plans
   const { plans: userPlans } = useSelector((state: RootState) => state.userData);
   const plans = Object.values(userPlans);
@@ -62,7 +57,7 @@ export default function PlansPage(): JSX.Element {
         </section>
       </main>
 
-      {openTemplateModal && <TemplateModal setOpenTemplateModal={setOpenTemplateModal} />}
+      {openTemplateModal && <TemplateModal setModal={setModal} />}
     </>
   );
 }
