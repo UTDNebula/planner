@@ -1,11 +1,13 @@
 import MenuIcon from '@mui/icons-material/ArrowBack';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { AppBar, Button, IconButton, Theme, Toolbar, Typography } from '@mui/material';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { makeStyles } from 'tss-react/mui';
 
 import { useAuthContext } from '../../../modules/auth/auth-context';
+import MyDocument from '../GeneratePDF/GeneratePDF';
 import SettingsDialog from './PlannerSettings';
 import styles from './PlanningToolbar.module.css';
 
@@ -122,14 +124,18 @@ export default function PlanningToolbar({
         <Typography variant="h6" className={classes.title}>
           {planTitle}
         </Typography>
-        <Button
+        {/* TODO: REDUX FOR IMPORTING CURRENT USER to place into file name, also figure out styling button */}
+        <PDFDownloadLink document={<MyDocument />} fileName="yourPlan.pdf">
+          {({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'EXPORT PLAN')}
+        </PDFDownloadLink>
+        {/* <Button
           color="inherit"
           onClick={() => {
             onExportPlan();
           }}
         >
           Export plan
-        </Button>
+        </Button> */}
         <input
           id="planUpload"
           className={styles.visuallyHidden}
