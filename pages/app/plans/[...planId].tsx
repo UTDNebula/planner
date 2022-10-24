@@ -114,7 +114,7 @@ export default function PlanDetailPage(): JSX.Element {
         updateQuery={updateQuery}
         removeCourse={removeItemFromList}
       >
-        <div className={classes.fabContainer} style={{position: 'fixed', top: '75px', right: '10px'}}>
+        <div className={classes.fabContainer} style={{position: 'fixed', top: '125px', right: '10px'}}>
           <Fab color="primary" onClick={() => addSemester()} className={classes.fab}>
             <AddIcon />
           </Fab>
