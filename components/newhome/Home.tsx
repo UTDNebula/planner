@@ -13,7 +13,6 @@ import TemplateModal from '../template/Modal';
  */
 export default function PlansPage(): JSX.Element {
   const [openTemplateModal, setOpenTemplateModal] = useState(false);
-  const setModal = () => setOpenTemplateModal(!openTemplateModal);
   // TODO: Write function to get user plans
   const { plans: userPlans } = useSelector((state: RootState) => state.userData);
   const plans = Object.values(userPlans);
@@ -57,7 +56,7 @@ export default function PlansPage(): JSX.Element {
         </section>
       </main>
 
-      {openTemplateModal && <TemplateModal setModal={setModal} />}
+      {openTemplateModal && <TemplateModal setOpenTemplateModal={setOpenTemplateModal} />}
     </>
   );
 }

@@ -3,94 +3,90 @@ import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 
+// TODO: Move to server once we use server-side rendering
 import dummyTemplate from '../../data/degree_template.json';
 import { getAllCourses } from '../../modules/common/api/templates';
 import { Course, Semester, StudentPlan } from '../../modules/common/data';
 import { updatePlan } from '../../modules/redux/userDataSlice';
-type selectiveCourses = {
-  options: string;
-};
-
-const emptyCourse: Course = {
-  id: '',
-  title: '',
-  creditHours: 0,
-  description: '',
-  catalogCode: '',
-};
 
 interface TemplateModalProps {
-  setModal: () => void;
+  setOpenTemplateModal: (flag: boolean) => void;
 }
-export default function TemplateModal({ setModal }: TemplateModalProps) {
+export default function TemplateModal({ setOpenTemplateModal }: TemplateModalProps) {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const handleTemplateCreation = async (val: string) => {
+  const handleTemplateCreation = async (major: string) => {
     const courses = await getAllCourses();
 
     const semesters: Semester[] = [];
     const year = new Date().getFullYear();
+
+    // TODO: Move semester creation to generateSemesters
     let season = 'Fall';
-    dummyTemplate[val].map((sem, index) => {
+
+    for (let i = 0; i < dummyTemplate[major].length; i++) {
+      const sem = dummyTemplate[major][i];
       const semCourses: Course[] = [];
-      const semTitle = `${season} ${year + Math.floor(index / 2)}`;
-      const semCode = `${year + Math.floor(index / 2)}${season[0].toLowerCase()}`;
+
+      const semTitle = `${season} ${year + Math.floor(i / 2)}`;
+      const semCode = `${year + Math.floor(i / 2)}${season[0].toLowerCase()}`;
       season = season === 'Fall' ? 'Spring' : 'Fall';
 
       const semester: Semester = { title: semTitle, code: semCode, courses: semCourses };
 
-      sem.map((c) => {
+      for (let j = 0; j < sem.length; j++) {
         let course: Course;
-        if (typeof c === 'object') {
+        if (typeof sem[j] === 'object') {
           course = {
             id: uuid(),
-            title: c.options + ' Course',
+            title: sem[j].options + ' Course',
             creditHours: 3,
-            description: `Chose one of the ${c.options} courses for this`,
+            description: `Chose one of the ${sem[j].options} courses for this`,
             catalogCode: '',
           };
         } else {
           try {
-            console.log(c);
-            const { id, name: title, description, hours } = courses[c];
+            console.log(sem[j]);
+            const { id, name: title, description, hours } = courses[sem[j]];
             const courseId = id.toString();
             course = {
               id: courseId,
               title,
-              catalogCode: c,
+              catalogCode: sem[j],
               description,
               creditHours: +hours,
             };
           } catch (e) {
-            console.log(e);
-            course = emptyCourse;
+            // TODO: Handle this better, preferably move to server and use a logger
+            // console.log(e);
+            continue;
           }
         }
-
         semCourses.push(course);
-      });
+      }
       semester.courses = semCourses;
-      semester.courses = semester.courses.filter((c) => c.id !== '');
       semesters.push(semester);
-    });
+    }
 
     const routeId = uuid();
-    const planTitle = val + ' Degree Plan';
-    const planMajor = val;
+    const planTitle = major + ' Degree Plan';
+    const planMajor = major;
     const newPlanFromTemplate: StudentPlan = {
       id: routeId,
       title: planTitle,
       major: planMajor,
       semesters,
     };
+
+    console.log(newPlanFromTemplate);
     dispatch(updatePlan(newPlanFromTemplate));
     router.push(`/app/plans/${routeId}`);
   };
 
   return (
     <div
-      onClick={() => setModal()}
+      onClick={() => setOpenTemplateModal(false)}
       className="w-full h-full top-0 left-0 absolute flex items-center justify-center backdrop-blur-md"
     >
       <div
@@ -113,7 +109,7 @@ export default function TemplateModal({ setModal }: TemplateModalProps) {
           })}
         </div>
         <button
-          onClick={() => setModal()}
+          onClick={() => setOpenTemplateModal(false)}
           className="top-0 right-0 absolute border-black border-2 rounded-lg m-2 hover:bg-slate-700 hover:text-white transition-colors"
         >
           <CloseIcon fontSize="medium" />
