@@ -126,7 +126,7 @@ export default function PlanDetailPage(): JSX.Element {
       </PlannerContainer>
     </div>
   );
-  const validatePlan = () => {
+  const openValidationModal = () => {
     setShowValidation(true);
   };
   const [showValidation, setShowValidation] = useState(false);
@@ -147,7 +147,7 @@ export default function PlanDetailPage(): JSX.Element {
             planTitle={title}
             shouldShowTabs={shouldShowTabs}
             onTabChange={handleTabChange}
-            onValidate={validatePlan}
+            onValidate={openValidationModal}
             onExportPlan={() => {
               console.log('Exporting plan');
               exportPlan(plan);
@@ -172,44 +172,44 @@ const ValidationDialog = (props: { open: boolean; onClose: () => void; plan: Stu
   const [loading, setLoading] = useState(true);
   const [outputData, setOutputData] = useState<DVResponse>(null);
   const ac = new AbortController();
+  const performValidation = async () => {
+    const body: DVRequest = {
+      courses: plan.semesters
+        .flatMap((s) => s.courses)
+        .map((c) => {
+          const split = c.catalogCode.split(' ');
+          const department = split[0];
+          const courseNumber = Number(split[1]);
+          const level = Math.floor(courseNumber / 1000);
+          const hours = Math.floor((courseNumber - level * 1000) / 100);
+          return {
+            name: c.catalogCode,
+            department: department,
+            level,
+            hours,
+          };
+        }),
+      bypasses: [],
+      degree: 'computer_science_ug',
+    };
+    const res = (await (
+      await fetch(`${process.env.NEXT_PUBLIC_VALIDATION_SERVER}/validate-degree-plan`, {
+        method: 'POST',
+        body: JSON.stringify(body),
+        signal: ac.signal,
+        headers: {
+          'content-type': 'application/json',
+        },
+      })
+    ).json()) as DVResponse;
+    setOutputData(res);
+    setLoading(false);
+  };
   useEffect(() => {
     if (!open) {
       setLoading(true);
       return;
     }
-    const performValidation = async () => {
-      const body: DVRequest = {
-        courses: plan.semesters
-          .flatMap((s) => s.courses)
-          .map((c) => {
-            const split = c.catalogCode.split(' ');
-            const department = split[0];
-            const courseNumber = Number(split[1]);
-            const level = Math.floor(courseNumber / 1000);
-            const hours = Math.floor((courseNumber - level * 1000) / 100);
-            return {
-              name: c.catalogCode,
-              department: department,
-              level,
-              hours,
-            };
-          }),
-        bypasses: [],
-        degree: 'computer_science_ug',
-      };
-      const res = (await (
-        await fetch(`${process.env.NEXT_PUBLIC_VALIDATION_SERVER}/validate-degree-plan`, {
-          method: 'POST',
-          body: JSON.stringify(body),
-          signal: ac.signal,
-          headers: {
-            'content-type': 'application/json',
-          },
-        })
-      ).json()) as DVResponse;
-      setOutputData(res);
-      setLoading(false);
-    };
     performValidation();
     return () => ac.abort();
   }, [open]);
@@ -231,7 +231,7 @@ const ValidationDialog = (props: { open: boolean; onClose: () => void; plan: Stu
                       {value.isfilled ? `Complete` : `Incomplete`} ({value.hours} credits)
                     </p>
                   </div>
-                  <ul className="list-disc ml-4">
+                  <ul className="ml-4 list-disc">
                     {Object.keys(value.courses).length != 0 ? (
                       Object.entries(value.courses).map(([course, credits]) => (
                         <li key={course}>
