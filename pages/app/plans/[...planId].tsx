@@ -25,8 +25,8 @@ import { usePlannerContainer } from '../../../modules/planner/hooks/usePlannerCo
 const useStyles = makeStyles()((theme: Theme) => {
   return {
     fabContainer: {
-      position: 'absolute',
-      top: theme.spacing(8),
+      position: 'fixed',
+      top: theme.spacing(16),
       right: theme.spacing(2),
       display: 'flex',
       flexDirection: 'column',
