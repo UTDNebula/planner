@@ -2,6 +2,7 @@ from collections import defaultdict
 from flask import Flask, request, make_response
 from flask_limiter import Limiter, RequestLimit
 from flask_limiter.util import get_remote_address
+from flask_cors import CORS
 
 from solver import GraduationRequirementsSolver
 from utils import Course, SingleAssignment
@@ -25,6 +26,7 @@ def ratelimit_callback(request_limit: RequestLimit):
 
 # Instantiate flask app and ratelimiter
 app = Flask(__name__)
+CORS(app)
 limiter = Limiter(
     app,
     key_func=get_remote_address,
