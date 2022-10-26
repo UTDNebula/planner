@@ -24,11 +24,11 @@ import { usePlannerContainer } from '../../../modules/planner/hooks/usePlannerCo
 const useStyles = makeStyles()((theme: Theme) => {
   return {
     fabContainer: {
-      position: 'absolute',
-      top: theme.spacing(8),
+      position: 'fixed',
+      top: theme.spacing(16),
       right: theme.spacing(2),
       display: 'flex',
-      flexDirection: 'column',
+      flexDirection: 'column',      
     },
     fab: {
       margin: '8px',
@@ -114,7 +114,7 @@ export default function PlanDetailPage(): JSX.Element {
         updateQuery={updateQuery}
         removeCourse={removeItemFromList}
       >
-        <div className={classes.fabContainer} style={{position: 'fixed', top: '125px', right: '10px'}}>
+        <div className={classes.fabContainer}>
           <Fab color="primary" onClick={() => addSemester()} className={classes.fab}>
             <AddIcon />
           </Fab>
