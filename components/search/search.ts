@@ -16,7 +16,7 @@ interface SearchReturn<T, K> {
 
 /**
  * This function performs search & returns relevant data
- * */
+ */
 const useSearch = <T, K>({
   getData,
   initialQuery,
@@ -33,14 +33,17 @@ const useSearch = <T, K>({
   React.useEffect(() => updateQuery(initialQuery), []);
 
   // TODO: Insert logc for filtering w/ chips
-  // TODO: Update filtering code to deal with data from Neblua API
+  // TODO: Update filtering code to deal with data from Nebula API
   const updateQuery = (query: K) => {
     getData()
       .then((data) =>
         data.filter((el) => filterFn(el, query)).slice(constraints[0], constraints[1]),
       )
       .then((data) => setResults(data))
-      .catch((error) => setErr(error));
+      .catch((error) => {
+        console.log('error was catched in updateQuery:', { error });
+        setErr(`error was catched in updateQuery: ${error.message}`);
+      });
   };
 
   return { results, getResults, updateQuery, err };

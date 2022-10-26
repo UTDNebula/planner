@@ -11,7 +11,7 @@ export default function TopAndSidebar({
   const router = useRouter();
 
   return (
-    <div className="antialiased w-screen h-screen overflow-hidden flex flex-row bg-blue-900">
+    <div className="antialiased w-screen min-h-screen flex flex-row bg-blue-900">
       <HomeDrawer open={open} setOpen={setOpen} />
 
       <div className="flex-grow flex flex-col">

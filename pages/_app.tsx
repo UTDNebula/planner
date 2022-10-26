@@ -6,16 +6,37 @@ import { createTheme, StyledEngineProvider, ThemeProvider } from '@mui/material/
 import { AnimateSharedLayout } from 'framer-motion';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
-import TopAndSidebar from '../components/common/Top-and-SideBar/TopAndSidebar';
 import { AuthProvider } from '../modules/auth/auth-context';
 import { useStore } from '../modules/redux/store';
 
-const theme = createTheme();
+const theme = createTheme({
+  typography: {
+    allVariants: {
+      color: '#1C2A6D',
+    },
+    fontFamily: [
+      'Inter var',
+      'ui-sans-serif',
+      'system-ui',
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      '"Noto Sans"',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+      '"Noto Color Emoji"',
+    ].join(','),
+  },
+});
 
 /**
  * Firebase configuration info
@@ -34,41 +55,6 @@ const config = {
 
 if (!firebase.apps.length) {
   firebase.initializeApp(config);
-}
-
-/**
- * Determines if the page at a specific route needs the AppNavigation component
- * @param pathname page route
- * @returns boolean
- */
-const needAppNav = (pathname: string): boolean => {
-  const routesList = ['/app/onboarding', '/auth', '/app/plans/', '/app/test'];
-  if (pathname === '/') {
-    return false;
-  }
-  for (let i = 0; i < routesList.length; i++) {
-    if (pathname.startsWith(routesList[i])) {
-      return false;
-    }
-  }
-  return true;
-};
-
-/**
- * Renders page layout for all pages
- * TODO: Consider unifying all NavigationBars here
- */
-function PageLayout({ Component, pageProps }) {
-  const router = useRouter();
-
-  const content = needAppNav(router.pathname) ? (
-    <TopAndSidebar>
-      <Component {...pageProps} />
-    </TopAndSidebar>
-  ) : (
-    <Component {...pageProps} />
-  );
-  return content;
 }
 
 /**
@@ -103,17 +89,18 @@ export default function NebulaApp({ Component, pageProps }: AppProps): JSX.Eleme
         <link rel="icon" href="/Nebula_Planner_Logo.png" />
         <link rel="manifest" href="/manifest.json" />
 
-        <link href="/icons/favicon-16x16.png" rel="icon" type="image/png" sizes="16x16" />
-        <link href="/icons/favicon-32x32.png" rel="icon" type="image/png" sizes="32x32" />
+        <link href="planner@16px.png" rel="icon" type="image/png" sizes="16x16" />
+        <link href="planner@32px.png" rel="icon" type="image/png" sizes="32x32" />
         <link rel="apple-touch-icon" href="/apple-icon.png"></link>
-        <meta name="theme-color" content="#317EFB" />
+        <meta name="theme-color" content="#4659A7" />
       </Head>
       <Provider store={store}>
         <PersistGate loading={<p>Loading...</p>} persistor={persistor}>
           <AnimateSharedLayout>
-            {' '}
             <StyledEngineProvider injectFirst>
-              <ThemeProvider theme={theme}>{PageLayout({ Component, pageProps })}</ThemeProvider>
+              <ThemeProvider theme={theme}>
+                <Component {...pageProps} />
+              </ThemeProvider>
             </StyledEngineProvider>
           </AnimateSharedLayout>
         </PersistGate>
