@@ -29,7 +29,7 @@ const useStyles = makeStyles()((theme: Theme) => {
       top: theme.spacing(16),
       right: theme.spacing(2),
       display: 'flex',
-      flexDirection: 'column',      
+      flexDirection: 'column',
     },
     fab: {
       margin: '8px',
