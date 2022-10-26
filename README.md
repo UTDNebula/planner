@@ -63,14 +63,29 @@ the [Discussions](https://github.com/UTDNebula/planner/discussions) section.
 ### Set-up
 
 This project requires a working [Node.js](https://nodejs.org/en/) and NPM
-installation. To start, clone the repository, and then run `npm start` to launch
+installation. It also requires local environmental variables since it uses Firebase.
+
+Create a file called .env.local in the root directory and add your personal Firebase env keys
+
+```bash
+NEXT_PUBLIC_FIREBASE_API_KEY=REPLACE_ME 
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=REPLACE_ME 
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=REPLACE_ME 
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=REPLACE_ME 
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=REPLACE_ME 
+NEXT_PUBLIC_FIREBASE_APP_ID=REPLACE_ME 
+```
+
+To start, clone the repository, and then run `npm start` to launch
 a local development server at [`localhost:3000`](https://localhost:3000) by default.
 
 ```bash
 git clone https://github.com/UTDNebula/planner.git
 cd planner
-npm start
+npm run dev
 ```
+
+Check out this [document](https://docs.google.com/document/d/1GLCdm314WjbUAgFMB_dFU6aQhgmwzXOn-ywWCr9A0Jg/edit?usp=sharing) for more information.
 
 ### Contact
 

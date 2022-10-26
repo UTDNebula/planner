@@ -18,11 +18,10 @@ module.exports = {
   rules: {
     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
     // e.g. '@typescript-eslint/explicit-function-return-type': 'off',
-    'simple-import-sort/imports': 'error',
-    'simple-import-sort/exports': 'error',
+    'simple-import-sort/imports': process.env.NODE_ENV === 'test' ? 'error' : 'off',
+    'simple-import-sort/exports': process.env.NODE_ENV === 'test' ? 'error' : 'off',
     'react/react-in-jsx-scope': 'off',
-    'no-unused-vars': 'off', // or "@typescript-eslint/no-unused-vars": "off",
-    'unused-imports/no-unused-imports': 'error',
+    'unused-imports/no-unused-imports': process.env.NODE_ENV === 'test' ? 'error' : 'warn',
     'unused-imports/no-unused-vars': [
       'warn',
       { vars: 'all', varsIgnorePattern: '^_', args: 'after-used', argsIgnorePattern: '^_' },

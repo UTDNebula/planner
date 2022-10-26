@@ -1,8 +1,12 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const defaultTheme = require('tailwindcss/defaultTheme');
+
 module.exports = {
   content: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       colors: {
+        defaultText: '#1C2A6D', // use this as override if text color not working
         general: {
           primary: '#4659A7',
           secondary: '#BCC9FD',
@@ -126,6 +130,7 @@ module.exports = {
       },
     },
     fontFamily: {
+      sans: ['Inter var', ...defaultTheme.fontFamily.sans],
       roboto: ['Roboto', 'ui-sans-serif', 'system-ui'],
       jost: ['Jost', 'Roboto', 'ui-sans-serif', 'system-ui'],
     },
