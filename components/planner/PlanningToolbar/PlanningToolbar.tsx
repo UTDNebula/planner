@@ -63,6 +63,11 @@ interface PlanningToolbarProps {
   onExportPlan?: () => void;
 
   /**
+   * A callback triggered when the user wants to validate the currently loaded plan.
+   */
+  onValidate?: () => void;
+
+  /**
    * A callback triggered when the user wants to import a plan into a planner view.
    *
    * @param event The React form event called when the selected plan is changed.
@@ -82,6 +87,7 @@ export default function PlanningToolbar({
   onTabChange,
   onImportPlan = () => undefined,
   onExportPlan = () => undefined,
+  onValidate = () => undefined,
 }: PlanningToolbarProps) {
   const { signOut } = useAuthContext();
 
@@ -129,6 +135,9 @@ export default function PlanningToolbar({
           }}
         >
           Export plan
+        </Button>
+        <Button color="inherit" onClick={onValidate}>
+          Validate plan
         </Button>
         <input
           id="planUpload"
