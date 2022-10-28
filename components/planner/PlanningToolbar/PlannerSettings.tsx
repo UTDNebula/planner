@@ -70,7 +70,7 @@ export default function SettingsDialog({
   const handleDeletePlan = () => {
     dispatch(deletePlan(planId));
     handleAlertClose();
-    router.push('/app/plans');
+    router.push('/app');
   };
 
   const [alertOpen, setAlertOpen] = React.useState(false);
