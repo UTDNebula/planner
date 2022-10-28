@@ -1,10 +1,9 @@
 import formidable, { File } from 'formidable';
 import * as fs from 'fs';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import path from 'path';
 import pdf from 'pdf-parse';
 
-import courseCode from './../../../data/courseCode.json';
+import courseCode from '../../../data/courseCode.json';
 
 /* Don't miss that! */
 export const config = {
@@ -39,24 +38,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     // files?.length
     // make sure files is not null, undefined, NaN, empty, 0, false...
     if (files) {
-      /* Create directory for uploads */
-      const targetPath = path.join(process.cwd(), `/public/uploads/`);
-      try {
-        await fs.promises.access(targetPath);
-      } catch (e) {
-        await fs.promises.mkdir(targetPath);
-      }
+      // /* Parse the uploaded file */
+      const dataBuffer = fs.readFileSync(files[0][1].filepath);
 
-      /* Move uploaded files to directory */
-      for (const file of files) {
-        const tempPath = file[1].filepath;
-        await fs.promises.rename(tempPath, targetPath + file[1].originalFilename);
-      }
-
-      /* Parse the uploaded file */
-      const dataBuffer = fs.readFileSync(
-        process.cwd() + '/public/uploads/' + files[0][1]['originalFilename'],
-      );
       //const dataBuffer = Buffer.from(files[0][1]);
 
       pdf(dataBuffer).then(function (data) {
@@ -100,6 +84,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       });
     }
   } catch (error) {
+    console.log(`Error parsing file: ${error.message}`);
     res.status(400).json({
       message: JSON.stringify(error),
     });
