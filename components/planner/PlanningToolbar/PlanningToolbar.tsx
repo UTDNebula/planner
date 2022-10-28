@@ -28,6 +28,7 @@ const useStyles = () => {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
+        backgroundColor: '#3E61ED',
       },
       menuButton: {
         marginRight: theme.spacing(2),
@@ -125,7 +126,7 @@ export default function PlanningToolbar({
         >
           <MenuIcon />
         </IconButton>
-        <Typography variant="h6" className={classes.title}>
+        <Typography variant="h6" className={classes.title + ' text-white'}>
           {planTitle}
         </Typography>
         <Button
