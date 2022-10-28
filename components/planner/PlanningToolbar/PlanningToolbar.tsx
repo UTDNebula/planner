@@ -4,10 +4,13 @@ import { AppBar, Button, IconButton, Theme, Toolbar, Typography } from '@mui/mat
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { makeStyles } from 'tss-react/mui';
 
 import { useAuthContext } from '../../../modules/auth/auth-context';
-import MyDocument from '../GeneratePDF/GeneratePDF';
+import { createSamplePlan } from '../../../modules/common/data';
+import { RootState } from '../../../modules/redux/store';
+import UserDegreePlanPDF from '../GeneratePDF/GeneratePDF';
 import SettingsDialog from './PlannerSettings';
 import styles from './PlanningToolbar.module.css';
 
@@ -85,11 +88,15 @@ export default function PlanningToolbar({
   onImportPlan = () => undefined,
   onExportPlan = () => undefined,
 }: PlanningToolbarProps) {
-  const { signOut } = useAuthContext();
+  const { signOut, user } = useAuthContext();
 
   const handleTabChange = (event, newValue) => {
     onTabChange(newValue);
   };
+
+  const studentPlanRaw = useSelector((state: RootState) => state.userData.plans[planId]);
+
+  const studentPlan = studentPlanRaw !== undefined ? studentPlanRaw : createSamplePlan();
 
   const router = useRouter();
 
@@ -124,18 +131,12 @@ export default function PlanningToolbar({
         <Typography variant="h6" className={classes.title}>
           {planTitle}
         </Typography>
-        {/* TODO: REDUX FOR IMPORTING CURRENT USER to place into file name, also figure out styling button */}
-        <PDFDownloadLink document={<MyDocument />} fileName="yourPlan.pdf">
+        <PDFDownloadLink
+          document={<UserDegreePlanPDF name={user.name} studentPlan={studentPlan} />}
+          fileName={studentPlan.title + '.pdf'}
+        >
           {({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'EXPORT PLAN')}
         </PDFDownloadLink>
-        {/* <Button
-          color="inherit"
-          onClick={() => {
-            onExportPlan();
-          }}
-        >
-          Export plan
-        </Button> */}
         <input
           id="planUpload"
           className={styles.visuallyHidden}

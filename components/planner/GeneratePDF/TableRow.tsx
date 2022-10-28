@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from '@react-pdf/renderer';
-import React, { Fragment } from 'react';
+import React from 'react';
 
 import { Course } from '../../../modules/common/data';
 
@@ -40,14 +40,13 @@ const styles = StyleSheet.create({
 type TableRowProps = {
   item: Course;
 };
-const TableRow = ({ item }: TableRowProps) => {
-  const rows = (
-    <View style={styles.row}>
-      <Text style={styles.courseCode}>{item.catalogCode}</Text>
-      <Text style={styles.courseTitle}>{item.title}</Text>
-      <Text style={styles.courseGrade}>{item.creditHours}</Text>
-    </View>
-  );
-  return <Fragment>{rows}</Fragment>;
-};
+
+const TableRow = ({ item }: TableRowProps) => (
+  <View style={styles.row}>
+    <Text style={styles.courseCode}>{item.catalogCode}</Text>
+    <Text style={styles.courseTitle}>{item.title}</Text>
+    <Text style={styles.courseGrade}>{item.creditHours}</Text>
+  </View>
+);
+
 export default TableRow;

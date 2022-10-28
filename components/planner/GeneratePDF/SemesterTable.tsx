@@ -10,10 +10,9 @@ const styles = StyleSheet.create({
   tableContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginTop: 24,
     marginBottom: 20,
     borderWidth: 1,
-    borderColor: '#bff0fd',
+    borderColor: '#3E61ED',
   },
 });
 
@@ -22,20 +21,18 @@ type TableProps = {
   semesterTitle: string;
 };
 
-export function calcCredits(items: Course[]) {
-  let credits = 0;
-  items.map((course) => (credits += course.creditHours));
-  return credits;
-}
-
-const ItemsTable = ({ items }: TableProps) => (
-  <View style={styles.tableContainer}>
-    <TableHeader />
-    {items.map((course) => (
-      <TableRow item={course} key={undefined} />
-    ))}
-    <TableFooter credits={calcCredits(items)} />
-  </View>
-);
+const ItemsTable = ({ items }: TableProps) => {
+  let totalHours = 0;
+  return (
+    <View style={styles.tableContainer}>
+      <TableHeader />
+      {items.map((course) => {
+        totalHours += course.creditHours;
+        return <TableRow item={course} key={undefined} />;
+      })}
+      <TableFooter credits={totalHours} />
+    </View>
+  );
+};
 
 export default ItemsTable;

@@ -1,27 +1,40 @@
 import { StyleSheet, Text, View } from '@react-pdf/renderer';
 import React from 'react';
 
+import { StudentPlan } from '../../../modules/common/data';
+
 const styles = StyleSheet.create({
   titleContainer: {
-    flexDirection: 'row',
-    marginTop: 24,
+    display: 'flex',
+    flexDirection: 'column',
+    marginTop: 20,
   },
   planTitle: {
-    color: '#61dafb',
-    letterSpacing: 4,
-    fontSize: 25,
+    color: '#3E61ED',
+    letterSpacing: 2,
+    fontSize: 22,
     textAlign: 'left',
     textTransform: 'uppercase',
+  },
+  planMajor: {
+    color: '#3E61ED',
+    letterSpacing: 2,
+    fontSize: 18,
+    textAlign: 'left',
+    paddingTop: 6,
   },
 });
 
 type planHeaderProp = {
-  title: string; // TODO: Title of the Plan
+  degreePlan: StudentPlan;
+  name: string;
 };
 
-const PlanHeader = ({ title }: planHeaderProp) => (
+const PlanHeader = ({ name, degreePlan }: planHeaderProp) => (
   <View style={styles.titleContainer}>
-    <Text style={styles.planTitle}>{title}</Text>
+    <Text style={styles.planTitle}>{degreePlan.title}</Text>
+    <Text style={styles.planMajor}>{name}</Text>
+    <Text style={styles.planMajor}>{degreePlan.major}</Text>
   </View>
 );
 
