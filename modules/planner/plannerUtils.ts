@@ -1,3 +1,5 @@
+import { v4 as uuid } from 'uuid';
+
 import { RecentSemester } from '../../components/planner/PlannerContainer';
 import DUMMY_PLAN from '../../data/add_courses.json';
 import { Semester, SemesterCode, StudentPlan } from '../common/data';
@@ -8,6 +10,31 @@ export const initialPlan: StudentPlan = {
   title: 'Just a Degree Plan',
   major: 'Computer Science',
   semesters: DUMMY_PLAN,
+};
+
+const dummySemesters: Semester[] = [
+  {
+    title: 'Fall 2022',
+    code: '2022f',
+    courses: [],
+  },
+  {
+    title: 'Spring 2023',
+    code: '2023s',
+    courses: [],
+  },
+  {
+    title: 'Fall 2023',
+    code: '2023f',
+    courses: [],
+  },
+];
+
+export const dummyPlan: StudentPlan = {
+  id: uuid(),
+  title: 'Empty Template',
+  major: 'Major (Change in settings',
+  semesters: dummySemesters,
 };
 
 /**
