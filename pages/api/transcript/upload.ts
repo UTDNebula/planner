@@ -27,21 +27,20 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     form.on('end', () => resolve(files));
     form.on('error', (err) => reject(err));
     form.parse(req, () => {
-      console.log('Transcript upload success');
+      console.log('Transcript parsing via formitable success');
     });
   }).catch((e) => {
-    console.log(e);
-    status = 500;
-    resultBody = {
-      status: 'fail',
-      message: 'Upload error',
-    };
+    res.status(500).json({
+      message: e,
+    });
   });
 
   try {
-    if (files?.length) {
+    // files?.length
+    // make sure files is not null, undefined, NaN, empty, 0, false...
+    if (files) {
       /* Create directory for uploads */
-      const targetPath = path.join(process.cwd(), `/uploads/`);
+      const targetPath = path.join(process.cwd(), `/public/uploads/`);
       try {
         await fs.promises.access(targetPath);
       } catch (e) {
@@ -56,8 +55,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
       /* Parse the uploaded file */
       const dataBuffer = fs.readFileSync(
-        process.cwd() + '/uploads/' + files[0][1]['originalFilename'],
+        process.cwd() + '/public/uploads/' + files[0][1]['originalFilename'],
       );
+      //const dataBuffer = Buffer.from(files[0][1]);
 
       pdf(dataBuffer).then(function (data) {
         // Separate the words by whitespace and newline
