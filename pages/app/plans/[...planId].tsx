@@ -33,7 +33,10 @@ const useStyles = makeStyles()((theme: Theme) => {
     },
     fab: {
       margin: '8px',
-      backgroundColor: '#1976d2',
+      backgroundColor: '#3E61ED',
+      '&:hover': {
+        backgroundColor: '#0040AF',
+      },
     },
   };
 });
