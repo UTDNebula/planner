@@ -1,6 +1,6 @@
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 
-class UserDegreePlanPDF extends Document {
+class MyDocument extends Document {
   static async getInitialProps(ctx) {
     const initialProps = await Document.getInitialProps(ctx);
     return { ...initialProps };
@@ -30,4 +30,4 @@ class UserDegreePlanPDF extends Document {
   }
 }
 
-export default UserDegreePlanPDF;
+export default MyDocument;
