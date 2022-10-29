@@ -118,7 +118,7 @@ export function usePlan() {
       return JSON.parse(JSON.stringify(plan));
     } else {
       // Redirect back to '/app/plans'
-      router.push('/app/plans');
+      router.push('/app');
       return plan;
     }
   }

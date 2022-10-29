@@ -1,9 +1,8 @@
 name: Bug Report
 description: File a bug report
 title: '[Bug]: '
-labels: ['Type: Bug Report', 'Status: Awaiting Triage']
-assignees:
-  - rajmeet2001
+labels: ['Type: Bug Report', 'Status: Awaiting Triage, Engineering']
+assignees: 'ZzRanger'
 body:
   - type: markdown
     attributes:

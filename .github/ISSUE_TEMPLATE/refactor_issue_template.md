@@ -3,8 +3,8 @@ name: Refactor
 about: 'If you see any glaring issues with the codebase, this is the way to
 report them.'
 title: '[Internal]'
-labels: 'Type: Internal, Status: Awaiting Triage'
-assignees: ''
+labels: 'Type: Internal, Status: Awaiting Triage, Engineering'
+assignees: 'ZzRanger'
 ---
 
 # Overview of Proposed Changes

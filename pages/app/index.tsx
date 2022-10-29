@@ -1,19 +1,25 @@
-import Head from 'next/head';
-import React from 'react';
+import * as React from 'react';
 
-import UserWelcome from '../../components/home/UserWelcome';
+import Credits from '../../components/newhome/Credits';
+import Home from '../../components/newhome/Home';
+import HomeDrawer from '../../components/newhome/HomeDrawer';
+import Profile from '../../components/newhome/Profile';
+import useMedia from '../../modules/common/media';
 
-/**
- * The home screen for the app.
- * If the user has a valid Firebase id, then the data will be loaded.
- */
-export default function Home(): JSX.Element {
+export default function MiniDrawer() {
+  const [page, setPage] = React.useState(0);
+
+  const isDesktop = useMedia('(min-width: 900px)');
+
+  const content = [
+    <Home key={0} />,
+    <Profile isDesktop={isDesktop} key={1} />,
+    <Credits key={2} />,
+  ];
+
   return (
-    <div className="flex flex-col w-full h-full">
-      <Head>
-        <title>Nebula - Home</title>
-      </Head>
-      <UserWelcome />
-    </div>
+    <HomeDrawer page={page} setPage={setPage} isDesktop={isDesktop}>
+      <div className="w-full h-screen bg-[#F5F5F5]">{content[page]}</div>
+    </HomeDrawer>
   );
 }
