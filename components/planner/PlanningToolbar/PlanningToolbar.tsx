@@ -137,16 +137,17 @@ export default function PlanningToolbar({
         <Typography variant="h6" className={classes.title}>
           {planTitle}
         </Typography>
+        <Button color="inherit" onClick={onValidate} className="text-base font-normal">
+          Validate plan
+        </Button>
         <PDFDownloadLink
+          className="text-base font-normal"
           document={<UserDegreePlanPDF name={user.name} studentPlan={studentPlan} />}
           fileName={studentPlan.title + '.pdf'}
         >
           {({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'EXPORT PLAN')}
         </PDFDownloadLink>
 
-        <Button color="inherit" onClick={onValidate}>
-          Validate plan
-        </Button>
         <input
           id="planUpload"
           className={styles.visuallyHidden}
@@ -156,14 +157,13 @@ export default function PlanningToolbar({
         />
         <label htmlFor="planUpload">
           {/* This must render as a span for the input to function */}
-          <Button color="inherit" component="span">
+          <Button color="inherit" component="span" className="text-base font-normal">
             Import plan
           </Button>
         </label>
         <IconButton onClick={handleSettings} className="" size="large">
           <SettingsIcon color="inherit" className="text-white" />
         </IconButton>
-        {/* <ProfileIcon onSignIn={handleSignIn} onSignOut={handleSignOut} /> */}
       </Toolbar>
       <SettingsDialog
         planId={planId}
@@ -171,18 +171,6 @@ export default function PlanningToolbar({
         setOpen={setDialog}
         updatePlanTitle={setPlanTitle}
       />
-      {/* {showTabs && (
-        <Tabs
-          className="flex"
-          value={sectionIndex}
-          onChange={handleTabChange}
-          aria-label="Degree plan sections"
-        >
-          {TABS.map((tab, index) => {
-            return <Tab key={tab + '-' + index} label={tab} {...a11yProps(index)} />;
-          })}
-        </Tabs>
-      )} */}
     </AppBar>
   );
 }

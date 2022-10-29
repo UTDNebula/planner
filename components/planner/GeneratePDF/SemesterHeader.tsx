@@ -10,7 +10,6 @@ const styles = StyleSheet.create({
     fontStyle: 'bold',
     textAlign: 'left',
     marginTop: 24,
-    paddingLeft: 8,
   },
 });
 

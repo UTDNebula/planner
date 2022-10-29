@@ -11,41 +11,11 @@ const borderColor = '#3E61ED';
 const styles = StyleSheet.create({
   page: {
     flexDirection: 'column',
-    paddingBottom: '60px',
   },
   section: {
     margin: 10,
     padding: 10,
     flexGrow: 1,
-  },
-  container: {
-    flexDirection: 'row',
-    borderBottomColor: borderColor,
-    backgroundColor: borderColor,
-    borderBottomWidth: 1,
-    alignItems: 'center',
-    height: 24,
-    textAlign: 'center',
-    fontStyle: 'bold',
-    flexGrow: 1,
-  },
-  description: {
-    width: '60%',
-    borderRightColor: borderColor,
-    borderRightWidth: 1,
-  },
-  qty: {
-    width: '10%',
-    borderRightColor: borderColor,
-    borderRightWidth: 1,
-  },
-  rate: {
-    width: '15%',
-    borderRightColor: borderColor,
-    borderRightWidth: 1,
-  },
-  amount: {
-    width: '15%',
   },
 });
 
@@ -62,13 +32,13 @@ export default function UserDegreePlanPDF({ name, studentPlan }: StudentPlanProp
         <View style={styles.section}>
           <Header name={name} degreePlan={studentPlan}></Header>
           {studentPlan.semesters.map((semester) => (
-            <>
+            <View key={semester.code} wrap={false}>
               <SemesterHeader semester={semester}></SemesterHeader>
               <SemesterTable
                 items={semester.courses}
                 semesterTitle={semester.title}
               ></SemesterTable>
-            </>
+            </View>
           ))}
         </View>
       </Page>

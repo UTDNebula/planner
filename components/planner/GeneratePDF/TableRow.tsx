@@ -41,12 +41,14 @@ type TableRowProps = {
   item: Course;
 };
 
-const TableRow = ({ item }: TableRowProps) => (
-  <View style={styles.row}>
-    <Text style={styles.courseCode}>{item.catalogCode}</Text>
-    <Text style={styles.courseTitle}>{item.title}</Text>
-    <Text style={styles.courseGrade}>{item.creditHours}</Text>
-  </View>
-);
+const TableRow = ({ item }: TableRowProps) => {
+  return (
+    <View style={styles.row}>
+      <Text style={styles.courseCode}>{item.catalogCode !== '' ? item.catalogCode : 'N/A'}</Text>
+      <Text style={styles.courseTitle}>{item.title}</Text>
+      <Text style={styles.courseGrade}>{item.creditHours}</Text>
+    </View>
+  );
+};
 
 export default TableRow;
