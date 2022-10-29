@@ -19,12 +19,10 @@ const Button: FC<ButtonProps> = ({
   return (
     <button
       {...props}
-      className={`${colorClasses[color]} flex items-center justify-center h-[50px] w-[200px] transition duration-200 ease-in-out rounded-[10px] ${className}`}
+      className={`${colorClasses[color]} flex items-center justify-center h-[50px] w-[200px] transition duration-200 ease-in-out rounded-[10px] ${className} font-medium text-white gap-x-2`}
     >
-      <span className="font-medium text-white">
-        {icon && <span className="mr-2">{icon}</span>}
-        {children}
-      </span>
+      {icon}
+      {children}
     </button>
   );
 };
