@@ -27,9 +27,6 @@ export default function PlannerContainer({
   children,
   removeCourse,
 }: React.PropsWithChildren<PlannerContainerProps>) {
-  items.map((item) => {
-    console.log(item);
-  });
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="relative flex flex-row overflow-x-scroll">

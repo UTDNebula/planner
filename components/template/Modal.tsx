@@ -8,9 +8,11 @@ import { v4 as uuid } from 'uuid';
 import dummyTemplate from '../../data/degree_template.json';
 import { getAllCourses } from '../../modules/common/api/templates';
 import { Course, Semester, StudentPlan } from '../../modules/common/data';
+import { SEMESTER_CODE_MAPPINGS as semMap } from '../../modules/common/data';
 import { dummyPlan } from '../../modules/planner/plannerUtils';
 import { RootState } from '../../modules/redux/store';
 import { updatePlan } from '../../modules/redux/userDataSlice';
+
 interface TemplateModalProps {
   setOpenTemplateModal: (flag: boolean) => void;
 }
@@ -38,31 +40,73 @@ export default function TemplateModal({ setOpenTemplateModal }: TemplateModalPro
     const courses = await getAllCourses();
     const selectedTemplate = orderedTemplate[major];
 
-    // removing duplicates in creditSlice courses
-    const filteredCoursesFromCredits = coursesFromCredits.filter((course) => {
-      for (let i = 0; i < selectedTemplate.length; i++) {
-        if (selectedTemplate[i].includes(course.utdCourseCode)) {
-          return false;
-        }
-      }
-      return true;
-    });
+    const filteredTemplate = selectedTemplate.map((sem) => {
+      return sem.filter((course: string) => {
+        if (typeof course === 'object') return true;
 
-    const numOfSemesters = selectedTemplate.length;
-    const creditCoursesPerSemester = Math.ceil(filteredCoursesFromCredits.length / numOfSemesters);
+        return !coursesFromCredits.some((credit) => credit.utdCourseCode === course);
+      });
+    });
+    const numOfSemesters = filteredTemplate.length;
 
     const semesters: Semester[] = [];
+    const creditSemesters: Semester[] = [];
+
+    coursesFromCredits.sort((a, b) => {
+      if (!a.semester || !b.semester) return;
+      if (a.semester.year === b.semester.year) {
+        return semMap[b.semester.semester] < semMap[a.semester.semester] ? -1 : 1;
+      }
+      return a.semester.year - b.semester.year;
+    });
+
+    coursesFromCredits.forEach((course) => {
+      const { id, name: title, description, hours } = courses[course.utdCourseCode];
+      const courseId = id.toString();
+      const creditCourse: Course = {
+        id: courseId,
+        title,
+        catalogCode: course.utdCourseCode,
+        description,
+        creditHours: +hours,
+      };
+
+      if (!course.semester) {
+        const semester = creditSemesters.find((sem) => sem.code === 'transfer');
+        if (semester) {
+          semester.courses.push(creditCourse);
+        } else {
+          creditSemesters.push({
+            code: 'transfer',
+            title: 'Transfer Credits',
+            courses: [creditCourse],
+          });
+        }
+      } else {
+        const semester = creditSemesters.find(
+          (sem) => sem.code === course.semester.year + course.semester.semester,
+        );
+        if (semester) {
+          semester.courses.push(creditCourse);
+        } else {
+          creditSemesters.push({
+            code: course.semester.year + course.semester.semester,
+            title: semMap[course.semester.semester] + ' ' + course.semester.year,
+            courses: [creditCourse],
+          });
+        }
+      }
+    });
     const year = new Date().getFullYear();
 
-    // TODO: Move semester creation to generateSemesters
     let season = 'Fall';
 
     for (let i = 0; i < numOfSemesters; i++) {
-      const sem = selectedTemplate[i];
+      const sem = filteredTemplate[i];
       const semCourses: Course[] = [];
 
-      const semTitle = `${season} ${year + Math.floor(i / 2)}`;
-      const semCode = `${year + Math.floor(i / 2)}${season[0].toLowerCase()}`;
+      const semTitle = `${season} ${year + Math.floor((i + 1) / 2)}`;
+      const semCode = `${year + Math.floor((i + 1) / 2)}${season[0].toLowerCase()}`;
       season = season === 'Fall' ? 'Spring' : 'Fall';
 
       const semester: Semester = { title: semTitle, code: semCode, courses: semCourses };
@@ -95,22 +139,6 @@ export default function TemplateModal({ setOpenTemplateModal }: TemplateModalPro
         }
         semCourses.push(course);
       }
-
-      // equally distributing courses for now
-      for (let j = 0; j < creditCoursesPerSemester; j++) {
-        const creditCourse = filteredCoursesFromCredits.pop();
-        if (creditCourse) {
-          const courseDetails = courses[creditCourse.utdCourseCode];
-          const course: Course = {
-            id: courseDetails.id.toString(),
-            title: courseDetails.name,
-            catalogCode: creditCourse.utdCourseCode,
-            description: courseDetails.description,
-            creditHours: +courseDetails.hours,
-          };
-          semCourses.push(course);
-        }
-      }
       semester.courses = semCourses;
       semesters.push(semester);
     }
@@ -122,9 +150,8 @@ export default function TemplateModal({ setOpenTemplateModal }: TemplateModalPro
       id: routeId,
       title: planTitle,
       major: planMajor,
-      semesters,
+      semesters: [...creditSemesters, ...semesters],
     };
-
     dispatch(updatePlan(newPlanFromTemplate));
     router.push(`/app/plans/${routeId}`);
   };
@@ -132,7 +159,7 @@ export default function TemplateModal({ setOpenTemplateModal }: TemplateModalPro
   return (
     <div
       onClick={() => setOpenTemplateModal(false)}
-      className="w-full h-full top-0 left-0 absolute flex items-center justify-center backdrop-blur-md"
+      className="w-full h-full left-0 top-0  absolute flex items-center justify-center backdrop-blur-md"
     >
       <div
         onClick={(e) => e.stopPropagation()}
