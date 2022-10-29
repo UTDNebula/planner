@@ -66,6 +66,9 @@ if (!firebase.apps.length) {
  * page routes.
  */
 export default function NebulaApp({ Component, pageProps }: AppProps): JSX.Element {
+  // TODO: Properly type check this
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   const { store, persistor } = useStore(pageProps.initialReduxState);
 
   // manually resume persistence, see: https://github.com/UTDNebula/planner/issues/80

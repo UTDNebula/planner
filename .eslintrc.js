@@ -18,6 +18,8 @@ module.exports = {
   rules: {
     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
     // e.g. '@typescript-eslint/explicit-function-return-type': 'off',
+    'react/prop-types': 'warn',
+    'react/jsx-key': 'warn',
     'simple-import-sort/imports': process.env.NODE_ENV === 'test' ? 'error' : 'off',
     'simple-import-sort/exports': process.env.NODE_ENV === 'test' ? 'error' : 'off',
     'react/react-in-jsx-scope': 'off',
