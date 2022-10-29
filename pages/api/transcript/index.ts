@@ -82,6 +82,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           data: takenCourses,
         });
       });
+    } else {
+      res.status(400).json({
+        message: 'No file uploaded',
+      });
     }
   } catch (error) {
     console.log(`Error parsing file: ${error.message}`);
