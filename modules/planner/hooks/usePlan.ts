@@ -2,9 +2,11 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { useDispatch, useStore } from 'react-redux';
 
+// import {downloadPDF} from '../../../components/planner/GeneratePDF/GeneratePDF';
 import { Semester, StudentPlan } from '../../common/data';
 import { updatePlan } from '../../redux/userDataSlice';
 import { initialPlan } from '../plannerUtils';
+// import { PDFViewer } from '@react-pdf/renderer';
 
 /**
  * A utility hook that exposes callbacks to handle manipulating the StudentPlan.
@@ -46,29 +48,28 @@ export function usePlan() {
    * @param plan The plan to write to file
    */
   const exportPlan = (plan: StudentPlan) => {
-    const planFileContents = JSON.stringify(plan, null, 2);
-    const blob = new Blob([planFileContents], { type: 'application/json;charset=utf-8;' });
-    const link = document.createElement('a');
-    console.log('Plan file contents', planFileContents);
-    if (link.download === undefined) {
-      // TODO(planner): Figure out how to gracefully handle lack of API support
-      return;
-    }
-    // Due to how the browser works, we must create an anchor element that
-    // downloads a blob containing the file.
-    const url = URL.createObjectURL(blob);
-    const planFileName =
-      plan.title !== ''
-        ? `${plan.title} Degree Plan.json`
-        : `Nebula Degree Plan ${new Date().toISOString()}.json`;
-
-    link.style.visibility = 'hidden';
-    link.setAttribute('download', planFileName);
-    link.setAttribute('href', url);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    console.log('Plan downloaded');
+    // const planFileContents = JSON.stringify(plan, null, 2);
+    // const blob = new Blob([planFileContents], { type: 'application/json;charset=utf-8;' });
+    // const link = document.createElement('a');
+    // console.log('Plan file contents', planFileContents);
+    // if (link.download === undefined) {
+    //   // TODO(planner): Figure out how to gracefully handle lack of API support
+    //   return;
+    // }
+    // // Due to how the browser works, we must create an anchor element that
+    // // downloads a blob containing the file.
+    // const url = URL.createObjectURL(blob);
+    // const planFileName =
+    //   plan.title !== ''
+    //     ? `${plan.title} Degree Plan.json`
+    //     : `Nebula Degree Plan ${new Date().toISOString()}.json`;
+    // link.style.visibility = 'hidden';
+    // link.setAttribute('download', planFileName);
+    // link.setAttribute('href', url);
+    // document.body.appendChild(link);
+    // link.click();
+    // document.body.removeChild(link);
+    // console.log('Plan downloaded');
   };
 
   /**
