@@ -6,6 +6,7 @@ import React from 'react';
 import { makeStyles } from 'tss-react/mui';
 
 import ErrorMessage from '../../../components/common/ErrorMessage';
+import WarningMessageModal from '../../../components/common/WarningMessageModal';
 import PlannerContainer from '../../../components/planner/PlannerContainer';
 import PlanningToolbar, {
   usePlanningToolbar,
@@ -46,6 +47,8 @@ export default function PlanDetailPage(): JSX.Element {
   const router = useRouter();
   const { planId: planQuery } = router.query;
   const planId = planQuery ? planQuery[0] : 'empty-plan';
+
+  const [warning, setWarning] = React.useState(true);
 
   const [courseAttempts, setCourseAttempts] = React.useState<CourseAttempt[]>([]);
 
@@ -128,28 +131,36 @@ export default function PlanDetailPage(): JSX.Element {
   );
 
   return (
-    <div className="h-full flex flex-col overflow-x-hidden overflow-y-auto">
-      <div className="flex-none">
-        {err !== undefined && ErrorMessage(err)}
-        <PlanningToolbar
-          setPlanTitle={setTitle}
-          planId={plan.id}
-          sectionIndex={section}
-          planTitle={title}
-          shouldShowTabs={shouldShowTabs}
-          onTabChange={handleTabChange}
-          onExportPlan={() => {
-            console.log('Exporting plan');
-            exportPlan(plan);
-          }}
-          onImportPlan={(event) => {
-            handleSelectedPlanChange(event, updateLoadedPlan);
-          }}
+    <>
+      <div className="h-full flex flex-col overflow-x-hidden overflow-y-auto">
+        <div className="flex-none">
+          {err !== undefined && ErrorMessage(err)}
+          <PlanningToolbar
+            setPlanTitle={setTitle}
+            planId={plan.id}
+            sectionIndex={section}
+            planTitle={title}
+            shouldShowTabs={shouldShowTabs}
+            onTabChange={handleTabChange}
+            onExportPlan={() => {
+              console.log('Exporting plan');
+              exportPlan(plan);
+            }}
+            onImportPlan={(event) => {
+              handleSelectedPlanChange(event, updateLoadedPlan);
+            }}
+          />
+        </div>
+        <div className="flex-1">
+          <div className="">{content}</div>
+        </div>
+      </div>
+      {warning && (
+        <WarningMessageModal
+          message="Insert possible warning/message here"
+          setWarning={setWarning}
         />
-      </div>
-      <div className="flex-1">
-        <div className="">{content}</div>
-      </div>
-    </div>
+      )}
+    </>
   );
 }
