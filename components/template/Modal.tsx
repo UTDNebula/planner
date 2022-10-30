@@ -1,5 +1,6 @@
 import CloseIcon from '@mui/icons-material/Close';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { v4 as uuid } from 'uuid';
@@ -12,6 +13,8 @@ import { SEMESTER_CODE_MAPPINGS as semMap } from '../../modules/common/data';
 import { dummyPlan } from '../../modules/planner/plannerUtils';
 import { RootState } from '../../modules/redux/store';
 import { updatePlan } from '../../modules/redux/userDataSlice';
+import DataGrid from '../credits/DataGrid';
+import SearchBar from '../credits/SearchBar';
 
 interface TemplateModalProps {
   setOpenTemplateModal: (flag: boolean) => void;
@@ -20,6 +23,8 @@ export default function TemplateModal({ setOpenTemplateModal }: TemplateModalPro
   const router = useRouter();
   const dispatch = useDispatch();
   const coursesFromCredits = [...useSelector((state: RootState) => state.creditsData.credits)];
+
+  const [templateQuery, setTemplateQuery] = useState('');
 
   // Sorting the template in alphabetical order
   const orderedTemplate = Object.keys(dummyTemplate)
@@ -30,6 +35,7 @@ export default function TemplateModal({ setOpenTemplateModal }: TemplateModalPro
     }, {});
 
   const handleTemplateCreation = async (major: string) => {
+    console.log({ major });
     if (major === 'empty') {
       const newPlan: StudentPlan = dummyPlan;
       newPlan.id = uuid();
@@ -163,32 +169,68 @@ export default function TemplateModal({ setOpenTemplateModal }: TemplateModalPro
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-white relative max-w-4xl m-8 max-h-[90vh] w-full overflow-y-scroll flex-col gap-2 rounded-lg items-center justify-center p-4"
+        className="bg-white relative max-w-4xl m-8 max-h-[90vh] w-full overflow-y-scroll flex-col gap-2 rounded-lg items-center justify-center p-10"
       >
-        <div className="flex justify-center items-center">
-          <div className="p-2 text-2xl">Start fresh with an</div>
+        <div className="flex flex-col gap-2 justify-center items-center">
+          <div className="p-3 text-2xl">Start fresh with an</div>
           <button
-            className="p-2 rounded hover:bg-[#3E61ED] hover:text-white transition-colors border-2 border-[#3e61ed]"
+            className="p-2 rounded-lg font-semibold bg-[#3E61ED] hover:bg-[#3552C9] text-white transition-colors border-2 border-[#3e61ed]"
             onClick={() => handleTemplateCreation('empty')}
           >
             Empty Plan
           </button>
-        </div>
-        <div className="text-center p-2 text-4xl font-bold">OR</div>
-        <div className="text-center text-2xl p-2">Start with one of the templates</div>
 
-        <div className="flex flex-row flex-wrap justify-center gap-2 px-2 py-4">
-          {Object.keys(orderedTemplate).map((k, v) => {
-            return (
-              <button
-                className="p-4 rounded hover:bg-[#3E61ED] hover:text-white transition-colors border-2 border-[#3e61ed]"
-                onClick={() => handleTemplateCreation(k)}
-                key={k}
-              >
-                {k}
-              </button>
-            );
-          })}
+          <div className="text-center text-2xl ">OR</div>
+          <div className="text-center text-2xl font-medium">One of the templates</div>
+        </div>
+        <div className="sticky pt-10 -top-10 bg-white z-50">
+          <SearchBar
+            placeholder="Search template"
+            updateQuery={(query) => setTemplateQuery(query)}
+          />
+        </div>
+
+        <div className="gap-2 px-2 py-4 max-h-[400px]">
+          <DataGrid
+            columns={[
+              {
+                title: 'Templates',
+                key: 'templateName',
+              },
+            ]}
+            rows={
+              [
+                ...Object.keys(orderedTemplate)
+                  .filter((template) =>
+                    template.toLowerCase().includes(templateQuery.toLowerCase()),
+                  )
+                  .map((x) => ({ templateName: x })),
+              ] as { templateName: string }[]
+            }
+            childrenProps={{
+              headerProps: {
+                style: {
+                  padding: '20px 0',
+                },
+              },
+              gridProps: {
+                style: {},
+              },
+              rowProps: {
+                style: {
+                  borderTop: '1px solid #DEDFE1',
+                  padding: '20px 0',
+                  cursor: 'pointer',
+                },
+                onClick: (row) => {
+                  handleTemplateCreation(row.templateName);
+                },
+              },
+            }}
+            RowCellComponent={({ children }) => <span className="text-black">{children}</span>}
+            TitleComponent={({ children }) => <h4 className="text-black">{children}</h4>}
+            LoadingComponent={() => <h2 className="text-black">Loading...</h2>}
+          />
         </div>
         <button
           onClick={() => setOpenTemplateModal(false)}
