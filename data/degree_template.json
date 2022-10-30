@@ -1,0 +1,352 @@
+{
+    "Computer Science(BS)": [
+      ["MATH 2413", "CS 1200", "CS 1336", "RHET 1302", "ECS 1100", "UNIV 1010", { "options": "060"}],
+      ["MATH 2414", "CS 2305", "CS 1337", "PHYS 2325", "PHYS 2125", { "options": "060"}],
+      ["CS 2305", "CS 2340", "PHYS 2326", "PHYS 2126", "CS 2336", { "options": "040"}, { "options": "070"}],
+      ["MATH 2418", "CS 3341", "CS 3345", "CS 3377", { "options": "070"}],
+      ["ECS 3390", "CS 3354", "CS 4337", "CS 4341", "CS 4141", "UNIV 2020", { "options": "050"}],
+      ["CS 4349", "CS 4348", "CS 3162", {"options": "030"}, { "options": "080"}],
+      ["CS 4347", "CS 4384", { "options": "Free Elective"}, { "options": "CS Guided Elective"}, {"options": "CS Guided Elective"}],
+      ["CS 4485", { "options": "Free Elective"}, { "options": "Free Elective"}, {"options": "CS Guided Elective"}]
+    ],
+    "Psychology(BS)": [
+      ["PSY 2301", "BBSU 1100", "UNIV 1010", { "options": "020"}, { "options": "030"}, { "options": "050"}, {"options": "060"}],
+      ["PSY 2314", { "options": "010"}, { "options": "030"}, { "options": "040"}, {"options": "060"}],
+      ["GOVT 2306", "PSY 2317", "PSY 3310", { "options": "010"}, { "options": "Elective"}],
+      ["PSY 3331", "GOVT 2305", "PSY 3360", "PSY 3392", { "options": "Elective"}],
+      ["PSY 3393", "NSC 3361", "UNIV 2020", { "options": "Elective"}, { "options": "Elective"}, { "options": "PSY Independent Study"}],
+      [{"options":"PSY Elective"}, "NSC 3361", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}],
+      ["PSY 4343", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, {"options": "PSY Elective"}],
+      [{ "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, {"options": "PSY Elective"}]
+    ],
+    "Biology(BS)": [
+        ["CHEM 1311", "CHEM 1111", "HIST 1301", "MATH 2413", "COMM 1311", "NATHS 1101", "UNIV 1010"],
+        ["CHEM 1312", "CHEM 1112", "HIST 1302", "MATH 2414", "PHYS 2325", "PHYS 2125"],
+        ["CHEM 2323", "CHEM 2123", "BIOL 2311", "BIOL 2111", "PHYS 2326", "PHYS 2126", "RHET 1302"],
+        ["CHEM 2325", "CHEM 2125", "BIOL 2312", "BIOL 2112", "BIOL 2281", "ARTS 1301", "PSY 2301"],
+        ["GOVT 2305", "BIOL 3361", "BIOL 3161", "BIOL 3301", "BIOL 3101", { "options": "BIOL Upper-Level Elective"}],
+        ["GOVT 2306", "BIOL 3362", "BIOL 3162", "BIOL 3380", { "options": "Elective"}, { "options": "BIOL Upper-Level Elective"}],
+        ["BIOL 3302", "BIOL 3102", { "options:": "040"}, { "options": "BIOL Upper-Level Elective"}, { "options": "Elective"}, { "options": "Elective"}],
+        ["BIOL 4380", { "options": "BIOL Upper-Level Elective"}, { "options": "Elective"}, { "options": "Elective"}]
+    ],
+    "Information Technology and Systems(BS)": [
+        [{ "options": "010"}, { "options": "060"}, "MATH 1325", "BLAW 2301", "BCOM 1300", "UNIV 1010"],
+        [{ "options": "010"}, { "options": "060"}, "BA 1320", "MATH 1326", "OPRE 3333"],
+        [{ "options": "030"}, { "options": "040"}, "ACCT 2301", "GOVT 2305", "BA 1310"],
+        [{ "options": "030"}, { "options": "050"}, "ACCT 2302", "GOVT 2306", "ITSS 3300", "ITSS 3311"],
+        ["FIN 3320", "OPRE 3360", "ITSS 3312", "MKT 3300", "ITSS 4300", "UNIV 2020"],
+        ["BCOM 4300", "ITSS 4360", "ITSS 4330", "ITSS 4351", { "options": "Upper-Level Guided Elective"}, "ITSS 4090"],
+        ["OPRE 3310", "OBHR 3310", "ITSS 4370"]
+    ],
+    "Economics(BS)": [
+        [{ "options": "030"}, "ECON 2301", "GOVT 2305", "MATH 1314", "RHET 1302", "EPPS 1110", "UNIV 1010"],
+        ["COMM 1311", "ECON 2302", "GOVT 2306", "MATH 1325", "EPPS 2301"],
+        [{ "options": "030"}, "HIST 1301", "ARTS 1301", "EPPS 2302", "MATH 1326"],
+        [{ "options": "040"}, "HIST 1302", "ECON 3310", "ECON 3311", "CRIM 1301"],
+        ["ECON 4320", "ECON 4351", { "options": "ECON Major Related Elective"}, { "options": "Elective"}, { "options": "Elective"}],
+        ["ECON 4355", { "options": "ECON Major Related Elective"},  { "options": "ECON Major Related Elective"},  { "options": "ECON Major Related Elective"}, { "options": "Upper-Level Elective"}],
+        [{ "options": "ECON Major Related Elective"}, { "options": "ECON Major Related Elective"}, { "options": "ECON Major Related Elective"}, { "options": "Elective"}, { "options": "Elective"}],
+        [{ "options": "ECON Major Related Elective"}, { "options": "ECON Major Related Elective"}, { "options": "ECON Major Related Elective"}, { "options": "Elective"}, { "options": "Upper-Level Elective"}]
+    ],
+    "Accounting(BS)": [
+      [{ "options": "010"}, { "options": "060"}, { "options": "050"}, "MATH 1325", "BCOM 1300", "UNIV 1010"],
+      [{ "options": "010"}, { "options": "060"}, "BA 1320", "MATH 1326", "OPRE 3333"],
+      [{ "options": "030"}, "BLAW 2301", "ACCT 2301", "GOVT 2305", "BA 1310"],
+      [{ "options": "030"}, { "options": "040"}, "ACCT 2302", "GOVT 2306", "OPRE 3360"],
+      ["FIN 3320", "ACCT 3331", "ACCT 3341", "ITSS 3300", "MKT 3300", "UNIV 2020"],
+      ["BCOM 4300", "ACCT 3332", "ACCT 3350", "OPRE 3310", { "options": "Elective"}],
+      ["ACCT 4334", "OBHR 3330", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, "BA 4095"],
+      ["ACCT 4395", "ACCT 4342", "BPS 4305", "IMS 3310", { "options": "Elective"}, "BA 4090"]
+    ],
+    "Finance(BS)": [
+      [{ "options": "010"}, { "options": "040"}, "MATH 1325", "BLAW 2301", "BCOM 1300", "UNIV 1010"],
+      [{ "options": "010"}, "ECON 2301", "MATH 1326", "OPRE 3333", "ITSS 3300"],
+      [{ "options": "060"}, "ACCT 2301", "ECON 2302", "OPRE 3360", "FIN 3320"],
+      [{ "options": "030"}, { "options": "060"}, "ACCT 2302", "FIN 3390", "FIN 4310"],
+      [{ "options": "030"}, "GOVT 2305", "FIN 4300", "MKT 3300", { "options": "Elective"}, "UNIV 2020"],
+      [{ "options": "050"}, "BCOM 4300", "GOVT 2306", "OBHR 3330", { "options": "Elective"}, "FIN 4080"],
+      ["OPRE 3310", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, "BA 4095", { "options": "Elective"}],
+      ["FIN 4395", "IMS 3310", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}]
+    ],
+    "Mechanical Engineering(BS)": [
+      ["RHET 1302", "MATH 2417", "MECH 1100", "CS 1325", "CHEM 1311", "CHEM 1111", "ECS 1100", "UNIV 1010"],
+      [{ "options": "040"}, "MATH 2419", "MECH 1208", "ENGR 2300", "PHYS 2325", "PHYS 2125"],
+      [{ "options": "060"}, "ENGR 3300", "MECH 2310", "MATH 2420", "PHYS 2326", "PHYS 2126"],
+      [{ "options": "060"}, "ENGR 3341", "MECH 2320", "MECH 2120", "MECH 2330", "MECH 3310"],
+      ["GOVT 2305", "ECS 3390", "MECH 3305", "MECH 3105", "MECH 3315", "MECH 3350"],
+      ["GOVT 2306", "ECON 2301", "MECH 3115", "MECH 3150", "MECH 3320", "MECH 3351", "MECH 4310"],
+      [{ "options": "050"}, "MECH 4381", "MECH 3120", "MECH 4110", "UNIV 2020", { "options": "Elective"}, { "options": "Elective"}],
+      ["MECH 4382", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}]
+    ],
+    "Neuroscience(BS)": [
+      [{ "options": "020"}, "CHEM 1311", "CHEM 1111", "HIST 1301", "PSY 2301", "BBSU 1100", "UNIV 1010"],
+      [{ "options": "020"}, "CHEM 1312", "CHEM 1112", "HIST 1302", "NSC 3361", "RHET 1302"],
+      [{ "options": "040"}, "GOVT 2305", "BIOL 2311", "BIOL 2111", "COMM 1311", "NSC 4352"],
+      [{ "options": "050"}, "GOVT 2306", "BIOL 2281", "PSY 2317", { "options": "Elective"}],
+      ["NSC 4354", { "options": "Elective"}, " UNIV 2020 ", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}],
+      ["NSC 4353", "NSC 4363", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}],
+      [{ "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, "NSC 4357"],
+      ["NSC 4366", "NSC 4356", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}]
+    ],
+    "Marketing(BS)": [
+      [{ "options": "010"}, { "options": "060"}, "MATH 1325", "BLAW 2301", "BCOM 1300", "UNIV 1010"],
+      [{ "options": "010"}, { "options": "060"}, "BA 1320", { "options": "030"}, "MKT 3300"],
+      [{ "options": "030"}, "ACCT 2301", "GOVT 2305", "BA 1310", { "options": "040"}],
+      ["ACCT 2302", "GOVT 2306", "OPRE 3360", "MKT 3330", "MKT 4330"],
+      [{ "options": "090"}, "ITSS 3300", "FIN 3320", "OPRE 3310", "MKT 3340", "UNIV 2020"],
+      ["BCOM 4300", "OBHR 3330", "IMS 3310", { "options": "Elective"}, { "options": "Elective"}, "MKT 4090"],
+      [{ "options": "050"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, "BA 4095"],
+      ["MKT 4395", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}]
+    ],
+    "Business Analytics(BS)": [
+      [{ "options": "010"}, { "options": "060"}, "MATH 1325", "BLAW 2301", "BCOM 1300", "UNIV 1010"],
+      [{ "options": "060"}, "MATH 1326", "OPRE 3333", "ITSS 3300", "ITSS 3311"],
+      [{ "options": "010"}, "BA 1320", "ACCT 2301", "OPRE 3360", "ITSS 4381"],
+      [{ "options": "030"}, "BA 1310", { "options": "050"}, "ACCT 2302", "ITSS 4300"],
+      ["FIN 3320", "OPRE 3310", "MKT 3300", "ITSS 4351", "ITSS 4380", "UNIV 2020"],
+      [{ "options": "030"}, "BCOM 4300", "ITSS 4352", "ITSS 4353", { "options": "Elective"}, "BA 4095"],
+      ["GOVT 2305", "OBHR 3310", "ITSS 4354", "ITSS 4355", { "options": "Elective"}, "BUAN 4090"],
+      ["GOVT 2306", { "options": "040"}, "IMS 3310", "BUAN 4395", { "options": "Elective"}]
+    ],
+    "Business Administration(BS)": [
+      [{ "options": "010"}, { "options": "060"}, "MATH 1325", "BLAW 2301", "BCOM 1300", "UNIV 1010"],
+      [{ "options": "010"}, { "options": "060"}, "BA 1320", { "options": "030"}, { "options": "040"}],
+      [{ "options": "030"}, "ACCT 2301", "GOVT 2305", "BA 1310", { "options": "090"}],
+      [{ "options": "050"}, "ACCT 2302", "GOVT 2306", "OPRE 3360", "ITSS 3300"],
+      ["FIN 3320", "MKT 3300", "OBHR 3310", "OPRE 3330", { "options": "Elective"}, "UNIV 2020"],
+      ["BCOM 4300", "OPRE 3310", "ENTP 3301", "BA 3300", { "options": "Elective"}, "BA 4090"],
+      ["IMS 3310", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, "BA 4095"],
+      ["BPS 4395", "BPS 4305", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}]
+    ],
+    "Heathcare Studies(BS)": [
+      ["CHEM 1311", "CHEM 1111", "GOVT 2305", "MATH 1325", "RHET 1302", "BIS 1100", "UNIV 1010"],
+      ["CHEM 1312", "CHEM 1112", "COMM 1311", "GOVT 2306", "HIST 1301", "HLTH 1100", "STAT 2332"],
+      ["BIOL 2311", "BIOL 2111", "CHEM 2323", "CHEM 2123", "PHYS 1301", "PHYS 2125", "HIST 1302"],
+      ["BIOL 2312", "BIOL 2112", "CHEM 2325", "CHEM 2125", "PHYS 1302", "PHYS 2126", "BIOL 2281", "PSY 2301"],
+      ["BIOL 3361", "BIOL 3161", "BIOL 3455", "HLTH 3305", "HLTH 3101", { "options": "040"}],
+      ["BIOL 3520", "BIOL 3456", "HLTH 3315", "HLTH 4304"],
+      ["BIOL 4385", "PSY 4328", "BIS 3320", "HLTH 3300", "ARTS 1301", "UNIV 2020"],
+      ["HLTH 4305", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}]
+    ],
+    "Electrical Engineering(BSEE)": [
+      [{ "options": "Core"}, "EE 1100", "MATH 2417", "RHET 1302", "CS 1325", "ECS 1100", "UNIV 1010"],
+      ["ENGR 2300", "EE 1202", "MATH 2419", "EE 2310", "PHYS 2325", "PHYS 2125"],
+      [{ "options": "Core"}, { "options": "Core"}, "ENGR 3341", "MATH 2420", "PHYS 2326", "PHYS 2126"],
+      ["EE 3301", { "options": "Core"}, "ENGR 3300", { "options": "Core"}, "EE 3320", "EE 3201"],
+      ["EE 3161", "ECS 3390", "EE 3302", "CHEM 1311", "EE 3310", "EE 3202"],
+      [{ "options": "Core"}, "EE 3311", "EE 4310", "EE 4370", { "options": "Elective"}],
+      ["EE 4301", "EE 4388", { "options": "Core"}, "UNIV 2020", { "options": "Elective"}, { "options": "Elective"}],
+      ["EE 4389", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}]
+    ],
+    "Computer Engineering(BS)": [
+      [{ "options": "Core"}, "CE 1100", "MATH 2417", "RHET 1302", "CS 1337", "ECS 1100", "UNIV 1010"],
+      ["ENGR 2300", "CE 1202", "MATH 2419", "CE 2310", "PHYS 2325", "PHYS 2125"],
+      ["CE 2305", "CE 2336", "ENGR 3341", "MATH 2420", "PHYS 2326", "PHYS 2126"],
+      [{ "options": "Core"}, "CE 3320", "CE 3301", "CE 3201", "CE 3345"],
+      ["ECS 3390", "CE 3303", "CE 3310", "CE 3202", "CE 3354", "CE 3161"],
+      [{ "options": "Core"}, "CE 3311", { "options": "Core"}, "CE 4370", "CE 4304", { "options": "Elective"}],
+      ["CE 4348", "CE 4388", { "options": "Core"}, { "options": "Core"}, "UNIV 2020", { "options": "Elective"}, { "options": "Elective"}],
+      ["CE 4389", { "options": "Core"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}]
+    ],
+    "Biomedical Engineering(BS)": [
+      ["BMEN 1100", "CHEM 1311", "CHEM 1111", "CS 1324", "ECS 1100", "MATH 2417", "RHET 1302", "UNIV 1010"],
+      ["BMEN 1208", "CHEM 1312", "ENGR 2300", "MATH 2419", "PHYS 2325", "PHYS 2125"],
+      ["BIOL 2311", "BIOL 2111", "BMEN 2320", "CHEM 2324", "MATH 2420", "PHYS 2326", "PHYS 2126"],
+      [{ "options": "Core"}, "BIOL 2281", "BMEN 3331", "BMEN 3399", "ENGR 3300", "ENGR 3341"],
+      [{ "options": "Core"}, "BMEN 3302", "BMEN 3315", "BMEN 3320", "BMEN 3220", "BMEN 3332"],
+      ["BMEN 3200", "BMEN 4310", "BMEN 4360", "ECS 3390", { "options": "Core"}],
+      ["BMEN 4388", { "options": "Core"}, "UNIV 2020", { "options": "Elective"}],
+      ["BMEN 4389", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}]
+    ],
+    "Arts, Technology, and Emerging Communication(BA)": [
+      ["ATCM 1100", "UNIV 1010", "ATCM 2300", "CS1334", "ATCM 2301", "RHET 1302"],
+      ["ATCM 2302", { "options": "Elective"}, "ATCM 2300", "CS1334", { "options": "Elective"}, { "options": "Elective"}],
+      ["ATCM 2300", "ATCM 3301", "CS 1335", { "options": "Elective"}, { "options": "Elective"}],
+      ["ATCM 2300", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}],
+      ["ATCM 4384", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}],
+      [{ "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}],
+      [{ "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}],
+      ["ATCM 4397", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}]
+    ],
+    "History(BA)": [
+      [{ "options": "010"}, { "options": "050"}, { "options": "060"}, { "options": "Elective"}, { "options": "Elective"}, "ARHM 1100"],
+      [{ "options": "010"}, { "options": "020"}, { "options": "040"}, { "options": "060"}, { "options": "Elective"}],     
+      [{ "options": "030"}, { "options": "070"}, { "options": "090"}, { "options": "Elective"}, { "options": "Elective"}],
+      [{ "options": "030"}, { "options": "070"}, { "options": "080"}, { "options": "090"}, "HIST 3301"],
+      ["ARHM 3342", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}],
+      [{ "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}],
+      [{ "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}],
+      [{ "options": "Elective"}, "4000-level HIST Course", "HIST 4390", { "options": "Elective"}, { "options": "Elective"}]
+    ],
+    "Literature(BA)": [
+      [{ "options": "010"}, { "options": "050"}, { "options": "060"}, { "options": "Elective"}, { "options": "Elective"}, "ARHM 1100"],
+      [{ "options": "010"}, { "options": "020"}, { "options": "040"}, { "options": "060"}, { "options": "Elective"}],
+      [{ "options": "030"}, { "options": "070"}, { "options": "080"}, { "options": "090"}, { "options": "Elective"}],
+      [{ "options": "030"}, { "options": "070"}, { "options": "090"}, { "options": "Elective"}, { "options": "Elective"}],
+      [{ "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}],
+      [{ "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}],
+      [{ "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}],
+      [{ "options": "Elective"}, { "options": "Elective"}, "LIT 4390", { "options": "Elective"}, { "options": "Elective"}]
+    ],
+    "Visual and Performing Arts(BA)": [
+      [{ "options": "010"}, { "options": "050"}, { "options": "060"}, "ARHM 1100", { "options": "Elective"}, { "options": "Elective"}],
+      [{ "options": "010"}, { "options": "020"}, { "options": "040"}, { "options": "060"}, "ARTS 2380"],
+      [{ "options": "030"}, { "options": "070"}, { "options": "080"}, { "options": "090"}, { "options": "Elective"}],
+      [{ "options": "030"}, { "options": "070"}, { "options": "090"}, { "options": "Elective"}, { "options": "Elective"}],
+      [{ "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}],
+      [{ "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}],
+      [{ "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}],
+      [{ "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}]
+    ],
+    "Child Learning and Development(BS)": [
+      [{ "options": "010"}, { "options": "020"}, { "options": "050"}, { "options": "060"}, "PSY 2301", "BBSU 1100", "UNIV 1010"],
+      [{ "options": "010"}, { "options": "030"}, { "options": "040"}, { "options": "060"}, "PSY 2314"],
+      [{ "options": "070"}, "PSY 2317", "CLDP 3310", { "options": "Elective"}, { "options": "Elective"}],
+      [{ "options": "070"}, { "options": "030"}, "CLDP 3332", "PSY 3392", { "options": "Elective"}],
+      ["CLDP 3362", "CLDP 3394", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, "UNIV 2020"],
+      ["CLDP 3303", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}],
+      ["CLDP 3342", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}],
+      [{ "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}]
+    ],
+    "Cognitive Science(BS)": [
+      ["CGS 2301 ", "HIST 1301 ", "MATH 2413 ", " PSY 2301 ", "BBSU 1100 ", "UNIV 1010 "],
+      [" CS 1337 ", "HIST 1302 ", "MATH 2414 ", "GOVT 2306 ", "RHET 1302 "],
+      [{ "options": "050"}, "MATH 2418 ", "COMM 1311 ", "CS 2336 ", { "options": "Elective"}],
+      [{ "options": "030"}, { "options": "040"}, "GOVT 2305 ", "CS 2305 ", { "options": "Elective"}],
+      ["NSC 3361 ", " PSY 2317 ", "UNIV 2020 ", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}],
+      ["CGS 3361 ", "PSY 3490 ", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}],
+      ["CGS 3340 ", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}],
+      [{ "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}]
+    ],
+    "Speech, Language, and Hearing Sciences(BS)": [
+      [{ "options": "030"}, "COMM 1311", "HIST 1301", "MATH 1306", "BBSU 1100", "UNIV 1010"],
+      [{ "options": "030"}, "RHET 1302", "HIST 1302", "PSY 2301", "PSY 2314"],
+      ["GOVT 2306", { "options": "040"}, "PSY 2317", "SPAU 3301", { "options": "Elective"}],
+      ["GOVT 2305", "ARTS 1301", "SPAU 3344", { "options": "Elective"}, { "options": "Elective"}],
+      ["SPAU 3303", "SPAU 3343", "SPAU 3342", "UNIV 2020", { "options": "Elective"}, { "options": "Elective"}],
+      ["SPAU 3340", "SPAU 3304", "SPAU 4308", { "options": "Elective"}, { "options": "Elective"}],
+      ["SPAU 3341", "SPAU 3388", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}],
+      ["SPAU 3345", " SPAU 4393", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}]
+    ],
+    "Criminology(BA)": [
+      ["RHET 1302", "CRIM 1301", "GOVT 2305", "ECON 2301", "MATH 1314", "EPPS 1110"],
+      [{ "options": "030"}, "CRIM 1307", "GOVT 2306", "EPPS 2302", "COMM 1311", "UNIV 1010"],
+      [{ "options": "030"}, "HIST 1301", "ARTS 1301", "EPPS 2301", { "options": "Elective"}],
+      [{ "options": "040"}, "HIST 1302", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}],
+      ["CRIM 3300", "CRIM 3302", "CRIM 3310", { "options": "Elective"}, { "options": "Elective"}],
+      ["CRIM 3301", "CRIM 3303", "CRIM 4311", { "options": "Elective"}, { "options": "Elective"}],
+      ["CRIM 3319", "CRIM 4322", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}],
+      [{ "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}]
+    ],
+    "Political Science(BA)": [
+      [{ "options": "030"}, "RHET 1302", "GOVT 2305", "MATH 1314", "EPPS 1110", "UNIV 1010", { "options": "Elective"}],
+      [{ "options": "030"}, { "options": "050"}, "GOVT 2306", "EPPS 2302", "COMM 1311"],
+      [{ "options": "040"}, { "options": "060"}, { "options": "080"}, "EPPS 2301", { "options": "Elective"}],
+      [{ "options": "060"}, "PSCI 3333", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}],
+      ["PSCI 3322", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}],
+      [{ "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}],
+      [{ "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}],
+      [{ "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}]
+    ],
+    "Public Affairs(BS)": [
+      [{ "options": "030"}, "RHET 1302", "GOVT 2305", "PA 2325", "MATH 1314", "EPPS 1110", "UNIV 1010"],
+      [{ "options": "030"}, "COMM 1311", "GOVT 2306", "ARTS 1301", "EPPS 2302"],
+      ["HIST 1301", "HUMA 1301", "EPPS 2301", "ECON 2301", { "options": "Elective"}],
+      ["HIST 1302", "PA 3310", "PA 3333", { "options": "Elective"}, { "options": "Elective"}],
+      ["PA 3306", "PA 3378", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}],
+      ["PA 3380", "PA 4355", "PA 4370", { "options": "Elective"}, { "options": "Elective"}],
+      ["PA 4390", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}],
+      [{ "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}]
+    ],
+    "Software Engineering(BS)": [
+      [{ "options": "060"}, "MATH 2413", "CS 1200", "CS 1337", "RHET 1302", "ECS 1100", "UNIV 1010"],
+      [{ "options": "060"}, "MATH 2414", "CS 2305", "CS 2336", "PHYS 2325", "PHYS 2125"],
+      [{ "options": "040"}, "GOVT 2305", "SE 3306", "SE 2340", "PHYS 2326", "PHYS 2126"],
+      ["MATH 2418", "GOVT 2306", "SE 3341", "SE 3345", "SE 3377"],
+      [{ "options": "050"}, "ECS 3390", "SE 3354", "SE 4348", { "options": "Elective"}],
+      [{ "options": "080"}, "SE 3162", "SE 4347", "SE 4352", "SE 4381", { "options": "Elective"}],
+      [{ "options": "030"}, "SE 4351", "SE 4367", "UNIV 2020", { "options": "Elective"}, { "options": "Elective"}],
+      ["SE 4485", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}]
+    ],
+    "Global Business(BS)": [
+      [{ "options": "040"}, "BLAW 2301", "MATH 1325", "HIST 1301", "RHET 1302", "BA 1100"],
+      [{ "options": "030"}, { "options": "050"}, "MATH 1326", "HIST 1302", "COMM 1311", "IMS 3100", "UNIV 1010"],
+      [{ "options": "030"}, "ACCT 2301", "ECON 2301", "GOVT 2305", "OPRE 3333"],
+      ["MKT 3330", "ACCT 2302", "ECON 2302", "GOVT 2306", "OPRE 3360"],
+      ["MKT 3300", "IMS 3310", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}],
+      ["FIN 3320", "ITSS 3300", "OBHR 3310", { "options": "Elective"}, "IMS 4090", "UNIV 2020"],
+      ["FIN 3380", "IMS 4320", "OPRE 3310", { "options": "Elective"}, { "options": "Elective"}],
+      ["BCOM 4350", "IMS 4330", "IMS 4373", { "options": "Elective"}, { "options": "Elective"}]
+    ],
+    "Healthcare Management(BS)": [
+      [{ "options": "010"}, { "options": "060"}, "MATH 1325", "BLAW 2301", "BCOM 1300", "UNIV 1010"],
+      [{ "options": "010"}, { "options": "060"}, "BA 1320", { "options": "030"}, { "options": "040"}],
+      [{ "options": "030"}, "ACCT 2301", "GOVT 2305", "BA 1310", { "options": "090"}],
+      ["ACCT 2302", "GOVT 2306", "OPRE 3360", "ITSS 3300", "HMGT 3301"],
+      [{ "options": "050"}, "FIN 3320", "MKT 3300", "HMGT 4321", { "options": "Elective"}, "UNIV 2020"],
+      ["BCOM 4300", "OPRE 3310", "OBHR 3330", "HMGT 3311", { "options": "Elective"}, "HMGT 4090"],
+      ["IMS 3310", "HMGT 3310", "HMGT 3320", { "options": "Elective"}, { "options": "Elective"}, "BA 4095"],
+      ["HMGT 4395", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}]
+    ],
+    "Human Resource Management(BS)": [
+      [{ "options": "010"}, { "options": "060"}, "MATH 1325", "BLAW 2301", "BCOM 1300", "UNIV 1010"],
+      [{ "options": "030"}, { "options": "060"}, "BA 1320", { "options": "050"}, "OBHR 3330"],
+      [{ "options": "010"}, "ACCT 2301", "GOVT 2305", "BA 1310", "BLAW 3301"],
+      ["ACCT 2302", "GOVT 2306", "OPRE 3360", "OBHR 4331", "OBHR 4333"],
+      [{ "options": "030"}, "ITSS 3300", "FIN 3320", "OBHR 4334", "OBHR 4335", "UNIV 2020"],
+      [{ "options": "090"}, "BCOM 4300", "MKT 3300", "OPRE 3310", "OBHR 4354"],
+      [{ "options": "040"}, "OBHR 3310", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, "OBHR 4090"],
+      ["IMS 3310", "OBHR 4395", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, "BA 4095"]
+    ],
+    "Actuarial Science(BS)": [
+      ["ACCT 2301", "CS 1336", "CS 1136", "MATH 2417", "RHET 1302", "NATS 1101", "UNIV 1010"],
+      ["ACCT 2302", "CS 1337", "ECON 2301", "MATH 2418", "MATH 2419"],
+      ["ACTS 4308", "ECON 2302", "BCOM 3300", "PHYS 2325", "MATH 3351", "PHYS 2126"],
+      ["STAT 3355", "COMM 1311", "HIST 1301", "ITSS 3300", "PHYS 2326"],
+      ["ARTS 1301", "GOVT 2305", "HIST 1302", "ITSS 4301", "STAT 4351"],
+      ["ACTS 4301", "ACTS 4302", "GOVT 2306", "HUMA 1301", "STAT 4352"],
+      ["ACTS 4303", "ACTS 4304", "ACTS 4307", "ACTS 4309", { "options": "Elective"}],
+      ["ACTS 4305", "MATH 2420", "MATH 4334", "STAT 4382"]
+    ],
+    "Biochemistry(BS)": [
+      ["CHEM 1311", "CHEM 1111", "HIST 1301", "MATH 2413", "COMM 1311", "NATS 1101", "UNIV 1010"],
+      ["CHEM 1312", "CHEM 1112", "HIST 1302", "MATH 2414", "PHYS 2325"],
+      ["CHEM 2323", "CHEM 2123", "BIOL 2311", "BIOL 2111", "PHYS 2326", "PHYS 2126", "RHET 1302"],
+      ["CHEM 2325", "CHEM 2125", "CHEM 2401", "PSY 2301", "MATH 2415"],
+      ["GOVT 2305", "CHEM 3321", "CHEM 3361", "CHEM 3472", "BIOL 3161"],
+      ["GOVT 2306", "CHEM 3322", "CHEM 3362", "BIOL 3380", "BIOL 3162", { "options": "Elective"}],
+      ["BIOL 3301", "BIOL 3101", "ARTS 1301", "HUMA 1301", "STAT 2332"],
+      ["BIOL 3302", "BIOL 3102", { "options": "Elective"}, { "options": "Elective"}]
+    ],
+    "Chemistry(BS)": [
+      ["CHEM 1311", "CHEM 1111", "HIST 1301", "MATH 2413", "COMM 1311", "NATS 1101", "UNIV 1010"],
+      ["CHEM 1312", "CHEM 1112", "HIST 1302", "MATH 2414", "PHYS 2325"],
+      ["CHEM 2323", "CHEM 2123", "PHYS 2326", "PHYS 2126", "MATH 2415", "RHET 1302"],
+      ["CHEM 2325", "CHEM 2125", "CHEM 2401", "PSY 2301", "MATH 2418"],
+      ["CHEM 3321", "CHEM 3472", "CHEM 3361", "BIOL 3161", "GOVT 2305"],
+      ["CHEM 3322", "CHEM 3471", { "options": "Elective"}, { "options": "Elective"}, "GOVT 2306"],
+      [{ "options": "Elective"}, { "options": "Elective"}, "ARTS 1301", "HUMA 1301", { "options": "Elective"}],
+      [{ "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}]
+    ],
+    "Mathematics(BS)": [
+      ["HIST 1301", "MATH 2417", "MATH 2370", "COMM 1311", "UNIV 1010"],
+      ["HIST 1302", "MATH 2419", "PHYS 2325", "ARTS 1301", "NATS 1101"],
+      ["GOVT 2305", "MATH 2418", "PHYS 2326", "PHYS 2126", "RHET 1302"],
+      ["GOVT 2306", "MATH 2420", "MATH 3310", "MATH 3351", "PSY 2301"],
+      ["MATH 3311", "MATH 4334", "HUMA 1301", { "options": "Elective"}, { "options": "Elective"}],
+      ["MATH 3312", "MATH 3379", { "options": "Elective"}, { "options": "Elective"}, { "options": "Elective"}],
+      ["MATH 4301", "MATH 3380", "STAT 4351", { "options": "Elective"}],
+      ["MATH 4302", "MATH 4341", { "options": "Elective"}]
+    ],
+    "Molecular Biology(BS)": [
+      ["CHEM 1311", "CHEM 1111", "HIST 1301", "MATH 2417", "COMM 1311", "NATS 1101", "UNIV 1010"],
+      ["CHEM 1312", "CHEM 1112", "HIST 1302", "MATH 2419", "PHYS 2325"],
+      ["CHEM 2323", "CHEM 2123", "BIOL 2311", "BIOL 2111", "PHYS 2326", "PHYS 2126", "RHET 1302"],
+      ["CHEM 2325", "CHEM 2125", "BIOL 2312", "BIOL 2112", "BIOL 2281", "MATH 2418"],
+      ["GOVT 2305", "BIOL 3361", "BIOL 3161", "BIOL 3301", "BIOL 3101", { "options": "Elective"}],
+      ["GOVT 2306", "BIOL 3362", "BIOL 3162", "BIOL 3380", { "options": "Elective"}, { "options": "Elective"}],
+      ["BIOL 3302", "BIOL 3102", "HUMA 1301", "PSY 2301", { "options": "Elective"}, { "options": "Elective"}],
+      ["BIOL 4380", "BIOL 4461", "ARTS 1301", { "options": "Elective"}, { "options": "Elective"}]
+    ]
+    
+  }

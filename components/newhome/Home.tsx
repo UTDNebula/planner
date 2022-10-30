@@ -1,36 +1,21 @@
 import AddIcon from '@mui/icons-material/Add';
 import { Theme } from '@mui/material';
-import { useRouter } from 'next/router';
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { makeStyles } from 'tss-react/mui';
-import { v4 as uuid } from 'uuid';
 
 import PlanCard from '../../components/home/plans/PlanCard';
-import { initialPlan } from '../../modules/planner/plannerUtils';
 import { RootState } from '../../modules/redux/store';
-import { updatePlan } from '../../modules/redux/userDataSlice';
+import TemplateModal from '../template/Modal';
 
 /**
  * A list of the user's plans
  */
 export default function PlansPage(): JSX.Element {
-  const router = useRouter();
-
-  const dispatch = useDispatch();
-
+  const [openTemplateModal, setOpenTemplateModal] = useState(false);
   // TODO: Write function to get user plans
   const { plans: userPlans } = useSelector((state: RootState) => state.userData);
   const plans = Object.values(userPlans);
-
-  const handleCreatePlan = async () => {
-    // Generate route id
-    const routeID = uuid();
-    const newPlan = initialPlan;
-    newPlan.id = routeID;
-    dispatch(updatePlan(newPlan));
-    router.push(`/app/plans/${routeID}`);
-  };
 
   const useStyles = makeStyles()((theme: Theme) => {
     return {
@@ -38,7 +23,7 @@ export default function PlansPage(): JSX.Element {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'start',
-        paddingTop: '40px',
+        // paddingTop: '40px',
         height: '100%',
         width: '100%',
         background:
@@ -50,24 +35,30 @@ export default function PlansPage(): JSX.Element {
   const { classes } = useStyles();
 
   return (
-    <main className={classes.container}>
-      <section className="grid sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-x-16 gap-y-10">
-        <h1 className="col-span-full">Plans</h1>
-        <button
-          onClick={handleCreatePlan}
-          className="col-span-full text-white rounded-xl w-32 h-12 flex justify-center items-center flex-row bg-[#3E61ED]"
-        >
-          <div className="flex flex-row">
-            <div className="text-3xl flex flex-col justify-center items-center mr-2">
-              <AddIcon fontSize="inherit" />
+    <>
+      <main className={classes.container}>
+        <section className="flex flex-col w-full h-full p-20 gap-12">
+          <h1 className="col-span-full">Plans</h1>
+          <button
+            onClick={() => setOpenTemplateModal(true)}
+            className="col-span-full text-white rounded-xl w-32 h-12 p-2 flex justify-center items-center flex-row bg-[#3E61ED]"
+          >
+            <div className="flex flex-row">
+              <div className="text-3xl flex flex-col justify-center items-center mr-2">
+                <AddIcon fontSize="inherit" />
+              </div>
+              <h4 className="mr-2">New</h4> {/* Hacky css to make it look centered */}
             </div>
-            <h4 className="mr-2">New</h4> {/* Hacky css to make it look centered */}
+          </button>
+          <div className="w-fit flex flex-wrap gap-8">
+            {plans.map((plan) => (
+              <PlanCard key={plan.id} id={plan.id} plan={plan} />
+            ))}
           </div>
-        </button>
-        {plans.map((plan) => (
-          <PlanCard key={plan.id} id={plan.id} plan={plan} />
-        ))}
-      </section>
-    </main>
+        </section>
+      </main>
+
+      {openTemplateModal && <TemplateModal setOpenTemplateModal={setOpenTemplateModal} />}
+    </>
   );
 }

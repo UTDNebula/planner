@@ -2,7 +2,7 @@
 @layer base {
   html {
     @apply text-[#1C2A6D];
-  } 
+  }
   h1 {
     @apply text-[40px] font-semibold;
   }
@@ -18,7 +18,4 @@
 }
 @tailwind components;
 
-
 @tailwind utilities;
-
-

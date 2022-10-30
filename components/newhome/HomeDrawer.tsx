@@ -135,7 +135,10 @@ export default function HomeDrawer({ children, page, setPage, isDesktop }: HomeD
               <ListItem
                 key={text}
                 disablePadding
-                sx={{ display: 'block', bgcolor: index === page ? '#E0E0E0' : undefined }}
+                sx={{
+                  display: 'block',
+                  bgcolor: index === page ? '#E0E0E0' : undefined,
+                }}
               >
                 <ListItemButton
                   onClick={() => {

@@ -773,7 +773,9 @@ export default function EnhancedTable() {
                 })}
               {emptyRows > 0 && (
                 <TableRow
-                  style={{ height: (dense ? DENSE_PADDING : NOT_DENSE_PADDING) * emptyRows }}
+                  style={{
+                    height: (dense ? DENSE_PADDING : NOT_DENSE_PADDING) * emptyRows,
+                  }}
                 >
                   <TableCell colSpan={6} />
                 </TableRow>
