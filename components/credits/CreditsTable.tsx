@@ -86,7 +86,7 @@ const CreditsTable: FC = () => {
               valueGetter: (credit) =>
                 credit.semester
                   ? `${SEMESTER_CODE_MAPPINGS[credit.semester.semester]} ${credit.semester.year}`
-                  : 'Transfered in',
+                  : 'Transferred in',
             },
           ]}
           childrenProps={{
@@ -96,9 +96,7 @@ const CreditsTable: FC = () => {
               },
             },
             gridProps: {
-              style: {
-                maxHeight: '200px',
-              },
+              style: {},
             },
             rowProps: {
               style: {
