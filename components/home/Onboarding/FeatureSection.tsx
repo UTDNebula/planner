@@ -47,8 +47,7 @@ export default function NebFeatureDisplay({ ref2 }: FeatureProps): JSX.Element {
                 variant="h1"
                 color="black"
                 fontSize="55px"
-                fontWeight="bold"
-                fontFamily="Jost"
+                fontWeight="500"
                 letterSpacing="1px"
                 paddingBottom="20px"
               >
@@ -60,67 +59,32 @@ export default function NebFeatureDisplay({ ref2 }: FeatureProps): JSX.Element {
                 textAlign="left"
                 variant="h6"
                 color="black"
-                fontWeight="bold"
-                fontFamily="Jost"
                 letterSpacing="0.5px"
                 paddingTop="10px"
               >
                 Add your existing and
               </Typography>
-              <Typography
-                variant="h6"
-                color="black"
-                fontWeight="bold"
-                fontFamily="Jost"
-                letterSpacing="0.5px"
-                paddingBottom="20px"
-              >
+              <Typography variant="h6" color="black" letterSpacing="0.5px" paddingBottom="20px">
                 transfer credits.
               </Typography>
             </Grid>
             <Grid item>
-              <Typography
-                variant="h6"
-                color="black"
-                fontWeight="bold"
-                fontFamily="Jost"
-                letterSpacing="0.5px"
-              >
+              <Typography variant="h6" color="black" letterSpacing="0.5px">
                 Build personalized degree
               </Typography>
             </Grid>
             <Grid item>
-              <Typography
-                variant="h6"
-                color="black"
-                fontWeight="bold"
-                fontFamily="Jost"
-                letterSpacing="0.5px"
-                paddingBottom="20px"
-              >
+              <Typography variant="h6" color="black" letterSpacing="0.5px" paddingBottom="20px">
                 plans.
               </Typography>
             </Grid>
             <Grid item>
-              <Typography
-                variant="h6"
-                color="black"
-                fontWeight="bold"
-                fontFamily="Jost"
-                letterSpacing="0.5px"
-              >
+              <Typography variant="h6" color="black" letterSpacing="0.5px">
                 Pin your favorite plan.
               </Typography>
             </Grid>
             <Grid item>
-              <Typography
-                variant="h6"
-                color="black"
-                fontWeight="bold"
-                fontFamily="Jost"
-                letterSpacing="0.5px"
-                paddingTop="20px"
-              >
+              <Typography variant="h6" color="black" letterSpacing="0.5px" paddingTop="20px">
                 See your progress.
               </Typography>
             </Grid>

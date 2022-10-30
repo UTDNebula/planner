@@ -10,7 +10,7 @@ export default function NebPlannerDisplay(): JSX.Element {
       direction="column"
       alignItems="center"
       justifyContent="center"
-      style={{ height: '750px' }}
+      style={{ height: '750px', marginTop: '-80px' }}
       sx={{ backgroundColor: 'white' }}
     >
       <div className="flex flex-col-2 gap-x-5">
@@ -30,7 +30,6 @@ export default function NebPlannerDisplay(): JSX.Element {
               color="#4659A7"
               fontSize="40px"
               fontWeight="bold"
-              fontFamily="Jost"
               letterSpacing="1px"
               paddingTop="15px"
             >
@@ -42,7 +41,6 @@ export default function NebPlannerDisplay(): JSX.Element {
               variant="h6"
               color="black"
               fontWeight="bold"
-              fontFamily="Jost"
               letterSpacing="0.5px"
               paddingTop="10px"
             >
@@ -54,7 +52,6 @@ export default function NebPlannerDisplay(): JSX.Element {
               variant="h6"
               color="black"
               fontWeight="bold"
-              fontFamily="Jost"
               letterSpacing="0.5px"
               paddingBottom="5px"
             >
@@ -67,7 +64,7 @@ export default function NebPlannerDisplay(): JSX.Element {
               style={{
                 borderRadius: '10px',
                 backgroundColor: '#4659A7',
-                fontFamily: 'Jost',
+
                 fontSize: '15px',
               }}
               href="/auth/signup"

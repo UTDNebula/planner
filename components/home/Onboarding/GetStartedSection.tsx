@@ -35,8 +35,7 @@ export default function NebFeatureDisplay(): JSX.Element {
             variant="h1"
             color="black"
             fontSize="55px"
-            fontWeight="bold"
-            fontFamily="Jost"
+            fontWeight="500"
             letterSpacing="1px"
             paddingBottom="20px"
             textAlign="center"
@@ -45,13 +44,7 @@ export default function NebFeatureDisplay(): JSX.Element {
           </Typography>
         </Grid>
         <Grid item sx={{ width: { md: '850px', lg: '900px' } }}>
-          <Typography
-            textAlign="center"
-            color="black"
-            fontSize="30px"
-            fontFamily="Jost"
-            letterSpacing="-0.5px"
-          >
+          <Typography textAlign="center" color="black" fontSize="30px" letterSpacing="-0.5px">
             Try Planner out and explore how our tools create your degree plan in minutes with
             minimal effort.
           </Typography>
@@ -62,7 +55,7 @@ export default function NebFeatureDisplay(): JSX.Element {
             style={{
               borderRadius: '10px',
               backgroundColor: '#4659A7',
-              fontFamily: 'Jost',
+
               fontSize: '18px',
             }}
             href="/auth/signup"

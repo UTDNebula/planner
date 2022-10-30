@@ -25,8 +25,7 @@ export default function NebFeatureDisplay(): JSX.Element {
             variant="h1"
             color="black"
             fontSize="55px"
-            fontWeight="bold"
-            fontFamily="Jost"
+            fontWeight="500"
             letterSpacing="1px"
             paddingBottom="5px"
           >
@@ -38,7 +37,6 @@ export default function NebFeatureDisplay(): JSX.Element {
             textAlign="center"
             variant="h5"
             color="black"
-            fontFamily="Jost"
             letterSpacing="-0.5px"
             paddingBottom="50px"
           >
@@ -62,14 +60,8 @@ export default function NebFeatureDisplay(): JSX.Element {
                       }}
                       href="https://github.com/UTDNebula/athena"
                     >
-                      <Typography
-                        variant="h6"
-                        textAlign="center"
-                        fontWeight="bold"
-                        fontFamily="Jost"
-                        color="black"
-                      >
-                        UTD Grades Upgrade
+                      <Typography variant="h6" textAlign="center" fontWeight="bold" color="black">
+                        Trends
                       </Typography>
                     </Button>
                   </Grid>
@@ -86,13 +78,7 @@ export default function NebFeatureDisplay(): JSX.Element {
                       }}
                       href="https://github.com/UTDNebula/nebula-api"
                     >
-                      <Typography
-                        variant="h6"
-                        textAlign="center"
-                        fontWeight="bold"
-                        fontFamily="Jost"
-                        color="black"
-                      >
+                      <Typography variant="h6" textAlign="center" fontWeight="bold" color="black">
                         Nebula API
                       </Typography>
                     </Button>
@@ -111,14 +97,8 @@ export default function NebFeatureDisplay(): JSX.Element {
                       }}
                       href="https://github.com/UTDNebula/survival-guide"
                     >
-                      <Typography
-                        variant="h6"
-                        textAlign="center"
-                        fontWeight="bold"
-                        fontFamily="Jost"
-                        color="black"
-                      >
-                        UTD Survival Guide
+                      <Typography variant="h6" textAlign="center" fontWeight="bold" color="black">
+                        Guide
                       </Typography>
                     </Button>
                   </Grid>
@@ -135,14 +115,8 @@ export default function NebFeatureDisplay(): JSX.Element {
                       }}
                       href="https://about.utdnebula.com/"
                     >
-                      <Typography
-                        variant="h6"
-                        textAlign="center"
-                        fontWeight="bold"
-                        fontFamily="Jost"
-                        color="black"
-                      >
-                        About Nebula
+                      <Typography variant="h6" textAlign="center" fontWeight="bold" color="black">
+                        Jupiter
                       </Typography>
                     </Button>
                   </Grid>

@@ -27,19 +27,14 @@ export default function DegreePlanWrapper() {
                 >
                   {[1, 2, 3].map((elem, index) => (
                     <CardContent key={index}>
-                      <Typography variant="h4" color="white" fontFamily="Jost" sx={{ mt: -2 }}>
+                      <Typography variant="h4" color="white" sx={{ mt: -2 }}>
                         Fall 2021
                       </Typography>
                       <Divider
                         sx={{ borderBottomWidth: 3, borderRadius: 2 }}
                         style={{ background: 'white' }}
                       />
-                      <Typography
-                        variant="h6"
-                        color="white"
-                        fontFamily="Jost"
-                        style={{ float: 'right' }}
-                      >
+                      <Typography variant="h6" color="white" style={{ float: 'right' }}>
                         18 hours
                       </Typography>
                       <br></br>
@@ -51,7 +46,7 @@ export default function DegreePlanWrapper() {
                           borderRadius: '10px',
                           backgroundColor: 'white',
                           color: 'black',
-                          fontFamily: 'Jost',
+
                           fontWeight: 'bold',
                           fontSize: '15px',
                         }}
@@ -65,7 +60,7 @@ export default function DegreePlanWrapper() {
                           borderRadius: '10px',
                           backgroundColor: 'white',
                           color: 'black',
-                          fontFamily: 'Jost',
+
                           fontWeight: 'bold',
                           fontSize: '15px',
                         }}
@@ -79,7 +74,7 @@ export default function DegreePlanWrapper() {
                           borderRadius: '10px',
                           backgroundColor: 'white',
                           color: 'black',
-                          fontFamily: 'Jost',
+
                           fontWeight: 'bold',
                           fontSize: '15px',
                         }}
@@ -93,7 +88,7 @@ export default function DegreePlanWrapper() {
                           borderRadius: '10px',
                           backgroundColor: 'white',
                           color: 'black',
-                          fontFamily: 'Jost',
+
                           fontWeight: 'bold',
                           fontSize: '15px',
                         }}
@@ -107,7 +102,7 @@ export default function DegreePlanWrapper() {
                           borderRadius: '10px',
                           backgroundColor: 'white',
                           color: 'black',
-                          fontFamily: 'Jost',
+
                           fontWeight: 'bold',
                           fontSize: '15px',
                         }}
@@ -121,7 +116,7 @@ export default function DegreePlanWrapper() {
                           borderRadius: '10px',
                           backgroundColor: 'white',
                           color: 'black',
-                          fontFamily: 'Jost',
+
                           fontWeight: 'bold',
                           fontSize: '15px',
                         }}
