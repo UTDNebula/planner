@@ -47,7 +47,7 @@ export default function NebFeatureDisplay(): JSX.Element {
           {learnMoreVisible && (
             <div className="flex">
               <div>
-                <Fade direction="down">
+                <Fade direction="down" triggerOnce={true}>
                   <Grid className="" item sx={{ pr: 5, mb: 3 }}>
                     <Button
                       //className="animate__animated animate_fadeIn animate_slower"
@@ -66,7 +66,7 @@ export default function NebFeatureDisplay(): JSX.Element {
                     </Button>
                   </Grid>
                 </Fade>
-                <Fade direction="left">
+                <Fade direction="left" triggerOnce={true}>
                   <Grid item>
                     <Button
                       variant="contained"
@@ -86,7 +86,7 @@ export default function NebFeatureDisplay(): JSX.Element {
                 </Fade>
               </div>
               <div>
-                <Fade direction="right">
+                <Fade direction="right" triggerOnce={true}>
                   <Grid item sx={{ mb: 3 }}>
                     <Button
                       variant="contained"
@@ -103,7 +103,7 @@ export default function NebFeatureDisplay(): JSX.Element {
                     </Button>
                   </Grid>
                 </Fade>
-                <Fade direction="up">
+                <Fade direction="up" triggerOnce={true}>
                   <Grid item>
                     <Button
                       variant="contained"
