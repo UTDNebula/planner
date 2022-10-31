@@ -6,6 +6,7 @@ const SCROLL_THRESHOLD = 0.1;
  * @property {{Element: React.ElementType; onClick: (e: React.MouseEvent) => void;}} injectedComponent - element to be injected for each row (used for utility UI like delete and update buttons)
  */
 type RowLayoutProps<T> = React.ComponentPropsWithoutRef<'li'> & {
+  onClick?: (row: T) => void;
   injectedComponent?: {
     Element: React.ElementType;
     onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>, row: T) => void;
@@ -20,6 +21,7 @@ type InternalRowLayoutProps<T> = RowLayoutProps<T> & { row?: T };
 const RowLayout = <T extends { [key: string]: unknown }>({
   row,
   children,
+  onClick: rowOnClick,
   injectedComponent: { Element: InjectedComponent, onClick } = {
     Element: () => null,
     onClick: () => ({}),
@@ -27,7 +29,11 @@ const RowLayout = <T extends { [key: string]: unknown }>({
   ...props
 }: InternalRowLayoutProps<T>) => {
   return (
-    <li className="w-full grid grid-flow-col auto-cols-fr justify-items-start relative" {...props}>
+    <li
+      className="w-full grid grid-flow-col auto-cols-fr justify-items-start relative"
+      {...props}
+      onClick={() => rowOnClick(row)}
+    >
       <>
         {children}
         <div onClick={(e) => onClick(e, row)}>
