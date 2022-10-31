@@ -1,10 +1,15 @@
-import Head from 'next/head';
-import Link from 'next/link';
-import React from 'react';
+import 'animate.css';
 
-import Footer from '../components/common/Footer';
-import ServiceName from '../components/common/ServiceName';
-import { useAuthContext } from '../modules/auth/auth-context';
+import React from 'react';
+import Scrollbars from 'react-custom-scrollbars-2';
+import { useInView } from 'react-intersection-observer';
+
+import AppBar from '../components/home/Onboarding/Appbar';
+import DisplayLogoSection from '../components/home/Onboarding/DisplayLogoSection';
+import DragAndDropSection from '../components/home/Onboarding/DragAndDropSection';
+import FeatureSection from '../components/home/Onboarding/FeatureSection';
+import GetStartedSection from '../components/home/Onboarding/GetStartedSection';
+import LearnMoreSection from '../components/home/Onboarding/LearnMoreSection';
 
 /**
  * The primary landing page for the application.
@@ -14,37 +19,43 @@ import { useAuthContext } from '../modules/auth/auth-context';
  * TODO: Make landing page more exciting!
  * TODO: also show some lightweight interactive demos since why not.
  */
+
 export default function LandingPage(): JSX.Element {
-  const { signInAsGuest } = useAuthContext();
-  const handleSignInAsGuest = () => {
-    signInAsGuest();
-  };
+  const { ref: appBarRef, inView: appBarVisible } = useInView({
+    triggerOnce: true,
+  });
+
+  const ref1 = React.useRef();
+  const ref2 = React.useRef();
+  const ref3 = React.useRef();
 
   return (
-    <div className="min-w-screen min-h-screen bg-gray-800">
-      <Head>
-        <title>Nebula Web - A Degree Planning Tool for UTD Students</title>
-        <meta
-          name="description"
-          content="Nebula Web is a tool that lets you plan out your academic career."
-        />
-      </Head>
-      <div className="p-8 bg-gray-200">
-        <div className="max-w-4xl bg-white my-16 p-8 mx-auto shadow-md rounded-md text-center">
-          <div className="text-headline4 font-bold">
-            <ServiceName />
-          </div>
-          <div className="text-headline6">Tools to help you plan out your college career.</div>
-          <div className="my-4">
-            <button className="p-2 rounded-md shadow-md hover:shadow-lg bg-secondary font-bold text-button uppercase">
-              <Link href="/auth/login">Get Started 🌌</Link>
-            </button>
-            <button onClick={handleSignInAsGuest}>Continue as Guest</button>
-          </div>
+    <div>
+      <Scrollbars style={{ height: '100vh' }}>
+        <div
+          ref={appBarRef}
+          className={`sticky top-0 z-10 ${
+            appBarVisible && 'animate__animated animate__bounce animate__slow'
+          }`}
+        >
+          <AppBar ref1={ref1} ref2={ref2} ref3={ref3} />
         </div>
-      </div>
-      {/* TODO: Implement this <MaintainerSection /> */}
-      <Footer />
+        <div ref={ref1}>
+          <DisplayLogoSection />
+        </div>
+        <div>
+          <FeatureSection ref2={ref2} />
+        </div>
+        <div>
+          <DragAndDropSection />
+        </div>
+        <div>
+          <GetStartedSection />
+        </div>
+        <div ref={ref3}>
+          <LearnMoreSection />
+        </div>
+      </Scrollbars>
     </div>
   );
 }

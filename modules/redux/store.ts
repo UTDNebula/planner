@@ -1,8 +1,8 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useMemo } from 'react';
 import { applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { PersistorOptions, persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import thunkMiddleware from 'redux-thunk';
 
 import reducers from './rootReducer';
@@ -13,7 +13,7 @@ let store;
 
 const persistConfig = {
   key: 'root',
-  storage: AsyncStorage,
+  storage: storage,
 };
 
 function initStore(initialState) {

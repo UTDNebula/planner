@@ -1,4 +1,3 @@
-import '@fontsource/roboto';
 import '../styles/globals.css';
 
 import firebase from '@firebase/app';
