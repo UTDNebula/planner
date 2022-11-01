@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import firebase from 'firebase';
 
 import { SemesterCode } from '../common/data';
 
@@ -47,27 +48,44 @@ const initialState: CreditsState = {
   credits: [],
 };
 
+const saveToFirebase = (newState: CreditsState) => {
+  const firestore = firebase.firestore();
+  const user = firebase.auth().currentUser;
+  firestore.collection('users').doc(user.uid).set(newState, { merge: true });
+};
+
 const creditsSlice = createSlice({
   name: 'credits',
   initialState,
   reducers: {
+    loadCredits: (state, { payload: loadCredits }: PayloadAction<Credit[]>) => {
+      const newCreditState = { ...state, credits: [...loadCredits] };
+      return newCreditState;
+    },
     addCredit: (state, { payload: newCredit }: PayloadAction<Credit>) => {
       // check if credits are duplicates
       if (state.credits.some((existingCredit) => areEqual(existingCredit, newCredit))) {
         return state;
       }
 
-      return { ...state, credits: [...state.credits, newCredit] };
+      const newCreditState = { ...state, credits: [...state.credits, newCredit] };
+      saveToFirebase(newCreditState);
+
+      return newCreditState;
     },
     removeCredit: (state, { payload: creditToRemove }: PayloadAction<Credit>) => {
-      return {
+      const newCreditState = {
         ...state,
         credits: state.credits.filter((credit) => !areEqual(credit, creditToRemove)),
       };
+
+      saveToFirebase(newCreditState);
+      return newCreditState;
     },
+    resetCredits: () => ({ ...initialState }),
   },
 });
 
-export const { addCredit, removeCredit } = creditsSlice.actions;
+export const { loadCredits, addCredit, removeCredit, resetCredits } = creditsSlice.actions;
 
 export default creditsSlice.reducer;
