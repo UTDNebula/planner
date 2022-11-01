@@ -1,9 +1,11 @@
 import 'animate.css';
 
 import { Button, Grid, Typography } from '@mui/material';
+import { useRouter } from 'next/router';
 import React from 'react';
 
 export default function NebFeatureDisplay(): JSX.Element {
+  const router = useRouter();
   return (
     <div
       style={{
@@ -56,9 +58,9 @@ export default function NebFeatureDisplay(): JSX.Element {
               borderRadius: '10px',
               backgroundColor: '#4659A7',
 
-              fontSize: '18px',
+              fontSize: '15px',
             }}
-            href="/auth/signup"
+            onClick={() => router.push('/auth/signup')}
           >
             GET STARTED
           </Button>
