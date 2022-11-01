@@ -197,13 +197,10 @@ export function generateSemesters(
     if (semester === SemesterCode.f) {
       year = year + 1;
       semester = SemesterCode.s;
+    } else if (semester === SemesterCode.u && onlyLong) {
+      semester = SemesterCode.f;
     } else {
-      // Semester code is either spring or summer
-      if (onlyLong || semester === SemesterCode.s) {
-        semester = SemesterCode.f;
-      } else {
-        semester = SemesterCode.u;
-      }
+      semester = SemesterCode.u;
     }
   }
   let semesterIndex = 0;
@@ -223,13 +220,10 @@ export function generateSemesters(
         if (semester === SemesterCode.f) {
           year = year + 1;
           semester = SemesterCode.s;
+        } else if (semester === SemesterCode.u && onlyLong) {
+          semester = SemesterCode.f;
         } else {
-          // Semester code is either spring or summer
-          if (onlyLong || semester === SemesterCode.s) {
-            semester = SemesterCode.f;
-          } else {
-            semester = SemesterCode.u;
-          }
+          semester = SemesterCode.u;
         }
       }
       result[semesterIndex].courses.push(course);
