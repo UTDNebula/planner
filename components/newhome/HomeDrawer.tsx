@@ -13,11 +13,8 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { CSSObject, styled, Theme } from '@mui/material/styles';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import * as React from 'react';
-
-import logo from '../../public/Nebula_Planner_Logo.png';
 
 const drawerWidth = 240;
 
@@ -113,15 +110,19 @@ export default function HomeDrawer({ children, page, setPage, isDesktop }: HomeD
     <Box sx={{ display: 'flex' }}>
       <Drawer variant="permanent" open={open}>
         <div
-          className={`flex flex-row w-full justify-center items-center pt-2 ml-0.5 ${
+          className={`flex flex-row w-full justify-center items-center pt-2  ${
             isDesktop && 'h-16'
           }`}
         >
           {open ? (
             <>
-              <Image src={logo} width="45px" height="45px" />
-              <h4 className="text-defaultText ml-1 flex-grow">Planner</h4>
-              <DrawerIconButton icon={<ChevronLeftIcon />} eventHandler={handleDrawerChange} />
+              {/* <div className='absolute mt-1 left-1'>
+                <Image src={logo} width="45px" height="45px" />
+              </div> */}
+              <h4 className="absolute left-4 text-defaultText">Planner</h4>
+              <div className="absolute right-0">
+                <DrawerIconButton icon={<ChevronLeftIcon />} eventHandler={handleDrawerChange} />
+              </div>
             </>
           ) : (
             isDesktop && (

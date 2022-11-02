@@ -84,6 +84,7 @@ export default function CourseSelector({ results, updateQuery }: CourseSelectorP
           <div ref={provided.innerRef} {...provided.droppableProps}>
             <SearchBar updateQuery={handleSearch} />
             {results.map((elm, index) => {
+              console.log(elm);
               return (
                 <Draggable key={elm.id} draggableId={elm.id} index={index}>
                   {(provided) => (
