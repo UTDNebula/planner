@@ -152,7 +152,7 @@ export default function Disclaimer({ onConsent }: DisclaimerProps): JSX.Element 
                   new features based on your input.
                 </p>
                 <p className="text-body1 py-1">
-                  For more inforation, see our{' '}
+                  For more information, see our{' '}
                   <Link href="/privacy">
                     <span className="text-blue-500 font-bold">Privacy Policy</span>
                   </Link>

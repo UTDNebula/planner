@@ -38,7 +38,7 @@ export default function PlansPage(): JSX.Element {
     <>
       <main className={classes.container}>
         <section className="flex flex-col w-full h-full p-20 gap-12">
-          <h1 className="col-span-full">Plans</h1>
+          <h1 className="col-span-full">Home</h1>
           <button
             onClick={() => setOpenTemplateModal(true)}
             className="col-span-full text-white rounded-xl w-32 h-12 p-2 flex justify-center items-center flex-row bg-[#3E61ED]"

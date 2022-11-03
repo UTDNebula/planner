@@ -188,7 +188,7 @@ export default function PageTwo({ handleChange, props, handleValidate }: Page2Pr
           )}
         </div>
         <div>
-          <h3 className="text-xl text-gray-800">Are you recieving financial aid?</h3>
+          <h3 className="text-xl text-gray-800">Are you receiving financial aid?</h3>
           <div className="flex mt-2 items-center mb-10 ">
             <button
               onClick={(event) => handleButtonChange(event, 'receivingAid', true)}
