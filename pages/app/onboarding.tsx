@@ -6,7 +6,6 @@ import { NavigationStateProps } from '../../components/onboarding/Navigation';
 import Disclaimer from '../../components/onboarding/Onboarding_Pages/disclaimer';
 import PageOne, { PageOneTypes } from '../../components/onboarding/Onboarding_Pages/pg_1';
 import PageTwo, { PageTwoTypes } from '../../components/onboarding/Onboarding_Pages/pg_2';
-import PageThree from '../../components/onboarding/Onboarding_Pages/pg_3';
 import Privacy from '../../components/onboarding/Onboarding_Pages/privacy';
 import Welcome from '../../components/onboarding/Onboarding_Pages/welcome';
 import { CreditState } from '../../components/onboarding/TransferCreditGallery';
@@ -379,16 +378,10 @@ export default function OnboardingPage(): JSX.Element {
       props={{ ...pageTwoData }}
       handleValidate={validateForm}
     ></PageTwo>,
-    <PageThree
-      key={5}
-      handleChange={setPageThreeData}
-      props={{ ...pageThreeData }}
-      handleValidate={validateForm}
-    ></PageThree>,
   ];
   const incrementPage = () => {
     setNavigationProps(page + 1);
-    if (page + 1 <= 5) {
+    if (page + 1 < 5) {
       setPage(Math.min(page + 1, jsxElem.length - 1));
     } else {
       handleSubmit();

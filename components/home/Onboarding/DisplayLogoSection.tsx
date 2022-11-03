@@ -1,9 +1,11 @@
 import 'animate.css';
 
 import { Button, Grid, Typography } from '@mui/material';
+import { useRouter } from 'next/router';
 import React from 'react';
 
 export default function NebPlannerDisplay(): JSX.Element {
+  const router = useRouter();
   return (
     <Grid
       container
@@ -67,7 +69,7 @@ export default function NebPlannerDisplay(): JSX.Element {
 
                 fontSize: '15px',
               }}
-              href="/auth/signup"
+              onClick={() => router.push('/auth/signup')}
             >
               GET STARTED
             </Button>

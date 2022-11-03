@@ -3,6 +3,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import { useAuthContext } from '../../modules/auth/auth-context';
+import { resetCredits } from '../../modules/redux/creditsSlice';
 import { resetStore } from '../../modules/redux/userDataSlice';
 import Login from './Login';
 import Signup from './Signup';
@@ -37,6 +38,7 @@ export default function AuthCard({ authState }: AuthCardProps): JSX.Element {
       .then(() => {
         // Clear user data
         dispatch(resetStore());
+        dispatch(resetCredits());
         console.debug('Succesfully signed out.');
       })
       .catch((error) => {

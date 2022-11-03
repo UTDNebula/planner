@@ -4,6 +4,7 @@ import TextField from '@mui/material/TextField';
 import React, { useState } from 'react';
 
 import DummyData from '../../data/dummy_onboarding.json';
+import Degrees from '../../data/majors.json';
 
 export interface DegreePickerProps {
   id: number;
@@ -40,7 +41,7 @@ export default function DegreePicker({
   removePicker,
 }: DegreePickerProps): JSX.Element {
   // TODO: Populate with real degree values
-  const degrees = DummyData.degrees;
+  const degrees: string[] = Degrees;
   const degreeTypes = DummyData.degreeTypes; // No need for other because med school in future
 
   // Manages if component stays rendered
@@ -113,7 +114,7 @@ export default function DegreePicker({
               </div>
               <div className="text-xs text-grey-800"> </div>
             </div>
-            <FormControl className="w-32 mb-4">
+            <FormControl className="w-40 mb-4">
               <InputLabel id="demo-simple-select-autowidth-label">Degree Type</InputLabel>
               <Select
                 labelId="demo-simple-select-autowidth-label"

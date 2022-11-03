@@ -1,8 +1,10 @@
+import firebase from 'firebase';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useAuthContext } from '../../../modules/auth/auth-context';
+import { loadCredits } from '../../../modules/redux/creditsSlice';
 import { RootState } from '../../../modules/redux/store';
 import { loadUser } from '../../../modules/redux/userDataSlice';
 
@@ -24,6 +26,25 @@ export default function Routing() {
       console.info('User has changed.', user);
       // Sync Redux & Firebase
       dispatch(loadUser(user));
+      // Handle credit syncing logic (REFACTOR THIS LATER)
+      const firestore = firebase.firestore();
+      firestore
+        .collection('users')
+        .doc(user.id)
+        .get()
+        .then((userDoc) => {
+          if (userDoc.data() !== undefined) {
+            // Return credits data
+            const userData = userDoc.data();
+            if (userData === undefined || userData.credits === undefined) {
+              dispatch(loadCredits([]));
+            } else {
+              const creditsSlice = userData.credits;
+              dispatch(loadCredits(creditsSlice));
+            }
+          }
+        });
+
       setSync(true);
     }
   }, [user]);

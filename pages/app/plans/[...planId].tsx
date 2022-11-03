@@ -51,7 +51,7 @@ export default function PlanDetailPage(): JSX.Element {
   const { planId: planQuery } = router.query;
   const planId = planQuery ? planQuery[0] : 'empty-plan';
 
-  const [warning, setWarning] = React.useState(true);
+  const [warning, setWarning] = React.useState(false);
 
   const [courseAttempts, setCourseAttempts] = React.useState<CourseAttempt[]>([]);
 

@@ -122,7 +122,7 @@ export const loadUser = createAsyncThunk<
 function saveToFirebase(id: string, data: { userDataSlice: AcademicDataState }) {
   if (id !== 'guest') {
     const firestore = firebase.firestore();
-    firestore.collection('users').doc(id).set(data);
+    firestore.collection('users').doc(id).set(data, { merge: true });
   }
 }
 const userDataSlice = createSlice({
