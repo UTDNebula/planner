@@ -38,12 +38,12 @@ export default function Disclaimer({
         <blockquote>
           <p className="text-lg">
             All the information on Nebula-Web is published in good faith and for general information
-            purposes only. As fellow UTDallas students, the Project Nebula team strives to ensure
+            purposes only. As fellow UT Dallas students, the Project Nebula team strives to ensure
             that the content on the site is up-to-date and accurate. However, please consult your
             academic advisor for official advice. We do not make any warranties about the
-            completeness, reliability and accuracy of this information. Please double Any action you
-            take upon the information on our website is strictly at your own risk. We are not liable
-            for any losses and damages in connection with the use of our website.
+            completeness, reliability and accuracy of this information. Please keep in mind that any
+            action you take upon the information on our website is strictly at your own risk. We are
+            not liable for any losses and damages in connection with the use of our website.
           </p>
         </blockquote>
       </div>

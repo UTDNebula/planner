@@ -23,9 +23,17 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
 
   const handleSubmit = () => {
     if (name !== user.name) {
-      updateName(name).then(() => {
-        alert('Name changed successfully');
-      });
+      console.log(name);
+      console.log(user.name);
+      if (name.trim() == '') {
+        updateName('?').then(() => {
+          alert('Name chbanged successfully');
+        });
+        setName('?');
+      } else
+        updateName(name).then(() => {
+          alert('Name changed successfully');
+        });
     }
   };
 
@@ -67,7 +75,10 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
               label="Name"
               variant="outlined"
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+              inputProps={{ maxLength: 40 }}
             />
             <TextField
               name="name"

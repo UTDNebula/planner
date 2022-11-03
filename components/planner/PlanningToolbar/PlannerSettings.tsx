@@ -94,6 +94,7 @@ export default function SettingsDialog({
             value={title}
             fullWidth
             onChange={(event) => setTitle(event.target.value)}
+            inputProps={{ maxLength: 15 }}
           />
           <TextField
             autoFocus
@@ -103,6 +104,7 @@ export default function SettingsDialog({
             value={major}
             fullWidth
             onChange={(event) => setMajor(event.target.value)}
+            inputProps={{ maxLength: 15 }}
           />
           <div className="col-span-2 flex justify-center items-center pt-2">
             <Button className="w-30" onClick={handleAlertOpen}>
