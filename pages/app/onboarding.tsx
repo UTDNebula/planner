@@ -427,7 +427,8 @@ export default function OnboardingPage(): JSX.Element {
             <div className="justify-start">
               <button
                 onClick={decrementPage}
-                className="mr-10 text-blue-500 hover:text-yellow-500 font-bold rounded"
+                disabled={page == 0}
+                className="mr-10 text-blue-500 hover:text-yellow-500 font-bold rounded disabled:opacity-50"
               >
                 BACK
               </button>
