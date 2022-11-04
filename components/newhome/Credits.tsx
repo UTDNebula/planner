@@ -98,7 +98,7 @@ const UploadTranscriptDialog = (props: { open: boolean; onClose: () => void }) =
                 const data = (await res.json()) as { msg: string; data: string[] };
                 console.log(data);
                 data.data.forEach((credit) => {
-                  dispatch(addCredit({ utdCourseCode: credit }));
+                  dispatch(addCredit({ utdCourseCode: credit, semester: null }));
                 });
                 onClose();
               } catch (e) {
