@@ -78,7 +78,7 @@ export default function CourseSelector({ results, updateQuery }: CourseSelectorP
   }, []);
 
   return (
-    <div className="flex flex-col overflow-hidden items-center min-h-[100vh] mx-4 max-h-[100vh] min-w-[20rem] max-w-[20rem] p-0 mt-2 overflow-y-scroll">
+    <div className="bg-white z-10 fixed flex flex-col overflow-hidden items-center min-h-[100vh] max-h-[100vh] min-w-[20rem] max-w-[20rem] p-0 mt-2 overflow-y-scroll">
       <Droppable key={'selector'} droppableId={'selector'} isDropDisabled={true}>
         {(provided) => (
           <div ref={provided.innerRef} {...provided.droppableProps}>

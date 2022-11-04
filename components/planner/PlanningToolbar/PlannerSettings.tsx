@@ -20,6 +20,7 @@ export type SettingsDialogProps = {
   isOpen: boolean;
   setOpen: (isOpen: boolean) => void;
   updatePlanTitle: (title: string) => void;
+  updateSemesters: (semesters: Semester[]) => void;
 };
 
 /**
@@ -47,6 +48,7 @@ export default function SettingsDialog({
   isOpen,
   setOpen,
   updatePlanTitle,
+  updateSemesters,
 }: SettingsDialogProps) {
   const { plans } = useSelector((state: RootState) => state.userData);
   const plan = plans[planId];
@@ -104,7 +106,16 @@ export default function SettingsDialog({
 
     // TODO: Someone plz refactor this terrible code
     // Remove all summer if summer marked as not valid
-    oldSem = oldSem.filter((sem, idx) => sem.code[sem.code.length - 1] !== 'u');
+    if (!includeSummer) {
+      oldSem = oldSem.filter((sem, idx) => sem.code[sem.code.length - 1] !== 'u');
+    }
+
+    const oldSemMap: Record<string, Semester> = {};
+
+    // Turn into hashmap
+    for (let idx = 0; idx < oldSem.length; idx++) {
+      oldSemMap[oldSem[idx].title] = oldSem[idx];
+    }
 
     for (let i = startIdx; i <= endIdx; i++) {
       // Check if summer permitted
@@ -114,8 +125,8 @@ export default function SettingsDialog({
       ) {
         console.log('HI');
       } else {
-        if (oldSem.length > 0 && generatedSemesters[i].title === oldSem[0].title) {
-          newSem.push(oldSem.splice(0, 1)[0]);
+        if (generatedSemesters[i].title in oldSemMap) {
+          newSem.push(oldSemMap[generatedSemesters[i].title]);
         } else {
           newSem.push(generatedSemesters[i]);
         }
@@ -125,10 +136,9 @@ export default function SettingsDialog({
     newPlan.semesters = newSem;
 
     dispatch(updatePlan(newPlan));
+    updateSemesters(newSem);
     updatePlanTitle(title);
     setOpen(false);
-    // TODO: REMOVE WHEN YOU FIX THIS AWFUL STATE MANAGEMENT
-    window.location.reload();
   };
 
   // Open

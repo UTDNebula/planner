@@ -113,7 +113,7 @@ export default function PlanDetailPage(): JSX.Element {
   const { classes } = useStyles();
 
   const content = (
-    <div className="relative overflow-x-hidden">
+    <div className="relative">
       <PlannerContainer
         items={semesters}
         onDragEnd={handleOnDragEnd}
@@ -143,7 +143,7 @@ export default function PlanDetailPage(): JSX.Element {
         onClose={() => setShowValidation(false)}
         plan={plan}
       />
-      <div className="flex flex-col h-full overflow-x-hidden overflow-y-auto">
+      <div className="flex flex-col h-screen overflow-y-hidden">
         <div className="flex-none">
           {err !== undefined && ErrorMessage(err)}
           <PlanningToolbar
@@ -154,6 +154,7 @@ export default function PlanDetailPage(): JSX.Element {
             shouldShowTabs={shouldShowTabs}
             onTabChange={handleTabChange}
             onValidate={openValidationModal}
+            updateSemesters={updateSemesters}
             onExportPlan={() => {
               console.log('Exporting plan');
               exportPlan(plan);
@@ -163,9 +164,7 @@ export default function PlanDetailPage(): JSX.Element {
             }}
           />
         </div>
-        <div className="flex-1">
-          <div className="">{content}</div>
-        </div>
+        <div className="flex-1">{content}</div>
       </div>
       {warning && (
         <WarningMessageModal
@@ -204,6 +203,9 @@ const ValidationDialog = (props: { open: boolean; onClose: () => void; plan: Stu
       bypasses: [],
       degree: 'computer_science_ug',
     };
+
+    body.courses = body.courses.filter((course) => course.name !== '');
+
     const res = (await (
       await fetch(`${process.env.NEXT_PUBLIC_VALIDATION_SERVER}/validate-degree-plan`, {
         method: 'POST',
