@@ -8,14 +8,15 @@ import { SemesterCode } from '../common/data';
  */
 
 /**
- * **A credit is considered transfer if its semester is undefined**
+ * **A credit is considered transfer if its semester is null** \
+ * **Firebase does not support 'undefined'
  */
 export type Credit = {
   utdCourseCode: string;
-  semester?: {
+  semester: {
     year: number;
     semester: SemesterCode;
-  };
+  } | null;
 };
 
 /**
@@ -25,11 +26,11 @@ export type Credit = {
  * - if they are both UTD credits and have the same semester
  */
 const areEqual = (credit1: Credit, credit2: Credit) => {
-  if (typeof credit1.semester !== typeof credit2.semester) {
+  if ((!credit1.semester && credit2.semester) || (credit1.semester && !credit2.semester)) {
     return false;
   }
 
-  if (typeof credit1.semester === 'undefined' && typeof credit2.semester === 'undefined') {
+  if (!credit1.semester && !credit2.semester) {
     return credit1.utdCourseCode === credit2.utdCourseCode;
   }
 

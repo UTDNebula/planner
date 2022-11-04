@@ -21,7 +21,7 @@ type InternalRowLayoutProps<T> = RowLayoutProps<T> & { row?: T };
 const RowLayout = <T extends { [key: string]: unknown }>({
   row,
   children,
-  onClick: rowOnClick,
+  onClick: rowOnClick = () => ({}),
   injectedComponent: { Element: InjectedComponent, onClick } = {
     Element: () => null,
     onClick: () => ({}),
