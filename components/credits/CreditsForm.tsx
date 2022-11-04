@@ -40,7 +40,7 @@ const CreditsForm: FC = () => {
       dispatch(
         addCredit({
           utdCourseCode: credit,
-          semester: isTransfer ? undefined : convertSemesterToData(semester),
+          semester: isTransfer ? null : convertSemesterToData(semester),
         }),
       );
     }
