@@ -133,8 +133,9 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
           <h1>Delete My Account</h1>
           <div className="text-sm ">Deleting your account will remove all user data</div>
           <button
+            disabled={true} // temporary measure for beta
             onClick={() => console.log('Hi')}
-            className="mt-5 text-white justify-center items-center w-20 h-8 flex p-4 bg-[#FF0041] rounded-xl"
+            className="mt-5 text-white justify-center items-center w-20 h-8 flex p-4 bg-[#FF0041] disabled:opacity-40 rounded-xl"
           >
             Delete
           </button>
