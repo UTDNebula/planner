@@ -31,10 +31,13 @@ export default function PlannerContainer({
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="relative flex flex-row overflow-x-scroll">
         <CourseSelector results={results} updateQuery={updateQuery} />
-        {items.map((item) => (
-          <SemesterContainer key={item.code} item={item} removeCourse={removeCourse} />
-        ))}
-        {children}
+        <div className="mr-80"></div>
+        <div className="flex flex-row overflow-y-scroll h-full">
+          {items.map((item) => (
+            <SemesterContainer key={item.code} item={item} removeCourse={removeCourse} />
+          ))}
+          {children}
+        </div>
       </div>
     </DragDropContext>
   );

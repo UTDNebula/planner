@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import { makeStyles } from 'tss-react/mui';
 
 import { useAuthContext } from '../../../modules/auth/auth-context';
-import { createSamplePlan } from '../../../modules/common/data';
+import { createSamplePlan, Semester } from '../../../modules/common/data';
 import { RootState } from '../../../modules/redux/store';
 import UserDegreePlanPDF from '../GeneratePDF/GeneratePDF';
 import SettingsDialog from './PlannerSettings';
@@ -79,6 +79,7 @@ interface PlanningToolbarProps {
    * @param event The React form event called when the selected plan is changed.
    */
   onImportPlan?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  updateSemesters: (semesters: Semester[]) => void;
 }
 
 /**
@@ -94,6 +95,7 @@ export default function PlanningToolbar({
   onImportPlan = () => undefined,
   onExportPlan = () => undefined,
   onValidate = () => undefined,
+  updateSemesters,
 }: PlanningToolbarProps) {
   const { signOut, user } = useAuthContext();
 
@@ -171,6 +173,7 @@ export default function PlanningToolbar({
         isOpen={dialog}
         setOpen={setDialog}
         updatePlanTitle={setPlanTitle}
+        updateSemesters={updateSemesters}
       />
     </AppBar>
   );

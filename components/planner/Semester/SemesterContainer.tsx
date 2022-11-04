@@ -14,7 +14,7 @@ export default function SemesterContainer({ item, removeCourse }: SemesterContai
       {(provided) => (
         <div
           ref={provided.innerRef}
-          className="inline-block w-[19rem]"
+          className="inline-block w-[19rem] h-screen"
           {...provided.droppableProps}
         >
           <div className="m-2 p-2 w-[18rem] bg-white rounded-md border-gray-200 border-2">
@@ -43,6 +43,7 @@ export default function SemesterContainer({ item, removeCourse }: SemesterContai
                 </Draggable>
               );
             })}
+            <div className="h-32"></div>
             {provided.placeholder}
           </div>
         </div>
