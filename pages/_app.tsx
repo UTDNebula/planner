@@ -5,10 +5,12 @@ import { createTheme, StyledEngineProvider, ThemeProvider } from '@mui/material/
 import { AnimateSharedLayout } from 'framer-motion';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
+import BetaBanner from '../components/BetaBanner';
 import { AuthProvider } from '../modules/auth/auth-context';
 import { useStore } from '../modules/redux/store';
 
@@ -73,6 +75,9 @@ export default function NebulaApp({ Component, pageProps }: AppProps): JSX.Eleme
   // manually resume persistence, see: https://github.com/UTDNebula/planner/issues/80
   useEffect(persistor.persist, []);
 
+  const router = useRouter();
+  // alert(router.pathname);
+
   return (
     <AuthProvider>
       <Head>
@@ -101,6 +106,7 @@ export default function NebulaApp({ Component, pageProps }: AppProps): JSX.Eleme
           <AnimateSharedLayout>
             <StyledEngineProvider injectFirst>
               <ThemeProvider theme={theme}>
+                {!router.pathname.startsWith('/auth') && <BetaBanner />}
                 <Component {...pageProps} />
               </ThemeProvider>
             </StyledEngineProvider>
