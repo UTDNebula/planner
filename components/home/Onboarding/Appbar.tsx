@@ -36,12 +36,12 @@ export default function ResponsiveAppBar({ ref1, ref2, ref3 }: Props): JSX.Eleme
         backgroundColor: 'rgb(216,212,236)',
         boxShadow: 'none',
         height: '80px',
-        display: { xs: 'none', md: 'flex' },
+        display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
+        placeContent: { xs: 'center', md: 'inherit' },
         zIndex: '999',
-        paddingLeft: '70px',
-        paddingRight: '70px',
+        px: { xs: 'auto', sm: '70px' },
       }}
     >
       {pages.map((page) => (
@@ -53,7 +53,7 @@ export default function ResponsiveAppBar({ ref1, ref2, ref3 }: Props): JSX.Eleme
           sx={{
             marginRight: '30px',
             color: 'black',
-            display: 'block',
+            display: { xs: 'none', sm: 'block' },
             textTransform: 'none',
             fontSize: '20px',
             letterSpacing: '-0.25px',
@@ -62,7 +62,7 @@ export default function ResponsiveAppBar({ ref1, ref2, ref3 }: Props): JSX.Eleme
           {page}
         </Button>
       ))}
-      <div className="flex-grow"></div>
+      <div className="sm:flex-grow"></div>
 
       <div className="flex flex-row space-x-5">
         <Button

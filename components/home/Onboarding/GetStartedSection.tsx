@@ -26,7 +26,7 @@ export default function NebFeatureDisplay(): JSX.Element {
         }}
       ></div>
       <Grid
-        sx={{ height: '70vh' }}
+        sx={{ height: '70vh', px: '10px' }}
         container
         direction="column"
         alignItems="center"
@@ -36,7 +36,7 @@ export default function NebFeatureDisplay(): JSX.Element {
           <Typography
             variant="h1"
             color="black"
-            fontSize="55px"
+            fontSize={{ xs: '40px', sm: '55px' }}
             fontWeight="500"
             letterSpacing="1px"
             paddingBottom="20px"
@@ -46,7 +46,12 @@ export default function NebFeatureDisplay(): JSX.Element {
           </Typography>
         </Grid>
         <Grid item sx={{ width: { md: '850px', lg: '900px' } }}>
-          <Typography textAlign="center" color="black" fontSize="30px" letterSpacing="-0.5px">
+          <Typography
+            textAlign="center"
+            color="black"
+            fontSize={{ xs: '18px', sm: '30px' }}
+            letterSpacing="-0.5px"
+          >
             Try Planner out and explore how our tools create your degree plan in minutes with
             minimal effort.
           </Typography>
