@@ -86,7 +86,12 @@ const UploadTranscriptDialog = (props: { open: boolean; onClose: () => void }) =
               try {
                 setError(null);
                 e.preventDefault();
-                if (loading || !file) return;
+
+                if (loading) return;
+                if (!file) {
+                  setError('Must upload file');
+                  return;
+                }
                 setLoading(true);
                 const formData = new FormData();
                 formData.append('file', file);
@@ -112,7 +117,10 @@ const UploadTranscriptDialog = (props: { open: boolean; onClose: () => void }) =
               type="file"
               name={'file'}
               accept="application/pdf"
-              onChange={(e) => setFile(e.target.files[0])}
+              onChange={(e) => {
+                setFile(e.target.files[0]);
+                setError(undefined);
+              }}
             />
             <Button type="submit">Upload</Button>
           </form>
