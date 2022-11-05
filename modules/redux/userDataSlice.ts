@@ -3,7 +3,7 @@ import firebase from 'firebase';
 
 import { OnboardingFormData } from '../../pages/app/onboarding';
 import { CourseAttempt, ServiceUser, users } from '../auth/auth-context';
-import { createSampleOnboarding, createSamplePlan, StudentPlan } from '../common/data';
+import { createSampleOnboarding, StudentPlan } from '../common/data';
 
 /**
  * Manages user plans
@@ -37,8 +37,6 @@ export interface UserState {
  */
 export type AcademicDataState = PlannerDataState & CourseHistoryState & UserState;
 
-const samplePlan = createSamplePlan();
-
 const sampleOnboarding = createSampleOnboarding();
 
 // Default data for application & guest users
@@ -46,9 +44,7 @@ const initialState: AcademicDataState = {
   onboarding: sampleOnboarding,
   doneOnboarding: false,
   user: users.unauthenticated,
-  plans: {
-    [samplePlan.id]: samplePlan,
-  },
+  plans: {},
   courses: [],
 };
 
