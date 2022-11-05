@@ -24,7 +24,7 @@ export default function NebFeatureDisplay(): JSX.Element {
             textAlign="center"
             variant="h1"
             color="black"
-            fontSize="55px"
+            fontSize={{ xs: '40px', sm: '55px' }}
             fontWeight="500"
             letterSpacing="1px"
             paddingBottom="5px"
@@ -39,6 +39,7 @@ export default function NebFeatureDisplay(): JSX.Element {
             color="black"
             letterSpacing="-0.5px"
             paddingBottom="50px"
+            fontSize={{ xs: '18px', sm: '30px' }}
           >
             Check out the other Project Nebula tools!
           </Typography>

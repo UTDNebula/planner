@@ -15,7 +15,7 @@ export default function NebPlannerDisplay(): JSX.Element {
       style={{ height: '750px', marginTop: '-80px' }}
       sx={{ backgroundColor: 'white' }}
     >
-      <div className="flex flex-col-2 gap-x-5">
+      <div className="flex flex-col sm:flex-row place-items-center sm:place-items-auto gap-x-5">
         <div>
           <Grid item>
             <img
