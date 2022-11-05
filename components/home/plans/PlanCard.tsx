@@ -8,7 +8,7 @@ export type PlanCardProps = {
 };
 
 export default function PlanCard({ id, plan }: PlanCardProps) {
-  const { title } = plan;
+  const { title, major } = plan;
 
   const handlePlanClick = () => {
     router.push(`/app/plans/${id}`);
@@ -19,7 +19,7 @@ export default function PlanCard({ id, plan }: PlanCardProps) {
       className="bg-white max-w-[300px] w-full text-left py-2 flex flex-col px-8 justify-center rounded-2xl shadow-2xl"
     >
       <h4>{title}</h4>
-      <p>B.S. in Computer Science</p>
+      <p>{major}</p>
     </button>
   );
 }
