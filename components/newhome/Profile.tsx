@@ -27,7 +27,7 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
       console.log(user.name);
       if (name.trim() == '') {
         updateName('?').then(() => {
-          alert('Name chbanged successfully');
+          alert('Name changed successfully');
         });
         setName('?');
       } else
