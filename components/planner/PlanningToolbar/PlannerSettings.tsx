@@ -14,6 +14,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { generateSemesters, Semester, SemesterCode } from '../../../modules/common/data';
 import { RootState } from '../../../modules/redux/store';
 import { deletePlan, updatePlan } from '../../../modules/redux/userDataSlice';
+import SearchBar from '../../credits/AutoCompleteSearchBar';
+import useSearch from '../../search/search';
 
 export type SettingsDialogProps = {
   planId: string;
@@ -38,6 +40,11 @@ function returnMenuItems<MenuItem>(menuOptions: string[]) {
     </MenuItem>
   ));
 }
+
+const getAllMajors = async (): Promise<string[]> => {
+  const data = await import('../../../data/degree_template.json');
+  return Object.keys(data) as string[];
+};
 
 /**
  * Component that allows the user to change their plan settings.
@@ -158,6 +165,12 @@ export default function SettingsDialog({
     setAlertOpen(false);
   };
 
+  const { results, updateQuery } = useSearch({
+    getData: getAllMajors,
+    initialQuery: major,
+    filterFn: (elm, query) => elm.toLowerCase().includes(query.toLowerCase()),
+  });
+
   return (
     <div>
       <Dialog maxWidth="xl" open={isOpen} onClose={handleClose} aria-labelledby="form-dialog-title">
@@ -176,15 +189,13 @@ export default function SettingsDialog({
             onChange={(event) => setTitle(event.target.value)}
             inputProps={{ maxLength: 15 }}
           />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Major"
-            value={major}
-            fullWidth
-            onChange={(event) => setMajor(event.target.value)}
-            inputProps={{ maxLength: 15 }}
+          <SearchBar
+            defaultValue={major}
+            onValueChange={(value) => setMajor(value)}
+            onInputChange={(query) => updateQuery(query)}
+            options={results}
+            style={{ maxWidth: '450px', minWidth: '350px' }}
+            placeholder={'Major'}
           />
           <FormControl variant="outlined">
             <InputLabel id="demo-simple-select-autowidth-label">Starting Semester</InputLabel>
