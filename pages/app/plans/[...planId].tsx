@@ -100,6 +100,22 @@ export default function PlanDetailPage(): JSX.Element {
     updateSemesters(newPlan.semesters);
   };
 
+  const updateOverride = (id: string) => {
+    // Find course & update it
+    const newSemesters = semesters.map((semester) => {
+      const newCourses = semester.courses.map((course, idx) => {
+        if (course.id === id) {
+          if (course.validation.override === false)
+            return { ...course, validation: { isValid: true, override: true } };
+          else return { ...course, validation: { isValid: false, override: false } };
+        }
+        return course;
+      });
+      return { ...semester, courses: newCourses };
+    });
+    updateSemesters(newSemesters);
+  };
+
   // TODO: Maybe integrate this with current degree planner
   // if not, then remove
   const navSemesters = plan.semesters;
@@ -120,6 +136,7 @@ export default function PlanDetailPage(): JSX.Element {
         results={results}
         updateQuery={updateQuery}
         removeCourse={removeItemFromList}
+        updateOverride={updateOverride}
       >
         <div className={classes.fabContainer}>
           <Fab color="primary" onClick={() => addSemester()} className={classes.fab}>
