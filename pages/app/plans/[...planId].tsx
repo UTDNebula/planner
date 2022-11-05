@@ -143,7 +143,7 @@ export default function PlanDetailPage(): JSX.Element {
         onClose={() => setShowValidation(false)}
         plan={plan}
       />
-      <div className="flex flex-col h-screen overflow-y-hidden">
+      <div className="flex flex-col h-[90vh] overflow-y-hidden">
         <div className="flex-none">
           {err !== undefined && ErrorMessage(err)}
           <PlanningToolbar
