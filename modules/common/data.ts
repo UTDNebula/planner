@@ -12,8 +12,8 @@ export interface Course {
   catalogCode: string;
   description: string;
   creditHours: number;
-  prerequisites: string;
-  validation: { isValid: boolean; override: boolean };
+  prerequisites?: string;
+  validation?: { isValid: boolean; override: boolean };
 }
 
 /**

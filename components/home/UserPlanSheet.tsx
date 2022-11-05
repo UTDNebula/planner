@@ -4,9 +4,7 @@ import Link from 'next/link';
 import React from 'react';
 
 import { useAuthContext } from '../../modules/auth/auth-context';
-import { Course } from '../../modules/common/data';
 import useUserPlanData from '../../modules/redux/userPlanData';
-import CourseCard from '../common/CourseCard';
 /**
  * Component props for a UserPlanSheet.
  */
@@ -27,21 +25,21 @@ interface UserPlanSheetProps {
  *
  * @param courses The courses to display
  */
-function CourseList(courses: Course[]): JSX.Element[] {
-  return courses.map(({ id, catalogCode, title, description, creditHours }) => {
-    return (
-      <CourseCard
-        id={id}
-        key={id}
-        code={catalogCode}
-        title={title}
-        description={description}
-        creditHours={creditHours}
-        enabled={false}
-      />
-    );
-  });
-}
+// function CourseList(courses: Course[]): JSX.Element[] {
+//   return courses.map(({ id, catalogCode, title, description, creditHours }) => {
+//     return (
+//       <CourseCard
+//         id={id}
+//         key={id}
+//         code={catalogCode}
+//         title={title}
+//         description={description}
+//         creditHours={creditHours}
+//         enabled={false}
+//       />
+//     );
+//   });
+// }
 
 /**
  * A sheet that displays the current semester and upcoming semesters.
@@ -79,7 +77,7 @@ export default function UserPlanSheet({ isOpen, onExpandClick }: UserPlanSheetPr
             <header className="px-4 py-2 mx-2 mt-2 border-gray-200 border rounded-md">
               <span className="text-subtitle1 font-bold">{currentSemester.title}</span>
             </header>
-            <div className="px-2">{CourseList(currentSemester.courses)}</div>
+            {/* <div className="px-2">{CourseList(currentSemester.courses)}</div> */}
           </div>
         </div>
         <div className="p-2 flex-1">
@@ -101,7 +99,7 @@ export default function UserPlanSheet({ isOpen, onExpandClick }: UserPlanSheetPr
                     <header className="px-4 py-2 mx-2 mt-2 border-gray-200 border rounded-md">
                       <span className="text-subtitle1 font-bold">{semester.title}</span>
                     </header>
-                    <div className="px-2">{CourseList(semester.courses)}</div>
+                    {/* <div className="px-2">{CourseList(semester.courses)}</div> */}
                   </div>
                 </div>
               );
