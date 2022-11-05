@@ -13,7 +13,7 @@ export default function AuthPage(): JSX.Element {
   return (
     <>
       {/* <MarketingHeader /> */}
-      <div className="h-screen bg-gradient-to-r from-purple-500 to-blue-500 relative flex flex-col space-y-10 justify-center items-center">
+      <div className="relative flex flex-col items-center justify-center h-screen space-y-10 bg-gradient-to-r from-purple-500 to-blue-500">
         <section>
           <AuthCard authState={state as string} />
         </section>
