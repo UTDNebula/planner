@@ -19,6 +19,8 @@ import * as React from 'react';
 const drawerWidth = 240;
 
 const openedMixin = (theme: Theme): CSSObject => ({
+  position: 'relative',
+  height: '100%',
   width: drawerWidth,
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
@@ -28,6 +30,7 @@ const openedMixin = (theme: Theme): CSSObject => ({
 });
 
 const closedMixin = (theme: Theme): CSSObject => ({
+  position: 'relative',
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -107,7 +110,8 @@ export default function HomeDrawer({ children, page, setPage, isDesktop }: HomeD
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    // - 50px for banner, see BetaBanner.tsx
+    <Box sx={{ display: 'flex', width: '100%', height: 'calc(100vh - 50px)' }}>
       <Drawer variant="permanent" open={open}>
         <div
           className={`flex flex-row w-full justify-center items-center pt-2  ${
