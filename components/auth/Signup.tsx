@@ -61,7 +61,7 @@ function TabPanel(props: TabPanelProps) {
  * A dialog that exposes different sign-in/sign-up methods.
  */
 export default function AuthCard(): JSX.Element {
-  const { signUpWithEmail } = useAuthContext();
+  const { signUpWithEmail, signInWithGoogle } = useAuthContext();
 
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
