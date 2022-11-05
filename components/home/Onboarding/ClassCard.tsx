@@ -30,90 +30,25 @@ export default function DegreePlanWrapper() {
                 </Typography>
                 <br></br>
                 <br></br>
-                <Button
-                  sx={{ mt: -2, mr: 2.6, mb: 1, py: 0, px: 3 }}
-                  variant="contained"
-                  style={{
-                    borderRadius: '10px',
-                    backgroundColor: 'white',
-                    color: 'black',
+                <div className="gap-x-2">
+                  {[1, 2, 3, 4, 5, 6].map((index) => (
+                    <Button
+                      key={index}
+                      sx={{ py: 0, px: 3, mx: 1, my: 1 }}
+                      variant="contained"
+                      style={{
+                        borderRadius: '10px',
+                        backgroundColor: 'white',
+                        color: 'black',
 
-                    fontWeight: 'bold',
-                    fontSize: '15px',
-                  }}
-                >
-                  CS 1336
-                </Button>
-                <Button
-                  sx={{ mt: -2, mr: 2.6, mb: 1, py: 0, px: 3 }}
-                  variant="contained"
-                  style={{
-                    borderRadius: '10px',
-                    backgroundColor: 'white',
-                    color: 'black',
-
-                    fontWeight: 'bold',
-                    fontSize: '15px',
-                  }}
-                >
-                  CS 1336
-                </Button>
-                <Button
-                  sx={{ mt: -2, mr: 0, mb: 1, py: 0, px: 3 }}
-                  variant="contained"
-                  style={{
-                    borderRadius: '10px',
-                    backgroundColor: 'white',
-                    color: 'black',
-
-                    fontWeight: 'bold',
-                    fontSize: '15px',
-                  }}
-                >
-                  CS 1336
-                </Button>
-                <Button
-                  sx={{ mr: 2.6, mb: 1, py: 0, px: 3 }}
-                  variant="contained"
-                  style={{
-                    borderRadius: '10px',
-                    backgroundColor: 'white',
-                    color: 'black',
-
-                    fontWeight: 'bold',
-                    fontSize: '15px',
-                  }}
-                >
-                  CS 1336
-                </Button>
-                <Button
-                  sx={{ mr: 2.6, mb: 1, py: 0, px: 3 }}
-                  variant="contained"
-                  style={{
-                    borderRadius: '10px',
-                    backgroundColor: 'white',
-                    color: 'black',
-
-                    fontWeight: 'bold',
-                    fontSize: '15px',
-                  }}
-                >
-                  CS 1336
-                </Button>
-                <Button
-                  sx={{ mr: 0, mb: 1, py: 0, px: 3 }}
-                  variant="contained"
-                  style={{
-                    borderRadius: '10px',
-                    backgroundColor: 'white',
-                    color: 'black',
-
-                    fontWeight: 'bold',
-                    fontSize: '15px',
-                  }}
-                >
-                  CS 1336
-                </Button>
+                        fontWeight: 'bold',
+                        fontSize: '15px',
+                      }}
+                    >
+                      CS 1336
+                    </Button>
+                  ))}
+                </div>
               </CardContent>
             ))}
           </div>
