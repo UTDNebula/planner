@@ -37,8 +37,7 @@ export default function TemplateModal({ setOpenTemplateModal }: TemplateModalPro
   const handleTemplateCreation = async (major: string) => {
     console.log({ major });
     if (major === 'empty') {
-      const newPlan: StudentPlan = dummyPlan;
-      newPlan.id = uuid();
+      const newPlan: StudentPlan = { ...dummyPlan, id: uuid() };
       dispatch(updatePlan(newPlan));
       return router.push(`/app/plans/${newPlan.id}`);
     }
