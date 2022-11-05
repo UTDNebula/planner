@@ -2,6 +2,7 @@ import React from 'react';
 import { DropResult } from 'react-beautiful-dnd';
 import { v4 as uuid } from 'uuid';
 
+import rawPrereqMap from '../../../data/prereqMap';
 import { Course, Semester, SEMESTER_CODE_MAPPINGS } from '../../common/data';
 import { getRecentSemesterMetadata, getUpdatedSemesterData, reorderList } from '../plannerUtils';
 
@@ -89,7 +90,6 @@ export function usePlannerContainer(
    * have implemented the functionality of this function
    */
   const addItemToList = (sourceIndex: number, destinationId: string, destinationIndex: number) => {
-    const semesters = lists.semesters;
     const results = getResults();
     const course = JSON.parse(JSON.stringify(results[sourceIndex]));
     course.id = uuid();
@@ -102,7 +102,7 @@ export function usePlannerContainer(
       ...newSemesters[destinationId],
       courses: clonedDestination,
     };
-    setLists({ semesters: newSemesters });
+    updateSemesters(Object.values(newSemesters));
   };
 
   /**
@@ -117,9 +117,7 @@ export function usePlannerContainer(
     semester.courses.splice(courseIndex, 1);
     newSemesters[droppableId] = semester;
 
-    setLists({
-      semesters: newSemesters,
-    });
+    updateSemesters(Object.values(newSemesters));
   };
 
   /**
@@ -142,9 +140,7 @@ export function usePlannerContainer(
       ...sourceSemester,
       courses: items,
     };
-    setLists({
-      semesters: newSemesters,
-    });
+    updateSemesters(Object.values(newSemesters));
   };
 
   /**
@@ -183,9 +179,7 @@ export function usePlannerContainer(
       courses: clonedDestination,
     };
 
-    setLists({
-      semesters: newSemesters,
-    });
+    updateSemesters(Object.values(newSemesters));
   };
 
   /**
@@ -234,8 +228,69 @@ export function usePlannerContainer(
    * If using <string, Semester> use setLists
    */
   const updateSemesters = (newSemesters: Semester[]) => {
+    // Perform validation here
+
+    const coursesTaken = [];
+
+    const prereqMap = rawPrereqMap[0];
+
+    const validatedSemesters: Semester[] = newSemesters.map((semester, semIdx) => {
+      const newCourses = semester.courses.map((course) => {
+        // Add to courses taken set
+        coursesTaken.push(course.catalogCode);
+        // Ignore if override
+        if (course.validation.override) {
+          return course;
+        }
+        // Get prereq
+        const rawReqs: Record<string, string> =
+          prereqMap[course.catalogCode.toLowerCase().replace(/\s/g, '')];
+
+        if (course.catalogCode === 'CS 3345') {
+          console.log('HI');
+        }
+
+        if (rawReqs === undefined) {
+          // Return if no prereq
+          return { ...course, validation: { isValid: true, override: false } };
+        } else if (Object.values(rawReqs)[0].includes('SPX')) {
+          return { ...course, validation: { isValid: false, override: false } };
+        }
+
+        // Parse prereq into reqs
+        const reqs = Object.values(rawReqs)[0].split('and');
+        let counter = 0;
+
+        // Check if it succeeds
+
+        if (Object.keys(rawReqs)[0].includes('Pre')) {
+          reqs.forEach((req) => {
+            if (coursesTaken.some((course) => req.includes(course))) {
+              counter += 1;
+            }
+          });
+        }
+
+        if (Object.keys(rawReqs)[0].includes('Co')) {
+          reqs.forEach((req) => {
+            if (semester.courses.some((course) => req.includes(course.catalogCode))) {
+              counter += 1;
+            }
+          });
+        }
+
+        if (counter >= reqs.length)
+          return { ...course, validation: { isValid: true, override: false } };
+
+        return { ...course, validation: { isValid: false, override: false } };
+
+        // reqs.every(())
+      });
+      return { ...semester, courses: newCourses };
+    });
+
     setLists({
-      semesters: newSemesters.reduce((acc, semester) => {
+      semesters: validatedSemesters.reduce((acc, semester) => {
         acc[semester.code] = semester;
         return acc;
       }, {}),

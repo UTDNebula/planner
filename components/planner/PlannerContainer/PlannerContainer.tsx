@@ -11,6 +11,7 @@ interface PlannerContainerProps {
   results: any[];
   updateQuery: (query: string) => void;
   removeCourse: (courseId: string, droppableId: string) => void;
+  updateOverride: (id: string) => void;
 }
 
 /**
@@ -26,6 +27,7 @@ export default function PlannerContainer({
   updateQuery,
   children,
   removeCourse,
+  updateOverride,
 }: React.PropsWithChildren<PlannerContainerProps>) {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
@@ -34,7 +36,12 @@ export default function PlannerContainer({
         <div className="mr-80"></div>
         <div className="flex flex-row overflow-y-scroll h-full">
           {items.map((item) => (
-            <SemesterContainer key={item.code} item={item} removeCourse={removeCourse} />
+            <SemesterContainer
+              updateOverride={updateOverride}
+              key={item.code}
+              item={item}
+              removeCourse={removeCourse}
+            />
           ))}
           {children}
         </div>
