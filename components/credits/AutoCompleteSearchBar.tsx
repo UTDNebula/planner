@@ -10,6 +10,8 @@ interface SearchBarProps extends React.ComponentPropsWithoutRef<'div'> {
   onInputChange: (query: string) => void;
   options: string[];
   autoFocus?: boolean;
+  placeholder?: string;
+  defaultValue?: string;
 }
 
 const SearchBar: FC<SearchBarProps & React.ComponentPropsWithoutRef<'button'>> = ({
@@ -17,6 +19,8 @@ const SearchBar: FC<SearchBarProps & React.ComponentPropsWithoutRef<'button'>> =
   onInputChange,
   options,
   autoFocus,
+  placeholder = 'Course Code',
+  defaultValue = '',
   ...props
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -56,6 +60,7 @@ const SearchBar: FC<SearchBarProps & React.ComponentPropsWithoutRef<'button'>> =
         options={options}
         fullWidth
         PopperComponent={CustomPopper}
+        value={defaultValue}
         renderInput={(params) => {
           return (
             <TextField
@@ -66,7 +71,7 @@ const SearchBar: FC<SearchBarProps & React.ComponentPropsWithoutRef<'button'>> =
                 style: {},
                 ...params.inputProps,
               }}
-              placeholder="Course Code"
+              placeholder={placeholder}
               InputProps={{
                 ...params.InputProps,
                 disableUnderline: true,
