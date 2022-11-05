@@ -78,44 +78,57 @@ export default function AuthCard(): JSX.Element {
     setPassword(event.target.value);
   };
 
+  const handleSignInWithGoogle = () => {
+    signInWithGoogle();
+  };
+
   return (
-    <div className="bg-white md:shadow-lg shadow-none rounded p-6 w-96">
-      <div className="mb-4 flex justify-center items-center">
+    <div className="p-6 bg-white rounded shadow-none md:shadow-lg w-96">
+      <div className="flex items-center justify-center mb-4">
         <Image src={logo} alt="Logo" width="120px" height="120px" className="rounded-full" />
       </div>
-      <h1 className="text-center text-3xl mb-2 font-semibold leading-normal">
+      <h1 className="mb-2 text-3xl font-semibold leading-normal text-center">
         Sign Up with Nebula
       </h1>
-      <section className="space-y-5 mt-5">
-        <div className="mb-4 relative">
+      <section className="mt-5 space-y-5">
+        <div className="relative mb-4">
           <input
             value={email}
             onChange={handleEmailChange}
             type="email"
-            className="w-full border border-black p-3 rounded outline-none focus:border-black"
-            placeholder="Email or Phone"
+            className="w-full p-3 border border-black rounded outline-none focus:border-black"
+            placeholder="Email Address"
           ></input>
         </div>
-        <div className="mb-4 relative">
+        <div className="relative mb-4">
           <input
             value={password}
             onChange={handlePasswordChange}
             type="password"
-            className="w-full border border-black p-3 rounded outline-none focus:border-black"
+            className="w-full p-3 border border-black rounded outline-none focus:border-black"
             placeholder="Password"
           ></input>
         </div>
         <button
           onClick={handleEmailSignUp}
-          className="w-full text-center bg-blue-700 hover:bg-blue-800 rounded-lg text-white py-3 font-medium"
+          className="w-full py-3 font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800"
         >
           Sign Up
+        </button>
+        <div className="items-center pb-1 mx-auto -mb-6">
+          <h1 className="text-center text-gray-700 text-s">or</h1>
+        </div>
+        <button
+          onClick={handleSignInWithGoogle}
+          className="items-center justify-center block w-full px-3 py-3 leading-tight text-gray-700 bg-gray-100 border border-gray-500 rounded-lg shadow appearance-none hover:bg-gray-200 hover:text-gray-700 focus:outline-none"
+        >
+          <h1 className="text-xl text-center text-blue-700">Sign up with Google</h1>
         </button>
         <div className="flex place-content-center">
           <p>
             Already have an account?
             <Link href="/auth/login">
-              <a className="ml-2 text-blue-700 font-semibold hover:bg-blue-200 hover:rounded-lg">
+              <a className="ml-2 font-semibold text-blue-700 hover:bg-blue-200 hover:rounded-lg">
                 Sign In
               </a>
             </Link>
