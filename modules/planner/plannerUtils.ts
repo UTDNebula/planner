@@ -28,6 +28,31 @@ const dummySemesters: Semester[] = [
     code: '2023f',
     courses: [],
   },
+  {
+    title: 'Spring 2024',
+    code: '2024s',
+    courses: [],
+  },
+  {
+    title: 'Fall 2024',
+    code: '2024f',
+    courses: [],
+  },
+  {
+    title: 'Spring 2025',
+    code: '2025s',
+    courses: [],
+  },
+  {
+    title: 'Fall 2025',
+    code: '2025f',
+    courses: [],
+  },
+  {
+    title: 'Spring 2026',
+    code: '2026s',
+    courses: [],
+  },
 ];
 
 export const dummyPlan: StudentPlan = {
