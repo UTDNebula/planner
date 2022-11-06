@@ -1,6 +1,4 @@
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
-import { CircularProgress, Dialog, Fab, Theme } from '@mui/material';
+import { CircularProgress, Dialog, Theme } from '@mui/material';
 import { useRouter } from 'next/router';
 import React, { Fragment, useEffect, useState } from 'react';
 import { makeStyles } from 'tss-react/mui';
@@ -137,16 +135,9 @@ export default function PlanDetailPage(): JSX.Element {
         updateQuery={updateQuery}
         removeCourse={removeItemFromList}
         updateOverride={updateOverride}
-      >
-        <div className={classes.fabContainer}>
-          <Fab color="primary" onClick={() => addSemester()} className={classes.fab}>
-            <AddIcon />
-          </Fab>
-          <Fab color="primary" onClick={() => removeSemester()} className={classes.fab}>
-            <RemoveIcon />
-          </Fab>
-        </div>
-      </PlannerContainer>
+        addSemester={addSemester}
+        removeSemester={removeSemester}
+      ></PlannerContainer>
     </div>
   );
   const openValidationModal = () => {

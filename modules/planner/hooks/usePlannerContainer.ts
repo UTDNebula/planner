@@ -63,25 +63,29 @@ export function usePlannerContainer(
   /**
    * Allows users to add an additional semester to their schedule
    */
-  const addSemester = () => {
-    const recentSemester = getRecentSemesterMetadata(semesters);
-    const { year, semester } = getUpdatedSemesterData(recentSemester);
+  const addSemester = (newSemesterIndex = semesters.length, isSummer = false) => {
+    const recentSemester = getRecentSemesterMetadata(semesters.slice(0, newSemesterIndex + 1));
+    const { year, semester } = getUpdatedSemesterData(recentSemester, isSummer);
 
     const newSemester: Semester = {
       title: `${SEMESTER_CODE_MAPPINGS[semester]} ${year}`,
       code: (year + semester.toString()).toString(),
       courses: [],
     };
-    updateSemesters([...semesters, newSemester]);
+    const newSemesters = [...semesters];
+    newSemesters.splice(newSemesterIndex + 1, 0, newSemester);
+    updateSemesters(newSemesters);
   };
 
   /**
    * Allows users to remove a semester from their schedule
    * Does not run if the user only has one semester
    */
-  const removeSemester = () => {
+  const removeSemester = (removeSemesterIndex = semesters.length - 1) => {
     if (semesters.length > 1) {
-      updateSemesters(semesters.slice(0, semesters.length - 1));
+      const newSemester = [...semesters];
+      newSemester.splice(removeSemesterIndex, 1);
+      updateSemesters(newSemester);
     }
   };
 
