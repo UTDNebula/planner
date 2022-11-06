@@ -68,7 +68,9 @@ export default function SettingsDialog({
       setTitle(title);
       setMajor(major);
       updatePlanTitle(title);
-      setStartSemesterName(plan.semesters[0].title);
+      plan.semesters[0].title !== 'Transfer Credits'
+        ? setStartSemesterName(plan.semesters[0].title)
+        : setStartSemesterName(plan.semesters[1].title);
       setEndSemesterName(plan.semesters[plan.semesters.length - 1].title);
     }
   }, [plan]);
@@ -99,6 +101,12 @@ export default function SettingsDialog({
   };
 
   const handleUpdate = () => {
+    // Check if valid & reject if not valid
+    // TODO: PLEASE CHANGE THIS LOGIC LATER
+    if (startSemesterName.split(' ')[1] > endSemesterName.split(' ')[1]) {
+      alert('Please choose a valid start and end semester time');
+      return;
+    }
     // Update title & major
     const newPlan = JSON.parse(JSON.stringify(plan));
     newPlan.major = major;
@@ -123,6 +131,10 @@ export default function SettingsDialog({
     for (let idx = 0; idx < oldSem.length; idx++) {
       oldSemMap[oldSem[idx].title] = oldSem[idx];
     }
+    // If transfer credits exist, add to beginning of newSem
+    if (oldSemMap['Transfer Credits']) {
+      newSem.push(oldSemMap['Transfer Credits']);
+    }
 
     for (let i = startIdx; i <= endIdx; i++) {
       // Check if summer permitted
@@ -130,7 +142,6 @@ export default function SettingsDialog({
         generatedSemesters[i].code[generatedSemesters[i].code.length - 1] === 'u' &&
         !includeSummer
       ) {
-        console.log('HI');
       } else {
         if (generatedSemesters[i].title in oldSemMap) {
           newSem.push(oldSemMap[generatedSemesters[i].title]);
