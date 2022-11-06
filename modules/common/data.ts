@@ -63,7 +63,8 @@ export type Grade =
   | 'NC'
   | 'P'
   | 'NR'
-  | 'I';
+  | 'I'
+  | 'W';
 
 /**
  * A value of -1 indicates the course for which the letter grade was recieved
@@ -88,6 +89,7 @@ export const GPA_MAPPINGS: { [key in Grade]: number } = {
   P: -1,
   NR: -1,
   I: -1,
+  W: -1,
 };
 
 /**

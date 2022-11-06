@@ -2,14 +2,25 @@ import { v4 as uuid } from 'uuid';
 
 import { RecentSemester } from '../../components/planner/PlannerContainer';
 import DUMMY_PLAN from '../../data/add_courses.json';
-import { Semester, SemesterCode, StudentPlan } from '../common/data';
+import { Course, Semester, SemesterCode, StudentPlan } from '../common/data';
 
 // Initial value for plan until data is properly loaded
+const dummyCourse: Course[] = [
+  {
+    id: 'string',
+    title: 'string',
+    catalogCode: 'string',
+    description: 'string',
+    creditHours: 0,
+  },
+];
+
 export const initialPlan: StudentPlan = {
   id: 'empty-plan',
   title: 'Just a Degree Plan',
   major: 'Computer Science',
   semesters: DUMMY_PLAN,
+  //credits: 0,
 };
 
 const dummySemesters: Semester[] = [
@@ -51,6 +62,12 @@ export function getRecentSemesterMetadata(semesters: Semester[]) {
   };
   return recentSemester;
 }
+
+/**
+ * This function generates the metadata needed for the course
+ * create a new course object
+ * @param courseId The id of the course
+ */
 
 /**
  * Generate metadata for adding a new semester.

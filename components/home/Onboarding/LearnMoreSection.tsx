@@ -113,7 +113,7 @@ export default function NebFeatureDisplay(): JSX.Element {
                           'linear-gradient(to right, rgba(209, 218, 254, 1), rgba(209, 218, 254, 0.3))',
                         borderRadius: '10px',
                       }}
-                      href="https://about.utdnebula.com/"
+                      href="https://dev.jupiter.utdnebula.com/"
                     >
                       <Typography variant="h6" textAlign="center" fontWeight="bold" color="black">
                         Jupiter
