@@ -148,7 +148,7 @@ export default function PlanningToolbar({
           document={<UserDegreePlanPDF name={user.name} studentPlan={studentPlan} />}
           fileName={studentPlan.title + '.pdf'}
         >
-          {({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'EXPORT PLAN')}
+          {({ blob, url, loading, error }) => (error ? 'EXPORT ERROR' : 'EXPORT PLAN')}
         </PDFDownloadLink>
 
         <input

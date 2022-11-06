@@ -188,9 +188,9 @@ export function useUserSetup(studentDefaultName = 'Comet') {
   // TODO: Check if user already exists; if true, use user values
   const [consentData, setConsentData] = React.useState({
     disclaimer: false,
-    personalization: false,
-    analytics: false,
-    performance: false,
+    personalization: true,
+    analytics: true,
+    performance: true,
   });
   const [pageOneData, setPageOneData] = useState<PageOneTypes>({
     name: '',
