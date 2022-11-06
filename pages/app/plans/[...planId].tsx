@@ -120,6 +120,8 @@ export default function PlanDetailPage(): JSX.Element {
         results={results}
         updateQuery={updateQuery}
         removeCourse={removeItemFromList}
+        addSemester={addSemester}
+        removeSemester={removeSemester}
       >
         <div className={classes.fabContainer}>
           <Fab color="primary" onClick={() => addSemester()} className={classes.fab}>

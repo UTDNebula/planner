@@ -11,6 +11,8 @@ interface PlannerContainerProps {
   results: any[];
   updateQuery: (query: string) => void;
   removeCourse: (courseId: string, droppableId: string) => void;
+  addSemester: (idx: number, isSummer: boolean) => void;
+  removeSemester: (index: number) => void;
 }
 
 /**
@@ -26,6 +28,8 @@ export default function PlannerContainer({
   updateQuery,
   children,
   removeCourse,
+  addSemester,
+  removeSemester,
 }: React.PropsWithChildren<PlannerContainerProps>) {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
@@ -33,9 +37,46 @@ export default function PlannerContainer({
         <CourseSelector results={results} updateQuery={updateQuery} />
         <div className="mr-80"></div>
         <div className="flex flex-row overflow-y-scroll h-full">
-          {items.map((item) => (
-            <SemesterContainer key={item.code} item={item} removeCourse={removeCourse} />
-          ))}
+          {items.map((item, idx, itemArr) => {
+            const potentialSemesters = { semIndex: idx, f: true, s: true, u: true };
+            // Determine if you need next item in itemArr
+            const currSemCode = item.code[item.code.length - 1];
+
+            if (currSemCode === 'f') {
+              potentialSemesters['u'] = false;
+              potentialSemesters['f'] = false;
+              if (idx + 1 < itemArr.length && itemArr[idx + 1].code.includes('s')) {
+                potentialSemesters['s'] = false;
+              }
+            } else if (currSemCode === 's') {
+              potentialSemesters['s'] = false;
+              if (idx + 1 < itemArr.length) {
+                if (itemArr[idx + 1].code.includes('u')) {
+                  potentialSemesters['u'] = false;
+                  potentialSemesters['f'] = false;
+                }
+                if (itemArr[idx + 1].code.includes('f')) {
+                  potentialSemesters['f'] = false;
+                }
+              }
+            } else {
+              potentialSemesters['s'] = false;
+              if (idx + 1 < itemArr.length && itemArr[idx + 1].code.includes('f')) {
+                potentialSemesters['f'] = false;
+                potentialSemesters['u'] = false;
+              }
+            }
+            return (
+              <SemesterContainer
+                key={item.code}
+                potentialSemesters={potentialSemesters}
+                item={item}
+                removeCourse={removeCourse}
+                addSemester={addSemester}
+                removeSemester={removeSemester}
+              />
+            );
+          })}
           {children}
         </div>
       </div>
