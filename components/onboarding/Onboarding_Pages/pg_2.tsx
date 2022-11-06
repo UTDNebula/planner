@@ -10,6 +10,7 @@ import TextField from '@mui/material/TextField';
 import React from 'react';
 
 import DummyData from '../../../data/dummy_onboarding.json';
+import Degrees from '../../../data/majors.json';
 import { HONORS_INDICATOR_LABELS } from '../../../modules/common/data-utils';
 import { HonorsIndicator } from '../../../modules/common/types';
 
@@ -17,7 +18,7 @@ import { HonorsIndicator } from '../../../modules/common/types';
 const scholarships = DummyData.scholarships;
 
 const fastTrackYears = DummyData.fastTrackYears;
-const majors = DummyData.majors;
+const majors = Degrees;
 
 export type PageTwoTypes = {
   scholarship: boolean;
