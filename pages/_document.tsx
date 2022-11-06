@@ -1,7 +1,5 @@
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 
-import BetaBanner from '../components/BetaBanner';
-
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
     const initialProps = await Document.getInitialProps(ctx);
@@ -25,7 +23,6 @@ class MyDocument extends Document {
           <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
         </Head>
         <body>
-          <BetaBanner />
           <Main />
           <NextScript />
         </body>
