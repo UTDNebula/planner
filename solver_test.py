@@ -1,7 +1,7 @@
 from mock_data import MockData
 from solver import *
 
-REQUIREMENTS_FILE = "requirements/computer_science_ug.req"
+REQUIREMENTS_FILE = "requirements/computer_science_bs.req"
 # MOCK_COURSES_FCN = MockData.get_real_courses_ezhang
 MOCK_COURSES_FCN = MockData.get_real_courses_missing_physics
 
