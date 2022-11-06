@@ -129,7 +129,7 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
             Reset
           </button>
         </section>
-        <section className="bg-white flex flex-col w-full px-8 py-4 rounded-2xl">
+        <section className="bg-white flex flex-col w-full px-8 py-4 rounded-2xl mb-8">
           <h1>Delete My Account</h1>
           <div className="text-sm ">Deleting your account will remove all user data</div>
           <button

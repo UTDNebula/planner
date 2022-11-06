@@ -31,7 +31,7 @@ export default function LandingPage(): JSX.Element {
 
   return (
     <div>
-      <Scrollbars style={{ height: '100vh' }}>
+      <Scrollbars style={{ height: '90vh' }}>
         <div
           ref={appBarRef}
           className={`sticky top-0 z-10 ${
