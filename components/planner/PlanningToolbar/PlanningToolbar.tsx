@@ -1,6 +1,6 @@
 import MenuIcon from '@mui/icons-material/ArrowBack';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { AppBar, Button, IconButton, Theme, Toolbar, Typography } from '@mui/material';
+import { AppBar, IconButton, Theme, Toolbar, Typography } from '@mui/material';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -126,7 +126,7 @@ export default function PlanningToolbar({
 
   return (
     <AppBar position="relative" className={classes.root}>
-      <Toolbar className="flex">
+      <Toolbar className="flex flex-row gap-x-4">
         <IconButton
           edge="start"
           className={classes.menuButton}
@@ -140,15 +140,18 @@ export default function PlanningToolbar({
         <Typography variant="h6" className={classes.title + ' text-white'}>
           {planTitle}
         </Typography>
-        <Button color="inherit" onClick={onValidate} className="text-base font-normal">
+        <button
+          onClick={onValidate}
+          className="text-base font-normal bg-white text-[#1C2A6D] p-2 rounded-lg hover:bg-gray-50"
+        >
           Validate plan
-        </Button>
+        </button>
         <PDFDownloadLink
-          className="text-base font-normal"
+          className="text-base font-normal text-[#1C2A6D] bg-white  p-2 rounded-lg hover:bg-gray-50"
           document={<UserDegreePlanPDF name={user.name} studentPlan={studentPlan} />}
           fileName={studentPlan.title + '.pdf'}
         >
-          {({ blob, url, loading, error }) => (error ? 'EXPORT ERROR' : 'EXPORT PLAN')}
+          {({ blob, url, loading, error }) => (error ? 'Export Error' : 'Export Plan')}
         </PDFDownloadLink>
 
         <input
@@ -160,9 +163,9 @@ export default function PlanningToolbar({
         />
         <label htmlFor="planUpload">
           {/* This must render as a span for the input to function */}
-          <Button color="inherit" component="span" className="text-base font-normal">
+          <button className="text-base font-normal text-[#1C2A6D] bg-white p-2 rounded-lg hover:bg-gray-50">
             Import plan
-          </Button>
+          </button>
         </label>
         <IconButton onClick={handleSettings} className="" size="large">
           <SettingsIcon color="inherit" className="text-white" />
