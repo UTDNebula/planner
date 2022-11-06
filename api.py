@@ -1,4 +1,6 @@
 from collections import defaultdict
+from typing import Any
+
 from flask import Flask, request, make_response
 from flask_limiter import Limiter, RequestLimit
 from flask_limiter.util import get_remote_address
@@ -7,8 +9,20 @@ from flask_cors import CORS
 from solver import GraduationRequirementsSolver
 from utils import Course, SingleAssignment
 
+
+class APIError(Exception):
+    def __init__(self, message, http_response_code=400):
+        self.message = message
+        self.http_response_code = http_response_code
+        super().__init__(self.message)
+
+
 # Enumerate degree plans available in requirements/. No auto detection for now.
-DEGREE_PLANS = ['computer_science_ug']
+DEGREE_PLANS = [
+    'computer_science_ug',  # for backwards compatibility
+    'computer_science_bs',
+    'biology_bs',
+]
 
 # Load all degree plans
 solvers = defaultdict(GraduationRequirementsSolver)
@@ -17,11 +31,22 @@ for degree_plan in set(DEGREE_PLANS):
     solvers[degree_plan].load_requirements_from_file(filename)
 
 
-def ratelimit_callback(request_limit: RequestLimit):
+def _ratelimit_callback(request_limit: RequestLimit):
     print(f"RATELIMIT_BREACH key({request_limit.key})")
     return make_response({
         'message': "Ratelimit exceeded. If you believe you need a higher limit, please contact a developer.",
     }, 429)
+
+
+def _validate_json_fields(required_fields: list[str], request_json: dict[str, Any]):
+    if set(required_fields) != set(request_json):
+        raise APIError(f'Unexpected top-level fields in json. Expected {required_fields}.', 400)
+
+
+def _try_get_solver(degree):
+    if degree not in solvers:
+        raise APIError(f"Degree {degree} not found", 404)
+    return solvers[degree]
 
 
 # Instantiate flask app and ratelimiter
@@ -33,7 +58,7 @@ limiter = Limiter(
     default_limits=["100/hour"],
     headers_enabled=True,
     storage_uri="redis://localhost:6379",  # TODO: read from environment variable
-    on_breach=ratelimit_callback,
+    on_breach=_ratelimit_callback,
 )
 
 
@@ -52,30 +77,52 @@ def list_degree_plans():
     }, 200)
 
 
+@app.route('/get-degree-requirements', methods=['GET'])
+def get_degree_requirements():
+    try:
+        j = request.get_json()
+        _validate_json_fields(['degree'], j)
+        solver = _try_get_solver(j['degree'])
+        reqs_to_hours = {name: req.hours for name, req in solver.requirements_dict.items()}
+
+        return make_response({
+            'message': f"Degree requirements and their required hours for {j['degree']}",
+            'requirements': reqs_to_hours,
+        }, 200)
+
+    except APIError as e:
+        return make_response({
+            'message': 'Error in get-degree-requirements',
+            'error': str(e),
+        }, e.http_response_code)
+    except Exception as e:
+        return make_response({
+            'message': 'Error in get-degree-requirements',
+            'error': str(e),
+        }, 500)
+
+
 @app.route('/validate-degree-plan', methods=['POST'])
 @limiter.limit('1/2 second;100/hour;200/day')
 def validate_degree_plan():
-    REQUIRED_FIELDS = {'degree', 'courses', 'bypasses'}
-
     try:
-        print('Received request')
         j = request.get_json()
-
-        if REQUIRED_FIELDS != set(j):
-            raise Exception('Unexpected top-level fields')
-        if j['degree'] not in solvers:
-            raise Exception(f"Degree {j['degree']} not found")
-
-        solver = solvers[j['degree']]
+        _validate_json_fields(['degree', 'courses', 'bypasses'], j)
+        solver = _try_get_solver(j['degree'])
         courses = [Course.from_json(c) for c in j['courses']]
         bypasses = [SingleAssignment.from_json(b) for b in j['bypasses']]
 
         assignment = solver.solve(courses, bypasses)
 
-        return make_response(assignment.to_json(), 200)
+        return make_response(assignment.to_json(), 200)  # TODO: breaking change, wrap in json with message component
 
+    except APIError as e:
+        return make_response({
+            'message': 'Error in validate-degree-plan',
+            'error': str(e),
+        }, e.http_response_code)
     except Exception as e:
         return make_response({
             'message': 'Error in validate-degree-plan',
             'error': str(e),
-        }, 400)
+        }, 500)
