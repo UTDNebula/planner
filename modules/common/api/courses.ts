@@ -14,13 +14,15 @@ export async function loadDummyCourses(year = 2020): Promise<Course[]> {
   );
   return Object.entries(courseData).map((value) => {
     const [catalogCode, courseData] = value;
-    const { id, name: title, hours: creditHours, description } = courseData;
+    const { id, name: title, hours: creditHours, description, prerequisites } = courseData;
     return {
       id: String(id),
       title,
       catalogCode,
       description,
       creditHours: Number(creditHours),
+      validation: { isValid: true, override: false },
+      prerequisites: prerequisites ? prerequisites[0] : 'No prerequisite for this class',
     };
   });
 }

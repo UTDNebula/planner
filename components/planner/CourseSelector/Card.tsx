@@ -26,7 +26,7 @@ export type CardProps = {
  * TODO: Figure out final functionality of this component
  */
 export function Card({ props, toggleCourseSelected }: CardProps) {
-  const { catalogCode, title, description, creditHours } = props;
+  const { catalogCode, title, description, creditHours, prerequisites } = props;
   const [checkboxState, setCheckboxState] = useState(false);
 
   const handleChange = (event) => {
@@ -51,6 +51,7 @@ export function Card({ props, toggleCourseSelected }: CardProps) {
         <div className="text-xl">{title}</div>
         <div className="text-md"> Description: </div>
         <div className="text-xs">{description}</div>
+        <div className="mt-4 text-xs">Prerequisites: {prerequisites} </div>
       </AccordionDetails>
     </Accordion>
   );

@@ -11,6 +11,7 @@ interface PlannerContainerProps {
   results: any[];
   updateQuery: (query: string) => void;
   removeCourse: (courseId: string, droppableId: string) => void;
+  updateOverride: (id: string) => void;
   addSemester: (idx: number, isSummer: boolean) => void;
   removeSemester: (index: number) => void;
 }
@@ -28,6 +29,7 @@ export default function PlannerContainer({
   updateQuery,
   children,
   removeCourse,
+  updateOverride,
   addSemester,
   removeSemester,
 }: React.PropsWithChildren<PlannerContainerProps>) {
@@ -74,6 +76,7 @@ export default function PlannerContainer({
                 removeCourse={removeCourse}
                 addSemester={addSemester}
                 removeSemester={removeSemester}
+                updateOverride={updateOverride}
               />
             );
           })}

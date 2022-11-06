@@ -1,8 +1,9 @@
 import { MoreVert } from '@mui/icons-material';
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
 import InfoIcon from '@mui/icons-material/Info';
 import { IconButton, Menu, MenuItem, Tooltip } from '@mui/material';
 import React from 'react';
-
 /**
  * Component properties for a {@link CourseCard}.
  */
@@ -55,6 +56,11 @@ export interface CourseCardProps {
    * A callback triggered when a course should be swapped with another one
    */
   onOptionSwap?: (key: string) => void;
+
+  isValid: boolean;
+  prerequisites: string;
+  override: boolean;
+  updateOverride: (id: string) => void;
 }
 
 /**
@@ -80,8 +86,12 @@ function CourseCard(
     creditHours,
     estimatedWorkload,
     droppableCode,
+    prerequisites,
     enabled = false,
+    updateOverride,
+    override,
     onOptionRemove,
+    isValid,
     ...otherProps
   }: CourseCardProps,
   ref: React.Ref<HTMLElement>,
@@ -103,7 +113,8 @@ function CourseCard(
   // TODO: Only show outlines on desktop.
   const rootClasses = `p-4 m-2 w-[18rem] bg-white rounded-md hover:shadow-md border-gray-200 border-2 ${
     enabled ? 'shadow-sm' : 'shadow-none'
-  }`;
+  } ${!isValid ? 'border-red-500 border-2' : null}
+  `;
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -150,10 +161,24 @@ function CourseCard(
       <div className="">
         <span className="text-sm">{creditHoursText}</span>
         <span>
-          <Tooltip title={tooltipReason} placement="right-end">
+          <Tooltip title={prerequisites} placement="right-end">
             <InfoIcon fontSize="inherit" color="inherit" className="ml-2 text-xs text-gray-600" />
           </Tooltip>
         </span>
+        {isValid === false && !override && (
+          <span className="ml-2">
+            <IconButton onClick={() => updateOverride(id)}>
+              <CheckIcon />
+            </IconButton>
+          </span>
+        )}
+        {isValid === true && override && (
+          <span className="ml-2">
+            <IconButton onClick={() => updateOverride(id)}>
+              <CloseIcon />
+            </IconButton>
+          </span>
+        )}
       </div>
     </article>
   );

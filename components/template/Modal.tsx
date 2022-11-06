@@ -66,14 +66,16 @@ export default function TemplateModal({ setOpenTemplateModal }: TemplateModalPro
     });
 
     coursesFromCredits.forEach((course) => {
-      const { id, name: title, description, hours } = courses[course.utdCourseCode];
-      const courseId = id.toString();
+      const { name: title, description, hours, prerequisites } = courses[course.utdCourseCode];
+
       const creditCourse: Course = {
-        id: courseId,
+        id: uuid(),
         title,
         catalogCode: course.utdCourseCode,
         description,
         creditHours: +hours,
+        prerequisites: prerequisites[0],
+        validation: { isValid: true, override: false },
       };
 
       if (!course.semester) {
@@ -125,17 +127,20 @@ export default function TemplateModal({ setOpenTemplateModal }: TemplateModalPro
             creditHours: 3,
             description: `Chose one of the ${sem[j].options} courses for this`,
             catalogCode: '',
+            prerequisites: undefined,
+            validation: { isValid: true, override: false },
           };
         } else {
           try {
-            const { id, name: title, description, hours } = courses[sem[j]];
-            const courseId = id.toString();
+            const { name: title, description, hours, prerequisites } = courses[sem[j]];
             course = {
-              id: courseId,
+              id: uuid(),
               title,
               catalogCode: sem[j],
               description,
               creditHours: +hours,
+              prerequisites: prerequisites[0],
+              validation: { isValid: true, override: false },
             };
           } catch (e) {
             // TODO: Handle this better, preferably move to server and use a logger
