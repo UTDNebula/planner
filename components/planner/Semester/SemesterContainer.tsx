@@ -50,7 +50,7 @@ export default function SemesterContainer({
       {(provided) => (
         <div
           ref={provided.innerRef}
-          className="inline-block w-[19rem] h-screen"
+          className="inline-block w-[19rem]"
           {...provided.droppableProps}
         >
           <div className="m-2 p-2 w-[18rem] flex flex-row justify-between items-center bg-white rounded-md border-gray-200 border-2">

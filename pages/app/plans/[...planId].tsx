@@ -127,18 +127,16 @@ export default function PlanDetailPage(): JSX.Element {
   const { classes } = useStyles();
 
   const content = (
-    <div className="relative">
-      <PlannerContainer
-        items={semesters}
-        onDragEnd={handleOnDragEnd}
-        results={results}
-        updateQuery={updateQuery}
-        removeCourse={removeItemFromList}
-        updateOverride={updateOverride}
-        addSemester={addSemester}
-        removeSemester={removeSemester}
-      ></PlannerContainer>
-    </div>
+    <PlannerContainer
+      items={semesters}
+      onDragEnd={handleOnDragEnd}
+      results={results}
+      updateQuery={updateQuery}
+      removeCourse={removeItemFromList}
+      updateOverride={updateOverride}
+      addSemester={addSemester}
+      removeSemester={removeSemester}
+    ></PlannerContainer>
   );
   const openValidationModal = () => {
     setShowValidation(true);
@@ -151,7 +149,7 @@ export default function PlanDetailPage(): JSX.Element {
         onClose={() => setShowValidation(false)}
         plan={plan}
       />
-      <div className="flex flex-col h-[90vh] overflow-y-hidden">
+      <div className="flex flex-col h-[calc(100vh-50px)] overflow-y-hidden">
         <div className="flex-none">
           {err !== undefined && ErrorMessage(err)}
           <PlanningToolbar
