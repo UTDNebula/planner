@@ -112,7 +112,7 @@ export default function HomeDrawer({ children, page, setPage, isDesktop }: HomeD
   return (
     // - 50px for banner, see BetaBanner.tsx
     <Box sx={{ display: 'flex', width: '100%', height: 'calc(100vh - 50px)' }}>
-      <Drawer variant="permanent" open={open}>
+      <Drawer variant="permanent" open={open} sx={{ zIndex: 0 }}>
         <div
           className={`flex flex-row w-full justify-center items-center pt-2  ${
             isDesktop && 'h-16'

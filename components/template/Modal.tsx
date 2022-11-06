@@ -169,7 +169,7 @@ export default function TemplateModal({ setOpenTemplateModal }: TemplateModalPro
   return (
     <div
       onClick={() => setOpenTemplateModal(false)}
-      className="w-full h-full left-0 top-0  absolute flex items-center justify-center backdrop-blur-md"
+      className="w-full h-full left-0 top-0  absolute flex items-center justify-center backdrop-blur-md z-10"
     >
       <div
         onClick={(e) => e.stopPropagation()}
