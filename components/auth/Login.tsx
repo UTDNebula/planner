@@ -47,6 +47,11 @@ export default function AuthCard(): JSX.Element {
             value={email}
             onChange={handleEmailChange}
             placeholder="Email"
+            onKeyDown={(e) => {
+              if (e.key == 'Enter') {
+                handleEmailSignIn();
+              }
+            }}
           ></input>
         </div>
         <div className="mb-4 relative">
@@ -56,6 +61,11 @@ export default function AuthCard(): JSX.Element {
             placeholder="Password"
             value={password}
             onChange={handlePasswordChange}
+            onKeyDown={(e) => {
+              if (e.key == 'Enter') {
+                handleEmailSignIn();
+              }
+            }}
           ></input>
         </div>
         <div className="">
