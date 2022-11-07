@@ -405,7 +405,7 @@ export default function OnboardingPage(): JSX.Element {
   // TODO: Find better way to structure this glorified form.
   return (
     <>
-      <div className="min-h-[calc(100vh-50px)] flex items-center justify-center bg-blue-400">
+      <div className="min-h-screen flex items-center justify-center bg-blue-400">
         <div className="my-16 py-16 px-32 rounded shadow-2xl w-3/4 bg-white">
           <div className="flex flex-col items-center justify-center">
             {/* {page >= 3 && (

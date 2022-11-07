@@ -1,6 +1,7 @@
 import { CircularProgress, Dialog, Theme } from '@mui/material';
 import { useRouter } from 'next/router';
 import React, { Fragment, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { makeStyles } from 'tss-react/mui';
 
 import ErrorMessage from '../../../components/common/ErrorMessage';
@@ -17,6 +18,7 @@ import { loadDummyCourses } from '../../../modules/common/api/courses';
 import { StudentPlan } from '../../../modules/common/data';
 import { usePlan } from '../../../modules/planner/hooks/usePlan';
 import { usePlannerContainer } from '../../../modules/planner/hooks/usePlannerContainer';
+import { RootState } from '../../../modules/redux/store';
 
 /**
  * Styling for the add & remove semesters buttons
@@ -145,9 +147,9 @@ export default function PlanDetailPage(): JSX.Element {
   return (
     <>
       <ValidationDialog
+        planId={planId}
         open={showValidation}
         onClose={() => setShowValidation(false)}
-        plan={plan}
       />
       <div className="flex flex-col h-[calc(100vh-50px)] overflow-y-hidden">
         <div className="flex-none">
@@ -184,8 +186,19 @@ export default function PlanDetailPage(): JSX.Element {
 
 // TODO: Refactor everything below this line into a separate file
 
-const ValidationDialog = (props: { open: boolean; onClose: () => void; plan: StudentPlan }) => {
-  const { open, onClose, plan } = props;
+const ValidationDialog = (props: { open: boolean; onClose: () => void; planId: string }) => {
+  const { open, onClose, planId } = props;
+
+  const plan = useSelector((state: RootState) => state.userData.plans[planId]);
+
+  const major = plan !== undefined ? plan.major : '';
+
+  // TODO: Clean up this reformatting logic
+  // Change major name to one appropriate for API
+  // Major names can be found here: https://github.com/ez314/Degree-Validator/tree/main/requirements
+  const formattedMajor = `${major.split(' ').join('_').toLowerCase()}_bs`;
+  // alert(formattedMajor);
+
   const [loading, setLoading] = useState(true);
   const [outputData, setOutputData] = useState<DVResponse>(null);
   const ac = new AbortController();
@@ -207,23 +220,36 @@ const ValidationDialog = (props: { open: boolean; onClose: () => void; plan: Stu
           };
         }),
       bypasses: [],
-      degree: 'computer_science_ug',
+      degree: formattedMajor,
     };
 
     body.courses = body.courses.filter((course) => course.name !== '');
 
-    const res = (await (
-      await fetch(`${process.env.NEXT_PUBLIC_VALIDATION_SERVER}/validate-degree-plan`, {
+    const res = await await fetch(
+      `${process.env.NEXT_PUBLIC_VALIDATION_SERVER}/validate-degree-plan`,
+      {
         method: 'POST',
         body: JSON.stringify(body),
         signal: ac.signal,
         headers: {
           'content-type': 'application/json',
         },
-      })
-    ).json()) as DVResponse;
-    setOutputData(res);
-    setLoading(false);
+      },
+    );
+
+    const response = (await res.json()) as DVResponse;
+
+    if (res.status === 200) {
+      setOutputData(response);
+      setLoading(false);
+    } else if (res.status === 404) {
+      res.status === 404
+        ? alert(
+            'This major is not yet supported! If you want to help us support degree plan validation for more majors, check out this link: https://forms.gle/1KeszKHRkooVjyxn9',
+          )
+        : alert('An error has occured');
+      onClose();
+    }
   };
   useEffect(() => {
     if (!open) {
