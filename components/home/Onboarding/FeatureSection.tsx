@@ -12,7 +12,7 @@ export default function NebFeatureDisplay({ ref2 }: FeatureProps): JSX.Element {
   return (
     <div
       ref={ref2}
-      className="h-screen"
+      className="min-h-screen"
       style={{
         background: 'linear-gradient(#f5a75e, #ffffff)',
         transform: 'translateY(-15%)',
@@ -103,7 +103,7 @@ export default function NebFeatureDisplay({ ref2 }: FeatureProps): JSX.Element {
       <div
         style={{
           width: '100%',
-          height: '10vh',
+          height: '15vh',
           borderTopRightRadius: '10%',
           borderTopLeftRadius: '100%',
           borderBottomRightRadius: '0%',

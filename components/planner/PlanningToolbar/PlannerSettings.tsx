@@ -42,8 +42,8 @@ function returnMenuItems<MenuItem>(menuOptions: string[]) {
 }
 
 const getAllMajors = async (): Promise<string[]> => {
-  const data = await import('../../../data/degree_template.json');
-  return Object.keys(data) as string[];
+  const data = await import('../../../data/majors.json');
+  return data.default as string[];
 };
 
 /**
@@ -73,10 +73,11 @@ export default function SettingsDialog({
         : setStartSemesterName(plan.semesters[1].title);
       setEndSemesterName(plan.semesters[plan.semesters.length - 1].title);
     }
-  }, [plan]);
+  }, [planId]);
 
   const [title, setTitle] = React.useState('');
   const [major, setMajor] = React.useState('');
+  const [hacky, setHacky] = React.useState(false);
   // Update to current plan
   const [startSemesterName, setStartSemesterName] = useState('filler');
   const [endSemesterName, setEndSemesterName] = useState('fill');
@@ -152,12 +153,25 @@ export default function SettingsDialog({
     }
 
     newPlan.semesters = newSem;
-
-    dispatch(updatePlan(newPlan));
     updateSemesters(newSem);
+
     updatePlanTitle(title);
     setOpen(false);
+
+    setHacky(true);
   };
+
+  // TODO: Remove once degree planning tool logic is refactored; this is gross
+  // Basically this allows user to save changes to plan name and/or major
+  React.useEffect(() => {
+    if (plan !== undefined && hacky && (plan.title !== title || plan.major !== major)) {
+      const newPlan = JSON.parse(JSON.stringify(plan));
+      newPlan.title = title;
+      newPlan.major = major;
+      dispatch(updatePlan(newPlan));
+      setHacky(false);
+    }
+  }, [plan]);
 
   // Open
 
