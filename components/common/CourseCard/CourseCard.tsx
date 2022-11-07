@@ -69,7 +69,7 @@ export interface CourseCardProps {
  * TODO: Find some more scalable way to do this task
  */
 function pluralize(count?: number, item?: string, defaultCount = 0) {
-  const trueCount = count ? count : defaultCount;
+  const trueCount = count !== undefined ? count : defaultCount;
   const trueItemText = item ? (trueCount === 0 || trueCount > 1 ? item + 's' : item) : '';
   return `${trueCount} ${trueItemText}`;
 }
@@ -133,7 +133,7 @@ function CourseCard(
     setAnchorEl(null);
   };
 
-  return (
+  const content = (
     <article ref={ref} className={rootClasses} {...otherProps}>
       <div>
         <Menu
@@ -161,26 +161,51 @@ function CourseCard(
       <div className="">
         <span className="text-sm">{creditHoursText}</span>
         <span>
-          <Tooltip title={prerequisites} placement="right-end">
+          <Tooltip title={prerequisites} placement="right-end" className="text-md">
             <InfoIcon fontSize="inherit" color="inherit" className="ml-2 text-xs text-gray-600" />
           </Tooltip>
         </span>
         {isValid === false && !override && (
           <span className="ml-2">
-            <IconButton onClick={() => updateOverride(id)}>
-              <CheckIcon />
-            </IconButton>
+            <Tooltip title={'Mark prerequisite met'}>
+              <IconButton onClick={() => updateOverride(id)}>
+                <CheckIcon />
+              </IconButton>
+            </Tooltip>
           </span>
         )}
         {isValid === true && override && (
           <span className="ml-2">
-            <IconButton onClick={() => updateOverride(id)}>
-              <CloseIcon />
-            </IconButton>
+            <Tooltip title={'Mark prerequisite not met'}>
+              <IconButton onClick={() => updateOverride(id)}>
+                <CloseIcon />
+              </IconButton>
+            </Tooltip>
           </span>
         )}
       </div>
     </article>
+  );
+
+  return (
+    <>
+      {isValid ? (
+        content
+      ) : (
+        <Tooltip
+          title={'Error: Prerequisites not met for this course'}
+          componentsProps={{
+            tooltip: {
+              className: 'p-2 text-[13px] bg-white text-defaultText border-2  rounded-xl',
+            },
+          }}
+          followCursor
+          placement="top-start"
+        >
+          {content}
+        </Tooltip>
+      )}
+    </>
   );
 }
 

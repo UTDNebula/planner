@@ -42,8 +42,8 @@ function returnMenuItems<MenuItem>(menuOptions: string[]) {
 }
 
 const getAllMajors = async (): Promise<string[]> => {
-  const data = await import('../../../data/degree_template.json');
-  return Object.keys(data) as string[];
+  const data = await import('../../../data/majors.json');
+  return data.default as string[];
 };
 
 /**
@@ -68,13 +68,16 @@ export default function SettingsDialog({
       setTitle(title);
       setMajor(major);
       updatePlanTitle(title);
-      setStartSemesterName(plan.semesters[0].title);
+      plan.semesters[0].title !== 'Transfer Credits'
+        ? setStartSemesterName(plan.semesters[0].title)
+        : setStartSemesterName(plan.semesters[1].title);
       setEndSemesterName(plan.semesters[plan.semesters.length - 1].title);
     }
-  }, [plan]);
+  }, [planId]);
 
   const [title, setTitle] = React.useState('');
   const [major, setMajor] = React.useState('');
+  const [hacky, setHacky] = React.useState(false);
   // Update to current plan
   const [startSemesterName, setStartSemesterName] = useState('filler');
   const [endSemesterName, setEndSemesterName] = useState('fill');
@@ -99,6 +102,12 @@ export default function SettingsDialog({
   };
 
   const handleUpdate = () => {
+    // Check if valid & reject if not valid
+    // TODO: PLEASE CHANGE THIS LOGIC LATER
+    if (startSemesterName.split(' ')[1] > endSemesterName.split(' ')[1]) {
+      alert('Please choose a valid start and end semester time');
+      return;
+    }
     // Update title & major
     const newPlan = JSON.parse(JSON.stringify(plan));
     newPlan.major = major;
@@ -123,6 +132,10 @@ export default function SettingsDialog({
     for (let idx = 0; idx < oldSem.length; idx++) {
       oldSemMap[oldSem[idx].title] = oldSem[idx];
     }
+    // If transfer credits exist, add to beginning of newSem
+    if (oldSemMap['Transfer Credits']) {
+      newSem.push(oldSemMap['Transfer Credits']);
+    }
 
     for (let i = startIdx; i <= endIdx; i++) {
       // Check if summer permitted
@@ -130,7 +143,6 @@ export default function SettingsDialog({
         generatedSemesters[i].code[generatedSemesters[i].code.length - 1] === 'u' &&
         !includeSummer
       ) {
-        console.log('HI');
       } else {
         if (generatedSemesters[i].title in oldSemMap) {
           newSem.push(oldSemMap[generatedSemesters[i].title]);
@@ -141,12 +153,25 @@ export default function SettingsDialog({
     }
 
     newPlan.semesters = newSem;
-
-    dispatch(updatePlan(newPlan));
     updateSemesters(newSem);
+
     updatePlanTitle(title);
     setOpen(false);
+
+    setHacky(true);
   };
+
+  // TODO: Remove once degree planning tool logic is refactored; this is gross
+  // Basically this allows user to save changes to plan name and/or major
+  React.useEffect(() => {
+    if (plan !== undefined && hacky && (plan.title !== title || plan.major !== major)) {
+      const newPlan = JSON.parse(JSON.stringify(plan));
+      newPlan.title = title;
+      newPlan.major = major;
+      dispatch(updatePlan(newPlan));
+      setHacky(false);
+    }
+  }, [plan]);
 
   // Open
 

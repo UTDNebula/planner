@@ -23,8 +23,6 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
 
   const handleSubmit = () => {
     if (name !== user.name) {
-      console.log(name);
-      console.log(user.name);
       if (name.trim() == '') {
         updateName('?').then(() => {
           alert('Name changed successfully');
@@ -44,7 +42,6 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
   };
 
   const dumbInitialsParser = useMemo(() => {
-    console.log(name.split(' '));
     return name.split(' ').reduce((prev, curr) => prev + curr[0], '');
   }, [user.name]);
   return (
@@ -129,7 +126,7 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
             Reset
           </button>
         </section>
-        <section className="bg-white flex flex-col w-full px-8 py-4 rounded-2xl">
+        <section className="bg-white flex flex-col w-full px-8 py-4 rounded-2xl mb-8">
           <h1>Delete My Account</h1>
           <div className="text-sm ">Deleting your account will remove all user data</div>
           <button

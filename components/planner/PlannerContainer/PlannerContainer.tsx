@@ -35,10 +35,10 @@ export default function PlannerContainer({
 }: React.PropsWithChildren<PlannerContainerProps>) {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="relative flex flex-row overflow-x-scroll">
+      <div className="relative flex flex-row h-[calc(100vh-120px)]">
         <CourseSelector results={results} updateQuery={updateQuery} />
         <div className="mr-80"></div>
-        <div className="flex flex-row overflow-y-scroll h-full">
+        <div className="flex flex-row overflow-y-scroll h-full w-screen">
           {items.map((item, idx, itemArr) => {
             const potentialSemesters = { semIndex: idx, f: true, s: true, u: true };
             // Determine if you need next item in itemArr

@@ -43,11 +43,11 @@ export default function PlansPage(): JSX.Element {
             onClick={() => setOpenTemplateModal(true)}
             className="col-span-full text-white rounded-xl w-32 h-12 p-2 flex justify-center items-center flex-row bg-[#3E61ED]"
           >
-            <div className="flex flex-row">
+            <div className="flex flex-row items-center">
               <div className="text-3xl flex flex-col justify-center items-center mr-2">
                 <AddIcon fontSize="inherit" />
               </div>
-              <h4 className="mr-2">New</h4> {/* Hacky css to make it look centered */}
+              <div className="mr-2 text-xl">New</div> {/* Hacky css to make it look centered */}
             </div>
           </button>
           <div className="w-fit flex flex-wrap gap-8">

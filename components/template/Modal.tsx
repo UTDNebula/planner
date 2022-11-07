@@ -155,7 +155,7 @@ export default function TemplateModal({ setOpenTemplateModal }: TemplateModalPro
 
     const routeId = uuid();
     const planTitle = major + ' Degree Plan';
-    const planMajor = major;
+    const planMajor = major.split('(')[0]; // TODO: Change later; this formats the major to match in major.json()
     const newPlanFromTemplate: StudentPlan = {
       id: routeId,
       title: planTitle,
@@ -169,7 +169,7 @@ export default function TemplateModal({ setOpenTemplateModal }: TemplateModalPro
   return (
     <div
       onClick={() => setOpenTemplateModal(false)}
-      className="w-full h-full left-0 top-0  absolute flex items-center justify-center backdrop-blur-md"
+      className="w-full h-full left-0 top-0  absolute flex items-center justify-center backdrop-blur-md z-10"
     >
       <div
         onClick={(e) => e.stopPropagation()}

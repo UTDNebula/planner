@@ -20,8 +20,7 @@ export default function PlanCard({ id, plan }: PlanCardProps) {
       title={title}
       componentsProps={{
         tooltip: {
-          className:
-            'p-5 text-[16px] bg-white text-defaultText border-2 border-defaultText rounded-xl',
+          className: 'p-5 text-[16px] bg-white text-defaultText border-2  rounded-xl',
         },
       }}
       followCursor

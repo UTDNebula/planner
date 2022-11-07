@@ -106,8 +106,9 @@ export default function NebulaApp({ Component, pageProps }: AppProps): JSX.Eleme
           <AnimateSharedLayout>
             <StyledEngineProvider injectFirst>
               <ThemeProvider theme={theme}>
-                <main className="w-screen h-screen overflow-hidden">
-                  {!router.pathname.startsWith('/auth') && <BetaBanner />}
+                <main className="w-screen h-screen overflow-x-hidden">
+                  {!router.pathname.startsWith('/auth') &&
+                    !router.pathname.startsWith('/app/onboarding') && <BetaBanner />}
                   <Component {...pageProps} />
                 </main>
               </ThemeProvider>

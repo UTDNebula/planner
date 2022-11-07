@@ -1,5 +1,5 @@
 import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
-import { IconButton, Menu, MenuItem } from '@mui/material';
+import { IconButton, Menu, MenuItem, Tooltip } from '@mui/material';
 import React from 'react';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 
@@ -43,27 +43,36 @@ export default function SemesterContainer({
     setAnchorEl(null);
   };
 
-  // Determine where to show Add/Remove course
+  // Count total # credits per semester
+  let totalCredits = 0;
+  item.courses.forEach((course) => {
+    totalCredits += course.creditHours;
+  });
 
   return (
     <Droppable key={item.code} droppableId={item.code}>
       {(provided) => (
         <div
           ref={provided.innerRef}
-          className="inline-block w-[19rem] h-screen"
+          className="inline-block w-[19rem]"
           {...provided.droppableProps}
         >
           <div className="m-2 p-2 w-[18rem] flex flex-row justify-between items-center bg-white rounded-md border-gray-200 border-2">
             {item.title}
-            <IconButton
-              id="demo-positioned-button"
-              aria-controls={open ? 'demo-positioned-menu' : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? 'true' : undefined}
-              onClick={handleClick}
-            >
-              <ArrowDropDownCircleIcon />
-            </IconButton>
+            <div className="flex flex-row items-center">
+              <div className="text-sm">{`${totalCredits} credits`}</div>
+              <Tooltip title={'Modify Semester'}>
+                <IconButton
+                  id="demo-positioned-button"
+                  aria-controls={open ? 'demo-positioned-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? 'true' : undefined}
+                  onClick={handleClick}
+                >
+                  <ArrowDropDownCircleIcon />
+                </IconButton>
+              </Tooltip>
+            </div>
             <Menu
               id="demo-positioned-menu"
               aria-labelledby="demo-positioned-button"
