@@ -78,7 +78,7 @@ export default function PageOne({ handleChange, props, handleValidate }: Page1Pr
         <div>Personal </div>
         <div> Information</div>
       </h2>
-      <div className="grid grid-cols-2 gap-x-32">
+      <div className="lg:grid lg:grid-cols-2 mb-12 lg:mb-0 gap-x-32">
         <div>
           <div className="mb-10 flex flex-col">
             {/* <h3 className="text-xl  text-gray-800">Name</h3> */}
