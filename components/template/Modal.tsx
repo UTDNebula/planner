@@ -155,7 +155,7 @@ export default function TemplateModal({ setOpenTemplateModal }: TemplateModalPro
 
     const routeId = uuid();
     const planTitle = major + ' Degree Plan';
-    const planMajor = major;
+    const planMajor = major.split('(')[0]; // TODO: Change later; this formats the major to match in major.json()
     const newPlanFromTemplate: StudentPlan = {
       id: routeId,
       title: planTitle,

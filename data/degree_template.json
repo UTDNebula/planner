@@ -1,5 +1,5 @@
 {
-  "Computer Science (BS)": [
+  "Computer Science(BS)": [
     ["MATH 2413", "CS 1200", "CS 1336", "RHET 1302", "ECS 1100", "UNIV 1010", { "options": "060" }],
     ["MATH 2414", "CS 2305", "CS 1337", "PHYS 2325", "PHYS 2125", { "options": "060" }],
     [
@@ -28,7 +28,7 @@
       { "options": "CS Guided Elective" }
     ]
   ],
-  "Psychology (BS)": [
+  "Psychology(BS)": [
     [
       "PSY 2301",
       "BBSU 1100",
@@ -77,7 +77,7 @@
       { "options": "PSY Elective" }
     ]
   ],
-  "Biology (BS)": [
+  "Biology(BS)": [
     ["CHEM 1311", "CHEM 1111", "HIST 1301", "MATH 2413", "COMM 1311", "NATHS 1101", "UNIV 1010"],
     ["CHEM 1312", "CHEM 1112", "HIST 1302", "MATH 2414", "PHYS 2325", "PHYS 2125"],
     ["CHEM 2323", "CHEM 2123", "BIOL 2311", "BIOL 2111", "PHYS 2326", "PHYS 2126", "RHET 1302"],
@@ -113,7 +113,7 @@
       { "options": "Elective" }
     ]
   ],
-  "Information Technology and Systems (BS)": [
+  "Information Technology and Systems(BS)": [
     [
       { "options": "010" },
       { "options": "060" },
@@ -143,7 +143,7 @@
     ],
     ["OPRE 3310", "OBHR 3310", "ITSS 4370"]
   ],
-  "Economics (BS)": [
+  "Economics(BS)": [
     [
       { "options": "030" },
       "ECON 2301",
@@ -185,7 +185,7 @@
       { "options": "Upper-Level Elective" }
     ]
   ],
-  "Accounting (BS)": [
+  "Accounting(BS)": [
     [
       { "options": "010" },
       { "options": "060" },
@@ -209,7 +209,7 @@
     ],
     ["ACCT 4395", "ACCT 4342", "BPS 4305", "IMS 3310", { "options": "Elective" }, "BA 4090"]
   ],
-  "Finance (BS)": [
+  "Finance(BS)": [
     [
       { "options": "010" },
       { "options": "040" },
@@ -253,7 +253,7 @@
       { "options": "Elective" }
     ]
   ],
-  "Mechanical Engineering (BS)": [
+  "Mechanical Engineering(BS)": [
     [
       "RHET 1302",
       "MATH 2417",
@@ -286,7 +286,7 @@
       { "options": "Elective" }
     ]
   ],
-  "Neuroscience (BS)": [
+  "Neuroscience(BS)": [
     [
       { "options": "020" },
       "CHEM 1311",
@@ -329,7 +329,7 @@
       { "options": "Elective" }
     ]
   ],
-  "Marketing (BS)": [
+  "Marketing(BS)": [
     [
       { "options": "010" },
       { "options": "060" },
@@ -366,7 +366,7 @@
       { "options": "Elective" }
     ]
   ],
-  "Business Analytics (BS)": [
+  "Business Analytics(BS)": [
     [
       { "options": "010" },
       { "options": "060" },
@@ -390,7 +390,7 @@
     ["GOVT 2305", "OBHR 3310", "ITSS 4354", "ITSS 4355", { "options": "Elective" }, "BUAN 4090"],
     ["GOVT 2306", { "options": "040" }, "IMS 3310", "BUAN 4395", { "options": "Elective" }]
   ],
-  "Business Administration (BS)": [
+  "Business Administration(BS)": [
     [
       { "options": "010" },
       { "options": "060" },
@@ -426,7 +426,7 @@
       { "options": "Elective" }
     ]
   ],
-  "Heathcare Studies (BS)": [
+  "Heathcare Studies(BS)": [
     ["CHEM 1311", "CHEM 1111", "GOVT 2305", "MATH 1325", "RHET 1302", "BIS 1100", "UNIV 1010"],
     ["CHEM 1312", "CHEM 1112", "COMM 1311", "GOVT 2306", "HIST 1301", "HLTH 1100", "STAT 2332"],
     ["BIOL 2311", "BIOL 2111", "CHEM 2323", "CHEM 2123", "PHYS 1301", "PHYS 2125", "HIST 1302"],
@@ -484,7 +484,7 @@
       { "options": "Elective" }
     ]
   ],
-  "Computer Engineering (BS)": [
+  "Computer Engineering(BS)": [
     [
       { "options": "Core" },
       "CE 1100",
@@ -523,7 +523,7 @@
       { "options": "Elective" }
     ]
   ],
-  "Biomedical Engineering (BS)": [
+  "Biomedical Engineering(BS)": [
     [
       "BMEN 1100",
       "CHEM 1311",
@@ -766,7 +766,7 @@
       { "options": "Elective" }
     ]
   ],
-  "Child Learning and Development (BS)": [
+  "Child Learning and Development(BS)": [
     [
       { "options": "010" },
       { "options": "020" },
@@ -827,7 +827,7 @@
       { "options": "Elective" }
     ]
   ],
-  "Cognitive Science (BS)": [
+  "Cognitive Science(BS)": [
     ["CGS 2301 ", "HIST 1301 ", "MATH 2413 ", " PSY 2301 ", "BBSU 1100 ", "UNIV 1010 "],
     [" CS 1337 ", "HIST 1302 ", "MATH 2414 ", "GOVT 2306 ", "RHET 1302 "],
     [{ "options": "050" }, "MATH 2418 ", "COMM 1311 ", "CS 2336 ", { "options": "Elective" }],
@@ -868,7 +868,7 @@
       { "options": "Elective" }
     ]
   ],
-  "Speech, Language, and Hearing Sciences (BS)": [
+  "Speech, Language, and Hearing Sciences(BS)": [
     [{ "options": "030" }, "COMM 1311", "HIST 1301", "MATH 1306", "BBSU 1100", "UNIV 1010"],
     [{ "options": "030" }, "RHET 1302", "HIST 1302", "PSY 2301", "PSY 2314"],
     ["GOVT 2306", { "options": "040" }, "PSY 2317", "SPAU 3301", { "options": "Elective" }],
@@ -980,7 +980,7 @@
       { "options": "Elective" }
     ]
   ],
-  "Public Affairs (BS)": [
+  "Public Affairs(BS)": [
     [
       { "options": "030" },
       "RHET 1302",
@@ -1016,7 +1016,7 @@
       { "options": "Elective" }
     ]
   ],
-  "Software Engineering (BS)": [
+  "Software Engineering(BS)": [
     [{ "options": "060" }, "MATH 2413", "CS 1200", "CS 1337", "RHET 1302", "ECS 1100", "UNIV 1010"],
     [{ "options": "060" }, "MATH 2414", "CS 2305", "CS 2336", "PHYS 2325", "PHYS 2125"],
     [{ "options": "040" }, "GOVT 2305", "SE 3306", "SE 2340", "PHYS 2326", "PHYS 2126"],
@@ -1033,7 +1033,7 @@
     ],
     ["SE 4485", { "options": "Elective" }, { "options": "Elective" }, { "options": "Elective" }]
   ],
-  "Global Business (BS)": [
+  "Global Business(BS)": [
     [{ "options": "040" }, "BLAW 2301", "MATH 1325", "HIST 1301", "RHET 1302", "BA 1100"],
     [
       { "options": "030" },
@@ -1057,7 +1057,7 @@
     ["FIN 3380", "IMS 4320", "OPRE 3310", { "options": "Elective" }, { "options": "Elective" }],
     ["BCOM 4350", "IMS 4330", "IMS 4373", { "options": "Elective" }, { "options": "Elective" }]
   ],
-  "Healthcare Management (BS)": [
+  "Healthcare Management(BS)": [
     [
       { "options": "010" },
       { "options": "060" },
@@ -1100,7 +1100,7 @@
       { "options": "Elective" }
     ]
   ],
-  "Human Resource Management (BS)": [
+  "Human Resource Management(BS)": [
     [
       { "options": "010" },
       { "options": "060" },
@@ -1131,7 +1131,7 @@
       "BA 4095"
     ]
   ],
-  "Actuarial Science (BS)": [
+  "Actuarial Science(BS)": [
     ["ACCT 2301", "CS 1336", "CS 1136", "MATH 2417", "RHET 1302", "NATS 1101", "UNIV 1010"],
     ["ACCT 2302", "CS 1337", "ECON 2301", "MATH 2418", "MATH 2419"],
     ["ACTS 4308", "ECON 2302", "BCOM 3300", "PHYS 2325", "MATH 3351", "PHYS 2126"],
@@ -1141,7 +1141,7 @@
     ["ACTS 4303", "ACTS 4304", "ACTS 4307", "ACTS 4309", { "options": "Elective" }],
     ["ACTS 4305", "MATH 2420", "MATH 4334", "STAT 4382"]
   ],
-  "Biochemistry (BS)": [
+  "Biochemistry(BS)": [
     ["CHEM 1311", "CHEM 1111", "HIST 1301", "MATH 2413", "COMM 1311", "NATS 1101", "UNIV 1010"],
     ["CHEM 1312", "CHEM 1112", "HIST 1302", "MATH 2414", "PHYS 2325"],
     ["CHEM 2323", "CHEM 2123", "BIOL 2311", "BIOL 2111", "PHYS 2326", "PHYS 2126", "RHET 1302"],
@@ -1151,7 +1151,7 @@
     ["BIOL 3301", "BIOL 3101", "ARTS 1301", "HUMA 1301", "STAT 2332"],
     ["BIOL 3302", "BIOL 3102", { "options": "Elective" }, { "options": "Elective" }]
   ],
-  "Chemistry (BS)": [
+  "Chemistry(BS)": [
     ["CHEM 1311", "CHEM 1111", "HIST 1301", "MATH 2413", "COMM 1311", "NATS 1101", "UNIV 1010"],
     ["CHEM 1312", "CHEM 1112", "HIST 1302", "MATH 2414", "PHYS 2325"],
     ["CHEM 2323", "CHEM 2123", "PHYS 2326", "PHYS 2126", "MATH 2415", "RHET 1302"],
@@ -1173,7 +1173,7 @@
       { "options": "Elective" }
     ]
   ],
-  "Mathematics (BS)": [
+  "Mathematics(BS)": [
     ["HIST 1301", "MATH 2417", "MATH 2370", "COMM 1311", "UNIV 1010"],
     ["HIST 1302", "MATH 2419", "PHYS 2325", "ARTS 1301", "NATS 1101"],
     ["GOVT 2305", "MATH 2418", "PHYS 2326", "PHYS 2126", "RHET 1302"],
@@ -1189,7 +1189,7 @@
     ["MATH 4301", "MATH 3380", "STAT 4351", { "options": "Elective" }],
     ["MATH 4302", "MATH 4341", { "options": "Elective" }]
   ],
-  "Molecular Biology (BS)": [
+  "Molecular Biology(BS)": [
     ["CHEM 1311", "CHEM 1111", "HIST 1301", "MATH 2417", "COMM 1311", "NATS 1101", "UNIV 1010"],
     ["CHEM 1312", "CHEM 1112", "HIST 1302", "MATH 2419", "PHYS 2325"],
     ["CHEM 2323", "CHEM 2123", "BIOL 2311", "BIOL 2111", "PHYS 2326", "PHYS 2126", "RHET 1302"],
