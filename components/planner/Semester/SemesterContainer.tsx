@@ -43,7 +43,11 @@ export default function SemesterContainer({
     setAnchorEl(null);
   };
 
-  // Determine where to show Add/Remove course
+  // Count total # credits per semester
+  let totalCredits = 0;
+  item.courses.forEach((course) => {
+    totalCredits += course.creditHours;
+  });
 
   return (
     <Droppable key={item.code} droppableId={item.code}>
@@ -55,15 +59,18 @@ export default function SemesterContainer({
         >
           <div className="m-2 p-2 w-[18rem] flex flex-row justify-between items-center bg-white rounded-md border-gray-200 border-2">
             {item.title}
-            <IconButton
-              id="demo-positioned-button"
-              aria-controls={open ? 'demo-positioned-menu' : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? 'true' : undefined}
-              onClick={handleClick}
-            >
-              <ArrowDropDownCircleIcon />
-            </IconButton>
+            <div className="flex flex-row items-center">
+              <div className="text-sm">{`${totalCredits} credits`}</div>
+              <IconButton
+                id="demo-positioned-button"
+                aria-controls={open ? 'demo-positioned-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? 'true' : undefined}
+                onClick={handleClick}
+              >
+                <ArrowDropDownCircleIcon />
+              </IconButton>
+            </div>
             <Menu
               id="demo-positioned-menu"
               aria-labelledby="demo-positioned-button"
