@@ -23,8 +23,6 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
 
   const handleSubmit = () => {
     if (name !== user.name) {
-      console.log(name);
-      console.log(user.name);
       if (name.trim() == '') {
         updateName('?').then(() => {
           alert('Name changed successfully');
@@ -44,7 +42,6 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
   };
 
   const dumbInitialsParser = useMemo(() => {
-    console.log(name.split(' '));
     return name.split(' ').reduce((prev, curr) => prev + curr[0], '');
   }, [user.name]);
   return (
