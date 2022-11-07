@@ -1,6 +1,6 @@
-# Nebula Web
+# Nebula Planner
 
-_Nebula Web is a tool for planning out students' college experience_
+_Nebula Planner is a tool for planning out students' college experience_
 
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
