@@ -95,6 +95,11 @@ export default function AuthCard(): JSX.Element {
           <input
             value={email}
             onChange={handleEmailChange}
+            onKeyDown={(e) => {
+              if (e.key == 'Enter') {
+                handleEmailSignUp();
+              }
+            }}
             type="email"
             className="w-full p-3 border border-black rounded outline-none focus:border-black"
             placeholder="Email Address"
@@ -104,6 +109,11 @@ export default function AuthCard(): JSX.Element {
           <input
             value={password}
             onChange={handlePasswordChange}
+            onKeyDown={(e) => {
+              if (e.key == 'Enter') {
+                handleEmailSignUp();
+              }
+            }}
             type="password"
             className="w-full p-3 border border-black rounded outline-none focus:border-black"
             placeholder="Password"
