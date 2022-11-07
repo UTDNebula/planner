@@ -17,7 +17,16 @@ const BetaBanner: FC = () => {
       </div>
       <div className="flex gap-3 items-center">
         <h3 className="text-white text-[18px] font-medium">{'Interested in contributing?'}</h3>
-        <button className="bg-white hover:bg-gray-50 rounded-md px-2 py-1 flex items-center justify-center font-medium">
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            window.open(
+              'https://sites.google.com/view/nebula-labs-planner/home?authuser=0',
+              '_blank',
+            );
+          }}
+          className="bg-white hover:bg-gray-50 rounded-md px-2 py-1 flex items-center justify-center font-medium"
+        >
           Learn more
         </button>
       </div>
