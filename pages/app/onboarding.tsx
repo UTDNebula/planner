@@ -406,7 +406,7 @@ export default function OnboardingPage(): JSX.Element {
   return (
     <>
       <div className="min-h-screen flex items-center justify-center bg-blue-400">
-        <div className="my-16 py-16 px-32 rounded shadow-2xl w-3/4 bg-white">
+        <div className="w-full h-screen flex justify-center items-center p-5 transition-all sm:h-auto sm:my-16 sm:py-16 sm:px-32 sm:w-3/4 rounded shadow-2xl bg-white">
           <div className="flex flex-col items-center justify-center">
             {/* {page >= 3 && (
               <Navigation
