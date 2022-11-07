@@ -1,5 +1,5 @@
 import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
-import { IconButton, Menu, MenuItem } from '@mui/material';
+import { IconButton, Menu, MenuItem, Tooltip } from '@mui/material';
 import React from 'react';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 
@@ -61,15 +61,17 @@ export default function SemesterContainer({
             {item.title}
             <div className="flex flex-row items-center">
               <div className="text-sm">{`${totalCredits} credits`}</div>
-              <IconButton
-                id="demo-positioned-button"
-                aria-controls={open ? 'demo-positioned-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? 'true' : undefined}
-                onClick={handleClick}
-              >
-                <ArrowDropDownCircleIcon />
-              </IconButton>
+              <Tooltip title={'Modify Semester'}>
+                <IconButton
+                  id="demo-positioned-button"
+                  aria-controls={open ? 'demo-positioned-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? 'true' : undefined}
+                  onClick={handleClick}
+                >
+                  <ArrowDropDownCircleIcon />
+                </IconButton>
+              </Tooltip>
             </div>
             <Menu
               id="demo-positioned-menu"
