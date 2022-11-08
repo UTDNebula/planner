@@ -127,7 +127,7 @@ export default function TemplateModal({ setOpenTemplateModal }: TemplateModalPro
             creditHours: 3,
             description: `Chose one of the ${sem[j].options} courses for this`,
             catalogCode: '',
-            prerequisites: undefined,
+            prerequisites: null,
             validation: { isValid: true, override: false },
           };
         } else {
