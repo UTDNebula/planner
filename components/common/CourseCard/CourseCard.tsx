@@ -1,9 +1,11 @@
 import { MoreVert } from '@mui/icons-material';
+import AssignmentIcon from '@mui/icons-material/Assignment';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import InfoIcon from '@mui/icons-material/Info';
 import { IconButton, Menu, MenuItem, Tooltip } from '@mui/material';
 import React from 'react';
+
 /**
  * Component properties for a {@link CourseCard}.
  */
@@ -158,31 +160,40 @@ function CourseCard(
         </div>
       </div>
       {/* <div className="text-body2 break-words">{description}</div> */}
-      <div className="">
-        <span className="text-sm">{creditHoursText}</span>
-        <span>
-          <Tooltip title={prerequisites} placement="right-end" className="text-md">
-            <InfoIcon fontSize="inherit" color="inherit" className="ml-2 text-xs text-gray-600" />
+      <div className="flex">
+        <div className="flex-1">
+          <span className="text-sm">{creditHoursText}</span>
+          <span>
+            <Tooltip title={prerequisites} placement="right-end" className="text-md">
+              <InfoIcon fontSize="inherit" color="inherit" className="ml-2 text-xs text-gray-600" />
+            </Tooltip>
+          </span>
+          {isValid === false && !override && (
+            <span className="ml-2">
+              <Tooltip title={'Mark prerequisite met'}>
+                <IconButton onClick={() => updateOverride(id)}>
+                  <CheckIcon />
+                </IconButton>
+              </Tooltip>
+            </span>
+          )}
+          {isValid === true && override && (
+            <span className="ml-2">
+              <Tooltip title={'Mark prerequisite not met'}>
+                <IconButton onClick={() => updateOverride(id)}>
+                  <CloseIcon />
+                </IconButton>
+              </Tooltip>
+            </span>
+          )}
+        </div>
+        <span className="flex-0">
+          <Tooltip title="View grades" placement="bottom">
+            <IconButton onClick={showCardOptions} size="large">
+              <AssignmentIcon />
+            </IconButton>
           </Tooltip>
         </span>
-        {isValid === false && !override && (
-          <span className="ml-2">
-            <Tooltip title={'Mark prerequisite met'}>
-              <IconButton onClick={() => updateOverride(id)}>
-                <CheckIcon />
-              </IconButton>
-            </Tooltip>
-          </span>
-        )}
-        {isValid === true && override && (
-          <span className="ml-2">
-            <Tooltip title={'Mark prerequisite not met'}>
-              <IconButton onClick={() => updateOverride(id)}>
-                <CloseIcon />
-              </IconButton>
-            </Tooltip>
-          </span>
-        )}
       </div>
     </article>
   );
