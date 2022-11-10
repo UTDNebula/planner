@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { makeStyles } from 'tss-react/mui';
 
-import PlanCard from '../../components/home/plans/PlanCard';
 import { RootState } from '../../modules/redux/store';
+import PlanCard from '../home/plans/PlanCard';
 import TemplateModal from '../template/Modal';
 
 /**
