@@ -74,7 +74,7 @@
   "lint-staged": {
     "*.{tsx,ts,js}": [
       "cross-env NODE_ENV=test eslint  --cache --fix . ",
-      "prettier --write {pages,components,modules}/**/*.{tsx,ts,js}"
+      "prettier --write {src/pages,src/components,src/modules}/**/*.{tsx,ts,js}"
     ]
   },
   "config": {

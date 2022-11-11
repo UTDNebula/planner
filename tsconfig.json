@@ -17,7 +17,19 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true
+    "incremental": true,
+    "baseUrl": ".", // This must be specified.
+    "paths": {
+      "@/*": ["src/*"], // This maps imports starting with @ to the `src` folder
+      "@components/*": ["src/components/*"], // This maps imports starting with @components to the `src/components` folder
+      "@pages/*": ["src/pages/*"], // This maps imports starting with @pages to the `src/pages` folder
+      "@utils/*": ["src/utils/*"], // This maps imports starting with @utils to the `src/utils` folder
+      "@data/*": ["src/data/*"], // This maps imports starting with @data to the `src/data` folder
+      "@modules/*": ["src/modules/*"], // This maps imports starting with @modules to the `src/modules` folder
+      "@styles/*": ["src/styles/*"], // This maps imports starting with @styles to the `src/styles` folder
+      "@server/*": ["src/server/*"],
+      "@public/*": ["public/*"] // This maps imports starting with @server to the `src/server` folder
+    }
   },
   "include": [
     "next-env.d.ts",

@@ -2,7 +2,7 @@ import { Theme, Typography } from '@mui/material';
 import React from 'react';
 import { makeStyles } from 'tss-react/mui';
 
-import { convertSemesterToData } from '../common/data-utils';
+import { convertSemesterToData } from './data-utils';
 import { HonorsIndicator } from './types';
 
 const useStyles = makeStyles()((theme: Theme) => {
