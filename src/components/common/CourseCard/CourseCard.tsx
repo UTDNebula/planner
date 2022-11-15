@@ -15,8 +15,8 @@ import {
   reformatArray,
   sortByGrades,
   splitGradeData,
-} from '../../planner/GradeReport/GradeChart';
-import courseData from '../../planner/GradeReport/Spring2020data';
+} from '../../planner/GradeChart/GradeChart';
+import courseData from '../../planner/GradeChart/Spring2020data';
 
 /**
  * Component properties for a {@link CourseCard}.

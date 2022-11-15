@@ -35,7 +35,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "components/planner/GradeReport/GradeChart.js"  ],
+, "src/components/planner/GradeChart/GradeChart.js"  ],
   "exclude": [
     "node_modules"
   ]
