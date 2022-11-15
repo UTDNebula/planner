@@ -5,7 +5,7 @@ import _ from 'lodash';
 export const reformatArray = (array) => {
   const result = [];
 
-  for (let property in array) {
+  for (const property in array) {
     if (array.hasOwnProperty(property)) {
       result.push({
         key: property,
