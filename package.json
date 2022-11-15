@@ -46,7 +46,10 @@
     "redux-thunk": "^2.3.0",
     "tailwind-scrollbar-hide": "^1.1.7",
     "tss-react": "^3.3.6",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "chart.js": "^2.9.4",
+    "lodash": "^4.17.20",
+    "react-chartjs-2": "^2.11.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.1.0",

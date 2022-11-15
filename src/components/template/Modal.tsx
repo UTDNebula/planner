@@ -65,7 +65,12 @@ export default function TemplateModal({ setOpenTemplateModal }: TemplateModalPro
       return a.semester.year - b.semester.year;
     });
 
+    const keys = new Set(Object.keys(courses));
+
     coursesFromCredits.forEach((course) => {
+      if (!keys.has(course.utdCourseCode)) {
+        return;
+      }
       const { name: title, description, hours, prerequisites } = courses[course.utdCourseCode];
 
       const creditCourse: Course = {
@@ -127,7 +132,7 @@ export default function TemplateModal({ setOpenTemplateModal }: TemplateModalPro
             creditHours: 3,
             description: `Chose one of the ${sem[j].options} courses for this`,
             catalogCode: '',
-            prerequisites: undefined,
+            prerequisites: null,
             validation: { isValid: true, override: false },
           };
         } else {
