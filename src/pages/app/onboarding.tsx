@@ -2,13 +2,11 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { NavigationStateProps } from '../../components/onboarding/Navigation';
 import Disclaimer from '../../components/onboarding/Onboarding_Pages/disclaimer';
 import PageOne, { PageOneTypes } from '../../components/onboarding/Onboarding_Pages/pg_1';
 import PageTwo, { PageTwoTypes } from '../../components/onboarding/Onboarding_Pages/pg_2';
 import Privacy from '../../components/onboarding/Onboarding_Pages/privacy';
 import Welcome from '../../components/onboarding/Onboarding_Pages/welcome';
-import { CreditState } from '../../components/onboarding/TransferCreditGallery';
 import { useAuthContext } from '../../modules/auth/auth-context';
 import { HonorsIndicator } from '../../modules/common/types';
 import { updateOnboarding } from '../../modules/redux/userDataSlice';
@@ -117,17 +115,6 @@ type PlanData = {
   // programs: SpecialPrograms;
 };
 
-/**
- * Information about transfer credits
- */
-type CreditAttributes = {
-  /**
-   * TODO: Create more descriptive type for credits
-   * Stores credit information
-   */
-  credits: CreditState[];
-};
-
 type ConsentData = {
   disclaimer: boolean;
   personalization: boolean;
@@ -174,9 +161,6 @@ export type OnboardingFormData = {
    * Flags for special academic/scholarship programs a student is a part of.
    */
   prestige: PrestigeAttributes;
-
-  // TODO: Find more thorough way to get credit information
-  credits: CreditState[]; // CreditAttributes;
 };
 
 /**
@@ -256,7 +240,7 @@ export default function OnboardingPage(): JSX.Element {
 
   const [validNextPage, setValidNextPage] = useState(false);
 
-  const [navProps, setNavProps] = useState<NavigationStateProps>({
+  const [navProps, setNavProps] = useState<any>({
     personal: true,
     honors: false,
     credits: false,
@@ -336,7 +320,6 @@ export default function OnboardingPage(): JSX.Element {
       plan: plan,
       studentAttributes: studentAttributes,
       prestige: prestige,
-      credits: pageThreeData.creditState,
     };
     return data;
   };

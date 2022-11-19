@@ -171,7 +171,6 @@ export function createSampleOnboarding() {
       scholarship: '',
       fastTrack: { major: '', status: false, year: '' },
     },
-    credits: [],
   };
   return data;
 }
