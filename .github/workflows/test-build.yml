@@ -1,4 +1,5 @@
-// main.yml - https://github.com/OctopusSamples/nextjs-blog/blob/main/.github/workflows/main.yml
+name: Build
+
 on:
   pull_request:
     branches:
