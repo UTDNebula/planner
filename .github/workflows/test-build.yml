@@ -1,0 +1,20 @@
+// main.yml - https://github.com/OctopusSamples/nextjs-blog/blob/main/.github/workflows/main.yml
+on:
+  pull_request:
+    branches:
+      - 'develop'
+      - 'release/**'
+      - 'master'
+
+jobs:
+  release:
+    name: Test build app
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        run: |
+          npm ci
+          npm run build

@@ -4,6 +4,5 @@ node_modules
 build
 # Don't lint nyc coverage output
 coverage
-
-# A temporary fix until rewrite is complete
-old
+# Don't lint github
+.github
