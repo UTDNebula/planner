@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import firebase from 'firebase';
+import firebase from 'firebase/compat/app';
 
 import { SemesterCode } from '../common/data';
 

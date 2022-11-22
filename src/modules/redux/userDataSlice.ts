@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import firebase from 'firebase';
+import firebase from 'firebase/compat/app';
 
 import { OnboardingFormData } from '../../pages/app/onboarding';
 import { CourseAttempt, ServiceUser, users } from '../auth/auth-context';
