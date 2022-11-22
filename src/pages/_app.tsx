@@ -1,6 +1,6 @@
 import '../styles/globals.css';
 
-import firebase from '@firebase/app';
+import firebase from 'firebase/compat/app';
 import { createTheme, StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
 import { AnimateSharedLayout } from 'framer-motion';
 import type { AppProps } from 'next/app';
