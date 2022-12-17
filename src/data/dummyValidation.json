@@ -1,0 +1,135 @@
+{
+  "Computer Science Preparatory Courses": {
+    "courses": {
+      "CS 1200": 2,
+      "CS 2305": 3,
+      "CS 2337": 3,
+      "CS 2340": 3,
+      "ECS 1100": 1,
+      "MATH 2418": 4,
+      "PHYS 2125": 1
+    },
+    "hours": 25,
+    "isfilled": false
+  },
+  "Computer Science Preparatory Courses - MATH 2413 or MATH 2417": {
+    "courses": {},
+    "hours": 4,
+    "isfilled": false
+  },
+  "Computer Science Preparatory Courses - MATH 2414 or MATH 2419": {
+    "courses": {},
+    "hours": 4,
+    "isfilled": false
+  },
+  "Computer Science Preparatory Courses - PHYS 2325 or PHYS 2421": {
+    "courses": {
+      "PHYS 2325": 3
+    },
+    "hours": 3,
+    "isfilled": true
+  },
+  "Core - American History (060)": {
+    "courses": {},
+    "hours": 6,
+    "isfilled": false
+  },
+  "Core - Communication (010)": {
+    "courses": {},
+    "hours": 6,
+    "isfilled": false
+  },
+  "Core - Component Area Option (090)": {
+    "courses": {},
+    "hours": 6,
+    "isfilled": false
+  },
+  "Core - Creative Arts (050)": {
+    "courses": {},
+    "hours": 3,
+    "isfilled": false
+  },
+  "Core - Government/Political Science (070)": {
+    "courses": {},
+    "hours": 6,
+    "isfilled": false
+  },
+  "Core - Language, Philosophy and Culture (040)": {
+    "courses": {},
+    "hours": 3,
+    "isfilled": false
+  },
+  "Core - Life and Physical Sciences (030)": {
+    "courses": {
+      "PHYS 2325": 3
+    },
+    "hours": 6,
+    "isfilled": false
+  },
+  "Core - Mathematics (020)": {
+    "courses": {},
+    "hours": 3,
+    "isfilled": false
+  },
+  "Core - Social and Behavioral Sciences (080)": {
+    "courses": {},
+    "hours": 3,
+    "isfilled": false
+  },
+  "Free Electives": {
+    "courses": {
+      "ATCM 3336": 3,
+      "RHET 1302": 3
+    },
+    "hours": 10,
+    "isfilled": false
+  },
+  "Major Core Courses": {
+    "courses": {
+      "CS 3305": 3,
+      "CS 3341": 3,
+      "CS 3345": 3
+    },
+    "hours": 39,
+    "isfilled": false
+  },
+  "Major Core Courses - ECS 3390": {
+    "courses": {},
+    "hours": 3,
+    "isfilled": false
+  },
+  "Major Guided Electives": {
+    "courses": {},
+    "hours": 9,
+    "isfilled": false
+  },
+  "Minimum Cumulative Hours": {
+    "courses": {
+      "ATCM 3336": 3,
+      "CS 1200": 2,
+      "CS 2305": 3,
+      "CS 2337": 3,
+      "CS 2340": 3,
+      "CS 3305": 3,
+      "CS 3341": 3,
+      "CS 3345": 3,
+      "ECS 1100": 1,
+      "MATH 2418": 4,
+      "PHYS 2125": 1,
+      "PHYS 2325": 3,
+      "RHET 1302": 3
+    },
+    "hours": 124,
+    "isfilled": false
+  },
+  "Upper Level Hour Requirement": {
+    "courses": {
+      "ATCM 3336": 3,
+      "CS 3305": 3,
+      "CS 3341": 3,
+      "CS 3345": 3
+    },
+    "hours": 51,
+    "isfilled": false
+  }
+}
