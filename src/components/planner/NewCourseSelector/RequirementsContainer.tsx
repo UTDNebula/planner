@@ -1,10 +1,21 @@
 import useSearch from '@/components/search/search';
 import SearchBar from '@/components/search/SearchBar';
-import React from 'react';
+import React, { useRef, useState } from 'react';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 
 export default function RequirementsContainer({ data }) {
   const [carousel, setCarousel] = React.useState(0);
+  const [accordian, setAccordian] = React.useState(false);
   const [requirementIdx, setRequirementIdx] = React.useState(0);
+  const [height, setHeight] = useState('0px');
+
+  const contentSpace = useRef(null);
+
+  function toggleAccordion() {
+    setAccordian((prevState) => !prevState);
+    setHeight(accordian ? '0px' : `${contentSpace.current.scrollHeight}px`);
+  }
 
   // TODO: Change this later
   const getCourses = async () => {
@@ -24,25 +35,36 @@ export default function RequirementsContainer({ data }) {
   return (
     <div className="relative">
       <div className={` absolute z-30 duration-500 ${carousel && '-translate-x-full'} bg-white`}>
-        <div className="h-80 w-full  overflow-y-scroll">
-          {data.map((elm, idx) => (
-            <button
-              className="w-full"
-              key={idx}
-              onClick={() => {
-                setCarousel(1);
-                setRequirementIdx(idx);
-              }}
-            >
-              <div className="flex justify-between px-10 py-2" key={idx}>
-                <div>{`Req ${idx}`}</div>
-                <div>{elm.isfilled ? 'Complete' : 'Incomplete'}</div>
-              </div>
-            </button>
-          ))}
+        <div className="w-full  overflow-y-scroll">
+          <button className="flex flex-row w-full justify-between" onClick={toggleAccordion}>
+            <div>Major Requirements</div>
+            {accordian ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+          </button>
+
+          <div
+            ref={contentSpace}
+            className="overflow-auto transition-max-height duration-300 ease-in-out"
+            style={{ maxHeight: `${height}` }}
+          >
+            {data.map((elm, idx) => (
+              <button
+                className="w-full"
+                key={idx}
+                onClick={() => {
+                  setCarousel(1);
+                  setRequirementIdx(idx);
+                }}
+              >
+                <div className="flex justify-between px-10 py-2" key={idx}>
+                  <div>{`Req ${idx}`}</div>
+                  <div>{elm.isfilled ? 'Complete' : 'Incomplete'}</div>
+                </div>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
-      <div className="h-80 w-full absolute flex flex-col">
+      <div className={` absolute flex flex-col `}>
         <div className="flex flex-row items-start justify-start">
           <button onClick={() => setCarousel(0)}>
             <svg
