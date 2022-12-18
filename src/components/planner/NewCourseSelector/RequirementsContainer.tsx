@@ -3,6 +3,25 @@ import SearchBar from '@/components/search/SearchBar';
 import React, { useRef, useState } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import { useDraggable } from '@dnd-kit/core';
+import { v4 as uuid } from 'uuid';
+
+function Draggable(props) {
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+    id: props.id,
+  });
+  const style = transform
+    ? {
+        transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
+      }
+    : undefined;
+
+  return (
+    <button ref={setNodeRef} style={style} {...listeners} {...attributes}>
+      {props.children}
+    </button>
+  );
+}
 
 export default function RequirementsContainer({ data }) {
   const [carousel, setCarousel] = React.useState(0);
@@ -67,7 +86,7 @@ export default function RequirementsContainer({ data }) {
       <div
         className={` absolute animate-hide bg-white border-2 border-black ${
           accordian ? ' flex flex-col ' : 'hidden'
-        } overflow-hidden `}
+        }  `}
         style={{ height }}
       >
         <div className="flex flex-row items-start justify-start">
@@ -99,9 +118,13 @@ export default function RequirementsContainer({ data }) {
           advisor.
         </div>
         <SearchBar updateQuery={updateQuery} />
-        <div className="border-2 border-blue-500">
+        <div className="border-2 border-blue-500 flex flex-col gap-4">
           {results.map((elm, idx) => (
-            <div key={idx}>{elm}</div>
+            <>
+              <Draggable id={uuid()} key={uuid()}>
+                {elm}
+              </Draggable>
+            </>
           ))}
         </div>
       </div>
