@@ -2,6 +2,8 @@ import RequirementsContainer from '@/components/planner/NewCourseSelector/Requir
 import useSearch from '@/components/search/search';
 import { loadDummyCourses } from '@/modules/common/api/courses';
 import SearchBar from '@components/credits/SearchBar';
+import { DndContext, useDroppable } from '@dnd-kit/core';
+import React from 'react';
 
 // Data would be plan data I think?
 export default function Test({ data }: DVResponse) {
@@ -12,21 +14,51 @@ export default function Test({ data }: DVResponse) {
     constraints: [0, 5],
   });
 
-  return (
-    <div className="flex justify-center h-screen w-screen bg-[#F5F5F5]">
-      <div className="flex flex-col gap-y-8 border-2 w-[344px]">
-        {/* Search container */}
-        <div className="border-2 border-black">
-          <SearchBar updateQuery={updateQuery} placeholder="Search courses" />
-        </div>
-        <div className="border-2 border-blue-500">
-          {results.map((elm, idx) => (
-            <div key={idx}>{elm.catalogCode}</div>
-          ))}
-        </div>
-        <RequirementsContainer data={data} />
+  function Droppable(props) {
+    const { isOver, setNodeRef } = useDroppable({
+      id: 'droppable',
+    });
+    const style = {
+      color: isOver ? 'green' : undefined,
+
+      border: '2px solid black',
+      zIndex: '0',
+    };
+
+    return (
+      <div ref={setNodeRef} style={style}>
+        Hi
+        {props.children}
       </div>
-    </div>
+    );
+  }
+
+  return (
+    <DndContext>
+      <div className="flex justify-center h-screen w-screen bg-[#F5F5F5]">
+        <div className="flex flex-col gap-y-8 border-2 w-[344px]">
+          {/* Search container */}
+          <div className="border-2 border-black ">
+            <SearchBar updateQuery={updateQuery} placeholder="Search courses" />
+          </div>
+          <div className="bg-white flex flex-col gap-y-4 p-4 text-[#757575] ">
+            {results.map((elm, idx) => (
+              <div
+                className="bg-white text-[10px] items-center drop-shadow-sm py-1.5 px-2 flex flex-row justify-between border border-[#EDEFF7] rounded-md"
+                key={idx}
+              >
+                {elm.catalogCode}
+                <div className="flex justify-center items-center text-[11px] w-20 border border-[#757575] rounded-md">
+                  Complete{' '}
+                </div>
+              </div>
+            ))}
+          </div>
+          {/* <Droppable /> */}
+          <RequirementsContainer data={data} />
+        </div>
+      </div>
+    </DndContext>
   );
 }
 
@@ -96,10 +128,12 @@ export async function getServerSideProps() {
 
   const validationData = (await import('@/data/dummyValidation.json'))['default'];
 
-  const data = Object.keys(validationData).map((elm, idx) => ({
-    name: elm,
-    ...validationData[elm],
-  }));
+  const data = Object.keys(validationData)
+    .map((elm, idx) => ({
+      name: elm,
+      ...validationData[elm],
+    }))
+    .slice(0, 5);
 
   console.log(data);
   // Pass data to the page via props
