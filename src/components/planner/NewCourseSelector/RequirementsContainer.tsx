@@ -33,9 +33,9 @@ export default function RequirementsContainer({ data }) {
 
   const numCredits = test.length > 0 ? test.reduce((prev, curr) => prev + curr) : 0;
   return (
-    <div className="relative">
+    <div className="relative ">
       <div className={` absolute z-30 duration-500 ${carousel && '-translate-x-full'} bg-white`}>
-        <div className="w-full  overflow-y-scroll">
+        <div className="w-full">
           <button className="flex flex-row w-full justify-between" onClick={toggleAccordion}>
             <div>Major Requirements</div>
             {accordian ? <ExpandLessIcon /> : <ExpandMoreIcon />}
@@ -43,8 +43,8 @@ export default function RequirementsContainer({ data }) {
 
           <div
             ref={contentSpace}
-            className="overflow-auto transition-max-height duration-300 ease-in-out"
-            style={{ maxHeight: `${height}` }}
+            className="overflow-auto duration-500 ease-in-out"
+            style={{ height }}
           >
             {data.map((elm, idx) => (
               <button
@@ -64,7 +64,12 @@ export default function RequirementsContainer({ data }) {
           </div>
         </div>
       </div>
-      <div className={` absolute flex flex-col `}>
+      <div
+        className={` absolute animate-hide bg-white border-2 border-black ${
+          accordian ? ' flex flex-col ' : 'hidden'
+        } overflow-hidden `}
+        style={{ height }}
+      >
         <div className="flex flex-row items-start justify-start">
           <button onClick={() => setCarousel(0)}>
             <svg

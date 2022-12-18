@@ -14,7 +14,7 @@ export default function Test({ data }: DVResponse) {
 
   return (
     <div className="flex justify-center h-screen w-screen bg-[#F5F5F5]">
-      <div className="overflow-scroll flex flex-col gap-y-8 border-2 w-[344px]">
+      <div className="flex flex-col gap-y-8 border-2 w-[344px]">
         {/* Search container */}
         <div className="border-2 border-black">
           <SearchBar updateQuery={updateQuery} placeholder="Search courses" />
