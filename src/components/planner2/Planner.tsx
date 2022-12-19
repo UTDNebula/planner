@@ -42,7 +42,8 @@ export interface DragDataToSemesterTile {
   semester: Semester;
 }
 
-interface ActiveCourseData {
+/** Date stored during drag */
+interface ActiveDragData {
   from: 'semester-tile' | 'course-list';
   course: Course;
 }
@@ -71,9 +72,7 @@ export interface PlannerToolProps {
   ) => Promise<ToastMessage>;
 }
 
-/**
- * Controlled wrapper around course list and semester tiles
- */
+/** Controlled wrapper around course list and semester tiles */
 export const PlannerTool: FC<PlannerToolProps> = ({
   courses,
   semesters,
@@ -82,7 +81,7 @@ export const PlannerTool: FC<PlannerToolProps> = ({
   onRemoveCourseFromSemester,
   onMoveCourseFromSemesterToSemester,
 }) => {
-  const [activeCourse, setActiveCourse] = useState<ActiveCourseData | null>(null);
+  const [activeCourse, setActiveCourse] = useState<ActiveDragData | null>(null);
 
   return (
     <DndContext
