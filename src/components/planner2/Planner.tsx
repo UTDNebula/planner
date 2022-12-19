@@ -46,16 +46,41 @@ interface ActiveCourseData {
   course: Course;
 }
 
-/**
- * Controlled wrapper around course list and semester tiles
- */
+export interface ToastMessage {
+  message: string;
+  level: 'ok' | 'warn' | 'error';
+}
+
+/** PlannerTool Props */
 export interface PlannerToolProps {
   courses: Course[];
   semesters: Semester[];
-  setSemesters: (semesters: Semester[]) => void;
+  /** Called when course moved from course list -> semester */
+  onAddCourseToSemester?: (targetSemester: Semester, newCourse: Course) => Promise<ToastMessage>;
+  /** Called when course removed from semester */
+  onRemoveCourseFromSemester?: (
+    targetSemester: Semester,
+    courseToRemove: Course,
+  ) => Promise<ToastMessage>;
+  /** Called when courese moved from semester -> semester */
+  onMoveCourseFromSemesterToSemester?: (
+    originSemester: Semester,
+    destinationSemester: Semester,
+    courseToMove: Course,
+  ) => Promise<ToastMessage>;
 }
 
-export const PlannerTool: FC<PlannerToolProps> = ({ courses, semesters, setSemesters }) => {
+/**
+ * Controlled wrapper around course list and semester tiles
+ */
+export const PlannerTool: FC<PlannerToolProps> = ({
+  courses,
+  semesters,
+  onAddCourseToSemester,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars
+  onRemoveCourseFromSemester,
+  onMoveCourseFromSemesterToSemester,
+}) => {
   const [activeCourse, setActiveCourse] = useState<ActiveCourseData | null>(null);
 
   return (
@@ -67,7 +92,6 @@ export const PlannerTool: FC<PlannerToolProps> = ({ courses, semesters, setSemes
       }}
       onDragEnd={({ active, over }) => {
         setActiveCourse(null);
-        console.log({ active, over });
 
         if (active && over) {
           const originData = active.data.current as DragEventOriginData;
@@ -77,59 +101,32 @@ export const PlannerTool: FC<PlannerToolProps> = ({ courses, semesters, setSemes
           if (active.id == over.id && originData.from === destinationData.to) return;
 
           // from course list -> semester
-          if (originData.from === 'course-list' && destinationData.to === 'semester-tile') {
-            const semesterId = destinationData.semester.id;
-            setSemesters(
-              semesters.map((semester) => {
-                if (semester.id != semesterId) return semester;
-
-                // if duplicate course in destination semester
-                if (semester.courses.find((course) => course.id === originData.course.id)) {
-                  // TODO: Toast notification: semester already contains course
-                  return semester;
-                }
-
-                return { ...semester, courses: [...semester.courses, originData.course] };
-              }),
+          if (
+            originData.from === 'course-list' &&
+            destinationData.to === 'semester-tile' &&
+            onAddCourseToSemester
+          ) {
+            onAddCourseToSemester(destinationData.semester, originData.course).then(
+              (notification) =>
+                // TODO: push message to toast notifications
+                console.log(notification.message),
             );
           }
 
           // from semester -> semester
-          if (originData.from === 'semester-tile' && destinationData.to === 'semester-tile') {
-            // if duplicate course in destination semester
-            const isDuplicate = Boolean(
-              semesters
-                .find((semester) => semester.id === destinationData.semester.id)
-                ?.courses.find((course) => course.id === originData.course.id),
-            );
-            if (isDuplicate) {
-              // TODO: Toast notification: semester already contains course
-              return;
-            }
-
-            setSemesters(
-              semesters.map((semester) => {
-                // add course to destination semester
-                if (semester.id === destinationData.semester.id) {
-                  return {
-                    ...semester,
-                    courses: [...semester.courses, originData.course],
-                  };
-                }
-
-                // remove course from origin semester
-                if (semester.id === originData.semester.id) {
-                  return {
-                    ...semester,
-                    courses: semester.courses.filter(
-                      (course) => course.id !== originData.course.id,
-                    ),
-                  };
-                }
-
-                return semester;
-              }),
-            );
+          if (
+            originData.from === 'semester-tile' &&
+            destinationData.to === 'semester-tile' &&
+            onMoveCourseFromSemesterToSemester
+          ) {
+            onMoveCourseFromSemesterToSemester(
+              originData.semester,
+              destinationData.semester,
+              originData.course,
+            ).then((notification) => {
+              // TODO: push message to toast notifications
+              console.log(notification.message);
+            });
           }
         }
       }}

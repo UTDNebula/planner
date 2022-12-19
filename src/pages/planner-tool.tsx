@@ -19,7 +19,66 @@ const Test3Page: NextPage = () => {
       <PlannerTool
         courses={courses}
         semesters={semesters}
-        setSemesters={(semesters) => setSemesters(semesters)}
+        onAddCourseToSemester={async (targetSemester, newCourse) => {
+          // check for duplicate course
+          const isDuplicate = Boolean(
+            targetSemester.courses.find((course) => course.id === newCourse.id),
+          );
+          if (isDuplicate) {
+            return {
+              level: 'warn',
+              message: `You're already taking ${newCourse.name} in ${targetSemester.name}`,
+            };
+          }
+
+          setSemesters((semesters) =>
+            semesters.map((semester) =>
+              semester.id === targetSemester.id
+                ? { ...semester, courses: [...semester.courses, newCourse] }
+                : semester,
+            ),
+          );
+
+          return { level: 'ok', message: `Added ${newCourse.name} to ${targetSemester.name}` };
+        }}
+        onMoveCourseFromSemesterToSemester={async (
+          originSemester,
+          destinationSemester,
+          courseToMove,
+        ) => {
+          // check for duplicate course
+          const isDuplicate = Boolean(
+            destinationSemester.courses.find((course) => course.id === courseToMove.id),
+          );
+          if (isDuplicate) {
+            return {
+              level: 'warn',
+              message: `You're already taking ${courseToMove.name} in ${destinationSemester.name}`,
+            };
+          }
+
+          setSemesters((semesters) =>
+            semesters.map((semester) => {
+              if (semester.id === destinationSemester.id) {
+                return { ...semester, courses: [...semester.courses, courseToMove] };
+              }
+
+              if (semester.id === originSemester.id) {
+                return {
+                  ...semester,
+                  courses: semester.courses.filter((course) => course.id !== courseToMove.id),
+                };
+              }
+
+              return semester;
+            }),
+          );
+
+          return {
+            level: 'ok',
+            message: `Moved ${courseToMove.name} from ${originSemester.name} to ${destinationSemester.name}`,
+          };
+        }}
       />
     </div>
   );
