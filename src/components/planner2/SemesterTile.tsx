@@ -1,5 +1,4 @@
 import { UniqueIdentifier, useDroppable } from '@dnd-kit/core';
-import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { FC, forwardRef, useCallback } from 'react';
 
 import { Course, DragDataToSemesterTile, Semester } from './Planner';
@@ -59,18 +58,13 @@ const DroppableSemesterTile: FC<DroppableSemesterTileProps> = ({ id, semester, .
   const getDraggableId = useCallback((course: Course) => `${semester.id}-${course.id}`, [semester]);
 
   return (
-    <SortableContext
-      items={semester.courses.map(getDraggableId)}
-      strategy={verticalListSortingStrategy}
-    >
-      <SemesterTile
-        ref={setNodeRef}
-        isOver={isOver}
-        semester={semester}
-        getDraggableId={getDraggableId}
-        {...props}
-      />
-    </SortableContext>
+    <SemesterTile
+      ref={setNodeRef}
+      isOver={isOver}
+      semester={semester}
+      getDraggableId={getDraggableId}
+      {...props}
+    />
   );
 };
 

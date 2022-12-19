@@ -1,6 +1,4 @@
-import { UniqueIdentifier } from '@dnd-kit/core';
-import { useSortable } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
+import { UniqueIdentifier, useDraggable } from '@dnd-kit/core';
 import { ComponentPropsWithoutRef, FC, forwardRef } from 'react';
 
 import { Course, DragDataFromSemesterTile, Semester } from './Planner';
@@ -45,7 +43,7 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
   course,
   ...props
 }) => {
-  const { setNodeRef, transform, transition, attributes, listeners } = useSortable({
+  const { setNodeRef, attributes, listeners, isDragging } = useDraggable({
     id,
     data: { from: 'semester-tile', semester, course } as DragDataFromSemesterTile,
   });
@@ -53,7 +51,7 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
   return (
     <SemesterCourseItem
       ref={setNodeRef}
-      style={{ transform: CSS.Transform.toString(transform), transition }}
+      style={{ visibility: isDragging ? 'hidden' : 'unset' }}
       {...attributes}
       {...listeners}
       {...props}
