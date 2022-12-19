@@ -9,9 +9,7 @@ export default function RequirementsContainer({ data }) {
   const [requirementIdx, setRequirementIdx] = React.useState(0);
   const [height, setHeight] = useState('0px');
 
-  const contentSpace = useRef(null);
-
-  function toggleAccordion() {
+  function toggleAccordion(contentSpace) {
     setAccordian((prevState) => !prevState);
     setHeight(accordian ? '0px' : `${contentSpace.current.scrollHeight + 20}px`);
   }
@@ -23,16 +21,16 @@ export default function RequirementsContainer({ data }) {
           className={` px-4 py-3 rounded-md relative z-30 duration-500 ${
             carousel && '-translate-x-full'
           } bg-white`}
-        ></div>
-        <RequirementsAccordion
-          data={data}
-          toggleAccordion={toggleAccordion}
-          accordian={accordian}
-          contentSpace={contentSpace}
-          setCarousel={setCarousel}
-          setRequirementIdx={setRequirementIdx}
-          height={height}
-        />
+        >
+          <RequirementsAccordion
+            data={data}
+            toggleAccordion={toggleAccordion}
+            accordian={accordian}
+            setCarousel={setCarousel}
+            setRequirementIdx={setRequirementIdx}
+            height={height}
+          />
+        </div>
         <div
           className={` absolute top-0 p-4 animate-hide bg-white h-full ${
             accordian && carousel ? ' flex flex-col gap-4' : 'hidden'

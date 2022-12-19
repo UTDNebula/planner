@@ -2,19 +2,23 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 
 import RequirementsList from './RequirementsList';
+import { useRef } from 'react';
 
 export default function RequirementsAccordion({
   data,
   toggleAccordion,
   accordian,
-  contentSpace,
   setCarousel,
   setRequirementIdx,
   height,
 }) {
+  const contentSpace = useRef(null);
   return (
     <div className="w-full">
-      <button className="flex flex-row w-full justify-between px-2" onClick={toggleAccordion}>
+      <button
+        className="flex flex-row w-full justify-between px-2"
+        onClick={() => toggleAccordion(contentSpace)}
+      >
         <div className="">{data.name}</div>
         {accordian ? <ExpandLessIcon /> : <ExpandMoreIcon />}
       </button>
