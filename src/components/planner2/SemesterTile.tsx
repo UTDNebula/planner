@@ -15,15 +15,15 @@ export interface SemesterTileProps {
  * Strictly UI implementation of a semester tile
  */
 export const SemesterTile = forwardRef<HTMLDivElement, SemesterTileProps>(function SemesterTile(
-  { semester, getDraggableId, isValid },
+  { semester, getDraggableId, isValid, isOver },
   ref,
 ) {
   return (
     <div
       ref={ref}
-      className={`w-[256px] h-[184px] bg-white rounded-md shadow-md px-[12px] py-[8px] flex flex-col gap-[10px] border-b-[9px] ${
-        isValid ? 'border-[#3E61ED]' : 'border-red-500'
-      }`}
+      className={`w-[256px] h-[184px] bg-white rounded-md shadow-md px-[12px] py-[8px] flex flex-col gap-[10px] ${
+        isOver ? 'border-2 border-r-slate-200 border-t-slate-200 border-l-slate-200' : ''
+      } border-b-[9px] ${isValid ? 'border-b-[#3E61ED]' : 'border-b-red-500'}`}
     >
       <div className="flex justify-between">
         <h3 className={`text-[15px] font-medium ${isValid ? 'text-[#3E61ED]' : 'text-red-500'}`}>
