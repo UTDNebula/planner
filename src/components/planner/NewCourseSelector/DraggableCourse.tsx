@@ -1,5 +1,6 @@
 import { useDraggable } from '@dnd-kit/core';
 import { v4 as uuid } from 'uuid';
+import StatusTag from './StatusTag';
 
 function Draggable(props) {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
@@ -18,17 +19,18 @@ function Draggable(props) {
   );
 }
 
-export default function DraggableCourse({ idx, elm }) {
+export default function DraggableCourse({ elm, idx }) {
+  // Course would be marked incomplete ONLY if requirement needed course
+  // Maybe DraggableCourse needs to take a prop specifying if it's needed or nah?
+  // TODO: Update course status tag
   return (
     <Draggable id={uuid()} key={uuid()}>
       <div
         className="bg-white text-[10px] items-center drop-shadow-sm py-1.5 px-2 flex flex-row justify-between border border-[#EDEFF7] rounded-md"
         key={idx}
       >
-        {elm}
-        <div className="flex justify-center items-center text-[11px] w-20 border text-red-500 border-red-500 rounded-md">
-          Incomplete
-        </div>
+        {elm.catalogCode}
+        <StatusTag status={false} />
       </div>
     </Draggable>
   );
