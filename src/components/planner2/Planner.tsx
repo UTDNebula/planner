@@ -14,6 +14,7 @@ export interface Semester {
 export interface Course {
   id: UniqueIdentifier;
   name: string;
+  validation?: { isValid: boolean; override: boolean };
 }
 
 /**
@@ -164,7 +165,19 @@ export const PlannerTool: FC<PlannerToolProps> = ({
 
         <div className="flex flex-wrap gap-[20px]">
           {semesters.map((semester) => (
-            <DroppableSemesterTile key={semester.id} id={'s' + semester.id} semester={semester} />
+            <DroppableSemesterTile
+              key={semester.id}
+              id={'s' + semester.id}
+              semester={semester}
+              isValid={
+                semester.courses.length === 0
+                  ? true
+                  : !semester.courses.some(
+                      (course) =>
+                        typeof course.validation !== 'undefined' && !course.validation.isValid,
+                    )
+              }
+            />
           ))}
         </div>
       </div>

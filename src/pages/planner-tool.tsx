@@ -9,7 +9,11 @@ const Test3Page: NextPage = () => {
     { id: '2', name: 'CS 1337' },
   ];
   const [semesters, setSemesters] = useState<Semester[]>([
-    { id: '1', name: "Fall'22", courses: [] },
+    {
+      id: '1',
+      name: "Fall'22",
+      courses: [{ id: '3', name: 'CS 2305', validation: { isValid: false, override: false } }],
+    },
     { id: '2', name: "Spring'23", courses: [] },
     { id: '3', name: "Summer'23", courses: [] },
   ]);

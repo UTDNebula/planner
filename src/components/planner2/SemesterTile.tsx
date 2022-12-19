@@ -9,25 +9,29 @@ export interface SemesterTileProps {
   semester: Semester;
   isOver: boolean;
   getDraggableId: (c: Course) => UniqueIdentifier;
+  isValid: boolean;
 }
 
 /**
  * Strictly UI implementation of a semester tile
  */
 export const SemesterTile = forwardRef<HTMLDivElement, SemesterTileProps>(function SemesterTile(
-  { semester, getDraggableId },
+  { semester, getDraggableId, isValid },
   ref,
 ) {
   return (
     <div
       ref={ref}
-      className={`w-[256px] h-[184px] bg-white rounded-md shadow-md px-[12px] py-[8px] flex flex-col gap-[10px] border-b-[9px] border-[#3E61ED]`}
+      className={`w-[256px] h-[184px] bg-white rounded-md shadow-md px-[12px] py-[8px] flex flex-col gap-[10px] border-b-[9px] ${
+        isValid ? 'border-[#3E61ED]' : 'border-red-500'
+      }`}
     >
       <h3 className="text-[15px] font-medium text-[#3E61ED]">{semester.name}</h3>
       {semester.courses.map((course) => (
         <DraggableSemesterCourseItem
           key={course.id}
           id={getDraggableId(course)}
+          isValid={course.validation?.isValid === false}
           course={course}
           semester={semester}
         />
@@ -39,12 +43,13 @@ export const SemesterTile = forwardRef<HTMLDivElement, SemesterTileProps>(functi
 export interface DroppableSemesterTileProps {
   id: UniqueIdentifier;
   semester: Semester;
+  isValid: boolean;
 }
 
 /**
  * Strictly compositional wrapper around SemesterTile
  */
-const DroppableSemesterTile: FC<DroppableSemesterTileProps> = ({ id, semester }) => {
+const DroppableSemesterTile: FC<DroppableSemesterTileProps> = ({ id, semester, ...props }) => {
   const { setNodeRef, isOver } = useDroppable({
     id,
     data: { to: 'semester-tile', semester } as DragDataToSemesterTile,
@@ -63,6 +68,7 @@ const DroppableSemesterTile: FC<DroppableSemesterTileProps> = ({ id, semester })
         isOver={isOver}
         semester={semester}
         getDraggableId={getDraggableId}
+        {...props}
       />
     </SortableContext>
   );
