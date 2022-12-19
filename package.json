@@ -12,6 +12,8 @@
     "postinstall": "husky install"
   },
   "dependencies": {
+    "@dnd-kit/core": "^6.0.6",
+    "@dnd-kit/sortable": "^7.0.1",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
     "@fontsource/roboto": "^4.2.3",
@@ -38,7 +40,6 @@
     "react-awesome-reveal": "^4.1.0",
     "react-beautiful-dnd": "^13.1.0",
     "react-custom-scrollbars-2": "^4.5.0",
-    "react-dom": "^17.0.2",
     "react-intersection-observer": "^9.4.0",
     "react-redux": "^7.2.4",
     "redux-devtools-extension": "^2.13.9",
