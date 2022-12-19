@@ -53,8 +53,8 @@ export default function RequirementsContainer({ data }) {
 
   const numCredits = test.length > 0 ? test.reduce((prev, curr) => prev + curr) : 0;
   return (
-    <div className="relative h-full ">
-      <div className=" h-full overflow-hidden">
+    <div className="relative">
+      <div className="overflow-hidden">
         <div
           className={` px-4 py-3 rounded-md relative z-30 duration-500 ${
             carousel && '-translate-x-full'
@@ -71,13 +71,13 @@ export default function RequirementsContainer({ data }) {
 
             <div
               ref={contentSpace}
-              className="overflow-auto duration-500 ease-in-out"
+              className={`overflow-auto duration-500 ease-in-out ${accordian && 'pt-4'}`}
               style={{ height }}
             >
               {data.map((elm, idx) => (
                 <div className="flex justify-between px-2 py-1" key={idx}>
-                  <div className="text-sm">{` ${elm.name.split(' ').splice(2, 3).join(' ')}`}</div>
-                  <div className="text-[11px] flex flex-row px-[5px]">
+                  <div className="text-sm">{elm.name}</div>
+                  <div className="text-[11px] flex flex-row items-center px-[5px]">
                     <div className="flex justify-center items-center border rounded-md px-[10px] py-[1px] border-[#1C2A6D]">
                       {elm.isfilled ? 'Complete' : 'Incomplete'}
                     </div>
