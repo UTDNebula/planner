@@ -34,12 +34,12 @@ export default function RequirementsContainer({ data }) {
 
   function toggleAccordion() {
     setAccordian((prevState) => !prevState);
-    setHeight(accordian ? '0px' : `${contentSpace.current.scrollHeight}px`);
+    setHeight(accordian ? '0px' : `${contentSpace.current.scrollHeight + 20}px`);
   }
 
   // TODO: Change this later
   const getCourses = async () => {
-    return Object.keys(data[requirementIdx].courses);
+    return data.requirements[requirementIdx].courses;
   };
 
   const { results, updateQuery, getResults, err } = useSearch({
@@ -49,9 +49,21 @@ export default function RequirementsContainer({ data }) {
     constraints: [0, 5],
   });
 
-  const test = Object.values(data[requirementIdx].courses);
+  const test = Object.values(
+    data.requirements[requirementIdx].validCourses.map((elm, idx) => elm.split(' ')[1]),
+  );
 
-  const numCredits = test.length > 0 ? test.reduce((prev, curr) => prev + curr) : 0;
+  const hi =
+    test.length > 0
+      ? test.map((elm, idx) => {
+          if (elm !== undefined) return parseInt(elm.substring(1, 2));
+        })
+      : null;
+  console.log(hi);
+
+  console.log(test);
+
+  const numCredits = test.length > 0 ? hi.reduce((prev: number, curr: number) => prev + curr) : 0;
   return (
     <div className="relative">
       <div className="overflow-hidden">
@@ -61,11 +73,8 @@ export default function RequirementsContainer({ data }) {
           } bg-white`}
         >
           <div className="w-full">
-            <button
-              className="flex flex-row w-full justify-between px-2 "
-              onClick={toggleAccordion}
-            >
-              <div>Major Requirements</div>
+            <button className="flex flex-row w-full justify-between px-2" onClick={toggleAccordion}>
+              <div className="">{data.name}</div>
               {accordian ? <ExpandLessIcon /> : <ExpandMoreIcon />}
             </button>
 
@@ -74,7 +83,7 @@ export default function RequirementsContainer({ data }) {
               className={`overflow-auto duration-500 ease-in-out ${accordian && 'pt-4'}`}
               style={{ height }}
             >
-              {data.map((elm, idx) => (
+              {data.requirements.map((elm, idx) => (
                 <div className="flex justify-between px-2 py-1" key={idx}>
                   <div className="text-sm">{elm.name}</div>
                   <div className="text-[11px] flex flex-row items-center px-[5px]">
@@ -106,7 +115,7 @@ export default function RequirementsContainer({ data }) {
               <svg
                 width="30"
                 height="27"
-                viewBox="0 0 30 27"
+                viewBox="0 -12 60 54"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
@@ -119,18 +128,18 @@ export default function RequirementsContainer({ data }) {
               </svg>
             </button>
             <div>
-              <div>{data[requirementIdx].name}</div>
+              <div className="text-base">{data.requirements[requirementIdx].name}</div>
 
-              <div>{`${numCredits}/${data[requirementIdx].hours} credits`}</div>
+              <div className="text-[10px]">{`${numCredits}/${data.requirements[requirementIdx].hours} credits`}</div>
             </div>
           </div>
-          <div>
+          <div className="text-[11px]">
             CS guided electives are 4000 level CS courses approved by the students CS advisor. The
             following courses may be used as guided electives without the explicit approval of an
             advisor.
           </div>
           <SearchBar updateQuery={updateQuery} />
-          <div className="bg-white flex flex-col gap-y-4 p-4 text-[#757575] ">
+          <div className="bg-white flex flex-col gap-y-4 text-[#757575]">
             {results.map((elm, idx) => (
               <Draggable id={uuid()} key={uuid()}>
                 <div

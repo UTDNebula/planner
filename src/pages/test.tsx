@@ -55,7 +55,9 @@ export default function Test({ data }: DVResponse) {
             ))}
           </div>
           {/* <Droppable /> */}
-          <RequirementsContainer data={data} />
+          {data.map((req, idx) => (
+            <RequirementsContainer key={idx} data={req} />
+          ))}
         </div>
       </div>
     </DndContext>
@@ -128,14 +130,13 @@ export async function getServerSideProps() {
 
   const validationData = (await import('@/data/dummyValidation.json'))['default'];
 
-  const data = Object.keys(validationData)
-    .map((elm, idx) => ({
-      name: elm,
-      ...validationData[elm],
-    }))
-    .slice(0, 5);
+  // const data = Object.keys(validationData).map((elm, idx) => ({
+  //   name: elm,
+  //   ...validationData[elm],
+  // }));
+  // .slice(0, 5);
 
-  console.log(data);
+  console.log(validationData);
   // Pass data to the page via props
-  return { props: { data } };
+  return { props: { data: validationData } };
 }
