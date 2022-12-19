@@ -1,140 +1,20 @@
-import RequirementsContainer from '@/components/planner/NewCourseSelector/RequirementsContainer';
-import useSearch from '@/components/search/search';
-import { loadDummyCourses } from '@/modules/common/api/courses';
-import SearchBar from '@components/credits/SearchBar';
-import { DndContext, useDroppable } from '@dnd-kit/core';
-import React from 'react';
+import CourseSelectorContainer from '@/components/planner/NewCourseSelector/CourseSelectorContainer';
+import { DndContext } from '@dnd-kit/core';
 
 // Data would be plan data I think?
-export default function Test({ data }: DVResponse) {
-  const { results, updateQuery, getResults, err } = useSearch({
-    getData: loadDummyCourses,
-    initialQuery: '',
-    filterFn: (elm, query) => elm['catalogCode'].toLowerCase().includes(query.toLowerCase()),
-    constraints: [0, 5],
-  });
-
-  function Droppable(props) {
-    const { isOver, setNodeRef } = useDroppable({
-      id: 'droppable',
-    });
-    const style = {
-      color: isOver ? 'green' : undefined,
-
-      border: '2px solid black',
-      zIndex: '0',
-    };
-
-    return (
-      <div ref={setNodeRef} style={style}>
-        Hi
-        {props.children}
-      </div>
-    );
-  }
-
+export default function Test({ data }) {
   return (
     <DndContext>
       <div className="flex justify-center h-screen w-screen bg-[#F5F5F5]">
-        <div className="flex flex-col gap-y-8 border-2 w-[344px]">
-          {/* Search container */}
-          <div className="border-2 border-black ">
-            <SearchBar updateQuery={updateQuery} placeholder="Search courses" />
-          </div>
-          <div className="bg-white flex flex-col gap-y-4 p-4 text-[#757575] ">
-            {results.map((elm, idx) => (
-              <div
-                className="bg-white text-[10px] items-center drop-shadow-sm py-1.5 px-2 flex flex-row justify-between border border-[#EDEFF7] rounded-md"
-                key={idx}
-              >
-                {elm.catalogCode}
-                <div className="flex justify-center items-center text-[11px] w-20 border border-[#757575] rounded-md">
-                  Complete{' '}
-                </div>
-              </div>
-            ))}
-          </div>
-          {/* <Droppable /> */}
-          {data.map((req, idx) => (
-            <RequirementsContainer key={idx} data={req} />
-          ))}
-        </div>
+        <CourseSelectorContainer data={data} />
       </div>
     </DndContext>
   );
 }
 
-interface DVRequest {
-  courses: DVCourse[];
-  bypasses: DVBypass[];
-  degree: string;
-}
-
-interface DVResponse {
-  [requirement: string]: DVRequirement;
-}
-
-interface DVRequirement {
-  courses: Record<string, number>;
-  hours: number;
-  isfilled: boolean;
-}
-
-interface DVBypass {
-  course: string;
-  requirement: string;
-  hours: number;
-}
-
-interface DVCourse {
-  name: string;
-  department: string;
-  level: number;
-  hours: number;
-}
-
 // This gets called on every request
 export async function getServerSideProps() {
-  // const dummySchedule = await import('@/data/tempPlan.json');
-
-  // const body: DVRequest = {
-  //   courses: dummySchedule.semesters
-  //     .flatMap((s) => s.courses)
-  //     .map((c) => {
-  //       const split = c.catalogCode.split(' ');
-  //       const department = split[0];
-  //       const courseNumber = Number(split[1]);
-  //       const level = Math.floor(courseNumber / 1000);
-  //       const hours = Math.floor((courseNumber - level * 1000) / 100);
-  //       return {
-  //         name: c.catalogCode,
-  //         department: department,
-  //         level,
-  //         hours,
-  //       };
-  //     }),
-  //   bypasses: [],
-  //   degree: 'computer_science_bs',
-  // };
-
-  // const res = await fetch(`${process.env.NEXT_PUBLIC_VALIDATION_SERVER}/validate-degree-plan`, {
-  //   method: 'POST',
-  //   body: JSON.stringify(body),
-  //   headers: {
-  //     'content-type': 'application/json',
-  //   },
-  // });
-
-  // // TODO: Figure out way to sort courses in catalog order
-  // const data = (await res.json()) as DVResponse;
-
   const validationData = (await import('@/data/dummyValidation.json'))['default'];
-
-  // const data = Object.keys(validationData).map((elm, idx) => ({
-  //   name: elm,
-  //   ...validationData[elm],
-  // }));
-  // .slice(0, 5);
 
   console.log(validationData);
   // Pass data to the page via props
