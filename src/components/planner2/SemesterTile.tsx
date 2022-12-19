@@ -25,7 +25,13 @@ export const SemesterTile = forwardRef<HTMLDivElement, SemesterTileProps>(functi
         isValid ? 'border-[#3E61ED]' : 'border-red-500'
       }`}
     >
-      <h3 className="text-[15px] font-medium text-[#3E61ED]">{semester.name}</h3>
+      <div className="flex justify-between">
+        <h3 className={`text-[15px] font-medium ${isValid ? 'text-[#3E61ED]' : 'text-red-500'}`}>
+          {semester.name}
+        </h3>
+        {!isValid && <h3 className="text-[15px] font-medium text-red-500">{'Invalid Course'}</h3>}
+      </div>
+
       {semester.courses.map((course) => (
         <DraggableSemesterCourseItem
           key={course.id}
