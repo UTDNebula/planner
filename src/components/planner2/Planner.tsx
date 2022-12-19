@@ -1,7 +1,7 @@
 import { DndContext, DragOverlay, pointerWithin, UniqueIdentifier } from '@dnd-kit/core';
 import React, { FC, useState } from 'react';
 
-import DraggableCourseListCourseItem from './CourseListCourseItem';
+import DraggableCourseListCourseItem, { CourseListCourseItem } from './CourseListCourseItem';
 import { SemesterCourseItem } from './SemesterCourseItem';
 import DroppableSemesterTile from './SemesterTile';
 
@@ -146,11 +146,19 @@ export const PlannerTool: FC<PlannerToolProps> = ({
           ))}
 
           <DragOverlay dropAnimation={null}>
-            {activeCourse && activeCourse.from === 'semester-tile' ? (
-              <SemesterCourseItem courseName={activeCourse.course.name} />
-            ) : (
-              <div></div>
-            )}
+            {activeCourse &&
+              (activeCourse.from === 'semester-tile' ? (
+                <SemesterCourseItem courseName={activeCourse.course.name} />
+              ) : (
+                // TODO: Replace with Caleb's implementation of course item
+                <CourseListCourseItem
+                  courseName={activeCourse.course.name}
+                  style={{
+                    width: '300px',
+                    height: '50px',
+                  }}
+                />
+              ))}
           </DragOverlay>
         </section>
 

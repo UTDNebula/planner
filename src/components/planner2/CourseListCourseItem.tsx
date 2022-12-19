@@ -3,20 +3,19 @@ import React, { FC } from 'react';
 
 import { Course, DragDataFromCourseList } from './Planner';
 
-interface CourseItemProps extends React.ComponentPropsWithoutRef<'div'> {
+export interface CourseItemProps extends React.ComponentPropsWithoutRef<'div'> {
   courseName: string;
 }
 
-const CourseListCourseItem = React.forwardRef<HTMLDivElement, CourseItemProps>(function CourseItem(
-  { courseName, ...props },
-  ref,
-) {
-  return (
-    <div ref={ref} className={`bg-white rounded-md border-2 flex items-center px-4`} {...props}>
-      {courseName}
-    </div>
-  );
-});
+export const CourseListCourseItem = React.forwardRef<HTMLDivElement, CourseItemProps>(
+  function CourseItem({ courseName, ...props }, ref) {
+    return (
+      <div ref={ref} className={`bg-white rounded-md border-2 flex items-center px-4`} {...props}>
+        {courseName}
+      </div>
+    );
+  },
+);
 
 interface DraggableCourseListCourseItemProps extends React.ComponentPropsWithoutRef<'div'> {
   dragId: UniqueIdentifier;
