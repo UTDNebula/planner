@@ -21,8 +21,8 @@ export const SemesterTile = forwardRef<HTMLDivElement, SemesterTileProps>(functi
   return (
     <div
       ref={ref}
-      className={`w-[256px] h-[184px] bg-white rounded-md shadow-md px-[12px] py-[8px] flex flex-col gap-[10px] ${
-        isOver ? 'border-2 border-r-slate-200 border-t-slate-200 border-l-slate-200' : ''
+      className={`w-[256px] h-[184px] overflow-hidden bg-white rounded-md shadow-md px-[12px] py-[8px] flex flex-col gap-[10px] transition-all duration-300 ${
+        isOver ? 'shadow-lg scale-105' : ''
       } border-b-[9px] ${isValid ? 'border-b-[#3E61ED]' : 'border-b-red-500'}`}
     >
       <div className="flex justify-between">

@@ -16,10 +16,31 @@ const Test3Page: NextPage = () => {
     },
     { id: '2', name: "Spring'23", courses: [] },
     { id: '3', name: "Summer'23", courses: [] },
+    {
+      id: '4',
+      name: "Fall'23",
+      courses: [{ id: '3', name: 'CS 2305', validation: { isValid: false, override: false } }],
+    },
+    { id: '5', name: "Spring'24", courses: [] },
+    { id: '6', name: "Summer'24", courses: [] },
+    {
+      id: '7',
+      name: "Fall'24",
+      courses: [{ id: '3', name: 'CS 2305', validation: { isValid: false, override: false } }],
+    },
+    { id: '8', name: "Spring'25", courses: [] },
+    { id: '9', name: "Summer'25", courses: [] },
+    {
+      id: '10',
+      name: "Fall'25",
+      courses: [{ id: '3', name: 'CS 2305', validation: { isValid: false, override: false } }],
+    },
+    { id: '11', name: "Spring'26", courses: [] },
+    { id: '12', name: "Summer'26", courses: [] },
   ]);
 
   return (
-    <div className="w-screen h-screen bg-[#FFFBF7]">
+    <div className="w-screen h-screen bg-[#FFFFFF]">
       <PlannerTool
         courses={courses}
         semesters={semesters}

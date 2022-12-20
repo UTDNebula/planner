@@ -162,7 +162,7 @@ export const PlannerTool: FC<PlannerToolProps> = ({
           </DragOverlay>
         </section>
 
-        <div className="flex flex-wrap gap-[20px]">
+        <div className="flex flex-wrap gap-[32px]">
           {semesters.map((semester) => (
             <DroppableSemesterTile
               key={semester.id}
