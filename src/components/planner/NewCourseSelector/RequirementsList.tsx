@@ -1,7 +1,14 @@
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { DegreeRequirement } from './CourseSelectorContainer';
 import StatusTag from './StatusTag';
 
-export default function RequirementsList({ data, updateCarousel }) {
+export default function RequirementsList({
+  data,
+  updateRequirementInfo,
+}: {
+  data: DegreeRequirement[];
+  updateRequirementInfo: (idx: number) => void;
+}) {
   return (
     <>
       {data.map((elm, idx) => (
@@ -11,7 +18,7 @@ export default function RequirementsList({ data, updateCarousel }) {
             <StatusTag status={elm.isFilled} />
             <button
               onClick={() => {
-                updateCarousel(idx);
+                updateRequirementInfo(idx);
               }}
             >
               <ChevronRightIcon />

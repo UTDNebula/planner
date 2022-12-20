@@ -1,12 +1,17 @@
+import { DegreeRequirement } from './CourseSelectorContainer';
+
 export default function RequirementContainerHeader({
   data,
-  requirementIdx,
   numCredits,
   setCarousel,
+}: {
+  data: DegreeRequirement;
+  numCredits: number;
+  setCarousel: (state: boolean) => void;
 }) {
   return (
     <div className="flex flex-row items-start justify-start">
-      <button onClick={() => setCarousel(0)}>
+      <button onClick={() => setCarousel(false)}>
         <svg
           width="30"
           height="27"
@@ -23,8 +28,8 @@ export default function RequirementContainerHeader({
         </svg>
       </button>
       <div>
-        <div className="text-base">{data[requirementIdx].name}</div>
-        <div className="text-[10px]">{`${numCredits}/${data[requirementIdx].hours} credits`}</div>
+        <div className="text-base">{data.name}</div>
+        <div className="text-[10px]">{`${numCredits}/${data.hours} credits`}</div>
       </div>
     </div>
   );

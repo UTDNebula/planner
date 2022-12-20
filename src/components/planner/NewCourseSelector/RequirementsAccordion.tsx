@@ -2,17 +2,25 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 
 import RequirementsList from './RequirementsList';
-import { useRef } from 'react';
+import { MutableRefObject, useRef } from 'react';
+import { DegreeRequirementGroup } from './CourseSelectorContainer';
 
 export default function RequirementsAccordion({
   data,
   toggleAccordion,
-  accordian,
+  accordion,
   setCarousel,
   setRequirementIdx,
   height,
+}: {
+  data: DegreeRequirementGroup;
+  toggleAccordion: (ref: MutableRefObject<HTMLDivElement>) => void;
+  accordion: boolean;
+  setCarousel: (state: boolean) => void;
+  setRequirementIdx: (req: number) => void;
+  height: string;
 }) {
-  const contentSpace = useRef(null);
+  const contentSpace = useRef<HTMLDivElement>(null);
   return (
     <div className="w-full">
       <button
@@ -20,18 +28,18 @@ export default function RequirementsAccordion({
         onClick={() => toggleAccordion(contentSpace)}
       >
         <div className="">{data.name}</div>
-        {accordian ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+        {accordion ? <ExpandLessIcon /> : <ExpandMoreIcon />}
       </button>
 
       <div
         ref={contentSpace}
-        className={`overflow-auto duration-500 ease-in-out ${accordian && 'pt-4'}`}
+        className={`overflow-auto duration-500 ease-in-out ${accordion && 'pt-4'}`}
         style={{ height }}
       >
         <RequirementsList
           data={data.requirements}
-          updateCarousel={(idx) => {
-            setCarousel(1);
+          updateRequirementInfo={(idx) => {
+            setCarousel(true);
             setRequirementIdx(idx);
           }}
         />

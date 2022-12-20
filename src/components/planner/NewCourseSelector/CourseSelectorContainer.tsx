@@ -4,8 +4,23 @@ import { loadDummyCourses } from '@/modules/common/api/courses';
 import RequirementsContainer from '@/components/planner/NewCourseSelector/RequirementsContainer';
 import DraggableCourseContainer from './DraggableCourseContainer';
 
-export default function CourseSelectorContainer({ data }) {
-  const { results, updateQuery, getResults, err } = useSearch({
+export interface DegreeRequirementGroup {
+  name: string;
+  requirements: DegreeRequirement[];
+}
+
+export interface DegreeRequirement {
+  name: string;
+  validCourses: string[];
+  courses: string[];
+  hours: number;
+  isFilled: boolean;
+  description?: string;
+}
+
+export default function CourseSelectorContainer({ data }: { data: DegreeRequirementGroup[] }) {
+  // TODO: Provide UI indicator for errors
+  const { results, updateQuery } = useSearch({
     getData: loadDummyCourses,
     initialQuery: '',
     filterFn: (elm, query) => elm['catalogCode'].toLowerCase().includes(query.toLowerCase()),

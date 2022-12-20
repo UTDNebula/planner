@@ -1,15 +1,16 @@
-import React, { useRef, useState } from 'react';
+import React, { MutableRefObject, useState } from 'react';
+import { DegreeRequirementGroup } from './CourseSelectorContainer';
 
 import RequirementContainer from './RequirementContainer';
 import RequirementsAccordion from './RequirementsAccordion';
 
-export default function RequirementsContainer({ data }) {
-  const [carousel, setCarousel] = React.useState(0);
-  const [accordian, setAccordian] = React.useState(false);
-  const [requirementIdx, setRequirementIdx] = React.useState(0);
-  const [height, setHeight] = useState('0px');
+export default function RequirementsContainer({ data }: { data: DegreeRequirementGroup }) {
+  const [carousel, setCarousel] = React.useState<boolean>(false);
+  const [accordian, setAccordian] = React.useState<boolean>(false);
+  const [requirementIdx, setRequirementIdx] = React.useState<number>(0);
+  const [height, setHeight] = useState<string>('0px');
 
-  function toggleAccordion(contentSpace) {
+  function toggleAccordion(contentSpace: MutableRefObject<HTMLDivElement>) {
     setAccordian((prevState) => !prevState);
     setHeight(accordian ? '0px' : `${contentSpace.current.scrollHeight + 20}px`);
   }
@@ -25,7 +26,7 @@ export default function RequirementsContainer({ data }) {
           <RequirementsAccordion
             data={data}
             toggleAccordion={toggleAccordion}
-            accordian={accordian}
+            accordion={accordian}
             setCarousel={setCarousel}
             setRequirementIdx={setRequirementIdx}
             height={height}
@@ -37,10 +38,7 @@ export default function RequirementsContainer({ data }) {
           }  `}
         >
           <RequirementContainer
-            data={data.requirements}
-            requirementIdx={requirementIdx}
-            accordian={accordian}
-            carousel={carousel}
+            data={data.requirements[requirementIdx]}
             setCarousel={setCarousel}
           />
         </div>
