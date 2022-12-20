@@ -78,8 +78,7 @@ export default function RequirementContainer({
   });
 
   const numCredits = getCreditHours(data.validCourses);
-  const description =
-    'CS guided electives are 4000 level CS courses approved by the students CS advisor. Thefollowing courses may be used as guided electives without the explicit approval of an advisor.';
+  const description = data.description ?? '';
 
   // TODO: Make better solution to update results when carousel changes
   React.useEffect(() => {
