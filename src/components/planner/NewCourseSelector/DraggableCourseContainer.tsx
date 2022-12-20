@@ -1,7 +1,7 @@
-import { Course } from '@/modules/common/data';
+import { DraggableCourseProps } from './CourseSelectorContainer';
 import DraggableCourse from './DraggableCourse';
 
-export default function DraggableCourseContainer({ results }: { results: Course[] }) {
+export default function DraggableCourseContainer({ results }: { results: DraggableCourseProps[] }) {
   // Add sorting logic here
   return (
     <div className="bg-white flex flex-col gap-y-4 text-[#757575]">

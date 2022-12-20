@@ -3,6 +3,7 @@ import useSearch from '@/components/search/search';
 import { loadDummyCourses } from '@/modules/common/api/courses';
 import RequirementsContainer from '@/components/planner/NewCourseSelector/RequirementsContainer';
 import DraggableCourseContainer from './DraggableCourseContainer';
+import { Course } from '@/modules/common/data';
 
 export interface DegreeRequirementGroup {
   name: string;
@@ -18,6 +19,10 @@ export interface DegreeRequirement {
   description?: string;
 }
 
+export interface DraggableCourseProps extends Course {
+  status: string;
+}
+
 export default function CourseSelectorContainer({ data }: { data: DegreeRequirementGroup[] }) {
   // TODO: Provide UI indicator for errors
   const { results, updateQuery } = useSearch({
@@ -27,11 +32,29 @@ export default function CourseSelectorContainer({ data }: { data: DegreeRequirem
     constraints: [0, 5],
   });
 
+  // Include tag rendering information here (yes for tag & which tag)
+  // TODO: Obviously have a better way of computing all courses user has taken
+  // Idea is allCourses will be available as context or props or smthn
+  const allCourses = new Set();
+
+  // Get all courses user has taken
+  data.forEach((reqGroup) => {
+    reqGroup.requirements.forEach((req) => {
+      req.validCourses.forEach((course) => {
+        allCourses.add(course);
+      });
+    });
+  });
+
+  const courseResults = results.map((result) => {
+    return { ...result, status: allCourses.has(result.catalogCode) ? 'Complete' : '' };
+  });
+
   return (
     <div className="flex flex-col gap-y-8 border-2 w-[344px]">
       <SearchBar updateQuery={updateQuery} placeholder="Search courses" />
       <div className="bg-white p-4">
-        <DraggableCourseContainer results={results} />
+        <DraggableCourseContainer results={courseResults} />
       </div>
       {data.map((req, idx) => (
         <RequirementsContainer key={idx} data={req} />

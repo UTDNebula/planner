@@ -1,6 +1,7 @@
 import { Course } from '@/modules/common/data';
 import { useDraggable } from '@dnd-kit/core';
 import { v4 as uuid } from 'uuid';
+import { DraggableCourseProps } from './CourseSelectorContainer';
 import StatusTag from './StatusTag';
 
 function Draggable({ id, children }: { id: string; children: JSX.Element }) {
@@ -20,10 +21,21 @@ function Draggable({ id, children }: { id: string; children: JSX.Element }) {
   );
 }
 
-export default function DraggableCourse({ course }: { course: Course }) {
+export default function DraggableCourse({ course }: { course: DraggableCourseProps }) {
   // Course would be marked incomplete ONLY if requirement needed course
   // Maybe DraggableCourse needs to take a prop specifying if it's needed or nah?
   // TODO: Update course status tag
+
+  let showStatusTag = false;
+  let tagType = false;
+
+  if (course.status === 'Complete') {
+    showStatusTag = true;
+    tagType = true;
+  } else if (course.status === 'Incomplete') {
+    showStatusTag = true;
+    tagType = false;
+  }
 
   const id = uuid();
   return (
@@ -33,7 +45,7 @@ export default function DraggableCourse({ course }: { course: Course }) {
         key={id}
       >
         {course.catalogCode}
-        <StatusTag status={false} />
+        {showStatusTag && <StatusTag status={tagType} />}
       </div>
     </Draggable>
   );

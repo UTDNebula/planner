@@ -63,6 +63,20 @@ export default function RequirementContainer({
     constraints: [0, 5],
   });
 
+  // Include tag rendering information here (yes for tag & which tag)
+  // TODO: Obviously have a better way of computing all courses user has taken
+  // Idea is allCourses will be available as context or props or smthn
+  const allCourses = new Set();
+
+  // Get all courses user has taken
+  data.validCourses.forEach((course) => {
+    allCourses.add(course);
+  });
+
+  const courseResults = results.map((result) => {
+    return { ...result, status: allCourses.has(result.catalogCode) ? 'Complete' : '' };
+  });
+
   const numCredits = getCreditHours(data.validCourses);
   const description =
     'CS guided electives are 4000 level CS courses approved by the students CS advisor. Thefollowing courses may be used as guided electives without the explicit approval of an advisor.';
@@ -76,7 +90,7 @@ export default function RequirementContainer({
       <RequirementContainerHeader data={data} numCredits={numCredits} setCarousel={setCarousel} />
       <div className="text-[11px]">{description}</div>
       <SearchBar updateQuery={updateQuery} />
-      <DraggableCourseContainer results={results} />
+      <DraggableCourseContainer results={courseResults} />
     </>
   );
 }
