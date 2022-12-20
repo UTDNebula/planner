@@ -114,8 +114,14 @@ export const PlannerTool: FC<PlannerToolProps> = ({
           const originData = active.data.current as DragEventOriginData;
           const destinationData = over.data.current as DragEventDestinationData;
 
-          // attempting to drop item on its existing container
-          if (active.id == over.id && originData.from === destinationData.to) return;
+          // from semester -> current semester
+          // attempting to drop semester course on current tile
+          if (
+            originData.from === 'semester-tile' &&
+            destinationData.to === 'semester-tile' &&
+            originData.semester.id === destinationData.semester.id
+          )
+            return;
 
           // from course list -> semester
           if (
@@ -130,7 +136,7 @@ export const PlannerTool: FC<PlannerToolProps> = ({
             );
           }
 
-          // from semester -> semester
+          // from semester -> another semester
           if (
             originData.from === 'semester-tile' &&
             destinationData.to === 'semester-tile' &&
