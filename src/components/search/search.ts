@@ -36,10 +36,9 @@ const useSearch = <T, K>({
   // TODO: Update filtering code to deal with data from Nebula API
   const updateQuery = (query: K) => {
     getData()
-      .then((data) => {
-        console.log(data);
-        return data.filter((el) => filterFn(el, query)).slice(constraints[0], constraints[1]);
-      })
+      .then((data) =>
+        data.filter((el) => filterFn(el, query)).slice(constraints[0], constraints[1]),
+      )
       .then((data) => setResults(data))
       .catch((error) => {
         console.log('error was catched in updateQuery:', { error });
