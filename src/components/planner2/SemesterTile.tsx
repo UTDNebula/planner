@@ -1,5 +1,5 @@
 import { UniqueIdentifier, useDroppable } from '@dnd-kit/core';
-import { FC, forwardRef, useCallback } from 'react';
+import { FC, forwardRef } from 'react';
 
 import { Course, DragDataToSemesterTile, Semester } from './Planner';
 import DraggableSemesterCourseItem from './SemesterCourseItem';
@@ -7,7 +7,7 @@ import DraggableSemesterCourseItem from './SemesterCourseItem';
 export interface SemesterTileProps {
   semester: Semester;
   isOver: boolean;
-  getDraggableId: (c: Course) => UniqueIdentifier;
+  getDragId: (semester: Semester, c: Course) => UniqueIdentifier;
   isValid: boolean;
 }
 
@@ -15,7 +15,7 @@ export interface SemesterTileProps {
  * Strictly UI implementation of a semester tile
  */
 export const SemesterTile = forwardRef<HTMLDivElement, SemesterTileProps>(function SemesterTile(
-  { semester, getDraggableId, isValid, isOver },
+  { semester, getDragId, isValid, isOver },
   ref,
 ) {
   return (
@@ -35,7 +35,7 @@ export const SemesterTile = forwardRef<HTMLDivElement, SemesterTileProps>(functi
       {semester.courses.map((course) => (
         <DraggableSemesterCourseItem
           key={course.id}
-          id={getDraggableId(course)}
+          dragId={getDragId(semester, course)}
           isValid={course.validation?.isValid === false}
           course={course}
           semester={semester}
@@ -46,7 +46,8 @@ export const SemesterTile = forwardRef<HTMLDivElement, SemesterTileProps>(functi
 });
 
 export interface DroppableSemesterTileProps {
-  id: UniqueIdentifier;
+  dropId: UniqueIdentifier;
+  getSemesterCourseDragId: (semester: Semester, course: Course) => UniqueIdentifier;
   semester: Semester;
   isValid: boolean;
 }
@@ -54,21 +55,23 @@ export interface DroppableSemesterTileProps {
 /**
  * Strictly compositional wrapper around SemesterTile
  */
-const DroppableSemesterTile: FC<DroppableSemesterTileProps> = ({ id, semester, ...props }) => {
+const DroppableSemesterTile: FC<DroppableSemesterTileProps> = ({
+  dropId,
+  semester,
+  getSemesterCourseDragId,
+  ...props
+}) => {
   const { setNodeRef, isOver } = useDroppable({
-    id,
+    id: dropId,
     data: { to: 'semester-tile', semester } as DragDataToSemesterTile,
   });
-
-  // ensure no two courses have same id among different semesters
-  const getDraggableId = useCallback((course: Course) => `${semester.id}-${course.id}`, [semester]);
 
   return (
     <SemesterTile
       ref={setNodeRef}
       isOver={isOver}
       semester={semester}
-      getDraggableId={getDraggableId}
+      getDragId={getSemesterCourseDragId}
       {...props}
     />
   );

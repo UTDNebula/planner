@@ -1,3 +1,16 @@
+/**
+ * Uses @dnd-kit library
+ * Follows presentational, compositional component philosophy b/c lots of wrappers, easier to read
+ * https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0
+ *
+ * @dnd-kit heavily relies on IDs
+ * No two ids under DndContext should be the same
+ * All ids are generated in <PlannerTool /> (hence getId callback) and bubbled down, for clarity
+ *
+ * @dnd-kit allows data to be passed into drag events
+ * DragEventData types meant to force typing onto drag event data
+ * Be very careful when adding @dnd-kit presets (eg. @dnd-kit/sortable) or new data types
+ */
 import { DndContext, DragOverlay, pointerWithin, UniqueIdentifier } from '@dnd-kit/core';
 import React, { FC, useState } from 'react';
 
@@ -5,6 +18,10 @@ import DraggableCourseListCourseItem, { CourseListCourseItem } from './CourseLis
 import { SemesterCourseItem } from './SemesterCourseItem';
 import DroppableSemesterTile from './SemesterTile';
 
+/**
+ * Temporary types
+ * TODO: Remove
+ */
 export interface Semester {
   id: UniqueIdentifier;
   name: string;
@@ -136,7 +153,7 @@ export const PlannerTool: FC<PlannerToolProps> = ({
           {courses.map((course) => (
             <DraggableCourseListCourseItem
               key={course.id}
-              dragId={course.id.toString() + 'cl'}
+              dragId={`course-list-${course.id}`}
               style={{
                 width: '300px',
                 height: '50px',
@@ -163,21 +180,23 @@ export const PlannerTool: FC<PlannerToolProps> = ({
         </section>
 
         <div className="flex flex-wrap gap-[32px]">
-          {semesters.map((semester) => (
-            <DroppableSemesterTile
-              key={semester.id}
-              id={'s' + semester.id}
-              semester={semester}
-              isValid={
-                semester.courses.length === 0
-                  ? true
-                  : !semester.courses.some(
-                      (course) =>
-                        typeof course.validation !== 'undefined' && !course.validation.isValid,
-                    )
-              }
-            />
-          ))}
+          {semesters.map((semester) => {
+            const hasInvalidCourse =
+              semester.courses.length > 0 &&
+              semester.courses.some((course) => course.validation && !course.validation.isValid);
+
+            return (
+              <DroppableSemesterTile
+                key={semester.id}
+                dropId={`semester-${semester.id}`}
+                getSemesterCourseDragId={(semester, course) =>
+                  `semester-tile-course-${semester.id}-${course.id}`
+                }
+                semester={semester}
+                isValid={!hasInvalidCourse}
+              />
+            );
+          })}
         </div>
       </div>
     </DndContext>

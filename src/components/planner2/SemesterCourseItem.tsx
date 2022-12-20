@@ -28,7 +28,7 @@ export const SemesterCourseItem = forwardRef<HTMLDivElement, SemesterCourseItemP
 );
 
 export interface DraggableSemesterCourseItemProps {
-  id: UniqueIdentifier;
+  dragId: UniqueIdentifier;
   semester: Semester;
   course: Course;
   isValid: boolean;
@@ -38,13 +38,13 @@ export interface DraggableSemesterCourseItemProps {
  * Strictly compositional wrapper around SemesterCourseItem
  */
 const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
-  id,
+  dragId,
   semester,
   course,
   ...props
 }) => {
   const { setNodeRef, attributes, listeners, isDragging } = useDraggable({
-    id,
+    id: dragId,
     data: { from: 'semester-tile', semester, course } as DragDataFromSemesterTile,
   });
 
