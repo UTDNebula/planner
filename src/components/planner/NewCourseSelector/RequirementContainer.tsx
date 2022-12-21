@@ -156,57 +156,59 @@ export default function RequirementContainer({
     <>
       <RequirementContainerHeader data={data} numCredits={numCredits} setCarousel={setCarousel} />
       <div className="text-[11px]">{description}</div>
-      {!addCourse && !addPlaceholder && (
-        <>
-          <SearchBar updateQuery={updateQuery} />
-          <DraggableCourseContainer results={courseResults} />
-          <div className="flex flex-row text-[10px] text-[#3E61ED] gap-x-4">
-            <button onClick={() => setAddCourse(true)}>+ ADD COURSE</button>
-            <button onClick={() => setAddPlaceholder(true)}>+ ADD PLACEHOLDER</button>
-          </div>
-        </>
-      )}
-      {addCourse && (
-        <>
-          <div>
-            {/* This div is needed for React to recreate component */}
-            <SearchBar updateQuery={updateQuery2} />
-          </div>
-          <SelectableCourseContainer
-            results={courseResults2}
-            selectedCourses={selectedCourses}
-            updateSelectedCourses={updateSelectedCourses}
-          />
-          <div className="flex flex-row justify-between text-[10px] text-[#3E61ED] gap-x-4">
-            <button onClick={handleCourseCancel}>CANCEL</button>
-            <button onClick={handleCourseSubmit}>SELECT</button>
-          </div>
-        </>
-      )}
-      {addPlaceholder && (
-        <>
-          <div className="bg-white text-[10px] items-center drop-shadow-sm py-1.5 px-2 gap-x-4 flex flex-row justify-between border border-[#EDEFF7] rounded-md">
-            <input
-              value={placeholderName}
-              placeholder="Add Placeholder Name"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setPlaceholderName(e.target.value)
-              }
-            ></input>
-            <input
-              value={placeholderHours || undefined}
-              className="flex w-20"
-              placeholder="Add # hours"
-              inputMode="numeric"
-              onChange={(e) => setPlaceholderHours(parseInt(e.target.value))}
+      <div className="flex flex-col gap-4 ">
+        {!addCourse && !addPlaceholder && (
+          <>
+            <SearchBar updateQuery={updateQuery} />
+            <DraggableCourseContainer results={courseResults} />
+            <div className="flex flex-row text-[10px] text-[#3E61ED] gap-x-4">
+              <button onClick={() => setAddCourse(true)}>+ ADD COURSE</button>
+              <button onClick={() => setAddPlaceholder(true)}>+ ADD PLACEHOLDER</button>
+            </div>
+          </>
+        )}
+        {addCourse && (
+          <>
+            <div>
+              {/* This div is needed for React to recreate component */}
+              <SearchBar updateQuery={updateQuery2} />
+            </div>
+            <SelectableCourseContainer
+              results={courseResults2}
+              selectedCourses={selectedCourses}
+              updateSelectedCourses={updateSelectedCourses}
             />
-          </div>
-          <div className="flex flex-row justify-between text-[10px] text-[#3E61ED] gap-x-4">
-            <button onClick={handlePlaceholderCancel}>CANCEL</button>
-            <button onClick={handlePlaceholderSubmit}>SELECT</button>
-          </div>
-        </>
-      )}
+            <div className="flex flex-row justify-between text-[10px] text-[#3E61ED] gap-x-4">
+              <button onClick={handleCourseCancel}>CANCEL</button>
+              <button onClick={handleCourseSubmit}>SELECT</button>
+            </div>
+          </>
+        )}
+        {addPlaceholder && (
+          <>
+            <div className="bg-white text-[10px] items-center drop-shadow-sm py-1.5 px-2 gap-x-4 flex flex-row justify-between border border-[#EDEFF7] rounded-md">
+              <input
+                value={placeholderName}
+                placeholder="Add Placeholder Name"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setPlaceholderName(e.target.value)
+                }
+              ></input>
+              <input
+                value={placeholderHours || undefined}
+                className="flex w-20"
+                placeholder="Add # hours"
+                inputMode="numeric"
+                onChange={(e) => setPlaceholderHours(parseInt(e.target.value))}
+              />
+            </div>
+            <div className="flex flex-row justify-between text-[10px] text-[#3E61ED] gap-x-4">
+              <button onClick={handlePlaceholderCancel}>CANCEL</button>
+              <button onClick={handlePlaceholderSubmit}>SELECT</button>
+            </div>
+          </>
+        )}
+      </div>
     </>
   );
 }
