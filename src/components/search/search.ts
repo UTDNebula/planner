@@ -7,7 +7,7 @@ interface SearchParams<T, K> {
   constraints?: [number, number];
 }
 
-interface SearchReturn<T, K> {
+export interface SearchReturn<T, K> {
   results: T[];
   getResults: () => T[];
   updateQuery: (query: K) => void;
