@@ -16,8 +16,11 @@ export default function RequirementContainer({
 }: {
   data: DegreeRequirement;
   setCarousel: (state: boolean) => void;
-}) {
+}): JSX.Element {
   const [addCourse, setAddCourse] = React.useState<boolean>(false);
+  const [addPlaceholder, setAddPlaceholder] = React.useState<boolean>(false);
+  const [placeholderName, setPlaceholderName] = React.useState<string>('');
+  const [placeholderHours, setPlaceholderHours] = React.useState<number>(0);
 
   // TODO: Change this later when connecting to API
   const getCourses = async (): Promise<Course[]> => {
@@ -111,31 +114,59 @@ export default function RequirementContainer({
     setSelectedCourses(modifySelectedCourses);
   };
 
-  const handleCancel = () => {
+  const handleCourseCancel = () => {
     setSelectedCourses({});
     setAddCourse(false);
   };
 
-  const handleSubmit = () => {
+  const handleCourseSubmit = () => {
     // TODO: Update DegreeRequirementsGroup here
     console.log(selectedCourses);
     setSelectedCourses({});
     setAddCourse(false);
   };
+
+  const handlePlaceholderCancel = () => {
+    setPlaceholderName('');
+    setPlaceholderHours(0);
+    setAddPlaceholder(false);
+  };
+
+  interface PlaceholderCourse {
+    name: string;
+    hours: number;
+    requirement: string;
+  }
+  const handlePlaceholderSubmit = () => {
+    // Create placeholder object
+    const placeholderCourse: PlaceholderCourse = {
+      name: placeholderName,
+      hours: placeholderHours,
+      requirement: data.name,
+    };
+
+    // TODO: Connect this to DegreeRequirementGroup
+    console.log(placeholderCourse);
+
+    setPlaceholderName('');
+    setPlaceholderHours(0);
+    setAddPlaceholder(false);
+  };
   return (
     <>
       <RequirementContainerHeader data={data} numCredits={numCredits} setCarousel={setCarousel} />
       <div className="text-[11px]">{description}</div>
-      {!addCourse ? (
+      {!addCourse && !addPlaceholder && (
         <>
           <SearchBar updateQuery={updateQuery} />
           <DraggableCourseContainer results={courseResults} />
           <div className="flex flex-row text-[10px] text-[#3E61ED] gap-x-4">
             <button onClick={() => setAddCourse(true)}>+ ADD COURSE</button>
-            <button>+ ADD PLACEHOLDER</button>
+            <button onClick={() => setAddPlaceholder(true)}>+ ADD PLACEHOLDER</button>
           </div>
         </>
-      ) : (
+      )}
+      {addCourse && (
         <>
           <div>
             {/* This div is needed for React to recreate component */}
@@ -147,8 +178,32 @@ export default function RequirementContainer({
             updateSelectedCourses={updateSelectedCourses}
           />
           <div className="flex flex-row justify-between text-[10px] text-[#3E61ED] gap-x-4">
-            <button onClick={handleCancel}>CANCEL</button>
-            <button onClick={handleSubmit}>SELECT</button>
+            <button onClick={handleCourseCancel}>CANCEL</button>
+            <button onClick={handleCourseSubmit}>SELECT</button>
+          </div>
+        </>
+      )}
+      {addPlaceholder && (
+        <>
+          <div className="bg-white text-[10px] items-center drop-shadow-sm py-1.5 px-2 gap-x-4 flex flex-row justify-between border border-[#EDEFF7] rounded-md">
+            <input
+              value={placeholderName}
+              placeholder="Add Placeholder Name"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setPlaceholderName(e.target.value)
+              }
+            ></input>
+            <input
+              value={placeholderHours}
+              className="flex w-20"
+              placeholder="Add # hours"
+              type="number"
+              onChange={(e) => setPlaceholderHours(parseInt(e.target.value))}
+            />
+          </div>
+          <div className="flex flex-row justify-between text-[10px] text-[#3E61ED] gap-x-4">
+            <button onClick={handlePlaceholderCancel}>CANCEL</button>
+            <button onClick={handlePlaceholderSubmit}>SELECT</button>
           </div>
         </>
       )}
