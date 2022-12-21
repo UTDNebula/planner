@@ -194,10 +194,10 @@ export default function RequirementContainer({
               }
             ></input>
             <input
-              value={placeholderHours}
+              value={placeholderHours || undefined}
               className="flex w-20"
               placeholder="Add # hours"
-              type="number"
+              inputMode="numeric"
               onChange={(e) => setPlaceholderHours(parseInt(e.target.value))}
             />
           </div>
