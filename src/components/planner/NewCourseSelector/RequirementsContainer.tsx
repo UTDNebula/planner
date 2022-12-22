@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { DegreeRequirementGroup } from './CourseSelectorContainer';
 
 import RequirementContainer from './RequirementContainer';
@@ -10,45 +10,56 @@ export default function RequirementsContainer({ data }: { data: DegreeRequiremen
   const [requirementIdx, setRequirementIdx] = React.useState<number>(0);
   const [height, setHeight] = useState<string>('0px');
 
-  const MIN_HEIGHT = 390;
   const accordianRef = useRef<HTMLDivElement>(null);
   const requirementRef = useRef<HTMLDivElement>(null);
 
   function toggleAccordion() {
     setAccordian(!accordian);
-    setHeight(accordian ? '0px' : `${Math.max(accordianRef.current.scrollHeight, MIN_HEIGHT)}px`);
+    setHeight(accordian ? '0px' : `${Math.max(accordianRef.current.scrollHeight + 20)}px`);
   }
 
   function toggleCarousel() {
+    setOverflow(true);
     setCarousel(!carousel);
   }
 
+  const [overflow, setOverflow] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => setOverflow(false), 500);
+  }, [overflow]);
+
   return (
     <div className="relative">
-      <div className="overflow-hidden border-black border-2">
+      <div
+        className={`${
+          (overflow || !carousel) && 'overflow-hidden'
+        } border-black border-2 flex flex-row bg-white`}
+      >
         <div
-          ref={requirementRef}
-          className={` px-4 py-4 rounded-md relative z-30 duration-500 ${
+          className={`min-w-full h-fit px-4 py-4 rounded-md z-30 duration-500 ${
             carousel && '-translate-x-full'
-          } bg-white`}
+          } `}
         >
-          <RequirementsAccordion
-            data={data}
-            toggleAccordion={toggleAccordion}
-            accordion={accordian}
-            setCarousel={toggleCarousel}
-            setRequirementIdx={setRequirementIdx}
-            height={height}
-            accordianRef={accordianRef}
-          />
+          {(!carousel || overflow) && (
+            <RequirementsAccordion
+              data={data}
+              toggleAccordion={toggleAccordion}
+              accordion={accordian}
+              carousel={carousel}
+              setCarousel={toggleCarousel}
+              setRequirementIdx={setRequirementIdx}
+              height={height}
+              accordianRef={accordianRef}
+            />
+          )}
         </div>
+
         <div
-          className={` absolute top-0 p-4 animate-hide bg-white   ${
-            accordian && carousel ? '' : 'duration-500  ease-in-out hidden'
+          className={`relative min-w-full p-4 bg-white min-h-fit duration-500 ${
+            accordian && carousel ? '-translate-x-full' : 'max-h-0'
           }  `}
-          style={{
-            height: requirementRef.current ? requirementRef.current.scrollHeight : MIN_HEIGHT,
-          }}
+          ref={requirementRef}
         >
           <RequirementContainer
             data={data.requirements[requirementIdx]}

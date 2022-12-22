@@ -9,6 +9,7 @@ export default function RequirementsAccordion({
   data,
   toggleAccordion,
   accordion,
+  carousel,
   setCarousel,
   setRequirementIdx,
   height,
@@ -17,13 +18,14 @@ export default function RequirementsAccordion({
   data: DegreeRequirementGroup;
   toggleAccordion: () => void;
   accordion: boolean;
+  carousel: boolean;
   setCarousel: (state: boolean) => void;
   setRequirementIdx: (req: number) => void;
   height: string;
   accordianRef: MutableRefObject<HTMLDivElement>;
 }) {
   return (
-    <div className="w-full">
+    <div className={`w-full ${!carousel ? 'h-full' : 'h-0'}`}>
       <button className="flex flex-row w-full justify-between px-2" onClick={toggleAccordion}>
         <div className="">{data.name}</div>
         {accordion ? <ExpandLessIcon /> : <ExpandMoreIcon />}
