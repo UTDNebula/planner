@@ -436,13 +436,13 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
    * Once authentication is properly loaded, redirect the user to Home Page
    * if they didn't meet the proper authentication requirements
    */
-  React.useEffect(() => {
-    if (loadAuthentication) {
-      if (user.id === 'unauthenticated' && router.pathname != '/') {
-        router.push('/');
-      }
-    }
-  }, [loadAuthentication]);
+  // React.useEffect(() => {
+  //   if (loadAuthentication) {
+  //     if (user.id === 'unauthenticated' && router.pathname != '/') {
+  //       router.push('/');
+  //     }
+  //   }
+  // }, [loadAuthentication]);
 
   /**
    * Redirect user should the conditions for a redirect be met
