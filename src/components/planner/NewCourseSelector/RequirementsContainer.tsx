@@ -11,7 +11,6 @@ export default function RequirementsContainer({ data }: { data: DegreeRequiremen
   const [height, setHeight] = useState<string>('0px');
 
   const accordianRef = useRef<HTMLDivElement>(null);
-  const requirementRef = useRef<HTMLDivElement>(null);
 
   function toggleAccordion() {
     setAccordian(!accordian);
@@ -59,7 +58,6 @@ export default function RequirementsContainer({ data }: { data: DegreeRequiremen
           className={`flex flex-col gap-4 relative min-w-full p-4 bg-white min-h-fit duration-500 ${
             accordian && carousel ? '-translate-x-full' : 'max-h-0'
           }  `}
-          ref={requirementRef}
         >
           <RequirementContainer
             data={data.requirements[requirementIdx]}
