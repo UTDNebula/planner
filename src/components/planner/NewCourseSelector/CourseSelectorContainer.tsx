@@ -60,7 +60,7 @@ export default function CourseSelectorContainer({ data }: { data: DegreeRequirem
   });
 
   return (
-    <div className="flex flex-col gap-y-8 border-2 w-[344px]">
+    <div className="flex flex-col gap-y-8  w-[344px]">
       <SearchBar updateQuery={updateQueryWrapper} placeholder="Search courses" />
       {results.length > 0 && (
         <div className="bg-white p-4">
