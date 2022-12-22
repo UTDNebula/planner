@@ -27,10 +27,19 @@ export default function CourseSelectorContainer({ data }: { data: DegreeRequirem
   // TODO: Provide UI indicator for errors
   const { results, updateQuery } = useSearch({
     getData: loadDummyCourses,
-    initialQuery: '',
+    initialQuery: '@',
     filterFn: (elm, query) => elm['catalogCode'].toLowerCase().includes(query.toLowerCase()),
     constraints: [0, 5],
   });
+
+  // TODO: Change later!!! This code hides search bar when no input
+  // TODO: Temporary solution to hide search results when no input
+  const updateQueryWrapper = (query: string) => {
+    if (query === '') {
+      query = '@';
+    }
+    updateQuery(query);
+  };
 
   // Include tag rendering information here (yes for tag & which tag)
   // TODO: Obviously have a better way of computing all courses user has taken
@@ -52,10 +61,12 @@ export default function CourseSelectorContainer({ data }: { data: DegreeRequirem
 
   return (
     <div className="flex flex-col gap-y-8 border-2 w-[344px]">
-      <SearchBar updateQuery={updateQuery} placeholder="Search courses" />
-      <div className="bg-white p-4">
-        <DraggableCourseContainer results={courseResults} />
-      </div>
+      <SearchBar updateQuery={updateQueryWrapper} placeholder="Search courses" />
+      {results.length > 0 && (
+        <div className="bg-white p-4">
+          <DraggableCourseContainer results={courseResults} />
+        </div>
+      )}
       {data.map((req, idx) => (
         <RequirementsContainer key={idx} data={req} />
       ))}
