@@ -34,7 +34,7 @@ export default function RequirementsContainer({ data }: { data: DegreeRequiremen
       <div
         className={`${
           (overflow || !carousel) && 'overflow-hidden'
-        } border-black border-2 flex flex-row bg-white`}
+        } rounded-md flex flex-row bg-white`}
       >
         <div
           className={`min-w-full h-fit px-4 py-4 rounded-md z-30 duration-500 ${
@@ -56,7 +56,7 @@ export default function RequirementsContainer({ data }: { data: DegreeRequiremen
         </div>
 
         <div
-          className={`relative min-w-full p-4 bg-white min-h-fit duration-500 ${
+          className={`flex flex-col gap-4 relative min-w-full p-4 bg-white min-h-fit duration-500 ${
             accordian && carousel ? '-translate-x-full' : 'max-h-0'
           }  `}
           ref={requirementRef}
