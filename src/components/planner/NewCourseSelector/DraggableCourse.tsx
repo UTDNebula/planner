@@ -1,4 +1,3 @@
-import { Course } from '@/modules/common/data';
 import { useDraggable } from '@dnd-kit/core';
 import { v4 as uuid } from 'uuid';
 import { DraggableCourseProps } from './CourseSelectorContainer';

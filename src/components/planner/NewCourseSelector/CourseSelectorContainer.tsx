@@ -33,7 +33,6 @@ export default function CourseSelectorContainer({ data }: { data: DegreeRequirem
   });
 
   // TODO: Change later!!! This code hides search bar when no input
-  // TODO: Temporary solution to hide search results when no input
   const updateQueryWrapper = (query: string) => {
     if (query === '') {
       query = '@';
@@ -44,8 +43,9 @@ export default function CourseSelectorContainer({ data }: { data: DegreeRequirem
   // Include tag rendering information here (yes for tag & which tag)
   // TODO: Obviously have a better way of computing all courses user has taken
   // Idea is allCourses will be available as context or props or smthn
-  const allCourses = new Set();
+  const allCourses: Set<string> = new Set();
 
+  // TODO: Prolly have a context for this
   // Get all courses user has taken
   data.forEach((reqGroup) => {
     reqGroup.requirements.forEach((req) => {
@@ -55,7 +55,7 @@ export default function CourseSelectorContainer({ data }: { data: DegreeRequirem
     });
   });
 
-  const courseResults = results.map((result) => {
+  const courseResults: DraggableCourseProps[] = results.map((result) => {
     return { ...result, status: allCourses.has(result.catalogCode) ? 'Complete' : '' };
   });
 

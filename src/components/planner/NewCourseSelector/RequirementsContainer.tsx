@@ -22,6 +22,7 @@ export default function RequirementsContainer({ data }: { data: DegreeRequiremen
     setCarousel(!carousel);
   }
 
+  // Note: this logic hides overflow during sliding animation
   const [overflow, setOverflow] = useState(false);
 
   useEffect(() => {
