@@ -6,6 +6,7 @@ import SearchBar from '@/components/search/SearchBar';
 import { loadDummyCourses } from '@/modules/common/api/courses';
 import { DndContext } from '@dnd-kit/core';
 import React from 'react';
+import validationData from '@/data/dummyValidation.json';
 
 const getCreditHours = (validCourses: string[]): number => {
   return validCourses.length > 0
@@ -24,8 +25,8 @@ const sumList = (values: number[]): number => {
 };
 
 // Data would be plan data I think?
-export default function Test({ data }: { data: DegreeRequirementGroup[] }): JSX.Element {
-  const [degreeData, setDegreeData] = React.useState(data);
+export default function Test(): JSX.Element {
+  const [degreeData, setDegreeData] = React.useState<DegreeRequirementGroup[]>(validationData);
 
   // Code to test for performance
   const { results, updateQuery } = useSearch({
@@ -39,7 +40,7 @@ export default function Test({ data }: { data: DegreeRequirementGroup[] }): JSX.
     const result = results[0];
 
     // Perform expensive update & setDegreeData
-    const newData = [...data];
+    const newData = [...validationData];
     newData.forEach((degReq) => {
       degReq.requirements.forEach((req) => {
         if (
@@ -80,12 +81,12 @@ export default function Test({ data }: { data: DegreeRequirementGroup[] }): JSX.
   );
 }
 
-// This gets called on every request
-export async function getServerSideProps() {
-  const validationData = (await import('@/data/dummyValidation.json'))[
-    'default'
-  ] as DegreeRequirementGroup[];
+// // This gets called on every request
+// export async function getServerSideProps() {
+//   const validationData = (await import('@/data/dummyValidation.json'))[
+//     'default'
+//   ] as DegreeRequirementGroup[];
 
-  // Pass data to the page via props
-  return { props: { data: validationData } };
-}
+//   // Pass data to the page via props
+//   return { props: { data: validationData } };
+// }
