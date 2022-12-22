@@ -9,6 +9,7 @@ import { v4 as uuid } from 'uuid';
 import RequirementContainerHeader from './RequirementContainerHeader';
 import { loadDummyCourses } from '@/modules/common/api/courses';
 import SelectableCourseContainer from './SelectableCourseContainer';
+import RequirementSearchBar from './RequirementSearchBar';
 
 export default function RequirementContainer({
   data,
@@ -159,7 +160,7 @@ export default function RequirementContainer({
 
       {!addCourse && !addPlaceholder && (
         <>
-          <SearchBar updateQuery={updateQuery} />
+          <RequirementSearchBar updateQuery={updateQuery} />
           <DraggableCourseContainer results={courseResults} />
           <div className="flex flex-row text-[10px] text-[#3E61ED] gap-x-4">
             <button onClick={() => setAddCourse(true)}>+ ADD COURSE</button>
@@ -171,7 +172,7 @@ export default function RequirementContainer({
         <>
           <div>
             {/* This div is needed for React to recreate component */}
-            <SearchBar updateQuery={updateQuery2} />
+            <RequirementSearchBar updateQuery={updateQuery2} />
           </div>
           <SelectableCourseContainer
             results={courseResults2}
