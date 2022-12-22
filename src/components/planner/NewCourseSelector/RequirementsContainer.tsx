@@ -55,7 +55,7 @@ export default function RequirementsContainer({ data }: { data: DegreeRequiremen
         </div>
 
         <div
-          className={`flex flex-col gap-4 relative min-w-full p-4 bg-white min-h-fit duration-500 ${
+          className={`flex flex-col gap-4 relative min-w-full p-4 bg-white rounded-md min-h-fit duration-500 ${
             accordian && carousel ? '-translate-x-full' : 'max-h-0'
           }  `}
         >

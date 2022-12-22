@@ -41,7 +41,7 @@ export default function DraggableCourse({ course }: { course: DraggableCoursePro
   return (
     <Draggable id={id} key={id}>
       <div
-        className="bg-white text-[10px] items-center drop-shadow-sm py-1.5 px-2 flex flex-row justify-between border border-[#EDEFF7] rounded-md"
+        className="text-[#1C2A6D] bg-white text-[10px] items-center drop-shadow-sm py-1.5 px-2 flex flex-row justify-between border border-[#EDEFF7] rounded-md"
         key={id}
       >
         {course.catalogCode}
