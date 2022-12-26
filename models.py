@@ -64,7 +64,7 @@ class ConsentRequirement(BaseModel):
 
 class CoreRequirement(BaseModel):
     type: Literal[RequirementTypes.core]
-    core_flag: str
+    core_flag: Literal["010"] | Literal["020"] | Literal["030"] | Literal["040"] | Literal["050"] | Literal["060"] | Literal["070"] | Literal["080"] | Literal["090"] | str
     hours: int
 
 class OtherRequirement(BaseModel):

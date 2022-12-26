@@ -2,9 +2,16 @@ from __future__ import annotations
 from collections import defaultdict, Counter
 import numpy as np
 from ortools.graph.python import max_flow
-
+from mock_data import MockData
+from models import CollectionRequirement, CoreRequirement, CourseRequirement, Degree, RequirementTypes
 from utils import *
+from typing import List
+from functools import reduce
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
+import requests
 
 class AssignmentStore:
     def __init__(self):
@@ -85,8 +92,77 @@ class GraduationRequirementsSolver:
         requirements_names = set(self.requirements_dict.keys())
         groups_names = set(req.name for group in self.groups for req in group)
 
-        return requirements_names == groups_names
+        return requirements_names == groups_names  
 
+    def _core_requirement_to_matcher(self, option: CoreRequirement):
+        matcher: Matcher
+        match option.core_flag:
+            case "090":
+                matcher = MockData.core_090_matcher()
+            case "080":
+                matcher = MockData.core_080_matcher()
+            case "070":
+                matcher = MockData.core_070_matcher()
+            case "060":
+                matcher = MockData.core_060_matcher()
+            case "050":
+                matcher = MockData.core_050_matcher()
+            case "040":
+                matcher = MockData.core_040_matcher()
+            case "030":
+                matcher = MockData.core_030_matcher()
+            case "020":
+                matcher = MockData.core_020_matcher()
+            case "010":
+                matcher = MockData.core_010_matcher()
+            case _:
+                matcher = AnyMatcher()
+        return matcher
+    
+    def _course_requirements_to_name_list_matcher(self, courses: List[CourseRequirement]):
+        matcher = Matcher.Builder("NameList")
+        # for reference in courses:
+        #     course_data = requests.get(headers={"X-Api-Key": os.environ["NEBULA_API_KEY"]}, url=f"https://api.utdnebula.com/course/{reference.course_id}").json()
+        #     matcher.add_arg(course_data.data.name)
+        return matcher.build()
+    
+    def _collection_requirement_to_matcher(self, o: CollectionRequirement):
+        # TODO: revisit matcher selection logic, this is hacky at best
+        builder: Matcher.Builder = Matcher.Builder("Or" if o.required == 1 and len(o.options) == 2 else "And" if o.required == len(o.options) else "And")
+        total_hrs = 0
+        # TODO: correctly tabulate total hours considering required number of options
+        course_reqs: List[CourseRequirement] = []
+        for option in o.options:
+            hours = 0
+            if option.type == RequirementTypes.core:
+                matcher: Matcher = self._core_requirement_to_matcher(option)
+                hours += option.hours
+                builder.add_arg(matcher)
+            elif option.type == RequirementTypes.collection:
+                matcher, hrs = self._collection_requirement_to_matcher(option)
+                total_hrs += hrs 
+                builder.add_arg(matcher)
+            elif option.type == RequirementTypes.course:
+                course_reqs.append(option)
+            total_hrs += hours
+        if len(course_reqs) > 0:
+            builder.add_arg(self._course_requirements_to_name_list_matcher(course_reqs))
+        return builder.build(), total_hrs
+
+    def load_requirements_from_degree(self, degree: Degree):
+        minimum_cumulative_hours = Requirement("Minimum Cumulative Hours", degree.minimum_credit_hours, AnyMatcher())
+        self.requirements_dict[minimum_cumulative_hours.name] = minimum_cumulative_hours
+        self.groups.append([minimum_cumulative_hours])
+        
+        for o in degree.requirements.options:
+            if (o.type == RequirementTypes.collection):
+                # TODO: I'm assuming that every top level requirement is a collection, need to handle other requirement types too (I think only core and course requirements need to be handled)
+                matcher, hours = self._collection_requirement_to_matcher(o)
+                requirement = Requirement(o.name, hours, matcher)
+                self.requirements_dict[o.name] = requirement
+                self.groups.append([requirement])
+        self.validate()       
+    
     def load_requirements_from_file(self, filename):
         req_file = open(filename, 'r')
 

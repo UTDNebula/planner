@@ -213,3 +213,57 @@ class MockData:
         ]
 
         return [(req.name, [req]) for req in lone_reqs] + [('Cores + CS Reqs', cores + cs_reqs)]
+
+    @staticmethod
+    def core_090_matcher():
+        core_090 = ["ARAB1311","ARAB1312","ARAB2311","ARAB2312","ARHM2340","ARHM2342","ARHM2343","ARHM2344","CHEM1111","CHEM1115","CHIN2311","CHIN2312","EPPS2301","EPPS2302","FREN1311","FREN1312","FREN2311","FREN2312","GERM1311","GERM1312","GERM2311","GERM2312","JAPN1311","JAPN1312","JAPN2311","JAPN2312","KORE2311","KORE2312","MATH1326","MATH2419","SPAN1311","SPAN1312","SPAN2310","SPAN2311","SPAN2312","ATCM2340","COMM1311","COMM1315","RHET1302","MATH1306","MATH1314","MATH1316","MATH1325","MATH2306","MATH2312","MATH2413","MATH2414","MATH2415","MATH2417","PHIL2303","PSY2317","STAT1342","STAT2332","BIOL1300","BIOL2311","BIOL2312","BIOL2350","CGS2301","CHEM1311","CHEM1312","CHEM1315","CHEM1316","ENVR2302","GEOG2302","GEOS1303","GEOS1304","GEOS2302","GEOS2310","GEOS2321","GEOS2332","GEOS2333","GEOS2409","ISNS2359","ISNS2367","ISNS2368","NATS1311","NATS2330","NATS2333","PHIL2304","PHYS1301","PHYS1302","PHYS2125","PHYS2325","PHYS2326","PHYS2421","PHYS2422","PSY2364","ATCM2300","FILM1303","HIST2340","HIST2341","HIST2350","HIST2360","HIST2370","HUMA1301","LIT1301","LIT2322","LIT2329","LIT2331","PHIL1301","PHIL1305","PHIL1306","PHIL2316","PHIL2317","RELS1325","AHST1303","AHST1304","AHST2331","ARTS1301","DANC1305","DANC1310","FILM2332","MUSI1306","MUSI2321","PHIL1307","THEA1310","HIST1301","HIST1302","HIST2301","HIST2330","HIST2381","HIST2384","BA1310","BA1320","CLDP2314","ECON2301","ECON2302","PSY2301","PSY2314"]
+        core_090_matcher = NameListMatcher(*core_090)
+        return core_090_matcher
+    
+    @staticmethod
+    def core_010_matcher():
+        core_010 = ["ATCM2340","COMM1311","COMM1315","ECS3390","RHET1302","RHET2302"]
+        core_010_matcher = NameListMatcher(*core_010)
+        return core_010_matcher
+    
+    @staticmethod
+    def core_020_matcher():
+        core_020 = ["MATH1306","MATH1314","MATH1316","MATH1325","MATH2306","MATH2312","MATH2413","MATH2414","MATH2415","MATH2417","PHIL2303","PSY2317","STAT1342","STAT2332"]
+        core_020_matcher = NameListMatcher(*core_020)
+        return core_020_matcher
+
+    @staticmethod
+    def core_030_matcher():
+        core_030 = ["BIOL1300","BIOL1318","BIOL2311","BIOL2312","BIOL2350","CGS2301","CHEM1311","CHEM1312","CHEM1315","CHEM1316","ENVR2302","GEOG2302","GEOS1303","GEOS1304","GEOS2302","GEOS2310","GEOS2321","GEOS2332","GEOS2333","GEOS2409","ISNS2359","ISNS2367","ISNS2368","NATS1311","NATS2330","NATS2333","PHIL2304","PHYS1301","PHYS1302","PHYS2125","PHYS2325","PHYS2326","PHYS2421","PHYS2422","PSY2364"]
+        core_030_matcher = NameListMatcher(*core_030)
+        return core_030_matcher
+    
+    @staticmethod
+    def core_040_matcher():
+        core_040 = ["AMS2300","AMS2341","ATCM2300","FILM1303","HIST2340","HIST2341","HIST2350","HIST2360","HIST2370","HUMA1301","LIT1301","LIT2322","LIT2329","LIT2331","PHIL1301","PHIL1305","PHIL1306","PHIL2316","PHIL2317","RELS1325"]
+        core_040_matcher = NameListMatcher(*core_040)
+        return core_040_matcher
+    
+    @staticmethod
+    def core_050_matcher():
+        core_050 = ["AHST1303","AHST1304","AHST2331","ARTS1301","DANC1305","DANC1310","FILM2332","MUSI1306","MUSI2321","MUSI2322","PHIL1307","THEA1310"]
+        core_050_matcher = NameListMatcher(*core_050)
+        return core_050_matcher
+    
+    @staticmethod
+    def core_060_matcher():
+        core_060 = ["HIST1301","HIST1302","HIST2301","HIST2330","HIST2381","HIST2384"]
+        core_060_matcher = NameListMatcher(*core_060)
+        return core_060_matcher
+    
+    @staticmethod
+    def core_070_matcher():
+        core_070 = ["GOVT2107","GOVT2305","GOVT2306"]
+        core_070_matcher = NameListMatcher(*core_070)
+        return core_070_matcher
+
+    @staticmethod
+    def core_080_matcher():
+        core_080 = ["BA1310","BA1320","CLDP2314","CRIM1301","CRIM1307","ECON2301","ECON2302","GEOG2303","GST2300","PA2325","PSY2301","PSY2314","SOC1301","SOC2300","SOC2320"]
+        core_080_matcher = NameListMatcher(*core_080)
+        return core_080_matcher
