@@ -67,9 +67,8 @@ export default function LandingPage(): JSX.Element {
       <Scrollbars style={{ height: '90vh' }}>
         <div
           ref={appBarRef}
-          className={`sticky top-0 z-10 ${
-            appBarVisible && 'animate__animated animate__bounce animate__slow'
-          }`}
+          className={`sticky top-0 z-10 ${appBarVisible && 'animate__animated animate__bounce animate__slow'
+            }`}
         >
           <AppBar ref1={ref1} ref2={ref2} ref3={ref3} />
         </div>

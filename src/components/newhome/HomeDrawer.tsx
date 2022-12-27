@@ -60,13 +60,13 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 type HomeDrawerProps = {
-  children: React.ReactChild;
-  page: number;
-  setPage: (int: number) => void;
+  // children: React.ReactChild;
+  // page: number;
+  // setPage: (int: number) => void;
   isDesktop: boolean;
 };
 
-export default function HomeDrawer({ children, page, setPage, isDesktop }: HomeDrawerProps) {
+export default function HomeDrawer({ isDesktop }: HomeDrawerProps) {
   const [open, setOpen] = React.useState(true);
   const router = useRouter();
 
@@ -111,12 +111,11 @@ export default function HomeDrawer({ children, page, setPage, isDesktop }: HomeD
 
   return (
     // - 50px for banner, see BetaBanner.tsx
-    <Box sx={{ display: 'flex', width: '100%', height: 'calc(100vh - 50px)' }}>
+    <>
       <Drawer variant="permanent" open={open} sx={{ zIndex: 0 }}>
         <div
-          className={`flex flex-row w-full justify-center items-center pt-2  ${
-            isDesktop && 'h-16'
-          }`}
+          className={`flex flex-row w-full justify-center items-center pt-2  ${isDesktop && 'h-16'
+            }`}
         >
           {open ? (
             <>
@@ -142,12 +141,13 @@ export default function HomeDrawer({ children, page, setPage, isDesktop }: HomeD
                 disablePadding
                 sx={{
                   display: 'block',
-                  bgcolor: index === page ? '#E0E0E0' : undefined,
+                  bgcolor: '#E0E0E0',
                 }}
               >
                 <ListItemButton
                   onClick={() => {
-                    setPage(index);
+                    // setPage(index);
+                    router.push(`/app/${text.toLowerCase()}`);
                   }}
                   sx={{
                     minHeight: 48,
@@ -194,7 +194,8 @@ export default function HomeDrawer({ children, page, setPage, isDesktop }: HomeD
           </ListItem>
         </div>
       </Drawer>
-      {children}
-    </Box>
+      {/* {children} */}
+      {/* </Box > */}
+    </>
   );
 }

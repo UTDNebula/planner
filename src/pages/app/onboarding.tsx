@@ -221,7 +221,7 @@ export function useUserSetup(studentDefaultName = 'Comet') {
  * TODO: Support anonymous setup.
  */
 export default function OnboardingPage(): JSX.Element {
-  const { user } = useAuthContext();
+  // const { user } = useAuthContext();
   const {
     pageOneData,
     setPageOneData,
@@ -278,13 +278,13 @@ export default function OnboardingPage(): JSX.Element {
     return `?coursePlans=${coursePlans}&fastTrack=${prestige.fastTrack}`;
   }
 
-  const { updateName } = useAuthContext();
+  // const { updateName } = useAuthContext();
 
   const handleSubmit = () => {
     const data = organizeOnboardingData();
     // TODO: Send data to firebase if creating account
     console.log('Send data to firebase & go to /app', data);
-    updateName(data.preferredName);
+    // updateName(data.preferredName);
 
     // TODO: Figure out functionality for guest users
 

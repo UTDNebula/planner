@@ -3,17 +3,20 @@ import '../styles/globals.css';
 import firebase from 'firebase/compat/app';
 import { createTheme, StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
 import { AnimateSharedLayout } from 'framer-motion';
-import type { AppProps } from 'next/app';
+// import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
+import { type AppType } from 'next/app';
+import { type Session } from 'next-auth';
 
 import BetaBanner from '../components/BetaBanner';
-import { AuthProvider } from '../modules/auth/auth-context';
+import { SessionProvider, useSession } from 'next-auth/react';
+// import { AuthProvider } from '../modules/auth/auth-context';
 import { useStore } from '../modules/redux/store';
-
+import { trpc } from '../utils/trpc';
 const theme = createTheme({
   typography: {
     allVariants: {
@@ -66,7 +69,10 @@ if (!firebase.apps.length) {
  * This wrapper handles conditional rendering for certain layouts for non-landing
  * page routes.
  */
-export default function NebulaApp({ Component, pageProps }: AppProps): JSX.Element {
+const NebulaApp: AppType<{ session: Session | null }> = ({
+  Component,
+  pageProps: { session, ...pageProps },
+}) => {
   // TODO: Properly type check this
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
@@ -79,7 +85,7 @@ export default function NebulaApp({ Component, pageProps }: AppProps): JSX.Eleme
   // alert(router.pathname);
 
   return (
-    <AuthProvider>
+    <SessionProvider session={session}>
       <Head>
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -107,15 +113,28 @@ export default function NebulaApp({ Component, pageProps }: AppProps): JSX.Eleme
             <StyledEngineProvider injectFirst>
               <ThemeProvider theme={theme}>
                 <main className="w-screen h-screen overflow-x-hidden">
-                  {!router.pathname.startsWith('/auth') &&
-                    !router.pathname.startsWith('/app/onboarding') && <BetaBanner />}
-                  <Component {...pageProps} />
+                  {Component.auth ? (
+                    <Auth>
+                      <Component {...pageProps} />
+                    </Auth>) : (
+
+                    <Component {...pageProps} />)}
                 </main>
               </ThemeProvider>
             </StyledEngineProvider>
           </AnimateSharedLayout>
         </PersistGate>
       </Provider>
-    </AuthProvider>
+    </SessionProvider>
   );
 }
+
+function Auth({ children }) {
+  const { status } = useSession({ required: true })
+  if (status === 'loading') {
+    return <p>Loading...</p>
+  }
+  return children;
+}
+
+export default trpc.withTRPC(NebulaApp);
