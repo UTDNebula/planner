@@ -1,15 +1,22 @@
+import { createContextInner } from '@/server/trpc/context';
+import { type RouterInputs } from '@utils/trpc';
+import { appRouter } from '@/server/trpc/router/_app';
+import { trpc } from '@/utils/trpc';
+import { createProxySSGHelpers } from '@trpc/react-query/ssg';
+import { GetServerSidePropsContext, NextPage } from 'next';
+import { unstable_getServerSession } from 'next-auth/next';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import superjson from 'superjson';
 
 import Disclaimer from '../../components/onboarding/Onboarding_Pages/disclaimer';
 import PageOne, { PageOneTypes } from '../../components/onboarding/Onboarding_Pages/pg_1';
 import PageTwo, { PageTwoTypes } from '../../components/onboarding/Onboarding_Pages/pg_2';
 import Privacy from '../../components/onboarding/Onboarding_Pages/privacy';
 import Welcome from '../../components/onboarding/Onboarding_Pages/welcome';
-import { useAuthContext } from '../../modules/auth/auth-context';
 import { HonorsIndicator } from '../../modules/common/types';
-import { updateOnboarding } from '../../modules/redux/userDataSlice';
+import { authOptions } from '../api/auth/[...nextauth]';
 
 /**
  * The first onboarding page for the application.
@@ -190,10 +197,10 @@ export function useUserSetup(studentDefaultName = 'Comet') {
   });
 
   const [pageTwoData, setPageTwoData] = useState<PageTwoTypes>({
-    scholarship: null,
+    scholarship: false,
     scholarshipType: '',
-    receivingAid: null,
-    fastTrack: null,
+    receivingAid: false,
+    fastTrack: false,
     fastTrackMajor: '',
     fastTrackYear: '',
     honors: [],
@@ -220,7 +227,7 @@ export function useUserSetup(studentDefaultName = 'Comet') {
  *
  * TODO: Support anonymous setup.
  */
-export default function OnboardingPage(): JSX.Element {
+export default function OnboardingPage(): NextPage {
   // const { user } = useAuthContext();
   const {
     pageOneData,
@@ -232,6 +239,15 @@ export default function OnboardingPage(): JSX.Element {
     consentData,
     setConsentData,
   } = useUserSetup();
+  const utils = trpc.useContext();
+  const userQuery = trpc.user.getUser.useQuery();
+  const { data } = userQuery;
+
+  const addProfile = trpc.user.updateUserOnboard.useMutation({
+    async onSuccess() {
+      await utils.user.getUser.invalidate();
+    },
+  });
 
   const [page, setPage] = useState(0);
   const [validate, setValidate] = useState([true, false, true, false, false, true]);
@@ -263,10 +279,6 @@ export default function OnboardingPage(): JSX.Element {
     }
   };
 
-  if (user === null) {
-    // TODO: Do something useful
-  }
-
   const validateForm = (value: boolean) => {
     const temp = validate;
     temp[page] = value;
@@ -280,20 +292,35 @@ export default function OnboardingPage(): JSX.Element {
 
   // const { updateName } = useAuthContext();
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const data = organizeOnboardingData();
     // TODO: Send data to firebase if creating account
     console.log('Send data to firebase & go to /app', data);
     // updateName(data.preferredName);
+    // flogi
+    const input: RouterInputs['user']['updateUserOnboard'] = {
+      preferredName: data.preferredName,
+      classification: data.classification,
+      personalization: data.consent.personalization,
+      disclaimer: data.consent.disclaimer,
+      analytics: data.consent.analytics,
+      performance: data.consent.performance,
+      onCampus: data.studentAttributes.onCampus,
+      majors: data.plan.majors,
+    };
+
+    try {
+      await addProfile.mutateAsync(input);
+    } catch (error) {}
 
     // TODO: Figure out functionality for guest users
 
-    const onboardingRedirect = `/app/routes/route`;
+    // const onboardingRedirect = `/app/routes/route`;
 
     // Mark onboarding done
-    dispatch(updateOnboarding(data));
+    // dispatch(updateOnboarding(data));
 
-    router.push(onboardingRedirect);
+    router.push('/app/home');
   };
 
   const organizeOnboardingData = () => {
@@ -421,4 +448,20 @@ export default function OnboardingPage(): JSX.Element {
       </div>
     </>
   );
+}
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const session = await unstable_getServerSession(context.req, context.res, authOptions);
+  const ssg = createProxySSGHelpers({
+    router: appRouter,
+    ctx: await createContextInner({ session }),
+    transformer: superjson,
+  });
+
+  await ssg.user.getUser.prefetch();
+  return {
+    props: {
+      trpcState: ssg.dehydrate(),
+    },
+  };
 }
