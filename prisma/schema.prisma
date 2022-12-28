@@ -14,7 +14,7 @@ model TemplateData {
   id         String         @id @default(auto()) @map("_id") @db.ObjectId
   semester   Int
   items      TemplateItem[]
-  template   Template       @relation(fields: [templateId], references: [id])
+  template   Template       @relation(fields: [templateId], references: [id], onDelete: Cascade)
   templateId String
 }
 
@@ -22,7 +22,7 @@ model TemplateItem {
   id             String           @id @default(auto()) @map("_id") @db.ObjectId
   name           String?
   type           TemplateDataType @default(CORE)
-  templateData   TemplateData     @relation(fields: [templateDataId], references: [id])
+  templateData   TemplateData     @relation(fields: [templateDataId], references: [id], onDelete: Cascade)
   templateDataId String
 }
 
@@ -36,7 +36,7 @@ model Profile {
   id              String   @id @default(auto()) @map("_id") @db.ObjectId
   name            String?
   user            User     @relation(fields: [userId], references: [id])
-  userId          String   @db.ObjectId
+  userId          String   @unique @db.ObjectId
   disclaimer      Boolean  @default(false)
   personalization Boolean  @default(false)
   analytics       Boolean  @default(false)
@@ -49,6 +49,8 @@ model Profile {
   fastTrackMajors String?
   fastTrackStatus Boolean  @default(false)
   fastTrackYear   String?
+  majors          String[]
+  minors          String[]
 }
 
 model Prerequisite {
@@ -101,12 +103,6 @@ model Credit {
   user         User?   @relation(fields: [userId], references: [id])
 }
 
-model Example {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
 model AcademicDetails {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 }
@@ -148,7 +144,7 @@ model User {
   image              String?
   accounts           Account[]
   sessions           Session[]
-  profile            Profile[]
+  profile            Profile?
 }
 
 model VerificationToken {
