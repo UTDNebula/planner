@@ -81,6 +81,8 @@ model Plan {
   createdAt DateTime   @default(now()) @map("created_at")
   updatedAt DateTime   @default(now()) @map("updated_at")
   semesters Semester[]
+  User      User?      @relation(fields: [userId], references: [id])
+  userId    String?    @db.ObjectId
 }
 
 model Semester {
@@ -145,6 +147,7 @@ model User {
   accounts           Account[]
   sessions           Session[]
   profile            Profile?
+  plans              Plan[]
 }
 
 model VerificationToken {
