@@ -1,0 +1,48 @@
+import { TRPCError } from '@trpc/server';
+import { z } from 'zod';
+
+import { router, publicProcedure } from '../trpc';
+
+export const templateRouter = router({
+  getAllTemplates: publicProcedure.query(async ({ ctx }) => {
+    try {
+      const templates = await ctx.prisma.template.findMany();
+      console.table(templates);
+      return templates;
+    } catch (error) {
+      if (error instanceof TRPCError) {
+        return error;
+      }
+    }
+  }),
+  getTemplateById: publicProcedure
+    .input(
+      z.object({
+        templateId: z.string().min(1),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      // console.log(input);
+      try {
+        const template = await ctx.prisma.template.findUnique({
+          where: {
+            id: input.templateId,
+          },
+          include: {
+            templateData: {
+              select: {
+                semester: true,
+                items: {
+                  select: {
+                    name: true,
+                    type: true,
+                  },
+                },
+              },
+            },
+          },
+        });
+        return template;
+      } catch (error) {}
+    }),
+});
