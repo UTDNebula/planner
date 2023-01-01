@@ -88,7 +88,7 @@ model Plan {
 model Semester {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   name      String
-  code      String
+  code      String // TODO: convert code to enum
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   courses   Course[]
