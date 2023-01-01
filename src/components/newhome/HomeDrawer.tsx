@@ -67,6 +67,7 @@ type HomeDrawerProps = {
 };
 
 export default function HomeDrawer({ isDesktop }: HomeDrawerProps) {
+  // import Credits from '../../components/newhome/Credits';
   const [open, setOpen] = React.useState(true);
   const router = useRouter();
 
@@ -114,8 +115,9 @@ export default function HomeDrawer({ isDesktop }: HomeDrawerProps) {
     <>
       <Drawer variant="permanent" open={open} sx={{ zIndex: 0 }}>
         <div
-          className={`flex flex-row w-full justify-center items-center pt-2  ${isDesktop && 'h-16'
-            }`}
+          className={`flex flex-row w-full justify-center items-center pt-2  ${
+            isDesktop && 'h-16'
+          }`}
         >
           {open ? (
             <>
