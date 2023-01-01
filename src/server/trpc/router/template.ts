@@ -7,7 +7,7 @@ export const templateRouter = router({
   getAllTemplates: publicProcedure.query(async ({ ctx }) => {
     try {
       const templates = await ctx.prisma.template.findMany();
-      console.table(templates);
+      // console.table(templates);
       return templates;
     } catch (error) {
       if (error instanceof TRPCError) {
@@ -15,34 +15,28 @@ export const templateRouter = router({
       }
     }
   }),
-  getTemplateById: publicProcedure
-    .input(
-      z.object({
-        templateId: z.string().min(1),
-      }),
-    )
-    .query(async ({ ctx, input }) => {
-      // console.log(input);
-      try {
-        const template = await ctx.prisma.template.findUnique({
-          where: {
-            id: input.templateId,
-          },
-          include: {
-            templateData: {
-              select: {
-                semester: true,
-                items: {
-                  select: {
-                    name: true,
-                    type: true,
-                  },
+  getTemplateById: publicProcedure.input(z.string().min(1)).query(async ({ ctx, input }) => {
+    // console.log(input);
+    try {
+      const template = await ctx.prisma.template.findUnique({
+        where: {
+          id: input,
+        },
+        include: {
+          templateData: {
+            select: {
+              semester: true,
+              items: {
+                select: {
+                  name: true,
+                  type: true,
                 },
               },
             },
           },
-        });
-        return template;
-      } catch (error) {}
-    }),
+        },
+      });
+      return template;
+    } catch (error) {}
+  }),
 });
