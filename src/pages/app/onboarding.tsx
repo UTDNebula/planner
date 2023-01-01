@@ -240,8 +240,8 @@ export default function OnboardingPage(): NextPage {
     setConsentData,
   } = useUserSetup();
   const utils = trpc.useContext();
-  const userQuery = trpc.user.getUser.useQuery();
-  const { data } = userQuery;
+  // const userQuery = trpc.user.getUser.useQuery();
+  // const { data } = userQuery;
 
   const addProfile = trpc.user.updateUserOnboard.useMutation({
     async onSuccess() {
@@ -252,7 +252,7 @@ export default function OnboardingPage(): NextPage {
   const [page, setPage] = useState(0);
   const [validate, setValidate] = useState([true, false, true, false, false, true]);
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const [validNextPage, setValidNextPage] = useState(false);
 
@@ -402,10 +402,10 @@ export default function OnboardingPage(): NextPage {
     setPage(Math.max(page - 1, 0));
   };
 
-  const changePage = (page: number) => {
-    setNavigationProps(page);
-    setPage(page);
-  };
+  // const changePage = (page: number) => {
+  //   setNavigationProps(page);
+  //   setPage(page);
+  // };
 
   useEffect(() => {
     console.log(pageTwoData);
