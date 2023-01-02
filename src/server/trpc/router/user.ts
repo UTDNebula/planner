@@ -1,15 +1,6 @@
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
-import {
-  Prisma,
-  type User,
-  type Plan,
-  type Profile,
-  type Semester,
-  type Course,
-  type Template,
-} from '@prisma/client';
-import { v4 as uuid } from 'uuid';
+import { Prisma } from '@prisma/client';
 import { router, protectedProcedure } from '../trpc';
 import { getAllCourses } from '@modules/common/api/templates';
 
@@ -101,7 +92,7 @@ export const userRouter = router({
     } catch (error) {}
   }),
   createUserPlan: protectedProcedure.input(z.string().min(1)).mutation(async ({ ctx, input }) => {
-    console.log('Inside createUserPlan');
+    const userId = ctx.session.user.id;
     try {
       const template = await ctx.prisma.template.findUnique({
         where: {
@@ -128,28 +119,37 @@ export const userRouter = router({
         });
       }
       const major = template.name;
+      // TODO: Handle empty template creation.
+      // TODO: Create dummy empty plan
+      //
       // if (major === 'empty') {
-      //   const newPlan: StudentPlan = { ...dummyPlan, id: uuid() };
-      //   dispatch(updatePlan(newPlan));
-      //   return router.push(`/app/plans/${newPlan.id}`);
+      //   const createUserPlan = ctx.prisma.user.update({
+      //     where: {
+      //       id: userId,
+      //     },
+      //     data: {
+      //       plans: {
+      //         name: 'My Plan',
+      //         semesters: {
+      //           create: [
+      //             {
+      //               name: 'Fall 2022',
+      //             },
+      //           ],
+      //         },
+      //       },
+      //     },
+      //   });
       // }
 
       const allCourses = await getAllCourses();
       const templateData = template.templateData;
 
-      // TODO: Handle credits courses while creating template
-
-      // const filteredTemplate = templateData.map((sem) => {
-      // return sem.items.filter((course: string) => {
-      // if (typeof course === 'object') return true;
-
-      // return !coursesFromCredits.some((credit) => credit.utdCourseCode === course);
-      // });
-      // });
-
       const numOfSemesters = templateData.length;
       // const creditSemesters: Semester[] = [];
 
+      // TODO: Add course data from credits
+      //
       // coursesFromCredits.sort((a, b) => {
       //   if (!a.semester || !b.semester) return;
       //   if (a.semester.year === b.semester.year) {
@@ -213,9 +213,9 @@ export const userRouter = router({
           let courseInputData: Prisma.CourseCreateManySemesterInput;
           if (sem.items[j].type === 'OPTIONAL') {
             courseInputData = {
-              name: sem.items[j].name + ' Course',
+              name: sem.items[j].name,
               creditHours: 3,
-              description: `Chose one of the ${sem.items[j].name} courses for this`,
+              description: `Chose one of the ${sem.items[j].name} for this`,
               catalogCode: '',
             };
           } else {
@@ -241,7 +241,7 @@ export const userRouter = router({
           },
         };
         const semesterInputData: Prisma.SemesterUncheckedCreateWithoutPlanInput = {
-          name: i.toString(),
+          name: semTitle,
           code: semCode,
           courses: courses,
         };
@@ -259,13 +259,24 @@ export const userRouter = router({
         create: plansInput,
       };
       const updatedUser = await ctx.prisma.user.update({
-        where: { id: ctx.session.user.id },
+        where: { id: userId },
         data: {
           plans: plans,
         },
+        select: {
+          name: true,
+          plans: {
+            orderBy: {
+              createdAt: 'desc',
+            },
+            take: 1,
+            select: {
+              id: true,
+            },
+          },
+        },
       });
-      console.log({ updatedUser });
-      return updatedUser;
+      return updatedUser.plans[0].id;
     } catch (error) {
       console.error(error);
     }
