@@ -204,13 +204,13 @@ export const userRouter = router({
       for (let i = 0; i < numOfSemesters; i++) {
         const sem = templateData[i];
 
-        const coursesInput: Array<Prisma.CourseUncheckedCreateWithoutSemesterInput> = [];
+        const coursesInput: Array<Prisma.CourseCreateManySemesterInput> = [];
         const semTitle = `${season} ${year + Math.floor((i + 1) / 2)}`;
         const semCode = `${year + Math.floor((i + 1) / 2)}${season[0].toLowerCase()}`;
         season = season === 'Fall' ? 'Spring' : 'Fall';
 
         for (let j = 0; j < sem.items.length; j++) {
-          let courseInputData: Prisma.CourseUncheckedCreateWithoutSemesterInput;
+          let courseInputData: Prisma.CourseCreateManySemesterInput;
           if (sem.items[j].type === 'OPTIONAL') {
             courseInputData = {
               name: sem.items[j].name + ' Course',
@@ -234,8 +234,11 @@ export const userRouter = router({
           }
           coursesInput.push(courseInputData);
         }
+
         const courses: Prisma.CourseUncheckedCreateNestedManyWithoutSemesterInput = {
-          create: [...coursesInput],
+          createMany: {
+            data: coursesInput,
+          },
         };
         const semesterInputData: Prisma.SemesterUncheckedCreateWithoutPlanInput = {
           name: i.toString(),
@@ -249,7 +252,7 @@ export const userRouter = router({
       };
 
       const plansInput: Prisma.PlanUncheckedCreateWithoutUserInput = {
-        name: 'Plan 1',
+        name: major,
         semesters: semesters,
       };
       const plans: Prisma.PlanUpdateManyWithoutUserNestedInput = {
