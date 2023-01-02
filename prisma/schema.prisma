@@ -57,7 +57,7 @@ model Prerequisite {
   id          String @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   catalogCode String
-  course      Course @relation(fields: [courseId], references: [id])
+  course      Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
   courseId    String @db.ObjectId
 }
 
@@ -70,7 +70,7 @@ model Course {
 
   createdAt     DateTime       @default(now()) @map("created_at")
   updatedAt     DateTime       @default(now()) @map("updated_at")
-  semester      Semester?      @relation(fields: [semesterId], references: [id])
+  semester      Semester?      @relation(fields: [semesterId], references: [id], onDelete: Cascade)
   semesterId    String?        @db.ObjectId
   prerequisites Prerequisite[]
 }
@@ -92,7 +92,7 @@ model Semester {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   courses   Course[]
-  plan      Plan?    @relation(fields: [planId], references: [id])
+  plan      Plan?    @relation(fields: [planId], references: [id], onDelete: Cascade)
   planId    String?  @db.ObjectId
 }
 
