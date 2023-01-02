@@ -7,6 +7,7 @@ import {
   type Profile,
   type Semester,
   type Course,
+  type Template,
 } from '@prisma/client';
 import { v4 as uuid } from 'uuid';
 import { router, protectedProcedure } from '../trpc';
@@ -120,14 +121,13 @@ export const userRouter = router({
           },
         },
       });
-      if (!template) {
+      if (!template || !template.name) {
         throw new TRPCError({
           code: 'NOT_FOUND',
           message: 'Template not found',
         });
       }
       const major = template.name;
-      console.log({ major });
       // if (major === 'empty') {
       //   const newPlan: StudentPlan = { ...dummyPlan, id: uuid() };
       //   dispatch(updatePlan(newPlan));
@@ -147,15 +147,7 @@ export const userRouter = router({
       // });
       // });
 
-      console.log({ templateData });
-      // return templateData;
       const numOfSemesters = templateData.length;
-      // let semesters: Prisma.SemesterCreateNestedManyWithoutPlanInput;
-      // let courses: Prisma.CourseCreateNestedManyWithoutSemesterInput;
-
-      // const semesters: Array<Prisma.SemesterCreateNestedManyWithoutPlanInput> = [];
-
-      // const semesters:  = [];
       // const creditSemesters: Semester[] = [];
 
       // coursesFromCredits.sort((a, b) => {
@@ -205,30 +197,22 @@ export const userRouter = router({
       //     }
       //   }
       // });
-      const year = new Date().getFullYear();
-      // const plan: Prisma.PlanCreateWithoutUserInput;
-      const semesters: Array<Prisma.SemesterCreateNestedWithoutPlanInput> = [];
-      let season = 'Fall';
 
+      const year = new Date().getFullYear();
+      let season = 'Fall';
+      const semestersInput: Array<Prisma.SemesterUncheckedCreateWithoutPlanInput> = [];
       for (let i = 0; i < numOfSemesters; i++) {
         const sem = templateData[i];
 
-        const semCourses: Array<Prisma.CourseCreateNestedManyWithoutSemesterInput> = [];
+        const coursesInput: Array<Prisma.CourseUncheckedCreateWithoutSemesterInput> = [];
         const semTitle = `${season} ${year + Math.floor((i + 1) / 2)}`;
         const semCode = `${year + Math.floor((i + 1) / 2)}${season[0].toLowerCase()}`;
         season = season === 'Fall' ? 'Spring' : 'Fall';
-        // const semester: Prisma.SemesterCreateWithoutPlanInput = { name: semTitle, code: semCode, courses: courses}
-        // const semester: Semester = { title: semTitle, code: semCode, courses: semCourses };
 
-        const semester: Prisma.SemesterCreateNestedManyWithoutPlanInput = {
-          name: semTitle,
-          code: semCode,
-          courses: undefined,
-        };
         for (let j = 0; j < sem.items.length; j++) {
-          let course: Course;
+          let courseInputData: Prisma.CourseUncheckedCreateWithoutSemesterInput;
           if (sem.items[j].type === 'OPTIONAL') {
-            course = {
+            courseInputData = {
               name: sem.items[j].name + ' Course',
               creditHours: 3,
               description: `Chose one of the ${sem.items[j].name} courses for this`,
@@ -237,9 +221,9 @@ export const userRouter = router({
           } else {
             try {
               const { name: title, description, hours } = allCourses[sem.items[j].name];
-              course = {
+              courseInputData = {
                 name: title,
-                catalogCode: sem.items[j]?.name,
+                catalogCode: sem.items[j].name,
                 description: description,
                 creditHours: +hours,
               };
@@ -248,54 +232,37 @@ export const userRouter = router({
               continue;
             }
           }
-          semCourses.push(course);
+          coursesInput.push(courseInputData);
         }
-        semester.courses = semCourses;
-        semesters.push(semester);
+        const courses: Prisma.CourseUncheckedCreateNestedManyWithoutSemesterInput = {
+          create: [...coursesInput],
+        };
+        const semesterInputData: Prisma.SemesterUncheckedCreateWithoutPlanInput = {
+          name: i.toString(),
+          code: semCode,
+          courses: courses,
+        };
+        semestersInput.push(semesterInputData);
       }
-      // console.log({ semesters });
-      // for (let i = 0; i < semesters.length; i++) {
-      //   console.log('Semester: ', i);
-      //   for (let j = 0; j < semesters[i].courses.length; j++) {
-      //     console.log(semesters[i].courses[j]);
-      //   }
-      // }
-      const plan: Prisma.PlanCreateWithoutUserInput = { name: major, semesters: semesters };
-      // console.log(plan);
+      const semesters: Prisma.SemesterUncheckedCreateNestedManyWithoutPlanInput = {
+        create: [...semestersInput],
+      };
 
+      const plansInput: Prisma.PlanUncheckedCreateWithoutUserInput = {
+        name: 'Plan 1',
+        semesters: semesters,
+      };
+      const plans: Prisma.PlanUpdateManyWithoutUserNestedInput = {
+        create: plansInput,
+      };
       const updatedUser = await ctx.prisma.user.update({
         where: { id: ctx.session.user.id },
         data: {
-          plans: {
-            upsert: {
-              create: {
-                name: major,
-                semesters: [...semesters],
-              },
-              update: {
-                name: major,
-                semesters: {
-                  create: [...semesters],
-                },
-              },
-            },
-          },
+          plans: plans,
         },
       });
       console.log({ updatedUser });
-      return templateData;
-      //   const routeId = uuid();
-      //   const planTitle = major + ' Degree Plan';
-      //   const planMajor = major.split('(')[0]; // TODO: Change later; this formats the major to match in major.json()
-      //   const newPlanFromTemplate: StudentPlan = {
-      //     id: routeId,
-      //     title: planTitle,
-      //     major: planMajor,
-      //     semesters: [...creditSemesters, ...semesters],
-      //   };
-      //   dispatch(updatePlan(newPlanFromTemplate));
-      //   router.push(`/app/plans/${routeId}`);
-      // };
+      return updatedUser;
     } catch (error) {
       console.error(error);
     }

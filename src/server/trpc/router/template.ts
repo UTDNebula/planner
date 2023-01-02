@@ -36,6 +36,12 @@ export const templateRouter = router({
           },
         },
       });
+      if (!template) {
+        throw new TRPCError({
+          message: 'Template not found',
+          code: 'NOT_FOUND',
+        });
+      }
       return template;
     } catch (error) {}
   }),

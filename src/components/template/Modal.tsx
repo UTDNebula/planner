@@ -1,19 +1,8 @@
 import { trpc } from '@/utils/trpc';
 import CloseIcon from '@mui/icons-material/Close';
-// import { useRouter } from 'next/router';
-// import { useState } from 'react';
-// import { useDispatch } from 'react-redux';
-// import { useSelector } from 'react-redux';
-// import { v4 as uuid } from 'uuid';
 
 // TODO: Move to server once we use server-side rendering
-// import dummyTemplate from '../../data/degree_template.json';
-// import { getAllCourses } from '../../modules/common/api/templates';
-// import { Course, Semester, StudentPlan } from '../../modules/common/data';
-// import { SEMESTER_CODE_MAPPINGS as semMap } from '../../modules/common/data';
-// import { dummyPlan } from '../../modules/planner/plannerUtils';
-// import { RootState } from '../../modules/redux/store';
-// import { updatePlan } from '../../modules/redux/userDataSlice';
+
 import DataGrid from '../credits/DataGrid';
 import SearchBar from '../credits/SearchBar';
 
@@ -25,17 +14,23 @@ export default function TemplateModal({ setOpenTemplateModal }: TemplateModalPro
   // const dispatch = useDispatch();
   // const coursesFromCredits = [...useSelector((state: RootState) => state.creditsData.credits)];
 
-  const templatesQuery = trpc.template.getAllTemplates.useQuery();
-  const templates = templatesQuery.data;
-
-  // const [templateQuery, setTemplateQuery] = useState('');
-
   const utils = trpc.useContext();
   const createUserPlan = trpc.user.createUserPlan.useMutation({
     async onSuccess() {
       await utils.user.getUser.invalidate();
     },
   });
+  const { data, isError } = trpc.template.getAllTemplates.useQuery();
+  if (isError) {
+    console.error('Error fetching templates');
+    return <div>Error fetching templates</div>;
+  }
+  if (!data) {
+    return <div>Loading...</div>;
+  }
+  const templates = data;
+
+  // const [templateQuery, setTemplateQuery] = useState('');
 
   const orderedTemplate = templates?.sort((a, b) => {
     if (a.name < b.name) {
@@ -43,7 +38,7 @@ export default function TemplateModal({ setOpenTemplateModal }: TemplateModalPro
     }
     return 1;
   });
-
+  console.log('OrderedTemplate', orderedTemplate);
   // const handleTemplateCreation = async (major: string) => {
   //   console.log({ major });
   //   if (major === 'empty') {
@@ -176,10 +171,10 @@ export default function TemplateModal({ setOpenTemplateModal }: TemplateModalPro
   //   router.push(`/app/plans/${routeId}`);
   // };
   const handleTemplateCreation = async (major: string) => {
-    console.log(orderedTemplate);
+    // console.log(orderedTemplate);
     console.log({ major });
 
-    const selectedTemplate = orderedTemplate.filter((template) => {
+    const selectedTemplate = templates.filter((template) => {
       if (template.name === major) {
         return template;
       }
