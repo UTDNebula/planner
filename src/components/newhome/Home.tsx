@@ -1,10 +1,9 @@
 import AddIcon from '@mui/icons-material/Add';
 import { Theme } from '@mui/material';
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
 import { makeStyles } from 'tss-react/mui';
 
-import { RootState } from '../../modules/redux/store';
+import { trpc } from '@utils/trpc';
 import PlanCard from '../home/plans/PlanCard';
 import TemplateModal from '../template/Modal';
 
@@ -12,11 +11,6 @@ import TemplateModal from '../template/Modal';
  * A list of the user's plans
  */
 export default function PlansPage(): JSX.Element {
-  const [openTemplateModal, setOpenTemplateModal] = useState(false);
-  // TODO: Write function to get user plans
-  const { plans: userPlans } = useSelector((state: RootState) => state.userData);
-  const plans = Object.values(userPlans);
-
   const useStyles = makeStyles()((theme: Theme) => {
     return {
       container: {
@@ -31,8 +25,13 @@ export default function PlansPage(): JSX.Element {
       },
     };
   });
-
   const { classes } = useStyles();
+  const [openTemplateModal, setOpenTemplateModal] = useState(false);
+  const userPlanQuery = trpc.plan.getUserPlans.useQuery();
+  const { data } = userPlanQuery;
+  if (!data) {
+    return <div>You have not created any plans yet</div>;
+  }
 
   return (
     <>
@@ -51,8 +50,8 @@ export default function PlansPage(): JSX.Element {
             </div>
           </button>
           <div className="w-fit flex flex-wrap gap-8">
-            {plans.map((plan) => (
-              <PlanCard key={plan.id} id={plan.id} plan={plan} />
+            {data.plans.map((plan) => (
+              <PlanCard key={plan.id} id={plan.id} name={plan.name} />
             ))}
           </div>
         </section>
