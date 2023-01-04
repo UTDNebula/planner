@@ -74,23 +74,6 @@ export const userRouter = router({
       console.table(user);
       return user;
     }),
-  getUserPlans: protectedProcedure.query(async ({ ctx }) => {
-    try {
-      const plans = await ctx.prisma.user.findUnique({
-        where: {
-          id: ctx.session.user.id,
-        },
-        select: {
-          plans: {
-            select: {
-              name: true,
-            },
-          },
-        },
-      });
-      return plans;
-    } catch (error) {}
-  }),
   createUserPlan: protectedProcedure.input(z.string().min(1)).mutation(async ({ ctx, input }) => {
     const userId = ctx.session.user.id;
     try {

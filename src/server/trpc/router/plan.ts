@@ -3,6 +3,24 @@ import { z } from 'zod';
 import { router, protectedProcedure } from '../trpc';
 
 export const planRouter = router({
+  getUserPlans: protectedProcedure.query(async ({ ctx }) => {
+    try {
+      const plans = await ctx.prisma.user.findUnique({
+        where: {
+          id: ctx.session.user.id,
+        },
+        select: {
+          plans: {
+            select: {
+              name: true,
+              id: true,
+            },
+          },
+        },
+      });
+      return plans;
+    } catch (error) {}
+  }),
   getPlanById: protectedProcedure.input(z.string().min(1)).query(async ({ ctx, input }) => {
     const planData = await ctx.prisma.user.findUnique({
       where: {
