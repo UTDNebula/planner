@@ -11,12 +11,13 @@ export const templateRouter = router({
       return templates;
     } catch (error) {
       if (error instanceof TRPCError) {
-        return error;
+        // TODO: Handle error and return empty template or default object
+        //
+        // return error;
       }
     }
   }),
   getTemplateById: publicProcedure.input(z.string().min(1)).query(async ({ ctx, input }) => {
-    // console.log(input);
     try {
       const template = await ctx.prisma.template.findUnique({
         where: {

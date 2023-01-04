@@ -41,6 +41,7 @@ export const planRouter = router({
                 code: true,
                 courses: {
                   select: {
+                    id: true,
                     name: true,
                     description: true,
                   },
