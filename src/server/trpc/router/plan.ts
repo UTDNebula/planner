@@ -89,49 +89,40 @@ export const planRouter = router({
       return false;
     }
   }),
-  deleteSemesterById: protectedProcedure
-    .input(
-      z.object({
-        planId: z.string().min(1),
-        semesterId: z.string().min(1),
-      }),
-    )
-    .mutation(async ({ ctx, input }) => {
-      try {
-        const semesterId = await ctx.prisma.user.findUnique({
-          where: {
-            id: ctx.session.user.id,
-          },
-          select: {
-            plans: {
-              where: {
-                id: input.planId,
-              },
-              select: {
-                id: true,
-                semesters: {
-                  where: {
-                    id: input.semesterId,
-                  },
-                  select: {
-                    id: true,
-                  },
+  deleteSemester: protectedProcedure.input(z.string().min(1)).mutation(async ({ ctx, input }) => {
+    try {
+      const semesterId = await ctx.prisma.user.findUnique({
+        where: {
+          id: ctx.session.user.id,
+        },
+        select: {
+          plans: {
+            where: {
+              id: input,
+            },
+            select: {
+              id: true,
+              semesters: {
+                select: {
+                  id: true,
                 },
+                take: -1,
               },
             },
           },
-        });
-        await ctx.prisma.semester.delete({
-          where: {
-            id: semesterId?.plans[0]?.semesters[0]?.id,
-          },
-        });
-        return true;
-      } catch (error) {
-        return false;
-      }
-    }),
-  addSemesterToPlan: protectedProcedure
+        },
+      });
+      await ctx.prisma.semester.delete({
+        where: {
+          id: semesterId?.plans[0]?.semesters[0]?.id,
+        },
+      });
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }),
+  addEmptySemesterToPlan: protectedProcedure
     .input(z.string().min(1))
     .mutation(async ({ ctx, input }) => {
       try {
@@ -149,17 +140,15 @@ export const planRouter = router({
             },
           },
         });
-
         if (!plan) {
           throw new TRPCError({
             code: 'NOT_FOUND',
             message: 'Plan not found',
           });
         }
-        const lastSemesterCode = plan.semesters[0]?.code;
+        const lastSemesterCode = plan.semesters[0]?.code ? plan.semesters[0]?.code : '2023s';
         let year = lastSemesterCode?.substring(0, 4);
         let season = lastSemesterCode?.substring(4, 5);
-
         year = season === 'f' ? (parseInt(year) + 1).toString() : year;
         season = season === 'f' ? 's' : 'f';
 

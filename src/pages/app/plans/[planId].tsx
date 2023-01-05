@@ -198,13 +198,13 @@ export default function PlanDetailPage(
     },
   });
 
-  const createSemester = trpc.plan.addSemesterToPlan.useMutation({
+  const createSemester = trpc.plan.addEmptySemesterToPlan.useMutation({
     async onSuccess() {
       await utils.plan.getPlanById.invalidate(planId);
     },
   });
 
-  const deleteSemester = trpc.plan.deleteSemesterById.useMutation({
+  const deleteSemester = trpc.plan.deleteSemester.useMutation({
     async onSuccess() {
       await utils.plan.getPlanById.invalidate(planId);
     },
@@ -228,14 +228,11 @@ export default function PlanDetailPage(
       await createSemester.mutateAsync(planId);
     } catch (error) {}
   };
-  const handleSemesterDelete = async (semesterId: string) => {
+  const handleSemesterDelete = async () => {
     try {
       // TODO: Handle deletion errors
 
-      await deleteSemester.mutateAsync({
-        planId: planId,
-        semesterId: semesterId,
-      });
+      await deleteSemester.mutateAsync(planId);
     } catch (error) {}
   };
   return (
@@ -246,17 +243,15 @@ export default function PlanDetailPage(
       <button className="m-4 p-4 font-bold bg-red-400" onClick={() => handleSemesterCreate()}>
         Add Semester
       </button>
+      <button className="m-4 p-4 font-bold bg-red-400" onClick={() => handleSemesterDelete()}>
+        Delete Semester
+      </button>
       <div>{planQuery.data?.name}</div>
       {planQuery.data?.semesters.map((sem) => {
         return (
           <div key={sem.code} className="p-2 m-2 border-2 border-blue-500">
             <div className="font-bold">{sem.name}</div>
-            <button
-              className="m-4 p-4 font-bold bg-red-400"
-              onClick={() => handleSemesterDelete(sem.id)}
-            >
-              Delete Semester
-            </button>
+
             {sem.courses.map((course) => {
               return (
                 <div key={course.id} className="p-2">
