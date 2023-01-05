@@ -5,6 +5,7 @@ import { HonorsIndicator } from './types';
 
 /**
  * A topic of study.
+ * TODO: Update prereqs to be string array (CHECK IF WE SHOULD DO THIS THOUGH)
  */
 export interface Course {
   id: string;
