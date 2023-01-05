@@ -20,7 +20,7 @@ model TemplateData {
 
 model TemplateItem {
   id             String           @id @default(auto()) @map("_id") @db.ObjectId
-  name           String?
+  name           String
   type           TemplateDataType @default(CORE)
   templateData   TemplateData     @relation(fields: [templateDataId], references: [id], onDelete: Cascade)
   templateDataId String
