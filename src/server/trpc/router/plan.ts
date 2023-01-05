@@ -131,4 +131,55 @@ export const planRouter = router({
         return false;
       }
     }),
+  addSemesterToPlan: protectedProcedure
+    .input(z.string().min(1))
+    .mutation(async ({ ctx, input }) => {
+      try {
+        const plan = await ctx.prisma.plan.findUnique({
+          where: {
+            id: input,
+          },
+          select: {
+            semesters: {
+              select: {
+                code: true,
+                name: true,
+              },
+              take: -1,
+            },
+          },
+        });
+
+        if (!plan) {
+          throw new TRPCError({
+            code: 'NOT_FOUND',
+            message: 'Plan not found',
+          });
+        }
+        const lastSemesterCode = plan.semesters[0]?.code;
+        let year = lastSemesterCode?.substring(0, 4);
+        let season = lastSemesterCode?.substring(4, 5);
+
+        year = season === 'f' ? (parseInt(year) + 1).toString() : year;
+        season = season === 'f' ? 's' : 'f';
+
+        const semTitle = `${season === 'f' ? 'Fall' : 'Spring'} ${year}`;
+        const semCode = `${year}${season[0].toLowerCase()}`;
+
+        await ctx.prisma.plan.update({
+          where: {
+            id: input,
+          },
+          data: {
+            semesters: {
+              create: {
+                code: semCode,
+                name: semTitle,
+              },
+            },
+          },
+        });
+        return true;
+      } catch (error) {}
+    }),
 });
