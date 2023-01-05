@@ -198,6 +198,12 @@ export default function PlanDetailPage(
     },
   });
 
+  const createSemester = trpc.plan.addSemesterToPlan.useMutation({
+    async onSuccess() {
+      await utils.plan.getPlanById.invalidate(planId);
+    },
+  });
+
   const deleteSemester = trpc.plan.deleteSemesterById.useMutation({
     async onSuccess() {
       await utils.plan.getPlanById.invalidate(planId);
@@ -215,6 +221,13 @@ export default function PlanDetailPage(
       router.push('/app/home');
     } catch (error) {}
   };
+  const handleSemesterCreate = async () => {
+    try {
+      // TODO: Handle deletion errors
+
+      await createSemester.mutateAsync(planId);
+    } catch (error) {}
+  };
   const handleSemesterDelete = async (semesterId: string) => {
     try {
       // TODO: Handle deletion errors
@@ -229,6 +242,9 @@ export default function PlanDetailPage(
     <>
       <button className="m-4 p-4 font-bold bg-red-400" onClick={() => handlePlanDelete()}>
         Delete Plan
+      </button>
+      <button className="m-4 p-4 font-bold bg-red-400" onClick={() => handleSemesterCreate()}>
+        Add Semester
       </button>
       <div>{planQuery.data?.name}</div>
       {planQuery.data?.semesters.map((sem) => {
