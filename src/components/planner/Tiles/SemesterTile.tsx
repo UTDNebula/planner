@@ -1,4 +1,3 @@
-import { Course } from '@/modules/common/data';
 import { UniqueIdentifier, useDroppable } from '@dnd-kit/core';
 import { FC, forwardRef } from 'react';
 
