@@ -136,7 +136,7 @@ export default function Planner({
               <DroppableSemesterTile
                 key={semester.id}
                 dropId={`semester-${semester.id}`}
-                getSemesterCourseDragId={(semester, course) =>
+                getSemesterCourseDragId={(course, semester) =>
                   `semester-tile-course-${semester.id}-${course.id}`
                 }
                 semester={semester}

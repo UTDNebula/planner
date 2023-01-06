@@ -2,13 +2,13 @@ import { Course } from '@/modules/common/data';
 import { UniqueIdentifier, useDroppable } from '@dnd-kit/core';
 import { FC, forwardRef } from 'react';
 
-import { DragDataToSemesterTile, Semester } from '../types';
+import { DragDataToSemesterTile, GetDragIdByCourseAndSemester, Semester } from '../types';
 import DraggableSemesterCourseItem from './SemesterCourseItem';
 
 export interface SemesterTileProps {
   semester: Semester;
   isOver: boolean;
-  getDragId: (semester: Semester, c: Course) => UniqueIdentifier;
+  getDragId: GetDragIdByCourseAndSemester;
   isValid: boolean;
 }
 
@@ -36,7 +36,7 @@ export const SemesterTile = forwardRef<HTMLDivElement, SemesterTileProps>(functi
       {semester.courses.map((course) => (
         <DraggableSemesterCourseItem
           key={course.id}
-          dragId={getDragId(semester, course)}
+          dragId={getDragId(course, semester)}
           isValid={course.validation?.isValid === false}
           course={course}
           semester={semester}
@@ -48,7 +48,7 @@ export const SemesterTile = forwardRef<HTMLDivElement, SemesterTileProps>(functi
 
 export interface DroppableSemesterTileProps {
   dropId: UniqueIdentifier;
-  getSemesterCourseDragId: (semester: Semester, course: Course) => UniqueIdentifier;
+  getSemesterCourseDragId: GetDragIdByCourseAndSemester;
   semester: Semester;
   isValid: boolean;
 }
