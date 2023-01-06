@@ -59,7 +59,7 @@ const Test3Page: NextPage = () => {
   ]);
 
   return (
-    <div className="w-screen h-screen bg-[#FFFFFF]">
+    <div className="w-screen max-h-screen h-screen overflow-hidden bg-[#FFFFFF] p-[44px]">
       <Planner
         degreeRequirements={degreeData}
         semesters={semesters}

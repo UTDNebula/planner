@@ -59,6 +59,8 @@ export default function Planner({
 
   return (
     <DndContext
+      // Enabling autoScroll causes odd behavior when dragging outside of a scrollable container (eg. Sidebar)
+      autoScroll={true}
       collisionDetection={pointerWithin}
       onDragStart={({ active }) => {
         const originData = active.data.current as DragEventOriginData;
@@ -111,7 +113,7 @@ export default function Planner({
         }
       }}
     >
-      <div className="grid grid-cols-[auto_1fr]">
+      <div className="w-full h-full grid grid-cols-[auto_1fr] gap-[52px]">
         <CourseSelectorContainer
           degreeRequirements={degreeRequirements}
           getSearchedDragId={(course) => `course-list-searched-${course.id}`}
@@ -126,7 +128,7 @@ export default function Planner({
             ) : null)}
         </DragOverlay>
 
-        <div className="flex flex-wrap gap-[32px]">
+        <div className="grid grid-cols-3 grid-rows-4 w-fit gap-[32px]">
           {semesters.map((semester) => {
             const hasInvalidCourse =
               semester.courses.length > 0 &&
