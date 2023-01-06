@@ -1,7 +1,8 @@
+import { Course } from '@/modules/common/data';
 import { UniqueIdentifier, useDroppable } from '@dnd-kit/core';
 import { FC, forwardRef } from 'react';
 
-import { Course, DragDataToSemesterTile, Semester } from './Planner';
+import { DragDataToSemesterTile, Semester } from '../types';
 import DraggableSemesterCourseItem from './SemesterCourseItem';
 
 export interface SemesterTileProps {

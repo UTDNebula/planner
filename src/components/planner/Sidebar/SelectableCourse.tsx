@@ -1,14 +1,14 @@
 import { Course } from '@/modules/common/data';
 import React from 'react';
 import { v4 as uuid } from 'uuid';
-import { DraggableCourseProps } from './CourseSelectorContainer';
+import { DraggableCourse } from '../types';
 
 export default function SelectableCourse({
   course,
   selected,
   selectCourse,
 }: {
-  course: DraggableCourseProps;
+  course: DraggableCourse;
   selected: boolean;
   selectCourse: (course: Course, add: boolean) => void;
 }) {

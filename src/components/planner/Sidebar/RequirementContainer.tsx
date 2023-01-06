@@ -1,18 +1,22 @@
 import { Course } from '@/modules/common/data';
 import React from 'react';
-import { DegreeRequirement } from './CourseSelectorContainer';
+import { DegreeRequirement, GetDragIdByCourseAndReq } from '../types';
 import RequirementContainerHeader from './RequirementContainerHeader';
 import AddCourseContainer from './AddCourseContainer';
 import PlaceholderComponent from './PlaceholderComponent';
 import RequirementInfo from './RequirementInfo';
 
-export default function RequirementContainer({
-  data,
-  setCarousel,
-}: {
-  data: DegreeRequirement;
+export interface RequirementContainerProps {
+  degreeRequirement: DegreeRequirement;
   setCarousel: (state: boolean) => void;
-}): JSX.Element {
+  getCourseItemDragId: GetDragIdByCourseAndReq;
+}
+
+export default function RequirementContainer({
+  degreeRequirement,
+  setCarousel,
+  getCourseItemDragId,
+}: RequirementContainerProps): JSX.Element {
   const [addCourse, setAddCourse] = React.useState<boolean>(false);
   const [addPlaceholder, setAddPlaceholder] = React.useState<boolean>(false);
   const [placeholderName, setPlaceholderName] = React.useState<string>('');
@@ -41,12 +45,12 @@ export default function RequirementContainer({
   const allCourses: Set<string> = new Set();
 
   // Get all courses user has taken
-  data.validCourses.forEach((course) => {
+  degreeRequirement.validCourses.forEach((course) => {
     allCourses.add(course);
   });
 
-  const numCredits = getCreditHours(data.validCourses);
-  const description = data.description ?? '';
+  const numCredits = getCreditHours(degreeRequirement.validCourses);
+  const description = degreeRequirement.description ?? '';
 
   const [selectedCourses, setSelectedCourses] = React.useState<{ [key: string]: Course }>({});
 
@@ -54,7 +58,7 @@ export default function RequirementContainer({
     const modifySelectedCourses = { ...selectedCourses };
     add
       ? (modifySelectedCourses[course.catalogCode] = course)
-      : delete modifySelectedCourses.course.catalogCode;
+      : delete modifySelectedCourses[course.catalogCode];
     setSelectedCourses(modifySelectedCourses);
   };
 
@@ -86,7 +90,7 @@ export default function RequirementContainer({
     const placeholderCourse: PlaceholderCourse = {
       name: placeholderName,
       hours: placeholderHours,
-      requirement: data.name,
+      requirement: degreeRequirement.name,
     };
 
     // TODO: Connect this to DegreeRequirementGroup
@@ -98,15 +102,21 @@ export default function RequirementContainer({
   };
   return (
     <>
-      <RequirementContainerHeader data={data} numCredits={numCredits} setCarousel={setCarousel} />
+      <RequirementContainerHeader
+        data={degreeRequirement}
+        numCredits={numCredits}
+        setCarousel={setCarousel}
+      />
       <div className="text-[11px]">{description}</div>
 
       {!addCourse && !addPlaceholder && (
         <RequirementInfo
-          courses={data.courses}
+          courses={degreeRequirement.courses}
           allUserCourses={allCourses}
           setAddCourse={setAddCourse}
           setAddPlaceholder={setAddPlaceholder}
+          getCourseItemDragId={getCourseItemDragId}
+          degreeRequirement={degreeRequirement}
         />
       )}
       {addCourse && (

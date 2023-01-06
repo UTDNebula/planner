@@ -1,39 +1,58 @@
 import { NextPage } from 'next';
 import { useState } from 'react';
 
-import { Course, PlannerTool, Semester } from '@/components/planner2/Planner';
+import Planner from '@/components/planner/Planner';
+import { Semester, DegreeRequirementGroup } from '@/components/planner/types';
+import validationData from '@/data/dummyValidation.json';
+import { Course } from '@/modules/common/data';
 
 const Test3Page: NextPage = () => {
-  const courses: Course[] = [
-    { id: '1', name: 'ECS 1110' },
-    { id: '2', name: 'CS 1337' },
-  ];
+  const [degreeData, setDegreeData] = useState<DegreeRequirementGroup[]>(validationData);
+
   const [semesters, setSemesters] = useState<Semester[]>([
     {
       id: '1',
       name: "Fall'22",
-      courses: [{ id: '3', name: 'CS 2305', validation: { isValid: true, override: false } }],
+      courses: [
+        {
+          id: '3',
+          catalogCode: 'CS 2305',
+          creditHours: 10,
+          description: '',
+          title: 'Discrete Math',
+          validation: { isValid: true, override: false },
+        },
+      ],
     },
     { id: '2', name: "Spring'23", courses: [] },
     { id: '3', name: "Summer'23", courses: [] },
     {
       id: '4',
       name: "Fall'23",
-      courses: [{ id: '3', name: 'CS 2305', validation: { isValid: false, override: false } }],
+      courses: [
+        {
+          id: '3',
+          catalogCode: 'CS 2305',
+          creditHours: 10,
+          description: '',
+          title: 'Discrete Math',
+          validation: { isValid: false, override: false },
+        },
+      ],
     },
     { id: '5', name: "Spring'24", courses: [] },
     { id: '6', name: "Summer'24", courses: [] },
     {
       id: '7',
       name: "Fall'24",
-      courses: [{ id: '3', name: 'CS 2305', validation: { isValid: false, override: false } }],
+      courses: [],
     },
     { id: '8', name: "Spring'25", courses: [] },
     { id: '9', name: "Summer'25", courses: [] },
     {
       id: '10',
       name: "Fall'25",
-      courses: [{ id: '3', name: 'CS 2305', validation: { isValid: false, override: false } }],
+      courses: [],
     },
     { id: '11', name: "Spring'26", courses: [] },
     { id: '12', name: "Summer'26", courses: [] },
@@ -41,18 +60,18 @@ const Test3Page: NextPage = () => {
 
   return (
     <div className="w-screen h-screen bg-[#FFFFFF]">
-      <PlannerTool
-        courses={courses}
+      <Planner
+        degreeRequirements={degreeData}
         semesters={semesters}
         onAddCourseToSemester={async (targetSemester, newCourse) => {
           // check for duplicate course
           const isDuplicate = Boolean(
-            targetSemester.courses.find((course) => course.id === newCourse.id),
+            targetSemester.courses.find((course) => course.catalogCode === newCourse.catalogCode),
           );
           if (isDuplicate) {
             return {
               level: 'warn',
-              message: `You're already taking ${newCourse.name} in ${targetSemester.name}`,
+              message: `You're already taking ${newCourse.catalogCode} in ${targetSemester.name}`,
             };
           }
 
@@ -64,7 +83,10 @@ const Test3Page: NextPage = () => {
             ),
           );
 
-          return { level: 'ok', message: `Added ${newCourse.name} to ${targetSemester.name}` };
+          return {
+            level: 'ok',
+            message: `Added ${newCourse.catalogCode} to ${targetSemester.name}`,
+          };
         }}
         onMoveCourseFromSemesterToSemester={async (
           originSemester,
@@ -73,12 +95,14 @@ const Test3Page: NextPage = () => {
         ) => {
           // check for duplicate course
           const isDuplicate = Boolean(
-            destinationSemester.courses.find((course) => course.id === courseToMove.id),
+            destinationSemester.courses.find(
+              (course) => course.catalogCode === courseToMove.catalogCode,
+            ),
           );
           if (isDuplicate) {
             return {
               level: 'warn',
-              message: `You're already taking ${courseToMove.name} in ${destinationSemester.name}`,
+              message: `You're already taking ${courseToMove.catalogCode} in ${destinationSemester.name}`,
             };
           }
 
@@ -101,7 +125,7 @@ const Test3Page: NextPage = () => {
 
           return {
             level: 'ok',
-            message: `Moved ${courseToMove.name} from ${originSemester.name} to ${destinationSemester.name}`,
+            message: `Moved ${courseToMove.catalogCode} from ${originSemester.name} to ${destinationSemester.name}`,
           };
         }}
       />

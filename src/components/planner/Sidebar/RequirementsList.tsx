@@ -1,5 +1,5 @@
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { DegreeRequirement } from './CourseSelectorContainer';
+import { DegreeRequirement } from '../types';
 import StatusTag from './StatusTag';
 
 export default function RequirementsList({

@@ -1,5 +1,5 @@
 import { Course } from '@/modules/common/data';
-import { DraggableCourseProps } from './CourseSelectorContainer';
+import { DraggableCourse } from '../types';
 import SelectableCourse from './SelectableCourse';
 
 export default function SelectableCourseContainer({
@@ -7,7 +7,7 @@ export default function SelectableCourseContainer({
   selectedCourses,
   updateSelectedCourses,
 }: {
-  results: DraggableCourseProps[];
+  results: DraggableCourse[];
   selectedCourses: { [key: string]: Course };
   updateSelectedCourses: (course: Course, add: boolean) => void;
 }) {

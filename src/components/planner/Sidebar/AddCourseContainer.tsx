@@ -3,6 +3,7 @@ import { loadDummyCourses } from '@/modules/common/api/courses';
 import { Course } from '@/modules/common/data';
 import RequirementSearchBar from './RequirementSearchBar';
 import SelectableCourseContainer from './SelectableCourseContainer';
+import { DraggableCourse } from '../types';
 
 export default function AddCourseContainer({
   allCourses,
@@ -26,8 +27,8 @@ export default function AddCourseContainer({
   });
 
   const courseResults = results.map((result) => {
-    return { ...result, status: allCourses.has(result.catalogCode) ? 'Complete' : '' };
-  });
+    return { ...result, status: allCourses.has(result.catalogCode) ? 'complete' : undefined };
+  }) as DraggableCourse[];
 
   return (
     <>

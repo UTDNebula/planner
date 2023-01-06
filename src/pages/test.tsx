@@ -1,6 +1,5 @@
-import CourseSelectorContainer, {
-  DegreeRequirementGroup,
-} from '@/components/planner/NewCourseSelector/CourseSelectorContainer';
+import CourseSelectorContainer from '@/components/planner/Sidebar/Sidebar';
+import { DegreeRequirementGroup } from '@/components/planner/types';
 import useSearch from '@/components/search/search';
 import SearchBar from '@/components/search/SearchBar';
 import { loadDummyCourses } from '@/modules/common/api/courses';
@@ -68,7 +67,11 @@ export default function Test(): JSX.Element {
   return (
     <DndContext>
       <div className="flex flex-row px-10 bg-[#F5F5F5]">
-        <CourseSelectorContainer data={degreeData} />
+        <CourseSelectorContainer
+          degreeRequirements={degreeData}
+          getRequirementDragId={() => ''}
+          getSearchedDragId={() => 1}
+        />
         <div className="flex flex-col">
           <SearchBar updateQuery={updateQuery} />
           {results.map((result, idx) => (

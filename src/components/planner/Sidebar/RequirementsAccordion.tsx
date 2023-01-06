@@ -2,8 +2,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 
 import RequirementsList from './RequirementsList';
-import { MutableRefObject, useRef } from 'react';
-import { DegreeRequirementGroup } from './CourseSelectorContainer';
+import { RefObject } from 'react';
+import { DegreeRequirementGroup } from '../types';
 
 export default function RequirementsAccordion({
   data,
@@ -22,7 +22,7 @@ export default function RequirementsAccordion({
   setCarousel: (state: boolean) => void;
   setRequirementIdx: (req: number) => void;
   height: string;
-  accordianRef: MutableRefObject<HTMLDivElement>;
+  accordianRef: RefObject<HTMLDivElement>;
 }) {
   return (
     <div className={`w-full ${!carousel ? 'h-full' : 'h-0'}`}>

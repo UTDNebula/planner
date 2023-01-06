@@ -1,29 +1,21 @@
 import SearchBar from '@components/credits/SearchBar';
 import useSearch from '@/components/search/search';
 import { loadDummyCourses } from '@/modules/common/api/courses';
-import RequirementsContainer from '@/components/planner/NewCourseSelector/RequirementsContainer';
-import DraggableCourseContainer from './DraggableCourseContainer';
-import { Course } from '@/modules/common/data';
+import RequirementsContainer from '@/components/planner/Sidebar/RequirementsContainer';
+import DraggableCourseList from './DraggableCourseList';
+import { DegreeRequirementGroup, DraggableCourse, GetDragIdByCourse } from '../types';
 
-export interface DegreeRequirementGroup {
-  name: string;
-  requirements: DegreeRequirement[];
+export interface CourseSelectorContainerProps {
+  degreeRequirements: DegreeRequirementGroup[];
+  getSearchedDragId: GetDragIdByCourse;
+  getRequirementDragId: GetDragIdByCourse;
 }
 
-export interface DegreeRequirement {
-  name: string;
-  validCourses: string[];
-  courses: string[];
-  hours: number;
-  isFilled: boolean;
-  description?: string;
-}
-
-export interface DraggableCourseProps extends Course {
-  status: string;
-}
-
-export default function CourseSelectorContainer({ data }: { data: DegreeRequirementGroup[] }) {
+export default function CourseSelectorContainer({
+  degreeRequirements,
+  getSearchedDragId,
+  getRequirementDragId,
+}: CourseSelectorContainerProps) {
   // TODO: Provide UI indicator for errors
   const { results, updateQuery } = useSearch({
     getData: loadDummyCourses,
@@ -47,7 +39,7 @@ export default function CourseSelectorContainer({ data }: { data: DegreeRequirem
 
   // TODO: Prolly have a context for this
   // Get all courses user has taken
-  data.forEach((reqGroup) => {
+  degreeRequirements.forEach((reqGroup) => {
     reqGroup.requirements.forEach((req) => {
       req.validCourses.forEach((course) => {
         allCourses.add(course);
@@ -55,20 +47,24 @@ export default function CourseSelectorContainer({ data }: { data: DegreeRequirem
     });
   });
 
-  const courseResults: DraggableCourseProps[] = results.map((result) => {
-    return { ...result, status: allCourses.has(result.catalogCode) ? 'Complete' : '' };
-  });
+  const courseResults = results.map((result) => {
+    return { ...result, status: allCourses.has(result.catalogCode) ? 'complete' : undefined };
+  }) as DraggableCourse[];
 
   return (
     <div className="flex flex-col gap-y-8  w-[344px]">
       <SearchBar updateQuery={updateQueryWrapper} placeholder="Search courses" />
       {results.length > 0 && (
         <div className="bg-white p-4">
-          <DraggableCourseContainer results={courseResults} />
+          <DraggableCourseList courses={courseResults} getDragId={getSearchedDragId} />
         </div>
       )}
-      {data.map((req, idx) => (
-        <RequirementsContainer key={idx} data={req} />
+      {degreeRequirements.map((req, idx) => (
+        <RequirementsContainer
+          key={idx}
+          degreeRequirement={req}
+          getCourseItemDragId={getRequirementDragId}
+        />
       ))}
     </div>
   );

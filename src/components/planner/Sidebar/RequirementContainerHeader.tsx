@@ -1,4 +1,4 @@
-import { DegreeRequirement } from './CourseSelectorContainer';
+import { DegreeRequirement } from '../types';
 
 export default function RequirementContainerHeader({
   data,

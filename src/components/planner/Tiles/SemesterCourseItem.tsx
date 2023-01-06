@@ -1,16 +1,15 @@
+import { Course } from '@/modules/common/data';
 import { UniqueIdentifier, useDraggable } from '@dnd-kit/core';
 import { ComponentPropsWithoutRef, FC, forwardRef } from 'react';
 
-import { Course, DragDataFromSemesterTile, Semester } from './Planner';
+import { DragDataFromSemesterTile, Semester } from '../types';
 
 export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'> {
   courseName: string;
   isValid?: boolean;
 }
 
-/**
- * Strictly UI implementation of a semester course
- */
+/** UI implementation of a semester course */
 export const SemesterCourseItem = forwardRef<HTMLDivElement, SemesterCourseItemProps>(
   function SemesterCourseItem({ courseName, isValid, ...props }, ref) {
     return (
@@ -34,9 +33,7 @@ export interface DraggableSemesterCourseItemProps {
   isValid: boolean;
 }
 
-/**
- * Strictly compositional wrapper around SemesterCourseItem
- */
+/** Compositional wrapper around SemesterCourseItem */
 const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
   dragId,
   semester,
@@ -55,7 +52,7 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
       {...attributes}
       {...listeners}
       {...props}
-      courseName={course.name}
+      courseName={course.catalogCode}
     />
   );
 };

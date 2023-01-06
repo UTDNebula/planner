@@ -1,10 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { DegreeRequirementGroup } from './CourseSelectorContainer';
+import { DegreeRequirementGroup, GetDragIdByCourseAndReq } from '../types';
 
 import RequirementContainer from './RequirementContainer';
 import RequirementsAccordion from './RequirementsAccordion';
 
-export default function RequirementsContainer({ data }: { data: DegreeRequirementGroup }) {
+export interface RequirementsCarouselProps {
+  degreeRequirement: DegreeRequirementGroup;
+  getCourseItemDragId: GetDragIdByCourseAndReq;
+}
+
+export default function RequirementsCarousel({
+  degreeRequirement,
+  getCourseItemDragId,
+}: RequirementsCarouselProps) {
   const [carousel, setCarousel] = React.useState<boolean>(false);
   const [accordian, setAccordian] = React.useState<boolean>(false);
   const [requirementIdx, setRequirementIdx] = React.useState<number>(0);
@@ -14,7 +22,11 @@ export default function RequirementsContainer({ data }: { data: DegreeRequiremen
 
   function toggleAccordion() {
     setAccordian(!accordian);
-    setHeight(accordian ? '0px' : `${Math.max(accordianRef.current.scrollHeight + 20)}px`);
+    setHeight(
+      accordian
+        ? '0px'
+        : `${Math.max(accordianRef.current ? accordianRef.current.scrollHeight + 20 : 0)}px`,
+    );
   }
 
   function toggleCarousel() {
@@ -43,7 +55,7 @@ export default function RequirementsContainer({ data }: { data: DegreeRequiremen
         >
           {(!carousel || overflow) && (
             <RequirementsAccordion
-              data={data}
+              data={degreeRequirement}
               toggleAccordion={toggleAccordion}
               accordion={accordian}
               carousel={carousel}
@@ -61,8 +73,9 @@ export default function RequirementsContainer({ data }: { data: DegreeRequiremen
           }  `}
         >
           <RequirementContainer
-            data={data.requirements[requirementIdx]}
+            degreeRequirement={degreeRequirement.requirements[requirementIdx]}
             setCarousel={toggleCarousel}
+            getCourseItemDragId={getCourseItemDragId}
           />
         </div>
       </div>
