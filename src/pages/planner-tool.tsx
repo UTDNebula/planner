@@ -63,6 +63,24 @@ const Test3Page: NextPage = () => {
       <Planner
         degreeRequirements={degreeData}
         semesters={semesters}
+        onRemoveCourseFromSemester={async (targetSemester, targetCourse) => {
+          setSemesters((semesters) =>
+            semesters.map((semester) => {
+              if (semester.id === targetSemester.id) {
+                return {
+                  ...semester,
+                  courses: semester.courses.filter((course) => course.id !== targetCourse.id),
+                };
+              }
+
+              return semester;
+            }),
+          );
+          return {
+            level: 'ok',
+            message: `Removed ${targetCourse.catalogCode} from ${targetSemester.name}`,
+          };
+        }}
         onAddCourseToSemester={async (targetSemester, newCourse) => {
           // check for duplicate course
           const isDuplicate = Boolean(

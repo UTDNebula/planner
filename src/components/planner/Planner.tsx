@@ -11,7 +11,14 @@
  * Adding DndContext hooks (eg. useDraggable) without considering 'data' property will cause unexpected behaviors
  */
 import React, { useState } from 'react';
-import { DndContext, DragOverlay, pointerWithin } from '@dnd-kit/core';
+import {
+  DndContext,
+  DragOverlay,
+  MouseSensor,
+  pointerWithin,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core';
 import { SidebarCourseItem } from './Sidebar/SidebarCourseItem';
 import { SemesterCourseItem } from './Tiles/SemesterCourseItem';
 import DroppableSemesterTile from './Tiles/SemesterTile';
@@ -33,7 +40,7 @@ export interface PlannerProps {
   /** Called when course moved from course list -> semester */
   onAddCourseToSemester?: (targetSemester: Semester, newCourse: Course) => Promise<ToastMessage>;
   /** Called when course removed from semester */
-  onRemoveCourseFromSemester?: (
+  onRemoveCourseFromSemester: (
     targetSemester: Semester,
     courseToRemove: Course,
   ) => Promise<ToastMessage>;
@@ -57,10 +64,22 @@ export default function Planner({
   // Course that is currently being dragged
   const [activeCourse, setActiveCourse] = useState<ActiveDragData | null>(null);
 
+  // Delay necessary so events inside draggables propagate
+  // valid sensors: https://github.com/clauderic/dnd-kit/discussions/82#discussioncomment-347608
+  const sensors = useSensors(
+    useSensor(MouseSensor, {
+      activationConstraint: {
+        tolerance: 1,
+        delay: 100,
+      },
+    }),
+  );
+
   return (
     <DndContext
       // Enabling autoScroll causes odd behavior when dragging outside of a scrollable container (eg. Sidebar)
-      autoScroll={true}
+      autoScroll={false}
+      sensors={sensors}
       collisionDetection={pointerWithin}
       onDragStart={({ active }) => {
         const originData = active.data.current as DragEventOriginData;
@@ -122,7 +141,7 @@ export default function Planner({
         <DragOverlay dropAnimation={null}>
           {activeCourse &&
             (activeCourse.from === 'semester-tile' ? (
-              <SemesterCourseItem courseName={activeCourse.course.catalogCode} />
+              <SemesterCourseItem course={activeCourse.course} />
             ) : activeCourse.from === 'course-list' ? (
               <SidebarCourseItem course={activeCourse.course} />
             ) : null)}
@@ -136,6 +155,12 @@ export default function Planner({
 
             return (
               <DroppableSemesterTile
+                onRemoveCourse={(semester, course) =>
+                  onRemoveCourseFromSemester(semester, course).then((notification) => {
+                    // TODO: push message to toast notification
+                    console.log(notification.message);
+                  })
+                }
                 key={semester.id}
                 dropId={`semester-${semester.id}`}
                 getSemesterCourseDragId={(course, semester) =>

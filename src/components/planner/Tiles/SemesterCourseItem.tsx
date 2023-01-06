@@ -1,26 +1,31 @@
 import { Course } from '@/modules/common/data';
 import { UniqueIdentifier, useDraggable } from '@dnd-kit/core';
 import { ComponentPropsWithoutRef, FC, forwardRef } from 'react';
+import CloseIcon from '@mui/icons-material/Close';
 
-import { DragDataFromSemesterTile, Semester } from '../types';
+import { DragDataFromSemesterTile, DraggableCourse, Semester } from '../types';
 
 export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'> {
-  courseName: string;
+  course: DraggableCourse;
   isValid?: boolean;
+  onRemove?: (course: DraggableCourse) => void;
 }
 
 /** UI implementation of a semester course */
 export const SemesterCourseItem = forwardRef<HTMLDivElement, SemesterCourseItemProps>(
-  function SemesterCourseItem({ courseName, isValid, ...props }, ref) {
+  function SemesterCourseItem({ course, isValid, onRemove, ...props }, ref) {
     return (
       <div
         ref={ref}
         {...props}
-        className={`shadow-md w-full h-[22px] rounded-md py-[1px] px-[8px] flex items-center bg-white ${
+        className={`shadow-md w-full h-[22px] rounded-md py-[1px] px-[8px] flex items-center justify-between bg-white ${
           isValid ? 'border-red-500 border-[1px]' : ''
         }`}
       >
-        <span className="text-[12px] font-medium text-[#1C2A6D]">{courseName}</span>
+        <span className="text-[12px] font-medium text-[#1C2A6D]">{course.catalogCode}</span>
+        <div onClick={() => onRemove && onRemove(course)}>
+          <CloseIcon fontSize="small" />
+        </div>
       </div>
     );
   },
@@ -31,6 +36,7 @@ export interface DraggableSemesterCourseItemProps {
   semester: Semester;
   course: Course;
   isValid: boolean;
+  onRemove: (course: DraggableCourse) => void;
 }
 
 /** Compositional wrapper around SemesterCourseItem */
@@ -38,7 +44,7 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
   dragId,
   semester,
   course,
-  ...props
+  onRemove,
 }) => {
   const { setNodeRef, attributes, listeners, isDragging } = useDraggable({
     id: dragId,
@@ -51,8 +57,8 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
       style={{ visibility: isDragging ? 'hidden' : 'unset' }}
       {...attributes}
       {...listeners}
-      {...props}
-      courseName={course.catalogCode}
+      course={course}
+      onRemove={onRemove}
     />
   );
 };

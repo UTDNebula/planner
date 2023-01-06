@@ -1,7 +1,12 @@
 import { UniqueIdentifier, useDroppable } from '@dnd-kit/core';
 import { FC, forwardRef } from 'react';
 
-import { DragDataToSemesterTile, GetDragIdByCourseAndSemester, Semester } from '../types';
+import {
+  DragDataToSemesterTile,
+  GetDragIdByCourseAndSemester,
+  Semester,
+  DraggableCourse,
+} from '../types';
 import DraggableSemesterCourseItem from './SemesterCourseItem';
 
 export interface SemesterTileProps {
@@ -9,13 +14,14 @@ export interface SemesterTileProps {
   isOver: boolean;
   getDragId: GetDragIdByCourseAndSemester;
   isValid: boolean;
+  onRemoveCourse: (semester: Semester, course: DraggableCourse) => void;
 }
 
 /**
  * Strictly UI implementation of a semester tile
  */
 export const SemesterTile = forwardRef<HTMLDivElement, SemesterTileProps>(function SemesterTile(
-  { semester, getDragId, isValid, isOver },
+  { semester, getDragId, isValid, isOver, onRemoveCourse },
   ref,
 ) {
   return (
@@ -39,6 +45,7 @@ export const SemesterTile = forwardRef<HTMLDivElement, SemesterTileProps>(functi
           isValid={course.validation?.isValid === false}
           course={course}
           semester={semester}
+          onRemove={(course) => onRemoveCourse(semester, course)}
         />
       ))}
     </div>
@@ -47,9 +54,10 @@ export const SemesterTile = forwardRef<HTMLDivElement, SemesterTileProps>(functi
 
 export interface DroppableSemesterTileProps {
   dropId: UniqueIdentifier;
-  getSemesterCourseDragId: GetDragIdByCourseAndSemester;
   semester: Semester;
+  getSemesterCourseDragId: GetDragIdByCourseAndSemester;
   isValid: boolean;
+  onRemoveCourse: (semester: Semester, course: DraggableCourse) => void;
 }
 
 /**
