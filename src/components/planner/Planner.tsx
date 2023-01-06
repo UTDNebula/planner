@@ -57,7 +57,6 @@ export default function Planner({
   degreeRequirements,
   semesters,
   onAddCourseToSemester,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars
   onRemoveCourseFromSemester,
   onMoveCourseFromSemesterToSemester,
 }: PlannerProps): JSX.Element {
