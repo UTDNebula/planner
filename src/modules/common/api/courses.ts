@@ -48,7 +48,7 @@ export async function loadCourses(): Promise<Course[]> {
   return courses;
 }
 
-type JSONCourseType = {
+export type JSONCourseType = {
   id: number;
   name: string;
   hours: string;

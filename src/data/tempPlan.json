@@ -1,0 +1,115 @@
+{
+  "id": "2af00d62-bef1-4d58-a77b-8dd8ec53d271",
+  "title": "Just a Degree Plan",
+  "major": "Computer Science",
+  "semesters": [
+    {
+      "title": "Fall 2021",
+      "code": "2021f",
+      "courses": [
+        {
+          "id": "944e84d8-29ff-4995-ab75-ebc01472121d",
+          "title": "Rhetoric",
+          "catalogCode": "RHET 1302",
+          "description": "This course presents an integrated approach to writing, reading, and critical thinking by developing the grammatical, logical, and rhetorical skills necessary for university writing. ",
+          "creditHours": 3
+        },
+        {
+          "id": "57e478a6-36e9-4e3b-87ec-1ad3c1c4d952",
+          "title": "Introduction to Computer Science and Software Engineering",
+          "catalogCode": "CS 1200",
+          "description": "Introduction to the computing professions; overview of Computer Science ",
+          "creditHours": 2
+        },
+        {
+          "id": "a38c8d90-d625-4640-861c-02b07cc9eebb",
+          "title": "Discrete Mathematics for Computing I",
+          "catalogCode": "CS 2305",
+          "description": "Principles of counting. Boolean operations. Logic and proof methods. Recurrence relations. Sets, relations, functions. Elementary graph theory. Elementary number theory.  ",
+          "creditHours": 3
+        },
+        {
+          "id": "de5c6f4e-4a80-4f81-8549-0ae4899084ec",
+          "title": "Linear Algebra",
+          "catalogCode": "MATH 2418",
+          "description": "Introduces and provides models for application of the concepts of vector algebra. Topics include finite dimensional vector spaces and their geometric significance; representing and solving systems of linear equations using multiple methods, including Gaussian elimination and matrix inversion; matrices; determinants; linear transformations; quadratic forms; eigenvalues and eigenvectors; and applications in science and engineering. Three lecture hours and two discussion hours a week; problem section required with MATH 2418, and will also be registered for exam section. Not all MATH/STAT courses may be counted toward various degree plans. Please consult your degree plan to determine the appropriate MATH/STAT course requirements.  ",
+          "creditHours": 4
+        },
+        {
+          "id": "86e4f478-bc57-4935-bec1-29028a9c10ba",
+          "title": "Computer Science II",
+          "catalogCode": "CS 2337",
+          "description": "Further applications of programming techniques, introducing the fundamental concepts of data structures and algorithms. Topics include recursion, fundamental data structures ",
+          "creditHours": 3
+        },
+        {
+          "id": "e139b154-db46-47aa-bf97-77b622c2074c",
+          "title": "Introduction to Engineering and Computer Science",
+          "catalogCode": "ECS 1100",
+          "description": "Introduction to engineering and computing careers; overview of Engineering and Computer Science ",
+          "creditHours": 1
+        }
+      ]
+    },
+    {
+      "title": "Spring 2022",
+      "code": "2022s",
+      "courses": [
+        {
+          "id": "47344863-4928-45de-8830-0ca86f3879f2",
+          "title": "Discrete Mathematics for Computing II",
+          "catalogCode": "CS 3305",
+          "description": "Advanced counting methods; recurrence relations, divide and conquer algorithms, principle of inclusion and exclusion. Partial orders and lattices, Algorithmic complexity. Graph theory. Strings and languages. Number theory. Elements of modern algebra. Credit cannot be received for both courses, CS 3305 and SE 3306. Double majors are required to take CS 3305.  ",
+          "creditHours": 3
+        },
+        {
+          "id": "b6cb74f7-3923-4cbc-bfc4-f0ae1a23fcbe",
+          "title": "Design Research Methods",
+          "catalogCode": "ATCM 3336",
+          "description": "This course will explore a variety of behavioral and attitudinal design research methods, including the planning, analysis, and execution of quantitative and qualitative methods. Topics also include the ethical concerns related to understanding users. and how to communicate research results. ",
+          "creditHours": 3
+        },
+        {
+          "id": "c81328c5-0ef9-4fb8-b40d-55648827a1f3",
+          "title": "Computer Architecture",
+          "catalogCode": "CS 2340",
+          "description": "This course introduces the concepts of computer architecture by going through multiple levels of abstraction, and the numbering systems and their basic computations. It focuses on the instruction-set architecture of the MIPS machine, including MIPS assembly programming, translation between MIPS and C, and between MIPS and machine code. General topics include performance calculation, processor datapath, pipelining, and memory hierarchy. Credit cannot be received for both courses, ",
+          "creditHours": 3
+        },
+        {
+          "id": "05c521d1-a884-4312-b602-124e0555aadb",
+          "title": "Physics Laboratory I",
+          "catalogCode": "PHYS 2125",
+          "description": "Laboratory course to accompany any Physics I or Mechanics course. Experiments investigate basic measurements and statistics including error, mean, standard deviation and error propagation; one dimensional and two dimensional motion; Newton's laws; conservation laws of energy and momentum; rotational motion; and oscillations.  ",
+          "creditHours": 1
+        },
+        {
+          "id": "c109dd7b-074b-4624-a12b-e78502133cf7",
+          "title": "Mechanics",
+          "catalogCode": "PHYS 2325",
+          "description": "Calculus based. Basic physics including a study of space and time, kinematics, forces, energy and momentum, conservation laws, rotational motion, torques, and harmonic oscillation. Two lectures per week. Students will also be registered for an exam section.   ",
+          "creditHours": 3
+        },
+        {
+          "id": "730a52db-76e8-4205-b6b3-79adf628e384",
+          "title": "Data Structures and Introduction to Algorithmic Analysis",
+          "catalogCode": "CS 3345",
+          "description": "Analysis of algorithms including time complexity and Big-O notation. Analysis of stacks, queues, and trees, including B-trees. Heaps, hashing, and advanced sorting techniques. Disjoint sets and graphs. Course emphasizes design and implementation.   ",
+          "creditHours": 3
+        },
+        {
+          "id": "16b6f222-cc15-4dfb-9d11-d7e9e69389bf",
+          "title": "Probability and Statistics in Computer Science and Software Engineering",
+          "catalogCode": "CS 3341",
+          "description": "Axiomatic probability theory, independence, conditional probability. Discrete and continuous random variables, special distributions of importance to CS/SE, and expectation. Simulation of random variables and Monte Carlo methods. Central limit theorem. Basic statistical inference, parameter estimation, hypothesis testing, and linear regression. Introduction to stochastic processes. Illustrative examples and simulation exercises from queuing, reliability, and other CS/SE applications. Credit cannot be received for both courses, ",
+          "creditHours": 3
+        }
+      ]
+    },
+    {
+      "title": "Fall 2022",
+      "code": "2022f",
+      "courses": []
+    }
+  ]
+}

@@ -112,6 +112,10 @@ module.exports = {
         ],
       },
       keyframes: {
+        fadeInTwo: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '100' },
+        },
         fadeIn: {
           '0%': { transform: 'translateX(1rem)', opacity: '0' },
           '100%': { transform: 'translateX(0)', opacity: '100' },
@@ -122,6 +126,7 @@ module.exports = {
         },
       },
       animation: {
+        hide: 'fadeInTwo 1s ease-in-out',
         intro: 'fadeIn 0.75s ease-in-out',
         fadeDown: 'fadeDown 0.75s ease-in-out',
       },
