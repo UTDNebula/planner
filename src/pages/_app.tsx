@@ -116,9 +116,10 @@ const NebulaApp: AppType<{ session: Session | null }> = ({
                   {Component.auth ? (
                     <Auth>
                       <Component {...pageProps} />
-                    </Auth>) : (
-
-                    <Component {...pageProps} />)}
+                    </Auth>
+                  ) : (
+                    <Component {...pageProps} />
+                  )}
                 </main>
               </ThemeProvider>
             </StyledEngineProvider>
@@ -127,12 +128,12 @@ const NebulaApp: AppType<{ session: Session | null }> = ({
       </Provider>
     </SessionProvider>
   );
-}
+};
 
 function Auth({ children }) {
-  const { status } = useSession({ required: true })
+  const { status } = useSession({ required: true });
   if (status === 'loading') {
-    return <p>Loading...</p>
+    return <p>Loading...</p>;
   }
   return children;
 }

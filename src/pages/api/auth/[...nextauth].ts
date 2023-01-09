@@ -1,11 +1,11 @@
-import NextAuth, { type NextAuthOptions } from "next-auth";
-import DiscordProvider from "next-auth/providers/discord";
-import EmailProvider from "next-auth/providers/email"
+import NextAuth, { type NextAuthOptions } from 'next-auth';
+import DiscordProvider from 'next-auth/providers/discord';
+import EmailProvider from 'next-auth/providers/email';
 // Prisma adapter for NextAuth, optional and can be removed
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
 
-import { env } from "../../../env/server.mjs";
-import { prisma } from "../../../server/db/client";
+import { env } from '../../../env/server.mjs';
+import { prisma } from '../../../server/db/client';
 
 export const authOptions: NextAuthOptions = {
   // Include user.id on session
@@ -16,7 +16,6 @@ export const authOptions: NextAuthOptions = {
       }
       return session;
     },
-
   },
   // Configure one or more authentication providers
   adapter: PrismaAdapter(prisma),
@@ -27,14 +26,14 @@ export const authOptions: NextAuthOptions = {
     }),
     EmailProvider({
       server: env.NEXTAUTH_EMAIL_SERVER,
-      from: env.NEXTAUTH_EMAIL_FROM
-    })
+      from: env.NEXTAUTH_EMAIL_FROM,
+    }),
     // ...add more providers here
   ],
   pages: {
     signIn: '/auth/login',
     signOut: '/',
-    newUser: '/app/onboarding'       // TODO: Redirect to signup page
-  }
+    newUser: '/app/onboarding', // TODO: Redirect to signup page
+  },
 };
 export default NextAuth(authOptions);
