@@ -1,4 +1,4 @@
-import { styled } from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import { useRouter } from 'next/router';
