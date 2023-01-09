@@ -1,4 +1,5 @@
 import { UniqueIdentifier } from '@dnd-kit/core';
+
 import { Course } from '@/modules/common/data';
 
 // Temporary semester type

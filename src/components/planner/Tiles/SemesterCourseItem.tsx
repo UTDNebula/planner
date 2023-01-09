@@ -1,7 +1,8 @@
-import { Course } from '@/modules/common/data';
 import { UniqueIdentifier, useDraggable } from '@dnd-kit/core';
-import { ComponentPropsWithoutRef, FC, forwardRef } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
+import { ComponentPropsWithoutRef, FC, forwardRef } from 'react';
+
+import { Course } from '@/modules/common/data';
 
 import { DragDataFromSemesterTile, DraggableCourse, Semester } from '../types';
 

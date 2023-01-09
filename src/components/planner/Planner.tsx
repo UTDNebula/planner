@@ -10,7 +10,6 @@
  * Be very careful when adding @dnd-kit presets (eg. @dnd-kit/sortable) or new data sources
  * Adding DndContext hooks (eg. useDraggable) without considering 'data' property will cause unexpected behaviors
  */
-import React, { useState } from 'react';
 import {
   DndContext,
   DragOverlay,
@@ -19,19 +18,22 @@ import {
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
+import React, { useState } from 'react';
+
+import { Course } from '@/modules/common/data';
+
+import CourseSelectorContainer from './Sidebar/Sidebar';
 import { SidebarCourseItem } from './Sidebar/SidebarCourseItem';
 import { SemesterCourseItem } from './Tiles/SemesterCourseItem';
 import DroppableSemesterTile from './Tiles/SemesterTile';
-import CourseSelectorContainer from './Sidebar/Sidebar';
 import {
+  ActiveDragData,
+  DegreeRequirementGroup,
+  DragEventDestinationData,
+  DragEventOriginData,
   Semester,
   ToastMessage,
-  DragEventOriginData,
-  ActiveDragData,
-  DragEventDestinationData,
-  DegreeRequirementGroup,
 } from './types';
-import { Course } from '@/modules/common/data';
 
 /** PlannerTool Props */
 export interface PlannerProps {

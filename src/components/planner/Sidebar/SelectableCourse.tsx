@@ -1,6 +1,8 @@
-import { Course } from '@/modules/common/data';
 import React from 'react';
 import { v4 as uuid } from 'uuid';
+
+import { Course } from '@/modules/common/data';
+
 import { DraggableCourse } from '../types';
 
 export default function SelectableCourse({

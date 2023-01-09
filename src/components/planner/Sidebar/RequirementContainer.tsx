@@ -1,9 +1,11 @@
-import { Course } from '@/modules/common/data';
 import React from 'react';
+
+import { Course } from '@/modules/common/data';
+
 import { DegreeRequirement, GetDragIdByCourseAndReq } from '../types';
-import RequirementContainerHeader from './RequirementContainerHeader';
 import AddCourseContainer from './AddCourseContainer';
 import PlaceholderComponent from './PlaceholderComponent';
+import RequirementContainerHeader from './RequirementContainerHeader';
 import RequirementInfo from './RequirementInfo';
 
 export interface RequirementContainerProps {

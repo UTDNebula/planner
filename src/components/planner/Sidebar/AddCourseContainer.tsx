@@ -1,9 +1,10 @@
 import useSearch, { SearchReturn } from '@/components/search/search';
 import { loadDummyCourses } from '@/modules/common/api/courses';
 import { Course } from '@/modules/common/data';
+
+import { DraggableCourse } from '../types';
 import RequirementSearchBar from './RequirementSearchBar';
 import SelectableCourseContainer from './SelectableCourseContainer';
-import { DraggableCourse } from '../types';
 
 export default function AddCourseContainer({
   allCourses,

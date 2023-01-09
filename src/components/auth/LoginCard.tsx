@@ -1,10 +1,10 @@
 import logo from '@public/Nebula_Planner_Logo.png';
+import { InferGetServerSidePropsType } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
-import { InferGetServerSidePropsType } from 'next';
 // import { useAuthContext } from '../../modules/auth/auth-context';
-import { signIn, signOut, useSession, getProviders } from 'next-auth/react';
+import { getProviders,signIn } from 'next-auth/react';
+import React from 'react';
 
 /**
  * A dialog that exposes different sign-in/sign-up methods.

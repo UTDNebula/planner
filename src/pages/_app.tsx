@@ -1,19 +1,18 @@
 import '../styles/globals.css';
 
-import firebase from 'firebase/compat/app';
 import { createTheme, StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
+import firebase from 'firebase/compat/app';
 import { AnimateSharedLayout } from 'framer-motion';
+import { type AppType } from 'next/app';
 // import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { type Session } from 'next-auth';
+import { SessionProvider, useSession } from 'next-auth/react';
 import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import { type AppType } from 'next/app';
-import { type Session } from 'next-auth';
 
-import BetaBanner from '../components/BetaBanner';
-import { SessionProvider, useSession } from 'next-auth/react';
 // import { AuthProvider } from '../modules/auth/auth-context';
 import { useStore } from '../modules/redux/store';
 import { trpc } from '../utils/trpc';

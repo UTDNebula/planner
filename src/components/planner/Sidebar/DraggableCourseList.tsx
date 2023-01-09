@@ -1,4 +1,5 @@
 import { UniqueIdentifier } from '@dnd-kit/core';
+
 import { DraggableCourse } from '../types';
 import DraggableSidebarCourseItem from './SidebarCourseItem';
 
