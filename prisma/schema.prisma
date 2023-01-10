@@ -73,16 +73,37 @@ model Course {
   semester      Semester?      @relation(fields: [semesterId], references: [id], onDelete: Cascade)
   semesterId    String?        @db.ObjectId
   prerequisites Prerequisite[]
+  Bypass        Bypass[]
 }
 
 model Plan {
-  id        String     @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  createdAt DateTime   @default(now()) @map("created_at")
-  updatedAt DateTime   @default(now()) @map("updated_at")
-  semesters Semester[]
-  User      User?      @relation(fields: [userId], references: [id])
-  userId    String?    @db.ObjectId
+  id           String               @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  createdAt    DateTime             @default(now()) @map("created_at")
+  updatedAt    DateTime             @default(now()) @map("updated_at")
+  semesters    Semester[]
+  User         User?                @relation(fields: [userId], references: [id])
+  userId       String?              @db.ObjectId
+  requirements DegreeRequirements[]
+}
+
+model DegreeRequirements {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  // Do derived attributes for classes later
+  major    String
+  bypasses Bypass[]
+  plan     Plan     @relation(fields: [planId], references: [id], onDelete: Cascade)
+  planId   String   @db.ObjectId
+}
+
+model Bypass {
+  id                   String             @id @default(auto()) @map("_id") @db.ObjectId
+  course               Course             @relation(fields: [courseId], references: [id])
+  requirement          String
+  hours                Int
+  degreeRequirements   DegreeRequirements @relation(fields: [degreeRequirementsId], references: [id])
+  degreeRequirementsId String             @db.ObjectId
+  courseId             String             @db.ObjectId
 }
 
 model Semester {

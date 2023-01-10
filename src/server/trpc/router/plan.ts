@@ -171,4 +171,5 @@ export const planRouter = router({
         return true;
       } catch (error) {}
     }),
+  addCourseToSemester: protectedProcedure,
 });

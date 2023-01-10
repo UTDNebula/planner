@@ -18,6 +18,12 @@ export default function TemplateModal({ setOpenTemplateModal }: TemplateModalPro
       await utils.user.getUser.invalidate();
     },
   });
+
+  const createEmptyUserPlan = trpc.user.createEmptyUserPlan.useMutation({
+    async onSuccess() {
+      await utils.user.getUser.invalidate();
+    },
+  });
   const { data, isError } = trpc.template.getAllTemplates.useQuery();
   if (isError) {
     console.error('Error fetching templates');
@@ -38,6 +44,15 @@ export default function TemplateModal({ setOpenTemplateModal }: TemplateModalPro
     return 1;
   });
   const handleTemplateCreation = async (major: string) => {
+    if (major === 'empty') {
+      try {
+        const planId = await createEmptyUserPlan.mutateAsync('empty');
+        if (!planId) {
+          return router.push('/app/home');
+        }
+        return router.push(`/app/plans/${planId}`);
+      } catch (error) {}
+    }
     const selectedTemplate = templates.filter((template) => {
       if (template.name === major) {
         return template;

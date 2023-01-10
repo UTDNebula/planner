@@ -20,13 +20,17 @@ import useSearch from '../../../components/search/search';
 import { CourseAttempt } from '../../../modules/auth/auth-context';
 import { loadCourseAttempts } from '../../../modules/common/api/courseAttempts';
 import { loadDummyCourses } from '../../../modules/common/api/courses';
-import { StudentPlan } from '../../../modules/common/data';
+
 import { usePlan } from '../../../modules/planner/hooks/usePlan';
 import { usePlannerContainer } from '../../../modules/planner/hooks/usePlannerContainer';
 import { RootState } from '../../../modules/redux/store';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next/types';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { trpc } from '@/utils/trpc';
+import Planner from '@/components/planner/Planner';
+import validationData from '@/data/dummyValidation.json';
+import { DegreeRequirementGroup } from '@/components/planner/types';
+import { Semester } from '@prisma/client';
 
 /**
  * Styling for the add & remove semesters buttons
@@ -61,6 +65,7 @@ export default function PlanDetailPage(
   const router = useRouter();
   const { planId } = props;
   const planQuery = trpc.plan.getPlanById.useQuery(planId);
+  const semesters = planQuery.data?.semesters ?? [];
   //   const [warning, setWarning] = React.useState(false);
 
   //   const [courseAttempts, setCourseAttempts] = React.useState<CourseAttempt[]>([]);
@@ -235,36 +240,143 @@ export default function PlanDetailPage(
       await deleteSemester.mutateAsync(planId);
     } catch (error) {}
   };
-  return (
-    <>
-      <button className="m-4 p-4 font-bold bg-red-400" onClick={() => handlePlanDelete()}>
-        Delete Plan
-      </button>
-      <button className="m-4 p-4 font-bold bg-red-400" onClick={() => handleSemesterCreate()}>
-        Add Semester
-      </button>
-      <button className="m-4 p-4 font-bold bg-red-400" onClick={() => handleSemesterDelete()}>
-        Delete Semester
-      </button>
-      <div>{planQuery.data?.name}</div>
-      {planQuery.data?.semesters.map((sem) => {
-        return (
-          <div key={sem.code} className="p-2 m-2 border-2 border-blue-500">
-            <div className="font-bold">{sem.name}</div>
 
-            {sem.courses.map((course) => {
-              return (
-                <div key={course.id} className="p-2">
-                  <div>{course.name}</div>
-                  <div>{course.description}</div>
-                </div>
-              );
-            })}
-          </div>
-        );
-      })}
-    </>
+  const handleBack = () => {
+    return router.push('/app/home');
+  };
+
+  const [degreeData, setDegreeData] = useState<DegreeRequirementGroup[]>(validationData);
+
+  return (
+    <div className="w-screen flex flex-col bg-[#FFFFFF] p-[44px]">
+      <div className="mt-4 mb-10 flex flex-row">
+        <button onClick={handleBack}>Back</button>
+        <div className="text-2xl">My Plan</div>{' '}
+      </div>
+      <Planner
+        degreeRequirements={degreeData}
+        semesters={semesters}
+        onRemoveCourseFromSemester={async (targetSemester, targetCourse) => {
+          setSemesters((semesters) =>
+            semesters.map((semester) => {
+              if (semester.id === targetSemester.id) {
+                return {
+                  ...semester,
+                  courses: semester.courses.filter(
+                    (course: { id: string }) => course.id !== targetCourse.id,
+                  ),
+                };
+              }
+
+              return semester;
+            }),
+          );
+          return {
+            level: 'ok',
+            message: `Removed ${targetCourse.catalogCode} from ${targetSemester.name}`,
+          };
+        }}
+        onAddCourseToSemester={async (targetSemester, newCourse) => {
+          // check for duplicate course
+          const isDuplicate = Boolean(
+            targetSemester.courses.find((course) => course.catalogCode === newCourse.catalogCode),
+          );
+          if (isDuplicate) {
+            return {
+              level: 'warn',
+              message: `You're already taking ${newCourse.catalogCode} in ${targetSemester.name}`,
+            };
+          }
+
+          setSemesters((semesters) =>
+            semesters.map((semester) =>
+              semester.id === targetSemester.id
+                ? { ...semester, courses: [...semester.courses, newCourse] }
+                : semester,
+            ),
+          );
+
+          return {
+            level: 'ok',
+            message: `Added ${newCourse.catalogCode} to ${targetSemester.name}`,
+          };
+        }}
+        onMoveCourseFromSemesterToSemester={async (
+          originSemester,
+          destinationSemester,
+          courseToMove,
+        ) => {
+          // check for duplicate course
+          const isDuplicate = Boolean(
+            destinationSemester.courses.find(
+              (course) => course.catalogCode === courseToMove.catalogCode,
+            ),
+          );
+          if (isDuplicate) {
+            return {
+              level: 'warn',
+              message: `You're already taking ${courseToMove.catalogCode} in ${destinationSemester.name}`,
+            };
+          }
+
+          setSemesters((semesters) =>
+            semesters.map((semester) => {
+              if (semester.id === destinationSemester.id) {
+                return { ...semester, courses: [...semester.courses, courseToMove] };
+              }
+
+              if (semester.id === originSemester.id) {
+                return {
+                  ...semester,
+                  courses: semester.courses.filter(
+                    (course: { id: string }) => course.id !== courseToMove.id,
+                  ),
+                };
+              }
+
+              return semester;
+            }),
+          );
+
+          return {
+            level: 'ok',
+            message: `Moved ${courseToMove.catalogCode} from ${originSemester.name} to ${destinationSemester.name}`,
+          };
+        }}
+      />
+    </div>
   );
+  // return (
+
+  //   <>
+  //     <button className="m-4 p-4 font-bold bg-red-400" onClick={() => handlePlanDelete()}>
+  //       Delete Plan
+  //     </button>
+  //     <button className="m-4 p-4 font-bold bg-red-400" onClick={() => handleSemesterCreate()}>
+  //       Add Semester
+  //     </button>
+  //     <button className="m-4 p-4 font-bold bg-red-400" onClick={() => handleSemesterDelete()}>
+  //       Delete Semester
+  //     </button>
+  //     <div>{planQuery.data?.name}</div>
+  //     {planQuery.data?.semesters.map((sem) => {
+  //       return (
+  //         <div key={sem.code} className="p-2 m-2 border-2 border-blue-500">
+  //           <div className="font-bold">{sem.name}</div>
+
+  //           {sem.courses.map((course) => {
+  //             return (
+  //               <div key={course.id} className="p-2">
+  //                 <div>{course.name}</div>
+  //                 <div>{course.description}</div>
+  //               </div>
+  //             );
+  //           })}
+  //         </div>
+  //       );
+  //     })}
+  //   </>
+  // );
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext<{ planId: string }>) {
@@ -426,3 +538,208 @@ interface DVCourse {
   level: number;
   hours: number;
 }
+
+// import superjson from 'superjson';
+
+// import { GetServerSidePropsContext, NextPage } from 'next';
+// import { useState } from 'react';
+
+// import Planner from '@/components/planner/Planner';
+// import { Semester, DegreeRequirementGroup } from '@/components/planner/types';
+// import validationData from '@/data/dummyValidation.json';
+// import { Course } from '@/modules/common/data';
+// import { useRouter } from 'next/router';
+// import HomeDrawer from '@/components/newhome/HomeDrawer';
+// import useMedia from '@/modules/common/media';
+// import { authOptions } from '@/pages/api/auth/[...nextauth]';
+// import { createContextInner } from '@/server/trpc/context';
+// import { appRouter } from '@/server/trpc/router/_app';
+// import { Home } from '@mui/icons-material';
+// import { createProxySSGHelpers } from '@trpc/react-query/ssg';
+// import { unstable_getServerSession } from 'next-auth';
+
+// export async function getServerSideProps(context: GetServerSidePropsContext) {
+//   const session = await unstable_getServerSession(context.req, context.res, authOptions);
+//   const ssg = createProxySSGHelpers({
+//     router: appRouter,
+//     ctx: await createContextInner({ session }),
+//     transformer: superjson,
+//   });
+
+//   await ssg.plan.getPlanById(context.params['planId']);
+//   return {
+//     props: {
+//       trpcState: ssg.dehydrate(),
+//     },
+//   };
+// }
+// export default function MiniDrawer() {
+//   const isDesktop = useMedia('(min-width: 900px)');
+
+//   return (
+//     <>
+//       <HomeDrawer isDesktop={isDesktop} />
+//       <Home key={0} />
+//     </>
+//   );
+// }
+
+// MiniDrawer.auth = true;
+
+// const Test3Page: NextPage = () => {
+//   const [degreeData, setDegreeData] = useState<DegreeRequirementGroup[]>(validationData);
+
+//   const [semesters, setSemesters] = useState<Semester[]>([
+//     {
+//       id: '1',
+//       name: "Fall'22",
+//       courses: [
+//         {
+//           id: '3',
+//           catalogCode: 'CS 2305',
+//           creditHours: 10,
+//           description: '',
+//           title: 'Discrete Math',
+//           validation: { isValid: true, override: false },
+//         },
+//       ],
+//     },
+//     { id: '2', name: "Spring'23", courses: [] },
+//     { id: '3', name: "Summer'23", courses: [] },
+//     {
+//       id: '4',
+//       name: "Fall'23",
+//       courses: [
+//         {
+//           id: '3',
+//           catalogCode: 'CS 2305',
+//           creditHours: 10,
+//           description: '',
+//           title: 'Discrete Math',
+//           validation: { isValid: false, override: false },
+//         },
+//       ],
+//     },
+//     { id: '5', name: "Spring'24", courses: [] },
+//     { id: '6', name: "Summer'24", courses: [] },
+//     {
+//       id: '7',
+//       name: "Fall'24",
+//       courses: [],
+//     },
+//     { id: '8', name: "Spring'25", courses: [] },
+//     { id: '9', name: "Summer'25", courses: [] },
+//     {
+//       id: '10',
+//       name: "Fall'25",
+//       courses: [],
+//     },
+//     { id: '11', name: "Spring'26", courses: [] },
+//     { id: '12', name: "Summer'26", courses: [] },
+//   ]);
+
+//   const router = useRouter();
+
+//   const handleBack = () => {
+//     return router.push('/app/home');
+//   };
+//   // Create
+
+//   return (
+//     <div className="w-screen flex flex-col bg-[#FFFFFF] p-[44px]">
+//       <div className="mt-4 mb-10 flex flex-row">
+//         <button onClick={handleBack}>Back</button>
+//         <div className="text-2xl">My Plan</div>{' '}
+//       </div>
+//       <Planner
+//         degreeRequirements={degreeData}
+//         semesters={semesters}
+//         onRemoveCourseFromSemester={async (targetSemester, targetCourse) => {
+//           setSemesters((semesters) =>
+//             semesters.map((semester) => {
+//               if (semester.id === targetSemester.id) {
+//                 return {
+//                   ...semester,
+//                   courses: semester.courses.filter((course) => course.id !== targetCourse.id),
+//                 };
+//               }
+
+//               return semester;
+//             }),
+//           );
+//           return {
+//             level: 'ok',
+//             message: `Removed ${targetCourse.catalogCode} from ${targetSemester.name}`,
+//           };
+//         }}
+//         onAddCourseToSemester={async (targetSemester, newCourse) => {
+//           // check for duplicate course
+//           const isDuplicate = Boolean(
+//             targetSemester.courses.find((course) => course.catalogCode === newCourse.catalogCode),
+//           );
+//           if (isDuplicate) {
+//             return {
+//               level: 'warn',
+//               message: `You're already taking ${newCourse.catalogCode} in ${targetSemester.name}`,
+//             };
+//           }
+
+//           setSemesters((semesters) =>
+//             semesters.map((semester) =>
+//               semester.id === targetSemester.id
+//                 ? { ...semester, courses: [...semester.courses, newCourse] }
+//                 : semester,
+//             ),
+//           );
+
+//           return {
+//             level: 'ok',
+//             message: `Added ${newCourse.catalogCode} to ${targetSemester.name}`,
+//           };
+//         }}
+//         onMoveCourseFromSemesterToSemester={async (
+//           originSemester,
+//           destinationSemester,
+//           courseToMove,
+//         ) => {
+//           // check for duplicate course
+//           const isDuplicate = Boolean(
+//             destinationSemester.courses.find(
+//               (course) => course.catalogCode === courseToMove.catalogCode,
+//             ),
+//           );
+//           if (isDuplicate) {
+//             return {
+//               level: 'warn',
+//               message: `You're already taking ${courseToMove.catalogCode} in ${destinationSemester.name}`,
+//             };
+//           }
+
+//           setSemesters((semesters) =>
+//             semesters.map((semester) => {
+//               if (semester.id === destinationSemester.id) {
+//                 return { ...semester, courses: [...semester.courses, courseToMove] };
+//               }
+
+//               if (semester.id === originSemester.id) {
+//                 return {
+//                   ...semester,
+//                   courses: semester.courses.filter((course) => course.id !== courseToMove.id),
+//                 };
+//               }
+
+//               return semester;
+//             }),
+//           );
+
+//           return {
+//             level: 'ok',
+//             message: `Moved ${courseToMove.catalogCode} from ${originSemester.name} to ${destinationSemester.name}`,
+//           };
+//         }}
+//       />
+//     </div>
+//   );
+// };
+
+// export default Test3Page;

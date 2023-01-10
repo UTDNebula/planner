@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { Prisma } from '@prisma/client';
 import { router, protectedProcedure } from '../trpc';
 import { getAllCourses } from '@modules/common/api/templates';
+import { v4 as uuid } from 'uuid';
 
 export const userRouter = router({
   getUser: protectedProcedure.query(async ({ ctx }) => {
@@ -73,6 +74,42 @@ export const userRouter = router({
       });
       console.table(user);
       return user;
+    }),
+  createEmptyUserPlan: protectedProcedure
+    .input(z.string().min(1))
+    .mutation(async ({ ctx, input }) => {
+      const userId = ctx.session.user.id;
+      const semesters: Prisma.SemesterUncheckedCreateNestedManyWithoutPlanInput = {
+        create: [],
+      };
+
+      const plansInput: Prisma.PlanUncheckedCreateWithoutUserInput = {
+        name: uuid(),
+        semesters: semesters,
+      };
+
+      const plans: Prisma.PlanUpdateManyWithoutUserNestedInput = {
+        create: plansInput,
+      };
+      const updatedUser = await ctx.prisma.user.update({
+        where: { id: userId },
+        data: {
+          plans: plans,
+        },
+        select: {
+          name: true,
+          plans: {
+            orderBy: {
+              createdAt: 'desc',
+            },
+            take: 1,
+            select: {
+              id: true,
+            },
+          },
+        },
+      });
+      return updatedUser.plans[0].id;
     }),
   createUserPlan: protectedProcedure.input(z.string().min(1)).mutation(async ({ ctx, input }) => {
     const userId = ctx.session.user.id;
