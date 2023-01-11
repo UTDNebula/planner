@@ -266,9 +266,7 @@ export default function PlanDetailPage(
   }) => {
     try {
       await removeCourse.mutateAsync({ planId, semesterId, courseName });
-    } catch (error) {
-      alert('SAD');
-    }
+    } catch (error) {}
   };
 
   const handleMoveCourse = async ({

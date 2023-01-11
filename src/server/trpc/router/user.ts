@@ -2,6 +2,7 @@ import { getAllCourses } from '@modules/common/api/templates';
 import { Prisma } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
+import { ObjectID } from 'bson';
 
 import { protectedProcedure, router } from '../trpc';
 
@@ -79,7 +80,7 @@ export const userRouter = router({
     .input(z.string().min(1))
     .mutation(async ({ ctx, input }) => {
       const userId = ctx.session.user.id;
-      const planId = '63bdb0843e7983e7a724f763';
+      const planId = new ObjectID().toString();
 
       const dummySemesterData = [
         {
