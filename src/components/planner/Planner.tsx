@@ -33,22 +33,10 @@ import {
 } from './types';
 import { Course } from '@/modules/common/data';
 
-type Temp = {
-  name: string;
-  id: string;
-  description: string | null;
-};
-
-type TempSemester = {
-  name: string;
-  id: string;
-  code: string;
-  courses: Temp[];
-};
 /** PlannerTool Props */
 export interface PlannerProps {
   degreeRequirements: DegreeRequirementGroup[];
-  semesters: TempSemester[];
+  semesters: Semester[];
   /** Called when course moved from course list -> semester */
   onAddCourseToSemester?: (targetSemester: Semester, newCourse: Course) => Promise<ToastMessage>;
   /** Called when course removed from semester */

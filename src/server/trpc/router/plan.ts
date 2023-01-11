@@ -1,7 +1,7 @@
+import { Course } from '@/modules/common/data';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 import { router, protectedProcedure } from '../trpc';
-
 export const planRouter = router({
   getUserPlans: protectedProcedure.query(async ({ ctx }) => {
     try {
@@ -39,13 +39,7 @@ export const planRouter = router({
                 id: true,
                 name: true,
                 code: true,
-                courses: {
-                  select: {
-                    id: true,
-                    name: true,
-                    description: true,
-                  },
-                },
+                courses: true,
               },
             },
           },
@@ -171,5 +165,122 @@ export const planRouter = router({
         return true;
       } catch (error) {}
     }),
-  addCourseToSemester: protectedProcedure,
+  addCourseToSemester: protectedProcedure
+    .input(z.object({ planId: z.string(), semesterId: z.string(), courseName: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      // Get semester you're adding the course to
+      try {
+        const { semesterId, courseName } = input;
+        // This works bc semesters are stored in its own table
+        // Once integrated w/ Nebula API, use Promise.all() to call concurrently
+        const semester = await ctx.prisma.semester.findUnique({
+          where: { id: semesterId },
+          select: {
+            id: true,
+            courses: true,
+          },
+        });
+        // Update courses
+        await ctx.prisma.semester.update({
+          where: {
+            id: semesterId,
+          },
+          data: {
+            courses: [...semester!.courses, courseName],
+          },
+        });
+        return true;
+      } catch (error) {}
+    }),
+  removeCourseFromSemester: protectedProcedure
+    .input(z.object({ planId: z.string(), semesterId: z.string(), courseName: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      try {
+        const { semesterId, courseName } = input;
+
+        console.log('GOT UP TO HERE');
+        // This works bc semesters are stored in its own table
+        // Once integrated w/ Nebula API, use Promise.all() to call concurrently
+        const semester = await ctx.prisma.semester.findUnique({
+          where: { id: semesterId },
+          select: {
+            id: true,
+            courses: true,
+          },
+        });
+        // Update courses
+        await ctx.prisma.semester.update({
+          where: {
+            id: semesterId,
+          },
+          data: {
+            courses: semester!.courses.filter((cName) => cName != courseName),
+          },
+        });
+        return true;
+      } catch (error) {
+        console.error(error);
+      }
+    }),
+  moveCourseFromSemester: protectedProcedure
+    .input(
+      z.object({
+        planId: z.string(),
+        oldSemesterId: z.string(),
+        newSemesterId: z.string(),
+        courseName: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      try {
+        const { oldSemesterId, newSemesterId, courseName } = input;
+        // This works bc semesters are stored in its own table
+
+        const removeCourse = async () => {
+          // Once integrated w/ Nebula API, use Promise.all() to call concurrently
+          const oldSemester = await ctx.prisma.semester.findUnique({
+            where: { id: oldSemesterId },
+            select: {
+              id: true,
+              courses: true,
+            },
+          });
+          // Update courses
+          await ctx.prisma.semester.update({
+            where: {
+              id: oldSemesterId,
+            },
+            data: {
+              courses: oldSemester!.courses.filter((cName) => cName != courseName),
+            },
+          });
+          return true;
+        };
+
+        const addCourse = async () => {
+          // This works bc semesters are stored in its own table
+          // Once integrated w/ Nebula API, use Promise.all() to call concurrently
+          const semester = await ctx.prisma.semester.findUnique({
+            where: { id: newSemesterId },
+            select: {
+              id: true,
+              courses: true,
+            },
+          });
+          // Update courses
+          await ctx.prisma.semester.update({
+            where: {
+              id: newSemesterId,
+            },
+            data: {
+              courses: [...semester!.courses, courseName],
+            },
+          });
+          return true;
+        };
+
+        await Promise.all([addCourse, removeCourse]);
+        return true;
+      } catch (error) {}
+    }),
 });

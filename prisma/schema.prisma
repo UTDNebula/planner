@@ -53,29 +53,6 @@ model Profile {
   minors          String[]
 }
 
-model Prerequisite {
-  id          String @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
-  catalogCode String
-  course      Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  courseId    String @db.ObjectId
-}
-
-model Course {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
-  catalogCode String
-  creditHours Int
-  description String?
-
-  createdAt     DateTime       @default(now()) @map("created_at")
-  updatedAt     DateTime       @default(now()) @map("updated_at")
-  semester      Semester?      @relation(fields: [semesterId], references: [id], onDelete: Cascade)
-  semesterId    String?        @db.ObjectId
-  prerequisites Prerequisite[]
-  Bypass        Bypass[]
-}
-
 model Plan {
   id           String               @id @default(auto()) @map("_id") @db.ObjectId
   name         String
@@ -98,12 +75,11 @@ model DegreeRequirements {
 
 model Bypass {
   id                   String             @id @default(auto()) @map("_id") @db.ObjectId
-  course               Course             @relation(fields: [courseId], references: [id])
+  courseCode           String
   requirement          String
   hours                Int
   degreeRequirements   DegreeRequirements @relation(fields: [degreeRequirementsId], references: [id])
   degreeRequirementsId String             @db.ObjectId
-  courseId             String             @db.ObjectId
 }
 
 model Semester {
@@ -112,7 +88,7 @@ model Semester {
   code      String // TODO: convert code to enum
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  courses   Course[]
+  courses   String[] // Store course catalog codes
   plan      Plan?    @relation(fields: [planId], references: [id], onDelete: Cascade)
   planId    String?  @db.ObjectId
 }

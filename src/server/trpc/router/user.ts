@@ -79,12 +79,32 @@ export const userRouter = router({
     .input(z.string().min(1))
     .mutation(async ({ ctx, input }) => {
       const userId = ctx.session.user.id;
+      const planId = '63bdb0843e7983e7a724f763';
+
+      const dummySemesterData = [
+        {
+          name: "Fall'22",
+          code: 'f22',
+          courses: ['CS 2305'],
+        },
+        {
+          name: "Spring'23",
+          code: 's23',
+          courses: [],
+        },
+        {
+          name: "Summer'23",
+          code: 'u23',
+          courses: [],
+        },
+      ];
       const semesters: Prisma.SemesterUncheckedCreateNestedManyWithoutPlanInput = {
-        create: [],
+        create: dummySemesterData, // Prepopulate with semester
       };
 
       const plansInput: Prisma.PlanUncheckedCreateWithoutUserInput = {
-        name: uuid(),
+        id: planId,
+        name: 'test plan',
         semesters: semesters,
       };
 

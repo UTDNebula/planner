@@ -29,8 +29,10 @@ import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { trpc } from '@/utils/trpc';
 import Planner from '@/components/planner/Planner';
 import validationData from '@/data/dummyValidation.json';
-import { DegreeRequirementGroup } from '@/components/planner/types';
-import { Semester } from '@prisma/client';
+import { DegreeRequirementGroup, Semester } from '@/components/planner/types';
+import { Course } from '@/modules/common/data';
+import { v4 as uuid } from 'uuid';
+import { string } from 'zod';
 
 /**
  * Styling for the add & remove semesters buttons
@@ -65,7 +67,8 @@ export default function PlanDetailPage(
   const router = useRouter();
   const { planId } = props;
   const planQuery = trpc.plan.getPlanById.useQuery(planId);
-  const semesters = planQuery.data?.semesters ?? [];
+
+  const { data, isLoading } = planQuery;
   //   const [warning, setWarning] = React.useState(false);
 
   //   const [courseAttempts, setCourseAttempts] = React.useState<CourseAttempt[]>([]);
@@ -197,6 +200,25 @@ export default function PlanDetailPage(
   //       )}
   //     </>
   //   );
+
+  const addCourse = trpc.plan.addCourseToSemester.useMutation({
+    async onSuccess() {
+      await utils.plan.getPlanById.invalidate(planId);
+    },
+  });
+
+  const removeCourse = trpc.plan.removeCourseFromSemester.useMutation({
+    async onSuccess() {
+      await utils.plan.getPlanById.invalidate(planId);
+    },
+  });
+
+  const moveCourse = trpc.plan.moveCourseFromSemester.useMutation({
+    async onSuccess() {
+      await utils.plan.getPlanById.invalidate(planId);
+    },
+  });
+
   const deletePlan = trpc.plan.deletePlanById.useMutation({
     async onSuccess() {
       await utils.user.getUser.invalidate();
@@ -241,11 +263,73 @@ export default function PlanDetailPage(
     } catch (error) {}
   };
 
+  const handleAddCourse = async ({
+    semesterId,
+    courseName,
+  }: {
+    semesterId: string;
+    courseName: string;
+  }) => {
+    try {
+      await addCourse.mutateAsync({ planId, semesterId, courseName });
+    } catch (error) {}
+  };
+
+  const handleRemoveCourse = async ({
+    semesterId,
+    courseName,
+  }: {
+    semesterId: string;
+    courseName: string;
+  }) => {
+    try {
+      await removeCourse.mutateAsync({ planId, semesterId, courseName });
+    } catch (error) {
+      alert('SAD');
+    }
+  };
+
+  const handleMoveCourse = async ({
+    oldSemesterId,
+    newSemesterId,
+    courseName,
+  }: {
+    oldSemesterId: string;
+    newSemesterId: string;
+    courseName: string;
+  }) => {
+    try {
+      moveCourse.mutateAsync({ planId, oldSemesterId, newSemesterId, courseName });
+    } catch (error) {}
+  };
+
   const handleBack = () => {
     return router.push('/app/home');
   };
 
   const [degreeData, setDegreeData] = useState<DegreeRequirementGroup[]>(validationData);
+
+  // Indicate UI loading
+  if (isLoading) {
+    return <div>Loading</div>;
+  }
+
+  // Extend Course object to contain fields for prereq validation & other stuff ig
+
+  const semesters: Semester[] = data!.semesters.map((sem, idx) => {
+    const courses = sem.courses.map((course, index): Course => {
+      const newCourse = {
+        id: uuid(),
+        description: '',
+        title: 'temp',
+        catalogCode: course,
+        creditHours: 3,
+      };
+      return newCourse;
+    });
+    const semester = { name: sem.code, id: sem.id, courses };
+    return semester;
+  });
 
   return (
     <div className="w-screen flex flex-col bg-[#FFFFFF] p-[44px]">
@@ -257,20 +341,10 @@ export default function PlanDetailPage(
         degreeRequirements={degreeData}
         semesters={semesters}
         onRemoveCourseFromSemester={async (targetSemester, targetCourse) => {
-          setSemesters((semesters) =>
-            semesters.map((semester) => {
-              if (semester.id === targetSemester.id) {
-                return {
-                  ...semester,
-                  courses: semester.courses.filter(
-                    (course: { id: string }) => course.id !== targetCourse.id,
-                  ),
-                };
-              }
-
-              return semester;
-            }),
-          );
+          const semesterId = targetSemester.id as string;
+          alert(semesterId);
+          const courseName = targetCourse.catalogCode;
+          handleRemoveCourse({ semesterId, courseName });
           return {
             level: 'ok',
             message: `Removed ${targetCourse.catalogCode} from ${targetSemester.name}`,
@@ -287,14 +361,9 @@ export default function PlanDetailPage(
               message: `You're already taking ${newCourse.catalogCode} in ${targetSemester.name}`,
             };
           }
-
-          setSemesters((semesters) =>
-            semesters.map((semester) =>
-              semester.id === targetSemester.id
-                ? { ...semester, courses: [...semester.courses, newCourse] }
-                : semester,
-            ),
-          );
+          const semesterId = targetSemester.id as string;
+          const courseName = newCourse.catalogCode;
+          handleAddCourse({ semesterId, courseName });
 
           return {
             level: 'ok',
@@ -319,25 +388,11 @@ export default function PlanDetailPage(
             };
           }
 
-          setSemesters((semesters) =>
-            semesters.map((semester) => {
-              if (semester.id === destinationSemester.id) {
-                return { ...semester, courses: [...semester.courses, courseToMove] };
-              }
+          const oldSemesterId = originSemester.id as string;
+          const newSemesterId = destinationSemester.id as string;
+          const courseName = courseToMove.catalogCode;
 
-              if (semester.id === originSemester.id) {
-                return {
-                  ...semester,
-                  courses: semester.courses.filter(
-                    (course: { id: string }) => course.id !== courseToMove.id,
-                  ),
-                };
-              }
-
-              return semester;
-            }),
-          );
-
+          handleMoveCourse({ oldSemesterId, newSemesterId, courseName });
           return {
             level: 'ok',
             message: `Moved ${courseToMove.catalogCode} from ${originSemester.name} to ${destinationSemester.name}`,
