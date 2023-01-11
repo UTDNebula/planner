@@ -2,7 +2,7 @@ import { createProxySSGHelpers } from '@trpc/react-query/ssg';
 import { useRouter } from 'next/router';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next/types';
 import { unstable_getServerSession } from 'next-auth';
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import superjson from 'superjson';
 
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
@@ -322,7 +322,6 @@ export default function PlanDetailPage(
         semesters={semesters}
         onRemoveCourseFromSemester={async (targetSemester, targetCourse) => {
           const semesterId = targetSemester.id as string;
-          alert(semesterId);
           const courseName = targetCourse.catalogCode;
           handleRemoveCourse({ semesterId, courseName });
           return {
@@ -379,6 +378,11 @@ export default function PlanDetailPage(
           };
         }}
       />
+      <div>
+        <button onClick={handleSemesterDelete}>Remove Semester</button>
+        <button onClick={handleSemesterCreate}>Add Semester</button>
+      </div>
+      <button onClick={handlePlanDelete}>Delete Plan</button>
     </div>
   );
   // return (
