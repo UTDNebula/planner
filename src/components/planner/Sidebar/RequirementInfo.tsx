@@ -1,11 +1,13 @@
+import React from 'react';
+import { v4 as uuid } from 'uuid';
+
 import useSearch from '@/components/search/search';
 import { getAllCourses } from '@/modules/common/api/templates';
 import { Course } from '@/modules/common/data';
+
+import { DegreeRequirement, DraggableCourse, GetDragIdByCourseAndReq } from '../types';
 import DraggableCourseList from './DraggableCourseList';
 import RequirementSearchBar from './RequirementSearchBar';
-import { v4 as uuid } from 'uuid';
-import React from 'react';
-import { DegreeRequirement, DraggableCourse, GetDragIdByCourseAndReq } from '../types';
 
 export interface RequirementInfoProps {
   courses: string[];

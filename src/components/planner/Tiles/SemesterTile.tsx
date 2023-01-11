@@ -3,9 +3,9 @@ import { FC, forwardRef } from 'react';
 
 import {
   DragDataToSemesterTile,
+  DraggableCourse,
   GetDragIdByCourseAndSemester,
   Semester,
-  DraggableCourse,
 } from '../types';
 import DraggableSemesterCourseItem from './SemesterCourseItem';
 

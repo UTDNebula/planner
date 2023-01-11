@@ -1,5 +1,5 @@
 // @ts-check
-import { z } from "zod";
+import { z } from 'zod';
 
 /**
  * Specify your server-side environment variables schema here.
@@ -7,11 +7,9 @@ import { z } from "zod";
  */
 export const serverSchema = z.object({
   DATABASE_URL: z.string().url(),
-  NODE_ENV: z.enum(["development", "test", "production"]),
+  NODE_ENV: z.enum(['development', 'test', 'production']),
   NEXTAUTH_SECRET:
-    process.env.NODE_ENV === "production"
-      ? z.string().min(1)
-      : z.string().min(1).optional(),
+    process.env.NODE_ENV === 'production' ? z.string().min(1) : z.string().min(1).optional(),
   NEXTAUTH_URL: z.preprocess(
     // This makes Vercel deployments not fail if you don't set NEXTAUTH_URL
     // Since NextAuth automatically uses the VERCEL_URL if present.

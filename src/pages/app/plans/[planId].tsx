@@ -1,31 +1,13 @@
+import { createProxySSGHelpers } from '@trpc/react-query/ssg';
+import { useRouter } from 'next/router';
+import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next/types';
+import { unstable_getServerSession } from 'next-auth';
+import React, { Fragment } from 'react';
+import superjson from 'superjson';
+
+import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { createContextInner } from '@/server/trpc/context';
 import { appRouter } from '@/server/trpc/router/_app';
-import superjson from 'superjson';
-import { CircularProgress, Dialog, Theme } from '@mui/material';
-import { createProxySSGHelpers } from '@trpc/react-query/ssg';
-import { unstable_getServerSession } from 'next-auth';
-import { useRouter } from 'next/router';
-import React, { Fragment, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { makeStyles } from 'tss-react/mui';
-
-import ErrorMessage from '../../../components/common/ErrorMessage';
-import WarningMessageModal from '../../../components/common/WarningMessageModal';
-import PlannerContainer from '../../../components/planner/PlannerContainer';
-import PlanningToolbar, {
-  usePlanningToolbar,
-} from '../../../components/planner/PlanningToolbar/PlanningToolbar';
-import { useSemesterNavigation } from '../../../components/planner/SemesterNavigationDrawer/SemesterNavigationDrawer';
-import useSearch from '../../../components/search/search';
-import { CourseAttempt } from '../../../modules/auth/auth-context';
-import { loadCourseAttempts } from '../../../modules/common/api/courseAttempts';
-import { loadDummyCourses } from '../../../modules/common/api/courses';
-
-import { usePlan } from '../../../modules/planner/hooks/usePlan';
-import { usePlannerContainer } from '../../../modules/planner/hooks/usePlannerContainer';
-import { RootState } from '../../../modules/redux/store';
-import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next/types';
-import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { trpc } from '@/utils/trpc';
 import Planner from '@/components/planner/Planner';
 import validationData from '@/data/dummyValidation.json';

@@ -1,5 +1,6 @@
 import { UniqueIdentifier, useDraggable } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities';
+
 import { DragDataFromCourseList, DraggableCourse } from '../types';
 import StatusTag from './StatusTag';
 

@@ -1,7 +1,7 @@
 import { router } from '../trpc';
-import { userRouter } from './user';
-import { templateRouter } from './template';
 import { planRouter } from './plan';
+import { templateRouter } from './template';
+import { userRouter } from './user';
 export const appRouter = router({
   user: userRouter,
   plan: planRouter,

@@ -1,4 +1,5 @@
 import { Course } from '@/modules/common/data';
+
 import { DraggableCourse } from '../types';
 import SelectableCourse from './SelectableCourse';
 

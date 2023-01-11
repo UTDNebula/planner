@@ -1,9 +1,9 @@
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-
-import RequirementsList from './RequirementsList';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { RefObject } from 'react';
+
 import { DegreeRequirementGroup } from '../types';
+import RequirementsList from './RequirementsList';
 
 export default function RequirementsAccordion({
   data,

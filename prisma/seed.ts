@@ -1,4 +1,4 @@
-import { PrismaClient, Prisma } from '@prisma/client'
+import { Prisma,PrismaClient } from '@prisma/client'
 
 import dummyTemplate from '../src/data/degree_template.json';
 const prisma = new PrismaClient();

@@ -1,4 +1,5 @@
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+
 import { DegreeRequirement } from '../types';
 import StatusTag from './StatusTag';
 

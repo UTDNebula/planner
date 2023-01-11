@@ -1,11 +1,12 @@
+import { DndContext } from '@dnd-kit/core';
+import React from 'react';
+
 import CourseSelectorContainer from '@/components/planner/Sidebar/Sidebar';
 import { DegreeRequirementGroup } from '@/components/planner/types';
 import useSearch from '@/components/search/search';
 import SearchBar from '@/components/search/SearchBar';
-import { loadDummyCourses } from '@/modules/common/api/courses';
-import { DndContext } from '@dnd-kit/core';
-import React from 'react';
 import validationData from '@/data/dummyValidation.json';
+import { loadDummyCourses } from '@/modules/common/api/courses';
 
 const getCreditHours = (validCourses: string[]): number => {
   return validCourses.length > 0

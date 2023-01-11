@@ -1,9 +1,9 @@
+import { getAllCourses } from '@modules/common/api/templates';
+import { Prisma } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
-import { Prisma } from '@prisma/client';
-import { router, protectedProcedure } from '../trpc';
-import { getAllCourses } from '@modules/common/api/templates';
-import { v4 as uuid } from 'uuid';
+
+import { protectedProcedure, router } from '../trpc';
 
 export const userRouter = router({
   getUser: protectedProcedure.query(async ({ ctx }) => {

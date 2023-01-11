@@ -1,7 +1,7 @@
 import AddIcon from '@mui/icons-material/Add';
+import { trpc } from '@utils/trpc';
 import React, { useState } from 'react';
 
-import { trpc } from '@utils/trpc';
 import PlanCard from '../home/plans/PlanCard';
 import TemplateModal from '../template/Modal';
 

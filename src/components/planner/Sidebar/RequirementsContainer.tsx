@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { DegreeRequirementGroup, GetDragIdByCourseAndReq } from '../types';
 
+import { DegreeRequirementGroup, GetDragIdByCourseAndReq } from '../types';
 import RequirementContainer from './RequirementContainer';
 import RequirementsAccordion from './RequirementsAccordion';
 
