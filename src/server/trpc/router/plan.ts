@@ -200,7 +200,6 @@ export const planRouter = router({
       try {
         const { semesterId, courseName } = input;
 
-        console.log('GOT UP TO HERE');
         // This works bc semesters are stored in its own table
         // Once integrated w/ Nebula API, use Promise.all() to call concurrently
         const semester = await ctx.prisma.semester.findUnique({
@@ -281,8 +280,10 @@ export const planRouter = router({
           return true;
         };
 
-        await Promise.all([addCourse, removeCourse]);
+        await Promise.all([addCourse(), removeCourse()]);
         return true;
-      } catch (error) {}
+      } catch (error) {
+        console.error(error);
+      }
     }),
 });
