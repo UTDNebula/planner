@@ -1,4 +1,3 @@
-import { Course } from '@/modules/common/data';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 

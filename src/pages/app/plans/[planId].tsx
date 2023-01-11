@@ -2,19 +2,18 @@ import { createProxySSGHelpers } from '@trpc/react-query/ssg';
 import { useRouter } from 'next/router';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next/types';
 import { unstable_getServerSession } from 'next-auth';
-import React, { Fragment } from 'react';
+import React from 'react';
 import superjson from 'superjson';
+import { v4 as uuid } from 'uuid';
 
+import Planner from '@/components/planner/Planner';
+import { DegreeRequirementGroup, Semester } from '@/components/planner/types';
+import validationData from '@/data/dummyValidation.json';
+import { Course } from '@/modules/common/data';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { createContextInner } from '@/server/trpc/context';
 import { appRouter } from '@/server/trpc/router/_app';
 import { trpc } from '@/utils/trpc';
-import Planner from '@/components/planner/Planner';
-import validationData from '@/data/dummyValidation.json';
-import { DegreeRequirementGroup, Semester } from '@/components/planner/types';
-import { Course } from '@/modules/common/data';
-import { v4 as uuid } from 'uuid';
-import { string } from 'zod';
 
 /**
  * Styling for the add & remove semesters buttons
