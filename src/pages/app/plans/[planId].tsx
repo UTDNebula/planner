@@ -32,7 +32,6 @@ function useTaskQueue(params: { shouldProcess: boolean }): {
     if (queue.isProcessing) return;
 
     console.log(queue);
-    alert('REACHED');
 
     const { func, args } = queue.tasks[0];
     console.log(args);
@@ -169,11 +168,9 @@ export default function PlanDetailPage(
     [key: string]: string;
   }) => {
     try {
-      console.log('I confused');
-      moveCourse.mutateAsync({ planId, oldSemesterId, newSemesterId, courseName });
+      await moveCourse.mutateAsync({ planId, oldSemesterId, newSemesterId, courseName });
     } catch (error) {
       console.error(error);
-      console.log('HI');
     }
   };
 
@@ -218,7 +215,6 @@ export default function PlanDetailPage(
     const semCode = `${year}${season[0].toLowerCase()}`;
 
     const id = new ObjectID() as unknown as string;
-    alert(id);
 
     const newSemester: Semester = {
       name: semCode,
