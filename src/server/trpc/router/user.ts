@@ -1,8 +1,8 @@
 import { getAllCourses } from '@modules/common/api/templates';
 import { Prisma } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
-import { z } from 'zod';
 import { ObjectID } from 'bson';
+import { z } from 'zod';
 
 import { protectedProcedure, router } from '../trpc';
 
