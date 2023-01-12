@@ -2,7 +2,7 @@ import { NextPage } from 'next';
 import { useState } from 'react';
 
 import Planner from '@/components/planner/Planner';
-import { DegreeRequirementGroup,Semester } from '@/components/planner/types';
+import { DegreeRequirementGroup, Semester } from '@/components/planner/types';
 import validationData from '@/data/dummyValidation.json';
 
 const Test3Page: NextPage = () => {

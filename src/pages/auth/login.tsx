@@ -3,7 +3,7 @@ import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { unstable_getServerSession } from 'next-auth/next';
-import { getCsrfToken,getProviders, signIn } from 'next-auth/react';
+import { getCsrfToken, getProviders, signIn } from 'next-auth/react';
 import React from 'react';
 
 import { authOptions } from '../api/auth/[...nextauth]';
