@@ -2,7 +2,7 @@ import { createProxySSGHelpers } from '@trpc/react-query/ssg';
 import { useRouter } from 'next/router';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next/types';
 import { unstable_getServerSession } from 'next-auth';
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import superjson from 'superjson';
 
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
@@ -15,7 +15,56 @@ import { DegreeRequirementGroup, Semester, ToastMessage } from '@/components/pla
 import { Course } from '@/modules/common/data';
 import { v4 as uuid } from 'uuid';
 import { ObjectID } from 'bson';
-import { UniqueIdentifier } from '@dnd-kit/core';
+
+function useTaskQueue(params: { shouldProcess: boolean }): {
+  tasks: ReadonlyArray<Task>;
+  isProcessing: boolean;
+  addTask: (task: Task) => void;
+} {
+  const [queue, setQueue] = React.useState<{
+    isProcessing: boolean;
+    tasks: Array<Task>;
+  }>({ isProcessing: false, tasks: [] });
+
+  React.useEffect(() => {
+    if (!params.shouldProcess) return;
+    if (queue.tasks.length === 0) return;
+    if (queue.isProcessing) return;
+
+    console.log(queue);
+    alert('REACHED');
+
+    const { func, args } = queue.tasks[0];
+    console.log(args);
+    setQueue((prev) => ({
+      isProcessing: true,
+      tasks: prev.tasks.slice(1),
+    }));
+
+    Promise.resolve(func(args)).finally(() => {
+      setQueue((prev) => ({
+        isProcessing: false,
+        tasks: prev.tasks,
+      }));
+    });
+  }, [queue, params.shouldProcess]);
+
+  return {
+    tasks: queue.tasks,
+    isProcessing: queue.isProcessing,
+    addTask: React.useCallback((task) => {
+      setQueue((prev) => ({
+        isProcessing: prev.isProcessing,
+        tasks: [...prev.tasks, task],
+      }));
+    }, []),
+  };
+}
+
+type Task = {
+  func: (args: { [key: string]: string }) => Promise<void> | void;
+  args: { [key: string]: string };
+};
 
 /**
  * A page that displays the details of a specific student academic plan.
@@ -30,6 +79,8 @@ export default function PlanDetailPage(
   const planQuery = trpc.plan.getPlanById.useQuery(planId);
 
   const { data, isLoading } = planQuery;
+
+  const { tasks, isProcessing, addTask } = useTaskQueue({ shouldProcess: true });
 
   const addCourse = trpc.plan.addCourseToSemester.useMutation({
     async onSuccess() {
@@ -78,58 +129,32 @@ export default function PlanDetailPage(
       router.push('/app/home');
     } catch (error) {}
   };
-  const handleSemesterCreate = async () => {
+  const handleSemesterCreate = async ({ semesterId }: { [key: string]: string }) => {
     try {
       // TODO: Handle deletion errors
 
-      const lastSemesterCode = semesters[0]?.name ? semesters[semesters.length - 1]?.name : '2023s';
-      let year = lastSemesterCode?.substring(0, 4);
-      let season = lastSemesterCode?.substring(4, 5);
-      year = season === 'f' ? (parseInt(year) + 1).toString() : year;
-      season = season === 'f' ? 's' : 'f';
-
-      const semTitle = `${season === 'f' ? 'Fall' : 'Spring'} ${year}`;
-      const semCode = `${year}${season[0].toLowerCase()}`;
-
-      const newSemester: Semester = {
-        name: semCode,
-        id: new ObjectID() as unknown as UniqueIdentifier,
-        courses: [],
-      };
-
-      setSemesters([...semesters, newSemester]);
-
-      await createSemester.mutateAsync(planId);
+      await createSemester.mutateAsync({ planId, semesterId });
     } catch (error) {}
   };
   const handleSemesterDelete = async () => {
     try {
       // TODO: Handle deletion errors
 
-      setSemesters(semesters.filter((sem, idx) => idx !== semesters.length - 1));
-
       await deleteSemester.mutateAsync(planId);
     } catch (error) {}
   };
 
-  const handleAddCourse = async ({
-    semesterId,
-    courseName,
-  }: {
-    semesterId: string;
-    courseName: string;
-  }) => {
+  const handleAddCourse = async ({ semesterId, courseName }: { [key: string]: string }) => {
     try {
       await addCourse.mutateAsync({ planId, semesterId, courseName });
     } catch (error) {}
   };
 
   const handleRemoveCourse = async ({
-    semesterId,
-    courseName,
+    semesterId: semesterId,
+    courseName: courseName,
   }: {
-    semesterId: string;
-    courseName: string;
+    [key: string]: string;
   }) => {
     try {
       await removeCourse.mutateAsync({ planId, semesterId, courseName });
@@ -141,13 +166,15 @@ export default function PlanDetailPage(
     newSemesterId,
     courseName,
   }: {
-    oldSemesterId: string;
-    newSemesterId: string;
-    courseName: string;
+    [key: string]: string;
   }) => {
     try {
+      console.log('I confused');
       moveCourse.mutateAsync({ planId, oldSemesterId, newSemesterId, courseName });
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+      console.log('HI');
+    }
   };
 
   const handleBack = () => {
@@ -174,11 +201,40 @@ export default function PlanDetailPage(
       };
       return newCourse;
     });
-    const semester = { name: sem.code, id: sem.id, courses };
+    const semester: Semester = { name: sem.code, id: sem.id, courses };
     return semester;
   });
 
   const [semesters, setSemesters] = useState(semestersInfo);
+
+  const handleOnAddSemester = async () => {
+    const lastSemesterCode = semesters[0]?.name ? semesters[semesters.length - 1]?.name : '2023s';
+    let year = lastSemesterCode?.substring(0, 4);
+    let season = lastSemesterCode?.substring(4, 5);
+    year = season === 'f' ? (parseInt(year) + 1).toString() : year;
+    season = season === 'f' ? 's' : 'f';
+
+    const semTitle = `${season === 'f' ? 'Fall' : 'Spring'} ${year}`;
+    const semCode = `${year}${season[0].toLowerCase()}`;
+
+    const id = new ObjectID() as unknown as string;
+    alert(id);
+
+    const newSemester: Semester = {
+      name: semCode,
+      id: id,
+      courses: [],
+    };
+
+    setSemesters([...semesters, newSemester]);
+    addTask({ func: handleSemesterCreate, args: { semesterId: id } });
+    console.log('THINK');
+  };
+
+  const handleOnRemoveSemester = async () => {
+    setSemesters(semesters.filter((sem, idx) => idx !== semesters.length - 1));
+    addTask({ func: handleSemesterDelete, args: {} });
+  };
 
   const handleOnRemoveCourseFromSemester = async (
     targetSemester: Semester,
@@ -199,7 +255,9 @@ export default function PlanDetailPage(
 
     const semesterId = targetSemester.id as string;
     const courseName = targetCourse.catalogCode;
-    handleRemoveCourse({ semesterId, courseName });
+
+    addTask({ func: handleRemoveCourse, args: { semesterId, courseName } });
+
     return {
       level: 'ok',
       message: `Removed ${targetCourse.catalogCode} from ${targetSemester.name}`,
@@ -221,6 +279,8 @@ export default function PlanDetailPage(
       };
     }
 
+    // alert(targetSemester.id);
+
     setSemesters((semesters) =>
       semesters.map((semester) =>
         semester.id === targetSemester.id
@@ -230,7 +290,7 @@ export default function PlanDetailPage(
     );
     const semesterId = targetSemester.id as string;
     const courseName = newCourse.catalogCode;
-    handleAddCourse({ semesterId, courseName });
+    addTask({ func: handleAddCourse, args: { semesterId, courseName } });
 
     return {
       level: 'ok',
@@ -275,12 +335,29 @@ export default function PlanDetailPage(
     const newSemesterId = destinationSemester.id as string;
     const courseName = courseToMove.catalogCode;
 
-    handleMoveCourse({ oldSemesterId, newSemesterId, courseName });
+    addTask({ func: handleMoveCourse, args: { oldSemesterId, newSemesterId, courseName } });
+
     return {
       level: 'ok',
       message: `Moved ${courseToMove.catalogCode} from ${originSemester.name} to ${destinationSemester.name}`,
     };
   };
+
+  // Queue time
+  // const [queue, setQueue] = useState<Array<unknown>>([]);
+
+  // // useEffect(() => {
+  // //   if (queue.length > 0) {
+  // //     const runAsync = async () => {
+  // //       console.log('TEST');
+  // //       const func = queue[0][0];
+  // //       const args = queue[0][1];
+  // //       await func(args);
+  // //       setQueue([...queue.slice(1)]);
+  // //     };
+  // //     runAsync();
+  // //   }
+  // // }, [queue]);
 
   return (
     <div className="w-screen flex flex-col bg-[#FFFFFF] p-[44px]">
@@ -296,8 +373,8 @@ export default function PlanDetailPage(
         onMoveCourseFromSemesterToSemester={handleOnMoveCourseFromSemesterToSemester}
       />
       <div>
-        <button onClick={handleSemesterDelete}>Remove Semester</button>
-        <button onClick={handleSemesterCreate}>Add Semester</button>
+        <button onClick={handleOnRemoveSemester}>Remove Semester</button>
+        <button onClick={handleOnAddSemester}>Add Semester</button>
       </div>
       <button onClick={handlePlanDelete}>Delete Plan</button>
     </div>
@@ -322,33 +399,4 @@ export async function getServerSideProps(context: GetServerSidePropsContext<{ pl
       planId,
     },
   };
-}
-
-interface DVRequest {
-  courses: DVCourse[];
-  bypasses: DVBypass[];
-  degree: string;
-}
-
-interface DVResponse {
-  [requirement: string]: DVRequirement;
-}
-
-interface DVRequirement {
-  courses: Record<string, number>;
-  hours: number;
-  isfilled: boolean;
-}
-
-interface DVBypass {
-  course: string;
-  requirement: string;
-  hours: number;
-}
-
-interface DVCourse {
-  name: string;
-  department: string;
-  level: number;
-  hours: number;
 }
