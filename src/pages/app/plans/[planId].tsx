@@ -2,68 +2,19 @@ import { createProxySSGHelpers } from '@trpc/react-query/ssg';
 import { useRouter } from 'next/router';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next/types';
 import { unstable_getServerSession } from 'next-auth';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import superjson from 'superjson';
 import { v4 as uuid } from 'uuid';
 
 import Planner from '@/components/planner/Planner';
-import { DegreeRequirementGroup, Semester, ToastMessage } from '@/components/planner/types';
-import validationData from '@/data/dummyValidation.json';
+import { Semester, ToastMessage } from '@/components/planner/types';
 import { Course } from '@/modules/common/data';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { createContextInner } from '@/server/trpc/context';
 import { appRouter } from '@/server/trpc/router/_app';
 import { trpc } from '@/utils/trpc';
-import { ObjectID } from 'bson';
-
-function useTaskQueue(params: { shouldProcess: boolean }): {
-  tasks: ReadonlyArray<Task>;
-  isProcessing: boolean;
-  addTask: (task: Task) => void;
-} {
-  const [queue, setQueue] = React.useState<{
-    isProcessing: boolean;
-    tasks: Array<Task>;
-  }>({ isProcessing: false, tasks: [] });
-
-  React.useEffect(() => {
-    if (!params.shouldProcess) return;
-    if (queue.tasks.length === 0) return;
-    if (queue.isProcessing) return;
-
-    console.log(queue);
-
-    const { func, args } = queue.tasks[0];
-    console.log(args);
-    setQueue((prev) => ({
-      isProcessing: true,
-      tasks: prev.tasks.slice(1),
-    }));
-
-    Promise.resolve(func(args)).finally(() => {
-      setQueue((prev) => ({
-        isProcessing: false,
-        tasks: prev.tasks,
-      }));
-    });
-  }, [queue, params.shouldProcess]);
-
-  return {
-    tasks: queue.tasks,
-    isProcessing: queue.isProcessing,
-    addTask: React.useCallback((task) => {
-      setQueue((prev) => ({
-        isProcessing: prev.isProcessing,
-        tasks: [...prev.tasks, task],
-      }));
-    }, []),
-  };
-}
-
-type Task = {
-  func: (args: { [key: string]: string }) => Promise<void> | void;
-  args: { [key: string]: string };
-};
+import { useTaskQueue } from '@/utils/useTaskQueue';
+import { createNewSemester } from '@/utils/utilFunctions';
 
 /**
  * A page that displays the details of a specific student academic plan.
@@ -81,52 +32,17 @@ export default function PlanDetailPage(
 
   const { data, isLoading } = planQuery;
 
-  const semestersInfo: Semester[] = data!.semesters.map((sem, idx) => {
-    const courses = sem.courses.map((course, index): Course => {
-      const newCourse = {
-        id: uuid(),
-        description: '',
-        title: 'temp',
-        catalogCode: course,
-        creditHours: 3,
-      };
-      return newCourse;
-    });
-    const semester: Semester = { name: sem.code, id: sem.id, courses };
-    return semester;
+  const [semesters, setSemesters] = useState<Semester[]>(getSemestersInfo(data));
+
+  const body = formatDegreeValidationRequest(semesters);
+
+  const degreeRequirementsQuery = trpc.plan.validateDegreePlan.useQuery(body, {
+    enabled: !isLoading,
   });
 
-  const [semesters, setSemesters] = useState(semestersInfo);
+  const degreeData = degreeRequirementsQuery.data ?? [];
 
-  const body = {
-    courses: semesters
-      .flatMap((s) => s.courses)
-      .map((c) => {
-        const split = c.catalogCode.split(' ');
-        const department = split[0];
-        const courseNumber = Number(split[1]);
-        const level = Math.floor(courseNumber / 1000);
-        const hours = Math.floor((courseNumber - level * 1000) / 100);
-        return {
-          name: c.catalogCode,
-          department: department,
-          level,
-          hours,
-        };
-      }),
-    bypasses: [],
-    degree: 'computer_science_bs',
-  };
-
-  const degreeRequirementsQuery = trpc.plan.validateDegreePlan.useQuery(body);
-
-  const degreeData = degreeRequirementsQuery.data ?? validationData;
-  console.log('test');
-  console.log(degreeData);
-
-  // const [degreeData, setDegreeData] = useState<DegreeRequirementGroup[]>(validationData);
-
-  const { tasks, isProcessing, addTask } = useTaskQueue({ shouldProcess: true });
+  const { addTask } = useTaskQueue({ shouldProcess: true });
 
   const addCourse = trpc.plan.addCourseToSemester.useMutation({
     async onSuccess() {
@@ -231,25 +147,12 @@ export default function PlanDetailPage(
   }
 
   const handleOnAddSemester = async () => {
-    const lastSemesterCode = semesters[0]?.name ? semesters[semesters.length - 1]?.name : '2023s';
-    let year = lastSemesterCode?.substring(0, 4);
-    let season = lastSemesterCode?.substring(4, 5);
-    year = season === 'f' ? (parseInt(year) + 1).toString() : year;
-    season = season === 'f' ? 's' : 'f';
-
-    const semTitle = `${season === 'f' ? 'Fall' : 'Spring'} ${year}`;
-    const semCode = `${year}${season[0].toLowerCase()}`;
-
-    const id = new ObjectID() as unknown as string;
-
-    const newSemester: Semester = {
-      name: semCode,
-      id: id,
-      courses: [],
-    };
-
+    const newSemester: Semester = createNewSemester(semesters);
     setSemesters([...semesters, newSemester]);
-    addTask({ func: handleSemesterCreate, args: { semesterId: id } });
+    addTask({
+      func: handleSemesterCreate,
+      args: { semesterId: newSemester.id as string },
+    });
   };
 
   const handleOnRemoveSemester = async () => {
@@ -395,7 +298,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext<{ pl
   });
 
   const planId = context.params?.planId as string;
-  console.log('planId', planId);
 
   await ssg.plan.getPlanById.prefetch(planId);
   return {
@@ -404,4 +306,54 @@ export async function getServerSideProps(context: GetServerSidePropsContext<{ pl
       planId,
     },
   };
+}
+
+function formatDegreeValidationRequest(semesters: Semester[], degree = 'computer_science_bs') {
+  return {
+    courses: semesters
+      .flatMap((s) => s.courses)
+      .map((c) => {
+        const split = c.catalogCode.split(' ');
+        const department = split[0];
+        const courseNumber = Number(split[1]);
+        const level = Math.floor(courseNumber / 1000);
+        const hours = Math.floor((courseNumber - level * 1000) / 100);
+        return {
+          name: c.catalogCode,
+          department: department,
+          level,
+          hours,
+        };
+      }),
+    bypasses: [],
+    degree,
+  };
+}
+// Not sure if tRPC autogenerates the type
+function getSemestersInfo(
+  plan:
+    | {
+        semesters: { id: string; code: string; name: string; courses: string[] }[];
+        id: string;
+        name: string;
+      }
+    | undefined,
+): Semester[] {
+  if (!plan) {
+    return [];
+  }
+  return plan.semesters.map((sem) => {
+    const courses = sem.courses.map((course): Course => {
+      const newCourse = {
+        id: uuid(),
+        description: '',
+        title: 'temp',
+        catalogCode: course,
+        creditHours: 3,
+      };
+      return newCourse;
+    });
+    const semester: Semester = { name: sem.code, id: sem.id, courses };
+    return semester;
+  });
 }
