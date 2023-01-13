@@ -20,7 +20,7 @@ export interface DegreeRequirement {
   validCourses: string[];
   courses: string[];
   hours: number;
-  isFilled: boolean;
+  isfilled: boolean;
   description?: string;
 }
 

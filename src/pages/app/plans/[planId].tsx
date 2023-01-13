@@ -77,7 +77,54 @@ export default function PlanDetailPage(
   const { planId } = props;
   const planQuery = trpc.plan.getPlanById.useQuery(planId);
 
+  // Extend Course object to contain fields for prereq validation & other stuff ig
+
   const { data, isLoading } = planQuery;
+
+  const semestersInfo: Semester[] = data!.semesters.map((sem, idx) => {
+    const courses = sem.courses.map((course, index): Course => {
+      const newCourse = {
+        id: uuid(),
+        description: '',
+        title: 'temp',
+        catalogCode: course,
+        creditHours: 3,
+      };
+      return newCourse;
+    });
+    const semester: Semester = { name: sem.code, id: sem.id, courses };
+    return semester;
+  });
+
+  const [semesters, setSemesters] = useState(semestersInfo);
+
+  const body = {
+    courses: semesters
+      .flatMap((s) => s.courses)
+      .map((c) => {
+        const split = c.catalogCode.split(' ');
+        const department = split[0];
+        const courseNumber = Number(split[1]);
+        const level = Math.floor(courseNumber / 1000);
+        const hours = Math.floor((courseNumber - level * 1000) / 100);
+        return {
+          name: c.catalogCode,
+          department: department,
+          level,
+          hours,
+        };
+      }),
+    bypasses: [],
+    degree: 'computer_science_bs',
+  };
+
+  const degreeRequirementsQuery = trpc.plan.validateDegreePlan.useQuery(body);
+
+  const degreeData = degreeRequirementsQuery.data ?? validationData;
+  console.log('test');
+  console.log(degreeData);
+
+  // const [degreeData, setDegreeData] = useState<DegreeRequirementGroup[]>(validationData);
 
   const { tasks, isProcessing, addTask } = useTaskQueue({ shouldProcess: true });
 
@@ -178,31 +225,10 @@ export default function PlanDetailPage(
     return router.push('/app/home');
   };
 
-  const [degreeData, setDegreeData] = useState<DegreeRequirementGroup[]>(validationData);
-
   // Indicate UI loading
   if (isLoading) {
     return <div>Loading</div>;
   }
-
-  // Extend Course object to contain fields for prereq validation & other stuff ig
-
-  const semestersInfo: Semester[] = data!.semesters.map((sem, idx) => {
-    const courses = sem.courses.map((course, index): Course => {
-      const newCourse = {
-        id: uuid(),
-        description: '',
-        title: 'temp',
-        catalogCode: course,
-        creditHours: 3,
-      };
-      return newCourse;
-    });
-    const semester: Semester = { name: sem.code, id: sem.id, courses };
-    return semester;
-  });
-
-  const [semesters, setSemesters] = useState(semestersInfo);
 
   const handleOnAddSemester = async () => {
     const lastSemesterCode = semesters[0]?.name ? semesters[semesters.length - 1]?.name : '2023s';
@@ -224,7 +250,6 @@ export default function PlanDetailPage(
 
     setSemesters([...semesters, newSemester]);
     addTask({ func: handleSemesterCreate, args: { semesterId: id } });
-    console.log('THINK');
   };
 
   const handleOnRemoveSemester = async () => {
@@ -338,22 +363,6 @@ export default function PlanDetailPage(
       message: `Moved ${courseToMove.catalogCode} from ${originSemester.name} to ${destinationSemester.name}`,
     };
   };
-
-  // Queue time
-  // const [queue, setQueue] = useState<Array<unknown>>([]);
-
-  // // useEffect(() => {
-  // //   if (queue.length > 0) {
-  // //     const runAsync = async () => {
-  // //       console.log('TEST');
-  // //       const func = queue[0][0];
-  // //       const args = queue[0][1];
-  // //       await func(args);
-  // //       setQueue([...queue.slice(1)]);
-  // //     };
-  // //     runAsync();
-  // //   }
-  // // }, [queue]);
 
   return (
     <div className="w-screen flex flex-col bg-[#FFFFFF] p-[44px]">

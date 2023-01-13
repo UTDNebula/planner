@@ -1,3 +1,4 @@
+import { DegreeRequirement, DegreeRequirementGroup } from '@/components/planner/types';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
@@ -247,7 +248,6 @@ export const planRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       try {
-        console.log('BROOO');
         const { oldSemesterId, newSemesterId, courseName } = input;
 
         // This works bc semesters are stored in its own table
@@ -293,6 +293,66 @@ export const planRouter = router({
         return true;
       } catch (error) {
         console.error(error);
+      }
+    }),
+  validateDegreePlan: protectedProcedure
+    .input(
+      z.object({
+        courses: z.array(
+          z.object({
+            name: z.string(),
+            department: z.string(),
+            level: z.number(),
+            hours: z.number(),
+          }),
+        ),
+        bypasses: z.array(
+          z.object({
+            course: z.string(),
+            requirement: z.string(),
+            hours: z.number(),
+          }),
+        ),
+        degree: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      try {
+        return await fetch('http://127.0.0.1:5000/validate-degree-plan', {
+          method: 'POST',
+          body: JSON.stringify(input),
+          headers: {
+            'content-type': 'application/json',
+          },
+        }).then(async (res) => {
+          const rawData = await res.json();
+          // Transform data
+          const core: DegreeRequirementGroup = { name: 'Core Requirements', requirements: [] };
+          const major: DegreeRequirementGroup = { name: 'Major Requirements', requirements: [] };
+          const electives: DegreeRequirementGroup = {
+            name: 'Free Elective Requirements',
+            requirements: [],
+          };
+          const university: DegreeRequirementGroup = {
+            name: 'University Requirements',
+            requirements: [],
+          };
+
+          Object.keys(rawData).forEach((req: string) => {
+            if (req.includes('Free Electives')) {
+              electives.requirements.push({ name: req, ...rawData[req] });
+            } else if (req.includes('Core - ')) {
+              core.requirements.push({ name: req, ...rawData[req] });
+            } else if ('Minimum Cumulative Hours Upper Level Hour Requirement'.includes(req)) {
+              university.requirements.push({ name: req, ...rawData[req] });
+            } else {
+              major.requirements.push({ name: req, ...rawData[req] });
+            }
+          });
+          return [core, major, electives, university];
+        });
+      } catch (error) {
+        console.log(error);
       }
     }),
 });

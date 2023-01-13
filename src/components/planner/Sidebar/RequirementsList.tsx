@@ -16,7 +16,7 @@ export default function RequirementsList({
         <div className="flex justify-between px-2 py-1" key={idx}>
           <div className="text-sm">{elm.name}</div>
           <div className="text-[11px] flex flex-row items-center px-[5px]">
-            <StatusTag status={elm.isFilled} />
+            <StatusTag status={elm.isfilled} />
             <button
               onClick={() => {
                 updateRequirementInfo(idx);

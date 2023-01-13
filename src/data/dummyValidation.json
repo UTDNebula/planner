@@ -7,7 +7,7 @@
         "validCourses": ["RHET 1302"],
         "courses": ["ATCM 2340", "COMM 1311", "COMM 1315", "ECS 3390", "RHET 1302", "RHET 2302"],
         "hours": 6,
-        "isFilled": false
+        "isfilled": false
       },
       {
         "name": "Mathematics (020)",
@@ -29,7 +29,7 @@
           "STAT 2332"
         ],
         "hours": 3,
-        "isFilled": false
+        "isfilled": false
       },
       {
         "name": "Life and Physical Sciences (030)",
@@ -72,7 +72,7 @@
           "PSY 2364"
         ],
         "hours": 6,
-        "isFilled": false
+        "isfilled": false
       },
       {
         "name": "Language, Philosophy and Culture (040)",
@@ -100,7 +100,7 @@
           "RELS 1325"
         ],
         "hours": 3,
-        "isFilled": false
+        "isfilled": false
       },
       {
         "name": "Creative Arts (050)",
@@ -120,21 +120,21 @@
           "THEA 1310"
         ],
         "hours": 3,
-        "isFilled": false
+        "isfilled": false
       },
       {
         "name": "American History (060)",
         "validCourses": [],
         "courses": ["HIST 1301", "HIST 1302", "HIST 2301", "HIST 2330", "HIST 2381,HIST 2384"],
         "hours": 6,
-        "isFilled": false
+        "isfilled": false
       },
       {
         "name": "Government/Political Science (070)",
         "validCourses": [],
         "courses": ["GOVT 2107", "GOVT 2305", "GOVT 2306"],
         "hours": 6,
-        "isFilled": false
+        "isfilled": false
       },
 
       {
@@ -158,7 +158,7 @@
           "SOC 2320"
         ],
         "hours": 3,
-        "isFilled": false
+        "isfilled": false
       },
 
       {
@@ -296,7 +296,7 @@
           "PSY 2314"
         ],
         "hours": 6,
-        "isFilled": false
+        "isfilled": false
       }
     ]
   },
@@ -321,28 +321,28 @@
           "CS 1200"
         ],
         "hours": 25,
-        "isFilled": false
+        "isfilled": false
       },
       {
         "name": "Preparatory Courses - MATH 2413 or MATH 2417",
         "validCourses": [],
         "courses": ["MATH 2413", "MATH 2417"],
         "hours": 4,
-        "isFilled": false
+        "isfilled": false
       },
       {
         "name": "Preparatory Courses - MATH 2414 or MATH 2419",
         "validCourses": [],
         "courses": ["MATH 2414", "MATH 2419"],
         "hours": 4,
-        "isFilled": false
+        "isfilled": false
       },
       {
         "name": "Preparatory Courses - PHYS 2325 or PHYS 2421",
         "validCourses": ["PHYS 2325"],
         "courses": ["PHYS 2325", "PHYS 2421"],
         "hours": 3,
-        "isFilled": true
+        "isfilled": true
       },
       {
         "name": "Core Courses",
@@ -364,14 +364,14 @@
           "CS 3162"
         ],
         "hours": 39,
-        "isFilled": false
+        "isfilled": false
       },
       {
         "name": "Core Courses - ECS 3390",
         "validCourses": [],
         "courses": ["ECS 3390"],
         "hours": 3,
-        "isFilled": false
+        "isfilled": false
       },
       {
         "name": "Guided Electives",
@@ -379,7 +379,7 @@
         "validCourses": [],
         "courses": ["all"],
         "hours": 9,
-        "isFilled": false
+        "isfilled": false
       }
     ]
   },
@@ -391,7 +391,7 @@
         "validCourses": ["ATCM 3336"],
         "courses": ["all"],
         "hours": 10,
-        "isFilled": false
+        "isfilled": false
       }
     ]
   },
@@ -417,14 +417,14 @@
         ],
         "courses": ["all"],
         "hours": 124,
-        "isFilled": false
+        "isfilled": false
       },
       {
         "name": "Upper Level Hour Requirement",
         "validCourses": ["ATCM 3336", "CS 3305", "CS 3341", "CS 3345"],
         "courses": ["all"],
         "hours": 51,
-        "isFilled": false
+        "isfilled": false
       }
     ]
   }
