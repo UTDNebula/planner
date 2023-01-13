@@ -11,12 +11,13 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-import requests
+
 
 class AssignmentStore:
     def __init__(self):
         # req -> course -> hours
-        self.reqs_to_courses: dict[Requirement, dict[Course, float]] = defaultdict(Counter)
+        self.reqs_to_courses: dict[Requirement,
+                                   dict[Course, float]] = defaultdict(Counter)
 
     def assert_requirement(self, requirement: Requirement):
         """Initialize requirement in store if not already initialized"""
@@ -48,9 +49,10 @@ class AssignmentStore:
     def to_json(self):
         return {
             req.name: {
+                'courses': list_matcher_requirements(req.course_matcher),
                 'hours': req.hours,
                 'isfilled': self._get_req_hours_filled(req) >= req.hours,
-                'courses': {
+                'validCourses': {
                     c.name: hours
                     for c, hours in req_fills.items()
                 },
@@ -67,7 +69,8 @@ class AssignmentStore:
         str_bldr = []
         for req, req_fills in self.reqs_to_courses.items():
             hours_filled = self._get_req_hours_filled(req)
-            str_bldr.append(f'{req.name} ({hours_filled}/{req.hours} hrs filled)\n')
+            str_bldr.append(
+                f'{req.name} ({hours_filled}/{req.hours} hrs filled)\n')
 
             for course, hours in sorted(req_fills.items()):
                 # Display how many hours were used if the course did not go entirely into one req
@@ -92,7 +95,7 @@ class GraduationRequirementsSolver:
         requirements_names = set(self.requirements_dict.keys())
         groups_names = set(req.name for group in self.groups for req in group)
 
-        return requirements_names == groups_names  
+        return requirements_names == groups_names
 
     def _core_requirement_to_matcher(self, option: CoreRequirement):
         matcher: Matcher
@@ -118,17 +121,18 @@ class GraduationRequirementsSolver:
             case _:
                 matcher = AnyMatcher()
         return matcher
-    
+
     def _course_requirements_to_name_list_matcher(self, courses: List[CourseRequirement]):
         matcher = Matcher.Builder("NameList")
         # for reference in courses:
         #     course_data = requests.get(headers={"X-Api-Key": os.environ["NEBULA_API_KEY"]}, url=f"https://api.utdnebula.com/course/{reference.course_id}").json()
         #     matcher.add_arg(course_data.data.name)
         return matcher.build()
-    
+
     def _collection_requirement_to_matcher(self, o: CollectionRequirement):
         # TODO: revisit matcher selection logic, this is hacky at best
-        builder: Matcher.Builder = Matcher.Builder("Or" if o.required == 1 and len(o.options) == 2 else "And" if o.required == len(o.options) else "And")
+        builder: Matcher.Builder = Matcher.Builder("Or" if o.required == 1 and len(
+            o.options) == 2 else "And" if o.required == len(o.options) else "And")
         total_hrs = 0
         # TODO: correctly tabulate total hours considering required number of options
         course_reqs: List[CourseRequirement] = []
@@ -140,20 +144,22 @@ class GraduationRequirementsSolver:
                 builder.add_arg(matcher)
             elif option.type == RequirementTypes.collection:
                 matcher, hrs = self._collection_requirement_to_matcher(option)
-                total_hrs += hrs 
+                total_hrs += hrs
                 builder.add_arg(matcher)
             elif option.type == RequirementTypes.course:
                 course_reqs.append(option)
             total_hrs += hours
         if len(course_reqs) > 0:
-            builder.add_arg(self._course_requirements_to_name_list_matcher(course_reqs))
+            builder.add_arg(
+                self._course_requirements_to_name_list_matcher(course_reqs))
         return builder.build(), total_hrs
 
     def load_requirements_from_degree(self, degree: Degree):
-        minimum_cumulative_hours = Requirement("Minimum Cumulative Hours", degree.minimum_credit_hours, AnyMatcher())
+        minimum_cumulative_hours = Requirement(
+            "Minimum Cumulative Hours", degree.minimum_credit_hours, AnyMatcher())
         self.requirements_dict[minimum_cumulative_hours.name] = minimum_cumulative_hours
         self.groups.append([minimum_cumulative_hours])
-        
+
         for o in degree.requirements.options:
             if (o.type == RequirementTypes.collection):
                 # TODO: I'm assuming that every top level requirement is a collection, need to handle other requirement types too (I think only core and course requirements need to be handled)
@@ -161,8 +167,8 @@ class GraduationRequirementsSolver:
                 requirement = Requirement(o.name, hours, matcher)
                 self.requirements_dict[o.name] = requirement
                 self.groups.append([requirement])
-        self.validate()       
-    
+        self.validate()
+
     def load_requirements_from_file(self, filename):
         req_file = open(filename, 'r')
 
@@ -183,7 +189,8 @@ class GraduationRequirementsSolver:
                 case 'DEFINE':
                     k, v = args.split(maxsplit=1)
                     # Unpack defines before adding, to prevent ever having to unpack multiple layers
-                    v = GraduationRequirementsSolver._unpack_defines(defines, v)
+                    v = GraduationRequirementsSolver._unpack_defines(
+                        defines, v)
                     defines[k] = v
 
                 case 'REQUIRE':
@@ -192,16 +199,20 @@ class GraduationRequirementsSolver:
                         # Handle req names wrapped in quotes (because they might have spaces)
                         end_quote_idx = args.index('"', 1)
                         if end_quote_idx == -1:
-                            raise ParseException("REQUIRE name contains start quote but no end quote found")
+                            raise ParseException(
+                                "REQUIRE name contains start quote but no end quote found")
                         req_name, args = args[1:end_quote_idx], args[end_quote_idx + 1:].strip()
                     else:
                         req_name, args = args.split(maxsplit=1)
 
                     # Parse all components
                     req_key, req_hrs, matcher_str = args.split(maxsplit=2)
-                    req_hrs = int(req_hrs)  # ASSUMPTION: No FP hour requirements
-                    matcher_str = GraduationRequirementsSolver._unpack_defines(defines, matcher_str)
-                    matcher = GraduationRequirementsSolver._parse_matcher_str(matcher_str)
+                    # ASSUMPTION: No FP hour requirements
+                    req_hrs = int(req_hrs)
+                    matcher_str = GraduationRequirementsSolver._unpack_defines(
+                        defines, matcher_str)
+                    matcher = GraduationRequirementsSolver._parse_matcher_str(
+                        matcher_str)
                     # Build and store requirement
                     requirement = Requirement(req_name, req_hrs, matcher)
                     requirements[req_key] = requirement
@@ -216,7 +227,8 @@ class GraduationRequirementsSolver:
                     self.groups.append(group_reqs)
 
                 case _:
-                    raise ParseException(f'"{command}" is not a supported command')
+                    raise ParseException(
+                        f'"{command}" is not a supported command')
 
         req_file.close()
 
@@ -229,12 +241,15 @@ class GraduationRequirementsSolver:
     def solve(self, courses: list[Course], bypasses: list[SingleAssignment]):
         # Pre-process bypasses into an assignment, and validate them
         bypass_assignments = AssignmentStore()
-        courses_dict: dict[str, Course] = {course.name: course for course in courses}
+        courses_dict: dict[str, Course] = {
+            course.name: course for course in courses}
         for course_name, req_name, hours in bypasses:
             if course_name not in courses_dict:
-                raise KeyError(f'Could not find course name {course_name} specified in bypass')
+                raise KeyError(
+                    f'Could not find course name {course_name} specified in bypass')
             if req_name not in self.requirements_dict:
-                raise KeyError(f'Could not find requirement name {req_name} specified in bypass')
+                raise KeyError(
+                    f'Could not find requirement name {req_name} specified in bypass')
             course = courses_dict[course_name]
             req = self.requirements_dict[req_name]
             bypass_assignments.add(course, req, hours)
@@ -247,7 +262,8 @@ class GraduationRequirementsSolver:
         # Run max flow on all groups and aggregate results
         for i, reqs in enumerate(self.groups, start=1):
             print(f'\nRunning on requirement group {i}/{len(self.groups)}...')
-            group_assignments = GraduationRequirementsSolver._solve_group(courses, reqs, bypass_assignments)
+            group_assignments = GraduationRequirementsSolver._solve_group(
+                courses, reqs, bypass_assignments)
             all_assignments.update(group_assignments)
 
         # Add bypasses to the assignments
@@ -269,7 +285,8 @@ class GraduationRequirementsSolver:
 
         def get_adjusted_hours(entity: Course | Requirement):
             remaining = entity.hours - bypassed_hrs[entity]
-            granulated = int(GraduationRequirementsSolver.GRANULARITY_FACTOR * remaining)
+            granulated = int(
+                GraduationRequirementsSolver.GRANULARITY_FACTOR * remaining)
             return max(0, granulated)
 
         # Define some IDs and ID offsets/prefixes to use for the graph
@@ -298,12 +315,14 @@ class GraduationRequirementsSolver:
         for i, req in enumerate(reqs):
             for j, course in enumerate(courses):
                 if req.match(course):
-                    smf.add_arc_with_capacity(COURSE_OFFSET + j, REQ_OFFSET + i, 1000)
+                    smf.add_arc_with_capacity(
+                        COURSE_OFFSET + j, REQ_OFFSET + i, 1000)
 
         # Solve max flow
         status = smf.solve(SOURCE, SINK)
         if status != smf.OPTIMAL:
-            raise Exception(f'There was an issue with the max flow input.\nStatus: {status}')
+            raise Exception(
+                f'There was an issue with the max flow input.\nStatus: {status}')
 
         # Go through the arcs and aggregate them by course and req
         group_assignments = AssignmentStore()
@@ -313,7 +332,8 @@ class GraduationRequirementsSolver:
                 course = courses[course_id]
                 req_id = smf.head(i) - REQ_OFFSET
                 req = reqs[req_id]
-                hours = smf.flow(i) / GraduationRequirementsSolver.GRANULARITY_FACTOR
+                hours = smf.flow(
+                    i) / GraduationRequirementsSolver.GRANULARITY_FACTOR
                 # Convert back to integer if integer, to save some formatting pain later on
                 if hours == int(hours):
                     hours = int(hours)
