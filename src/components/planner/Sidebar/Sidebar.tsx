@@ -22,7 +22,7 @@ export default function CourseSelectorContainer({
   const { results, updateQuery } = useSearch({
     getData: loadDummyCourses,
     initialQuery: '@',
-    filterFn: (elm, query) => elm['catalogCode'].toLowerCase().includes(query.toLowerCase()),
+    filterFn: (elm, query) => elm['code'].toLowerCase().includes(query.toLowerCase()),
     constraints: [0, 5],
   });
 
@@ -50,7 +50,7 @@ export default function CourseSelectorContainer({
   });
 
   const courseResults = results.map((result) => {
-    return { ...result, status: allCourses.has(result.catalogCode) ? 'complete' : undefined };
+    return { ...result, status: allCourses.has(result.code) ? 'complete' : undefined };
   }) as DraggableCourse[];
 
   return (

@@ -11,7 +11,7 @@ export function SidebarCourseItem({ course }: { course: DraggableCourse }): JSX.
   // TODO: Update course status tag
   return (
     <div className="text-[#1C2A6D] bg-white text-[10px] items-center drop-shadow-sm py-1.5 px-2 flex flex-row justify-between border border-[#EDEFF7] rounded-md">
-      {course.catalogCode}
+      {course.code}
       {typeof course.status !== 'undefined' && <StatusTag status={course.status === 'complete'} />}
     </div>
   );

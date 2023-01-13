@@ -4,17 +4,17 @@ import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next/typ
 import { unstable_getServerSession } from 'next-auth';
 import { useState } from 'react';
 import superjson from 'superjson';
-import { v4 as uuid } from 'uuid';
 
 import Planner from '@/components/planner/Planner';
-import { Semester, ToastMessage } from '@/components/planner/types';
-import { Course } from '@/modules/common/data';
+import { DraggableCourse, Semester, ToastMessage } from '@/components/planner/types';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { createContextInner } from '@/server/trpc/context';
 import { appRouter } from '@/server/trpc/router/_app';
 import { trpc } from '@/utils/trpc';
 import { useTaskQueue } from '@/utils/useTaskQueue';
 import { createNewSemester } from '@/utils/utilFunctions';
+import { ObjectID } from 'bson';
+import { UniqueIdentifier } from '@dnd-kit/core';
 
 /**
  * A page that displays the details of a specific student academic plan.
@@ -38,9 +38,12 @@ export default function PlanDetailPage(
 
   const degreeRequirementsQuery = trpc.plan.validateDegreePlan.useQuery(body, {
     enabled: !isLoading,
+    staleTime: 10000,
   });
 
   const degreeData = degreeRequirementsQuery.data ?? [];
+  console.log('HM');
+  console.log(degreeData);
 
   const { addTask } = useTaskQueue({ shouldProcess: true });
 
@@ -162,7 +165,7 @@ export default function PlanDetailPage(
 
   const handleOnRemoveCourseFromSemester = async (
     targetSemester: Semester,
-    targetCourse: Course,
+    targetCourse: DraggableCourse,
   ): Promise<ToastMessage> => {
     setSemesters((semesters) =>
       semesters.map((semester) => {
@@ -178,28 +181,28 @@ export default function PlanDetailPage(
     );
 
     const semesterId = targetSemester.id as string;
-    const courseName = targetCourse.catalogCode;
+    const courseName = targetCourse.code;
 
     addTask({ func: handleRemoveCourse, args: { semesterId, courseName } });
 
     return {
       level: 'ok',
-      message: `Removed ${targetCourse.catalogCode} from ${targetSemester.name}`,
+      message: `Removed ${targetCourse.code} from ${targetSemester.code}`,
     };
   };
 
   const handleOnAddCourseToSemester = async (
     targetSemester: Semester,
-    newCourse: Course,
+    newCourse: DraggableCourse,
   ): Promise<ToastMessage> => {
     // check for duplicate course
     const isDuplicate = Boolean(
-      targetSemester.courses.find((course) => course.catalogCode === newCourse.catalogCode),
+      targetSemester.courses.find((course) => course.code === newCourse.code),
     );
     if (isDuplicate) {
       return {
         level: 'warn',
-        message: `You're already taking ${newCourse.catalogCode} in ${targetSemester.name}`,
+        message: `You're already taking ${newCourse.code} in ${targetSemester.code}`,
       };
     }
 
@@ -213,28 +216,28 @@ export default function PlanDetailPage(
       ),
     );
     const semesterId = targetSemester.id as string;
-    const courseName = newCourse.catalogCode;
+    const courseName = newCourse.code;
     addTask({ func: handleAddCourse, args: { semesterId, courseName } });
 
     return {
       level: 'ok',
-      message: `Added ${newCourse.catalogCode} to ${targetSemester.name}`,
+      message: `Added ${newCourse.code} to ${targetSemester.code}`,
     };
   };
 
   const handleOnMoveCourseFromSemesterToSemester = async (
     originSemester: Semester,
     destinationSemester: Semester,
-    courseToMove: Course,
+    courseToMove: DraggableCourse,
   ): Promise<ToastMessage> => {
     // check for duplicate course
     const isDuplicate = Boolean(
-      destinationSemester.courses.find((course) => course.catalogCode === courseToMove.catalogCode),
+      destinationSemester.courses.find((course) => course.code === courseToMove.code),
     );
     if (isDuplicate) {
       return {
         level: 'warn',
-        message: `You're already taking ${courseToMove.catalogCode} in ${destinationSemester.name}`,
+        message: `You're already taking ${courseToMove.code} in ${destinationSemester.code}`,
       };
     }
 
@@ -257,13 +260,13 @@ export default function PlanDetailPage(
 
     const oldSemesterId = originSemester.id as string;
     const newSemesterId = destinationSemester.id as string;
-    const courseName = courseToMove.catalogCode;
+    const courseName = courseToMove.code;
 
     addTask({ func: handleMoveCourse, args: { oldSemesterId, newSemesterId, courseName } });
 
     return {
       level: 'ok',
-      message: `Moved ${courseToMove.catalogCode} from ${originSemester.name} to ${destinationSemester.name}`,
+      message: `Moved ${courseToMove.code} from ${originSemester.code} to ${destinationSemester.code}`,
     };
   };
 
@@ -313,13 +316,13 @@ function formatDegreeValidationRequest(semesters: Semester[], degree = 'computer
     courses: semesters
       .flatMap((s) => s.courses)
       .map((c) => {
-        const split = c.catalogCode.split(' ');
+        const split = c.code.split(' ');
         const department = split[0];
         const courseNumber = Number(split[1]);
         const level = Math.floor(courseNumber / 1000);
         const hours = Math.floor((courseNumber - level * 1000) / 100);
         return {
-          name: c.catalogCode,
+          name: c.code,
           department: department,
           level,
           hours,
@@ -332,28 +335,21 @@ function formatDegreeValidationRequest(semesters: Semester[], degree = 'computer
 // Not sure if tRPC autogenerates the type
 function getSemestersInfo(
   plan:
-    | {
-        semesters: { id: string; code: string; name: string; courses: string[] }[];
-        id: string;
-        name: string;
-      }
+    | { semesters: { courses: string[]; code: string; id: string }[]; name: string; id: string }
     | undefined,
 ): Semester[] {
   if (!plan) {
     return [];
   }
-  return plan.semesters.map((sem) => {
-    const courses = sem.courses.map((course): Course => {
+  return plan.semesters.map((sem: { courses: string[]; code: string; id: string }) => {
+    const courses = sem.courses.map((course: string): DraggableCourse => {
       const newCourse = {
-        id: uuid(),
-        description: '',
-        title: 'temp',
-        catalogCode: course,
-        creditHours: 3,
+        id: new ObjectID() as unknown as UniqueIdentifier,
+        code: course,
       };
       return newCourse;
     });
-    const semester: Semester = { name: sem.code, id: sem.id, courses };
+    const semester: Semester = { code: sem.code, id: sem.id, courses };
     return semester;
   });
 }

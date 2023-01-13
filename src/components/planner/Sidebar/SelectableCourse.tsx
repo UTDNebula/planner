@@ -12,7 +12,7 @@ export default function SelectableCourse({
 }: {
   course: DraggableCourse;
   selected: boolean;
-  selectCourse: (course: Course, add: boolean) => void;
+  selectCourse: (course: DraggableCourse, add: boolean) => void;
 }) {
   const id = uuid();
 
@@ -28,7 +28,7 @@ export default function SelectableCourse({
       key={id}
       onClick={handleSelectCourse}
     >
-      {course.catalogCode}
+      {course.code}
       {course.status && (
         <div
           className={`${

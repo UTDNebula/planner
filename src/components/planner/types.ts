@@ -1,13 +1,22 @@
 import { UniqueIdentifier } from '@dnd-kit/core';
 
-import { Course } from '@/modules/common/data';
-
 // Temporary semester type
 // TODO: Remove
 export interface Semester {
   id: UniqueIdentifier;
-  name: string;
-  courses: Course[];
+  code: string;
+  courses: DraggableCourse[];
+}
+
+export interface Course {
+  code: string;
+}
+
+/* Represents a Course inside a Plan */
+export interface DraggableCourse extends Course {
+  id: UniqueIdentifier;
+  validation?: { isValid: boolean; override: boolean };
+  status?: 'complete' | 'incomplete';
 }
 
 export interface DegreeRequirementGroup {
@@ -22,10 +31,6 @@ export interface DegreeRequirement {
   hours: number;
   isfilled: boolean;
   description?: string;
-}
-
-export interface DraggableCourse extends Course {
-  status?: 'complete' | 'incomplete';
 }
 
 /**

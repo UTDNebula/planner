@@ -31,6 +31,7 @@ import {
   DegreeRequirementGroup,
   DragEventDestinationData,
   DragEventOriginData,
+  DraggableCourse,
   Semester,
   ToastMessage,
 } from './types';
@@ -40,17 +41,20 @@ export interface PlannerProps {
   degreeRequirements: DegreeRequirementGroup[];
   semesters: Semester[];
   /** Called when course moved from course list -> semester */
-  onAddCourseToSemester?: (targetSemester: Semester, newCourse: Course) => Promise<ToastMessage>;
+  onAddCourseToSemester?: (
+    targetSemester: Semester,
+    newCourse: DraggableCourse,
+  ) => Promise<ToastMessage>;
   /** Called when course removed from semester */
   onRemoveCourseFromSemester: (
     targetSemester: Semester,
-    courseToRemove: Course,
+    courseToRemove: DraggableCourse,
   ) => Promise<ToastMessage>;
   /** Called when courese moved from semester -> semester */
   onMoveCourseFromSemesterToSemester?: (
     originSemester: Semester,
     destinationSemester: Semester,
-    courseToMove: Course,
+    courseToMove: DraggableCourse,
   ) => Promise<ToastMessage>;
 }
 

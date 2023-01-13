@@ -2,8 +2,6 @@ import { UniqueIdentifier, useDraggable } from '@dnd-kit/core';
 import CloseIcon from '@mui/icons-material/Close';
 import { ComponentPropsWithoutRef, FC, forwardRef } from 'react';
 
-import { Course } from '@/modules/common/data';
-
 import { DragDataFromSemesterTile, DraggableCourse, Semester } from '../types';
 
 export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'> {
@@ -23,7 +21,7 @@ export const SemesterCourseItem = forwardRef<HTMLDivElement, SemesterCourseItemP
           isValid ? 'border-red-500 border-[1px]' : ''
         }`}
       >
-        <span className="text-[12px] font-medium text-[#1C2A6D]">{course.catalogCode}</span>
+        <span className="text-[12px] font-medium text-[#1C2A6D]">{course.code}</span>
         <div onClick={() => onRemove && onRemove(course)}>
           <CloseIcon fontSize="small" />
         </div>
@@ -35,7 +33,7 @@ export const SemesterCourseItem = forwardRef<HTMLDivElement, SemesterCourseItemP
 export interface DraggableSemesterCourseItemProps {
   dragId: UniqueIdentifier;
   semester: Semester;
-  course: Course;
+  course: DraggableCourse;
   isValid: boolean;
   onRemove: (course: DraggableCourse) => void;
 }

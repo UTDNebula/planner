@@ -8,6 +8,8 @@ import { Course } from '@/modules/common/data';
 import { DegreeRequirement, DraggableCourse, GetDragIdByCourseAndReq } from '../types';
 import DraggableCourseList from './DraggableCourseList';
 import RequirementSearchBar from './RequirementSearchBar';
+import { UniqueIdentifier } from '@dnd-kit/core';
+import { ObjectID } from 'bson';
 
 export interface RequirementInfoProps {
   courses: string[];
@@ -32,40 +34,35 @@ export default function RequirementInfo({
   }, [courses]);
 
   // TODO: Change this later when connecting to API
-  const getCourses = async (): Promise<Course[]> => {
+  const getCourses = async (): Promise<DraggableCourse[]> => {
     const courseData = await getAllCourses();
     const temp = courses;
 
-    const courseInfoList: (Course | undefined)[] = temp.map((elm) => {
+    const courseInfoList: (DraggableCourse | undefined)[] = temp.map((elm) => {
       if (courseData[elm] !== undefined) {
-        const { name, hours, description, prerequisites } = courseData[elm];
-        const newCourse: Course = {
-          id: uuid(),
-          title: name,
-          catalogCode: elm,
-          description,
-          creditHours: +hours,
-          prerequisites: prerequisites[0], // Fix this later
+        const newCourse: DraggableCourse = {
+          id: new ObjectID() as unknown as UniqueIdentifier,
+          code: elm,
           validation: { isValid: true, override: false },
         };
         return newCourse;
       }
     });
-    return courseInfoList.filter((elm) => typeof elm !== 'undefined') as Course[];
+    return courseInfoList.filter((elm) => typeof elm !== 'undefined') as DraggableCourse[];
   };
 
   // TODO: Add error UI
   const { results, updateQuery } = useSearch({
     getData: getCourses,
     initialQuery: '',
-    filterFn: (elm, query) => elm['catalogCode'].toLowerCase().includes(query.toLowerCase()),
+    filterFn: (elm, query) => elm['code'].toLowerCase().includes(query.toLowerCase()),
     constraints: [0, 5],
   });
 
   const courseResults = results.map((result) => {
     return {
       ...result,
-      status: allUserCourses.has(result.catalogCode) ? 'complete' : undefined,
+      status: allUserCourses.has(result.code) ? 'complete' : undefined,
     };
   }) as DraggableCourse[];
 

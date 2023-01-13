@@ -1,4 +1,5 @@
-import { DegreeRequirement, DegreeRequirementGroup } from '@/components/planner/types';
+import { DegreeRequirement, DegreeRequirementGroup, Semester } from '@/components/planner/types';
+import { createNewSemester } from '@/utils/utilFunctions';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
@@ -39,7 +40,6 @@ export const planRouter = router({
             semesters: {
               select: {
                 id: true,
-                name: true,
                 code: true,
                 courses: true,
               },
@@ -129,10 +129,6 @@ export const planRouter = router({
           },
           select: {
             semesters: {
-              select: {
-                code: true,
-                name: true,
-              },
               take: -1,
             },
           },
@@ -143,14 +139,8 @@ export const planRouter = router({
             message: 'Plan not found',
           });
         }
-        const lastSemesterCode = plan.semesters[0]?.code ? plan.semesters[0]?.code : '2023s';
-        let year = lastSemesterCode?.substring(0, 4);
-        let season = lastSemesterCode?.substring(4, 5);
-        year = season === 'f' ? (parseInt(year) + 1).toString() : year;
-        season = season === 'f' ? 's' : 'f';
 
-        const semTitle = `${season === 'f' ? 'Fall' : 'Spring'} ${year}`;
-        const semCode = `${year}${season[0].toLowerCase()}`;
+        const { code } = createNewSemester(plan.semesters as unknown as Semester[]);
 
         await ctx.prisma.plan.update({
           where: {
@@ -159,10 +149,8 @@ export const planRouter = router({
           data: {
             semesters: {
               create: {
-                id: semesterId,
-                code: semCode,
-                name: semTitle,
-                courses: [],
+                id: semesterId, // Note: Use semesterId passed in so that Semester droppable on the client modifies correct Semester on the backend
+                code,
               },
             },
           },
