@@ -92,13 +92,23 @@ model Semester {
   planId    String?  @db.ObjectId
 }
 
+type SemesterType {
+  semester SemesterCode
+  year     Int
+}
+
+enum SemesterCode {
+  f
+  s
+  u
+}
+
 model Credit {
-  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+  id           String        @id @default(auto()) @map("_id") @db.ObjectId
   courseCode   String
-  semesterCode String?
-  year         Int?
-  userId       String  @db.ObjectId
-  user         User?   @relation(fields: [userId], references: [id])
+  semesterCode SemesterType?
+  userId       String        @db.ObjectId
+  user         User?         @relation(fields: [userId], references: [id])
 }
 
 model AcademicDetails {

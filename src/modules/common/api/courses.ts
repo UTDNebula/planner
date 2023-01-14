@@ -1,5 +1,4 @@
-import { DraggableCourse } from '@/components/planner/types';
-import { Course } from '../data';
+import { Course } from '@/components/planner/types';
 
 /**
  * Load all supported courses from file.
@@ -9,42 +8,19 @@ import { Course } from '../data';
  *
  * @param year The catalog year from which to load course data
  */
-export async function loadDummyCourses(year = 2020): Promise<DraggableCourse[]> {
+export async function loadDummyCourses(year = 2020): Promise<Course[]> {
   const courseData: { [key: string]: JSONCourseType } = await import(
     `../../../data/${year}-courses.json`
   );
   return Object.entries(courseData).map((value) => {
     const [catalogCode, courseData] = value;
-    const { id, name: title, hours: creditHours, description, prerequisites } = courseData;
     return {
-      id: String(id),
       code: catalogCode,
-      validation: { isValid: true, override: false },
-      prerequisites: prerequisites ? prerequisites[0] : 'No prerequisite for this class',
     };
   });
 }
 
-export async function loadCourses(): Promise<DraggableCourse[]> {
-  const courses = await fetch('https://api.utdnebula.com/course/search')
-    .then((res) => res.json())
-    .then((data) => {
-      return data.map((course) => {
-        const { _id, title, credit_hours, description, subject_prefix, course_number } = course;
-        const catalogCode = subject_prefix + ' ' + course_number;
-        return {
-          id: _id,
-          title,
-          creditHours: credit_hours,
-          description,
-          catalogCode,
-        };
-      });
-    })
-    .catch((error) => alert('An error has occured'));
-
-  return courses;
-}
+// TODO: Write way to load data from API
 
 export type JSONCourseType = {
   id: number;

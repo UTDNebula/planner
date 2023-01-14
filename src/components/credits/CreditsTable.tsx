@@ -1,20 +1,29 @@
+import { trpc } from '@/utils/trpc';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+import { SemesterType } from '@prisma/client';
 import { FC, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { SEMESTER_CODE_MAPPINGS } from '../../modules/common/data';
-import { Credit, removeCredit } from '../../modules/redux/creditsSlice';
 import { RootState } from '../../modules/redux/store';
 import DataGrid from './DataGrid';
 import SearchBar from './SearchBar';
+import { Credit } from './types';
 
 const Layout: FC = ({ children }) => (
   <section className="flex flex-col gap-10 lg:gap-0">{children}</section>
 );
 
 const CreditsTable: FC = () => {
-  const allCredits = useSelector((store: RootState) => store.creditsData.credits);
-  const dispatch = useDispatch();
+  const utils = trpc.useContext();
+  const creditsQuery = trpc.credits.getCredits.useQuery();
+  const allCredits = creditsQuery.data ?? [];
+
+  const removeCredit = trpc.credits.removeCredit.useMutation({
+    async onSuccess() {
+      await utils.credits.getCredits.invalidate();
+    },
+  });
 
   /**
    * Naive search that compresses Credit object into a string so query string can matched against it
@@ -32,11 +41,11 @@ const CreditsTable: FC = () => {
   const searchableCredits = useMemo(
     () =>
       allCredits.map((credit) => {
-        const { utdCourseCode, semester } = credit;
+        const { courseCode, semesterCode } = credit;
         return {
-          matchString: (semester
-            ? utdCourseCode + `${SEMESTER_CODE_MAPPINGS[semester.semester]} ${semester.year}`
-            : utdCourseCode + 'transfer'
+          matchString: (semesterCode
+            ? courseCode + `${SEMESTER_CODE_MAPPINGS[semesterCode.semester]} ${semesterCode.year}`
+            : courseCode + 'transfer'
           ).toLowerCase(),
           data: credit,
         };
@@ -53,7 +62,7 @@ const CreditsTable: FC = () => {
     () =>
       searchableCredits
         .filter(({ matchString }) => matchString.includes(query.toLowerCase()))
-        .map((d) => d.data),
+        .map((d) => d.data as Credit),
     [searchableCredits, query],
   );
 
@@ -75,17 +84,19 @@ const CreditsTable: FC = () => {
           columns={[
             {
               title: 'Course Number',
-              key: 'utdCourseCode',
+              key: 'courseCode',
             },
             {
               title: 'Transfer',
-              valueGetter: (credit) => (!credit.semester ? 'Yes' : 'No'),
+              valueGetter: (credit) => (!credit.semesterCode ? 'Yes' : 'No'),
             },
             {
               title: 'Semester',
               valueGetter: (credit) =>
-                credit.semester
-                  ? `${SEMESTER_CODE_MAPPINGS[credit.semester.semester]} ${credit.semester.year}`
+                credit.semesterCode
+                  ? `${SEMESTER_CODE_MAPPINGS[credit.semesterCode.semester]} ${
+                      credit.semesterCode.year
+                    }`
                   : 'Transferred in',
             },
           ]}
@@ -107,7 +118,11 @@ const CreditsTable: FC = () => {
                 Element: () => (
                   <DeleteIcon className="text-red-500 cursor-pointer absolute right-5 top-1/2 -translate-y-1/2" />
                 ),
-                onClick: (_, row) => dispatch(removeCredit(row)),
+                onClick: (_, row) =>
+                  removeCredit.mutateAsync({
+                    courseCode: row.courseCode,
+                    semesterCode: row.semesterCode as SemesterType,
+                  }),
               },
             },
           }}

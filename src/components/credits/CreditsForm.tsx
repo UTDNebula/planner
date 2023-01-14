@@ -1,14 +1,13 @@
+import { trpc } from '@/utils/trpc';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import { FC, useMemo, useState } from 'react';
-import { useDispatch } from 'react-redux';
 
 import { loadDummyCourses } from '../../modules/common/api/courses';
 import { generateSemesters, Semester, SemesterCode } from '../../modules/common/data';
 import { convertSemesterToData } from '../../modules/common/data-utils';
-import { addCredit } from '../../modules/redux/creditsSlice';
 import useSearch from '../search/search';
 import AutoCompleteSearchBar from './AutoCompleteSearchBar';
 import Button from './Button';
@@ -27,22 +26,28 @@ const CreditsForm: FC = () => {
 
   const [semester, setSemester] = useState<string>(semesters[0].code);
 
-  const dispatch = useDispatch();
+  const utils = trpc.useContext();
+
+  const addCredit = trpc.credits.addCredit.useMutation({
+    async onSuccess() {
+      await utils.credits.getCredits.invalidate();
+    },
+  });
 
   const { results, updateQuery } = useSearch({
     getData: loadDummyCourses,
     initialQuery: '',
-    filterFn: (course, query) => course.catalogCode.toLowerCase().includes(query.toLowerCase()),
+    filterFn: (course, query) => course.code.toLowerCase().includes(query.toLowerCase()),
   });
 
   const submit = () => {
+    alert('HI');
     if (credit) {
-      dispatch(
-        addCredit({
-          utdCourseCode: credit,
-          semester: isTransfer ? null : convertSemesterToData(semester),
-        }),
-      );
+      alert('HEH');
+      addCredit.mutateAsync({
+        courseCode: credit,
+        semesterCode: isTransfer ? null : convertSemesterToData(semester),
+      });
     }
   };
 
@@ -53,7 +58,7 @@ const CreditsForm: FC = () => {
       <AutoCompleteSearchBar
         onValueChange={(value) => setCredit(value)}
         onInputChange={(query) => updateQuery(query)}
-        options={results.map((course) => course.catalogCode)}
+        options={results.map((course) => course.code)}
         style={{ maxWidth: '450px', minWidth: '350px' }}
         autoFocus
       />
