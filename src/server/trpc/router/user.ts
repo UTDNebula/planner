@@ -191,7 +191,6 @@ export const userRouter = router({
         const semTitle = `${season} ${year + Math.floor((i + 1) / 2)}`;
         const semCode = `${year + Math.floor((i + 1) / 2)}${season[0].toLowerCase()}`;
         season = season === 'Fall' ? 'Spring' : 'Fall';
-
         for (let j = 0; j < sem.items.length; j++) {
           let courseInputData: Prisma.CourseCreateManySemesterInput;
           if (sem.items[j].type === 'OPTIONAL') {

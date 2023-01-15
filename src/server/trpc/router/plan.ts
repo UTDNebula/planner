@@ -43,7 +43,6 @@ export const planRouter = router({
                   select: {
                     id: true,
                     name: true,
-                    description: true,
                   },
                 },
               },
@@ -168,6 +167,42 @@ export const planRouter = router({
             },
           },
         });
+        return true;
+      } catch (error) {}
+    }),
+  deleteCourseFromSemester: protectedProcedure
+    .input(
+      z.object({
+        semesterId: z.string().min(1),
+        courseId: z.string().min(1),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      try {
+        const deletedCourse = await ctx.prisma.course.delete({
+          where: {
+            id: input.courseId,
+          },
+        });
+        console.log(deletedCourse);
+        return true;
+      } catch (error) {}
+    }),
+  addCourseToSemester: protectedProcedure
+    .input(
+      z.object({
+        semesterId: z.string().min(1),
+        courseId: z.string().min(1),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      try {
+        const deletedCourse = await ctx.prisma.course.delete({
+          where: {
+            id: input.courseId,
+          },
+        });
+        console.log(deletedCourse);
         return true;
       } catch (error) {}
     }),
