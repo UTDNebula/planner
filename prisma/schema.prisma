@@ -132,12 +132,10 @@ model Session {
 
 model User {
   id                 String    @id @default(auto()) @map("_id") @db.ObjectId
-  name               String?
   email              String?   @unique
   emailVerified      DateTime?
   onboardingComplete Boolean   @default(false)
   credit             Credit[]
-  image              String?
   accounts           Account[] // Wait can a user have multiple accounts?
   sessions           Session[]
   profile            Profile?
