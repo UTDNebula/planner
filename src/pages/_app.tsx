@@ -10,11 +10,8 @@ import { useRouter } from 'next/router';
 import { type Session } from 'next-auth';
 import { SessionProvider, useSession } from 'next-auth/react';
 import React, { useEffect } from 'react';
-import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
 
 // import { AuthProvider } from '../modules/auth/auth-context';
-import { useStore } from '../modules/redux/store';
 import { trpc } from '../utils/trpc';
 const theme = createTheme({
   typography: {
@@ -75,10 +72,6 @@ const NebulaApp: AppType<{ session: Session | null }> = ({
   // TODO: Properly type check this
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  const { store, persistor } = useStore(pageProps.initialReduxState);
-
-  // manually resume persistence, see: https://github.com/UTDNebula/planner/issues/80
-  useEffect(persistor.persist, []);
 
   const router = useRouter();
   // alert(router.pathname);
@@ -106,25 +99,21 @@ const NebulaApp: AppType<{ session: Session | null }> = ({
         <link rel="apple-touch-icon" href="/apple-icon.png"></link>
         <meta name="theme-color" content="#4659A7" />
       </Head>
-      <Provider store={store}>
-        <PersistGate loading={<p>Loading...</p>} persistor={persistor}>
-          <AnimateSharedLayout>
-            <StyledEngineProvider injectFirst>
-              <ThemeProvider theme={theme}>
-                <main className="w-screen h-screen overflow-x-hidden">
-                  {Component.auth ? (
-                    <Auth>
-                      <Component {...pageProps} />
-                    </Auth>
-                  ) : (
-                    <Component {...pageProps} />
-                  )}
-                </main>
-              </ThemeProvider>
-            </StyledEngineProvider>
-          </AnimateSharedLayout>
-        </PersistGate>
-      </Provider>
+      <AnimateSharedLayout>
+        <StyledEngineProvider injectFirst>
+          <ThemeProvider theme={theme}>
+            <main className="w-screen h-screen overflow-x-hidden">
+              {Component.auth ? (
+                <Auth>
+                  <Component {...pageProps} />
+                </Auth>
+              ) : (
+                <Component {...pageProps} />
+              )}
+            </main>
+          </ThemeProvider>
+        </StyledEngineProvider>
+      </AnimateSharedLayout>
     </SessionProvider>
   );
 };
