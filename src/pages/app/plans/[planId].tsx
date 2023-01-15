@@ -42,8 +42,6 @@ export default function PlanDetailPage(
   });
 
   const degreeData = degreeRequirementsQuery.data ?? [];
-  console.log('HM');
-  console.log(degreeData);
 
   const { addTask } = useTaskQueue({ shouldProcess: true });
 

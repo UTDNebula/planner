@@ -3,9 +3,6 @@ import { TextField } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import { purple } from '@mui/material/colors';
 import { useEffect, useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
-
-import { RootState } from '../../modules/redux/store';
 
 type ProfilePageProps = {
   isDesktop: boolean;

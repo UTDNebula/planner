@@ -41,9 +41,7 @@ const CreditsForm: FC = () => {
   });
 
   const submit = () => {
-    alert('HI');
     if (credit) {
-      alert('HEH');
       addCredit.mutateAsync({
         courseCode: credit,
         semesterCode: isTransfer ? null : convertSemesterToData(semester),
