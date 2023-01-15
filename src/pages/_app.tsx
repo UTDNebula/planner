@@ -1,7 +1,6 @@
 import '../styles/globals.css';
 
 import { createTheme, StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
-import firebase from 'firebase/compat/app';
 import { AnimateSharedLayout } from 'framer-motion';
 import { type AppType } from 'next/app';
 // import type { AppProps } from 'next/app';
@@ -9,7 +8,6 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { type Session } from 'next-auth';
 import { SessionProvider, useSession } from 'next-auth/react';
-import React, { useEffect } from 'react';
 
 // import { AuthProvider } from '../modules/auth/auth-context';
 import { trpc } from '../utils/trpc';
@@ -37,25 +35,6 @@ const theme = createTheme({
     ].join(','),
   },
 });
-
-/**
- * Firebase configuration info
- * Note: You must have a .env.local file with
- * your own Firebase keys in order to run this project
- */
-const config = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-};
-
-if (!firebase.apps.length) {
-  firebase.initializeApp(config);
-}
 
 /**
  * The root wrapper component for the app.
