@@ -13,10 +13,10 @@ export const userRouter = router({
         id: ctx.session.user.id,
       },
       select: {
-        name: true,
         email: true,
         emailVerified: true,
         onboardingComplete: true,
+        profile: true,
       },
     });
     if (!userInfo) {
@@ -28,17 +28,35 @@ export const userRouter = router({
 
     return userInfo;
   }),
+  updateUserProfile: protectedProcedure
+    .input(z.object({ name: z.string().min(1) }))
+    .mutation(async ({ ctx, input }) => {
+      const userId = ctx.session.user.id;
+      const user = await ctx.prisma.user.update({
+        where: {
+          id: userId,
+        },
+        data: {
+          profile: {
+            upsert: {
+              update: {
+                name: input.name,
+              },
+              create: {
+                name: input.name,
+              },
+            },
+          },
+        },
+      });
+      console.table(user);
+      return user;
+    }),
   updateUserOnboard: protectedProcedure
     .input(
       z.object({
-        classification: z.string().min(1),
-        disclaimer: z.boolean(),
-        personalization: z.boolean(),
-        analytics: z.boolean(),
-        performance: z.boolean(),
-        preferredName: z.string().min(1),
+        name: z.string().min(1),
         majors: z.array(z.string()).min(1),
-        onCampus: z.boolean(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -51,22 +69,12 @@ export const userRouter = router({
           onboardingComplete: true,
           profile: {
             upsert: {
-              create: {
-                name: input.preferredName,
-                disclaimer: input.disclaimer,
-                personalization: input.personalization,
-                analytics: input.analytics,
-                performance: input.performance,
-                classification: input.classification,
+              update: {
+                name: input.name,
                 majors: input.majors,
               },
-              update: {
-                name: input.preferredName,
-                disclaimer: input.disclaimer,
-                personalization: input.personalization,
-                analytics: input.analytics,
-                performance: input.performance,
-                classification: input.classification,
+              create: {
+                name: input.name,
                 majors: input.majors,
               },
             },
@@ -84,17 +92,14 @@ export const userRouter = router({
 
       const dummySemesterData = [
         {
-          name: "Fall'22",
           code: 'f22',
           courses: ['CS 2305'],
         },
         {
-          name: "Spring'23",
           code: 's23',
           courses: [],
         },
         {
-          name: "Summer'23",
           code: 'u23',
           courses: [],
         },
@@ -282,7 +287,6 @@ export const userRouter = router({
           },
         };
         const semesterInputData: Prisma.SemesterUncheckedCreateWithoutPlanInput = {
-          name: semTitle,
           code: semCode,
           courses: courses,
         };
