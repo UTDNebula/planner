@@ -1,10 +1,12 @@
 import { UniqueIdentifier } from '@dnd-kit/core';
+import { SemesterCode } from '@prisma/client';
+import { ObjectID } from 'bson';
 
 // Temporary semester type
 // TODO: Remove
 export interface Semester {
-  id: UniqueIdentifier;
-  code: string;
+  id: ObjectID;
+  code: SemesterCode;
   courses: DraggableCourse[];
 }
 
@@ -14,7 +16,7 @@ export interface Course {
 
 /* Represents a Course inside a Plan */
 export interface DraggableCourse extends Course {
-  id: UniqueIdentifier;
+  id: ObjectID;
   validation?: { isValid: boolean; override: boolean };
   status?: 'complete' | 'incomplete';
 }

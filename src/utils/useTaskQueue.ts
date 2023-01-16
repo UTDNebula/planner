@@ -45,6 +45,6 @@ export function useTaskQueue(params: { shouldProcess: boolean }): {
 }
 
 export type Task = {
-  func: (args: { [key: string]: string }) => Promise<void> | void;
-  args: { [key: string]: string };
+  func: (args: any) => Promise<void>;
+  args: { [key: string]: unknown };
 };

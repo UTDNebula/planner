@@ -1,5 +1,5 @@
 import { getAllCourses } from '@modules/common/api/templates';
-import { Prisma } from '@prisma/client';
+import { Prisma, Semester, SemesterType } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 import { ObjectID } from 'bson';
@@ -90,17 +90,30 @@ export const userRouter = router({
       const userId = ctx.session.user.id;
       const planId = new ObjectID().toString();
 
-      const dummySemesterData = [
+      // idk how to type this
+      const dummySemesterData: Prisma.SemesterCreateInput[] = [
         {
-          code: 'f22',
-          courses: ['CS 2305'],
-        },
-        {
-          code: 's23',
+          id: new ObjectID().toString(),
+          code: {
+            year: 2022,
+            semester: 'f' as SemesterType,
+          },
           courses: [],
         },
         {
-          code: 'u23',
+          id: new ObjectID().toString(),
+          code: {
+            year: 2023,
+            semester: 's' as SemesterType,
+          },
+          courses: [],
+        },
+        {
+          id: new ObjectID().toString(),
+          code: {
+            year: 2023,
+            semester: 'u' as SemesterType,
+          },
           courses: [],
         },
       ];
@@ -123,7 +136,6 @@ export const userRouter = router({
           plans: plans,
         },
         select: {
-          name: true,
           plans: {
             orderBy: {
               createdAt: 'desc',

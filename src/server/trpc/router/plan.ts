@@ -1,5 +1,5 @@
-import { DegreeRequirement, DegreeRequirementGroup, Semester } from '@/components/planner/types';
-import { createNewSemester } from '@/utils/utilFunctions';
+import { DegreeRequirementGroup, Semester } from '@/components/planner/types';
+import { createNewYear } from '@/utils/utilFunctions';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
@@ -85,9 +85,9 @@ export const planRouter = router({
       return false;
     }
   }),
-  deleteSemester: protectedProcedure.input(z.string().min(1)).mutation(async ({ ctx, input }) => {
+  deleteYear: protectedProcedure.input(z.string().min(1)).mutation(async ({ ctx, input }) => {
     try {
-      const semesterId = await ctx.prisma.user.findUnique({
+      const semesterIds = await ctx.prisma.user.findUnique({
         where: {
           id: ctx.session.user.id,
         },
@@ -97,20 +97,19 @@ export const planRouter = router({
               id: input,
             },
             select: {
-              id: true,
               semesters: {
                 select: {
                   id: true,
                 },
-                take: -1,
+                take: -3,
               },
             },
           },
         },
       });
-      await ctx.prisma.semester.delete({
+      await ctx.prisma.semester.deleteMany({
         where: {
-          id: semesterId?.plans[0]?.semesters[0]?.id,
+          id: { in: semesterIds?.plans[0].semesters.map((val) => val.id) },
         },
       });
       return true;
@@ -118,10 +117,11 @@ export const planRouter = router({
       return false;
     }
   }),
-  addEmptySemesterToPlan: protectedProcedure
-    .input(z.object({ planId: z.string(), semesterId: z.string() }))
+  addYear: protectedProcedure
+    .input(z.object({ planId: z.string(), semesterIds: z.array(z.string()).length(3) }))
     .mutation(async ({ ctx, input }) => {
-      const { planId, semesterId } = input;
+      const { planId, semesterIds } = input;
+      console.log('A');
       try {
         const plan = await ctx.prisma.plan.findUnique({
           where: {
@@ -140,7 +140,11 @@ export const planRouter = router({
           });
         }
 
-        const { code } = createNewSemester(plan.semesters as unknown as Semester[]);
+        console.log('HAML');
+
+        const newYear: Semester[] = createNewYear(
+          plan.semesters[0] ? plan.semesters[0].code : { semester: 'u', year: 2022 },
+        );
 
         await ctx.prisma.plan.update({
           where: {
@@ -148,15 +152,22 @@ export const planRouter = router({
           },
           data: {
             semesters: {
-              create: {
-                id: semesterId, // Note: Use semesterId passed in so that Semester droppable on the client modifies correct Semester on the backend
-                code,
+              createMany: {
+                data: newYear.map((semester, idx) => {
+                  return {
+                    ...semester,
+                    courses: semester.courses.map((course) => course.code),
+                    id: semesterIds[idx].toString(),
+                  };
+                }),
               },
             },
           },
         });
         return true;
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     }),
   addCourseToSemester: protectedProcedure
     .input(z.object({ planId: z.string(), semesterId: z.string(), courseName: z.string() }))
@@ -197,10 +208,6 @@ export const planRouter = router({
     .mutation(async ({ ctx, input }) => {
       try {
         const { semesterId, courseName } = input;
-
-        console.log(semesterId);
-        console.log(courseName);
-        console.log('HM');
 
         // This works bc semesters are stored in its own table
         // Once integrated w/ Nebula API, use Promise.all() to call concurrently

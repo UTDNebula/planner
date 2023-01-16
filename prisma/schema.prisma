@@ -71,21 +71,19 @@ model Bypass {
 }
 
 model Semester {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  code      String // TODO: convert code to enum
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  courses   String[] // Store course catalog codes
-  plan      Plan?    @relation(fields: [planId], references: [id], onDelete: Cascade)
-  planId    String?  @db.ObjectId
+  id      String       @id @default(auto()) @map("_id") @db.ObjectId
+  code    SemesterCode
+  courses String[] // Store course catalog codes
+  plan    Plan?        @relation(fields: [planId], references: [id], onDelete: Cascade)
+  planId  String?      @db.ObjectId
 }
 
-type SemesterType {
-  semester SemesterCode
+type SemesterCode {
+  semester SemesterType
   year     Int
 }
 
-enum SemesterCode {
+enum SemesterType {
   f
   s
   u

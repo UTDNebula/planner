@@ -12,9 +12,9 @@ import { createContextInner } from '@/server/trpc/context';
 import { appRouter } from '@/server/trpc/router/_app';
 import { trpc } from '@/utils/trpc';
 import { useTaskQueue } from '@/utils/useTaskQueue';
-import { createNewSemester } from '@/utils/utilFunctions';
+import { createNewYear } from '@/utils/utilFunctions';
 import { ObjectID } from 'bson';
-import { UniqueIdentifier } from '@dnd-kit/core';
+import { SemesterCode } from '@prisma/client';
 
 /**
  * A page that displays the details of a specific student academic plan.
@@ -69,13 +69,13 @@ export default function PlanDetailPage(
     },
   });
 
-  const createSemester = trpc.plan.addEmptySemesterToPlan.useMutation({
+  const createYear = trpc.plan.addYear.useMutation({
     async onSuccess() {
       await utils.plan.getPlanById.invalidate(planId);
     },
   });
 
-  const deleteSemester = trpc.plan.deleteSemester.useMutation({
+  const deleteYear = trpc.plan.deleteYear.useMutation({
     async onSuccess() {
       await utils.plan.getPlanById.invalidate(planId);
     },
@@ -92,18 +92,20 @@ export default function PlanDetailPage(
       router.push('/app/home');
     } catch (error) {}
   };
-  const handleSemesterCreate = async ({ semesterId }: { [key: string]: string }) => {
+  const handleYearCreate = async ({ semesterIds }: { [key: string]: any }) => {
     try {
-      // TODO: Handle deletion errors
-
-      await createSemester.mutateAsync({ planId, semesterId });
-    } catch (error) {}
+      console.log(semesterIds);
+      const annoyed = semesterIds.map((id) => id.toString());
+      await createYear.mutateAsync({ planId, semesterIds: annoyed });
+    } catch (error) {
+      console.error(error);
+    }
   };
-  const handleSemesterDelete = async () => {
+  const handleYearDelete = async () => {
     try {
       // TODO: Handle deletion errors
 
-      await deleteSemester.mutateAsync(planId);
+      await deleteYear.mutateAsync(planId);
     } catch (error) {}
   };
 
@@ -147,18 +149,21 @@ export default function PlanDetailPage(
     return <div>Loading</div>;
   }
 
-  const handleOnAddSemester = async () => {
-    const newSemester: Semester = createNewSemester(semesters);
-    setSemesters([...semesters, newSemester]);
+  const handleOnAddYear = async () => {
+    const newYear: Semester[] = createNewYear(
+      semesters.length ? semesters[semesters.length - 1].code : { semester: 'u', year: 2022 },
+    );
+    const semesterIds = newYear.map((sem) => sem.id);
+    setSemesters([...semesters, ...newYear]);
     addTask({
-      func: handleSemesterCreate,
-      args: { semesterId: newSemester.id as string },
+      func: handleYearCreate,
+      args: { semesterIds: semesterIds },
     });
   };
 
-  const handleOnRemoveSemester = async () => {
-    setSemesters(semesters.filter((sem, idx) => idx !== semesters.length - 1));
-    addTask({ func: handleSemesterDelete, args: {} });
+  const handleOnRemoveYear = async () => {
+    setSemesters(semesters.filter((sem, idx) => idx < semesters.length - 3));
+    addTask({ func: handleYearDelete, args: {} });
   };
 
   const handleOnRemoveCourseFromSemester = async (
@@ -178,7 +183,7 @@ export default function PlanDetailPage(
       }),
     );
 
-    const semesterId = targetSemester.id as string;
+    const semesterId = targetSemester.id.toString();
     const courseName = targetCourse.code;
 
     addTask({ func: handleRemoveCourse, args: { semesterId, courseName } });
@@ -204,8 +209,6 @@ export default function PlanDetailPage(
       };
     }
 
-    // alert(targetSemester.id);
-
     setSemesters((semesters) =>
       semesters.map((semester) =>
         semester.id === targetSemester.id
@@ -213,7 +216,7 @@ export default function PlanDetailPage(
           : semester,
       ),
     );
-    const semesterId = targetSemester.id as string;
+    const semesterId = targetSemester.id.toString();
     const courseName = newCourse.code;
     addTask({ func: handleAddCourse, args: { semesterId, courseName } });
 
@@ -256,8 +259,8 @@ export default function PlanDetailPage(
       }),
     );
 
-    const oldSemesterId = originSemester.id as string;
-    const newSemesterId = destinationSemester.id as string;
+    const oldSemesterId = originSemester.id.toString();
+    const newSemesterId = destinationSemester.id.toString();
     const courseName = courseToMove.code;
 
     addTask({ func: handleMoveCourse, args: { oldSemesterId, newSemesterId, courseName } });
@@ -282,8 +285,8 @@ export default function PlanDetailPage(
         onMoveCourseFromSemesterToSemester={handleOnMoveCourseFromSemesterToSemester}
       />
       <div>
-        <button onClick={handleOnRemoveSemester}>Remove Semester</button>
-        <button onClick={handleOnAddSemester}>Add Semester</button>
+        <button onClick={handleOnRemoveYear}>Remove Year</button>
+        <button onClick={handleOnAddYear}>Add Year</button>
       </div>
       <button onClick={handlePlanDelete}>Delete Plan</button>
     </div>
@@ -333,21 +336,25 @@ function formatDegreeValidationRequest(semesters: Semester[], degree = 'computer
 // Not sure if tRPC autogenerates the type
 function getSemestersInfo(
   plan:
-    | { semesters: { courses: string[]; code: string; id: string }[]; name: string; id: string }
+    | {
+        semesters: { code: SemesterCode; id: string; courses: string[] }[];
+        id: string;
+        name: string;
+      }
     | undefined,
 ): Semester[] {
   if (!plan) {
     return [];
   }
-  return plan.semesters.map((sem: { courses: string[]; code: string; id: string }) => {
+  return plan.semesters.map((sem) => {
     const courses = sem.courses.map((course: string): DraggableCourse => {
       const newCourse = {
-        id: new ObjectID() as unknown as UniqueIdentifier,
+        id: new ObjectID(),
         code: course,
       };
       return newCourse;
     });
-    const semester: Semester = { code: sem.code, id: sem.id, courses };
+    const semester: Semester = { code: sem.code, id: sem.id as unknown as ObjectID, courses };
     return semester;
   });
 }
