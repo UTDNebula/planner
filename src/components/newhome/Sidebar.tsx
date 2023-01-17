@@ -3,10 +3,12 @@ import HomeIcon from '@/icons/HomeIcon';
 import LogoutIcon from '@/icons/LogoutIcon';
 import ProfileIcon from '@/icons/ProfileIcon';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function Sidebar({ isMobile }: { isMobile: boolean }): JSX.Element {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(!isMobile);
+
+  useEffect(() => setOpen(!isMobile), [isMobile]);
 
   const sidebarItems = [
     {
