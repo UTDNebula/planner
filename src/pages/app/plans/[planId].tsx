@@ -15,12 +15,13 @@ import { useTaskQueue } from '@/utils/useTaskQueue';
 import { createNewYear } from '@/utils/utilFunctions';
 import { ObjectID } from 'bson';
 import { SemesterCode } from '@prisma/client';
+import React from 'react';
 
 /**
  * A page that displays the details of a specific student academic plan.
  * // TODO: Decide planner navigation UX
  */
-export default function PlanDetailPage(
+function PlanDetailPage(
   props: InferGetServerSidePropsType<typeof getServerSideProps>,
 ): JSX.Element {
   const utils = trpc.useContext();
@@ -32,16 +33,9 @@ export default function PlanDetailPage(
 
   const { data, isLoading } = planQuery;
 
-  const [semesters, setSemesters] = useState<Semester[]>(getSemestersInfo(data));
+  const [semesters, setSemesters] = useState<Semester[]>(getSemestersInfo(data?.plan));
 
-  const body = formatDegreeValidationRequest(semesters);
-
-  const degreeRequirementsQuery = trpc.plan.validateDegreePlan.useQuery(body, {
-    enabled: !isLoading,
-    staleTime: 10000,
-  });
-
-  const degreeData = degreeRequirementsQuery.data ?? [];
+  const degreeData = data?.validation ?? [];
 
   const { addTask } = useTaskQueue({ shouldProcess: true });
 
@@ -312,27 +306,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext<{ pl
   };
 }
 
-function formatDegreeValidationRequest(semesters: Semester[], degree = 'computer_science_bs') {
-  return {
-    courses: semesters
-      .flatMap((s) => s.courses)
-      .map((c) => {
-        const split = c.code.split(' ');
-        const department = split[0];
-        const courseNumber = Number(split[1]);
-        const level = Math.floor(courseNumber / 1000);
-        const hours = Math.floor((courseNumber - level * 1000) / 100);
-        return {
-          name: c.code,
-          department: department,
-          level,
-          hours,
-        };
-      }),
-    bypasses: [],
-    degree,
-  };
-}
 // Not sure if tRPC autogenerates the type
 function getSemestersInfo(
   plan:
@@ -358,3 +331,5 @@ function getSemestersInfo(
     return semester;
   });
 }
+
+export default React.memo(PlanDetailPage);

@@ -1,9 +1,10 @@
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import React from 'react';
 
 import { DegreeRequirement } from '../types';
 import StatusTag from './StatusTag';
 
-export default function RequirementsList({
+function RequirementsList({
   data,
   updateRequirementInfo,
 }: {
@@ -30,3 +31,4 @@ export default function RequirementsList({
     </>
   );
 }
+export default React.memo(RequirementsList);

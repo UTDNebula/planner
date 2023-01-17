@@ -14,7 +14,7 @@ export interface RequirementContainerProps {
   getCourseItemDragId: GetDragIdByCourseAndReq;
 }
 
-export default function RequirementContainer({
+function RequirementContainer({
   degreeRequirement,
   setCarousel,
   getCourseItemDragId,
@@ -143,3 +143,5 @@ export default function RequirementContainer({
     </>
   );
 }
+
+export default React.memo(RequirementContainer);

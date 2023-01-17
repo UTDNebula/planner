@@ -6,6 +6,7 @@ import { loadDummyCourses } from '@/modules/common/api/courses';
 
 import { DegreeRequirementGroup, DraggableCourse, GetDragIdByCourse } from '../types';
 import DraggableCourseList from './DraggableCourseList';
+import React from 'react';
 
 export interface CourseSelectorContainerProps {
   degreeRequirements: DegreeRequirementGroup[];
@@ -13,11 +14,13 @@ export interface CourseSelectorContainerProps {
   getRequirementDragId: GetDragIdByCourse;
 }
 
-export default function CourseSelectorContainer({
+function CourseSelectorContainer({
   degreeRequirements,
   getSearchedDragId,
   getRequirementDragId,
 }: CourseSelectorContainerProps) {
+  console.log('RERENDER');
+  console.log(degreeRequirements);
   // TODO: Provide UI indicator for errors
   const { results, updateQuery } = useSearch({
     getData: loadDummyCourses,
@@ -73,3 +76,5 @@ export default function CourseSelectorContainer({
     </div>
   );
 }
+
+export default React.memo(CourseSelectorContainer);

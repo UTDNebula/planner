@@ -1,7 +1,8 @@
+import { Prisma, SemesterCode } from '@prisma/client';
 import { v4 as uuid } from 'uuid';
 
 import DUMMY_PLAN from '../data/add_courses.json';
-import { Semester, SemesterCode, StudentPlan } from '../modules/common/data';
+import { Semester, StudentPlan } from '../modules/common/data';
 
 export interface RecentSemester {
   year: number;
@@ -67,48 +68,6 @@ export const dummyPlan: StudentPlan = {
 };
 
 /**
- * This function generates the metadata needed
- * create a new semester inside the user plan
- * @param semesters Array of semesters obtained from the user plan
- * @returns metatdata to create a new semester
- */
-export function getRecentSemesterMetadata(semesters: Semester[]) {
-  const lastSemester: Semester = semesters[semesters.length - 1];
-  const recentSemester: RecentSemester = {
-    year: parseInt(lastSemester.code.substring(0, lastSemester.code.length - 1)),
-    semester: lastSemester.code.substring(lastSemester.code.length - 1) as SemesterCode,
-  };
-  return recentSemester;
-}
-
-/**
- * Generate metadata for adding a new semester.
- *
- * @param isSummer Flag for whether to use summer or fall
- */
-export function getUpdatedSemesterData(recentSemesterData: RecentSemester, isSummer = false) {
-  const { year, semester } = recentSemesterData;
-  let updatedYear;
-  let updatedSemester = semester;
-  if (semester === SemesterCode.f) {
-    updatedYear = year + 1;
-    updatedSemester = SemesterCode.s;
-  } else {
-    // Semester code is either spring or summer
-    updatedYear = year;
-    if (isSummer && semester === SemesterCode.s) {
-      updatedSemester = SemesterCode.u;
-    } else {
-      updatedSemester = SemesterCode.f;
-    }
-  }
-  return {
-    year: updatedYear,
-    semester: updatedSemester,
-  };
-}
-
-/**
  * Move the item at the given start index to the given end index.
  *
  * @param courses The semester to reorder
@@ -128,4 +87,29 @@ export function reorderList<T>(list: T[], startIndex: number, endIndex: number) 
   result.splice(endIndex, 0, removed);
 
   return result;
+}
+
+export function formatDegreeValidationRequest(
+  semesters: { code: SemesterCode; id: string; courses: string[] }[],
+  degree = 'computer_science_bs',
+) {
+  return {
+    courses: semesters
+      .flatMap((s) => s.courses)
+      .map((c) => {
+        const split = c.split(' ');
+        const department = split[0];
+        const courseNumber = Number(split[1]);
+        const level = Math.floor(courseNumber / 1000);
+        const hours = Math.floor((courseNumber - level * 1000) / 100);
+        return {
+          name: c,
+          department: department,
+          level,
+          hours,
+        };
+      }),
+    bypasses: [],
+    degree,
+  };
 }

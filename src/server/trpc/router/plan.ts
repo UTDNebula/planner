@@ -1,4 +1,6 @@
 import { DegreeRequirementGroup, Semester } from '@/components/planner/types';
+import { formatDegreeValidationRequest } from '@/utils/plannerUtils';
+
 import { createNewYear } from '@/utils/utilFunctions';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
@@ -25,36 +27,77 @@ export const planRouter = router({
     } catch (error) {}
   }),
   getPlanById: protectedProcedure.input(z.string().min(1)).query(async ({ ctx, input }) => {
-    const planData = await ctx.prisma.user.findUnique({
-      where: {
-        id: ctx.session.user.id,
-      },
-      select: {
-        plans: {
-          where: {
-            id: input,
-          },
-          select: {
-            name: true,
-            id: true,
-            semesters: {
-              select: {
-                id: true,
-                code: true,
-                courses: true,
+    try {
+      const planData = await ctx.prisma.user.findUnique({
+        where: {
+          id: ctx.session.user.id,
+        },
+        select: {
+          plans: {
+            where: {
+              id: input,
+            },
+            select: {
+              name: true,
+              id: true,
+              semesters: {
+                select: {
+                  id: true,
+                  code: true,
+                  courses: true,
+                },
               },
             },
           },
         },
-      },
-    });
-    if (!planData) {
-      throw new TRPCError({
-        code: 'NOT_FOUND',
-        message: 'Plan not found',
       });
+      if (!planData) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Plan not found',
+        });
+      }
+
+      const body = formatDegreeValidationRequest(planData.plans[0].semesters);
+
+      const validationData = await fetch('http://127.0.0.1:5000/validate-degree-plan', {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {
+          'content-type': 'application/json',
+        },
+      }).then(async (res) => {
+        const rawData = await res.json();
+        // Transform data
+        const core: DegreeRequirementGroup = { name: 'Core Requirements', requirements: [] };
+        const major: DegreeRequirementGroup = { name: 'Major Requirements', requirements: [] };
+        const electives: DegreeRequirementGroup = {
+          name: 'Free Elective Requirements',
+          requirements: [],
+        };
+        const university: DegreeRequirementGroup = {
+          name: 'University Requirements',
+          requirements: [],
+        };
+
+        Object.keys(rawData).forEach((req: string) => {
+          if (req.includes('Free Electives')) {
+            electives.requirements.push({ name: req, ...rawData[req] });
+          } else if (req.includes('Core - ')) {
+            core.requirements.push({ name: req, ...rawData[req] });
+          } else if ('Minimum Cumulative Hours Upper Level Hour Requirement'.includes(req)) {
+            university.requirements.push({ name: req, ...rawData[req] });
+          } else {
+            major.requirements.push({ name: req, ...rawData[req] });
+          }
+        });
+        return [core, major, electives, university];
+      });
+
+      return { plan: planData.plans[0], validation: validationData };
+    } catch (error) {
+      console.log(error);
     }
-    return planData.plans[0];
   }),
   deletePlanById: protectedProcedure.input(z.string().min(1)).mutation(async ({ ctx, input }) => {
     // check if plans belongs to user with id = ctx.session.user.id
@@ -140,8 +183,6 @@ export const planRouter = router({
           });
         }
 
-        console.log('HAML');
-
         const newYear: Semester[] = createNewYear(
           plan.semesters[0] ? plan.semesters[0].code : { semester: 'u', year: 2022 },
         );
@@ -186,9 +227,6 @@ export const planRouter = router({
           },
         });
 
-        console.log('HI');
-        console.log(semester);
-        console.log('HM');
         // Update courses
         await ctx.prisma.semester.update({
           where: {

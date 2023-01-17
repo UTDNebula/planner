@@ -1,11 +1,12 @@
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import React from 'react';
 import { RefObject } from 'react';
 
 import { DegreeRequirementGroup } from '../types';
 import RequirementsList from './RequirementsList';
 
-export default function RequirementsAccordion({
+function RequirementsAccordion({
   data,
   toggleAccordion,
   accordion,
@@ -47,3 +48,5 @@ export default function RequirementsAccordion({
     </div>
   );
 }
+
+export default React.memo(RequirementsAccordion);

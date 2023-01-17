@@ -9,7 +9,7 @@ export interface RequirementsCarouselProps {
   getCourseItemDragId: GetDragIdByCourseAndReq;
 }
 
-export default function RequirementsCarousel({
+function RequirementsCarousel({
   degreeRequirement,
   getCourseItemDragId,
 }: RequirementsCarouselProps) {
@@ -82,3 +82,5 @@ export default function RequirementsCarousel({
     </div>
   );
 }
+
+export default React.memo(RequirementsCarousel);
