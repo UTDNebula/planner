@@ -1,4 +1,5 @@
 import { UniqueIdentifier, useDroppable } from '@dnd-kit/core';
+import { SemesterCode, SemesterType } from '@prisma/client';
 import { FC, forwardRef } from 'react';
 
 import {
@@ -17,6 +18,16 @@ export interface SemesterTileProps {
   onRemoveCourse: (semester: Semester, course: DraggableCourse) => void;
 }
 
+function displaySemesterCode(semesterCode: SemesterCode): string {
+  let semesterName;
+  if (semesterCode.semester === 'f') {
+    semesterName = 'Fall';
+  } else if (semesterCode.semester === 's') semesterName = 'Spring';
+  else {
+    semesterName = 'Summer';
+  }
+  return `${semesterName} ${semesterCode.year}`;
+}
 /**
  * Strictly UI implementation of a semester tile
  */
@@ -33,7 +44,7 @@ export const SemesterTile = forwardRef<HTMLDivElement, SemesterTileProps>(functi
     >
       <div className="flex justify-between">
         <h3 className={`text-[15px] font-medium ${isValid ? 'text-[#3E61ED]' : 'text-red-500'}`}>
-          {semester.code}
+          {displaySemesterCode(semester.code)}
         </h3>
         {!isValid && <h3 className="text-[15px] font-medium text-red-500">{'Invalid Course'}</h3>}
       </div>
