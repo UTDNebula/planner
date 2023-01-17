@@ -37,4 +37,4 @@ const SearchBar: React.FC<SearchBarProps> = ({ placeholder, updateQuery, ...prop
   );
 };
 
-export default SearchBar;
+export default React.memo(SearchBar);
