@@ -2,7 +2,6 @@ import { trpc } from '@/utils/trpc';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import { SemesterCode, SemesterType } from '@prisma/client';
 import { FC, useMemo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { displaySemesterCode } from '../planner/Tiles/SemesterTile';
 
 import DataGrid from './DataGrid';
