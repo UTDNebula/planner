@@ -86,11 +86,12 @@ function PlanDetailPage(
       router.push('/app/home');
     } catch (error) {}
   };
-  const handleYearCreate = async ({ semesterIds }: { [key: string]: any }) => {
+  const handleYearCreate = async ({ semesterIds }: { [key: string]: unknown[] }) => {
     try {
-      console.log(semesterIds);
-      const annoyed = semesterIds.map((id) => id.toString());
-      await createYear.mutateAsync({ planId, semesterIds: annoyed });
+      await createYear.mutateAsync({
+        planId,
+        semesterIds: semesterIds.map((id) => id.toString()),
+      });
     } catch (error) {
       console.error(error);
     }

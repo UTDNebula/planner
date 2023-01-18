@@ -1,5 +1,5 @@
 import { DegreeRequirementGroup, Semester } from '@/components/planner/types';
-import { formatDegreeValidationRequest } from '@/utils/plannerUtils';
+import { addCreditsToPlan, formatDegreeValidationRequest } from '@/utils/plannerUtils';
 
 import { createNewYear } from '@/utils/utilFunctions';
 import { TRPCError } from '@trpc/server';
@@ -28,6 +28,18 @@ export const planRouter = router({
   }),
   getPlanById: protectedProcedure.input(z.string().min(1)).query(async ({ ctx, input }) => {
     try {
+      // Fetch credits
+      const creditData = await ctx.prisma.credit.findMany({
+        where: {
+          userId: ctx.session.user.id,
+        },
+        select: {
+          courseCode: true,
+          semesterCode: true,
+        },
+      });
+
+      // Fetch current plan
       const planData = await ctx.prisma.user.findUnique({
         where: {
           id: ctx.session.user.id,
@@ -58,7 +70,13 @@ export const planRouter = router({
         });
       }
 
-      const body = formatDegreeValidationRequest(planData.plans[0].semesters);
+      // Add credits to plan
+
+      const semesters = addCreditsToPlan(planData.plans[0].semesters, creditData);
+
+      planData.plans[0].semesters = semesters;
+
+      const body = formatDegreeValidationRequest(semesters);
 
       const validationData = await fetch('http://127.0.0.1:5000/validate-degree-plan', {
         method: 'POST',
@@ -68,6 +86,11 @@ export const planRouter = router({
         },
       }).then(async (res) => {
         const rawData = await res.json();
+
+        // Throw error if bad
+        if (res.status !== 200) {
+          return [];
+        }
         // Transform data
         const core: DegreeRequirementGroup = { name: 'Core Requirements', requirements: [] };
         const major: DegreeRequirementGroup = { name: 'Major Requirements', requirements: [] };
