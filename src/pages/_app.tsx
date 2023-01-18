@@ -11,6 +11,7 @@ import { SessionProvider, useSession } from 'next-auth/react';
 
 // import { AuthProvider } from '../modules/auth/auth-context';
 import { trpc } from '../utils/trpc';
+import Layout from '@/components/home/Layout';
 const theme = createTheme({
   typography: {
     allVariants: {
@@ -84,7 +85,9 @@ const NebulaApp: AppType<{ session: Session | null }> = ({
             <main className="w-screen h-screen overflow-x-hidden">
               {Component.auth ? (
                 <Auth>
-                  <Component {...pageProps} />
+                  <Layout>
+                    <Component {...pageProps} />
+                  </Layout>
                 </Auth>
               ) : (
                 <Component {...pageProps} />

@@ -5,12 +5,12 @@ import React from 'react';
 import Scrollbars from 'react-custom-scrollbars-2';
 import { useInView } from 'react-intersection-observer';
 
-import AppBar from '../components/home/Onboarding/Appbar';
-import DisplayLogoSection from '../components/home/Onboarding/DisplayLogoSection';
-import DragAndDropSection from '../components/home/Onboarding/DragAndDropSection';
-import FeatureSection from '../components/home/Onboarding/FeatureSection';
-import GetStartedSection from '../components/home/Onboarding/GetStartedSection';
-import LearnMoreSection from '../components/home/Onboarding/LearnMoreSection';
+import AppBar from '../components/landing/Onboarding/Appbar';
+import DisplayLogoSection from '../components/landing/Onboarding/DisplayLogoSection';
+import DragAndDropSection from '../components/landing/Onboarding/DragAndDropSection';
+import FeatureSection from '../components/landing/Onboarding/FeatureSection';
+import GetStartedSection from '../components/landing/Onboarding/GetStartedSection';
+import LearnMoreSection from '../components/landing/Onboarding/LearnMoreSection';
 
 /**
  * The primary landing page for the application.
