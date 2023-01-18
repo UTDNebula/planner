@@ -2,6 +2,7 @@ import ChevronIcon from '@/icons/ChevronIcon';
 import HomeIcon from '@/icons/HomeIcon';
 import LogoutIcon from '@/icons/LogoutIcon';
 import ProfileIcon from '@/icons/ProfileIcon';
+import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
@@ -58,10 +59,13 @@ export default function Sidebar({ isMobile }: { isMobile: boolean }): JSX.Elemen
           ))}
         </ul>
 
-        <div className="absolute bottom-5 px-5 flex gap-6 items-center">
+        <button
+          className="absolute bottom-5 px-5 flex gap-6 items-center"
+          onClick={() => signOut()}
+        >
           <LogoutIcon className="w-6 h-6" />
           {open && <span>Log Out</span>}
-        </div>
+        </button>
       </div>
     </>
   );
