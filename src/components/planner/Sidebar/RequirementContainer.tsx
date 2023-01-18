@@ -1,8 +1,6 @@
 import React from 'react';
 
-import { Course } from '@/modules/common/data';
-
-import { DegreeRequirement, GetDragIdByCourseAndReq } from '../types';
+import { Course, DegreeRequirement, GetDragIdByCourseAndReq } from '../types';
 import AddCourseContainer from './AddCourseContainer';
 import PlaceholderComponent from './PlaceholderComponent';
 import RequirementContainerHeader from './RequirementContainerHeader';
@@ -58,9 +56,7 @@ function RequirementContainer({
 
   const updateSelectedCourses = (course: Course, add: boolean) => {
     const modifySelectedCourses = { ...selectedCourses };
-    add
-      ? (modifySelectedCourses[course.catalogCode] = course)
-      : delete modifySelectedCourses[course.catalogCode];
+    add ? (modifySelectedCourses[course.code] = course) : delete modifySelectedCourses[course.code];
     setSelectedCourses(modifySelectedCourses);
   };
 

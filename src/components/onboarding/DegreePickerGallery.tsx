@@ -30,7 +30,7 @@ export default function DegreePickerGallery({ degree, handleChange }: DegreePick
       return index;
     }),
   );
-  const [removeIndex, setRemoveIndex] = useState([]);
+  const [removeIndex, setRemoveIndex] = useState<number[]>([]);
 
   const addNewDegree = () => {
     setDegreeCount([...degreeCount, degreeCount[degreeCount.length - 1] + 1]);
@@ -88,6 +88,7 @@ export default function DegreePickerGallery({ degree, handleChange }: DegreePick
 
             return (
               <DegreePicker
+                key={index}
                 id={index}
                 props={{ degree: '', degreeType: '', valid: false }}
                 updateChange={handleDegreeChange}
@@ -97,6 +98,7 @@ export default function DegreePickerGallery({ degree, handleChange }: DegreePick
           } else {
             return (
               <DegreePicker
+                key={index}
                 id={index}
                 props={degree[index - count]}
                 updateChange={handleDegreeChange}

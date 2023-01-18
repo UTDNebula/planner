@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React, { useMemo, useState } from 'react';
 
 const SCROLL_THRESHOLD = 0.1;
@@ -32,11 +33,15 @@ const RowLayout = <T extends { [key: string]: unknown }>({
     <li
       className="w-full grid grid-flow-col auto-cols-fr justify-items-start relative"
       {...props}
-      onClick={() => rowOnClick(row)}
+      onClick={() => rowOnClick(row!)}
     >
       <>
         {children}
-        <div onClick={(e) => onClick(e, row)}>
+        <div
+          onClick={(e) => {
+            if (onClick) onClick(e, row!);
+          }}
+        >
           <InjectedComponent />
         </div>
       </>
@@ -87,7 +92,7 @@ const DataGrid = <T extends { [key: string]: unknown }, K extends keyof T>({
   TitleComponent: Title,
   RowCellComponent: RowCell,
   LoadingComponent: Loading,
-  childrenProps: { headerProps, gridProps, rowProps },
+  childrenProps,
 }: DataGridProps<T, K>) => {
   const [isFetching, setIsFetching] = useState(false);
 
@@ -110,23 +115,23 @@ const DataGrid = <T extends { [key: string]: unknown }, K extends keyof T>({
 
   return (
     <div>
-      <RowLayout {...headerProps}>
+      <RowLayout {...childrenProps?.headerProps}>
         {columns.map(({ title }, i) => (
           <Title key={`data-grid-title-${title}-${i}`}>{title}</Title>
         ))}
       </RowLayout>
 
       <section
-        {...gridProps}
-        style={{ ...gridProps.style, overflowY: 'scroll' }}
+        {...childrenProps?.gridProps}
+        style={{ ...childrenProps?.gridProps?.style, overflowY: 'scroll' }}
         onScroll={onScroll}
       >
         {rows.map((row, i) => {
           return (
-            <RowLayout key={`row-${i}`} {...rowProps} row={row}>
+            <RowLayout key={`row-${i}`} {...childrenProps?.rowProps} row={row}>
               {columns.map(({ key, title, valueGetter }, i) => (
                 <RowCell key={`data-grid-row-cell-${title}-${i}`}>
-                  {valueGetter ? valueGetter(row) : row[key]}
+                  {valueGetter ? valueGetter(row) : row?.key}
                 </RowCell>
               ))}
             </RowLayout>

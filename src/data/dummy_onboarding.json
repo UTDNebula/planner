@@ -1,0 +1,41 @@
+{
+  "classificationTypes": ["freshman", "sophomore", "junior", "senior", "super senior", "none"],
+  "futureTypes": [
+    "law",
+    "medical",
+    "graduate",
+    "industry",
+    "entrepreneurship",
+    "military",
+    "undecided"
+  ],
+  "degrees": ["Computer Science", "History", ""],
+  "degreeTypes": ["Major", "Minor"],
+
+  "scholarships": [
+    "Select Scholarship Type",
+    "Euguene McDermott Scholars",
+    "Terry Foundation Future Scholars",
+    "National Merit Scholarship",
+    "Diversity Scholars",
+    "Academic Excellence Scholarship"
+  ],
+
+  "fastTrackYears": ["Fall 202x", "Spring 202x"],
+
+  "majors": ["Computer Science", "History", ""],
+
+  "courses": ["RHET 1302", "ECS 1100", "CS 3345", ""],
+  "subjects": ["ECS", "EPPS", "MATH", ""],
+  "types": ["Transfer", "AP", "IB", "CLEP", "UTD"],
+
+  "apTests": ["Biology", "Chemistry", "Computer Science A"],
+  "apScores": ["1", "2", "3", "4", "5"],
+
+  "ibTests": ["Biology", "Chemistry", "Computer Science A"],
+  "ibLevels": ["Standard", "Higher"],
+  "ibScores": ["1", "2", "3", "4", "5"],
+
+  "clepTests": ["Biology", "Chemistry", "Computer Science A"],
+  "clepScores": ["1", "2", "3", "4", "5"]
+}

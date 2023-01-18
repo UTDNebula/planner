@@ -1,7 +1,7 @@
 import 'animate.css';
 
 import { Button, Dialog, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
-import React from 'react';
+import React, { LegacyRef } from 'react';
 import Scrollbars from 'react-custom-scrollbars-2';
 import { useInView } from 'react-intersection-observer';
 
@@ -73,7 +73,7 @@ export default function LandingPage(): JSX.Element {
         >
           <AppBar ref1={ref1} ref2={ref2} ref3={ref3} />
         </div>
-        <div ref={ref1}>
+        <div ref={ref1 as unknown as LegacyRef<HTMLDivElement> | undefined}>
           <DisplayLogoSection />
         </div>
         <div>
@@ -85,7 +85,7 @@ export default function LandingPage(): JSX.Element {
         <div>
           <GetStartedSection />
         </div>
-        <div ref={ref3}>
+        <div ref={ref3 as unknown as LegacyRef<HTMLDivElement> | undefined}>
           <LearnMoreSection />
         </div>
       </Scrollbars>

@@ -18,7 +18,7 @@ export interface SemesterTileProps {
   onRemoveCourse: (semester: Semester, course: DraggableCourse) => void;
 }
 
-function displaySemesterCode(semesterCode: SemesterCode): string {
+export function displaySemesterCode(semesterCode: SemesterCode): string {
   let semesterName;
   if (semesterCode.semester === 'f') {
     semesterName = 'Fall';
@@ -51,7 +51,7 @@ export const SemesterTile = forwardRef<HTMLDivElement, SemesterTileProps>(functi
 
       {semester.courses.map((course) => (
         <DraggableSemesterCourseItem
-          key={course.id}
+          key={course.id.toString()}
           dragId={getDragId(course, semester)}
           isValid={course.validation?.isValid === false}
           course={course}

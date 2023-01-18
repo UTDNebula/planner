@@ -7,7 +7,7 @@ interface DropdownSelectProps<T> {
   id?: string;
   value: string;
   values: T[];
-  onChange: (string) => void;
+  onChange: (arg: string) => void;
   getValue: (v: T) => string;
   getDisplayedValue: (v: T) => string;
 }

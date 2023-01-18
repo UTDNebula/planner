@@ -34,13 +34,7 @@ export default function AuthPage({
           <div className="m-2 bg-white md:rounded-md md:shadow-md">
             <div className="bg-white md:shadow-lg shadow-none rounded p-6 w-96 ">
               <div className="mb-4 flex justify-center items-center">
-                <Image
-                  src={logo}
-                  alt="Logo"
-                  width="120px"
-                  height="120px"
-                  className="rounded-full"
-                />
+                <Image src={logo} alt="Logo" width="120" height="120" className="rounded-full" />
               </div>
               <h1 className="text-center text-3xl mb-2 font-semibold leading-normal">Sign in</h1>
               <p className="text-sm leading-normal">
@@ -71,8 +65,9 @@ export default function AuthPage({
                   <h1 className="text-center text-s text-gray-700">or</h1>
                 </div>
                 {providers &&
-                  Object.values(providers).map((provider) => (
+                  Object.values(providers).map((provider, idx) => (
                     <button
+                      key={idx}
                       onClick={() => signIn(provider.id)}
                       className="appearance-none items-center justify-center block w-full bg-gray-100 text-gray-700 shadow border border-gray-500 rounded-lg py-3 px-3 leading-tight hover:bg-gray-200 hover:text-gray-700 focus:outline-none"
                     >

@@ -1,15 +1,12 @@
 import React from 'react';
-import { v4 as uuid } from 'uuid';
 
 import useSearch from '@/components/search/search';
-import { getAllCourses } from '@/modules/common/api/templates';
-import { Course } from '@/modules/common/data';
 
 import { DegreeRequirement, DraggableCourse, GetDragIdByCourseAndReq } from '../types';
 import DraggableCourseList from './DraggableCourseList';
 import RequirementSearchBar from './RequirementSearchBar';
-import { UniqueIdentifier } from '@dnd-kit/core';
 import { ObjectID } from 'bson';
+import { getAllCourses } from '@/utils/utilFunctions';
 
 export interface RequirementInfoProps {
   courses: string[];
@@ -41,7 +38,7 @@ export default function RequirementInfo({
     const courseInfoList: (DraggableCourse | undefined)[] = temp.map((elm) => {
       if (courseData[elm] !== undefined) {
         const newCourse: DraggableCourse = {
-          id: new ObjectID() as unknown as UniqueIdentifier,
+          id: new ObjectID(),
           code: elm,
           validation: { isValid: true, override: false },
         };

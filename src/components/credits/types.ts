@@ -2,7 +2,7 @@
  * Manage user credits
  */
 
-import { SemesterCode } from '@/modules/common/data';
+import { SemesterType } from '@prisma/client';
 
 /**
  * **A credit is considered transfer if its semester is null** \
@@ -12,7 +12,7 @@ export type Credit = {
   courseCode: string;
   semesterCode: {
     year: number;
-    semester: SemesterCode;
+    semester: SemesterType;
   } | null;
 };
 

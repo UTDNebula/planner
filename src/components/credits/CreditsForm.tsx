@@ -1,13 +1,16 @@
 import { trpc } from '@/utils/trpc';
+import { loadDummyCourses } from '@/utils/utilFunctions';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
+import { SemesterType } from '@prisma/client';
 import { FC, useMemo, useState } from 'react';
 
-import { loadDummyCourses } from '../../modules/common/api/courses';
-import { generateSemesters, Semester, SemesterCode } from '../../modules/common/data';
+import { generateSemesters } from '../../modules/common/data';
 import { convertSemesterToData } from '../../modules/common/data-utils';
+import { displaySemesterCode } from '../planner/Tiles/SemesterTile';
+import { Semester } from '../planner/types';
 import useSearch from '../search/search';
 import AutoCompleteSearchBar from './AutoCompleteSearchBar';
 import Button from './Button';
@@ -20,11 +23,11 @@ const CreditsForm: FC = () => {
   const [isTransfer, setIsTransfer] = useState(false);
 
   const semesters = useMemo(
-    () => generateSemesters(8, new Date().getFullYear() - 4, SemesterCode.f).reverse(),
+    () => generateSemesters(8, new Date().getFullYear() - 4, SemesterType.f).reverse(),
     [],
   );
 
-  const [semester, setSemester] = useState<string>(semesters[0].code);
+  const [semester, setSemester] = useState<string>(displaySemesterCode(semesters[0].code));
 
   const utils = trpc.useContext();
 
@@ -110,7 +113,7 @@ const CreditsForm: FC = () => {
               id="semester"
               value={semester}
               values={semesters as (Semester & { [key: string]: string })[]}
-              getValue={(semester) => semester.code}
+              getValue={(semester) => displaySemesterCode(semester.code)}
               getDisplayedValue={(semester) => semester.title}
               onChange={(sem) => setSemester(sem)}
             />

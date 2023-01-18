@@ -1,9 +1,7 @@
+import { Semester } from '@/components/planner/types';
 import { Prisma, SemesterCode, SemesterType } from '@prisma/client';
-import { ObjectId } from 'bson';
 import { v4 as uuid } from 'uuid';
 
-import DUMMY_PLAN from '../data/add_courses.json';
-import { Semester, StudentPlan } from '../modules/common/data';
 import { createNewYear } from './utilFunctions';
 
 export interface RecentSemester {
@@ -11,63 +9,55 @@ export interface RecentSemester {
   semester: SemesterCode;
 }
 
-// Initial value for plan until data is properly loaded
-export const initialPlan: StudentPlan = {
-  id: 'empty-plan',
-  title: 'Just a Degree Plan',
-  major: 'Computer Science',
-  semesters: DUMMY_PLAN,
-};
+// const dummySemesters: Semester[] = [
+//   {
+//     title: 'Fall 2022',
+//     code: '2022f',
+//     courses: [],
+//   },
+//   {
+//     title: 'Spring 2023',
+//     code: '2023s',
+//     courses: [],
+//   },
+//   {
+//     title: 'Fall 2023',
+//     code: '2023f',
+//     courses: [],
+//   },
+//   {
+//     title: 'Spring 2024',
+//     code: '2024s',
+//     courses: [],
+//   },
+//   {
+//     title: 'Fall 2024',
+//     code: '2024f',
+//     courses: [],
+//   },
+//   {
+//     title: 'Spring 2025',
+//     code: '2025s',
+//     courses: [],
+//   },
+//   {
+//     title: 'Fall 2025',
+//     code: '2025f',
+//     courses: [],
+//   },
+//   {
+//     title: 'Spring 2026',
+//     code: '2026s',
+//     courses: [],
+//   },
+// ];
 
-const dummySemesters: Semester[] = [
-  {
-    title: 'Fall 2022',
-    code: '2022f',
-    courses: [],
-  },
-  {
-    title: 'Spring 2023',
-    code: '2023s',
-    courses: [],
-  },
-  {
-    title: 'Fall 2023',
-    code: '2023f',
-    courses: [],
-  },
-  {
-    title: 'Spring 2024',
-    code: '2024s',
-    courses: [],
-  },
-  {
-    title: 'Fall 2024',
-    code: '2024f',
-    courses: [],
-  },
-  {
-    title: 'Spring 2025',
-    code: '2025s',
-    courses: [],
-  },
-  {
-    title: 'Fall 2025',
-    code: '2025f',
-    courses: [],
-  },
-  {
-    title: 'Spring 2026',
-    code: '2026s',
-    courses: [],
-  },
-];
-
-export const dummyPlan: StudentPlan = {
-  id: uuid(),
-  title: 'Empty Template',
-  major: 'Major (Change in settings',
-  semesters: dummySemesters,
-};
+// export const dummyPlan: StudentPlan = {
+//   id: uuid(),
+//   title: 'Empty Template',
+//   major: 'Major (Change in settings',
+//   semesters: dummySemesters,
+// };
 
 /**
  * Move the item at the given start index to the given end index.

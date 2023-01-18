@@ -25,7 +25,6 @@ export const creditsRouter = router({
     .mutation(async ({ ctx, input }) => {
       const userId = ctx.session.user.id;
       const { courseCode, semesterCode } = input;
-      console.log('TEST');
       try {
         await ctx.prisma.credit.create({
           data: {
@@ -34,7 +33,6 @@ export const creditsRouter = router({
             semesterCode,
           },
         });
-        console.log('HUH');
         return true;
       } catch (error) {
         console.log(error);

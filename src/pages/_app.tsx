@@ -1,17 +1,18 @@
+/* eslint-disable react/prop-types */
 import '../styles/globals.css';
 
 import { createTheme, StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
 import { AnimateSharedLayout } from 'framer-motion';
-import { type AppType } from 'next/app';
+import { AppProps, type AppType } from 'next/app';
 // import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 import { type Session } from 'next-auth';
 import { SessionProvider, useSession } from 'next-auth/react';
 
 // import { AuthProvider } from '../modules/auth/auth-context';
 import { trpc } from '../utils/trpc';
 import Layout from '@/components/home/Layout';
+import { FC } from 'react';
 const theme = createTheme({
   typography: {
     allVariants: {
@@ -37,6 +38,13 @@ const theme = createTheme({
   },
 });
 
+import type { NextComponentType } from 'next'; //Import Component type
+
+//Add custom appProp type then use union to add it
+type CustomAppProps = AppProps & {
+  Component: NextComponentType & { auth?: boolean }; // add auth type
+};
+
 /**
  * The root wrapper component for the app.
  *
@@ -48,12 +56,11 @@ const theme = createTheme({
 const NebulaApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
-}) => {
+}: CustomAppProps) => {
   // TODO: Properly type check this
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
 
-  const router = useRouter();
   // alert(router.pathname);
 
   return (
@@ -100,12 +107,12 @@ const NebulaApp: AppType<{ session: Session | null }> = ({
   );
 };
 
-function Auth({ children }) {
+const Auth: FC = ({ children }) => {
   const { status } = useSession({ required: true });
   if (status === 'loading') {
     return <p>Loading...</p>;
   }
-  return children;
-}
+  return <>{children}</>;
+};
 
 export default trpc.withTRPC(NebulaApp);

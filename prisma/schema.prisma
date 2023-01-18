@@ -131,6 +131,8 @@ model Session {
 model User {
   id                 String    @id @default(auto()) @map("_id") @db.ObjectId
   email              String?   @unique
+  name               String // Can I not add this?
+  image              String // Can I not add this?
   emailVerified      DateTime?
   onboardingComplete Boolean   @default(false)
   credit             Credit[]

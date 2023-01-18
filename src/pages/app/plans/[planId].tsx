@@ -86,11 +86,11 @@ function PlanDetailPage(
       router.push('/app/home');
     } catch (error) {}
   };
-  const handleYearCreate = async ({ semesterIds }: { [key: string]: unknown[] }) => {
+  const handleYearCreate = async ({ semesterIds }: { [key: string]: string[] }) => {
     try {
       await createYear.mutateAsync({
         planId,
-        semesterIds: semesterIds.map((id) => id.toString()),
+        semesterIds: semesterIds.map((id) => id),
       });
     } catch (error) {
       console.error(error);
@@ -152,7 +152,7 @@ function PlanDetailPage(
     setSemesters([...semesters, ...newYear]);
     addTask({
       func: handleYearCreate,
-      args: { semesterIds: semesterIds },
+      args: { semesterIds: semesterIds.map((id) => id.toString()) },
     });
   };
 

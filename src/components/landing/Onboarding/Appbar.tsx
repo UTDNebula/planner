@@ -18,7 +18,11 @@ export default function ResponsiveAppBar({ ref1, ref2, ref3 }: Props): JSX.Eleme
 
   const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
-  function scrollTo(ref) {
+  function scrollTo(ref: {
+    current: {
+      scrollIntoView: (arg0: { behavior: string; block: string; inline: string }) => void;
+    };
+  }) {
     if (!ref.current) return;
     ref.current.scrollIntoView({
       behavior: 'smooth',

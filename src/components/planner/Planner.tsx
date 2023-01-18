@@ -20,8 +20,6 @@ import {
 } from '@dnd-kit/core';
 import React, { useState } from 'react';
 
-import { Course } from '@/modules/common/data';
-
 import CourseSelectorContainer from './Sidebar/Sidebar';
 import { SidebarCourseItem } from './Sidebar/SidebarCourseItem';
 import { SemesterCourseItem } from './Tiles/SemesterCourseItem';
@@ -166,7 +164,7 @@ export default function Planner({
                     console.log(notification.message);
                   })
                 }
-                key={semester.id}
+                key={semester.id.toString()}
                 dropId={`semester-${semester.id}`}
                 getSemesterCourseDragId={(course, semester) =>
                   `semester-tile-course-${semester.id}-${course.id}`

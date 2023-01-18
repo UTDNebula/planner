@@ -1,11 +1,10 @@
 import { trpc } from '@/utils/trpc';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
-import { SemesterType } from '@prisma/client';
+import { SemesterCode, SemesterType } from '@prisma/client';
 import { FC, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { displaySemesterCode } from '../planner/Tiles/SemesterTile';
 
-import { SEMESTER_CODE_MAPPINGS } from '../../modules/common/data';
-import { RootState } from '../../modules/redux/store';
 import DataGrid from './DataGrid';
 import SearchBar from './SearchBar';
 import { Credit } from './types';
@@ -44,7 +43,7 @@ const CreditsTable: FC = () => {
         const { courseCode, semesterCode } = credit;
         return {
           matchString: (semesterCode
-            ? courseCode + `${SEMESTER_CODE_MAPPINGS[semesterCode.semester]} ${semesterCode.year}`
+            ? courseCode + `${displaySemesterCode(semesterCode)}`
             : courseCode + 'transfer'
           ).toLowerCase(),
           data: credit,
@@ -94,9 +93,7 @@ const CreditsTable: FC = () => {
               title: 'Semester',
               valueGetter: (credit) =>
                 credit.semesterCode
-                  ? `${SEMESTER_CODE_MAPPINGS[credit.semesterCode.semester]} ${
-                      credit.semesterCode.year
-                    }`
+                  ? `${displaySemesterCode(credit.semesterCode)}`
                   : 'Transferred in',
             },
           ]}
@@ -121,7 +118,7 @@ const CreditsTable: FC = () => {
                 onClick: (_, row) =>
                   removeCredit.mutateAsync({
                     courseCode: row.courseCode,
-                    semesterCode: row.semesterCode as SemesterType,
+                    semesterCode: row.semesterCode as SemesterCode,
                   }),
               },
             },

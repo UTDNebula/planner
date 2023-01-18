@@ -227,7 +227,7 @@ export function useUserSetup(studentDefaultName = 'Comet') {
  *
  * TODO: Support anonymous setup.
  */
-export default function OnboardingPage(): NextPage {
+export default function OnboardingPage() {
   // const { user } = useAuthContext();
   const {
     pageOneData,
@@ -299,13 +299,7 @@ export default function OnboardingPage(): NextPage {
     // updateName(data.preferredName);
     // flogi
     const input: RouterInputs['user']['updateUserOnboard'] = {
-      preferredName: data.preferredName,
-      classification: data.classification,
-      personalization: data.consent.personalization,
-      disclaimer: data.consent.disclaimer,
-      analytics: data.consent.analytics,
-      performance: data.consent.performance,
-      onCampus: data.studentAttributes.onCampus,
+      name: data.preferredName,
       majors: data.plan.majors,
     };
 
@@ -354,8 +348,8 @@ export default function OnboardingPage(): NextPage {
   const degreeToPlan = () => {
     // Create new PlanData variable
     const temp = {
-      majors: [],
-      minors: [],
+      majors: [] as string[],
+      minors: [] as string[],
     };
     pageOneData.degree.forEach((value) => {
       if (value.degreeType === 'Major') {

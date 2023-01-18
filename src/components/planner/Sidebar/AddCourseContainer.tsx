@@ -1,8 +1,8 @@
 import useSearch, { SearchReturn } from '@/components/search/search';
-import { loadDummyCourses } from '@/modules/common/api/courses';
-import { Course } from '@/modules/common/data';
+import { loadDummyCourses } from '@/utils/utilFunctions';
+import { ObjectID } from 'bson';
 
-import { DraggableCourse } from '../types';
+import { Course, DraggableCourse } from '../types';
 import RequirementSearchBar from './RequirementSearchBar';
 import SelectableCourseContainer from './SelectableCourseContainer';
 
@@ -23,14 +23,17 @@ export default function AddCourseContainer({
   const { results, updateQuery }: SearchReturn<Course, string> = useSearch({
     getData: loadDummyCourses,
     initialQuery: '',
-    filterFn: (elm, query) => elm['catalogCode'].toLowerCase().includes(query.toLowerCase()),
+    filterFn: (elm, query) => elm.code.toLowerCase().includes(query.toLowerCase()),
     constraints: [0, 5],
   });
 
   const courseResults = results.map((result) => {
-    return { ...result, status: allCourses.has(result.catalogCode) ? 'complete' : undefined };
-  }) as DraggableCourse[];
+    return { ...result, status: allCourses.has(result.code) ? 'complete' : undefined };
+  }) as unknown as DraggableCourse[];
 
+  const newSelectedCourses: DraggableCourse[] = Object.values(selectedCourses).map((course) => {
+    return { id: new ObjectID(), code: course.code };
+  });
   return (
     <>
       <div>
@@ -39,7 +42,10 @@ export default function AddCourseContainer({
       </div>
       <SelectableCourseContainer
         results={courseResults}
-        selectedCourses={selectedCourses}
+        selectedCourses={newSelectedCourses.reduce(
+          (prev, curr) => ({ ...prev, [curr.code]: curr }),
+          {},
+        )}
         updateSelectedCourses={updateSelectedCourses}
       />
       <div className="flex flex-row justify-between text-[10px] text-[#3E61ED] gap-x-4">

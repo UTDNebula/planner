@@ -1,4 +1,4 @@
-import useMedia from '@/modules/common/media';
+import useMedia from '@/utils/media';
 import Sidebar from './Sidebar';
 
 export default function Layout({

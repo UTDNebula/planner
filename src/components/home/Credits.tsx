@@ -66,8 +66,8 @@ export default function CreditsPage(): JSX.Element {
 const UploadTranscriptDialog = (props: { open: boolean; onClose: () => void }) => {
   const { open, onClose } = props;
   const [loading, setLoading] = useState(false);
-  const [file, setFile] = useState<File>(undefined);
-  const [error, setError] = useState<string>(undefined);
+  const [file, setFile] = useState<File | null>(null);
+  const [error, setError] = useState<string | null>(null);
   return (
     <Dialog open={open} onClose={onClose}>
       <div className="p-10 flex flex-col gap-3">
@@ -80,34 +80,32 @@ const UploadTranscriptDialog = (props: { open: boolean; onClose: () => void }) =
           <form
             className={'contents'}
             onSubmit={async (e) => {
-              try {
-                setError(null);
-                e.preventDefault();
-
-                if (loading) return;
-                if (!file) {
-                  setError('Must upload file');
-                  return;
-                }
-                setLoading(true);
-                const formData = new FormData();
-                formData.append('file', file);
-
-                const res = await fetch('/api/transcript', {
-                  method: 'POST',
-                  body: formData,
-                });
-                const data = (await res.json()) as { msg: string; data: string[] };
-                console.log(data);
-                data.data.forEach((credit) => {
-                  dispatch(addCredit({ utdCourseCode: credit, semester: null }));
-                });
-                onClose();
-              } catch (e) {
-                setError(e);
-              } finally {
-                setLoading(false);
-              }
+              // TODO: Reimplement this
+              // try {
+              //   setError(null);
+              //   e.preventDefault();
+              //   if (loading) return;
+              //   if (!file) {
+              //     setError('Must upload file');
+              //     return;
+              //   }
+              //   setLoading(true);
+              //   const formData = new FormData();
+              //   formData.append('file', file);
+              //   const res = await fetch('/api/transcript', {
+              //     method: 'POST',
+              //     body: formData,
+              //   });
+              //   const data = (await res.json()) as { msg: string; data: string[] };
+              //   console.log(data);
+              //   data.data.forEach((credit) => {
+              //   });
+              //   onClose();
+              // } catch (e) {
+              //   setError(e);
+              // } finally {
+              //   setLoading(false);
+              // }
             }}
           >
             <input
@@ -115,8 +113,8 @@ const UploadTranscriptDialog = (props: { open: boolean; onClose: () => void }) =
               name={'file'}
               accept="application/pdf"
               onChange={(e) => {
-                setFile(e.target.files[0]);
-                setError(undefined);
+                setFile(e.target.files ? e.target.files[0] : null);
+                setError(null);
               }}
             />
             <Button type="submit">Upload</Button>
