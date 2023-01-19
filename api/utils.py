@@ -88,17 +88,20 @@ class Matcher(ABC):
     class Builder:
         def __init__(self, matcher_type: str):
             if matcher_type not in ('And', 'Or', 'Not', 'NameList', 'Regex', 'Level', 'Department', 'Any'):
-                raise ParseException(f"'{matcher_type}' is not a supported Matcher type")
+                raise ParseException(
+                    f"'{matcher_type}' is not a supported Matcher type")
             self.matcher_type = matcher_type
             self.args = []
 
         def _assert_single_arg(self):
             if len(self.args) != 0:
-                raise ParseException(f"'{self.matcher_type}' matcher only takes one argument")
+                raise ParseException(
+                    f"'{self.matcher_type}' matcher only takes one argument")
 
         def _assert_type(self, arg: Matcher | str, t: type):
             if not issubclass(type(arg), t):
-                raise ParseException(f"Invalid argument passed into '{self.matcher_type}' matcher")
+                raise ParseException(
+                    f"Invalid argument passed into '{self.matcher_type}' matcher")
 
         def add_arg(self, arg: Matcher | str):
             match self.matcher_type:
@@ -113,8 +116,10 @@ class Matcher(ABC):
                     self._assert_type(arg, str)
                     m = re.match(r'(.*)(\d[\dVv]\d\d)', arg)
                     if not m:
-                        raise ParseException(f"Unable to parse course name passed into '{self.matcher_type}' matcher")
-                    course_str = m.group(1) + ' ' + m.group(2).replace('v', 'V')
+                        raise ParseException(
+                            f"Unable to parse course name passed into '{self.matcher_type}' matcher")
+                    course_str = m.group(1) + ' ' + \
+                        m.group(2).replace('v', 'V')
                     self.args.append(course_str)
                 case 'Regex':
                     self._assert_single_arg()
@@ -122,18 +127,21 @@ class Matcher(ABC):
                     try:
                         r = re.compile(arg)
                     except re.error as e:
-                        raise ParseException(f"Unable to compile regex passed into '{self.matcher_type}' matcher: {e}")
+                        raise ParseException(
+                            f"Unable to compile regex passed into '{self.matcher_type}' matcher: {e}")
                     self.args.append(r)
                 case 'Level':
                     if type(arg) != str or not arg.isdigit() or not 0 <= int(arg) <= 9:
-                        raise ParseException(f"Invalid argument passed into '{self.matcher_type}' matcher")
+                        raise ParseException(
+                            f"Invalid argument passed into '{self.matcher_type}' matcher")
                     self.args.append(int(arg))
                 case 'Department':
                     self._assert_single_arg()
                     self._assert_type(arg, str)
                     self.args.append(arg)
                 case 'Any':
-                    raise ParseException(f"'{self.matcher_type}' matcher does not take arguments")
+                    raise ParseException(
+                        f"'{self.matcher_type}' matcher does not take arguments")
                 case _:
                     raise Exception("Unhandled matcher type")
 
@@ -235,3 +243,12 @@ class SingleAssignment(NamedTuple):
         requirement = d['requirement']
         hours = d['hours']
         return cls(course, requirement, hours)
+
+
+def list_matcher_requirements(matcher: Matcher):
+    """
+    Only supports NameList atm
+    """
+    if type(matcher).__name__ == 'NameListMatcher':
+        return [course for course in matcher.name_list]
+    return "all"
