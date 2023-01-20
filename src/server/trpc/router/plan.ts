@@ -40,29 +40,20 @@ export const planRouter = router({
       });
 
       // Fetch current plan
-      const planData = await ctx.prisma.user.findUnique({
+      const planData = await ctx.prisma.plan.findUnique({
         where: {
-          id: ctx.session.user.id,
+          id: input,
         },
         select: {
-          plans: {
-            where: {
-              id: input,
-            },
-            select: {
-              name: true,
-              id: true,
-              semesters: {
-                select: {
-                  id: true,
-                  code: true,
-                  courses: true,
-                },
-              },
-            },
-          },
+          name: true,
+          id: true,
+          semesters: true,
         },
       });
+
+      console.log(planData);
+      console.log('HUH');
+
       if (!planData) {
         throw new TRPCError({
           code: 'NOT_FOUND',
@@ -72,9 +63,9 @@ export const planRouter = router({
 
       // Add credits to plan
 
-      const semesters = addCreditsToPlan(planData.plans[0].semesters, creditData);
+      const semesters = addCreditsToPlan(planData.semesters, creditData);
 
-      planData.plans[0].semesters = semesters;
+      planData.semesters = semesters;
 
       const body = formatDegreeValidationRequest(semesters);
 
@@ -117,7 +108,7 @@ export const planRouter = router({
         return [core, major, electives, university];
       });
 
-      return { plan: planData.plans[0], validation: validationData };
+      return { plan: planData, validation: validationData };
     } catch (error) {
       console.log(error);
     }
@@ -187,7 +178,7 @@ export const planRouter = router({
     .input(z.object({ planId: z.string(), semesterIds: z.array(z.string()).length(3) }))
     .mutation(async ({ ctx, input }) => {
       const { planId, semesterIds } = input;
-      console.log('A');
+      console.log('Aasdf');
       try {
         const plan = await ctx.prisma.plan.findUnique({
           where: {
