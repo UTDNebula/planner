@@ -4,7 +4,7 @@ import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import { SemesterType } from '@prisma/client';
+import { SemesterCode, SemesterType } from '@prisma/client';
 import { FC, useMemo, useState } from 'react';
 
 import { generateSemesters } from '../../modules/common/data';
@@ -23,11 +23,14 @@ const CreditsForm: FC = () => {
   const [isTransfer, setIsTransfer] = useState(false);
 
   const semesters = useMemo(
-    () => generateSemesters(8, new Date().getFullYear() - 4, SemesterType.f).reverse(),
+    () =>
+      generateSemesters(8, new Date().getFullYear() - 4, SemesterType.f)
+        .reverse()
+        .map((sem) => sem.code),
     [],
   );
 
-  const [semester, setSemester] = useState<string>(displaySemesterCode(semesters[0].code));
+  const [semester, setSemester] = useState<SemesterCode>(semesters[0]);
 
   const utils = trpc.useContext();
 
@@ -47,7 +50,7 @@ const CreditsForm: FC = () => {
     if (credit) {
       addCredit.mutateAsync({
         courseCode: credit,
-        semesterCode: isTransfer ? null : convertSemesterToData(semester),
+        semesterCode: isTransfer ? null : semester,
       });
     }
   };
@@ -112,9 +115,9 @@ const CreditsForm: FC = () => {
             <DropdownSelect
               id="semester"
               value={semester}
-              values={semesters as (Semester & { [key: string]: string })[]}
-              getValue={(semester) => displaySemesterCode(semester.code)}
-              getDisplayedValue={(semester) => semester.title}
+              values={semesters as (SemesterCode & { [key: string]: string })[]}
+              getValue={(semester) => semester}
+              getDisplayedValue={(semester) => displaySemesterCode(semester)}
               onChange={(sem) => setSemester(sem)}
             />
           </>

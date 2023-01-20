@@ -5,10 +5,10 @@ import React, { useRef, useState } from 'react';
 
 interface DropdownSelectProps<T> {
   id?: string;
-  value: string;
+  value: T;
   values: T[];
-  onChange: (arg: string) => void;
-  getValue: (v: T) => string;
+  onChange: (arg: T) => void;
+  getValue: (v: T) => T;
   getDisplayedValue: (v: T) => string;
 }
 
@@ -33,7 +33,7 @@ const DropdownSelect = <T extends { [key: string]: unknown }>({
         id={id}
         value={value}
         label=""
-        onChange={(e) => onChange(e.target.value)}
+        onChange={(e) => onChange(e.target.value as T)}
         className="rounded-[10px] border-[2px] border-[#EDEFF7] shadow-none px-4 w-full font-medium"
         open={Boolean(anchorEl)}
         onClose={() => setAnchorEl(null)}
@@ -54,7 +54,11 @@ const DropdownSelect = <T extends { [key: string]: unknown }>({
         )}
       >
         {values.map((v, i) => (
-          <MenuItem className="w-full outline-none py-2" value={getValue(v)} key={getValue(v) + i}>
+          <MenuItem
+            className="w-full outline-none py-2"
+            value={getValue(v) as unknown as string}
+            key={i as unknown as string}
+          >
             {getDisplayedValue(v)}
           </MenuItem>
         ))}
