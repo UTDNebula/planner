@@ -352,7 +352,7 @@ export default function OnboardingPage() {
       minors: [] as string[],
     };
     pageOneData.degree.forEach((value) => {
-      if (value.degreeType === 'Major') {
+      if (value.degreeType === 'major') {
         temp.majors.push(value.degree);
       } else {
         temp.minors.push(value.degree);
