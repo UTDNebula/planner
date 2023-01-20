@@ -50,7 +50,8 @@ const CreditsForm: FC = () => {
     if (credit) {
       addCredit.mutateAsync({
         courseCode: credit,
-        semesterCode: isTransfer ? null : semester,
+        semesterCode: semester,
+        transfer: isTransfer,
       });
     }
   };
@@ -107,21 +108,20 @@ const CreditsForm: FC = () => {
             label="No"
           />
         </RadioGroup>
-        {!isTransfer && (
-          <>
-            <label htmlFor="semester" className="text-black font-medium">
-              Semester
-            </label>
-            <DropdownSelect
-              id="semester"
-              value={semester}
-              values={semesters as (SemesterCode & { [key: string]: string })[]}
-              getValue={(semester) => semester}
-              getDisplayedValue={(semester) => displaySemesterCode(semester)}
-              onChange={(sem) => setSemester(sem)}
-            />
-          </>
-        )}
+
+        <>
+          <label htmlFor="semester" className="text-black font-medium">
+            Semester
+          </label>
+          <DropdownSelect
+            id="semester"
+            value={semester}
+            values={semesters as (SemesterCode & { [key: string]: string })[]}
+            getValue={(semester) => semester}
+            getDisplayedValue={(semester) => displaySemesterCode(semester)}
+            onChange={(sem) => setSemester(sem)}
+          />
+        </>
       </FormControl>
       <Button onClick={submit}>{'Add Credit'}</Button>
     </Layout>

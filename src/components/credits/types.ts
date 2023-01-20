@@ -9,11 +9,12 @@ import { SemesterType } from '@prisma/client';
  * **Firebase does not support 'undefined'
  */
 export type Credit = {
+  transfer: boolean;
   courseCode: string;
   semesterCode: {
     year: number;
     semester: SemesterType;
-  } | null;
+  };
 };
 
 /**

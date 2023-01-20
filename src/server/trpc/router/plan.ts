@@ -63,7 +63,7 @@ export const planRouter = router({
 
       // Add credits to plan
 
-      const semesters = addCreditsToPlan(planData.semesters, creditData);
+      const semesters = addCreditsToPlan(planData.semesters, creditData, planData.id);
 
       planData.semesters = semesters;
 

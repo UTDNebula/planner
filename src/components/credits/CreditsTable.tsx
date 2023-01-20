@@ -87,7 +87,7 @@ const CreditsTable: FC = () => {
             },
             {
               title: 'Transfer',
-              valueGetter: (credit) => (!credit.semesterCode ? 'Yes' : 'No'),
+              valueGetter: (credit) => (!credit.transfer ? 'Yes' : 'No'),
             },
             {
               title: 'Semester',
@@ -116,8 +116,6 @@ const CreditsTable: FC = () => {
                   <DeleteIcon className="text-red-500 cursor-pointer absolute right-5 top-1/2 -translate-y-1/2" />
                 ),
                 onClick: (_, row) => {
-                  console.log(row);
-                  console.log('WTF');
                   return removeCredit.mutateAsync({
                     courseCode: row.courseCode,
                     semesterCode: row.semesterCode as SemesterCode,

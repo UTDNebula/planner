@@ -12,6 +12,7 @@ export const creditsRouter = router({
         id: true,
         courseCode: true,
         semesterCode: true,
+        transfer: true,
       },
     });
   }),
@@ -19,18 +20,20 @@ export const creditsRouter = router({
     .input(
       z.object({
         courseCode: z.string(),
-        semesterCode: z.object({ semester: z.enum(['f', 's', 'u']), year: z.number() }).nullable(),
+        semesterCode: z.object({ semester: z.enum(['f', 's', 'u']), year: z.number() }),
+        transfer: z.boolean(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
       const userId = ctx.session.user.id;
-      const { courseCode, semesterCode } = input;
+      const { courseCode, semesterCode, transfer } = input;
       try {
         await ctx.prisma.credit.create({
           data: {
             userId,
             courseCode,
             semesterCode,
+            transfer,
           },
         });
         return true;

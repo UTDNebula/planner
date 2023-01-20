@@ -109,6 +109,7 @@ export function formatDegreeValidationRequest(
 export function addCreditsToPlan(
   semesters: { code: SemesterCode; id: string; courses: string[]; planId: string | null }[],
   creditsData: { courseCode: string; semesterCode: SemesterCode | null }[],
+  planId: string,
 ) {
   // Calculate # years to add
   // Bug: ignores credits transferred in
@@ -122,7 +123,6 @@ export function addCreditsToPlan(
       }
     }
   });
-
   // Add credit years to plan
   const creditSemesters: {
     courses: string[];
@@ -130,13 +130,15 @@ export function addCreditsToPlan(
     code: SemesterCode;
     planId: string | null;
   }[] = [];
-  for (let year = minYear; year < semesters[0].code.year; year++) {
+
+  const endSemester = semesters[0] ? semesters[0].code.year : 2022;
+
+  for (let year = minYear; year < endSemester; year++) {
     const newYear = createNewYear({ semester: 'u', year }).map((sem) => {
       return { ...sem, courses: [] as string[], id: sem.id.toString() };
     });
 
     // Add credits to year
-
     newYear.forEach((sem) => {
       creditsData.map((credit) => {
         if (
@@ -147,7 +149,7 @@ export function addCreditsToPlan(
           sem.courses.push(credit.courseCode);
         }
       });
-      creditSemesters.push({ ...sem, planId: semesters[0].planId });
+      creditSemesters.push({ ...sem, planId });
     });
   }
 
