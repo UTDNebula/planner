@@ -33,8 +33,8 @@ export default function Sidebar({ isMobile }: { isMobile: boolean }): JSX.Elemen
     <>
       <div
         className={`${
-          open ? 'w-[240px]' : 'w-auto'
-        } h-screen max-h-screen bg-white border-r-[1px] border-r-[#e0e0e0] transition-all`}
+          open ? 'w-[240px] shrink-0' : 'w-auto'
+        } border-blue-900 border-2 h-screen max-h-screen  transition-all`}
       >
         {!isMobile && (
           <div
