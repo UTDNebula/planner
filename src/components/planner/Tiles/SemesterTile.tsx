@@ -1,3 +1,4 @@
+import { isEarlierSemester, getFirstNewSemester } from '@/utils/plannerUtils';
 import { UniqueIdentifier, useDroppable } from '@dnd-kit/core';
 import { SemesterCode, SemesterType } from '@prisma/client';
 import { FC, forwardRef } from 'react';
@@ -15,6 +16,7 @@ export interface SemesterTileProps {
   isOver: boolean;
   getDragId: GetDragIdByCourseAndSemester;
   isValid: boolean;
+  isDisabled: boolean;
   onRemoveCourse: (semester: Semester, course: DraggableCourse) => void;
 }
 
@@ -32,13 +34,15 @@ export function displaySemesterCode(semesterCode: SemesterCode): string {
  * Strictly UI implementation of a semester tile
  */
 export const SemesterTile = forwardRef<HTMLDivElement, SemesterTileProps>(function SemesterTile(
-  { semester, getDragId, isValid, isOver, onRemoveCourse },
+  { semester, getDragId, isDisabled, isValid, isOver, onRemoveCourse },
   ref,
 ) {
   return (
     <div
       ref={ref}
-      className={`w-[256px] h-[184px] overflow-hidden bg-white rounded-md shadow-md px-[12px] py-[8px] flex flex-col gap-[10px] transition-all duration-300 select-none ${
+      className={`w-[256px] h-[184px] overflow-hidden ${
+        isDisabled ? 'bg-gray-100' : 'bg-white'
+      } rounded-md shadow-md px-[12px] py-[8px] flex flex-col gap-[10px] transition-all duration-300 select-none ${
         isOver ? 'shadow-lg scale-105' : ''
       } border-b-[9px] ${isValid ? 'border-b-[#3E61ED]' : 'border-b-red-500'}`}
     >
@@ -80,14 +84,17 @@ const DroppableSemesterTile: FC<DroppableSemesterTileProps> = ({
   getSemesterCourseDragId,
   ...props
 }) => {
+  const isDisabled = isEarlierSemester(semester.code, getFirstNewSemester());
   const { setNodeRef, isOver } = useDroppable({
     id: dropId,
     data: { to: 'semester-tile', semester } as DragDataToSemesterTile,
+    disabled: isDisabled,
   });
 
   return (
     <SemesterTile
       ref={setNodeRef}
+      isDisabled={isDisabled}
       isOver={isOver}
       semester={semester}
       getDragId={getSemesterCourseDragId}

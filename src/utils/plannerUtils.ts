@@ -156,3 +156,17 @@ export function addCreditsToPlan(
   const newSem = creditSemesters.concat(semesters);
   return newSem;
 }
+
+export const isEarlierSemester = (semesterOne: SemesterCode, semesterTwo: SemesterCode) => {
+  if (semesterOne.year < semesterTwo.year) {
+    return true;
+  } else if (semesterOne.semester < semesterTwo.semester) {
+    return true;
+  }
+  return false;
+};
+
+// TODO: Add actual logic to this
+export const getFirstNewSemester = () => {
+  return { semester: 's' as SemesterType, year: 2023 };
+};

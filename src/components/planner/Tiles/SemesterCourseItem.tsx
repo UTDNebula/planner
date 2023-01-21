@@ -1,3 +1,4 @@
+import { isEarlierSemester, getFirstNewSemester } from '@/utils/plannerUtils';
 import { UniqueIdentifier, useDraggable } from '@dnd-kit/core';
 import CloseIcon from '@mui/icons-material/Close';
 import { ComponentPropsWithoutRef, FC, forwardRef } from 'react';
@@ -7,24 +8,27 @@ import { DragDataFromSemesterTile, DraggableCourse, Semester } from '../types';
 export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'> {
   course: DraggableCourse;
   isValid?: boolean;
+  isDisabled: boolean;
   onRemove?: (course: DraggableCourse) => void;
 }
 
 /** UI implementation of a semester course */
 export const SemesterCourseItem = forwardRef<HTMLDivElement, SemesterCourseItemProps>(
-  function SemesterCourseItem({ course, isValid, onRemove, ...props }, ref) {
+  function SemesterCourseItem({ course, isValid, isDisabled, onRemove, ...props }, ref) {
     return (
       <div
         ref={ref}
         {...props}
-        className={`shadow-md w-full h-[22px] rounded-md py-[1px] px-[8px] flex items-center justify-between bg-white ${
-          isValid ? 'border-red-500 border-[1px]' : ''
-        }`}
+        className={`shadow-md w-full h-[22px] rounded-md py-[1px] px-[8px] flex items-center justify-between ${
+          isDisabled ? 'bg-gray-100' : 'bg-white'
+        } ${isValid ? 'border-red-500 border-[1px]' : ''}`}
       >
         <span className="text-[12px] font-medium text-[#1C2A6D]">{course.code}</span>
-        <div onClick={() => onRemove && onRemove(course)}>
-          <CloseIcon fontSize="small" />
-        </div>
+        {!isDisabled && (
+          <div onClick={() => onRemove && onRemove(course)}>
+            <CloseIcon fontSize="small" />
+          </div>
+        )}
       </div>
     );
   },
@@ -45,15 +49,20 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
   course,
   onRemove,
 }) => {
+  const isDisabled = isEarlierSemester(semester.code, getFirstNewSemester());
   const { setNodeRef, attributes, listeners, isDragging } = useDraggable({
     id: dragId,
     data: { from: 'semester-tile', semester, course } as DragDataFromSemesterTile,
+    disabled: isDisabled,
   });
 
   return (
     <SemesterCourseItem
       ref={setNodeRef}
-      style={{ visibility: isDragging ? 'hidden' : 'unset' }}
+      style={{
+        visibility: isDragging ? 'hidden' : 'unset',
+      }}
+      isDisabled={isDisabled}
       {...attributes}
       {...listeners}
       course={course}
