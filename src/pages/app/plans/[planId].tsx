@@ -16,12 +16,13 @@ import { createNewYear } from '@/utils/utilFunctions';
 import { ObjectID } from 'bson';
 import { SemesterCode } from '@prisma/client';
 import React from 'react';
+import BackArrowIcon from '@/icons/BackArrowIcon';
 
 /**
  * A page that displays the details of a specific student academic plan.
  * // TODO: Decide planner navigation UX
  */
-function PlanDetailPage(
+export default function PlanDetailPage(
   props: InferGetServerSidePropsType<typeof getServerSideProps>,
 ): JSX.Element {
   const utils = trpc.useContext();
@@ -267,10 +268,14 @@ function PlanDetailPage(
   };
 
   return (
-    <div className="w-screen flex flex-col bg-[#FFFFFF] p-[44px]">
-      <div className="mt-4 mb-10 flex flex-row">
-        <button onClick={handleBack}>Back</button>
-        <div className="text-2xl">My Plan</div>{' '}
+    <div className="w-screen flex flex-col p-4 h-screen max-h-screen overflow-y-scroll overflow-x-hidden">
+      <div className=" mb-10 flex flex-row items-center">
+        <BackArrowIcon
+          onClick={() => router.push('/app/home')}
+          className={`w-5 h-5 cursor-pointer mr-2`}
+          strokeWidth={2.5}
+        />
+        <div className="text-2xl">My Plan</div>
       </div>
       <Planner
         degreeRequirements={degreeData}
@@ -278,12 +283,9 @@ function PlanDetailPage(
         onRemoveCourseFromSemester={handleOnRemoveCourseFromSemester}
         onAddCourseToSemester={handleOnAddCourseToSemester}
         onMoveCourseFromSemesterToSemester={handleOnMoveCourseFromSemesterToSemester}
+        onRemoveYear={handleOnRemoveYear}
+        onAddYear={handleOnAddYear}
       />
-      <div>
-        <button onClick={handleOnRemoveYear}>Remove Year</button>
-        <button onClick={handleOnAddYear}>Add Year</button>
-      </div>
-      <button onClick={handlePlanDelete}>Delete Plan</button>
     </div>
   );
 }
@@ -332,5 +334,4 @@ function getSemestersInfo(
     return semester;
   });
 }
-
-export default React.memo(PlanDetailPage);
+PlanDetailPage.auth = true;

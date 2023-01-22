@@ -25,7 +25,12 @@ export const SemesterCourseItem = forwardRef<HTMLDivElement, SemesterCourseItemP
       >
         <span className="text-[12px] font-medium text-[#1C2A6D]">{course.code}</span>
         {!isDisabled && (
-          <div onClick={() => onRemove && onRemove(course)}>
+          <div
+            onClick={(e) => {
+              e.stopPropagation();
+              onRemove && onRemove(course);
+            }}
+          >
             <CloseIcon fontSize="small" />
           </div>
         )}

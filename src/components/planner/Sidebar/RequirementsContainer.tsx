@@ -42,7 +42,7 @@ function RequirementsCarousel({
   }, [overflow]);
 
   return (
-    <div className="relative">
+    <>
       <div
         className={`${
           (overflow || !carousel) && 'overflow-hidden'
@@ -79,7 +79,7 @@ function RequirementsCarousel({
           />
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

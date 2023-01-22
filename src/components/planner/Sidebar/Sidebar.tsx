@@ -57,22 +57,21 @@ function CourseSelectorContainer({
   }) as DraggableCourse[];
 
   return (
-    <div className="grid grid-rows-[auto_1fr] gap-y-8 w-[344px] h-full overflow-hidden">
+    <div className="flex flex-col gap-y-8 w-[344px] h-full overflow-hidden">
       <SearchBar updateQuery={updateQueryWrapper} placeholder="Search courses" />
-      <div className="overflow-y-scroll max-h-full overflow-x-hidden">
-        {results.length > 0 && (
-          <div className="bg-white p-4">
-            <DraggableCourseList courses={courseResults} getDragId={getSearchedDragId} />
-          </div>
-        )}
-        {degreeRequirements.map((req, idx) => (
-          <RequirementsContainer
-            key={idx}
-            degreeRequirement={req}
-            getCourseItemDragId={getRequirementDragId}
-          />
-        ))}
-      </div>
+
+      {results.length > 0 && (
+        <div className="bg-white p-4">
+          <DraggableCourseList courses={courseResults} getDragId={getSearchedDragId} />
+        </div>
+      )}
+      {degreeRequirements.map((req, idx) => (
+        <RequirementsContainer
+          key={idx}
+          degreeRequirement={req}
+          getCourseItemDragId={getRequirementDragId}
+        />
+      ))}
     </div>
   );
 }

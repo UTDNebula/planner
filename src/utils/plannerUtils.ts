@@ -158,12 +158,17 @@ export function addCreditsToPlan(
 }
 
 export const isEarlierSemester = (semesterOne: SemesterCode, semesterTwo: SemesterCode) => {
-  if (semesterOne.year < semesterTwo.year) {
-    return true;
-  } else if (semesterOne.semester < semesterTwo.semester) {
-    return true;
+  if (JSON.stringify(semesterOne) === JSON.stringify(semesterTwo)) {
+    return false;
+  } else if (semesterOne.year > semesterTwo.year) {
+    return false;
+  } else if (
+    semesterOne.year === semesterTwo.year &&
+    (semesterOne.semester === 'f' || semesterOne.semester > semesterTwo.semester)
+  ) {
+    return false;
   }
-  return false;
+  return true;
 };
 
 // TODO: Add actual logic to this

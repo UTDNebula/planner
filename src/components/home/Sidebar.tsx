@@ -34,7 +34,7 @@ export default function Sidebar({ isMobile }: { isMobile: boolean }): JSX.Elemen
       <div
         className={`${
           open ? 'w-[240px] shrink-0' : 'w-auto'
-        } border-blue-900 border-2 h-screen max-h-screen  transition-all`}
+        } flex flex-col bg-white border-r-[1px] border-r-[#e0e0e0] h-screen max-h-screen  transition-all`}
       >
         {!isMobile && (
           <div
@@ -58,9 +58,10 @@ export default function Sidebar({ isMobile }: { isMobile: boolean }): JSX.Elemen
             </Link>
           ))}
         </ul>
+        <div className="flex-grow"></div>
 
         <button
-          className="absolute bottom-5 px-5 flex gap-6 items-center"
+          className="align-bottom px-5  pb-5 flex gap-6 items-center"
           onClick={() => signOut()}
         >
           <LogoutIcon className="w-6 h-6" />
