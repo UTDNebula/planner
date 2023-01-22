@@ -4,7 +4,6 @@ import { z } from 'zod';
 import { ObjectID } from 'bson';
 
 import { protectedProcedure, router } from '../trpc';
-import { getAllCourses } from '@/utils/utilFunctions';
 
 export const userRouter = router({
   getUser: protectedProcedure.query(async ({ ctx }) => {

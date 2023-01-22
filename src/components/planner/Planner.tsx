@@ -153,33 +153,35 @@ export default function Planner({
             ) : null)}
         </DragOverlay>
 
-        <div className="grid grid-cols-3 grid-rows-4 w-fit gap-[32px] min-h-fit">
-          {semesters.map((semester) => {
-            const hasInvalidCourse =
-              semester.courses.length > 0 &&
-              semester.courses.some((course) => course.validation && !course.validation.isValid);
+        <div className="min-h-fit">
+          <div className="grid grid-cols-3 grid-rows-4 w-fit gap-[32px]">
+            {semesters.map((semester) => {
+              const hasInvalidCourse =
+                semester.courses.length > 0 &&
+                semester.courses.some((course) => course.validation && !course.validation.isValid);
 
-            return (
-              <DroppableSemesterTile
-                onRemoveCourse={(semester, course) =>
-                  onRemoveCourseFromSemester(semester, course).then((notification) => {
-                    // TODO: push message to toast notification
-                    console.log(notification.message);
-                  })
-                }
-                key={semester.id.toString()}
-                dropId={`semester-${semester.id}`}
-                getSemesterCourseDragId={(course, semester) =>
-                  `semester-tile-course-${semester.id}-${course.id}`
-                }
-                semester={semester}
-                isValid={!hasInvalidCourse}
-              />
-            );
-          })}
-          <div className="col-span-full flex justify-center items-center gap-8 h-10">
-            <button onClick={onRemoveYear}>- Remove Year</button>
-            <button onClick={onAddYear}>+ Add Year</button>
+              return (
+                <DroppableSemesterTile
+                  onRemoveCourse={(semester, course) =>
+                    onRemoveCourseFromSemester(semester, course).then((notification) => {
+                      // TODO: push message to toast notification
+                      console.log(notification.message);
+                    })
+                  }
+                  key={semester.id.toString()}
+                  dropId={`semester-${semester.id}`}
+                  getSemesterCourseDragId={(course, semester) =>
+                    `semester-tile-course-${semester.id}-${course.id}`
+                  }
+                  semester={semester}
+                  isValid={!hasInvalidCourse}
+                />
+              );
+            })}
+            <div className="col-span-full flex justify-center items-center gap-8 h-10">
+              <button onClick={onRemoveYear}>- Remove Year</button>
+              <button onClick={onAddYear}>+ Add Year</button>
+            </div>
           </div>
         </div>
       </div>

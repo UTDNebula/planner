@@ -14,7 +14,7 @@ export default function Sidebar({ isMobile }: { isMobile: boolean }): JSX.Elemen
 
   const sidebarItems = [
     {
-      url: '/app',
+      url: '/app/home',
       label: 'Home',
       Icon: HomeIcon,
     },

@@ -17,6 +17,7 @@ import { ObjectID } from 'bson';
 import { SemesterCode } from '@prisma/client';
 import React from 'react';
 import BackArrowIcon from '@/icons/BackArrowIcon';
+import SettingsIcon from '@/icons/SettingsIcon';
 
 /**
  * A page that displays the details of a specific student academic plan.
@@ -269,13 +270,20 @@ export default function PlanDetailPage(
 
   return (
     <div className="w-screen flex flex-col p-4 h-screen max-h-screen overflow-y-scroll overflow-x-hidden">
-      <div className=" mb-10 flex flex-row items-center">
+      <div className=" mb-10 flex flex-row items-center gap-2">
         <BackArrowIcon
           onClick={() => router.push('/app/home')}
           className={`w-5 h-5 cursor-pointer mr-2`}
           strokeWidth={2.5}
         />
         <div className="text-2xl">My Plan</div>
+
+        <div className=" ml-auto">Majors: Computer Science</div>
+        <div>Minors: Cognitive Science</div>
+        <div>Fast Track</div>
+        <div>Import Plan</div>
+        <div>Export Plan </div>
+        <SettingsIcon className={`w-5 h-5 cursor-pointer ml-5`} strokeWidth={2.5} />
       </div>
       <Planner
         degreeRequirements={degreeData}
@@ -286,6 +294,7 @@ export default function PlanDetailPage(
         onRemoveYear={handleOnRemoveYear}
         onAddYear={handleOnAddYear}
       />
+      <button onClick={handlePlanDelete}>Delete</button>
     </div>
   );
 }

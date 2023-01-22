@@ -30,6 +30,13 @@ export function displaySemesterCode(semesterCode: SemesterCode): string {
   }
   return `${semesterName} ${semesterCode.year}`;
 }
+
+function getTitleText({ isValid, isDisabled }: { isValid: boolean; isDisabled: boolean }) {
+  if (isDisabled) {
+    return 'text-gray-600';
+  }
+  return isValid ? 'text-[#3E61ED]' : 'text-red-500';
+}
 /**
  * Strictly UI implementation of a semester tile
  */
@@ -47,7 +54,7 @@ export const SemesterTile = forwardRef<HTMLDivElement, SemesterTileProps>(functi
       } border-b-[9px] ${isValid ? 'border-b-[#3E61ED]' : 'border-b-red-500'}`}
     >
       <div className="flex justify-between">
-        <h3 className={`text-[15px] font-medium ${isValid ? 'text-[#3E61ED]' : 'text-red-500'}`}>
+        <h3 className={`text-[15px] font-medium ${getTitleText({ isValid, isDisabled })}`}>
           {displaySemesterCode(semester.code)}
         </h3>
         {!isValid && <h3 className="text-[15px] font-medium text-red-500">{'Invalid Course'}</h3>}

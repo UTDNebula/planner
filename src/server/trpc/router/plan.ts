@@ -51,9 +51,6 @@ export const planRouter = router({
         },
       });
 
-      console.log(planData);
-      console.log('HUH');
-
       if (!planData) {
         throw new TRPCError({
           code: 'NOT_FOUND',
