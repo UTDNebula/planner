@@ -18,27 +18,27 @@ export default function CreditsPage(): JSX.Element {
   const [openAddCredit, setOpenAddCredit] = useState(false);
   const [openTranscriptDialog, setOpenTranscriptDialog] = useState(false);
   return (
-    <main className="overflow-y-scroll h-[90vh]">
+    <main className="overflow-y-scroll h-[90vh] w-full">
       <Head>
         <title>Nebula - Your credits</title>
       </Head>
-      <UploadTranscriptDialog
+      {/* <UploadTranscriptDialog
         open={openTranscriptDialog}
         onClose={() => setOpenTranscriptDialog(false)}
-      />
+      /> */}
       <div className="w-full  p-5 lg:p-20 overflow-y-auto flex flex-col gap-10">
         <h1 className="text-[40px] font-semibold text-[#1C2A6D]">Credits</h1>
         <div className="flex gap-10">
           <Button onClick={() => setOpenAddCredit(true)} icon={<AddIcon />} className="w-[140px]">
             Add Credit
           </Button>
-          <Button
+          {/* <Button
             onClick={() => setOpenTranscriptDialog(true)}
             icon={<AddIcon />}
             className="w-[200px]"
           >
             Upload Transcript
-          </Button>
+          </Button> */}
         </div>
         <Modal
           open={openAddCredit}

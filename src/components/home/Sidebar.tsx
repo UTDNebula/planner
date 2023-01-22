@@ -1,4 +1,5 @@
 import ChevronIcon from '@/icons/ChevronIcon';
+import CreditsIcon from '@/icons/CreditsIcon';
 import HomeIcon from '@/icons/HomeIcon';
 import LogoutIcon from '@/icons/LogoutIcon';
 import ProfileIcon from '@/icons/ProfileIcon';
@@ -25,7 +26,7 @@ export default function Sidebar({ isMobile }: { isMobile: boolean }): JSX.Elemen
     {
       url: '/app/credits',
       label: 'Credits',
-      Icon: ProfileIcon,
+      Icon: CreditsIcon,
     },
   ];
 
