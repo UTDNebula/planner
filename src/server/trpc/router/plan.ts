@@ -66,7 +66,7 @@ export const planRouter = router({
 
       const body = formatDegreeValidationRequest(semesters);
 
-      const validationData = await fetch('http://127.0.0.1:5000/validate-degree-plan', {
+      const validationData = await fetch(`${process.env.VALIDATOR}/validate-degree-plan`, {
         method: 'POST',
         body: JSON.stringify(body),
         headers: {
@@ -362,13 +362,15 @@ export const planRouter = router({
     )
     .query(async ({ ctx, input }) => {
       try {
-        return await fetch('http://127.0.0.1:5000/validate-degree-plan', {
+        console.log('BR');
+        return await fetch('http://0.0.0.0:5001/validate-degree-plan', {
           method: 'POST',
           body: JSON.stringify(input),
           headers: {
             'content-type': 'application/json',
           },
         }).then(async (res) => {
+          console.log(res.status);
           const rawData = await res.json();
           // Transform data
           const core: DegreeRequirementGroup = { name: 'Core Requirements', requirements: [] };
