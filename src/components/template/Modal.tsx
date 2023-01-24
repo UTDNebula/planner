@@ -14,11 +14,11 @@ export default function TemplateModal({ setOpenTemplateModal }: TemplateModalPro
   const router = useRouter();
   const [templateQuery, setTemplateQuery] = useState('');
   const utils = trpc.useContext();
-  // const createUserPlan = trpc.user.createUserPlan.useMutation({
-  //   async onSuccess() {
-  //     await utils.user.getUser.invalidate();
-  //   },
-  // });
+  const createUserPlan = trpc.user.createUserPlan.useMutation({
+    async onSuccess() {
+      await utils.user.getUser.invalidate();
+    },
+  });
 
   const createEmptyUserPlan = trpc.user.createEmptyUserPlan.useMutation({
     async onSuccess() {
@@ -44,6 +44,7 @@ export default function TemplateModal({ setOpenTemplateModal }: TemplateModalPro
     }
     return 1;
   });
+
   const handleTemplateCreation = async (major: string) => {
     if (major === 'empty') {
       try {
@@ -60,13 +61,17 @@ export default function TemplateModal({ setOpenTemplateModal }: TemplateModalPro
       }
     });
 
-    // try {
-    //   const planId = await createUserPlan.mutateAsync(selectedTemplate[0].id);
-    //   if (!planId) {
-    //     return router.push('/app/home');
-    //   }
-    //   return router.push(`/app/plans/${planId}`);
-    // } catch (error) {}
+    try {
+      const planId = await createUserPlan.mutateAsync(selectedTemplate[0].id);
+      console.log('HM');
+      console.log(planId);
+      if (!planId) {
+        return router.push('/app/home');
+      }
+      return router.push(`/app/plans/${planId}`);
+    } catch (error) {
+      console.error(error);
+    }
   };
   return (
     <div
@@ -102,6 +107,7 @@ export default function TemplateModal({ setOpenTemplateModal }: TemplateModalPro
               {
                 title: 'Templates',
                 key: 'templateName',
+                valueGetter: (name) => name.templateName,
               },
             ]}
             rows={
