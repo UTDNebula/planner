@@ -1,4 +1,5 @@
 import { DegreeRequirementGroup, Semester } from '@/components/planner/types';
+import { env } from '@/env/server.mjs';
 import { addCreditsToPlan, formatDegreeValidationRequest } from '@/utils/plannerUtils';
 
 import { createNewYear, getAllCourses } from '@/utils/utilFunctions';
@@ -78,7 +79,7 @@ export const planRouter = router({
 
       const body = formatDegreeValidationRequest(hehe);
 
-      const validationData = await fetch(`${process.env.VALIDATOR}/validate-degree-plan`, {
+      const validationData = await fetch(`${env.VALIDATOR}/validate-degree-plan`, {
         method: 'POST',
         body: JSON.stringify(body),
         headers: {
@@ -375,7 +376,7 @@ export const planRouter = router({
     .query(async ({ ctx, input }) => {
       try {
         console.log('BR');
-        return await fetch('http://0.0.0.0:5001/validate-degree-plan', {
+        return await fetch(`${env.VALIDATOR}/validate-degree-plan`, {
           method: 'POST',
           body: JSON.stringify(input),
           headers: {
