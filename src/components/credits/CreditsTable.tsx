@@ -1,9 +1,10 @@
-import { trpc } from '@/utils/trpc';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
-import { SemesterCode, SemesterType } from '@prisma/client';
+import { SemesterCode } from '@prisma/client';
 import { FC, useMemo, useState } from 'react';
-import { displaySemesterCode } from '../planner/Tiles/SemesterTile';
 
+import { trpc } from '@/utils/trpc';
+
+import { displaySemesterCode } from '../planner/Tiles/SemesterTile';
 import DataGrid from './DataGrid';
 import SearchBar from './SearchBar';
 import { Credit } from './types';
@@ -60,7 +61,7 @@ const CreditsTable: FC = () => {
     () =>
       searchableCredits
         .filter(({ matchString }) => matchString.includes(query.toLowerCase()))
-        .map((d) => d.data as Credit),
+        .map((d) => d.data as unknown as Credit),
     [searchableCredits, query],
   );
 

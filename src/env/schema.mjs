@@ -21,6 +21,7 @@ export const serverSchema = z.object({
   DISCORD_CLIENT_SECRET: z.string(),
   NEXTAUTH_EMAIL_SERVER: z.string(),
   NEXTAUTH_EMAIL_FROM: z.string(),
+  VALIDATOR: z.string(),
 });
 
 /**

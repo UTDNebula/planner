@@ -5,11 +5,11 @@ import { unstable_getServerSession } from 'next-auth';
 import * as React from 'react';
 import superjson from 'superjson';
 
+import Credits from '@/components/home/Credits';
 import { appRouter } from '@/server/trpc/router/_app';
 
 import useMedia from '../../utils/media';
 import { authOptions } from '../api/auth/[...nextauth]';
-import Credits from '@/components/home/Credits';
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const session = await unstable_getServerSession(context.req, context.res, authOptions);
   const ssg = createProxySSGHelpers({

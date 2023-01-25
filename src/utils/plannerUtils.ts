@@ -1,6 +1,4 @@
-import { Semester } from '@/components/planner/types';
-import { Prisma, SemesterCode, SemesterType } from '@prisma/client';
-import { v4 as uuid } from 'uuid';
+import { SemesterCode, SemesterType } from '@prisma/client';
 
 import { createNewYear } from './utilFunctions';
 
@@ -89,6 +87,7 @@ export function formatDegreeValidationRequest(
     courses: semesters
       .flatMap((s) => s.courses)
       .map((c) => {
+        console.log(c);
         const split = c.split(' ');
         const department = split[0];
         const courseNumber = Number(split[1]);

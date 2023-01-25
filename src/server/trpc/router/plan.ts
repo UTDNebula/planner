@@ -1,9 +1,9 @@
-import { DegreeRequirementGroup, Semester } from '@/components/planner/types';
-import { addCreditsToPlan, formatDegreeValidationRequest } from '@/utils/plannerUtils';
-
-import { createNewYear } from '@/utils/utilFunctions';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
+
+import { DegreeRequirementGroup, Semester } from '@/components/planner/types';
+import { addCreditsToPlan, formatDegreeValidationRequest } from '@/utils/plannerUtils';
+import { createNewYear, getAllCourses } from '@/utils/utilFunctions';
 
 import { protectedProcedure, router } from '../trpc';
 
@@ -64,7 +64,19 @@ export const planRouter = router({
 
       planData.semesters = semesters;
 
-      const body = formatDegreeValidationRequest(semesters);
+      // FIX THIS LATER IDC RN
+
+      const temporaryFunctionPlzDeleteThis = async () => {
+        const validCourses = await getAllCourses();
+        return semesters.map((sem) => {
+          const courses = sem.courses.filter((course) => course in validCourses);
+          return { ...sem, courses };
+        });
+      };
+
+      const hehe = await temporaryFunctionPlzDeleteThis();
+
+      const body = formatDegreeValidationRequest(hehe);
 
       const validationData = await fetch(`${process.env.VALIDATOR}/validate-degree-plan`, {
         method: 'POST',

@@ -1,6 +1,7 @@
-import { Semester } from '@/components/planner/types';
 import { SemesterCode, SemesterType } from '@prisma/client';
 import { ObjectID } from 'bson';
+
+import { Semester } from '@/components/planner/types';
 
 /**
  * Creates 3 new semesters based on given year in SemesterCode

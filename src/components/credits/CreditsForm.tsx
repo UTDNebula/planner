@@ -1,5 +1,3 @@
-import { trpc } from '@/utils/trpc';
-import { loadDummyCourses } from '@/utils/utilFunctions';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
@@ -7,10 +5,11 @@ import RadioGroup from '@mui/material/RadioGroup';
 import { SemesterCode, SemesterType } from '@prisma/client';
 import { FC, useMemo, useState } from 'react';
 
+import { trpc } from '@/utils/trpc';
+import { loadDummyCourses } from '@/utils/utilFunctions';
+
 import { generateSemesters } from '../../modules/common/data';
-import { convertSemesterToData } from '../../modules/common/data-utils';
 import { displaySemesterCode } from '../planner/Tiles/SemesterTile';
-import { Semester } from '../planner/types';
 import useSearch from '../search/search';
 import AutoCompleteSearchBar from './AutoCompleteSearchBar';
 import Button from './Button';

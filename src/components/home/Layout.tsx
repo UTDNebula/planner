@@ -1,4 +1,5 @@
 import useMedia from '@/utils/media';
+
 import Sidebar from './Sidebar';
 
 export default function Layout({
