@@ -3,16 +3,17 @@ import '../styles/globals.css';
 
 import { createTheme, StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
 import { AnimateSharedLayout } from 'framer-motion';
-import { AppProps, type AppType } from 'next/app';
+import { type AppType,AppProps } from 'next/app';
 // import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { type Session } from 'next-auth';
 import { SessionProvider, useSession } from 'next-auth/react';
+import { FC } from 'react';
+
+import Layout from '@/components/home/Layout';
 
 // import { AuthProvider } from '../modules/auth/auth-context';
 import { trpc } from '../utils/trpc';
-import Layout from '@/components/home/Layout';
-import { FC } from 'react';
 const theme = createTheme({
   typography: {
     allVariants: {

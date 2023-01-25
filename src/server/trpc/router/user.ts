@@ -1,11 +1,11 @@
 import { Prisma, SemesterCode, SemesterType } from '@prisma/client';
-import { Semester } from '@/components/planner/types';
 import { TRPCError } from '@trpc/server';
+import { ObjectID } from 'bson';
 import { z } from 'zod';
-import { ObjectId, ObjectID } from 'bson';
+
+import { createNewYear } from '@/utils/utilFunctions';
 
 import { protectedProcedure, router } from '../trpc';
-import { createNewYear, getAllCourses } from '@/utils/utilFunctions';
 
 export const userRouter = router({
   getUser: protectedProcedure.query(async ({ ctx }) => {

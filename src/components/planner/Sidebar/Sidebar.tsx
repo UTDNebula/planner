@@ -1,12 +1,12 @@
 import SearchBar from '@components/credits/SearchBar';
+import React from 'react';
 
 import RequirementsContainer from '@/components/planner/Sidebar/RequirementsContainer';
 import useSearch from '@/components/search/search';
+import { loadDummyCourses } from '@/utils/utilFunctions';
 
 import { DegreeRequirementGroup, DraggableCourse, GetDragIdByCourse } from '../types';
 import DraggableCourseList from './DraggableCourseList';
-import React from 'react';
-import { loadDummyCourses } from '@/utils/utilFunctions';
 
 export interface CourseSelectorContainerProps {
   degreeRequirements: DegreeRequirementGroup[];

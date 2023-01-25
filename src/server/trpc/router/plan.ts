@@ -1,9 +1,9 @@
-import { DegreeRequirementGroup, Semester } from '@/components/planner/types';
-import { addCreditsToPlan, formatDegreeValidationRequest } from '@/utils/plannerUtils';
-
-import { createNewYear, getAllCourses } from '@/utils/utilFunctions';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
+
+import { DegreeRequirementGroup, Semester } from '@/components/planner/types';
+import { addCreditsToPlan, formatDegreeValidationRequest } from '@/utils/plannerUtils';
+import { createNewYear, getAllCourses } from '@/utils/utilFunctions';
 
 import { protectedProcedure, router } from '../trpc';
 

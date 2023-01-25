@@ -1,7 +1,8 @@
-import { isEarlierSemester, getFirstNewSemester } from '@/utils/plannerUtils';
 import { UniqueIdentifier, useDraggable } from '@dnd-kit/core';
 import CloseIcon from '@mui/icons-material/Close';
 import { ComponentPropsWithoutRef, FC, forwardRef } from 'react';
+
+import { getFirstNewSemester,isEarlierSemester } from '@/utils/plannerUtils';
 
 import { DragDataFromSemesterTile, DraggableCourse, Semester } from '../types';
 

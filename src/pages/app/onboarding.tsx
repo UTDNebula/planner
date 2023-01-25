@@ -1,6 +1,6 @@
 import { createProxySSGHelpers } from '@trpc/react-query/ssg';
 import { type RouterInputs } from '@utils/trpc';
-import { GetServerSidePropsContext, NextPage } from 'next';
+import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import { unstable_getServerSession } from 'next-auth/next';
 import React, { useEffect, useState } from 'react';

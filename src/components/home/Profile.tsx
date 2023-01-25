@@ -1,8 +1,9 @@
-import { trpc } from '@/utils/trpc';
 import { TextField } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import { purple } from '@mui/material/colors';
 import { useEffect, useMemo, useState } from 'react';
+
+import { trpc } from '@/utils/trpc';
 
 type ProfilePageProps = {
   isDesktop: boolean;
