@@ -60,7 +60,7 @@ const CreditsTable: FC = () => {
     () =>
       searchableCredits
         .filter(({ matchString }) => matchString.includes(query.toLowerCase()))
-        .map((d) => d.data as Credit),
+        .map((d) => d.data as unknown as Credit),
     [searchableCredits, query],
   );
 
