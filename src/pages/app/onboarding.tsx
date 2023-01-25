@@ -1,17 +1,22 @@
+import { createProxySSGHelpers } from '@trpc/react-query/ssg';
+import { type RouterInputs } from '@utils/trpc';
+import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
+import { unstable_getServerSession } from 'next-auth/next';
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import superjson from 'superjson';
 
-import { NavigationStateProps } from '../../components/onboarding/Navigation';
+import { createContextInner } from '@/server/trpc/context';
+import { appRouter } from '@/server/trpc/router/_app';
+import { trpc } from '@/utils/trpc';
+
 import Disclaimer from '../../components/onboarding/Onboarding_Pages/disclaimer';
 import PageOne, { PageOneTypes } from '../../components/onboarding/Onboarding_Pages/pg_1';
 import PageTwo, { PageTwoTypes } from '../../components/onboarding/Onboarding_Pages/pg_2';
 import Privacy from '../../components/onboarding/Onboarding_Pages/privacy';
 import Welcome from '../../components/onboarding/Onboarding_Pages/welcome';
-import { CreditState } from '../../components/onboarding/TransferCreditGallery';
-import { useAuthContext } from '../../modules/auth/auth-context';
 import { HonorsIndicator } from '../../modules/common/types';
-import { updateOnboarding } from '../../modules/redux/userDataSlice';
+import { authOptions } from '../api/auth/[...nextauth]';
 
 /**
  * The first onboarding page for the application.
@@ -117,17 +122,6 @@ type PlanData = {
   // programs: SpecialPrograms;
 };
 
-/**
- * Information about transfer credits
- */
-type CreditAttributes = {
-  /**
-   * TODO: Create more descriptive type for credits
-   * Stores credit information
-   */
-  credits: CreditState[];
-};
-
 type ConsentData = {
   disclaimer: boolean;
   personalization: boolean;
@@ -174,9 +168,6 @@ export type OnboardingFormData = {
    * Flags for special academic/scholarship programs a student is a part of.
    */
   prestige: PrestigeAttributes;
-
-  // TODO: Find more thorough way to get credit information
-  credits: CreditState[]; // CreditAttributes;
 };
 
 /**
@@ -206,10 +197,10 @@ export function useUserSetup(studentDefaultName = 'Comet') {
   });
 
   const [pageTwoData, setPageTwoData] = useState<PageTwoTypes>({
-    scholarship: null,
+    scholarship: false,
     scholarshipType: '',
-    receivingAid: null,
-    fastTrack: null,
+    receivingAid: false,
+    fastTrack: false,
     fastTrackMajor: '',
     fastTrackYear: '',
     honors: [],
@@ -236,8 +227,8 @@ export function useUserSetup(studentDefaultName = 'Comet') {
  *
  * TODO: Support anonymous setup.
  */
-export default function OnboardingPage(): JSX.Element {
-  const { user } = useAuthContext();
+export default function OnboardingPage() {
+  // const { user } = useAuthContext();
   const {
     pageOneData,
     setPageOneData,
@@ -248,15 +239,24 @@ export default function OnboardingPage(): JSX.Element {
     consentData,
     setConsentData,
   } = useUserSetup();
+  const utils = trpc.useContext();
+  // const userQuery = trpc.user.getUser.useQuery();
+  // const { data } = userQuery;
+
+  const addProfile = trpc.user.updateUserOnboard.useMutation({
+    async onSuccess() {
+      await utils.user.getUser.invalidate();
+    },
+  });
 
   const [page, setPage] = useState(0);
   const [validate, setValidate] = useState([true, false, true, false, false, true]);
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const [validNextPage, setValidNextPage] = useState(false);
 
-  const [navProps, setNavProps] = useState<NavigationStateProps>({
+  const [navProps, setNavProps] = useState<any>({
     personal: true,
     honors: false,
     credits: false,
@@ -279,10 +279,6 @@ export default function OnboardingPage(): JSX.Element {
     }
   };
 
-  if (user === null) {
-    // TODO: Do something useful
-  }
-
   const validateForm = (value: boolean) => {
     const temp = validate;
     temp[page] = value;
@@ -294,22 +290,31 @@ export default function OnboardingPage(): JSX.Element {
     return `?coursePlans=${coursePlans}&fastTrack=${prestige.fastTrack}`;
   }
 
-  const { updateName } = useAuthContext();
+  // const { updateName } = useAuthContext();
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const data = organizeOnboardingData();
     // TODO: Send data to firebase if creating account
     console.log('Send data to firebase & go to /app', data);
-    updateName(data.preferredName);
+    // updateName(data.preferredName);
+    // flogi
+    const input: RouterInputs['user']['updateUserOnboard'] = {
+      name: data.preferredName,
+      majors: data.plan.majors,
+    };
+
+    try {
+      await addProfile.mutateAsync(input);
+    } catch (error) {}
 
     // TODO: Figure out functionality for guest users
 
-    const onboardingRedirect = `/app/routes/route`;
+    // const onboardingRedirect = `/app/routes/route`;
 
     // Mark onboarding done
-    dispatch(updateOnboarding(data));
+    // dispatch(updateOnboarding(data));
 
-    router.push(onboardingRedirect);
+    router.push('/app/home');
   };
 
   const organizeOnboardingData = () => {
@@ -336,7 +341,6 @@ export default function OnboardingPage(): JSX.Element {
       plan: plan,
       studentAttributes: studentAttributes,
       prestige: prestige,
-      credits: pageThreeData.creditState,
     };
     return data;
   };
@@ -344,11 +348,11 @@ export default function OnboardingPage(): JSX.Element {
   const degreeToPlan = () => {
     // Create new PlanData variable
     const temp = {
-      majors: [],
-      minors: [],
+      majors: [] as string[],
+      minors: [] as string[],
     };
     pageOneData.degree.forEach((value) => {
-      if (value.degreeType === 'Major') {
+      if (value.degreeType === 'major') {
         temp.majors.push(value.degree);
       } else {
         temp.minors.push(value.degree);
@@ -392,10 +396,10 @@ export default function OnboardingPage(): JSX.Element {
     setPage(Math.max(page - 1, 0));
   };
 
-  const changePage = (page: number) => {
-    setNavigationProps(page);
-    setPage(page);
-  };
+  // const changePage = (page: number) => {
+  //   setNavigationProps(page);
+  //   setPage(page);
+  // };
 
   useEffect(() => {
     console.log(pageTwoData);
@@ -438,4 +442,20 @@ export default function OnboardingPage(): JSX.Element {
       </div>
     </>
   );
+}
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const session = await unstable_getServerSession(context.req, context.res, authOptions);
+  const ssg = createProxySSGHelpers({
+    router: appRouter,
+    ctx: await createContextInner({ session }),
+    transformer: superjson,
+  });
+
+  await ssg.user.getUser.prefetch();
+  return {
+    props: {
+      trpcState: ssg.dehydrate(),
+    },
+  };
 }

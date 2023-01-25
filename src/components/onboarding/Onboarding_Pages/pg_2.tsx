@@ -5,7 +5,7 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import React from 'react';
 
@@ -62,7 +62,7 @@ export default function PageTwo({ handleChange, props, handleValidate }: Page2Pr
     honors,
   } = props;
 
-  const honorsCheck = {
+  const honorsCheck: { [key: string]: boolean } = {
     cv: false,
     cs2: false,
     lahc: false,
@@ -76,7 +76,7 @@ export default function PageTwo({ handleChange, props, handleValidate }: Page2Pr
   for (const val of honors) {
     const tempKeys = Object.keys(honorsCheck);
     if (tempKeys.includes(val)) {
-      honorsCheck[val] = true;
+      honorsCheck[val as string] = true;
     }
   }
 
@@ -90,18 +90,18 @@ export default function PageTwo({ handleChange, props, handleValidate }: Page2Pr
   };
 
   // Handles change for Select
-  const handleStandardChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleStandardChange = (event: SelectChangeEvent<string>) => {
     handleChange({ ...props, [event.target.name]: event.target.value });
   };
 
   // Handles change for Button
   const handleButtonChange = (
-    event,
+    _event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     buttonName: string,
     value: boolean,
     ...clearValues: string[]
   ) => {
-    const clear = {};
+    const clear: { [key: string]: string } = {};
     for (const val of clearValues) {
       clear[val] = '';
     }
@@ -110,10 +110,10 @@ export default function PageTwo({ handleChange, props, handleValidate }: Page2Pr
   };
 
   // Handles change for Autocomplete
-  const handleAutocompleteChange = (event: React.ChangeEvent<HTMLInputElement>, value: string) => {
+  const handleAutocompleteChange = (event: React.SyntheticEvent<Element>, value: string | null) => {
     handleChange({
       ...props,
-      fastTrackMajor: value,
+      fastTrackMajor: value ?? '',
     });
   };
 

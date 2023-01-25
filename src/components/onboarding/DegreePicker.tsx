@@ -1,9 +1,8 @@
-import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import React, { useState } from 'react';
 
-import DummyData from '../../data/dummy_onboarding.json';
 import Degrees from '../../data/majors.json';
 
 export interface DegreePickerProps {
@@ -42,7 +41,7 @@ export default function DegreePicker({
 }: DegreePickerProps): JSX.Element {
   // TODO: Populate with real degree values
   const degrees: string[] = Degrees;
-  const degreeTypes = DummyData.degreeTypes; // No need for other because med school in future
+  const degreeTypes = ['major', 'minor']; // No need for other because med school in future
 
   // Manages if component stays rendered
   const [unmount, setUnmount] = useState(false);
@@ -55,11 +54,11 @@ export default function DegreePicker({
 
   const { degree, degreeType } = degreeState;
 
-  const handleAutocompleteChange = (event: React.ChangeEvent<HTMLInputElement>, value: string) => {
-    setDegreeState({ ...degreeState, degree: value });
+  const handleAutocompleteChange = (event: React.SyntheticEvent<Element>, value: string | null) => {
+    setDegreeState({ ...degreeState, degree: value ?? '' });
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: SelectChangeEvent<string>) => {
     setDegreeState({ ...degreeState, [event.target.name]: event.target.value });
   };
 

@@ -2,7 +2,7 @@ import { TextField } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useRouter } from 'next/router';
 import React from 'react';
 
@@ -50,7 +50,7 @@ export default function PageOne({ handleChange, props, handleValidate }: Page1Pr
   const { name, classification, degree, future } = props;
 
   // Handles all form data except DegreePicker
-  const handleStandardChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleStandardChange = (event: SelectChangeEvent<string>) => {
     handleChange({ ...props, [event.target.name]: event.target.value });
   };
 
@@ -90,7 +90,11 @@ export default function PageOne({ handleChange, props, handleValidate }: Page1Pr
               label="Name"
               variant="outlined"
               value={name}
-              onChange={handleStandardChange}
+              onChange={
+                handleStandardChange as
+                  | React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
+                  | undefined
+              }
             />
           </div>
 

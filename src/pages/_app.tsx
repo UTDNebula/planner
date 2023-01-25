@@ -1,19 +1,19 @@
+/* eslint-disable react/prop-types */
 import '../styles/globals.css';
 
-import firebase from '@firebase/app';
 import { createTheme, StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
 import { AnimateSharedLayout } from 'framer-motion';
-import type { AppProps } from 'next/app';
+import { type AppType,AppProps } from 'next/app';
+// import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
-import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
+import { type Session } from 'next-auth';
+import { SessionProvider, useSession } from 'next-auth/react';
+import { FC } from 'react';
 
-import BetaBanner from '../components/BetaBanner';
-import { AuthProvider } from '../modules/auth/auth-context';
-import { useStore } from '../modules/redux/store';
+import Layout from '@/components/home/Layout';
 
+// import { AuthProvider } from '../modules/auth/auth-context';
+import { trpc } from '../utils/trpc';
 const theme = createTheme({
   typography: {
     allVariants: {
@@ -39,24 +39,12 @@ const theme = createTheme({
   },
 });
 
-/**
- * Firebase configuration info
- * Note: You must have a .env.local file with
- * your own Firebase keys in order to run this project
- */
-const config = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-};
+import type { NextComponentType } from 'next'; //Import Component type
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(config);
-}
+//Add custom appProp type then use union to add it
+type CustomAppProps = AppProps & {
+  Component: NextComponentType & { auth?: boolean }; // add auth type
+};
 
 /**
  * The root wrapper component for the app.
@@ -66,20 +54,18 @@ if (!firebase.apps.length) {
  * This wrapper handles conditional rendering for certain layouts for non-landing
  * page routes.
  */
-export default function NebulaApp({ Component, pageProps }: AppProps): JSX.Element {
+const NebulaApp: AppType<{ session: Session | null }> = ({
+  Component,
+  pageProps: { session, ...pageProps },
+}: CustomAppProps) => {
   // TODO: Properly type check this
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  const { store, persistor } = useStore(pageProps.initialReduxState);
 
-  // manually resume persistence, see: https://github.com/UTDNebula/planner/issues/80
-  useEffect(persistor.persist, []);
-
-  const router = useRouter();
   // alert(router.pathname);
 
   return (
-    <AuthProvider>
+    <SessionProvider session={session}>
       <Head>
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -101,21 +87,33 @@ export default function NebulaApp({ Component, pageProps }: AppProps): JSX.Eleme
         <link rel="apple-touch-icon" href="/apple-icon.png"></link>
         <meta name="theme-color" content="#4659A7" />
       </Head>
-      <Provider store={store}>
-        <PersistGate loading={<p>Loading...</p>} persistor={persistor}>
-          <AnimateSharedLayout>
-            <StyledEngineProvider injectFirst>
-              <ThemeProvider theme={theme}>
-                <main className="w-screen h-screen overflow-x-hidden">
-                  {!router.pathname.startsWith('/auth') &&
-                    !router.pathname.startsWith('/app/onboarding') && <BetaBanner />}
-                  <Component {...pageProps} />
-                </main>
-              </ThemeProvider>
-            </StyledEngineProvider>
-          </AnimateSharedLayout>
-        </PersistGate>
-      </Provider>
-    </AuthProvider>
+      <AnimateSharedLayout>
+        <StyledEngineProvider injectFirst>
+          <ThemeProvider theme={theme}>
+            <main className="w-screen h-screen overflow-x-hidden">
+              {Component.auth ? (
+                <Auth>
+                  <Layout>
+                    <Component {...pageProps} />
+                  </Layout>
+                </Auth>
+              ) : (
+                <Component {...pageProps} />
+              )}
+            </main>
+          </ThemeProvider>
+        </StyledEngineProvider>
+      </AnimateSharedLayout>
+    </SessionProvider>
   );
-}
+};
+
+const Auth: FC = ({ children }) => {
+  const { status } = useSession({ required: true });
+  if (status === 'loading') {
+    return <p>Loading...</p>;
+  }
+  return <>{children}</>;
+};
+
+export default trpc.withTRPC(NebulaApp);

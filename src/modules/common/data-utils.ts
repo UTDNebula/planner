@@ -1,4 +1,5 @@
-import { SemesterCode } from './data';
+import { SemesterType } from '@prisma/client';
+
 import { HonorsIndicator } from './types';
 
 /**
@@ -8,12 +9,11 @@ import { HonorsIndicator } from './types';
  */
 export function convertSemesterToData(semesterCode: string): {
   year: number;
-  semester: SemesterCode;
+  semester: SemesterType;
 } {
   // TODO: Properly validate code
   const year = Number(semesterCode.slice(0, semesterCode.length - 1));
-  const semester =
-    SemesterCode[semesterCode.charAt(semesterCode.length - 1) as keyof typeof SemesterCode];
+  const semester = semesterCode.slice(semesterCode.length - 1) as SemesterType;
   return { year, semester };
 }
 

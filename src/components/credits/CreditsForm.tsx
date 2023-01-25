@@ -2,13 +2,14 @@ import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
+import { SemesterCode, SemesterType } from '@prisma/client';
 import { FC, useMemo, useState } from 'react';
-import { useDispatch } from 'react-redux';
 
-import { loadDummyCourses } from '../../modules/common/api/courses';
-import { generateSemesters, Semester, SemesterCode } from '../../modules/common/data';
-import { convertSemesterToData } from '../../modules/common/data-utils';
-import { addCredit } from '../../modules/redux/creditsSlice';
+import { trpc } from '@/utils/trpc';
+import { loadDummyCourses } from '@/utils/utilFunctions';
+
+import { generateSemesters } from '../../modules/common/data';
+import { displaySemesterCode } from '../planner/Tiles/SemesterTile';
 import useSearch from '../search/search';
 import AutoCompleteSearchBar from './AutoCompleteSearchBar';
 import Button from './Button';
@@ -21,28 +22,36 @@ const CreditsForm: FC = () => {
   const [isTransfer, setIsTransfer] = useState(false);
 
   const semesters = useMemo(
-    () => generateSemesters(8, new Date().getFullYear() - 4, SemesterCode.f).reverse(),
+    () =>
+      generateSemesters(8, new Date().getFullYear() - 4, SemesterType.f)
+        .reverse()
+        .map((sem) => sem.code),
     [],
   );
 
-  const [semester, setSemester] = useState<string>(semesters[0].code);
+  const [semester, setSemester] = useState<SemesterCode>(semesters[0]);
 
-  const dispatch = useDispatch();
+  const utils = trpc.useContext();
+
+  const addCredit = trpc.credits.addCredit.useMutation({
+    async onSuccess() {
+      await utils.credits.getCredits.invalidate();
+    },
+  });
 
   const { results, updateQuery } = useSearch({
     getData: loadDummyCourses,
     initialQuery: '',
-    filterFn: (course, query) => course.catalogCode.toLowerCase().includes(query.toLowerCase()),
+    filterFn: (course, query) => course.code.toLowerCase().includes(query.toLowerCase()),
   });
 
   const submit = () => {
     if (credit) {
-      dispatch(
-        addCredit({
-          utdCourseCode: credit,
-          semester: isTransfer ? null : convertSemesterToData(semester),
-        }),
-      );
+      addCredit.mutateAsync({
+        courseCode: credit,
+        semesterCode: semester,
+        transfer: isTransfer,
+      });
     }
   };
 
@@ -53,7 +62,7 @@ const CreditsForm: FC = () => {
       <AutoCompleteSearchBar
         onValueChange={(value) => setCredit(value)}
         onInputChange={(query) => updateQuery(query)}
-        options={results.map((course) => course.catalogCode)}
+        options={results.map((course) => course.code)}
         style={{ maxWidth: '450px', minWidth: '350px' }}
         autoFocus
       />
@@ -98,21 +107,20 @@ const CreditsForm: FC = () => {
             label="No"
           />
         </RadioGroup>
-        {!isTransfer && (
-          <>
-            <label htmlFor="semester" className="text-black font-medium">
-              Semester
-            </label>
-            <DropdownSelect
-              id="semester"
-              value={semester}
-              values={semesters as (Semester & { [key: string]: string })[]}
-              getValue={(semester) => semester.code}
-              getDisplayedValue={(semester) => semester.title}
-              onChange={(sem) => setSemester(sem)}
-            />
-          </>
-        )}
+
+        <>
+          <label htmlFor="semester" className="text-black font-medium">
+            Semester
+          </label>
+          <DropdownSelect
+            id="semester"
+            value={semester}
+            values={semesters as (SemesterCode & { [key: string]: string })[]}
+            getValue={(semester) => semester}
+            getDisplayedValue={(semester) => displaySemesterCode(semester)}
+            onChange={(sem) => setSemester(sem)}
+          />
+        </>
       </FormControl>
       <Button onClick={submit}>{'Add Credit'}</Button>
     </Layout>

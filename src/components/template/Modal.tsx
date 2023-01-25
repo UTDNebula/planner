@@ -1,18 +1,9 @@
 import CloseIcon from '@mui/icons-material/Close';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
-import { v4 as uuid } from 'uuid';
 
-// TODO: Move to server once we use server-side rendering
-import dummyTemplate from '../../data/degree_template.json';
-import { getAllCourses } from '../../modules/common/api/templates';
-import { Course, Semester, StudentPlan } from '../../modules/common/data';
-import { SEMESTER_CODE_MAPPINGS as semMap } from '../../modules/common/data';
-import { dummyPlan } from '../../modules/planner/plannerUtils';
-import { RootState } from '../../modules/redux/store';
-import { updatePlan } from '../../modules/redux/userDataSlice';
+import { trpc } from '@/utils/trpc';
+
 import DataGrid from '../credits/DataGrid';
 import SearchBar from '../credits/SearchBar';
 
@@ -21,151 +12,67 @@ interface TemplateModalProps {
 }
 export default function TemplateModal({ setOpenTemplateModal }: TemplateModalProps) {
   const router = useRouter();
-  const dispatch = useDispatch();
-  const coursesFromCredits = [...useSelector((state: RootState) => state.creditsData.credits)];
-
   const [templateQuery, setTemplateQuery] = useState('');
+  const utils = trpc.useContext();
+  const createUserPlan = trpc.user.createUserPlan.useMutation({
+    async onSuccess() {
+      await utils.user.getUser.invalidate();
+    },
+  });
 
-  // Sorting the template in alphabetical order
-  const orderedTemplate = Object.keys(dummyTemplate)
-    .sort()
-    .reduce((obj, key) => {
-      obj[key] = dummyTemplate[key];
-      return obj;
-    }, {});
+  const createEmptyUserPlan = trpc.user.createEmptyUserPlan.useMutation({
+    async onSuccess() {
+      await utils.user.getUser.invalidate();
+    },
+  });
+  const { data, isError } = trpc.template.getAllTemplates.useQuery();
+  if (isError) {
+    console.error('Error fetching templates');
+    return <div>Error fetching templates</div>;
+  }
+
+  // TODO: Error component for this case
+  //
+  if (!data) {
+    return <div>Loading...</div>;
+  }
+
+  const templates = data;
+  const orderedTemplate = templates.sort((a, b) => {
+    if (a.name! < b.name!) {
+      return -1;
+    }
+    return 1;
+  });
 
   const handleTemplateCreation = async (major: string) => {
-    console.log({ major });
     if (major === 'empty') {
-      const newPlan: StudentPlan = { ...dummyPlan, id: uuid() };
-      dispatch(updatePlan(newPlan));
-      return router.push(`/app/plans/${newPlan.id}`);
+      try {
+        const planId = await createEmptyUserPlan.mutateAsync('empty');
+        if (!planId) {
+          return router.push('/app/home');
+        }
+        return router.push(`/app/plans/${planId}`);
+      } catch (error) {}
     }
-
-    const courses = await getAllCourses();
-    const selectedTemplate = orderedTemplate[major];
-
-    const filteredTemplate = selectedTemplate.map((sem) => {
-      return sem.filter((course: string) => {
-        if (typeof course === 'object') return true;
-
-        return !coursesFromCredits.some((credit) => credit.utdCourseCode === course);
-      });
-    });
-    const numOfSemesters = filteredTemplate.length;
-
-    const semesters: Semester[] = [];
-    const creditSemesters: Semester[] = [];
-
-    coursesFromCredits.sort((a, b) => {
-      if (!a.semester || !b.semester) return;
-      if (a.semester.year === b.semester.year) {
-        return semMap[b.semester.semester] < semMap[a.semester.semester] ? -1 : 1;
-      }
-      return a.semester.year - b.semester.year;
-    });
-
-    coursesFromCredits.forEach((course) => {
-      const { name: title, description, hours, prerequisites } = courses[course.utdCourseCode];
-
-      const creditCourse: Course = {
-        id: uuid(),
-        title,
-        catalogCode: course.utdCourseCode,
-        description,
-        creditHours: +hours,
-        prerequisites: prerequisites[0],
-        validation: { isValid: true, override: false },
-      };
-
-      if (!course.semester) {
-        const semester = creditSemesters.find((sem) => sem.code === 'transfer');
-        if (semester) {
-          semester.courses.push(creditCourse);
-        } else {
-          creditSemesters.push({
-            code: 'transfer',
-            title: 'Transfer Credits',
-            courses: [creditCourse],
-          });
-        }
-      } else {
-        const semester = creditSemesters.find(
-          (sem) => sem.code === course.semester.year + course.semester.semester,
-        );
-        if (semester) {
-          semester.courses.push(creditCourse);
-        } else {
-          creditSemesters.push({
-            code: course.semester.year + course.semester.semester,
-            title: semMap[course.semester.semester] + ' ' + course.semester.year,
-            courses: [creditCourse],
-          });
-        }
+    const selectedTemplate = templates.filter((template) => {
+      if (template.name === major) {
+        return template;
       }
     });
-    const year = new Date().getFullYear();
 
-    let season = 'Fall';
-
-    for (let i = 0; i < numOfSemesters; i++) {
-      const sem = filteredTemplate[i];
-      const semCourses: Course[] = [];
-
-      const semTitle = `${season} ${year + Math.floor((i + 1) / 2)}`;
-      const semCode = `${year + Math.floor((i + 1) / 2)}${season[0].toLowerCase()}`;
-      season = season === 'Fall' ? 'Spring' : 'Fall';
-
-      const semester: Semester = { title: semTitle, code: semCode, courses: semCourses };
-
-      for (let j = 0; j < sem.length; j++) {
-        let course: Course;
-        if (typeof sem[j] === 'object') {
-          course = {
-            id: uuid(),
-            title: sem[j].options + ' Course',
-            creditHours: 3,
-            description: `Chose one of the ${sem[j].options} courses for this`,
-            catalogCode: '',
-            prerequisites: undefined,
-            validation: { isValid: true, override: false },
-          };
-        } else {
-          try {
-            const { name: title, description, hours, prerequisites } = courses[sem[j]];
-            course = {
-              id: uuid(),
-              title,
-              catalogCode: sem[j],
-              description,
-              creditHours: +hours,
-              prerequisites: prerequisites[0],
-              validation: { isValid: true, override: false },
-            };
-          } catch (e) {
-            // TODO: Handle this better, preferably move to server and use a logger
-            continue;
-          }
-        }
-        semCourses.push(course);
+    try {
+      const planId = await createUserPlan.mutateAsync(selectedTemplate[0].id);
+      console.log('HM');
+      console.log(planId);
+      if (!planId) {
+        return router.push('/app/home');
       }
-      semester.courses = semCourses;
-      semesters.push(semester);
+      return router.push(`/app/plans/${planId}`);
+    } catch (error) {
+      console.error(error);
     }
-
-    const routeId = uuid();
-    const planTitle = major + ' Degree Plan';
-    const planMajor = major.split('(')[0]; // TODO: Change later; this formats the major to match in major.json()
-    const newPlanFromTemplate: StudentPlan = {
-      id: routeId,
-      title: planTitle,
-      major: planMajor,
-      semesters: [...creditSemesters, ...semesters],
-    };
-    dispatch(updatePlan(newPlanFromTemplate));
-    router.push(`/app/plans/${routeId}`);
   };
-
   return (
     <div
       onClick={() => setOpenTemplateModal(false)}
@@ -200,16 +107,13 @@ export default function TemplateModal({ setOpenTemplateModal }: TemplateModalPro
               {
                 title: 'Templates',
                 key: 'templateName',
+                valueGetter: (name) => name.templateName,
               },
             ]}
             rows={
-              [
-                ...Object.keys(orderedTemplate)
-                  .filter((template) =>
-                    template.toLowerCase().includes(templateQuery.toLowerCase()),
-                  )
-                  .map((x) => ({ templateName: x })),
-              ] as { templateName: string }[]
+              [...orderedTemplate.map((x) => ({ templateName: x.name }))] as {
+                templateName: string;
+              }[]
             }
             childrenProps={{
               headerProps: {
@@ -227,7 +131,8 @@ export default function TemplateModal({ setOpenTemplateModal }: TemplateModalPro
                   cursor: 'pointer',
                 },
                 onClick: (row) => {
-                  handleTemplateCreation(row.templateName);
+                  const newRow: { templateName: string } = row as { templateName: string };
+                  handleTemplateCreation(newRow.templateName);
                 },
               },
             }}

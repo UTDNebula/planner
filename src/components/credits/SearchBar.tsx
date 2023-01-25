@@ -18,7 +18,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ placeholder, updateQuery, ...prop
 
   return (
     <div
-      className="bg-white sticky top-0 flex flex-row justify-between z-20 rounded-[10px] overflow-hidden h-[55px] border-[2px] border-[#EDEFF7]"
+      className="bg-white top-0 flex flex-row justify-between z-20 rounded-[10px] overflow-hidden min-h-[55px] border-[2px] border-[#EDEFF7]"
       {...props}
     >
       <InputBase
@@ -37,4 +37,4 @@ const SearchBar: React.FC<SearchBarProps> = ({ placeholder, updateQuery, ...prop
   );
 };
 
-export default SearchBar;
+export default React.memo(SearchBar);

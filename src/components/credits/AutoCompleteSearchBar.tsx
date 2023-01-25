@@ -55,7 +55,7 @@ const SearchBar: FC<SearchBarProps & React.ComponentPropsWithoutRef<'button'>> =
       <div ref={containerRef} className="absolute -bottom-3 left-0 w-full h-full"></div>
       <Autocomplete
         style={{ width: '100%' }}
-        onChange={(_, value) => onValueChange(value)}
+        onChange={(_, value) => onValueChange(value ?? '')}
         onInputChange={(_, query) => onInputChange(query)}
         options={options}
         fullWidth
