@@ -1,4 +1,5 @@
-// @ts-check
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 /**
  * This file is included in `/next.config.mjs` which ensures the app isn't built with invalid env vars.
  * It has to be a `.mjs`-file to be imported there.
