@@ -1,4 +1,5 @@
 import { SemesterType } from '@prisma/client';
+
 import { HonorsIndicator } from './types';
 
 /**

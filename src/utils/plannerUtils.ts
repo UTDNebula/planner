@@ -1,6 +1,4 @@
-import { Semester } from '@/components/planner/types';
-import { Prisma, SemesterCode, SemesterType } from '@prisma/client';
-import { v4 as uuid } from 'uuid';
+import { SemesterCode, SemesterType } from '@prisma/client';
 
 import { createNewYear } from './utilFunctions';
 

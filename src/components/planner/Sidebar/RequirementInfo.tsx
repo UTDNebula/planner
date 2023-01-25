@@ -1,12 +1,12 @@
+import { ObjectID } from 'bson';
 import React from 'react';
 
 import useSearch from '@/components/search/search';
+import { getAllCourses } from '@/utils/utilFunctions';
 
 import { DegreeRequirement, DraggableCourse, GetDragIdByCourseAndReq } from '../types';
 import DraggableCourseList from './DraggableCourseList';
 import RequirementSearchBar from './RequirementSearchBar';
-import { ObjectID } from 'bson';
-import { getAllCourses } from '@/utils/utilFunctions';
 
 export interface RequirementInfoProps {
   courses: string[];

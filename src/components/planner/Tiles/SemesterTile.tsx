@@ -1,7 +1,8 @@
-import { isEarlierSemester, getFirstNewSemester } from '@/utils/plannerUtils';
 import { UniqueIdentifier, useDroppable } from '@dnd-kit/core';
-import { SemesterCode, SemesterType } from '@prisma/client';
+import { SemesterCode } from '@prisma/client';
 import { FC, forwardRef } from 'react';
+
+import { getFirstNewSemester,isEarlierSemester } from '@/utils/plannerUtils';
 
 import {
   DragDataToSemesterTile,

@@ -1,4 +1,5 @@
 import { z } from 'zod';
+
 import { protectedProcedure, router } from '../trpc';
 
 export const creditsRouter = router({
@@ -32,7 +33,7 @@ export const creditsRouter = router({
           data: {
             userId,
             courseCode,
-            semesterCode,
+            semesterCode: { semester: semesterCode.semester, year: semesterCode.year },
             transfer,
           },
         });
@@ -57,7 +58,7 @@ export const creditsRouter = router({
           where: {
             userId,
             courseCode,
-            semesterCode,
+            semesterCode: { semester: semesterCode.semester, year: semesterCode.year },
           },
         });
 

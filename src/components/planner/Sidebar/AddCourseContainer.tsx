@@ -1,6 +1,7 @@
+import { ObjectID } from 'bson';
+
 import useSearch, { SearchReturn } from '@/components/search/search';
 import { loadDummyCourses } from '@/utils/utilFunctions';
-import { ObjectID } from 'bson';
 
 import { Course, DraggableCourse } from '../types';
 import RequirementSearchBar from './RequirementSearchBar';
