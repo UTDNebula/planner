@@ -9,7 +9,7 @@ import React from 'react';
 import superjson from 'superjson';
 
 import Planner from '@/components/planner/Planner';
-import { DraggableCourse, Semester, ToastMessage } from '@/components/planner/types';
+import { PlanCourse, PlanSemester, ToastMessage } from '@/components/planner/types';
 import BackArrowIcon from '@/icons/BackArrowIcon';
 import SettingsIcon from '@/icons/SettingsIcon';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
@@ -18,6 +18,8 @@ import { appRouter } from '@/server/trpc/router/_app';
 import { trpc } from '@/utils/trpc';
 import { useTaskQueue } from '@/utils/useTaskQueue';
 import { createNewYear } from '@/utils/utilFunctions';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import DegreePlanPDF from '@/components/planner/GeneratePDF/DegreePlanPDF';
 
 /**
  * A page that displays the details of a specific student academic plan.
@@ -35,7 +37,7 @@ export default function PlanDetailPage(
 
   const { data, isLoading } = planQuery;
 
-  const [semesters, setSemesters] = useState<Semester[]>(getSemestersInfo(data?.plan));
+  const [semesters, setSemesters] = useState<PlanSemester[]>(getSemestersInfo(data?.plan));
 
   const degreeData = data?.validation ?? [];
 
@@ -147,7 +149,7 @@ export default function PlanDetailPage(
   }
 
   const handleOnAddYear = async () => {
-    const newYear: Semester[] = createNewYear(
+    const newYear: PlanSemester[] = createNewYear(
       semesters.length ? semesters[semesters.length - 1].code : { semester: 'u', year: 2022 },
     );
     const semesterIds = newYear.map((sem) => sem.id);
@@ -164,8 +166,8 @@ export default function PlanDetailPage(
   };
 
   const handleOnRemoveCourseFromSemester = async (
-    targetSemester: Semester,
-    targetCourse: DraggableCourse,
+    targetSemester: PlanSemester,
+    targetCourse: PlanCourse,
   ): Promise<ToastMessage> => {
     setSemesters((semesters) =>
       semesters.map((semester) => {
@@ -192,8 +194,8 @@ export default function PlanDetailPage(
   };
 
   const handleOnAddCourseToSemester = async (
-    targetSemester: Semester,
-    newCourse: DraggableCourse,
+    targetSemester: PlanSemester,
+    newCourse: PlanCourse,
   ): Promise<ToastMessage> => {
     // check for duplicate course
     const isDuplicate = Boolean(
@@ -224,9 +226,9 @@ export default function PlanDetailPage(
   };
 
   const handleOnMoveCourseFromSemesterToSemester = async (
-    originSemester: Semester,
-    destinationSemester: Semester,
-    courseToMove: DraggableCourse,
+    originSemester: PlanSemester,
+    destinationSemester: PlanSemester,
+    courseToMove: PlanCourse,
   ): Promise<ToastMessage> => {
     // check for duplicate course
     const isDuplicate = Boolean(
@@ -282,7 +284,28 @@ export default function PlanDetailPage(
         <div>Minors: Cognitive Science</div>
         <div>Fast Track</div>
         <div>Import Plan</div>
-        <div>Export Plan </div>
+        {data && (
+          <PDFDownloadLink
+            className="text-base font-normal"
+            document={
+              <DegreePlanPDF
+                studentName={'some user name'}
+                major="Computer science"
+                planTitle={data.plan.name}
+                semesters={[
+                  {
+                    id: new ObjectID(),
+                    code: { semester: 'f', year: 2022 },
+                    courses: [{ id: new ObjectID(), code: 'HIST 1301', status: 'complete' }],
+                  },
+                ]}
+              />
+            }
+            fileName={data.plan.name + '.pdf'}
+          >
+            {({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'EXPORT PLAN')}
+          </PDFDownloadLink>
+        )}
         <SettingsIcon className={`w-5 h-5 cursor-pointer ml-5`} strokeWidth={2.5} />
       </div>
       <Planner
@@ -327,19 +350,19 @@ function getSemestersInfo(
         name: string;
       }
     | undefined,
-): Semester[] {
+): PlanSemester[] {
   if (!plan) {
     return [];
   }
   return plan.semesters.map((sem) => {
-    const courses = sem.courses.map((course: string): DraggableCourse => {
+    const courses = sem.courses.map((course: string): PlanCourse => {
       const newCourse = {
         id: new ObjectID(),
         code: course,
       };
       return newCourse;
     });
-    const semester: Semester = { code: sem.code, id: sem.id as unknown as ObjectID, courses };
+    const semester: PlanSemester = { code: sem.code, id: sem.id as unknown as ObjectID, courses };
     return semester;
   });
 }

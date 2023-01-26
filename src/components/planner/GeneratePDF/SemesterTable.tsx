@@ -1,41 +1,44 @@
-// import { StyleSheet, View } from '@react-pdf/renderer';
-// import React from 'react';
+import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
+import { StyleSheet, View } from '@react-pdf/renderer';
+import React, { FC } from 'react';
+import { PlanCourse } from '../types';
 
-// import { Course } from '../../../modules/common/data';
-// import TableFooter from './TableFooter';
-// import TableHeader from './TableHeader';
-// import TableRow from './TableRow';
+import TableFooter from './TableFooter';
+import TableHeader from './TableHeader';
+import TableRow from './TableRow';
 
-// const styles = StyleSheet.create({
-//   tableContainer: {
-//     flexDirection: 'row',
-//     flexWrap: 'wrap',
-//     marginBottom: 20,
-//     borderWidth: 1,
-//     borderColor: '#3E61ED',
-//   },
-// });
+const styles = StyleSheet.create({
+  tableContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: 'black',
+  },
+});
 
-// type TableProps = {
-//   items: Course[];
-//   semesterTitle: string;
-// };
+const SemesterTable: FC<{ courses: PlanCourse[] }> = ({ courses }) => {
+  const totalHours = courses.reduce(
+    (total, course) => total + (getSemesterHourFromCourseCode(course.code) || 0),
+    0,
+  );
 
-// const ItemsTable = ({ items }: TableProps) => {
-//   let totalHours = 0;
-//   return (
-//     <View style={styles.tableContainer}>
-//       <TableHeader />
-//       {items.map((course) => {
-//         totalHours += course.creditHours;
-//         return <TableRow item={course} key={undefined} />;
-//       })}
-//       <TableFooter credits={totalHours} />
-//     </View>
-//   );
-// };
+  return (
+    <View style={styles.tableContainer}>
+      <TableHeader />
+      {courses.map((course, i) => {
+        return (
+          <TableRow
+            key={course.code + i}
+            catalogCode={course.code}
+            title={course.code}
+            creditHours={getSemesterHourFromCourseCode(course.code) || -1}
+          />
+        );
+      })}
+      <TableFooter credits={totalHours} />
+    </View>
+  );
+};
 
-// export default ItemsTable;
-export default function UserDegreePlanPDF() {
-  return <div>Work in progress!</div>;
-}
+export default SemesterTable;

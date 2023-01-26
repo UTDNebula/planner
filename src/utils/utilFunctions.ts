@@ -1,7 +1,7 @@
 import { SemesterCode, SemesterType } from '@prisma/client';
 import { ObjectID } from 'bson';
 
-import { Semester } from '@/components/planner/types';
+import { PlanSemester } from '@/components/planner/types';
 
 /**
  * Creates 3 new semesters based on given year in SemesterCode
@@ -9,7 +9,7 @@ import { Semester } from '@/components/planner/types';
  * @param semesterCode
  * @returns
  */
-export const createNewYear = (semesterCode: SemesterCode): Semester[] => {
+export const createNewYear = (semesterCode: SemesterCode): PlanSemester[] => {
   const currYear = semesterCode.year;
   const newYear = semesterCode.year + 1;
 
@@ -41,8 +41,6 @@ export const createNewYear = (semesterCode: SemesterCode): Semester[] => {
   ];
 };
 
-import { Course } from '@/components/planner/types';
-
 /**
  * Load all supported courses from file.
  *
@@ -51,7 +49,7 @@ import { Course } from '@/components/planner/types';
  *
  * @param year The catalog year from which to load course data
  */
-export async function loadDummyCourses(year = 2020): Promise<Course[]> {
+export async function loadDummyCourses(year = 2020): Promise<{ code: string }[]> {
   const courseData: { [key: string]: JSONCourseType } = await import(
     `../data/${year}-courses.json`
   );
@@ -79,4 +77,19 @@ export type JSONCourseType = {
 export async function getAllCourses(year = 2020) {
   const courses: { [key: string]: JSONCourseType } = await import(`../data/${year}-courses.json`);
   return courses;
+}
+
+/**
+ * Get the semester hour from course code
+ *
+ * HIST 1301 -> 1
+ * */
+export function getSemesterHourFromCourseCode(code: string): number | null {
+  const [_, hours]: (string | undefined)[] = code.split(' ');
+
+  const hoursNum = Number(hours);
+
+  if (Number.isNaN(hoursNum) || hoursNum.toString().length < 2) return null;
+
+  return Number(hoursNum.toString()[1]);
 }

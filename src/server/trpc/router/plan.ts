@@ -1,7 +1,7 @@
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
-import { DegreeRequirementGroup, Semester } from '@/components/planner/types';
+import { PlanDegreeRequirementGroup, PlanSemester } from '@/components/planner/types';
 import { addCreditsToPlan, formatDegreeValidationRequest } from '@/utils/plannerUtils';
 import { createNewYear, getAllCourses } from '@/utils/utilFunctions';
 
@@ -92,13 +92,13 @@ export const planRouter = router({
           return [];
         }
         // Transform data
-        const core: DegreeRequirementGroup = { name: 'Core Requirements', requirements: [] };
-        const major: DegreeRequirementGroup = { name: 'Major Requirements', requirements: [] };
-        const electives: DegreeRequirementGroup = {
+        const core: PlanDegreeRequirementGroup = { name: 'Core Requirements', requirements: [] };
+        const major: PlanDegreeRequirementGroup = { name: 'Major Requirements', requirements: [] };
+        const electives: PlanDegreeRequirementGroup = {
           name: 'Free Elective Requirements',
           requirements: [],
         };
-        const university: DegreeRequirementGroup = {
+        const university: PlanDegreeRequirementGroup = {
           name: 'University Requirements',
           requirements: [],
         };
@@ -206,7 +206,7 @@ export const planRouter = router({
           });
         }
 
-        const newYear: Semester[] = createNewYear(
+        const newYear: PlanSemester[] = createNewYear(
           plan.semesters[0] ? plan.semesters[0].code : { semester: 'u', year: 2022 },
         );
 
@@ -385,13 +385,16 @@ export const planRouter = router({
           console.log(res.status);
           const rawData = await res.json();
           // Transform data
-          const core: DegreeRequirementGroup = { name: 'Core Requirements', requirements: [] };
-          const major: DegreeRequirementGroup = { name: 'Major Requirements', requirements: [] };
-          const electives: DegreeRequirementGroup = {
+          const core: PlanDegreeRequirementGroup = { name: 'Core Requirements', requirements: [] };
+          const major: PlanDegreeRequirementGroup = {
+            name: 'Major Requirements',
+            requirements: [],
+          };
+          const electives: PlanDegreeRequirementGroup = {
             name: 'Free Elective Requirements',
             requirements: [],
           };
-          const university: DegreeRequirementGroup = {
+          const university: PlanDegreeRequirementGroup = {
             name: 'University Requirements',
             requirements: [],
           };

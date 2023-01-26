@@ -2,17 +2,17 @@ import { SemesterType } from '@prisma/client';
 import { ObjectID } from 'bson';
 
 import { displaySemesterCode } from '@/components/planner/Tiles/SemesterTile';
-import { Course, Semester } from '@/components/planner/types';
+import { PlanCourse, PlanSemester } from '@/components/planner/types';
 
 export function generateSemesters(
   count: number,
   startYear: number,
   startSemester: SemesterType,
   useRandom = false,
-  courses: Course[] = [],
+  courses: PlanCourse[] = [],
   coursesPerSemester = 5,
   onlyLong = true,
-): Semester[] {
+): PlanSemester[] {
   const result = [];
   let semester = startSemester;
   let year = startYear;
