@@ -4,29 +4,26 @@ import { ObjectID } from 'bson';
 
 // Temporary semester type
 // TODO: Remove
-export interface Semester {
+export interface PlanSemester {
   id: ObjectID;
   code: SemesterCode;
-  courses: DraggableCourse[];
-}
-
-export interface Course {
-  code: string;
+  courses: PlanCourse[];
 }
 
 /* Represents a Course inside a Plan */
-export interface DraggableCourse extends Course {
+export interface PlanCourse {
   id: ObjectID;
+  code: string;
   validation?: { isValid: boolean; override: boolean };
   status?: 'complete' | 'incomplete';
 }
 
-export interface DegreeRequirementGroup {
+export interface PlanDegreeRequirementGroup {
   name: string;
-  requirements: DegreeRequirement[];
+  requirements: PlanDegreeRequirement[];
 }
 
-export interface DegreeRequirement {
+export interface PlanDegreeRequirement {
   name: string;
   validCourses: string[];
   courses: string[];
@@ -44,39 +41,39 @@ export type DragEventOriginData = DragDataFromSemesterTile | DragDataFromCourseL
 
 export interface DragDataFromSemesterTile {
   from: 'semester-tile';
-  semester: Semester;
-  course: DraggableCourse;
+  semester: PlanSemester;
+  course: PlanCourse;
 }
 
 export interface DragDataFromCourseList {
   from: 'course-list';
-  course: DraggableCourse;
+  course: PlanCourse;
 }
 
 export type DragEventDestinationData = DragDataToSemesterTile;
 
 export interface DragDataToSemesterTile {
   to: 'semester-tile';
-  semester: Semester;
+  semester: PlanSemester;
 }
 
 // Date stored during drag
 export interface ActiveDragData {
   from: 'semester-tile' | 'course-list';
-  course: DraggableCourse;
+  course: PlanCourse;
 }
 
 // Callbacks to generate drag and drop id's
-export type GetDragIdByCourse = (course: DraggableCourse) => UniqueIdentifier;
+export type GetDragIdByCourse = (course: PlanCourse) => UniqueIdentifier;
 
 export type GetDragIdByCourseAndReq = (
-  course: DraggableCourse,
-  requirement: DegreeRequirement,
+  course: PlanCourse,
+  requirement: PlanDegreeRequirement,
 ) => UniqueIdentifier;
 
 export type GetDragIdByCourseAndSemester = (
-  course: DraggableCourse,
-  semester: Semester,
+  course: PlanCourse,
+  semester: PlanSemester,
 ) => UniqueIdentifier;
 
 // Toast message passed back to Planner component

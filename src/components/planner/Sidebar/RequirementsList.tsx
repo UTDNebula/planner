@@ -1,14 +1,14 @@
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import React from 'react';
 
-import { DegreeRequirement } from '../types';
+import { PlanDegreeRequirement } from '../types';
 import StatusTag from './StatusTag';
 
 function RequirementsList({
   data,
   updateRequirementInfo,
 }: {
-  data: DegreeRequirement[];
+  data: PlanDegreeRequirement[];
   updateRequirementInfo: (idx: number) => void;
 }) {
   return (

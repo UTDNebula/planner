@@ -3,7 +3,7 @@ import { ObjectID } from 'bson';
 import useSearch, { SearchReturn } from '@/components/search/search';
 import { loadDummyCourses } from '@/utils/utilFunctions';
 
-import { Course, DraggableCourse } from '../types';
+import { PlanCourse, PlanCourse } from '../types';
 import RequirementSearchBar from './RequirementSearchBar';
 import SelectableCourseContainer from './SelectableCourseContainer';
 
@@ -15,13 +15,13 @@ export default function AddCourseContainer({
   handleCourseSubmit,
 }: {
   allCourses: Set<string>;
-  selectedCourses: { [key: string]: Course };
-  updateSelectedCourses: (course: Course, add: boolean) => void;
+  selectedCourses: { [key: string]: PlanCourse };
+  updateSelectedCourses: (course: PlanCourse, add: boolean) => void;
   handleCourseCancel: () => void;
   handleCourseSubmit: () => void;
 }) {
   // TODO: Clean this logic up hella xD
-  const { results, updateQuery }: SearchReturn<Course, string> = useSearch({
+  const { results, updateQuery }: SearchReturn<PlanCourse, string> = useSearch({
     getData: loadDummyCourses,
     initialQuery: '',
     filterFn: (elm, query) => elm.code.toLowerCase().includes(query.toLowerCase()),
@@ -30,9 +30,9 @@ export default function AddCourseContainer({
 
   const courseResults = results.map((result) => {
     return { ...result, status: allCourses.has(result.code) ? 'complete' : undefined };
-  }) as unknown as DraggableCourse[];
+  }) as unknown as PlanCourse[];
 
-  const newSelectedCourses: DraggableCourse[] = Object.values(selectedCourses).map((course) => {
+  const newSelectedCourses: PlanCourse[] = Object.values(selectedCourses).map((course) => {
     return { id: new ObjectID(), code: course.code };
   });
   return (

@@ -4,7 +4,7 @@ import React from 'react';
 import useSearch from '@/components/search/search';
 import { getAllCourses } from '@/utils/utilFunctions';
 
-import { DegreeRequirement, DraggableCourse, GetDragIdByCourseAndReq } from '../types';
+import { PlanDegreeRequirement, PlanCourse, GetDragIdByCourseAndReq } from '../types';
 import DraggableCourseList from './DraggableCourseList';
 import RequirementSearchBar from './RequirementSearchBar';
 
@@ -14,7 +14,7 @@ export interface RequirementInfoProps {
   setAddCourse: (state: boolean) => void;
   setAddPlaceholder: (state: boolean) => void;
   getCourseItemDragId: GetDragIdByCourseAndReq;
-  degreeRequirement: DegreeRequirement;
+  degreeRequirement: PlanDegreeRequirement;
 }
 
 export default function RequirementInfo({
@@ -31,13 +31,13 @@ export default function RequirementInfo({
   }, [courses]);
 
   // TODO: Change this later when connecting to API
-  const getCourses = async (): Promise<DraggableCourse[]> => {
+  const getCourses = async (): Promise<PlanCourse[]> => {
     const courseData = await getAllCourses();
     const temp = courses;
 
-    const courseInfoList: (DraggableCourse | undefined)[] = temp.map((elm) => {
+    const courseInfoList: (PlanCourse | undefined)[] = temp.map((elm) => {
       if (courseData[elm] !== undefined) {
-        const newCourse: DraggableCourse = {
+        const newCourse: PlanCourse = {
           id: new ObjectID(),
           code: elm,
           validation: { isValid: true, override: false },
@@ -45,7 +45,7 @@ export default function RequirementInfo({
         return newCourse;
       }
     });
-    return courseInfoList.filter((elm) => typeof elm !== 'undefined') as DraggableCourse[];
+    return courseInfoList.filter((elm) => typeof elm !== 'undefined') as PlanCourse[];
   };
 
   // TODO: Add error UI
@@ -61,7 +61,7 @@ export default function RequirementInfo({
       ...result,
       status: allUserCourses.has(result.code) ? 'complete' : undefined,
     };
-  }) as DraggableCourse[];
+  }) as PlanCourse[];
 
   return (
     <>

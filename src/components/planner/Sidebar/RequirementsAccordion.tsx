@@ -3,7 +3,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import React from 'react';
 import { RefObject } from 'react';
 
-import { DegreeRequirementGroup } from '../types';
+import { PlanDegreeRequirementGroup } from '../types';
 import RequirementsList from './RequirementsList';
 
 function RequirementsAccordion({
@@ -16,7 +16,7 @@ function RequirementsAccordion({
   height,
   accordianRef,
 }: {
-  data: DegreeRequirementGroup;
+  data: PlanDegreeRequirementGroup;
   toggleAccordion: () => void;
   accordion: boolean;
   carousel: boolean;

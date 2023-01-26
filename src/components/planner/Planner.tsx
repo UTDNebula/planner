@@ -26,33 +26,33 @@ import { SemesterCourseItem } from './Tiles/SemesterCourseItem';
 import DroppableSemesterTile from './Tiles/SemesterTile';
 import {
   ActiveDragData,
-  DegreeRequirementGroup,
+  PlanDegreeRequirementGroup,
   DragEventDestinationData,
   DragEventOriginData,
-  DraggableCourse,
-  Semester,
+  PlanCourse,
+  PlanSemester,
   ToastMessage,
 } from './types';
 
 /** PlannerTool Props */
 export interface PlannerProps {
-  degreeRequirements: DegreeRequirementGroup[];
-  semesters: Semester[];
+  degreeRequirements: PlanDegreeRequirementGroup[];
+  semesters: PlanSemester[];
   /** Called when course moved from course list -> semester */
   onAddCourseToSemester?: (
-    targetSemester: Semester,
-    newCourse: DraggableCourse,
+    targetSemester: PlanSemester,
+    newCourse: PlanCourse,
   ) => Promise<ToastMessage>;
   /** Called when course removed from semester */
   onRemoveCourseFromSemester: (
-    targetSemester: Semester,
-    courseToRemove: DraggableCourse,
+    targetSemester: PlanSemester,
+    courseToRemove: PlanCourse,
   ) => Promise<ToastMessage>;
   /** Called when courese moved from semester -> semester */
   onMoveCourseFromSemesterToSemester?: (
-    originSemester: Semester,
-    destinationSemester: Semester,
-    courseToMove: DraggableCourse,
+    originSemester: PlanSemester,
+    destinationSemester: PlanSemester,
+    courseToMove: PlanCourse,
   ) => Promise<ToastMessage>;
   onRemoveYear: () => Promise<void>;
   onAddYear: () => Promise<void>;

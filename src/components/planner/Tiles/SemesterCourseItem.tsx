@@ -2,15 +2,15 @@ import { UniqueIdentifier, useDraggable } from '@dnd-kit/core';
 import CloseIcon from '@mui/icons-material/Close';
 import { ComponentPropsWithoutRef, FC, forwardRef } from 'react';
 
-import { getFirstNewSemester,isEarlierSemester } from '@/utils/plannerUtils';
+import { getFirstNewSemester, isEarlierSemester } from '@/utils/plannerUtils';
 
-import { DragDataFromSemesterTile, DraggableCourse, Semester } from '../types';
+import { DragDataFromSemesterTile, PlanCourse, PlanSemester } from '../types';
 
 export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'> {
-  course: DraggableCourse;
+  course: PlanCourse;
   isValid?: boolean;
   isDisabled: boolean;
-  onRemove?: (course: DraggableCourse) => void;
+  onRemove?: (course: PlanCourse) => void;
 }
 
 /** UI implementation of a semester course */
@@ -42,10 +42,10 @@ export const SemesterCourseItem = forwardRef<HTMLDivElement, SemesterCourseItemP
 
 export interface DraggableSemesterCourseItemProps {
   dragId: UniqueIdentifier;
-  semester: Semester;
-  course: DraggableCourse;
+  semester: PlanSemester;
+  course: PlanCourse;
   isValid: boolean;
-  onRemove: (course: DraggableCourse) => void;
+  onRemove: (course: PlanCourse) => void;
 }
 
 /** Compositional wrapper around SemesterCourseItem */

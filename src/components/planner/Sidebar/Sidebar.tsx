@@ -5,11 +5,11 @@ import RequirementsContainer from '@/components/planner/Sidebar/RequirementsCont
 import useSearch from '@/components/search/search';
 import { loadDummyCourses } from '@/utils/utilFunctions';
 
-import { DegreeRequirementGroup, DraggableCourse, GetDragIdByCourse } from '../types';
+import { PlanDegreeRequirementGroup, PlanCourse, GetDragIdByCourse } from '../types';
 import DraggableCourseList from './DraggableCourseList';
 
 export interface CourseSelectorContainerProps {
-  degreeRequirements: DegreeRequirementGroup[];
+  degreeRequirements: PlanDegreeRequirementGroup[];
   getSearchedDragId: GetDragIdByCourse;
   getRequirementDragId: GetDragIdByCourse;
 }
@@ -54,7 +54,7 @@ function CourseSelectorContainer({
 
   const courseResults = results.map((result) => {
     return { ...result, status: allCourses.has(result.code) ? 'complete' : undefined };
-  }) as DraggableCourse[];
+  }) as PlanCourse[];
 
   return (
     <div className="flex flex-col gap-y-8 w-[344px] h-full overflow-hidden">

@@ -2,23 +2,23 @@ import { UniqueIdentifier, useDroppable } from '@dnd-kit/core';
 import { SemesterCode } from '@prisma/client';
 import { FC, forwardRef } from 'react';
 
-import { getFirstNewSemester,isEarlierSemester } from '@/utils/plannerUtils';
+import { getFirstNewSemester, isEarlierSemester } from '@/utils/plannerUtils';
 
 import {
   DragDataToSemesterTile,
-  DraggableCourse,
+  PlanCourse,
   GetDragIdByCourseAndSemester,
-  Semester,
+  PlanSemester,
 } from '../types';
 import DraggableSemesterCourseItem from './SemesterCourseItem';
 
 export interface SemesterTileProps {
-  semester: Semester;
+  semester: PlanSemester;
   isOver: boolean;
   getDragId: GetDragIdByCourseAndSemester;
   isValid: boolean;
   isDisabled: boolean;
-  onRemoveCourse: (semester: Semester, course: DraggableCourse) => void;
+  onRemoveCourse: (semester: PlanSemester, course: PlanCourse) => void;
 }
 
 export function displaySemesterCode(semesterCode: SemesterCode): string {
@@ -77,10 +77,10 @@ export const SemesterTile = forwardRef<HTMLDivElement, SemesterTileProps>(functi
 
 export interface DroppableSemesterTileProps {
   dropId: UniqueIdentifier;
-  semester: Semester;
+  semester: PlanSemester;
   getSemesterCourseDragId: GetDragIdByCourseAndSemester;
   isValid: boolean;
-  onRemoveCourse: (semester: Semester, course: DraggableCourse) => void;
+  onRemoveCourse: (semester: PlanSemester, course: PlanCourse) => void;
 }
 
 /**

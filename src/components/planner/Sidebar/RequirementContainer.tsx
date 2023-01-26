@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { Course, DegreeRequirement, GetDragIdByCourseAndReq } from '../types';
+import { PlanCourse, PlanDegreeRequirement, GetDragIdByCourseAndReq } from '../types';
 import AddCourseContainer from './AddCourseContainer';
 import PlaceholderComponent from './PlaceholderComponent';
 import RequirementContainerHeader from './RequirementContainerHeader';
 import RequirementInfo from './RequirementInfo';
 
 export interface RequirementContainerProps {
-  degreeRequirement: DegreeRequirement;
+  degreeRequirement: PlanDegreeRequirement;
   setCarousel: (state: boolean) => void;
   getCourseItemDragId: GetDragIdByCourseAndReq;
 }
@@ -52,9 +52,9 @@ function RequirementContainer({
   const numCredits = getCreditHours(degreeRequirement.validCourses);
   const description = degreeRequirement.description ?? '';
 
-  const [selectedCourses, setSelectedCourses] = React.useState<{ [key: string]: Course }>({});
+  const [selectedCourses, setSelectedCourses] = React.useState<{ [key: string]: PlanCourse }>({});
 
-  const updateSelectedCourses = (course: Course, add: boolean) => {
+  const updateSelectedCourses = (course: PlanCourse, add: boolean) => {
     const modifySelectedCourses = { ...selectedCourses };
     add ? (modifySelectedCourses[course.code] = course) : delete modifySelectedCourses[course.code];
     setSelectedCourses(modifySelectedCourses);

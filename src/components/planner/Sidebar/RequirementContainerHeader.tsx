@@ -1,11 +1,11 @@
-import { DegreeRequirement } from '../types';
+import { PlanDegreeRequirement } from '../types';
 
 export default function RequirementContainerHeader({
   data,
   numCredits,
   setCarousel,
 }: {
-  data: DegreeRequirement;
+  data: PlanDegreeRequirement;
   numCredits: number;
   setCarousel: (state: boolean) => void;
 }) {
