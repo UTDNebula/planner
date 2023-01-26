@@ -10,10 +10,8 @@ import { createContextInner } from '@/server/trpc/context';
 import { appRouter } from '@/server/trpc/router/_app';
 import { trpc } from '@/utils/trpc';
 
-import Disclaimer from '../../components/onboarding/Onboarding_Pages/disclaimer';
 import PageOne, { PageOneTypes } from '../../components/onboarding/Onboarding_Pages/pg_1';
 import PageTwo, { PageTwoTypes } from '../../components/onboarding/Onboarding_Pages/pg_2';
-import Privacy from '../../components/onboarding/Onboarding_Pages/privacy';
 import Welcome from '../../components/onboarding/Onboarding_Pages/welcome';
 import { HonorsIndicator } from '../../modules/common/types';
 import { authOptions } from '../api/auth/[...nextauth]';
@@ -363,13 +361,6 @@ export default function OnboardingPage() {
 
   const jsxElem = [
     <Welcome key={0} />,
-    <Disclaimer
-      props={{ ...consentData }}
-      handleChange={setConsentData}
-      key={1}
-      handleValidate={validateForm}
-    />,
-    <Privacy props={{ ...consentData }} handleChange={setConsentData} key={2} />,
     <PageOne
       key={3}
       handleChange={setPageOneData}
@@ -385,7 +376,7 @@ export default function OnboardingPage() {
   ];
   const incrementPage = () => {
     setNavigationProps(page + 1);
-    if (page + 1 < 4) {
+    if (page + 1 < jsxElem.length) {
       setPage(Math.min(page + 1, jsxElem.length - 1));
     } else {
       handleSubmit();
