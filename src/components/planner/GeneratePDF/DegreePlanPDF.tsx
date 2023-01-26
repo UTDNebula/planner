@@ -20,18 +20,17 @@ const styles = StyleSheet.create({
 
 interface DegreePlanPDFProps {
   studentName: string;
-  major: string;
   planTitle: string;
   semesters: PlanSemester[];
 }
 
 // Create Document Component containing the user's degree plan
-const DegreePlanPDF: FC<DegreePlanPDFProps> = ({ studentName, major, planTitle, semesters }) => {
+const DegreePlanPDF: FC<DegreePlanPDFProps> = ({ studentName, planTitle, semesters }) => {
   return (
     <Document>
       <Page size="A4" style={styles.page} wrap={false}>
         <View style={styles.section}>
-          <Header studentName={studentName} major={major} degreePlanTitle={planTitle}></Header>
+          <Header studentName={studentName} degreePlanTitle={planTitle}></Header>
           {semesters.map((semester) => (
             <View key={displaySemesterCode(semester.code)} wrap={false}>
               <SemesterHeader title={displaySemesterCode(semester.code)}></SemesterHeader>

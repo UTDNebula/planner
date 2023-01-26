@@ -293,7 +293,6 @@ export default function PlanDetailPage(
             document={
               <DegreePlanPDF
                 studentName={session?.user?.name || ''}
-                major={'a major'}
                 planTitle={data.plan.name}
                 semesters={semesters}
               />

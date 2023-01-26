@@ -22,15 +22,13 @@ const styles = StyleSheet.create({
 
 interface PlanHeaderProp {
   degreePlanTitle: string;
-  major: string;
   studentName: string;
 }
 
-const PlanHeader = ({ studentName, major, degreePlanTitle }: PlanHeaderProp) => (
+const PlanHeader = ({ studentName, degreePlanTitle }: PlanHeaderProp) => (
   <View style={styles.titleContainer}>
     <Text style={styles.planTitle}>{degreePlanTitle}</Text>
     <Text style={styles.planMajor}>{studentName}</Text>
-    <Text style={styles.planMajor}>{major}</Text>
   </View>
 );
 
