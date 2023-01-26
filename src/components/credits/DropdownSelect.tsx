@@ -48,9 +48,9 @@ const DropdownSelect = <T extends { [key: string]: unknown }>({
           open: Boolean(anchorEl),
         }}
         IconComponent={() => (
-          <div className="min-w-[35px] min-h-[35px] max-w-[35px] max-h-[35px] rounded-full flex justify-center items-center">
+          <button className="min-w-[35px] min-h-[35px] max-w-[35px] max-h-[35px] rounded-full flex justify-center items-center">
             <KeyboardArrowDownIcon className="text-[#3E61ED]" />
-          </div>
+          </button>
         )}
       >
         {values.map((v, i) => (
