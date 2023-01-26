@@ -1,8 +1,8 @@
 import { SemesterType } from '@prisma/client';
 import { ObjectID } from 'bson';
 
-import { displaySemesterCode } from '@/components/planner/Tiles/SemesterTile';
 import { PlanCourse, PlanSemester } from '@/components/planner/types';
+import { displaySemesterCode } from '@/utils/utilFunctions';
 
 export function generateSemesters(
   count: number,

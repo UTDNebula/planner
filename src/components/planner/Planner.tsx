@@ -26,10 +26,10 @@ import { SemesterCourseItem } from './Tiles/SemesterCourseItem';
 import DroppableSemesterTile from './Tiles/SemesterTile';
 import {
   ActiveDragData,
-  PlanDegreeRequirementGroup,
   DragEventDestinationData,
   DragEventOriginData,
   PlanCourse,
+  PlanDegreeRequirementGroup,
   PlanSemester,
   ToastMessage,
 } from './types';

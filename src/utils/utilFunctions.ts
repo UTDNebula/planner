@@ -49,13 +49,14 @@ export const createNewYear = (semesterCode: SemesterCode): PlanSemester[] => {
  *
  * @param year The catalog year from which to load course data
  */
-export async function loadDummyCourses(year = 2020): Promise<{ code: string }[]> {
+export async function loadDummyCourses(year = 2020): Promise<{ id: ObjectID; code: string }[]> {
   const courseData: { [key: string]: JSONCourseType } = await import(
     `../data/${year}-courses.json`
   );
   return Object.entries(courseData).map((value) => {
     const [catalogCode, courseData] = value;
     return {
+      id: new ObjectID(),
       code: catalogCode,
     };
   });
@@ -92,4 +93,15 @@ export function getSemesterHourFromCourseCode(code: string): number | null {
   if (Number.isNaN(hoursNum) || hoursNum.toString().length < 2) return null;
 
   return Number(hoursNum.toString()[1]);
+}
+
+export function displaySemesterCode(semesterCode: SemesterCode): string {
+  let semesterName;
+  if (semesterCode.semester === 'f') {
+    semesterName = 'Fall';
+  } else if (semesterCode.semester === 's') semesterName = 'Spring';
+  else {
+    semesterName = 'Summer';
+  }
+  return `${semesterName} ${semesterCode.year}`;
 }

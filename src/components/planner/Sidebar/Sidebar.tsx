@@ -5,7 +5,7 @@ import RequirementsContainer from '@/components/planner/Sidebar/RequirementsCont
 import useSearch from '@/components/search/search';
 import { loadDummyCourses } from '@/utils/utilFunctions';
 
-import { PlanDegreeRequirementGroup, PlanCourse, GetDragIdByCourse } from '../types';
+import { GetDragIdByCourse,PlanCourse, PlanDegreeRequirementGroup } from '../types';
 import DraggableCourseList from './DraggableCourseList';
 
 export interface CourseSelectorContainerProps {

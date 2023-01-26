@@ -1,7 +1,8 @@
+import { displaySemesterCode } from '@/utils/utilFunctions';
 import { Document, Page, StyleSheet, View } from '@react-pdf/renderer';
 import React, { FC } from 'react';
-import { PlanSemester } from '../types';
 
+import { PlanSemester } from '../types';
 import Header from './Header';
 import SemesterHeader from './SemesterHeader';
 import SemesterTable from './SemesterTable';
@@ -32,8 +33,8 @@ const DegreePlanPDF: FC<DegreePlanPDFProps> = ({ studentName, major, planTitle, 
         <View style={styles.section}>
           <Header studentName={studentName} major={major} degreePlanTitle={planTitle}></Header>
           {semesters.map((semester) => (
-            <View key={semester.code.semester} wrap={false}>
-              <SemesterHeader title={semester.code.semester}></SemesterHeader>
+            <View key={displaySemesterCode(semester.code)} wrap={false}>
+              <SemesterHeader title={displaySemesterCode(semester.code)}></SemesterHeader>
               <SemesterTable courses={semester.courses}></SemesterTable>
             </View>
           ))}

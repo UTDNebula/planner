@@ -7,9 +7,9 @@ import { FC, useMemo, useState } from 'react';
 
 import { trpc } from '@/utils/trpc';
 import { loadDummyCourses } from '@/utils/utilFunctions';
+import { displaySemesterCode } from '@/utils/utilFunctions';
 
 import { generateSemesters } from '../../modules/common/data';
-import { displaySemesterCode } from '../planner/Tiles/SemesterTile';
 import useSearch from '../search/search';
 import AutoCompleteSearchBar from './AutoCompleteSearchBar';
 import Button from './Button';

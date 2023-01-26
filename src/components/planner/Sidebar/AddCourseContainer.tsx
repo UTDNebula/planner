@@ -3,7 +3,7 @@ import { ObjectID } from 'bson';
 import useSearch, { SearchReturn } from '@/components/search/search';
 import { loadDummyCourses } from '@/utils/utilFunctions';
 
-import { PlanCourse, PlanCourse } from '../types';
+import { PlanCourse } from '../types';
 import RequirementSearchBar from './RequirementSearchBar';
 import SelectableCourseContainer from './SelectableCourseContainer';
 

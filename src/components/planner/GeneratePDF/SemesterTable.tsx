@@ -1,8 +1,9 @@
-import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
 import { StyleSheet, View } from '@react-pdf/renderer';
 import React, { FC } from 'react';
-import { PlanCourse } from '../types';
 
+import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
+
+import { PlanCourse } from '../types';
 import TableFooter from './TableFooter';
 import TableHeader from './TableHeader';
 import TableRow from './TableRow';

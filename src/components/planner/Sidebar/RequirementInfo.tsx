@@ -4,7 +4,7 @@ import React from 'react';
 import useSearch from '@/components/search/search';
 import { getAllCourses } from '@/utils/utilFunctions';
 
-import { PlanDegreeRequirement, PlanCourse, GetDragIdByCourseAndReq } from '../types';
+import { GetDragIdByCourseAndReq,PlanCourse, PlanDegreeRequirement } from '../types';
 import DraggableCourseList from './DraggableCourseList';
 import RequirementSearchBar from './RequirementSearchBar';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { PlanCourse, PlanDegreeRequirement, GetDragIdByCourseAndReq } from '../types';
+import { GetDragIdByCourseAndReq,PlanCourse, PlanDegreeRequirement } from '../types';
 import AddCourseContainer from './AddCourseContainer';
 import PlaceholderComponent from './PlaceholderComponent';
 import RequirementContainerHeader from './RequirementContainerHeader';

@@ -1,4 +1,5 @@
 import { SemesterCode } from '@prisma/client';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 import { createProxySSGHelpers } from '@trpc/react-query/ssg';
 import { ObjectID } from 'bson';
 import { useRouter } from 'next/router';
@@ -8,6 +9,7 @@ import { useState } from 'react';
 import React from 'react';
 import superjson from 'superjson';
 
+import DegreePlanPDF from '@/components/planner/GeneratePDF/DegreePlanPDF';
 import Planner from '@/components/planner/Planner';
 import { PlanCourse, PlanSemester, ToastMessage } from '@/components/planner/types';
 import BackArrowIcon from '@/icons/BackArrowIcon';
@@ -18,8 +20,6 @@ import { appRouter } from '@/server/trpc/router/_app';
 import { trpc } from '@/utils/trpc';
 import { useTaskQueue } from '@/utils/useTaskQueue';
 import { createNewYear } from '@/utils/utilFunctions';
-import { PDFDownloadLink } from '@react-pdf/renderer';
-import DegreePlanPDF from '@/components/planner/GeneratePDF/DegreePlanPDF';
 
 /**
  * A page that displays the details of a specific student academic plan.
