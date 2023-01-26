@@ -9,14 +9,11 @@ const styles = StyleSheet.create({
   },
   planTitle: {
     color: 'black',
-    letterSpacing: 2,
     fontSize: 22,
     textAlign: 'left',
-    textTransform: 'uppercase',
   },
   planMajor: {
     color: 'black',
-    letterSpacing: 2,
     fontSize: 18,
     textAlign: 'left',
     paddingTop: 6,

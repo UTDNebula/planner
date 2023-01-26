@@ -1,4 +1,3 @@
-import { SemesterCode } from '@prisma/client';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { createProxySSGHelpers } from '@trpc/react-query/ssg';
 import { ObjectID } from 'bson';
@@ -20,6 +19,8 @@ import { appRouter } from '@/server/trpc/router/_app';
 import { trpc } from '@/utils/trpc';
 import { useTaskQueue } from '@/utils/useTaskQueue';
 import { createNewYear } from '@/utils/utilFunctions';
+import { useSession } from 'next-auth/react';
+import { SemesterCode } from '@prisma/client';
 
 /**
  * A page that displays the details of a specific student academic plan.
@@ -32,6 +33,8 @@ export default function PlanDetailPage(
   const router = useRouter();
   const { planId } = props;
   const planQuery = trpc.plan.getPlanById.useQuery(planId);
+
+  const { data: session } = useSession();
 
   // Extend Course object to contain fields for prereq validation & other stuff ig
 
@@ -289,16 +292,10 @@ export default function PlanDetailPage(
             className="text-base font-normal"
             document={
               <DegreePlanPDF
-                studentName={'some user name'}
-                major="Computer science"
+                studentName={session?.user?.name || ''}
+                major={'a major'}
                 planTitle={data.plan.name}
-                semesters={[
-                  {
-                    id: new ObjectID(),
-                    code: { semester: 'f', year: 2022 },
-                    courses: [{ id: new ObjectID(), code: 'HIST 1301', status: 'complete' }],
-                  },
-                ]}
+                semesters={semesters}
               />
             }
             fileName={data.plan.name + '.pdf'}
