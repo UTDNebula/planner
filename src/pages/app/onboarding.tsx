@@ -87,7 +87,12 @@ export default function OnboardingPage() {
 
     const { name, startSemester, endSemester, credits } = onboardingData;
 
-    const input: RouterInputs['user']['updateUserOnboard'] = {};
+    const input: RouterInputs['user']['updateUserOnboard'] = {
+      name,
+      startSemester,
+      endSemester,
+      credits,
+    };
 
     try {
       await addProfile.mutateAsync(input);
@@ -109,7 +114,6 @@ export default function OnboardingPage() {
       key={2}
       handleChange={setOnboardingData as React.Dispatch<React.SetStateAction<PageTwoTypes>>}
       data={{ credits }}
-      handleValidate={validateForm}
     ></PageTwo>,
   ];
   const incrementPage = () => {
