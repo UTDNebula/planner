@@ -1,72 +1,61 @@
+import DropdownSelect from '@/components/credits/DropdownSelect';
+import { displaySemesterCode } from '@/components/planner/Tiles/SemesterTile';
+import { generateSemesters } from '@/modules/common/data';
 import { TextField } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { useRouter } from 'next/router';
-import React from 'react';
-
-import DummyData from '../../../data/dummy_onboarding.json';
-import { DegreeState } from '../DegreePicker';
-import DegreePickerGallery, { pickerValidate } from '../DegreePickerGallery';
+import { Semester, SemesterCode, SemesterType } from '@prisma/client';
+import React, { useMemo } from 'react';
 
 // TODO: Populate w/ real values
 // Array of values to choose from for form
-const classificationTypes = DummyData.classificationTypes;
-const futureTypes = DummyData.futureTypes;
+
+const startSemesters = generateSemesters(12, new Date().getFullYear() - 6, SemesterType.f, false)
+  .reverse()
+  .map((sem) => sem.code);
+
+const endSemesters = generateSemesters(12, new Date().getFullYear(), SemesterType.f, false)
+  .reverse()
+  .map((sem) => sem.code);
 
 export type PageOneTypes = {
   name: string;
-  classification: string;
-  degree: DegreeState[];
-  future: string; // CareerGoal;
+  startSemester: SemesterCode;
+  endSemester: SemesterCode;
+  credits: string[];
 };
 
-/**
- * Renders a list of MenuItem options for the user to select in the dropdowns.
- *
- * @param array An array of any type where the indices are rendered as separate options
- * @return The rendered list of MenuItems
- */
-function returnMenuItems<MenuItem>(menuOptions: string[]) {
-  //TODO: Place in a utils file
-
-  return menuOptions.map((option) => (
-    <MenuItem key={option} value={option}>
-      {option}
-    </MenuItem>
-  ));
-}
-
-export type Page1Props = {
+export type Page1Data = {
   handleChange: React.Dispatch<React.SetStateAction<PageOneTypes>>;
-  props: PageOneTypes;
+  data: PageOneTypes;
   handleValidate: (value: boolean) => void;
 };
 
-export default function PageOne({ handleChange, props, handleValidate }: Page1Props): JSX.Element {
-  const router = useRouter();
-
-  const { name, classification, degree, future } = props;
+export default function PageOne({ handleChange, data, handleValidate }: Page1Data): JSX.Element {
+  const { name, startSemester, endSemester }: PageOneTypes = data;
 
   // Handles all form data except DegreePicker
-  const handleStandardChange = (event: SelectChangeEvent<string>) => {
-    handleChange({ ...props, [event.target.name]: event.target.value });
+  const setName = (event: SelectChangeEvent<string>) => {
+    handleChange({ ...data, [event.target.name]: event.target.value });
   };
 
-  // Handles DegreePicker
-  const handlePickerChange = (updateDegree: DegreeState[]) => {
-    handleChange({ ...props, degree: updateDegree });
+  const setStartSemester = (sem: SemesterCode) => {
+    handleChange({ ...data, startSemester: sem });
+  };
+
+  const setEndSemester = (sem: SemesterCode) => {
+    handleChange({ ...data, endSemester: sem });
   };
 
   const checkValidate = () => {
-    const isValid = name && classification && future && pickerValidate(degree) ? true : false;
+    const isValid = name && startSemester && endSemester ? true : false;
     handleValidate(isValid);
   };
 
   React.useEffect(() => {
     checkValidate();
-  }, [props]);
+  }, [data]);
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
@@ -91,7 +80,7 @@ export default function PageOne({ handleChange, props, handleValidate }: Page1Pr
               variant="outlined"
               value={name}
               onChange={
-                handleStandardChange as
+                setName as
                   | React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
                   | undefined
               }
@@ -101,47 +90,34 @@ export default function PageOne({ handleChange, props, handleValidate }: Page1Pr
           <div className="mb-10">
             {/* <h3 className="text-xl mb-2 text-gray-800">Student Classification</h3> */}
 
-            <FormControl variant="outlined">
-              <InputLabel id="demo-simple-select-autowidth-label">Grade</InputLabel>
+            <FormControl variant="outlined" className="w-72">
+              <InputLabel id="demo-simple-select-autowidth-label">Start Date</InputLabel>
 
-              <Select
-                labelId="demo-simple-select-autowidth-label"
-                name="classification"
-                value={classification}
-                onChange={handleStandardChange}
-                id="demo-simple-select-autowidth"
-                className="w-72"
-                label="grade"
-              >
-                {returnMenuItems(classificationTypes)}
-              </Select>
+              <DropdownSelect
+                id="semester"
+                value={startSemester}
+                values={startSemesters}
+                getValue={(semester) => semester}
+                getDisplayedValue={(semester) => displaySemesterCode(semester)}
+                onChange={(sem) => {
+                  setStartSemester(sem);
+                }}
+              />
             </FormControl>
           </div>
           <div className="mb-10">
-            {/* <h3 className="text-xl ">Post Graduation Plan</h3> */}
-
-            <FormControl variant="outlined">
-              <InputLabel disableAnimation={false} id="demo-simple-select-autowidth-label">
-                Future Plans
-              </InputLabel>
-
-              <Select
-                labelId="demo-simple-select-autowidth-label"
-                id="demo-simple-select-autowidth"
-                className="w-72"
-                value={future}
-                onChange={handleStandardChange}
-                name="future"
-                label="Future Plans"
-              >
-                {returnMenuItems(futureTypes)}
-              </Select>
+            <FormControl variant="outlined" className="w-72">
+              <InputLabel id="demo-simple-select-autowidth-label">Graduation Date</InputLabel>
+              <DropdownSelect
+                id="semester"
+                value={endSemester}
+                values={endSemesters}
+                getValue={(semester) => semester}
+                getDisplayedValue={(semester) => displaySemesterCode(semester)}
+                onChange={(sem) => setEndSemester(sem)}
+              />
             </FormControl>
           </div>
-        </div>
-        <div className="w-72">
-          {/* <h3 className="text-xl  text-gray-800">Degree</h3> */}
-          <DegreePickerGallery degree={degree} handleChange={handlePickerChange} />
         </div>
       </div>
     </div>
