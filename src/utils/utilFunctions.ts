@@ -84,7 +84,7 @@ export async function getAllCourses(year = 2020) {
 /**
  * Get the semester hour from course code
  *
- * HIST 1301 -> 1
+ * HIST 1301 -> 3
  * */
 export function getSemesterHourFromCourseCode(code: string): number | null {
   const [_, hours]: (string | undefined)[] = code.split(' ');
