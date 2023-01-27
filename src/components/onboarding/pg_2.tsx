@@ -10,7 +10,7 @@ import { SemesterCode, SemesterType } from '@prisma/client';
 import useSearch from '@/components/search/search';
 import { loadDummyCourses } from '@/utils/utilFunctions';
 import SearchBar from '@/components/credits/SearchBar';
-import { FormControlLabel, Switch } from '@mui/material';
+import { FormControl, FormControlLabel, InputLabel, Switch } from '@mui/material';
 import AutoCompleteSearchBar from '@/components/credits/AutoCompleteSearchBar';
 import Button from '@/components/credits/Button';
 
@@ -65,11 +65,15 @@ export default function PageTwo({ handleChange, data }: Page2data): JSX.Element 
   };
 
   return (
-    <div className="animate-intro flex flex-col">
-      <div className="text-lg">Add Credits</div>
-      <div>Add credits that you have already taken in your degree plan here!</div>
+    <div className="animate-intro flex flex-col gap-16">
+      <div>
+        <div className="text-[40px]">Add Credits</div>
+        <div className="text-[16px]">
+          Add credits that you have already taken in your degree plan here!
+        </div>
+      </div>
 
-      <div className="w-72">
+      <div className="w-[350px] flex flex-col gap-4">
         <AutoCompleteSearchBar
           onValueChange={(value) => setCourseCode(value)}
           onInputChange={(query: string) => updateQuery(query)}
@@ -77,24 +81,26 @@ export default function PageTwo({ handleChange, data }: Page2data): JSX.Element 
           style={{ maxWidth: '450px', minWidth: '350px' }}
           autoFocus
         />
-      </div>
 
-      <div className="flex flex-row">
-        <DropdownSelect
-          id="semester"
-          value={semesterCode}
-          values={semesters as (SemesterCode & { [key: string]: string })[]}
-          getValue={(semester) => semester}
-          getDisplayedValue={(semester) => displaySemesterCode(semester)}
-          onChange={(sem) => setSemester(sem)}
-        />
-        <FormControlLabel
-          control={<Switch onChange={() => setTransfer(!transfer)} />}
-          label="Label"
-        />
+        <div className="flex flex-row justify-between items-center">
+          <FormControl variant="outlined" className="w-44">
+            <InputLabel id="demo-simple-select-autowidth-label">Start Date</InputLabel>
+            <DropdownSelect
+              id="semester"
+              value={semesterCode}
+              values={semesters as (SemesterCode & { [key: string]: string })[]}
+              getValue={(semester) => semester}
+              getDisplayedValue={(semester) => displaySemesterCode(semester)}
+              onChange={(sem) => setSemester(sem)}
+            />
+          </FormControl>
+          <div className="flex flex-row items-center">
+            <div className="text-[16px]">Transfer</div>
+            <Switch onChange={() => setTransfer(!transfer)} />
+          </div>
+        </div>
+        <Button onClick={handleAddCredit}>{'Add Credit'}</Button>
       </div>
-
-      <Button onClick={handleAddCredit}>{'Add Credit'}</Button>
 
       <div className="gap-2 px-2 py-4 max-h-[400px]">
         <DataGrid

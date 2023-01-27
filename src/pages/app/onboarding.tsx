@@ -10,14 +10,14 @@ import { createContextInner } from '@/server/trpc/context';
 import { appRouter } from '@/server/trpc/router/_app';
 import { trpc } from '@/utils/trpc';
 
-import PageOne, { PageOneTypes } from '../../components/onboarding/Onboarding_Pages/pg_1';
-import PageTwo, { PageTwoTypes } from '../../components/onboarding/Onboarding_Pages/pg_2';
+import PageOne, { PageOneTypes } from '../../components/onboarding/pg_1';
+import PageTwo, { PageTwoTypes } from '../../components/onboarding/pg_2';
 import { HonorsIndicator } from '../../modules/common/types';
 import { authOptions } from '../api/auth/[...nextauth]';
 import { SemesterCode, SemesterType } from '@prisma/client';
 import { Credit } from '@/components/credits/types';
 import { generateSemesters } from '@/modules/common/data';
-import Welcome from '@/components/onboarding/Onboarding_Pages/welcome';
+import Welcome from '@/components/onboarding/welcome';
 
 /**
  * The first onboarding page for the application.
