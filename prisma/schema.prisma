@@ -33,12 +33,12 @@ model Template {
 }
 
 model Profile {
-  id     String   @id @default(auto()) @map("_id") @db.ObjectId
-  name   String?
-  user   User     @relation(fields: [userId], references: [id])
-  userId String   @unique @db.ObjectId
-  majors String[]
-  minors String[]
+  id            String       @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  startSemester SemesterCode
+  endSemester   SemesterCode
+  user          User         @relation(fields: [userId], references: [id])
+  userId        String       @unique @db.ObjectId
 }
 
 model Plan {
@@ -132,8 +132,6 @@ model Session {
 model User {
   id                 String    @id @default(auto()) @map("_id") @db.ObjectId
   email              String?   @unique
-  name               String // Can I not add this?
-  image              String // Can I not add this?
   emailVerified      DateTime?
   onboardingComplete Boolean   @default(false)
   credit             Credit[]
