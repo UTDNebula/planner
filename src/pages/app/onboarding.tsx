@@ -3,7 +3,7 @@ import { type RouterInputs } from '@utils/trpc';
 import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import { unstable_getServerSession } from 'next-auth/next';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import superjson from 'superjson';
 
 import { createContextInner } from '@/server/trpc/context';
@@ -14,7 +14,10 @@ import PageOne, { PageOneTypes } from '../../components/onboarding/Onboarding_Pa
 import PageTwo, { PageTwoTypes } from '../../components/onboarding/Onboarding_Pages/pg_2';
 import { HonorsIndicator } from '../../modules/common/types';
 import { authOptions } from '../api/auth/[...nextauth]';
-import { SemesterCode } from '@prisma/client';
+import { SemesterCode, SemesterType } from '@prisma/client';
+import { Credit } from '@/components/credits/types';
+import { generateSemesters } from '@/modules/common/data';
+import Welcome from '@/components/onboarding/Onboarding_Pages/welcome';
 
 /**
  * The first onboarding page for the application.
@@ -26,18 +29,33 @@ export interface OnboardingData {
   name: string;
   startSemester: SemesterCode;
   endSemester: SemesterCode;
-  credits: string[];
+  credits: Credit[];
 }
+
+const startSemesters = generateSemesters(12, new Date().getFullYear() - 6, SemesterType.f, false)
+  .reverse()
+  .map((sem) => sem.code);
+
+const endSemesters = generateSemesters(12, new Date().getFullYear(), SemesterType.f, false)
+  .reverse()
+  .map((sem) => sem.code);
 
 const initialOnboardingData: OnboardingData = {
   name: '',
-  startSemester: { semester: 'f', year: 2022 }, // TODO: Create util function for this in the future
-  endSemester: { semester: 's', year: 2026 },
+  startSemester: startSemesters[1], // TODO: Create util function for this in the future
+  endSemester: endSemesters[6],
   credits: [],
 };
 
 export default function OnboardingPage() {
+  // Generate semesters here bc MUI annoying
+
   const [onboardingData, setOnboardingData] = useState<OnboardingData>(initialOnboardingData);
+
+  const handleOnboardingDataUpdate = (updatedFields: Partial<OnboardingData>) => {
+    setOnboardingData({ ...onboardingData, ...updatedFields });
+  };
+
   const { name, startSemester, endSemester, credits } = onboardingData;
 
   const utils = trpc.useContext();
@@ -49,7 +67,7 @@ export default function OnboardingPage() {
   });
 
   const [page, setPage] = useState(0);
-  const [validate, setValidate] = useState([true, false, false]);
+  const [validate, setValidate] = useState([true, false, true]);
 
   const [validNextPage, setValidNextPage] = useState(false);
 
@@ -67,10 +85,9 @@ export default function OnboardingPage() {
     // TODO: Send data to firebase if creating account
     console.log('Send data to firebase & go to /app', onboardingData);
 
-    const input: RouterInputs['user']['updateUserOnboard'] = {
-      name: onboardingData.name,
-      majors: [], // FIX LATER
-    };
+    const { name, startSemester, endSemester, credits } = onboardingData;
+
+    const input: RouterInputs['user']['updateUserOnboard'] = {};
 
     try {
       await addProfile.mutateAsync(input);
@@ -80,17 +97,18 @@ export default function OnboardingPage() {
   };
 
   const jsxElem = [
-    // <Welcome key={0} />,
+    <Welcome key={0} />,
     <PageOne
       key={1}
-      handleChange={setOnboardingData}
-      data={{ name, startSemester, endSemester, credits }}
+      handleChange={handleOnboardingDataUpdate as (updatedFields: Partial<PageOneTypes>) => void}
+      data={{ name, startSemester, endSemester }}
+      semesterOptions={{ startSemesters, endSemesters }}
       handleValidate={validateForm}
     ></PageOne>,
     <PageTwo
-      key={4}
-      handleChange={setOnboardingData}
-      data={{ ...pageTwoData }}
+      key={2}
+      handleChange={setOnboardingData as React.Dispatch<React.SetStateAction<PageTwoTypes>>}
+      data={{ credits }}
       handleValidate={validateForm}
     ></PageTwo>,
   ];
