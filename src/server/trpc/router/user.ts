@@ -39,13 +39,8 @@ export const userRouter = router({
         },
         data: {
           profile: {
-            upsert: {
-              update: {
-                name: input.name,
-              },
-              create: {
-                name: input.name,
-              },
+            update: {
+              name: input.name,
             },
           },
         },
@@ -57,11 +52,27 @@ export const userRouter = router({
     .input(
       z.object({
         name: z.string().min(1),
-        majors: z.array(z.string()).min(1),
+        startSemester: z.object({ semester: z.enum(['f', 's', 'u']), year: z.number() }),
+        endSemester: z.object({ semester: z.enum(['f', 's', 'u']), year: z.number() }),
+        credits: z.array(
+          z.object({
+            courseCode: z.string(),
+            semesterCode: z.object({ semester: z.enum(['f', 's', 'u']), year: z.number() }),
+            transfer: z.boolean(),
+          }),
+        ),
       }),
     )
     .mutation(async ({ ctx, input }) => {
       const userId = ctx.session.user.id;
+      if (input.credits.length > 0) {
+        await ctx.prisma.credit.createMany({
+          data: input.credits.map((credit) => {
+            return { ...credit, userId: userId };
+          }),
+        });
+      }
+
       const user = await ctx.prisma.user.update({
         where: {
           id: userId,
@@ -72,16 +83,19 @@ export const userRouter = router({
             upsert: {
               update: {
                 name: input.name,
-                majors: input.majors,
+                startSemester: input.startSemester,
+                endSemester: input.endSemester,
               },
               create: {
                 name: input.name,
-                majors: input.majors,
+                startSemester: input.startSemester,
+                endSemester: input.endSemester,
               },
             },
           },
         },
       });
+
       console.table(user);
       return user;
     }),
@@ -235,7 +249,6 @@ export const userRouter = router({
           plans: plans,
         },
         select: {
-          name: true,
           plans: {
             orderBy: {
               createdAt: 'desc',
@@ -247,7 +260,6 @@ export const userRouter = router({
           },
         },
       });
-      console.log('DID YOU FAIL?');
       return updatedUser.plans[0].id;
     } catch (error) {
       console.error(error);

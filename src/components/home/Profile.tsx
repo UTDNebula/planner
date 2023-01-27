@@ -26,8 +26,8 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
     if (!isLoading) {
       setName(data?.profile?.name ?? '');
       setEmail(data?.email ?? '');
-      setMajors(data?.profile?.majors ?? []);
-      setMinors(data?.profile?.minors ?? []);
+      // setMajors(data?.profile?.majors ?? []);
+      // setMinors(data?.profile?.minors ?? []);
     }
   }, [data]);
 
