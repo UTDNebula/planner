@@ -105,7 +105,6 @@ export default function PageOne({
               <DropdownSelect
                 id="semester"
                 value={endSemester}
-                defaultValue={endSemesters[0]}
                 values={endSemesters}
                 getValue={(semester) => semester}
                 getDisplayedValue={(semester) => displaySemesterCode(semester)}
