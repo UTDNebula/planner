@@ -23,10 +23,9 @@ export type PageTwoTypes = {
 export type Page2data = {
   handleChange: React.Dispatch<React.SetStateAction<PageTwoTypes>>;
   data: PageTwoTypes;
-  handleValidate: (value: boolean) => void;
 };
 
-export default function PageTwo({ handleChange, data, handleValidate }: Page2data): JSX.Element {
+export default function PageTwo({ handleChange, data }: Page2data): JSX.Element {
   const { credits } = data;
 
   // TODO: Change start semester to when they first joined UTD - 2
@@ -90,7 +89,7 @@ export default function PageTwo({ handleChange, data, handleValidate }: Page2dat
           onChange={(sem) => setSemester(sem)}
         />
         <FormControlLabel
-          control={<Switch defaultChecked onChange={() => setTransfer(!transfer)} />}
+          control={<Switch onChange={() => setTransfer(!transfer)} />}
           label="Label"
         />
       </div>
