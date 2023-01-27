@@ -80,3 +80,18 @@ export async function getAllCourses(year = 2020) {
   const courses: { [key: string]: JSONCourseType } = await import(`../data/${year}-courses.json`);
   return courses;
 }
+
+/**
+ * Get the semester hour from course code
+ *
+ * HIST 1301 -> 3
+ * */
+export function getSemesterHourFromCourseCode(code: string): number | null {
+  const [_, hours]: (string | undefined)[] = code.split(' ');
+
+  const hoursNum = Number(hours);
+
+  if (Number.isNaN(hoursNum) || hoursNum.toString().length < 2) return null;
+
+  return Number(hoursNum.toString()[1]);
+}
