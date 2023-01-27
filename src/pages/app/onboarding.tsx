@@ -112,7 +112,9 @@ export default function OnboardingPage() {
     ></PageOne>,
     <PageTwo
       key={2}
-      handleChange={setOnboardingData as React.Dispatch<React.SetStateAction<PageTwoTypes>>}
+      handleChange={
+        handleOnboardingDataUpdate as React.Dispatch<React.SetStateAction<PageTwoTypes>>
+      }
       data={{ credits }}
     ></PageTwo>,
   ];
