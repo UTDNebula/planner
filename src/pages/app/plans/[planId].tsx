@@ -18,6 +18,9 @@ import { appRouter } from '@/server/trpc/router/_app';
 import { trpc } from '@/utils/trpc';
 import { useTaskQueue } from '@/utils/useTaskQueue';
 import { createNewYear } from '@/utils/utilFunctions';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import DegreePlanPDF from '@/components/planner/DegreePlanPDF/DegreePlanPDF';
+import { useSession } from 'next-auth/react';
 
 /**
  * A page that displays the details of a specific student academic plan.
@@ -30,6 +33,8 @@ export default function PlanDetailPage(
   const router = useRouter();
   const { planId } = props;
   const planQuery = trpc.plan.getPlanById.useQuery(planId);
+
+  const { data: session } = useSession();
 
   // Extend Course object to contain fields for prereq validation & other stuff ig
 
@@ -282,7 +287,21 @@ export default function PlanDetailPage(
         <div>Minors: Cognitive Science</div>
         <div>Fast Track</div>
         <div>Import Plan</div>
-        <div>Export Plan </div>
+        {data && (
+          <PDFDownloadLink
+            className="text-base font-normal"
+            document={
+              <DegreePlanPDF
+                studentName={session?.user?.email || ''}
+                planTitle={data.plan.name}
+                semesters={semesters}
+              />
+            }
+            fileName={data.plan.name + '.pdf'}
+          >
+            {({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'EXPORT PLAN')}
+          </PDFDownloadLink>
+        )}
         <SettingsIcon className={`w-5 h-5 cursor-pointer ml-5`} strokeWidth={2.5} />
       </div>
       <Planner
