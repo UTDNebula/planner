@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "NODE_ENV=test eslint --fix .",
     "format": "prettier --write src/**",
-    "format:all": "prettier --write ."
+    "format:all": "prettier --write .",
+    "analyze": "cross-env ANALYZE=true npm run build"
   },
   "prisma": {
     "seed": "ts-node --transpile-only --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
@@ -21,6 +22,7 @@
     "@mui/lab": "^5.0.0-alpha.67",
     "@mui/material": "^5.4.0",
     "@next-auth/prisma-adapter": "^1.0.5",
+    "@next/bundle-analyzer": "^13.1.6",
     "@prisma/client": "^4.6.1",
     "@react-pdf/renderer": "^3.0.3",
     "@reduxjs/toolkit": "^1.6.0",
