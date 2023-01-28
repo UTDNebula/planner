@@ -3,7 +3,7 @@ import '../styles/globals.css';
 
 import { createTheme, StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
 import { AnimateSharedLayout } from 'framer-motion';
-import { type AppType,AppProps } from 'next/app';
+import { type AppType, AppProps } from 'next/app';
 // import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { type Session } from 'next-auth';
@@ -82,8 +82,8 @@ const NebulaApp: AppType<{ session: Session | null }> = ({
         <link rel="icon" href="/Nebula_Planner_Logo.png" />
         <link rel="manifest" href="/manifest.json" />
 
-        <link href="planner@16px.png" rel="icon" type="image/png" sizes="16x16" />
-        <link href="planner@32px.png" rel="icon" type="image/png" sizes="32x32" />
+        <link href="/planner@16px.png" rel="icon" type="image/png" sizes="16x16" />
+        <link href="/planner@32px.png" rel="icon" type="image/png" sizes="32x32" />
         <link rel="apple-touch-icon" href="/apple-icon.png"></link>
         <meta name="theme-color" content="#4659A7" />
       </Head>
