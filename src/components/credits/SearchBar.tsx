@@ -1,4 +1,4 @@
-import { Search as SearchIcon } from '@mui/icons-material';
+import SearchIcon from '@mui/icons-material/Search';
 import { IconButton, InputBase } from '@mui/material';
 import React, { useState } from 'react';
 
