@@ -25,7 +25,10 @@ export default function AuthPage({
   };
 
   const handleEmailSignIn = () => {
-    signIn('email', { email, callbackUrl: 'http://localhost:3000/app' });
+    signIn('email', {
+      email,
+      callbackUrl: '/app',
+    });
   };
   return (
     <>
