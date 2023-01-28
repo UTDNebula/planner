@@ -25,7 +25,12 @@ export default function AuthPage({
   };
 
   const handleEmailSignIn = () => {
-    signIn('email', { email, callbackUrl: 'http://localhost:3000/app' });
+    signIn('email', {
+      email,
+      callbackUrl: process.env.VERCEL_URL
+        ? `https://${process.env.VERCEL_URL}/app`
+        : `http://localhost:${process.env.PORT ?? 3000}/app`,
+    });
   };
   return (
     <>
