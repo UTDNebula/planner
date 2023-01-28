@@ -33,7 +33,7 @@
     "bson": "^4.7.2",
     "eslint": "^8.8.0",
     "eslint-plugin-unused-imports": "^2.0.0",
-    "formidable": "^2.0.1",
+    "formidable": "^2.1.1",
     "framer-motion": "^6.2.3",
     "intersection-observer": "^0.12.2",
     "next": "^13.0.4",
