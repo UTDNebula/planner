@@ -187,7 +187,6 @@ export const planRouter = router({
     .input(z.object({ planId: z.string(), semesterIds: z.array(z.string()).length(3) }))
     .mutation(async ({ ctx, input }) => {
       const { planId, semesterIds } = input;
-      console.log('Aasdf');
       try {
         const plan = await ctx.prisma.plan.findUnique({
           where: {
@@ -239,7 +238,6 @@ export const planRouter = router({
       // Get semester you're adding the course to
       try {
         const { semesterId, courseName } = input;
-        console.log(semesterId);
         // This works bc semesters are stored in its own table
         // Once integrated w/ Nebula API, use Promise.all() to call concurrently
         const semester = await ctx.prisma.semester.findUnique({
@@ -374,7 +372,6 @@ export const planRouter = router({
     )
     .query(async ({ ctx, input }) => {
       try {
-        console.log('BR');
         return await fetch('http://0.0.0.0:5001/validate-degree-plan', {
           method: 'POST',
           body: JSON.stringify(input),
@@ -382,7 +379,6 @@ export const planRouter = router({
             'content-type': 'application/json',
           },
         }).then(async (res) => {
-          console.log(res.status);
           const rawData = await res.json();
           // Transform data
           const core: DegreeRequirementGroup = { name: 'Core Requirements', requirements: [] };

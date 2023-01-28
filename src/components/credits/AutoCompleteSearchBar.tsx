@@ -60,7 +60,6 @@ const SearchBar: FC<SearchBarProps & React.ComponentPropsWithoutRef<'button'>> =
         options={options}
         fullWidth
         PopperComponent={CustomPopper}
-        value={defaultValue}
         renderInput={(params) => {
           return (
             <TextField

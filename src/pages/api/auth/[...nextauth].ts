@@ -23,6 +23,13 @@ export const authOptions: NextAuthOptions = {
     DiscordProvider({
       clientId: env.DISCORD_CLIENT_ID,
       clientSecret: env.DISCORD_CLIENT_SECRET,
+      profile(profile) {
+        // profile type can be found here: https://next-auth.js.org/providers/discord
+        return {
+          id: profile.id,
+          email: profile.email,
+        };
+      },
     }),
     EmailProvider({
       server: {

@@ -8,10 +8,7 @@ export function generateSemesters(
   count: number,
   startYear: number,
   startSemester: SemesterType,
-  useRandom = false,
-  courses: Course[] = [],
-  coursesPerSemester = 5,
-  onlyLong = true,
+  includeSummer = true,
 ): Semester[] {
   const result = [];
   let semester = startSemester;
@@ -28,10 +25,10 @@ export function generateSemesters(
     if (semester === SemesterType.f) {
       year = year + 1;
       semester = SemesterType.s;
-    } else if (semester === SemesterType.u && onlyLong) {
-      semester = SemesterType.f;
-    } else {
+    } else if (semester === SemesterType.s && includeSummer) {
       semester = SemesterType.u;
+    } else {
+      semester = SemesterType.f;
     }
   }
 
