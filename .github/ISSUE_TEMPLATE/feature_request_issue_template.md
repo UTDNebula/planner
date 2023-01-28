@@ -2,7 +2,7 @@
 name: Feature Request
 about: Think of something you would like added to this project? This is how to do it.
 title: '[Feature Request]'
-labels: 'Type: Feature Request, Category: User Experience, Status: Awaiting Triage'
+labels: ['Status: Awaiting Triage']
 assignees: 'ZzRanger'
 ---
 
