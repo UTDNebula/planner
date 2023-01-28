@@ -38,7 +38,7 @@
     "formidable": "^2.1.1",
     "framer-motion": "^6.2.3",
     "intersection-observer": "^0.12.2",
-    "next": "^13.0.4",
+    "next": "^13.1.6",
     "next-auth": "^4.17.0",
     "nodemailer": "^6.8.0",
     "pdf-parse": "^1.1.1",
