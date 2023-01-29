@@ -87,7 +87,6 @@ export function formatDegreeValidationRequest(
     courses: semesters
       .flatMap((s) => s.courses)
       .map((c) => {
-        console.log(c);
         const split = c.split(' ');
         const department = split[0];
         const courseNumber = Number(split[1]);
