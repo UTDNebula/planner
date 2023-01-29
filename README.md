@@ -71,9 +71,10 @@ To start, clone the repository, and obtain the required environment keys as expl
 git clone https://github.com/UTDNebula/planner.git
 cd planner
 ```
-##### Setting up MongoDB
-
 ***
+
+#### Setting up MongoDB
+
 
 1. [Go to Database Deployments | Cloud: MongoDB Cloud](https://cloud.mongodb.com/v2)
 
@@ -109,9 +110,9 @@ cd planner
 12. Copy the generated connection string
 ![Step 17 screenshot](https://images.tango.us/workflows/b5af1e64-4847-4e00-bd27-0b6d9addee9d/steps/935c3c08-b60a-48fa-b3ae-bf2f12c37744/2007b63a-8bfc-4c0b-b9fc-695b1083c75e.png?crop=focalpoint&fit=crop&fp-x=0.7349&fp-y=0.5154&fp-z=3.1395&w=1200&mark-w=0.2&mark-pad=0&mark64=aHR0cHM6Ly9pbWFnZXMudGFuZ28udXMvc3RhdGljL21hZGUtd2l0aC10YW5nby13YXRlcm1hcmsucG5n&ar=1860%3A972)
 
-##### Obtaining API Keys for Auth Providers
-
 ***
+
+#### Obtaining API Keys for Auth Providers
 
 ##### Discord
 
@@ -147,9 +148,8 @@ cd planner
 11. Click on Save Changes
 ![Step 11 screenshot](https://images.tango.us/workflows/3a8e357f-f80d-4e7d-ab54-84e04d812a3b/steps/e7149cf3-3501-437c-8900-bb38ac380174/cf87bca6-2e88-43e7-993a-256b4901c0ca.png?crop=focalpoint&fit=crop&fp-x=0.8790&fp-y=0.8951&fp-z=6.0984&w=1200&mark-w=0.2&mark-pad=0&mark64=aHR0cHM6Ly9pbWFnZXMudGFuZ28udXMvc3RhdGljL21hZGUtd2l0aC10YW5nby13YXRlcm1hcmsucG5n&ar=1860%3A972)
 
-##### Setup mailing server
+#### Setup mailing server
 
-***
 
 1. [Go to Mailtrap: Email Delivery Platform](https://mailtrap.io/)
 
@@ -163,9 +163,10 @@ cd planner
 ![Step 7 screenshot](https://images.tango.us/workflows/4a569e1c-9ecf-4f99-ab9d-a40276d05712/steps/1156a1c2-6851-46a2-a777-fcd821309ef0/2933e425-6917-45d5-a383-b36d627773d5.png?crop=focalpoint&fit=crop&fp-x=0.4505&fp-y=0.4830&fp-z=2.8207&w=1200&blend-align=bottom&blend-mode=normal&blend-x=800&blend64=aHR0cHM6Ly9pbWFnZXMudGFuZ28udXMvc3RhdGljL21hZGUtd2l0aC10YW5nby13YXRlcm1hcmsucG5n)
 5. Copy the host, port, user, and pass values.
 
-##### Adding environment variables
-
 ***
+
+#### Adding environment variables
+
 Create a file called .env in the root directory and add your personal env keys
 
 ```bash
@@ -197,9 +198,10 @@ NODE_ENV=development
 
 ![MongoDB Connection String](https://storage.googleapis.com/cp_bucket_test/MongoDBurlEncode.gif)
 
-##### Installing dependencies and seeding the database
-
 ***
+
+#### Installing dependencies and seeding the database
+
 
 ```bash
 npm install
@@ -208,7 +210,7 @@ npx prisma db seed
 npm run dev
 ```
 
-This will launch generate the DB schema, seed the DB and run a local development server on [`localhost:3000`](https://localhost:3000) by default.
+This will generate the DB schema, seed the DB and run a local development server on [`localhost:3000`](https://localhost:3000) by default.
 
 Check out this [blog](https://btt.skgr.xyz/blog/nebula-planner-tech-stack) to learn about the stack we are using and a basic overview of the codebase.
 
