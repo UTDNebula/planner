@@ -10,7 +10,6 @@
     "format": "prettier --write src/**",
     "format:all": "prettier --write .",
     "analyze": "cross-env ANALYZE=true npm run build",
-    "setup": "ts-node --transpile-only --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "prisma": {
     "seed": "ts-node --transpile-only --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
