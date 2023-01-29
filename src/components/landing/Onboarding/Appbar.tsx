@@ -87,7 +87,7 @@ export default function ResponsiveAppBar({ ref1, ref2, ref3 }: Props): JSX.Eleme
             backgroundColor: '#4659A7',
             fontSize: '18px',
           }}
-          onClick={() => router.push('/auth/signup')}
+          onClick={() => router.push('/auth/login')}
         >
           GET STARTED
         </Button>
