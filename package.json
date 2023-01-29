@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && prisma db push && npm run setup && next build",
+    "build": "prisma generate && prisma db push && prisma db seed && next build",
     "start": "next start",
     "lint": "NODE_ENV=test eslint --fix .",
     "format": "prettier --write src/**",
