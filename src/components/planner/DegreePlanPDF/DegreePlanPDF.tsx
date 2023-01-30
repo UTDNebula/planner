@@ -1,7 +1,7 @@
-import { displaySemesterCode } from '../Tiles/SemesterTile';
 import { Document, Page, StyleSheet, View } from '@react-pdf/renderer';
 import React, { FC } from 'react';
 
+import { displaySemesterCode } from '../Tiles/SemesterTile';
 import { Semester } from '../types';
 import Header from './Header';
 import SemesterHeader from './SemesterHeader';

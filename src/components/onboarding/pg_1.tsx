@@ -1,12 +1,12 @@
-import DropdownSelect from '@/components/credits/DropdownSelect';
-import { displaySemesterCode } from '@/components/planner/Tiles/SemesterTile';
-import { generateSemesters } from '@/modules/common/data';
 import { TextField } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { Semester, SemesterCode, SemesterType } from '@prisma/client';
-import React, { useEffect, useMemo } from 'react';
+import { SelectChangeEvent } from '@mui/material/Select';
+import { SemesterCode } from '@prisma/client';
+import React from 'react';
+
+import DropdownSelect from '@/components/credits/DropdownSelect';
+import { displaySemesterCode } from '@/utils/utilFunctions';
 
 // TODO: Populate w/ real values
 // Array of values to choose from for form

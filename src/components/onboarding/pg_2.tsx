@@ -1,18 +1,17 @@
+import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+import { FormControl, InputLabel, Switch } from '@mui/material';
+import { SemesterCode, SemesterType } from '@prisma/client';
+import React, { useMemo, useState } from 'react';
+
+import AutoCompleteSearchBar from '@/components/credits/AutoCompleteSearchBar';
+import Button from '@/components/credits/Button';
 import DataGrid from '@/components/credits/DataGrid';
 import DropdownSelect from '@/components/credits/DropdownSelect';
 import { Credit } from '@/components/credits/types';
 import { displaySemesterCode } from '@/components/planner/Tiles/SemesterTile';
-import { generateSemesters } from '@/modules/common/data';
-import DeleteIcon from '@mui/icons-material/DeleteOutlined';
-import React, { useMemo, useState } from 'react';
-
-import { SemesterCode, SemesterType } from '@prisma/client';
 import useSearch from '@/components/search/search';
+import { generateSemesters } from '@/modules/common/data';
 import { loadDummyCourses } from '@/utils/utilFunctions';
-import SearchBar from '@/components/credits/SearchBar';
-import { FormControl, FormControlLabel, InputLabel, Switch } from '@mui/material';
-import AutoCompleteSearchBar from '@/components/credits/AutoCompleteSearchBar';
-import Button from '@/components/credits/Button';
 
 // Array of values to choose from for form
 
