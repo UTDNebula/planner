@@ -1,4 +1,4 @@
-import { displaySemesterCode } from '../Tiles/SemesterTile';
+import { displaySemesterCode } from '@/utils/utilFunctions';
 import { Document, Page, StyleSheet, View } from '@react-pdf/renderer';
 import React, { FC } from 'react';
 

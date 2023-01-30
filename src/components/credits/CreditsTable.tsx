@@ -3,8 +3,8 @@ import { SemesterCode } from '@prisma/client';
 import { FC, useMemo, useState } from 'react';
 
 import { trpc } from '@/utils/trpc';
+import { displaySemesterCode } from '@/utils/utilFunctions';
 
-import { displaySemesterCode } from '../planner/Tiles/SemesterTile';
 import DataGrid from './DataGrid';
 import SearchBar from './SearchBar';
 import { Credit } from './types';

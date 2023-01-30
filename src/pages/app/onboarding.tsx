@@ -1,23 +1,22 @@
+import { SemesterCode, SemesterType } from '@prisma/client';
 import { createProxySSGHelpers } from '@trpc/react-query/ssg';
 import { type RouterInputs } from '@utils/trpc';
 import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import { unstable_getServerSession } from 'next-auth/next';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import superjson from 'superjson';
 
+import { Credit } from '@/components/credits/types';
+import Welcome from '@/components/onboarding/welcome';
 import { createContextInner } from '@/server/trpc/context';
 import { appRouter } from '@/server/trpc/router/_app';
 import { trpc } from '@/utils/trpc';
+import { generateSemesters } from '@/utils/utilFunctions';
 
 import PageOne, { PageOneTypes } from '../../components/onboarding/pg_1';
 import PageTwo, { PageTwoTypes } from '../../components/onboarding/pg_2';
-import { HonorsIndicator } from '../../modules/common/types';
 import { authOptions } from '../api/auth/[...nextauth]';
-import { SemesterCode, SemesterType } from '@prisma/client';
-import { Credit } from '@/components/credits/types';
-import { generateSemesters } from '@/modules/common/data';
-import Welcome from '@/components/onboarding/welcome';
 
 /**
  * The first onboarding page for the application.
