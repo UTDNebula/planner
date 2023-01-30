@@ -2,6 +2,7 @@ import { UniqueIdentifier, useDroppable } from '@dnd-kit/core';
 import { FC, forwardRef } from 'react';
 
 import { getFirstNewSemester, isEarlierSemester } from '@/utils/plannerUtils';
+import { displaySemesterCode } from '@/utils/utilFunctions';
 
 import {
   DragDataToSemesterTile,

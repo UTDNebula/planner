@@ -8,10 +8,8 @@ import Button from '@/components/credits/Button';
 import DataGrid from '@/components/credits/DataGrid';
 import DropdownSelect from '@/components/credits/DropdownSelect';
 import { Credit } from '@/components/credits/types';
-import { displaySemesterCode } from '@/components/planner/Tiles/SemesterTile';
 import useSearch from '@/components/search/search';
-import { generateSemesters } from '@/modules/common/data';
-import { loadDummyCourses } from '@/utils/utilFunctions';
+import { displaySemesterCode, generateSemesters, loadDummyCourses } from '@/utils/utilFunctions';
 
 // Array of values to choose from for form
 
