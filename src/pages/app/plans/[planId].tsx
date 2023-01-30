@@ -277,7 +277,7 @@ export default function PlanDetailPage(
     <div className="w-screen flex flex-col p-4 h-screen max-h-screen overflow-y-scroll overflow-x-hidden">
       <div className=" mb-10 flex flex-row items-center gap-2">
         <BackArrowIcon
-          onClick={() => router.push('/app/home')}
+          onClick={handleBack}
           className={`w-5 h-5 cursor-pointer mr-2`}
           strokeWidth={2.5}
         />
