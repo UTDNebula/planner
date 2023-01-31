@@ -17,6 +17,8 @@ import {
   pointerWithin,
   useSensor,
   useSensors,
+  Active,
+  Over,
 } from '@dnd-kit/core';
 import React, { useMemo, useState } from 'react';
 
@@ -86,62 +88,71 @@ export default function Planner({
     [semesters],
   );
 
+  const handleOnDragStart = ({ active }: { active: Active }) => {
+    const originData = active.data.current as DragEventOriginData;
+    setActiveCourse({ from: originData.from, course: originData.course });
+  };
+
+  const handleOnDragEnd = ({ active, over }: { active: Active; over: Over | null }) => {
+    setActiveCourse(null);
+
+    if (active && over) {
+      const originData = active.data.current as DragEventOriginData;
+      const destinationData = over.data.current as DragEventDestinationData;
+
+      // from semester -> current semester
+      // attempting to drop semester course on current tile
+      if (
+        originData.from === 'semester-tile' &&
+        destinationData.to === 'semester-tile' &&
+        originData.semester.id === destinationData.semester.id
+      )
+        return;
+
+      // from course list -> semester
+      if (
+        originData.from === 'course-list' &&
+        destinationData.to === 'semester-tile' &&
+        onAddCourseToSemester
+      ) {
+        onAddCourseToSemester(destinationData.semester, originData.course).then((notification) =>
+          // TODO: push message to toast notifications
+          console.log(notification.message),
+        );
+      }
+
+      // from semester -> another semester
+      if (
+        originData.from === 'semester-tile' &&
+        destinationData.to === 'semester-tile' &&
+        onMoveCourseFromSemesterToSemester
+      ) {
+        onMoveCourseFromSemesterToSemester(
+          originData.semester,
+          destinationData.semester,
+          originData.course,
+        ).then((notification) => {
+          // TODO: push message to toast notifications
+          console.log(notification.message);
+        });
+      }
+    }
+  };
+
+  const handleOnRemoveCourse = (semester: Semester, course: DraggableCourse) =>
+    onRemoveCourseFromSemester(semester, course).then((notification) => {
+      // TODO: push message to toast notification
+      console.log(notification.message);
+    });
+
   return (
     <DndContext
       // Enabling autoScroll causes odd behavior when dragging outside of a scrollable container (eg. Sidebar)
       autoScroll={false}
       sensors={sensors}
       collisionDetection={pointerWithin}
-      onDragStart={({ active }) => {
-        const originData = active.data.current as DragEventOriginData;
-        setActiveCourse({ from: originData.from, course: originData.course });
-      }}
-      onDragEnd={({ active, over }) => {
-        setActiveCourse(null);
-
-        if (active && over) {
-          const originData = active.data.current as DragEventOriginData;
-          const destinationData = over.data.current as DragEventDestinationData;
-
-          // from semester -> current semester
-          // attempting to drop semester course on current tile
-          if (
-            originData.from === 'semester-tile' &&
-            destinationData.to === 'semester-tile' &&
-            originData.semester.id === destinationData.semester.id
-          )
-            return;
-
-          // from course list -> semester
-          if (
-            originData.from === 'course-list' &&
-            destinationData.to === 'semester-tile' &&
-            onAddCourseToSemester
-          ) {
-            onAddCourseToSemester(destinationData.semester, originData.course).then(
-              (notification) =>
-                // TODO: push message to toast notifications
-                console.log(notification.message),
-            );
-          }
-
-          // from semester -> another semester
-          if (
-            originData.from === 'semester-tile' &&
-            destinationData.to === 'semester-tile' &&
-            onMoveCourseFromSemesterToSemester
-          ) {
-            onMoveCourseFromSemesterToSemester(
-              originData.semester,
-              destinationData.semester,
-              originData.course,
-            ).then((notification) => {
-              // TODO: push message to toast notifications
-              console.log(notification.message);
-            });
-          }
-        }
-      }}
+      onDragStart={handleOnDragStart}
+      onDragEnd={handleOnDragEnd}
     >
       <div className="w-full grid grid-cols-[auto_1fr] gap-[52px]">
         <CourseSelectorContainer
@@ -168,12 +179,7 @@ export default function Planner({
 
               return (
                 <DroppableSemesterTile
-                  onRemoveCourse={(semester, course) =>
-                    onRemoveCourseFromSemester(semester, course).then((notification) => {
-                      // TODO: push message to toast notification
-                      console.log(notification.message);
-                    })
-                  }
+                  onRemoveCourse={handleOnRemoveCourse}
                   key={semester.id.toString()}
                   dropId={`semester-${semester.id}`}
                   getSemesterCourseDragId={(course, semester) =>
