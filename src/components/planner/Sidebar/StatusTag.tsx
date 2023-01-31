@@ -4,7 +4,7 @@ export default function CourseStatusTag({ status }: { status: boolean }) {
 
   return (
     <div
-      className={`${incomplete} flex justify-center items-center text-[11px] w-20 border rounded-md`}
+      className={`${incomplete} flex w-20 items-center justify-center rounded-md border text-[11px]`}
     >
       {tagText}
     </div>

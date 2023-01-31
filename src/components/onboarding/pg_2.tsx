@@ -62,7 +62,7 @@ export default function PageTwo({ handleChange, data }: Page2data): JSX.Element 
   };
 
   return (
-    <div className="animate-intro flex flex-col gap-16">
+    <div className="flex animate-intro flex-col gap-16">
       <div>
         <div className="text-[40px]">Add Credits</div>
         <div className="text-[16px]">
@@ -70,7 +70,7 @@ export default function PageTwo({ handleChange, data }: Page2data): JSX.Element 
         </div>
       </div>
 
-      <div className="w-[350px] flex flex-col gap-4">
+      <div className="flex w-[350px] flex-col gap-4">
         <AutoCompleteSearchBar
           onValueChange={(value) => setCourseCode(value)}
           onInputChange={(query: string) => updateQuery(query)}
@@ -79,7 +79,7 @@ export default function PageTwo({ handleChange, data }: Page2data): JSX.Element 
           autoFocus
         />
 
-        <div className="flex flex-row justify-between items-center">
+        <div className="flex flex-row items-center justify-between">
           <FormControl variant="outlined" className="w-44">
             <InputLabel id="demo-simple-select-autowidth-label">Start Date</InputLabel>
             <DropdownSelect
@@ -99,7 +99,7 @@ export default function PageTwo({ handleChange, data }: Page2data): JSX.Element 
         <Button onClick={handleAddCredit}>{'Add Credit'}</Button>
       </div>
 
-      <div className="gap-2 px-2 py-4 max-h-[400px]">
+      <div className="max-h-[400px] gap-2 px-2 py-4">
         <DataGrid
           columns={[
             {
@@ -135,7 +135,7 @@ export default function PageTwo({ handleChange, data }: Page2data): JSX.Element 
               },
               injectedComponent: {
                 Element: () => (
-                  <DeleteIcon className="text-red-500 cursor-pointer absolute right-5 top-1/2 -translate-y-1/2" />
+                  <DeleteIcon className="absolute right-5 top-1/2 -translate-y-1/2 cursor-pointer text-red-500" />
                 ),
                 onClick: (_, row) => {
                   handleRemoveCredit(row);

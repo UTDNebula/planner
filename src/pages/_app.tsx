@@ -90,7 +90,7 @@ const NebulaApp: AppType<{ session: Session | null }> = ({
       <AnimateSharedLayout>
         <StyledEngineProvider injectFirst>
           <ThemeProvider theme={theme}>
-            <main className="w-screen h-screen overflow-x-hidden">
+            <main className="h-screen w-screen overflow-x-hidden">
               {Component.auth ? (
                 <Auth>
                   <Layout>

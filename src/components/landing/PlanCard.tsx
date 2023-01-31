@@ -24,9 +24,9 @@ export default function PlanCard({ id, name }: PlanCardProps) {
     >
       <button
         onClick={handlePlanClick}
-        className="bg-white max-w-[300px] h-[150px] w-full text-left py-6 flex flex-col px-8 rounded-2xl shadow-2xl transition-all hover:scale-110"
+        className="flex h-[150px] w-full max-w-[300px] flex-col rounded-2xl bg-white py-6 px-8 text-left shadow-2xl transition-all hover:scale-110"
       >
-        <h4 className="max-w-full text-ellipsis whitespace-nowrap overflow-hidden">{name}</h4>
+        <h4 className="max-w-full overflow-hidden text-ellipsis whitespace-nowrap">{name}</h4>
         <p>{name}</p>
       </button>
     </Tooltip>

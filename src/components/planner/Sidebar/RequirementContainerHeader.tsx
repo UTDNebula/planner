@@ -10,7 +10,7 @@ export default function RequirementContainerHeader({
   setCarousel: (state: boolean) => void;
 }) {
   return (
-    <div className="w-full flex flex-row items-start justify-start">
+    <div className="flex w-full flex-row items-start justify-start">
       <button onClick={() => setCarousel(false)}>
         <svg
           width="30"

@@ -57,7 +57,7 @@ function CourseSelectorContainer({
   }) as DraggableCourse[];
 
   return (
-    <div className="flex flex-col gap-y-8 w-[344px] h-full overflow-hidden">
+    <div className="flex h-full w-[344px] flex-col gap-y-8 overflow-hidden">
       <SearchBar updateQuery={updateQueryWrapper} placeholder="Search courses" />
 
       {results.length > 0 && (
