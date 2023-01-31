@@ -7,6 +7,7 @@ import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next/typ
 import { unstable_getServerSession } from 'next-auth';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 import React from 'react';
 import superjson from 'superjson';
 
@@ -95,10 +96,20 @@ export default function PlanDetailPage(
   };
   const handleYearCreate = async ({ semesterIds }: { [key: string]: string[] }) => {
     try {
-      await createYear.mutateAsync({
-        planId,
-        semesterIds: semesterIds.map((id) => id),
-      });
+      await toast.promise(
+        createYear.mutateAsync({
+          planId,
+          semesterIds: semesterIds.map((id) => id),
+        }),
+        {
+          pending: 'Creating year...',
+          success: 'Year created!',
+          error: 'Error creating year',
+        },
+        {
+          autoClose: 1000,
+        },
+      );
     } catch (error) {
       console.error(error);
     }
@@ -107,13 +118,33 @@ export default function PlanDetailPage(
     try {
       // TODO: Handle deletion errors
 
-      await deleteYear.mutateAsync(planId);
+      await toast.promise(
+        deleteYear.mutateAsync(planId),
+        {
+          pending: 'Deleting year...',
+          success: 'Year deleted!',
+          error: 'Error deleting year',
+        },
+        {
+          autoClose: 1000,
+        },
+      );
     } catch (error) {}
   };
 
   const handleAddCourse = async ({ semesterId, courseName }: { [key: string]: string }) => {
     try {
-      await addCourse.mutateAsync({ planId, semesterId, courseName });
+      await toast.promise(
+        addCourse.mutateAsync({ planId, semesterId, courseName }),
+        {
+          pending: 'Adding course ' + courseName + '...',
+          success: 'Added course ' + courseName + '!',
+          error: 'Error in adding ' + courseName,
+        },
+        {
+          autoClose: 1000,
+        },
+      );
     } catch (error) {}
   };
 
@@ -124,7 +155,17 @@ export default function PlanDetailPage(
     [key: string]: string;
   }) => {
     try {
-      await removeCourse.mutateAsync({ planId, semesterId, courseName });
+      await toast.promise(
+        removeCourse.mutateAsync({ planId, semesterId, courseName }),
+        {
+          pending: 'Removing course ' + courseName + '...',
+          success: 'Removed course ' + courseName + '!',
+          error: 'Error in removing ' + courseName,
+        },
+        {
+          autoClose: 1000,
+        },
+      );
     } catch (error) {}
   };
 
@@ -136,7 +177,17 @@ export default function PlanDetailPage(
     [key: string]: string;
   }) => {
     try {
-      await moveCourse.mutateAsync({ planId, oldSemesterId, newSemesterId, courseName });
+      await toast.promise(
+        moveCourse.mutateAsync({ planId, oldSemesterId, newSemesterId, courseName }),
+        {
+          pending: 'Moving course ' + courseName + '...',
+          success: 'Moved course ' + courseName + '!',
+          error: 'Error while moving ' + courseName,
+        },
+        {
+          autoClose: 1000,
+        },
+      );
     } catch (error) {
       console.error(error);
     }
