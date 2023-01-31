@@ -30,15 +30,6 @@ function CourseSelectorContainer({
     constraints: [0, 5],
   });
 
-  const annoyed = React.useMemo(() => {
-    return results;
-  }, [results]);
-
-  const moreAnnoyed = React.useMemo(() => {
-    console.info(courses);
-    return courses;
-  }, [courses]);
-
   // TODO: Change later!!! This code hides search bar when no input
   const updateQueryWrapper = (query: string) => {
     if (query === '') {
@@ -62,7 +53,7 @@ function CourseSelectorContainer({
         status: courses.includes(result.code) ? 'complete' : undefined,
       };
     }) as DraggableCourse[];
-  }, [annoyed, moreAnnoyed]);
+  }, [results, courses]);
 
   return (
     <div className="flex flex-col gap-y-8 w-[344px] h-full overflow-hidden">
