@@ -1,6 +1,6 @@
 import { SemesterCode, SemesterType } from '@prisma/client';
 
-import { createNewYear } from './utilFunctions';
+import { createNewYear, displaySemesterCode } from './utilFunctions';
 
 export interface RecentSemester {
   year: number;
@@ -133,7 +133,7 @@ export function addCreditsToPlan(
 
   for (let year = minYear; year < endSemester; year++) {
     const newYear = createNewYear({ semester: 'u', year }).map((sem) => {
-      return { ...sem, courses: [] as string[], id: sem.id.toString() };
+      return { ...sem, courses: [] as string[], id: displaySemesterCode(sem.code) };
     });
 
     // Add credits to year
