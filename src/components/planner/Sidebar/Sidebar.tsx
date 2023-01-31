@@ -7,20 +7,21 @@ import { loadDummyCourses } from '@/utils/utilFunctions';
 
 import { DegreeRequirementGroup, DraggableCourse, GetDragIdByCourse } from '../types';
 import DraggableCourseList from './DraggableCourseList';
+import { ObjectID } from 'bson';
 
 export interface CourseSelectorContainerProps {
   degreeRequirements: DegreeRequirementGroup[];
+  courses: string[];
   getSearchedDragId: GetDragIdByCourse;
   getRequirementDragId: GetDragIdByCourse;
 }
 
 function CourseSelectorContainer({
   degreeRequirements,
+  courses,
   getSearchedDragId,
   getRequirementDragId,
 }: CourseSelectorContainerProps) {
-  console.log('RERENDER');
-  console.log(degreeRequirements);
   // TODO: Provide UI indicator for errors
   const { results, updateQuery } = useSearch({
     getData: loadDummyCourses,
@@ -28,6 +29,15 @@ function CourseSelectorContainer({
     filterFn: (elm, query) => elm['code'].toLowerCase().includes(query.toLowerCase()),
     constraints: [0, 5],
   });
+
+  const annoyed = React.useMemo(() => {
+    return results;
+  }, [results]);
+
+  const moreAnnoyed = React.useMemo(() => {
+    console.info(courses);
+    return courses;
+  }, [courses]);
 
   // TODO: Change later!!! This code hides search bar when no input
   const updateQueryWrapper = (query: string) => {
@@ -40,21 +50,19 @@ function CourseSelectorContainer({
   // Include tag rendering information here (yes for tag & which tag)
   // TODO: Obviously have a better way of computing all courses user has taken
   // Idea is allCourses will be available as context or props or smthn
-  const allCourses: Set<string> = new Set();
 
   // TODO: Prolly have a context for this
   // Get all courses user has taken
-  degreeRequirements.forEach((reqGroup) => {
-    reqGroup.requirements.forEach((req) => {
-      req.validCourses.forEach((course) => {
-        allCourses.add(course);
-      });
-    });
-  });
 
-  const courseResults = results.map((result) => {
-    return { ...result, status: allCourses.has(result.code) ? 'complete' : undefined };
-  }) as DraggableCourse[];
+  const courseResults = React.useMemo(() => {
+    return results.map((result) => {
+      return {
+        ...result,
+        id: new ObjectID(),
+        status: courses.includes(result.code) ? 'complete' : undefined,
+      };
+    }) as DraggableCourse[];
+  }, [annoyed, moreAnnoyed]);
 
   return (
     <div className="flex flex-col gap-y-8 w-[344px] h-full overflow-hidden">

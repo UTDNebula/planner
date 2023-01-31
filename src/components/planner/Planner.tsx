@@ -18,7 +18,7 @@ import {
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import CourseSelectorContainer from './Sidebar/Sidebar';
 import { SidebarCourseItem } from './Sidebar/SidebarCourseItem';
@@ -81,6 +81,11 @@ export default function Planner({
     }),
   );
 
+  const courses = useMemo(
+    () => semesters.flatMap((sem) => sem.courses).map((course) => course.code),
+    [semesters],
+  );
+
   return (
     <DndContext
       // Enabling autoScroll causes odd behavior when dragging outside of a scrollable container (eg. Sidebar)
@@ -140,6 +145,7 @@ export default function Planner({
     >
       <div className="w-full grid grid-cols-[auto_1fr] gap-[52px]">
         <CourseSelectorContainer
+          courses={courses}
           degreeRequirements={degreeRequirements}
           getSearchedDragId={(course) => `course-list-searched-${course.id}`}
           getRequirementDragId={(course) => `course-list-requirement-${course.id}`}
