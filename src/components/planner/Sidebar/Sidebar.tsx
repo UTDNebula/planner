@@ -68,6 +68,7 @@ function CourseSelectorContainer({
         <RequirementsContainer
           key={idx}
           degreeRequirement={req}
+          courses={courses}
           getCourseItemDragId={getRequirementDragId}
         />
       ))}

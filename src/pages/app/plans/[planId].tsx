@@ -23,6 +23,7 @@ import { createNewYear } from '@/utils/utilFunctions';
 
 /**
  * A page that displays the details of a specific student academic plan.
+ * TODO: Make context if we prop drill 3+ prop values
  */
 export default function PlanDetailPage(
   props: InferGetServerSidePropsType<typeof getServerSideProps>,

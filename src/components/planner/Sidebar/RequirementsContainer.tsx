@@ -6,11 +6,13 @@ import RequirementsAccordion from './RequirementsAccordion';
 
 export interface RequirementsCarouselProps {
   degreeRequirement: DegreeRequirementGroup;
+  courses: string[];
   getCourseItemDragId: GetDragIdByCourseAndReq;
 }
 
 function RequirementsCarousel({
   degreeRequirement,
+  courses,
   getCourseItemDragId,
 }: RequirementsCarouselProps) {
   const [carousel, setCarousel] = React.useState<boolean>(false);
@@ -74,6 +76,7 @@ function RequirementsCarousel({
         >
           <RequirementContainer
             degreeRequirement={degreeRequirement.requirements[requirementIdx]}
+            courses={courses}
             setCarousel={toggleCarousel}
             getCourseItemDragId={getCourseItemDragId}
           />
