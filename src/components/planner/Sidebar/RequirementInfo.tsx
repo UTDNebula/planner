@@ -2,11 +2,11 @@ import { ObjectID } from 'bson';
 import React from 'react';
 
 import useSearch from '@/components/search/search';
-import { getAllCourses } from '@/utils/utilFunctions';
 
 import { DegreeRequirement, DraggableCourse, GetDragIdByCourseAndReq } from '../types';
 import DraggableCourseList from './DraggableCourseList';
 import RequirementSearchBar from './RequirementSearchBar';
+import { trpc } from '@/utils/trpc';
 
 export interface RequirementInfoProps {
   courses: string[];
@@ -29,10 +29,15 @@ export default function RequirementInfo({
   React.useEffect(() => {
     updateQuery('');
   }, [courses]);
-
+  const q = trpc.courses.getAllCourses.useQuery(undefined, {
+    refetchOnWindowFocus: false
+  })
   // TODO: Change this later when connecting to API
   const getCourses = async (): Promise<DraggableCourse[]> => {
-    const courseData = await getAllCourses();
+    const courseData = q.data ? q.data.reduce((acc, curr) => {
+      acc[curr.subject_prefix + curr.course_number] = curr;
+      return acc;
+    }, {} as Record<string, typeof q.data[0]>) : {};
     const temp = courses;
 
     const courseInfoList: (DraggableCourse | undefined)[] = temp.map((elm) => {

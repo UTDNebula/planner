@@ -3,7 +3,7 @@ import { z } from 'zod';
 
 import { DegreeRequirementGroup, Semester } from '@/components/planner/types';
 import { addCreditsToPlan, formatDegreeValidationRequest } from '@/utils/plannerUtils';
-import { createNewYear, getAllCourses } from '@/utils/utilFunctions';
+import { createNewYear } from '@/utils/utilFunctions';
 
 import { protectedProcedure, router } from '../trpc';
 
@@ -67,9 +67,14 @@ export const planRouter = router({
       // FIX THIS LATER IDC RN
 
       const temporaryFunctionPlzDeleteThis = async () => {
-        const validCourses = await getAllCourses();
         return semesters.map((sem) => {
-          const courses = sem.courses.filter((course) => course in validCourses);
+          const courses = sem.courses.filter((course) => {
+            const [possiblePrefix, possibleCode] = course.split(" ")
+            if (Number.isNaN(Number(possibleCode)) || !Number.isNaN(Number(possiblePrefix))) {
+              return false
+            }
+            return true
+          });
           return { ...sem, courses };
         });
       };

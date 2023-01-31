@@ -42,26 +42,6 @@ export const createNewYear = (semesterCode: SemesterCode): Semester[] => {
   ];
 };
 
-/**
- * Load all supported courses from file.
- *
- * This maps the course objects in a course data file to a list of Course
- * objects.
- *
- * @param year The catalog year from which to load course data
- */
-export async function loadDummyCourses(year = 2020): Promise<Course[]> {
-  const courseData: { [key: string]: JSONCourseType } = await import(
-    `../data/${year}-courses.json`
-  );
-  return Object.entries(courseData).map((value) => {
-    const [catalogCode, courseData] = value;
-    return {
-      code: catalogCode,
-    };
-  });
-}
-
 // TODO: Write way to load data from API
 
 export type JSONCourseType = {
@@ -75,10 +55,6 @@ export type JSONCourseType = {
   prerequisites: string[];
 };
 
-export async function getAllCourses(year = 2020) {
-  const courses: { [key: string]: JSONCourseType } = await import(`../data/${year}-courses.json`);
-  return courses;
-}
 
 /**
  * Get the semester hour from course code

@@ -6,7 +6,8 @@ import { SemesterCode, SemesterType } from '@prisma/client';
 import { FC, useMemo, useState } from 'react';
 
 import { trpc } from '@/utils/trpc';
-import { displaySemesterCode, generateSemesters, loadDummyCourses } from '@/utils/utilFunctions';
+import { displaySemesterCode, generateSemesters } from '@/utils/utilFunctions';
+
 
 import useSearch from '../search/search';
 import AutoCompleteSearchBar from './AutoCompleteSearchBar';
@@ -37,8 +38,12 @@ const CreditsForm: FC = () => {
     },
   });
 
+  const q = trpc.courses.getAllCourses.useQuery(undefined, {
+    refetchOnWindowFocus: false
+  })
+
   const { results, updateQuery } = useSearch({
-    getData: loadDummyCourses,
+    getData: async () => q.data ? q.data.map((c)=>({code: c.subject_prefix + c.course_number})) : [],
     initialQuery: '',
     filterFn: (course, query) => course.code.toLowerCase().includes(query.toLowerCase()),
   });

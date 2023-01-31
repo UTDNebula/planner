@@ -1,11 +1,12 @@
 import { ObjectID } from 'bson';
 
 import useSearch, { SearchReturn } from '@/components/search/search';
-import { loadDummyCourses } from '@/utils/utilFunctions';
 
 import { Course, DraggableCourse } from '../types';
 import RequirementSearchBar from './RequirementSearchBar';
 import SelectableCourseContainer from './SelectableCourseContainer';
+import { trpc } from '@/utils/trpc';
+
 
 export default function AddCourseContainer({
   allCourses,
@@ -20,9 +21,12 @@ export default function AddCourseContainer({
   handleCourseCancel: () => void;
   handleCourseSubmit: () => void;
 }) {
+  const q = trpc.courses.getAllCourses.useQuery(undefined, {
+    refetchOnWindowFocus: false
+  })
   // TODO: Clean this logic up hella xD
   const { results, updateQuery }: SearchReturn<Course, string> = useSearch({
-    getData: loadDummyCourses,
+    getData: async () => q.data ? q.data.map((c)=>({code: c.subject_prefix + c.course_number})) : [],
     initialQuery: '',
     filterFn: (elm, query) => elm.code.toLowerCase().includes(query.toLowerCase()),
     constraints: [0, 5],

@@ -3,7 +3,6 @@ import React from 'react';
 
 import RequirementsContainer from '@/components/planner/Sidebar/RequirementsContainer';
 import useSearch from '@/components/search/search';
-import { loadDummyCourses } from '@/utils/utilFunctions';
 
 import { DegreeRequirementGroup, DraggableCourse, GetDragIdByCourse } from '../types';
 import DraggableCourseList from './DraggableCourseList';
@@ -13,6 +12,7 @@ export interface CourseSelectorContainerProps {
   getSearchedDragId: GetDragIdByCourse;
   getRequirementDragId: GetDragIdByCourse;
 }
+import { trpc } from '@/utils/trpc';
 
 function CourseSelectorContainer({
   degreeRequirements,
@@ -22,8 +22,11 @@ function CourseSelectorContainer({
   console.log('RERENDER');
   console.log(degreeRequirements);
   // TODO: Provide UI indicator for errors
+  const q = trpc.courses.getAllCourses.useQuery(undefined, {
+    refetchOnWindowFocus: false
+  })
   const { results, updateQuery } = useSearch({
-    getData: loadDummyCourses,
+    getData: async () => q.data ? q.data.map((c)=>({code: c.subject_prefix + c.course_number})) : [],
     initialQuery: '@',
     filterFn: (elm, query) => elm['code'].toLowerCase().includes(query.toLowerCase()),
     constraints: [0, 5],

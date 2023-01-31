@@ -9,7 +9,8 @@ import DataGrid from '@/components/credits/DataGrid';
 import DropdownSelect from '@/components/credits/DropdownSelect';
 import { Credit } from '@/components/credits/types';
 import useSearch from '@/components/search/search';
-import { displaySemesterCode, generateSemesters, loadDummyCourses } from '@/utils/utilFunctions';
+import { displaySemesterCode, generateSemesters } from '@/utils/utilFunctions';
+import { trpc } from '@/utils/trpc';
 
 // Array of values to choose from for form
 
@@ -36,8 +37,11 @@ export default function PageTwo({ handleChange, data }: Page2data): JSX.Element 
 
   const [semesterCode, setSemester] = useState<SemesterCode>(semesters[0]);
 
+  const q = trpc.courses.getAllCourses.useQuery(undefined, {
+    refetchOnWindowFocus: false
+  })
   const { results, updateQuery } = useSearch({
-    getData: loadDummyCourses,
+    getData: async () => q.data ? q.data.map((c)=>({code: c.subject_prefix + c.course_number})) : [],
     initialQuery: '',
     filterFn: (course, query) => course.code.toLowerCase().includes(query.toLowerCase()),
   });
