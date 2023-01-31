@@ -42,3 +42,5 @@ yarn-error.log*
 # See docs/ide-config.md for more information.
 .vscode
 .vs/
+
+prisma/generated

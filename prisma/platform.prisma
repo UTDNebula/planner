@@ -1,0 +1,313 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/platform"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("PLATFORM_DATABASE_URL")
+}
+
+type CoursesCoOrPreRequisites {
+  options  CoursesCoOrPreRequisitesOptions[]
+  required Int
+  type     String
+}
+
+type CoursesCoOrPreRequisitesOptions {
+  class_reference String?
+  options         CoursesCoOrPreRequisitesOptionsOptions[]
+  required        Int?
+  type            String
+}
+
+type CoursesCoOrPreRequisitesOptionsOptions {
+  class_reference String?
+  minimum_grade   String?
+  options         CoursesCoOrPreRequisitesOptionsOptionsOptions[]
+  required        Int?
+  type            String
+}
+
+type CoursesCoOrPreRequisitesOptionsOptionsOptions {
+  class_reference String
+  type            String
+}
+
+type CoursesCorequisites {
+  options  CoursesCorequisitesOptions[]
+  required Int
+  type     String
+}
+
+type CoursesCorequisitesOptions {
+  choices         CoursesCorequisitesOptionsChoices?
+  class_reference String?
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  condition       Json?
+  description     String?
+  major           String?
+  max_hours       Int?
+  options         CoursesCorequisitesOptionsOptions[]
+  required        Int?
+  type            String
+}
+
+type CoursesCorequisitesOptionsChoices {
+  options  CoursesCorequisitesOptionsChoicesOptions[]
+  required Int
+  type     String
+}
+
+type CoursesCorequisitesOptionsChoicesOptions {
+  class_reference String?
+  options         CoursesCorequisitesOptionsChoicesOptionsOptions[]
+  required        Int?
+  type            String
+}
+
+type CoursesCorequisitesOptionsChoicesOptionsOptions {
+  class_reference String?
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  condition       Json?
+  description     String?
+  type            String
+}
+
+type CoursesCorequisitesOptionsOptions {
+  class_reference String?
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  condition       Json?
+  description     String?
+  options         CoursesCorequisitesOptionsOptionsOptions[]
+  required        Int?
+  type            String
+}
+
+type CoursesCorequisitesOptionsOptionsOptions {
+  class_reference String?
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  condition       Json?
+  description     String?
+  type            String
+}
+
+type CoursesPrerequisites {
+  options  CoursesPrerequisitesOptions[]
+  required Int
+  type     String
+}
+
+type CoursesPrerequisitesOptions {
+  class_reference String?
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  condition       Json?
+  core_flag       String?
+  description     String?
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  hours           Json?
+  major           String?
+  /// Multiple data types found: Float: 66.7%, Int: 33.3% out of 3 sampled entries
+  minimum         Json?
+  minimum_grade   String?
+  options         CoursesPrerequisitesOptionsOptions[]
+  required        Int?
+  subset          String?
+  type            String
+}
+
+type CoursesPrerequisitesOptionsOptions {
+  class_reference String?
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  condition       Json?
+  core_flag       String?
+  description     String?
+  granter         String?
+  hours           Int?
+  major           String?
+  minimum         Float?
+  minimum_grade   String?
+  options         CoursesPrerequisitesOptionsOptionsOptions[]
+  required        Int?
+  subset          String?
+  type            String
+}
+
+type CoursesPrerequisitesOptionsOptionsOptions {
+  class_reference String?
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  condition       Json?
+  description     String?
+  granter         String?
+  minimum_grade   String?
+  options         CoursesPrerequisitesOptionsOptionsOptionsOptions[]
+  required        Int?
+  type            String
+}
+
+type CoursesPrerequisitesOptionsOptionsOptionsOptions {
+  class_reference String?
+  options         CoursesPrerequisitesOptionsOptionsOptionsOptionsOptions[]
+  required        Int?
+  type            String
+}
+
+type CoursesPrerequisitesOptionsOptionsOptionsOptionsOptions {
+  class_reference String
+  type            String
+}
+
+type ExamsYields {
+  outcome     Json
+  requirement ExamsYieldsRequirement
+}
+
+type ExamsYieldsRequirement {
+  exam_reference String?                         @db.ObjectId
+  minimum_score  Int?
+  name           String?
+  options        ExamsYieldsRequirementOptions[]
+  required       Int?
+  type           String
+}
+
+type ExamsYieldsRequirementOptions {
+  condition      String?
+  description    String?
+  exam_reference String?                                @db.ObjectId
+  minimum_score  Int?
+  name           String?
+  options        ExamsYieldsRequirementOptionsOptions[]
+  required       Int?
+  type           String
+}
+
+type ExamsYieldsRequirementOptionsOptions {
+  exclude  Boolean?
+  major    String?
+  name     String?
+  options  ExamsYieldsRequirementOptionsOptionsOptions[]
+  required Int?
+  type     String
+}
+
+type ExamsYieldsRequirementOptionsOptionsOptions {
+  class_reference ExamsYieldsRequirementOptionsOptionsOptionsClassReference?
+  major           String?
+  minimum_grade   String?
+  type            String
+}
+
+type ExamsYieldsRequirementOptionsOptionsOptionsClassReference {
+  number Int
+  prefix String
+}
+
+type ProfessorsOffice {
+  building String
+  map_uri  String
+  room     String
+}
+
+type SectionsAcademicSession {
+  end_date   String
+  name       String
+  start_date String
+}
+
+type SectionsAttributes {
+  raw_attributes String[]
+}
+
+type SectionsMeetings {
+  end_date     String?
+  end_time     String
+  location     SectionsMeetingsLocation
+  meeting_days String[]
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  modality     Json?
+  start_date   String
+  start_time   String
+}
+
+type SectionsMeetingsLocation {
+  building String?
+  map_uri  String
+  room     String?
+}
+
+type SectionsSectionCorequisites {
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  options Json?
+  type    String
+}
+
+type SectionsTeachingAssistants {
+  email      String
+  first_name String
+  last_name  String
+  role       String
+}
+
+model courses {
+  id                       String                   @id @default(auto()) @map("_id") @db.ObjectId
+  v                        Int                      @map("__v")
+  activity_type            String
+  class_level              String
+  co_or_pre_requisites     CoursesCoOrPreRequisites
+  corequisites             CoursesCorequisites
+  course_number            String
+  credit_hours             String
+  description              String
+  grading                  String
+  internal_course_number   String
+  laboratory_contact_hours String?
+  lecture_contact_hours    String?
+  offering_frequency       String?
+  prerequisites            CoursesPrerequisites
+  school                   String
+  sections                 String[]                 @db.ObjectId
+  subject_prefix           String
+  title                    String
+}
+
+model exams {
+  id     String        @id @default(auto()) @map("_id") @db.ObjectId
+  name   String?
+  type   String
+  yields ExamsYields[]
+}
+
+model professors {
+  id           String            @id @default(auto()) @map("_id") @db.ObjectId
+  v            Int               @map("__v")
+  email        String
+  first_name   String
+  image_uri    String?
+  last_name    String
+  office       ProfessorsOffice?
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  office_hours Json?
+  phone_number String?
+  profile_uri  String?
+  sections     String[]          @db.ObjectId
+  titles       String[]
+}
+
+model sections {
+  id                    String                       @id @default(auto()) @map("_id") @db.ObjectId
+  v                     Int                          @map("__v")
+  academic_session      SectionsAcademicSession
+  attributes            SectionsAttributes
+  core_flags            String[]
+  course_reference      String                       @db.ObjectId
+  grade_distribution    Int[]
+  instruction_mode      String
+  internal_class_number String
+  meetings              SectionsMeetings[]
+  professors            String[]                     @db.ObjectId
+  section_corequisites  SectionsSectionCorequisites
+  section_number        String
+  syllabus_uri          String?
+  teaching_assistants   SectionsTeachingAssistants[]
+}
