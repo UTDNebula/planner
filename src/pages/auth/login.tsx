@@ -82,7 +82,7 @@ export default function AuthPage({
                 <div className="flex place-content-center">
                   <p>
                     New to Nebula?
-                    <Link legacyBehavior href="/auth/signup">
+                    <Link legacyBehavior href="/auth/login">
                       <a className="ml-2 text-blue-700 font-semibold hover:bg-blue-200 hover:rounded-lg">
                         Sign Up
                       </a>
