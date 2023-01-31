@@ -77,8 +77,8 @@ export default function AuthPage({
                       <h1 className="text-center text-xl text-blue-700">
                         Sign in with {provider.name}
                       </h1>
-                    </button>
-                  ))}
+                    </button>)
+                  )}
                 <div className="flex place-content-center">
                   <p>
                     New to Nebula?
@@ -107,6 +107,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   }
   const csrfToken = await getCsrfToken(context);
   const providers = await getProviders();
+
+  if (providers && providers['email']) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-ignore
+    delete providers['email'];
+  }
   return {
     props: { providers, csrfToken },
   };
