@@ -7,21 +7,18 @@ import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next/typ
 import { unstable_getServerSession } from 'next-auth';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
-import { toast } from 'react-toastify';
 import React from 'react';
 import superjson from 'superjson';
 
 import DegreePlanPDF from '@/components/planner/DegreePlanPDF/DegreePlanPDF';
 import Planner from '@/components/planner/Planner';
-import { DraggableCourse, Semester, ToastMessage } from '@/components/planner/types';
+import { DraggableCourse, Semester } from '@/components/planner/types';
 import BackArrowIcon from '@/icons/BackArrowIcon';
 import SettingsIcon from '@/icons/SettingsIcon';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { createContextInner } from '@/server/trpc/context';
 import { appRouter } from '@/server/trpc/router/_app';
 import { trpc } from '@/utils/trpc';
-import { useTaskQueue } from '@/utils/useTaskQueue';
-import { createNewYear } from '@/utils/utilFunctions';
 
 /**
  * A page that displays the details of a specific student academic plan.
@@ -35,54 +32,18 @@ export default function PlanDetailPage(
   const { planId } = props;
   const planQuery = trpc.plan.getPlanById.useQuery(planId);
 
-  const { data: session } = useSession();
-
-  // Extend Course object to contain fields for prereq validation & other stuff ig
-
   const { data, isLoading } = planQuery;
+  const { data: session } = useSession();
 
   const [semesters, setSemesters] = useState<Semester[]>(getSemestersInfo(data?.plan));
 
   const degreeData = data?.validation ?? [];
-
-  const { addTask } = useTaskQueue({ shouldProcess: true });
-
-  const addCourse = trpc.plan.addCourseToSemester.useMutation({
-    async onSuccess() {
-      await utils.plan.getPlanById.invalidate(planId);
-    },
-  });
-
-  const removeCourse = trpc.plan.removeCourseFromSemester.useMutation({
-    async onSuccess() {
-      await utils.plan.getPlanById.invalidate(planId);
-    },
-  });
-
-  const moveCourse = trpc.plan.moveCourseFromSemester.useMutation({
-    async onSuccess() {
-      await utils.plan.getPlanById.invalidate(planId);
-    },
-  });
 
   const deletePlan = trpc.plan.deletePlanById.useMutation({
     async onSuccess() {
       await utils.user.getUser.invalidate();
     },
   });
-
-  const createYear = trpc.plan.addYear.useMutation({
-    async onSuccess() {
-      await utils.plan.getPlanById.invalidate(planId);
-    },
-  });
-
-  const deleteYear = trpc.plan.deleteYear.useMutation({
-    async onSuccess() {
-      await utils.plan.getPlanById.invalidate(planId);
-    },
-  });
-
   const handlePlanDelete = async () => {
     try {
       const deletedPlan = await deletePlan.mutateAsync(planId);
@@ -94,236 +55,10 @@ export default function PlanDetailPage(
       router.push('/app/home');
     } catch (error) {}
   };
-  const handleYearCreate = async ({ semesterIds }: { [key: string]: string[] }) => {
-    try {
-      await toast.promise(
-        createYear.mutateAsync({
-          planId,
-          semesterIds: semesterIds.map((id) => id),
-        }),
-        {
-          pending: 'Creating year...',
-          success: 'Year created!',
-          error: 'Error creating year',
-        },
-        {
-          autoClose: 1000,
-        },
-      );
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  const handleYearDelete = async () => {
-    try {
-      // TODO: Handle deletion errors
-
-      await toast.promise(
-        deleteYear.mutateAsync(planId),
-        {
-          pending: 'Deleting year...',
-          success: 'Year deleted!',
-          error: 'Error deleting year',
-        },
-        {
-          autoClose: 1000,
-        },
-      );
-    } catch (error) {}
-  };
-
-  const handleAddCourse = async ({ semesterId, courseName }: { [key: string]: string }) => {
-    try {
-      await toast.promise(
-        addCourse.mutateAsync({ planId, semesterId, courseName }),
-        {
-          pending: 'Adding course ' + courseName + '...',
-          success: 'Added course ' + courseName + '!',
-          error: 'Error in adding ' + courseName,
-        },
-        {
-          autoClose: 1000,
-        },
-      );
-    } catch (error) {}
-  };
-
-  const handleRemoveCourse = async ({
-    semesterId: semesterId,
-    courseName: courseName,
-  }: {
-    [key: string]: string;
-  }) => {
-    try {
-      await toast.promise(
-        removeCourse.mutateAsync({ planId, semesterId, courseName }),
-        {
-          pending: 'Removing course ' + courseName + '...',
-          success: 'Removed course ' + courseName + '!',
-          error: 'Error in removing ' + courseName,
-        },
-        {
-          autoClose: 1000,
-        },
-      );
-    } catch (error) {}
-  };
-
-  const handleMoveCourse = async ({
-    oldSemesterId,
-    newSemesterId,
-    courseName,
-  }: {
-    [key: string]: string;
-  }) => {
-    try {
-      await toast.promise(
-        moveCourse.mutateAsync({ planId, oldSemesterId, newSemesterId, courseName }),
-        {
-          pending: 'Moving course ' + courseName + '...',
-          success: 'Moved course ' + courseName + '!',
-          error: 'Error while moving ' + courseName,
-        },
-        {
-          autoClose: 1000,
-        },
-      );
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handleBack = () => {
-    return router.push('/app/home');
-  };
-
   // Indicate UI loading
   if (isLoading) {
     return <div>Loading</div>;
   }
-
-  const handleOnAddYear = async () => {
-    const newYear: Semester[] = createNewYear(
-      semesters.length ? semesters[semesters.length - 1].code : { semester: 'u', year: 2022 },
-    );
-    const semesterIds = newYear.map((sem) => sem.id);
-    setSemesters([...semesters, ...newYear]);
-    addTask({
-      func: handleYearCreate,
-      args: { semesterIds: semesterIds.map((id) => id.toString()) },
-    });
-  };
-
-  const handleOnRemoveYear = async () => {
-    setSemesters(semesters.filter((sem, idx) => idx < semesters.length - 3));
-    addTask({ func: handleYearDelete, args: {} });
-  };
-
-  const handleOnRemoveCourseFromSemester = async (
-    targetSemester: Semester,
-    targetCourse: DraggableCourse,
-  ): Promise<ToastMessage> => {
-    setSemesters((semesters) =>
-      semesters.map((semester) => {
-        if (semester.id === targetSemester.id) {
-          return {
-            ...semester,
-            courses: semester.courses.filter((course) => course.id !== targetCourse.id),
-          };
-        }
-
-        return semester;
-      }),
-    );
-
-    const semesterId = targetSemester.id.toString();
-    const courseName = targetCourse.code;
-
-    addTask({ func: handleRemoveCourse, args: { semesterId, courseName } });
-
-    return {
-      level: 'ok',
-      message: `Removed ${targetCourse.code} from ${targetSemester.code}`,
-    };
-  };
-
-  const handleOnAddCourseToSemester = async (
-    targetSemester: Semester,
-    newCourse: DraggableCourse,
-  ): Promise<ToastMessage> => {
-    // check for duplicate course
-    const isDuplicate = Boolean(
-      targetSemester.courses.find((course) => course.code === newCourse.code),
-    );
-    if (isDuplicate) {
-      return {
-        level: 'warn',
-        message: `You're already taking ${newCourse.code} in ${targetSemester.code}`,
-      };
-    }
-
-    setSemesters((semesters) =>
-      semesters.map((semester) =>
-        semester.id === targetSemester.id
-          ? { ...semester, courses: [...semester.courses, newCourse] }
-          : semester,
-      ),
-    );
-    const semesterId = targetSemester.id.toString();
-    const courseName = newCourse.code;
-    addTask({ func: handleAddCourse, args: { semesterId, courseName } });
-
-    return {
-      level: 'ok',
-      message: `Added ${newCourse.code} to ${targetSemester.code}`,
-    };
-  };
-
-  const handleOnMoveCourseFromSemesterToSemester = async (
-    originSemester: Semester,
-    destinationSemester: Semester,
-    courseToMove: DraggableCourse,
-  ): Promise<ToastMessage> => {
-    // check for duplicate course
-    const isDuplicate = Boolean(
-      destinationSemester.courses.find((course) => course.code === courseToMove.code),
-    );
-    if (isDuplicate) {
-      return {
-        level: 'warn',
-        message: `You're already taking ${courseToMove.code} in ${destinationSemester.code}`,
-      };
-    }
-
-    setSemesters((semesters) =>
-      semesters.map((semester) => {
-        if (semester.id === destinationSemester.id) {
-          return { ...semester, courses: [...semester.courses, courseToMove] };
-        }
-
-        if (semester.id === originSemester.id) {
-          return {
-            ...semester,
-            courses: semester.courses.filter((course) => course.id !== courseToMove.id),
-          };
-        }
-
-        return semester;
-      }),
-    );
-
-    const oldSemesterId = originSemester.id.toString();
-    const newSemesterId = destinationSemester.id.toString();
-    const courseName = courseToMove.code;
-
-    addTask({ func: handleMoveCourse, args: { oldSemesterId, newSemesterId, courseName } });
-
-    return {
-      level: 'ok',
-      message: `Moved ${courseToMove.code} from ${originSemester.code} to ${destinationSemester.code}`,
-    };
-  };
-
   return (
     <div className="w-screen flex flex-col p-4 h-screen max-h-screen overflow-y-scroll overflow-x-hidden">
       <div className=" mb-10 flex flex-row items-center gap-2">
@@ -350,7 +85,7 @@ export default function PlanDetailPage(
             }
             fileName={data.plan.name + '.pdf'}
           >
-            {({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'EXPORT PLAN')}
+            {({ loading }) => (loading ? 'Loading document...' : 'EXPORT PLAN')}
           </PDFDownloadLink>
         )}
         <SettingsIcon className={`w-5 h-5 cursor-pointer ml-5`} strokeWidth={2.5} />
@@ -358,11 +93,8 @@ export default function PlanDetailPage(
       <Planner
         degreeRequirements={degreeData}
         semesters={semesters}
-        onRemoveCourseFromSemester={handleOnRemoveCourseFromSemester}
-        onAddCourseToSemester={handleOnAddCourseToSemester}
-        onMoveCourseFromSemesterToSemester={handleOnMoveCourseFromSemesterToSemester}
-        onRemoveYear={handleOnRemoveYear}
-        onAddYear={handleOnAddYear}
+        planId={planId}
+        setSemesters={setSemesters}
       />
       <button onClick={handlePlanDelete}>Delete</button>
     </div>
