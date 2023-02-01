@@ -96,20 +96,10 @@ export default function PlanDetailPage(
   };
   const handleYearCreate = async ({ semesterIds }: { [key: string]: string[] }) => {
     try {
-      await toast.promise(
-        createYear.mutateAsync({
-          planId,
-          semesterIds: semesterIds.map((id) => id),
-        }),
-        {
-          pending: 'Creating year...',
-          success: 'Year created!',
-          error: 'Error creating year',
-        },
-        {
-          autoClose: 1000,
-        },
-      );
+      await createYear.mutateAsync({
+        planId,
+        semesterIds: semesterIds.map((id) => id),
+      });
     } catch (error) {
       console.error(error);
     }
@@ -117,34 +107,13 @@ export default function PlanDetailPage(
   const handleYearDelete = async () => {
     try {
       // TODO: Handle deletion errors
-
-      await toast.promise(
-        deleteYear.mutateAsync(planId),
-        {
-          pending: 'Deleting year...',
-          success: 'Year deleted!',
-          error: 'Error deleting year',
-        },
-        {
-          autoClose: 1000,
-        },
-      );
+      await deleteYear.mutateAsync(planId);
     } catch (error) {}
   };
 
   const handleAddCourse = async ({ semesterId, courseName }: { [key: string]: string }) => {
     try {
-      await toast.promise(
-        addCourse.mutateAsync({ planId, semesterId, courseName }),
-        {
-          pending: 'Adding course ' + courseName + '...',
-          success: 'Added course ' + courseName + '!',
-          error: 'Error in adding ' + courseName,
-        },
-        {
-          autoClose: 1000,
-        },
-      );
+      await addCourse.mutateAsync({ planId, semesterId, courseName });
     } catch (error) {}
   };
 
@@ -155,17 +124,7 @@ export default function PlanDetailPage(
     [key: string]: string;
   }) => {
     try {
-      await toast.promise(
-        removeCourse.mutateAsync({ planId, semesterId, courseName }),
-        {
-          pending: 'Removing course ' + courseName + '...',
-          success: 'Removed course ' + courseName + '!',
-          error: 'Error in removing ' + courseName,
-        },
-        {
-          autoClose: 1000,
-        },
-      );
+      await removeCourse.mutateAsync({ planId, semesterId, courseName });
     } catch (error) {}
   };
 
@@ -177,17 +136,7 @@ export default function PlanDetailPage(
     [key: string]: string;
   }) => {
     try {
-      await toast.promise(
-        moveCourse.mutateAsync({ planId, oldSemesterId, newSemesterId, courseName }),
-        {
-          pending: 'Moving course ' + courseName + '...',
-          success: 'Moved course ' + courseName + '!',
-          error: 'Error while moving ' + courseName,
-        },
-        {
-          autoClose: 1000,
-        },
-      );
+      await moveCourse.mutateAsync({ planId, oldSemesterId, newSemesterId, courseName });
     } catch (error) {
       console.error(error);
     }
@@ -202,7 +151,7 @@ export default function PlanDetailPage(
     return <div>Loading</div>;
   }
 
-  const handleOnAddYear = async () => {
+  const handleOnAddYear = async (): Promise<ToastMessage> => {
     const newYear: Semester[] = createNewYear(
       semesters.length ? semesters[semesters.length - 1].code : { semester: 'u', year: 2022 },
     );
@@ -212,11 +161,19 @@ export default function PlanDetailPage(
       func: handleYearCreate,
       args: { semesterIds: semesterIds.map((id) => id.toString()) },
     });
+    return {
+      level: 'ok',
+      message: `Added new year`,
+    };
   };
 
-  const handleOnRemoveYear = async () => {
+  const handleOnRemoveYear = async (): Promise<ToastMessage> => {
     setSemesters(semesters.filter((sem, idx) => idx < semesters.length - 3));
     addTask({ func: handleYearDelete, args: {} });
+    return {
+      level: 'ok',
+      message: `Removed last year`,
+    };
   };
 
   const handleOnRemoveCourseFromSemester = async (
@@ -243,7 +200,7 @@ export default function PlanDetailPage(
 
     return {
       level: 'ok',
-      message: `Removed ${targetCourse.code} from ${targetSemester.code}`,
+      message: `Removed ${targetCourse.code} from ${targetSemester.code.year}${targetSemester.code.semester}`,
     };
   };
 
@@ -258,7 +215,7 @@ export default function PlanDetailPage(
     if (isDuplicate) {
       return {
         level: 'warn',
-        message: `You're already taking ${newCourse.code} in ${targetSemester.code}`,
+        message: `You're already taking ${newCourse.code} in ${targetSemester.code.year}${targetSemester.code.semester}`,
       };
     }
 
@@ -275,7 +232,7 @@ export default function PlanDetailPage(
 
     return {
       level: 'ok',
-      message: `Added ${newCourse.code} to ${targetSemester.code}`,
+      message: `Added ${newCourse.code} to ${targetSemester.code.year}${targetSemester.code.semester}`,
     };
   };
 
@@ -291,7 +248,7 @@ export default function PlanDetailPage(
     if (isDuplicate) {
       return {
         level: 'warn',
-        message: `You're already taking ${courseToMove.code} in ${destinationSemester.code}`,
+        message: `You're already taking ${courseToMove.code} in ${destinationSemester.code.year}${destinationSemester.code.semester}`,
       };
     }
 
@@ -320,7 +277,7 @@ export default function PlanDetailPage(
 
     return {
       level: 'ok',
-      message: `Moved ${courseToMove.code} from ${originSemester.code} to ${destinationSemester.code}`,
+      message: `Moved ${courseToMove.code} from ${originSemester.code.year}${originSemester.code.semester} to ${destinationSemester.code.year}${destinationSemester.code.semester}`,
     };
   };
 
@@ -361,8 +318,16 @@ export default function PlanDetailPage(
         onRemoveCourseFromSemester={handleOnRemoveCourseFromSemester}
         onAddCourseToSemester={handleOnAddCourseToSemester}
         onMoveCourseFromSemesterToSemester={handleOnMoveCourseFromSemesterToSemester}
-        onRemoveYear={handleOnRemoveYear}
-        onAddYear={handleOnAddYear}
+        onRemoveYear={() =>
+          handleOnRemoveYear().then((notification) => {
+            toast.success(notification.message);
+          })
+        }
+        onAddYear={() =>
+          handleOnAddYear().then((notification) => {
+            toast.success(notification.message);
+          })
+        }
       />
       <button onClick={handlePlanDelete}>Delete</button>
     </div>

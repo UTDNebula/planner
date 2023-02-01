@@ -19,6 +19,7 @@ import {
   useSensors,
 } from '@dnd-kit/core';
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 
 import CourseSelectorContainer from './Sidebar/Sidebar';
 import { SidebarCourseItem } from './Sidebar/SidebarCourseItem';
@@ -114,9 +115,14 @@ export default function Planner({
             onAddCourseToSemester
           ) {
             onAddCourseToSemester(destinationData.semester, originData.course).then(
-              (notification) =>
+              (notification) => {
                 // TODO: push message to toast notifications
-                console.log(notification.message),
+                if (notification.level === 'warn') {
+                  toast.warn(notification.message);
+                } else {
+                  toast.success(notification.message);
+                }
+              },
             );
           }
 
@@ -133,6 +139,11 @@ export default function Planner({
             ).then((notification) => {
               // TODO: push message to toast notifications
               console.log(notification.message);
+              if (notification.level === 'warn') {
+                toast.warn(notification.message);
+              } else {
+                toast.success(notification.message);
+              }
             });
           }
         }
@@ -166,6 +177,11 @@ export default function Planner({
                     onRemoveCourseFromSemester(semester, course).then((notification) => {
                       // TODO: push message to toast notification
                       console.log(notification.message);
+                      if (notification.level === 'warn') {
+                        toast.warn(notification.message);
+                      } else {
+                        toast.success(notification.message);
+                      }
                     })
                   }
                   key={semester.id.toString()}
