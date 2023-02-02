@@ -9,12 +9,14 @@ import SelectableCourseContainer from './SelectableCourseContainer';
 
 export default function AddCourseContainer({
   allCourses,
+  validCourses,
   selectedCourses,
   updateSelectedCourses,
   handleCourseCancel,
   handleCourseSubmit,
 }: {
-  allCourses: Set<string>;
+  allCourses: string[];
+  validCourses: string[];
   selectedCourses: { [key: string]: Course };
   updateSelectedCourses: (course: Course, add: boolean) => void;
   handleCourseCancel: () => void;
@@ -29,7 +31,11 @@ export default function AddCourseContainer({
   });
 
   const courseResults = results.map((result) => {
-    return { ...result, status: allCourses.has(result.code) ? 'complete' : undefined };
+    return {
+      ...result,
+      status: allCourses.includes(result.code) ? 'complete' : undefined,
+      taken: validCourses.includes(result.code),
+    };
   }) as unknown as DraggableCourse[];
 
   const newSelectedCourses: DraggableCourse[] = Object.values(selectedCourses).map((course) => {

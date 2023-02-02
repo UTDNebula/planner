@@ -15,7 +15,7 @@ const nextConfig = withBundleAnalyzer({
   },
   compiler: {
     removeConsole: true,
-  }
+  },
 });
 
 module.exports = nextConfig;

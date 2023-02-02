@@ -1,8 +1,8 @@
 .cache
-.husky
 .next
 .vscode
-.github
-package.json
 package-lock.json
 public
+
+node_modules/
+

@@ -7,7 +7,6 @@ import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next/typ
 import { unstable_getServerSession } from 'next-auth';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
-import React from 'react';
 import superjson from 'superjson';
 
 import DegreePlanPDF from '@/components/planner/DegreePlanPDF/DegreePlanPDF';
@@ -22,49 +21,35 @@ import { trpc } from '@/utils/trpc';
 
 /**
  * A page that displays the details of a specific student academic plan.
- * // TODO: Decide planner navigation UX
+ * TODO: Make context if we prop drill 3+ prop values
  */
 export default function PlanDetailPage(
   props: InferGetServerSidePropsType<typeof getServerSideProps>,
 ): JSX.Element {
-  const utils = trpc.useContext();
-  const router = useRouter();
   const { planId } = props;
   const planQuery = trpc.plan.getPlanById.useQuery(planId);
 
   const { data, isLoading } = planQuery;
   const { data: session } = useSession();
+  const degreeData = data?.validation ?? [];
+
+  const { handlePlanDelete, handleBack } = usePlannerHooks({
+    planId: planId,
+  });
 
   const [semesters, setSemesters] = useState<Semester[]>(getSemestersInfo(data?.plan));
 
-  const degreeData = data?.validation ?? [];
-
-  const deletePlan = trpc.plan.deletePlanById.useMutation({
-    async onSuccess() {
-      await utils.user.getUser.invalidate();
-    },
-  });
-  const handlePlanDelete = async () => {
-    try {
-      const deletedPlan = await deletePlan.mutateAsync(planId);
-      if (deletedPlan) {
-        router.push('/app/home');
-      }
-
-      // TODO: Handle delete error
-      router.push('/app/home');
-    } catch (error) {}
-  };
   // Indicate UI loading
   if (isLoading) {
     return <div>Loading</div>;
   }
+
   return (
     <div className="flex h-screen max-h-screen w-screen flex-col overflow-x-hidden overflow-y-scroll p-4">
       <div className=" mb-10 flex flex-row items-center gap-2">
         <BackArrowIcon
-          onClick={() => router.push('/app/home')}
-          className={`mr-2 h-5 w-5 cursor-pointer`}
+          onClick={handleBack}
+          className={`w-5 h-5 cursor-pointer mr-2`}
           strokeWidth={2.5}
         />
         <div className="text-2xl">My Plan</div>
@@ -146,3 +131,35 @@ function getSemestersInfo(
   });
 }
 PlanDetailPage.auth = true;
+
+const usePlannerHooks = ({ planId }: { planId: string }) => {
+  const utils = trpc.useContext();
+  const router = useRouter();
+
+  // useMutation primitives
+  const deletePlan = trpc.plan.deletePlanById.useMutation({
+    async onSuccess() {
+      await utils.user.getUser.invalidate();
+    },
+  });
+
+  const handlePlanDelete = async () => {
+    try {
+      const deletedPlan = await deletePlan.mutateAsync(planId);
+      if (deletedPlan) {
+        router.push('/app/home');
+      }
+
+      // TODO: Handle delete error
+      router.push('/app/home');
+    } catch (error) {}
+  };
+  const handleBack = () => {
+    return router.push('/app/home');
+  };
+
+  return {
+    handlePlanDelete,
+    handleBack,
+  };
+};

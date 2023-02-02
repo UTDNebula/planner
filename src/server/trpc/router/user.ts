@@ -1,11 +1,12 @@
-import { Prisma, SemesterCode, SemesterType } from '@prisma/client';
+import { Bypass, Prisma, Semester, SemesterCode, SemesterType } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import { ObjectID } from 'bson';
 import { z } from 'zod';
 
-import { createNewYear } from '@/utils/utilFunctions';
+import { createNewYear, createSemesterCodeRange } from '@/utils/utilFunctions';
 
 import { protectedProcedure, router } from '../trpc';
+import { getStartingPlanSemester, isEarlierSemester } from '@/utils/plannerUtils';
 
 export const userRouter = router({
   getUser: protectedProcedure.query(async ({ ctx }) => {
@@ -105,41 +106,37 @@ export const userRouter = router({
       const userId = ctx.session.user.id;
       const planId = new ObjectID().toString();
 
-      // idk how to type this
-      const dummySemesterData: Prisma.SemesterCreateInput[] = [
+      // Create degree requirements
+      const degreeRequirements: Prisma.DegreeRequirementsUncheckedCreateNestedOneWithoutPlanInput =
         {
-          id: new ObjectID().toString(),
-          code: {
-            year: 2022,
-            semester: 'f' as SemesterType,
+          create: {
+            major: 'computer_science_bs', // Hardcode for now
           },
-          courses: [],
+        };
+
+      const user = await ctx.prisma.user.findFirst({
+        where: { id: userId },
+        select: {
+          profile: true,
         },
-        {
-          id: new ObjectID().toString(),
-          code: {
-            year: 2023,
-            semester: 's' as SemesterType,
-          },
-          courses: [],
-        },
-        {
-          id: new ObjectID().toString(),
-          code: {
-            year: 2023,
-            semester: 'u' as SemesterType,
-          },
-          courses: [],
-        },
-      ];
+      });
+
+      const semesterData: Prisma.SemesterCreateInput[] = createSemesterCodeRange(
+        getStartingPlanSemester(),
+        user?.profile?.endSemester ?? { semester: 'u', year: 2026 },
+        true,
+      ).map((semCode) => {
+        return { code: semCode };
+      });
       const semesters: Prisma.SemesterUncheckedCreateNestedManyWithoutPlanInput = {
-        create: dummySemesterData, // Prepopulate with semester
+        create: semesterData, // Prepopulate with semester
       };
 
       const plansInput: Prisma.PlanUncheckedCreateWithoutUserInput = {
         id: planId,
         name: 'test plan',
         semesters: semesters,
+        requirements: degreeRequirements,
       };
 
       const plans: Prisma.PlanUpdateManyWithoutUserNestedInput = {
@@ -209,36 +206,81 @@ export const userRouter = router({
 
       const major = template.name;
       const templateData = template.templateData;
-      const numOfSemesters = templateData.length;
 
       // Create semesters
-      const semestersInput: { id: string; code: SemesterCode; courses: string[] }[] = [];
+      let semestersInput: { id: string; code: SemesterCode; courses: string[] }[] = [];
 
-      for (let i = 0; i < 4; i++) {
+      // Get start & end semesters
+      const profile = await ctx.prisma.profile.findFirst({
+        where: {
+          userId,
+        },
+        select: {
+          endSemester: true,
+        },
+      });
+
+      const startingPlanSemester = getStartingPlanSemester();
+
+      const startYear =
+        startingPlanSemester.semester === 'f'
+          ? startingPlanSemester.year
+          : startingPlanSemester.year - 1;
+
+      const endYear = profile
+        ? profile.endSemester.semester === 'f'
+          ? profile.endSemester.year + 1
+          : profile.endSemester.year
+        : startYear + 4;
+
+      const numEnd = startingPlanSemester.semester === 'f' ? startYear + 4 : startYear + 5;
+      // Create semesters
+      for (let i = startYear; i < Math.max(endYear, numEnd); i++) {
         // Create new year
-        createNewYear({ year: 2022 + i, semester: 'u' })
+        createNewYear({ year: i, semester: 'u' })
           .map((sem) => {
             return { ...sem, courses: [] as string[], id: sem.id.toString() };
           })
           .map((sem) => semestersInput.push(sem));
-
-        // Add courses to year from both semester templates
-        for (let j = 0; j < 2; j++) {
-          templateData[j + 2 * i].items.forEach((item) => {
-            if (!credits.includes(item.name)) {
-              semestersInput[i * 3 + j].courses.push(item.name);
-            }
-          });
-        }
       }
+
+      // Remove extra semesters (beginning only)
+      semestersInput = semestersInput.filter(
+        (sem) => !isEarlierSemester(sem.code, startingPlanSemester),
+      );
+
+      let heh = 0;
+      templateData.forEach((tempSem) => {
+        console.log(heh);
+        if (semestersInput[heh].code.semester === 'u') {
+          heh++;
+        }
+        tempSem.items.forEach((item) => {
+          // Skip if summer
+
+          if (!credits.includes(item.name)) {
+            semestersInput[heh].courses.push(item.name);
+          }
+        });
+        heh++;
+      });
 
       const semesters: Prisma.SemesterUncheckedCreateNestedManyWithoutPlanInput = {
         create: [...semestersInput],
       };
 
+      // Create degree requirements
+      const degreeRequirements: Prisma.DegreeRequirementsUncheckedCreateNestedOneWithoutPlanInput =
+        {
+          create: {
+            major,
+          },
+        };
+
       const plansInput: Prisma.PlanUncheckedCreateWithoutUserInput = {
         name: major,
         semesters: semesters,
+        requirements: degreeRequirements,
       };
       const plans: Prisma.PlanUpdateManyWithoutUserNestedInput = {
         create: plansInput,

@@ -19,9 +19,11 @@ import {
   pointerWithin,
   useSensor,
   useSensors,
+  Active,
+  Over,
 } from '@dnd-kit/core';
-import React, { useState } from 'react';
 import { toast } from 'react-toastify';
+import React, { useMemo, useState } from 'react';
 
 import CourseSelectorContainer from './Sidebar/Sidebar';
 import { SidebarCourseItem } from './Sidebar/SidebarCourseItem';
@@ -268,17 +270,15 @@ export default function Planner({
     destinationSemester: Semester,
     courseToMove: DraggableCourse,
   ) => {
-    // check for duplicate course
     const isDuplicate = Boolean(
       destinationSemester.courses.find((course) => course.code === courseToMove.code),
     );
     if (isDuplicate) {
       toast.warn(
-        `You're already taking ${courseToMove.code} in ${destinationSemester.code.year}${destinationSemester.code.semester}`,
+        `You're already taking ${courseToMove.code} in ${originSemester.code.year}${destinationSemester.code.semester}`,
       );
       return;
     }
-
     setSemesters((semesters) =>
       semesters.map((semester) => {
         if (semester.id === destinationSemester.id) {
@@ -301,6 +301,51 @@ export default function Planner({
 
     addTask({ func: handleMoveCourse, args: { oldSemesterId, newSemesterId, courseName } });
   };
+  const courses = useMemo(
+    () => semesters.flatMap((sem) => sem.courses).map((course) => course.code),
+    [semesters],
+  );
+  console.log('courses', courses);
+  const handleOnDragStart = ({ active }: { active: Active }) => {
+    const originData = active.data.current as DragEventOriginData;
+    setActiveCourse({ from: originData.from, course: originData.course });
+  };
+
+  const handleOnDragEnd = ({ active, over }: { active: Active; over: Over | null }) => {
+    setActiveCourse(null);
+
+    if (active && over) {
+      const originData = active.data.current as DragEventOriginData;
+      const destinationData = over.data.current as DragEventDestinationData;
+
+      // from semester -> current semester
+      // attempting to drop semester course on current tile
+      if (
+        originData.from === 'semester-tile' &&
+        destinationData.to === 'semester-tile' &&
+        originData.semester.id === destinationData.semester.id
+      ) {
+        toast.warn(
+          `You're already taking ${originData.course.code} in ${originData.semester.code.year}${originData.semester.code.semester}`,
+        );
+        return;
+      }
+
+      // from course list -> semester
+      if (originData.from === 'course-list' && destinationData.to === 'semester-tile') {
+        handleAddCourseToSemester(destinationData.semester, originData.course);
+      }
+
+      // from semester -> another semester
+      if (originData.from === 'semester-tile' && destinationData.to === 'semester-tile') {
+        handleMoveCourseFromSemesterToSemester(
+          originData.semester,
+          destinationData.semester,
+          originData.course,
+        );
+      }
+    }
+  };
 
   return (
     <DndContext
@@ -308,48 +353,12 @@ export default function Planner({
       autoScroll={false}
       sensors={sensors}
       collisionDetection={pointerWithin}
-      onDragStart={({ active }) => {
-        const originData = active.data.current as DragEventOriginData;
-        setActiveCourse({ from: originData.from, course: originData.course });
-      }}
-      onDragEnd={({ active, over }) => {
-        setActiveCourse(null);
-
-        if (active && over) {
-          const originData = active.data.current as DragEventOriginData;
-          const destinationData = over.data.current as DragEventDestinationData;
-
-          // from semester -> current semester
-          // attempting to drop semester course on current tile
-          if (
-            originData.from === 'semester-tile' &&
-            destinationData.to === 'semester-tile' &&
-            originData.semester.id === destinationData.semester.id
-          )
-            return;
-
-          // from course list -> semester
-          if (
-            originData.from === 'course-list' &&
-            destinationData.to === 'semester-tile'
-            // onAddCourseToSemester
-          ) {
-            handleAddCourseToSemester(destinationData.semester, originData.course);
-          }
-
-          // from semester -> another semester
-          if (originData.from === 'semester-tile' && destinationData.to === 'semester-tile') {
-            handleMoveCourseFromSemesterToSemester(
-              originData.semester,
-              destinationData.semester,
-              originData.course,
-            );
-          }
-        }
-      }}
+      onDragStart={handleOnDragStart}
+      onDragEnd={handleOnDragEnd}
     >
       <div className="grid w-full grid-cols-[auto_1fr] gap-[52px]">
         <CourseSelectorContainer
+          courses={courses}
           degreeRequirements={degreeRequirements}
           getSearchedDragId={(course) => `course-list-searched-${course.id}`}
           getRequirementDragId={(course) => `course-list-requirement-${course.id}`}
@@ -372,9 +381,7 @@ export default function Planner({
 
               return (
                 <DroppableSemesterTile
-                  onRemoveCourse={(semester, course) =>
-                    handleRemoveCourseFromSemester(semester, course)
-                  }
+                  onRemoveCourse={handleRemoveCourseFromSemester}
                   key={semester.id.toString()}
                   dropId={`semester-${semester.id}`}
                   getSemesterCourseDragId={(course, semester) =>
@@ -385,7 +392,7 @@ export default function Planner({
                 />
               );
             })}
-            <div className="col-span-full flex justify-center items-center gap-8 h-10">
+            <div className="col-span-full flex h-10 items-center justify-center gap-8">
               <button onClick={handleRemoveYear}>- Remove Year</button>
               <button onClick={handleAddYear}>+ Add Year</button>
             </div>

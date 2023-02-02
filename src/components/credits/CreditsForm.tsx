@@ -6,12 +6,17 @@ import { SemesterCode, SemesterType } from '@prisma/client';
 import { FC, useMemo, useState } from 'react';
 
 import { trpc } from '@/utils/trpc';
-import { displaySemesterCode, generateSemesters, loadDummyCourses } from '@/utils/utilFunctions';
+import {
+  createSemesterCodeRange,
+  displaySemesterCode,
+  loadDummyCourses,
+} from '@/utils/utilFunctions';
 
 import useSearch from '../search/search';
 import AutoCompleteSearchBar from './AutoCompleteSearchBar';
 import Button from './Button';
 import DropdownSelect from './DropdownSelect';
+import { getStartingPlanSemester } from '@/utils/plannerUtils';
 
 const Layout: FC = ({ children }) => <section className="flex flex-col gap-10">{children}</section>;
 
@@ -19,11 +24,15 @@ const CreditsForm: FC = () => {
   const [credit, setCredit] = useState<string | null>();
   const [isTransfer, setIsTransfer] = useState(false);
 
+  const user = trpc.user.getUser.useQuery();
+
   const semesters = useMemo(
     () =>
-      generateSemesters(8, new Date().getFullYear() - 4, SemesterType.f)
-        .reverse()
-        .map((sem) => sem.code),
+      createSemesterCodeRange(
+        user.data?.profile?.startSemester ?? { semester: 'f', year: 2022 },
+        getStartingPlanSemester(),
+        false,
+      ),
     [],
   );
 
