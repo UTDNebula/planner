@@ -49,14 +49,14 @@ export const creditsRouter = router({
           courseCode: z.string(),
           semesterCode: z.object({ semester: z.enum(['f', 's', 'u']), year: z.number() }),
           transfer: z.boolean(),
-        })
-      )
+        }),
+      ),
     )
     .mutation(async ({ ctx, input }) => {
       const userId = ctx.session.user.id;
       try {
         await ctx.prisma.credit.createMany({
-          data: input.map(({ courseCode, semesterCode, transfer })=>({
+          data: input.map(({ courseCode, semesterCode, transfer }) => ({
             userId,
             courseCode,
             semesterCode: { semester: semesterCode.semester, year: semesterCode.year },

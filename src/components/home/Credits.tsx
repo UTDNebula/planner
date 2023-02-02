@@ -30,7 +30,7 @@ export default function CreditsPage(): JSX.Element {
       <UploadTranscriptDialog
         open={openTranscriptDialog}
         onClose={() => setOpenTranscriptDialog(false)}
-        />
+      />
       <div className="flex  w-full flex-col gap-10 overflow-y-auto p-5 lg:p-20">
         <h1 className="text-[40px] font-semibold text-[#1C2A6D]">Credits</h1>
         <div className="flex gap-10">
@@ -68,7 +68,6 @@ export default function CreditsPage(): JSX.Element {
   );
 }
 
-
 const UploadTranscriptDialog = (props: { open: boolean; onClose: () => void }) => {
   const { open, onClose } = props;
   const [loading, setLoading] = useState(false);
@@ -83,10 +82,10 @@ const UploadTranscriptDialog = (props: { open: boolean; onClose: () => void }) =
   });
 
   const parseTranscript = async (file: File) => {
-    const pdf = (await import('pdfjs-dist')).default
+    const pdf = (await import('pdfjs-dist')).default;
     // TODO: How to use local import for this?
     pdf.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/3.3.122/pdf.worker.js`;
-    const data = await pdf.getDocument(await file.arrayBuffer()).promise
+    const data = await pdf.getDocument(await file.arrayBuffer()).promise;
 
     // store keywords that arn't "[""]"
     const keywords = [];
@@ -95,7 +94,7 @@ const UploadTranscriptDialog = (props: { open: boolean; onClose: () => void }) =
       const page = await data.getPage(i + 1);
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore ignore-next-line
-      const textContent = (await page.getTextContent()).items.map(i=>(i).str);
+      const textContent = (await page.getTextContent()).items.map((i) => i.str);
 
       for (const line of textContent) {
         // Separate the words by whitespace and newline
@@ -119,39 +118,46 @@ const UploadTranscriptDialog = (props: { open: boolean; onClose: () => void }) =
     }
     // TODO: Consider whether credit was earned or not before adding to credits list
     const credits: Credit[] = [];
-    let isTransfer = true
-    let term: SemesterCode = {semester: 's', year: 1970}
+    let isTransfer = true;
+    let term: SemesterCode = { semester: 's', year: 1970 };
     for (let j = 0; j < keywords.length; j++) {
       const code = keywords[j];
       if (courseCode.includes(code) && j < keywords.length - 1) {
         const digit = keywords[j + 1].slice(0, 4).replace(/^\s+|\s+$/g, '');
         if (/^[\d-]+$/.test(digit)) {
-          credits.push({semesterCode: term, courseCode: code+digit, transfer: isTransfer});
+          credits.push({ semesterCode: term, courseCode: code + digit, transfer: isTransfer });
         }
       } else {
-        const t = isTerm(code + " " + keywords[j+1])
+        const t = isTerm(code + ' ' + keywords[j + 1]);
         if (t) {
           term = t;
-        } else if (code === "Beginning" && keywords[j+1] === "of" && keywords[j+2] === "Undergraduate" && keywords[j+3] === "Record") {
-          isTransfer = false
-          j += 3
+        } else if (
+          code === 'Beginning' &&
+          keywords[j + 1] === 'of' &&
+          keywords[j + 2] === 'Undergraduate' &&
+          keywords[j + 3] === 'Record'
+        ) {
+          isTransfer = false;
+          j += 3;
         }
       }
     }
-    const dedupedCredits = credits.reduce((acc, curr)=>{
-      if (!acc.some(i => i.courseCode === curr.courseCode)) {
-        acc.push(curr)
+    const dedupedCredits = credits.reduce((acc, curr) => {
+      if (!acc.some((i) => i.courseCode === curr.courseCode)) {
+        acc.push(curr);
       }
-      return acc
+      return acc;
     }, [] as Credit[]);
     if (dedupedCredits.length === 0) {
-      setError(`No credits found. Please ensure the file '${file.name}' is a UT Dallas issued transcript`);
+      setError(
+        `No credits found. Please ensure the file '${file.name}' is a UT Dallas issued transcript`,
+      );
       return;
     }
     addManyCredits.mutate(dedupedCredits);
-    data.destroy()
+    data.destroy();
     onClose();
-  }
+  };
 
   return (
     <Dialog open={open} onClose={onClose}>
@@ -176,7 +182,7 @@ const UploadTranscriptDialog = (props: { open: boolean; onClose: () => void }) =
                 setLoading(true);
                 await parseTranscript(file);
               } catch (e) {
-                setError("An error occurred");
+                setError('An error occurred');
               } finally {
                 setLoading(false);
               }
@@ -202,13 +208,15 @@ const UploadTranscriptDialog = (props: { open: boolean; onClose: () => void }) =
   );
 };
 
-
 const isTerm = (str: string) => {
   const yr = Number(str.substring(0, 4));
   if (Number.isNaN(yr)) return false;
   const terms = ['Fall', 'Spring', 'Summer'];
-  const s = terms.findIndex((term) => str.includes(term))
+  const s = terms.findIndex((term) => str.includes(term));
   if (s === -1) return false;
-  const out: SemesterCode = {year: yr, semester: s == 0 ? SemesterType.f : s == 1 ? SemesterType.s : SemesterType.u}
-  return out
-}
+  const out: SemesterCode = {
+    year: yr,
+    semester: s == 0 ? SemesterType.f : s == 1 ? SemesterType.s : SemesterType.u,
+  };
+  return out;
+};

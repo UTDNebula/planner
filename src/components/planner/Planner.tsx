@@ -385,7 +385,7 @@ export default function Planner({
                 />
               );
             })}
-            <div className="col-span-full flex justify-center items-center gap-8 h-10">
+            <div className="col-span-full flex h-10 items-center justify-center gap-8">
               <button onClick={handleRemoveYear}>- Remove Year</button>
               <button onClick={handleAddYear}>+ Add Year</button>
             </div>
