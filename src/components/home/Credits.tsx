@@ -83,7 +83,7 @@ const UploadTranscriptDialog = (props: { open: boolean; onClose: () => void }) =
   });
 
   const parseTranscript = async (file: File) => {
-    const pdf = await import('pdfjs-dist')
+    const pdf = (await import('pdfjs-dist')).default
     // TODO: How to use local import for this?
     pdf.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/3.3.122/pdf.worker.js`;
     const data = await pdf.getDocument(await file.arrayBuffer()).promise
