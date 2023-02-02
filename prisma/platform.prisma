@@ -8,155 +8,6 @@ datasource db {
   url      = env("PLATFORM_DATABASE_URL")
 }
 
-type CoursesCoOrPreRequisites {
-  options  CoursesCoOrPreRequisitesOptions[]
-  required Int
-  type     String
-}
-
-type CoursesCoOrPreRequisitesOptions {
-  class_reference String?
-  options         CoursesCoOrPreRequisitesOptionsOptions[]
-  required        Int?
-  type            String
-}
-
-type CoursesCoOrPreRequisitesOptionsOptions {
-  class_reference String?
-  minimum_grade   String?
-  options         CoursesCoOrPreRequisitesOptionsOptionsOptions[]
-  required        Int?
-  type            String
-}
-
-type CoursesCoOrPreRequisitesOptionsOptionsOptions {
-  class_reference String
-  type            String
-}
-
-type CoursesCorequisites {
-  options  CoursesCorequisitesOptions[]
-  required Int
-  type     String
-}
-
-type CoursesCorequisitesOptions {
-  choices         CoursesCorequisitesOptionsChoices?
-  class_reference String?
-  /// Could not determine type: the field only had null or empty values in the sample set.
-  condition       Json?
-  description     String?
-  major           String?
-  max_hours       Int?
-  options         CoursesCorequisitesOptionsOptions[]
-  required        Int?
-  type            String
-}
-
-type CoursesCorequisitesOptionsChoices {
-  options  CoursesCorequisitesOptionsChoicesOptions[]
-  required Int
-  type     String
-}
-
-type CoursesCorequisitesOptionsChoicesOptions {
-  class_reference String?
-  options         CoursesCorequisitesOptionsChoicesOptionsOptions[]
-  required        Int?
-  type            String
-}
-
-type CoursesCorequisitesOptionsChoicesOptionsOptions {
-  class_reference String?
-  /// Could not determine type: the field only had null or empty values in the sample set.
-  condition       Json?
-  description     String?
-  type            String
-}
-
-type CoursesCorequisitesOptionsOptions {
-  class_reference String?
-  /// Could not determine type: the field only had null or empty values in the sample set.
-  condition       Json?
-  description     String?
-  options         CoursesCorequisitesOptionsOptionsOptions[]
-  required        Int?
-  type            String
-}
-
-type CoursesCorequisitesOptionsOptionsOptions {
-  class_reference String?
-  /// Could not determine type: the field only had null or empty values in the sample set.
-  condition       Json?
-  description     String?
-  type            String
-}
-
-type CoursesPrerequisites {
-  options  CoursesPrerequisitesOptions[]
-  required Int
-  type     String
-}
-
-type CoursesPrerequisitesOptions {
-  class_reference String?
-  /// Could not determine type: the field only had null or empty values in the sample set.
-  condition       Json?
-  core_flag       String?
-  description     String?
-  /// Could not determine type: the field only had null or empty values in the sample set.
-  hours           Json?
-  major           String?
-  /// Multiple data types found: Float: 66.7%, Int: 33.3% out of 3 sampled entries
-  minimum         Json?
-  minimum_grade   String?
-  options         CoursesPrerequisitesOptionsOptions[]
-  required        Int?
-  subset          String?
-  type            String
-}
-
-type CoursesPrerequisitesOptionsOptions {
-  class_reference String?
-  /// Could not determine type: the field only had null or empty values in the sample set.
-  condition       Json?
-  core_flag       String?
-  description     String?
-  granter         String?
-  hours           Int?
-  major           String?
-  minimum         Float?
-  minimum_grade   String?
-  options         CoursesPrerequisitesOptionsOptionsOptions[]
-  required        Int?
-  subset          String?
-  type            String
-}
-
-type CoursesPrerequisitesOptionsOptionsOptions {
-  class_reference String?
-  /// Could not determine type: the field only had null or empty values in the sample set.
-  condition       Json?
-  description     String?
-  granter         String?
-  minimum_grade   String?
-  options         CoursesPrerequisitesOptionsOptionsOptionsOptions[]
-  required        Int?
-  type            String
-}
-
-type CoursesPrerequisitesOptionsOptionsOptionsOptions {
-  class_reference String?
-  options         CoursesPrerequisitesOptionsOptionsOptionsOptionsOptions[]
-  required        Int?
-  type            String
-}
-
-type CoursesPrerequisitesOptionsOptionsOptionsOptionsOptions {
-  class_reference String
-  type            String
-}
-
 type ExamsYields {
   outcome     Json
   requirement ExamsYieldsRequirement
@@ -254,8 +105,8 @@ model courses {
   v                        Int                      @map("__v")
   activity_type            String
   class_level              String
-  co_or_pre_requisites     CoursesCoOrPreRequisites
-  corequisites             CoursesCorequisites
+  co_or_pre_requisites     Json
+  corequisites             Json
   course_number            String
   credit_hours             String
   description              String
@@ -264,7 +115,7 @@ model courses {
   laboratory_contact_hours String?
   lecture_contact_hours    String?
   offering_frequency       String?
-  prerequisites            CoursesPrerequisites
+  prerequisites            Json
   school                   String
   sections                 String[]                 @db.ObjectId
   subject_prefix           String
