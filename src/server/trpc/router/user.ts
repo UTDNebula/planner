@@ -1,4 +1,4 @@
-import { Bypass, Prisma, SemesterCode, SemesterType } from '@prisma/client';
+import { Bypass, Prisma, Semester, SemesterCode, SemesterType } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import { ObjectID } from 'bson';
 import { z } from 'zod';
@@ -6,6 +6,7 @@ import { z } from 'zod';
 import { createNewYear } from '@/utils/utilFunctions';
 
 import { protectedProcedure, router } from '../trpc';
+import { isEarlierSemester } from '@/utils/plannerUtils';
 
 export const userRouter = router({
   getUser: protectedProcedure.query(async ({ ctx }) => {
@@ -219,11 +220,45 @@ export const userRouter = router({
       const templateData = template.templateData;
 
       // Create semesters
-      const semestersInput: { id: string; code: SemesterCode; courses: string[] }[] = [];
+      let semestersInput: { id: string; code: SemesterCode; courses: string[] }[] = [];
 
-      for (let i = 0; i < 4; i++) {
+      // Get start & end semesters
+      const profile = await ctx.prisma.profile.findFirst({
+        where: {
+          userId,
+        },
+        select: {
+          endSemester: true,
+        },
+      });
+
+      const getStartingPlanSemester = (): SemesterCode => {
+        const d = new Date();
+        if (d.getMonth() < 5) {
+          return { year: d.getFullYear(), semester: 's' };
+        } else if (d.getMonth() > 7) {
+          return { year: d.getFullYear(), semester: 'f' };
+        } else {
+          return { year: d.getFullYear(), semester: 'u' };
+        }
+      };
+
+      const startingPlanSemester = getStartingPlanSemester();
+
+      const startYear =
+        startingPlanSemester.semester === 'f'
+          ? startingPlanSemester.year
+          : startingPlanSemester.year - 1;
+
+      const endYear = profile
+        ? profile.endSemester.semester === 'f'
+          ? profile.endSemester.year + 1
+          : profile.endSemester.year
+        : startYear + 4;
+
+      for (let i = startYear; i < endYear + 1; i++) {
         // Create new year
-        createNewYear({ year: 2022 + i, semester: 'u' })
+        createNewYear({ year: i, semester: 'u' })
           .map((sem) => {
             return { ...sem, courses: [] as string[], id: sem.id.toString() };
           })
@@ -238,6 +273,13 @@ export const userRouter = router({
           });
         }
       }
+
+      console.log('TESTTTTTT');
+      console.log(semestersInput);
+      // Remove extra semesters (beginning only)
+      semestersInput = semestersInput.filter(
+        (sem) => !isEarlierSemester(sem.code, startingPlanSemester),
+      );
 
       const semesters: Prisma.SemesterUncheckedCreateNestedManyWithoutPlanInput = {
         create: [...semestersInput],

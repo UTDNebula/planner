@@ -122,7 +122,7 @@ export function addCreditsToPlan(
     }
   });
   // Add credit years to plan
-  const creditSemesters: {
+  let creditSemesters: {
     courses: string[];
     id: string;
     code: SemesterCode;
@@ -151,10 +151,20 @@ export function addCreditsToPlan(
     });
   }
 
+  console.log(semesters);
+  console.log('HEHE');
+  console.log(creditSemesters);
+
+  // Remove extra semester if needed
+  creditSemesters = creditSemesters.filter((sem) => isEarlierSemester(sem.code, semesters[0].code));
+  console.log(creditSemesters);
   const newSem = creditSemesters.concat(semesters);
   return newSem;
 }
 
+/**
+ * Is semesterOne earlier than semesterTwo
+ */
 export const isEarlierSemester = (semesterOne: SemesterCode, semesterTwo: SemesterCode) => {
   if (JSON.stringify(semesterOne) === JSON.stringify(semesterTwo)) {
     return false;
@@ -162,7 +172,7 @@ export const isEarlierSemester = (semesterOne: SemesterCode, semesterTwo: Semest
     return false;
   } else if (
     semesterOne.year === semesterTwo.year &&
-    (semesterOne.semester === 'f' || semesterOne.semester > semesterTwo.semester)
+    (semesterOne.semester === 'f' || semesterOne.semester < semesterTwo.semester)
   ) {
     return false;
   }
