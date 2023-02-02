@@ -87,8 +87,6 @@ export const planRouter = router({
         return { plan: planData, validation: [] };
       }
 
-      console.log('hehe');
-      console.log(hehe);
       const body = formatDegreeValidationRequest(hehe, degreeRequirements?.major);
 
       const validationData = await fetch(`${process.env.VALIDATOR}/validate-degree-plan`, {

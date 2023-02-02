@@ -153,7 +153,6 @@ export function addCreditsToPlan(
 
   // Remove extra semester if needed
   creditSemesters = creditSemesters.filter((sem) => isEarlierSemester(sem.code, semesters[0].code));
-  console.log(creditSemesters);
   const newSem = creditSemesters.concat(semesters);
   return newSem;
 }
