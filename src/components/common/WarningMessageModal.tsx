@@ -12,7 +12,7 @@ export default function WarningMessageModal(props: WarningMessageModalProps) {
   const [expand, setExpand] = React.useState(false);
 
   return (
-    <div className="bg-yellow-400 rounded-md fixed hover:scale-105 transition-transform bottom-0 right-0 flex gap-2 m-8">
+    <div className="fixed bottom-0 right-0 m-8 flex gap-2 rounded-md bg-yellow-400 transition-transform hover:scale-105">
       {expand ? (
         <div className="flex items-center justify-between gap-4 py-2 px-4">
           <div className="max-w-[200px]">{message}</div>

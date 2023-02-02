@@ -15,7 +15,7 @@ export default function NebPlannerDisplay(): JSX.Element {
       style={{ height: '750px', marginTop: '-80px' }}
       sx={{ backgroundColor: 'white' }}
     >
-      <div className="flex flex-col sm:flex-row place-items-center sm:place-items-auto gap-x-5">
+      <div className="sm:place-items-auto flex flex-col place-items-center gap-x-5 sm:flex-row">
         <div>
           <Grid item>
             <img
@@ -69,7 +69,7 @@ export default function NebPlannerDisplay(): JSX.Element {
 
                 fontSize: '15px',
               }}
-              onClick={() => router.push('/auth/signup')}
+              onClick={() => router.push('/auth/login')}
             >
               GET STARTED
             </Button>

@@ -2,21 +2,21 @@ import { FC } from 'react';
 
 const BetaBanner: FC = () => {
   return (
-    <div className="w-full h-[50px] flex items-center justify-center gap-8 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
-      <div className="flex gap-3 items-center">
-        <h3 className="text-white text-[18px] font-medium">{'Hey! This is our beta release'}</h3>
+    <div className="flex h-[50px] w-full items-center justify-center gap-8 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
+      <div className="flex items-center gap-3">
+        <h3 className="text-[18px] font-medium text-white">{'Hey! This is our beta release'}</h3>
         <button
           onClick={(e) => {
             e.preventDefault();
             window.open('https://forms.gle/wx4zxm3cemut31tNA', '_blank');
           }}
-          className="bg-white hover:bg-gray-50 rounded-md px-2 py-1 flex items-center justify-center font-medium"
+          className="flex items-center justify-center rounded-md bg-white px-2 py-1 font-medium hover:bg-gray-50"
         >
           Report a bug
         </button>
       </div>
-      <div className="flex gap-3 items-center">
-        <h3 className="text-white text-[18px] font-medium">{'Interested in contributing?'}</h3>
+      <div className="flex items-center gap-3">
+        <h3 className="text-[18px] font-medium text-white">{'Interested in contributing?'}</h3>
         <button
           onClick={(e) => {
             e.preventDefault();
@@ -25,7 +25,7 @@ const BetaBanner: FC = () => {
               '_blank',
             );
           }}
-          className="bg-white hover:bg-gray-50 rounded-md px-2 py-1 flex items-center justify-center font-medium"
+          className="flex items-center justify-center rounded-md bg-white px-2 py-1 font-medium hover:bg-gray-50"
         >
           Learn more
         </button>
