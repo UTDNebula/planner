@@ -58,8 +58,10 @@ async function main() {
   }
 
   console.time('Seeding took');
-  await prisma.template.createMany({ data: templatesToAdd });
-  await prisma.templateData.createMany({ data: templateDataArray });
+  if (templatesToAdd.length && templateDataArray) {
+    await prisma.template.createMany({ data: templatesToAdd });
+    await prisma.templateData.createMany({ data: templateDataArray });
+  }
   console.timeEnd('Seeding took');
 }
 
