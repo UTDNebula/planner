@@ -247,6 +247,9 @@ export default function Planner({
       targetSemester.courses.find((course) => course.code === newCourse.code),
     );
     if (isDuplicate) {
+      toast.warn(
+        `You're already taking ${newCourse.code} in ${targetSemester.code.year}${targetSemester.code.semester}`,
+      );
       return;
     }
 
@@ -267,6 +270,15 @@ export default function Planner({
     destinationSemester: Semester,
     courseToMove: DraggableCourse,
   ) => {
+    const isDuplicate = Boolean(
+      destinationSemester.courses.find((course) => course.code === courseToMove.code),
+    );
+    if (isDuplicate) {
+      toast.warn(
+        `You're already taking ${courseToMove.code} in ${originSemester.code.year}${destinationSemester.code.semester}`,
+      );
+      return;
+    }
     setSemesters((semesters) =>
       semesters.map((semester) => {
         if (semester.id === destinationSemester.id) {
@@ -293,7 +305,7 @@ export default function Planner({
     () => semesters.flatMap((sem) => sem.courses).map((course) => course.code),
     [semesters],
   );
-
+  console.log('courses', courses);
   const handleOnDragStart = ({ active }: { active: Active }) => {
     const originData = active.data.current as DragEventOriginData;
     setActiveCourse({ from: originData.from, course: originData.course });
