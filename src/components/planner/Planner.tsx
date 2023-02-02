@@ -138,7 +138,7 @@ export default function Planner({
         }
       }}
     >
-      <div className="w-full grid grid-cols-[auto_1fr] gap-[52px]">
+      <div className="grid w-full grid-cols-[auto_1fr] gap-[52px]">
         <CourseSelectorContainer
           degreeRequirements={degreeRequirements}
           getSearchedDragId={(course) => `course-list-searched-${course.id}`}
@@ -154,7 +154,7 @@ export default function Planner({
         </DragOverlay>
 
         <div className="min-h-fit">
-          <div className="grid grid-cols-3 grid-rows-4 w-fit gap-[32px]">
+          <div className="grid w-fit grid-cols-3 grid-rows-4 gap-[32px]">
             {semesters.map((semester) => {
               const hasInvalidCourse =
                 semester.courses.length > 0 &&
@@ -178,7 +178,7 @@ export default function Planner({
                 />
               );
             })}
-            <div className="col-span-full flex justify-center items-center gap-8 h-10">
+            <div className="col-span-full flex h-10 items-center justify-center gap-8">
               <button onClick={onRemoveYear}>- Remove Year</button>
               <button onClick={onAddYear}>+ Add Year</button>
             </div>
