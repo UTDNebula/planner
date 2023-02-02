@@ -1,8 +1,10 @@
 import { SemesterCode, SemesterType } from '@prisma/client';
 import { ObjectID } from 'bson';
 
-import { Semester } from '@/components/planner/types';
+import { DraggableCourse, Semester } from '@/components/planner/types';
 import { Course } from '@/components/planner/types';
+import { isEarlierSemester } from './plannerUtils';
+import { start } from 'repl';
 
 /**
  * Creates 3 new semesters based on given year in SemesterCode
@@ -135,4 +137,33 @@ export function generateSemesters(
   }
 
   return result;
+}
+
+function createNewSemesterCode(pastSemesterCode: SemesterCode): SemesterCode {
+  if (pastSemesterCode.semester === 'f') {
+    return { semester: 's', year: pastSemesterCode.year + 1 };
+  } else if (pastSemesterCode.semester === 's') {
+    return { semester: 'u', year: pastSemesterCode.year };
+  } else {
+    return { semester: 'f', year: pastSemesterCode.year };
+  }
+}
+export function createSemesterCodeRange(
+  startSemester: SemesterCode,
+  endSemester: SemesterCode,
+  includeEnd: boolean,
+) {
+  const semesterCodes = [startSemester];
+  let currSemester = createNewSemesterCode(startSemester);
+  while (isEarlierSemester(currSemester, endSemester)) {
+    semesterCodes.push(currSemester);
+
+    currSemester = createNewSemesterCode(currSemester);
+  }
+  semesterCodes.push(endSemester);
+
+  if (!includeEnd) {
+    return semesterCodes.slice(0, semesterCodes.length - 1);
+  }
+  return semesterCodes;
 }

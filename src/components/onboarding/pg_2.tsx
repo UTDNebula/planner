@@ -9,7 +9,12 @@ import DataGrid from '@/components/credits/DataGrid';
 import DropdownSelect from '@/components/credits/DropdownSelect';
 import { Credit } from '@/components/credits/types';
 import useSearch from '@/components/search/search';
-import { displaySemesterCode, generateSemesters, loadDummyCourses } from '@/utils/utilFunctions';
+import {
+  createSemesterCodeRange,
+  displaySemesterCode,
+  loadDummyCourses,
+} from '@/utils/utilFunctions';
+import { getStartingPlanSemester } from '@/utils/plannerUtils';
 
 // Array of values to choose from for form
 
@@ -20,17 +25,15 @@ export type PageTwoTypes = {
 export type Page2data = {
   handleChange: React.Dispatch<React.SetStateAction<PageTwoTypes>>;
   data: PageTwoTypes;
+  startSemester: SemesterCode;
 };
 
-export default function PageTwo({ handleChange, data }: Page2data): JSX.Element {
+export default function PageTwo({ handleChange, data, startSemester }: Page2data): JSX.Element {
   const { credits } = data;
 
   // TODO: Change start semester to when they first joined UTD - 2
   const semesters = useMemo(
-    () =>
-      generateSemesters(8, new Date().getFullYear() - 4, SemesterType.f)
-        .reverse()
-        .map((sem) => sem.code),
+    () => createSemesterCodeRange(startSemester, getStartingPlanSemester(), false),
     [],
   );
 
