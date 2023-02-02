@@ -30,6 +30,7 @@ export default function CreditsPage(): JSX.Element {
       <UploadTranscriptDialog
         open={openTranscriptDialog}
         onClose={() => setOpenTranscriptDialog(false)}
+        />
       <div className="flex  w-full flex-col gap-10 overflow-y-auto p-5 lg:p-20">
         <h1 className="text-[40px] font-semibold text-[#1C2A6D]">Credits</h1>
         <div className="flex gap-10">
