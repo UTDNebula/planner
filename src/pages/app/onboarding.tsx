@@ -115,6 +115,7 @@ export default function OnboardingPage() {
         handleOnboardingDataUpdate as React.Dispatch<React.SetStateAction<PageTwoTypes>>
       }
       data={{ credits }}
+      startSemester={startSemester}
     ></PageTwo>,
   ];
   const incrementPage = () => {

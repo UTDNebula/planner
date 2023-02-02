@@ -10,7 +10,8 @@ import RequirementSearchBar from './RequirementSearchBar';
 
 export interface RequirementInfoProps {
   courses: string[];
-  allUserCourses: Set<string>;
+  validCourses: string[];
+  allUserCourses: string[];
   setAddCourse: (state: boolean) => void;
   setAddPlaceholder: (state: boolean) => void;
   getCourseItemDragId: GetDragIdByCourseAndReq;
@@ -19,6 +20,7 @@ export interface RequirementInfoProps {
 
 export default function RequirementInfo({
   courses,
+  validCourses,
   allUserCourses,
   setAddCourse,
   setAddPlaceholder,
@@ -59,7 +61,8 @@ export default function RequirementInfo({
   const courseResults = results.map((result) => {
     return {
       ...result,
-      status: allUserCourses.has(result.code) ? 'complete' : undefined,
+      status: validCourses.includes(result.code) ? 'complete' : undefined,
+      taken: allUserCourses.includes(result.code),
     };
   }) as DraggableCourse[];
 

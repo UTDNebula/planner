@@ -1,4 +1,5 @@
-import { PrismaClient, TemplateDataType } from '@prisma/client';
+import { Prisma, PrismaClient, TemplateDataType } from '@prisma/client';
+import { ObjectId } from 'bson';
 
 import dummyTemplate from '../src/data/degree_template.json';
 const prisma = new PrismaClient();
@@ -20,21 +21,19 @@ async function main() {
     }, {});
 
   const templatesFromDb = await prisma.template.findMany();
-  let templatesToAdd: Array<string> = [];
+  let templatesToAdd: Array<{ id: string; name: string }> = [];
   if (templatesFromDb.length !== Object.keys(orderedTemplate).length) {
-    templatesToAdd = Object.keys(orderedTemplate).filter(
-      (item) => !templatesFromDb.some((dbItem) => dbItem.name === item),
-    );
+    templatesToAdd = Object.keys(orderedTemplate)
+      .filter((item) => !templatesFromDb.some((dbItem) => dbItem.name === item))
+      .map((name) => ({ id: new ObjectId().toString(), name }));
   }
 
+  const templateDataArray: Array<Prisma.TemplateDataCreateManyInput> = [];
+
   if (templatesToAdd.length > 0) {
-    for (const key of templatesToAdd) {
-      const value = orderedTemplate[key];
-      const template = await prisma.template.create({
-        data: {
-          name: key,
-        },
-      });
+    for (const { id: templateId, name } of templatesToAdd) {
+      const value = orderedTemplate[name];
+
       for (let i = 0; i < value.length; i++) {
         const templateDataItems: Array<TemplateDataItems> = [];
         for (let j = 0; j < value[i].length; j++) {
@@ -47,21 +46,23 @@ async function main() {
             templateDataItems.push({ name: value[i][j] as string, type: 'CORE' });
           }
         }
-        await prisma.templateData.create({
-          data: {
-            semester: i + 1,
-            items: {
-              create: [...templateDataItems],
-            },
-            template: {
-              connect: { id: template.id },
-            },
-          },
+
+        templateDataArray.push({
+          semester: i + 1,
+          templateId,
         });
       }
-      console.log(`Created template ${key}`);
+
+      console.log(`Adding template ${name}`);
     }
   }
+
+  console.time('Seeding took');
+  if (templatesToAdd.length && templateDataArray) {
+    await prisma.template.createMany({ data: templatesToAdd });
+    await prisma.templateData.createMany({ data: templateDataArray });
+  }
+  console.timeEnd('Seeding took');
 }
 
 main()

@@ -1,0 +1,28 @@
+name: Lint
+
+on:
+  workflow_dispatch:
+  # Trigger the workflow on push or pull request,
+  # but only for the main branch
+  pull_request:
+    type: [ready_for_review]
+
+jobs:
+  run-linters:
+    name: Run linters
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18
+
+      - name: Install Node.js Dependencies
+        run: npm ci
+
+      - name: Run Prettier
+        run: npm run format:check
