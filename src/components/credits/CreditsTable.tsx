@@ -88,7 +88,7 @@ const CreditsTable: FC = () => {
             },
             {
               title: 'Transfer',
-              valueGetter: (credit) => (!credit.transfer ? 'Yes' : 'No'),
+              valueGetter: (credit) => (credit.transfer ? 'Yes' : 'No'),
             },
             {
               title: 'Semester',
