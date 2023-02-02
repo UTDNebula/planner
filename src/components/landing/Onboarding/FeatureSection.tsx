@@ -32,7 +32,7 @@ export default function NebFeatureDisplay({ ref2 }: FeatureProps): JSX.Element {
           background: 'white',
         }}
       ></div>
-      <div className="flex flex-col-2">
+      <div className="flex-col-2 flex">
         <Grid
           container
           direction="column"

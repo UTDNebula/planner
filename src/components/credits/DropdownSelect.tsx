@@ -26,7 +26,7 @@ const DropdownSelect = <T extends { [key: string]: unknown }>({
   return (
     <div
       ref={anchorRef}
-      className="max-w-[350px] relative"
+      className="relative max-w-[350px]"
       onClick={() => setAnchorEl(anchorEl ? null : anchorRef.current)}
     >
       <Select
@@ -34,7 +34,7 @@ const DropdownSelect = <T extends { [key: string]: unknown }>({
         value={value}
         label=""
         onChange={(e) => onChange(e.target.value as T)}
-        className="rounded-[10px] border-[2px] border-[#EDEFF7] shadow-none px-4 w-full font-medium"
+        className="w-full rounded-[10px] border-[2px] border-[#EDEFF7] px-4 font-medium shadow-none"
         open={Boolean(anchorEl)}
         onClose={() => setAnchorEl(null)}
         sx={{
@@ -48,14 +48,14 @@ const DropdownSelect = <T extends { [key: string]: unknown }>({
           open: Boolean(anchorEl),
         }}
         IconComponent={() => (
-          <button className="min-w-[35px] min-h-[35px] max-w-[35px] max-h-[35px] rounded-full flex justify-center items-center">
+          <button className="flex max-h-[35px] min-h-[35px] min-w-[35px] max-w-[35px] items-center justify-center rounded-full">
             <KeyboardArrowDownIcon className="text-[#3E61ED]" />
           </button>
         )}
       >
         {values.map((v, i) => (
           <MenuItem
-            className="w-full outline-none py-2"
+            className="w-full py-2 outline-none"
             value={getValue(v) as unknown as string}
             key={i as unknown as string}
           >
@@ -64,7 +64,7 @@ const DropdownSelect = <T extends { [key: string]: unknown }>({
         ))}
       </Select>
 
-      <div ref={anchorRef} className="absolute -bottom-3 left-0 w-full h-full -z-10"></div>
+      <div ref={anchorRef} className="absolute -bottom-3 left-0 -z-10 h-full w-full"></div>
     </div>
   );
 };

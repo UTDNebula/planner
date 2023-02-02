@@ -20,9 +20,9 @@ export const SemesterCourseItem = forwardRef<HTMLDivElement, SemesterCourseItemP
       <div
         ref={ref}
         {...props}
-        className={`shadow-md w-full h-[22px] rounded-md py-[1px] px-[8px] flex items-center justify-between ${
+        className={`flex h-[22px] w-full items-center justify-between rounded-md py-[1px] px-[8px] shadow-md ${
           isDisabled ? 'bg-gray-100' : 'bg-white'
-        } ${isValid ? 'border-red-500 border-[1px]' : ''}`}
+        } ${isValid ? 'border-[1px] border-red-500' : ''}`}
       >
         <span className="text-[12px] font-medium text-[#1C2A6D]">{course.code}</span>
         {!isDisabled && (

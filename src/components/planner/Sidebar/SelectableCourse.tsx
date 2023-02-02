@@ -22,7 +22,7 @@ export default function SelectableCourse({
     <button
       className={`${
         selected ? 'bg-blue-500 text-white' : 'border border-[#EDEFF7] '
-      } text-[10px] items-center drop-shadow-sm py-1.5 px-2 flex flex-row justify-between rounded-md`}
+      } flex flex-row items-center justify-between rounded-md py-1.5 px-2 text-[10px] drop-shadow-sm`}
       key={id}
       onClick={handleSelectCourse}
     >
@@ -31,7 +31,7 @@ export default function SelectableCourse({
         <div
           className={`${
             selected ? 'border-white text-white' : 'border-[#1C2A6D]'
-          } flex justify-center items-center text-[11px] w-20 border rounded-md`}
+          } flex w-20 items-center justify-center rounded-md border text-[11px]`}
         >
           {'Complete'}
         </div>

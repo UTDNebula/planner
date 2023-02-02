@@ -19,9 +19,9 @@ export default function SearchBar({ updateQuery }: SearchBarProps): JSX.Element 
   };
 
   return (
-    <div className="rounded-md border-[#1C2A6D] border flex flex-row pl-5 pr-2 min-h-[30px] justify-between items-center">
+    <div className="flex min-h-[30px] flex-row items-center justify-between rounded-md border border-[#1C2A6D] pl-5 pr-2">
       <input
-        className="outline-none text-xs"
+        className="text-xs outline-none"
         placeholder="Filter courses"
         value={query}
         onChange={handleQueryUpdate}
