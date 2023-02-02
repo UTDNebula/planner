@@ -14,7 +14,7 @@ import courseCode from '@/data/courseCode.json';
 import { SemesterType, SemesterCode } from '@prisma/client';
 import { trpc } from '@/utils/trpc';
 import { Credit } from '../credits/types';
-import type { TextItem } from 'pdfjs-dist/types/src/display/api';
+// import type { TextItem } from 'pdfjs-dist/types/src/display/api';
 
 /**
  * A page containing student attributes and other account settings.
@@ -93,7 +93,9 @@ const UploadTranscriptDialog = (props: { open: boolean; onClose: () => void }) =
 
     for (let i = 0; i < data.numPages; i++) {
       const page = await data.getPage(i + 1);
-      const textContent = (await page.getTextContent()).items.map(i=>(i as TextItem).str);
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore ignore-next-line
+      const textContent = (await page.getTextContent()).items.map(i=>(i).str);
 
       for (const line of textContent) {
         // Separate the words by whitespace and newline
