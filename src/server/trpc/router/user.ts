@@ -6,7 +6,7 @@ import { z } from 'zod';
 import { createNewYear } from '@/utils/utilFunctions';
 
 import { protectedProcedure, router } from '../trpc';
-import { isEarlierSemester } from '@/utils/plannerUtils';
+import { getStartingPlanSemester, isEarlierSemester } from '@/utils/plannerUtils';
 
 export const userRouter = router({
   getUser: protectedProcedure.query(async ({ ctx }) => {
@@ -232,17 +232,6 @@ export const userRouter = router({
         },
       });
 
-      const getStartingPlanSemester = (): SemesterCode => {
-        const d = new Date();
-        if (d.getMonth() < 5) {
-          return { year: d.getFullYear(), semester: 's' };
-        } else if (d.getMonth() > 7) {
-          return { year: d.getFullYear(), semester: 'f' };
-        } else {
-          return { year: d.getFullYear(), semester: 'u' };
-        }
-      };
-
       const startingPlanSemester = getStartingPlanSemester();
 
       const startYear =
@@ -274,8 +263,6 @@ export const userRouter = router({
         }
       }
 
-      console.log('TESTTTTTT');
-      console.log(semestersInput);
       // Remove extra semesters (beginning only)
       semestersInput = semestersInput.filter(
         (sem) => !isEarlierSemester(sem.code, startingPlanSemester),
