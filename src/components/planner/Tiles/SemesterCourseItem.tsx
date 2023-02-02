@@ -2,7 +2,7 @@ import { UniqueIdentifier, useDraggable } from '@dnd-kit/core';
 import CloseIcon from '@mui/icons-material/Close';
 import { ComponentPropsWithoutRef, FC, forwardRef } from 'react';
 
-import { getFirstNewSemester, isEarlierSemester } from '@/utils/plannerUtils';
+import { getStartingPlanSemester, isEarlierSemester } from '@/utils/plannerUtils';
 
 import { DragDataFromSemesterTile, DraggableCourse, Semester } from '../types';
 
@@ -55,7 +55,7 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
   course,
   onRemove,
 }) => {
-  const isDisabled = isEarlierSemester(semester.code, getFirstNewSemester());
+  const isDisabled = isEarlierSemester(semester.code, getStartingPlanSemester());
   const { setNodeRef, attributes, listeners, isDragging } = useDraggable({
     id: dragId,
     data: { from: 'semester-tile', semester, course } as DragDataFromSemesterTile,

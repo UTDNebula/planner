@@ -1,7 +1,7 @@
 import { UniqueIdentifier, useDroppable } from '@dnd-kit/core';
 import { FC, forwardRef } from 'react';
 
-import { getFirstNewSemester, isEarlierSemester } from '@/utils/plannerUtils';
+import { getStartingPlanSemester, isEarlierSemester } from '@/utils/plannerUtils';
 import { displaySemesterCode } from '@/utils/utilFunctions';
 
 import {
@@ -81,7 +81,7 @@ const DroppableSemesterTile: FC<DroppableSemesterTileProps> = ({
   getSemesterCourseDragId,
   ...props
 }) => {
-  const isDisabled = isEarlierSemester(semester.code, getFirstNewSemester());
+  const isDisabled = isEarlierSemester(semester.code, getStartingPlanSemester());
   const { setNodeRef, isOver } = useDroppable({
     id: dropId,
     data: { to: 'semester-tile', semester } as DragDataToSemesterTile,
