@@ -76,7 +76,20 @@ export const planRouter = router({
 
       const hehe = await temporaryFunctionPlzDeleteThis();
 
-      const body = formatDegreeValidationRequest(hehe);
+      // Get degree requirements
+      const degreeRequirements = await ctx.prisma.degreeRequirements.findFirst({
+        where: {
+          planId: planData.id,
+        },
+      });
+
+      if (!degreeRequirements?.major || degreeRequirements.major === 'undecided') {
+        return { plan: planData, validation: [] };
+      }
+
+      console.log('hehe');
+      console.log(hehe);
+      const body = formatDegreeValidationRequest(hehe, degreeRequirements?.major);
 
       const validationData = await fetch(`${process.env.VALIDATOR}/validate-degree-plan`, {
         method: 'POST',

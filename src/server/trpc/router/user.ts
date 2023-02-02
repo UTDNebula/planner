@@ -1,4 +1,4 @@
-import { Prisma, SemesterCode, SemesterType } from '@prisma/client';
+import { Bypass, Prisma, SemesterCode, SemesterType } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import { ObjectID } from 'bson';
 import { z } from 'zod';
@@ -105,7 +105,14 @@ export const userRouter = router({
       const userId = ctx.session.user.id;
       const planId = new ObjectID().toString();
 
-      // idk how to type this
+      // Create degree requirements
+      const degreeRequirements: Prisma.DegreeRequirementsUncheckedCreateNestedOneWithoutPlanInput =
+        {
+          create: {
+            major: 'computer_science_bs', // Hardcode for now
+          },
+        };
+
       const dummySemesterData: Prisma.SemesterCreateInput[] = [
         {
           id: new ObjectID().toString(),
@@ -140,6 +147,7 @@ export const userRouter = router({
         id: planId,
         name: 'test plan',
         semesters: semesters,
+        requirements: degreeRequirements,
       };
 
       const plans: Prisma.PlanUpdateManyWithoutUserNestedInput = {
@@ -209,7 +217,6 @@ export const userRouter = router({
 
       const major = template.name;
       const templateData = template.templateData;
-      const numOfSemesters = templateData.length;
 
       // Create semesters
       const semestersInput: { id: string; code: SemesterCode; courses: string[] }[] = [];
@@ -236,9 +243,18 @@ export const userRouter = router({
         create: [...semestersInput],
       };
 
+      // Create degree requirements
+      const degreeRequirements: Prisma.DegreeRequirementsUncheckedCreateNestedOneWithoutPlanInput =
+        {
+          create: {
+            major,
+          },
+        };
+
       const plansInput: Prisma.PlanUncheckedCreateWithoutUserInput = {
         name: major,
         semesters: semesters,
+        requirements: degreeRequirements,
       };
       const plans: Prisma.PlanUpdateManyWithoutUserNestedInput = {
         create: plansInput,
