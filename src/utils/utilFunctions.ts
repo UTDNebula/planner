@@ -1,4 +1,4 @@
-import { SemesterCode, SemesterType } from '@prisma/client';
+import { SemesterCode, SemesterType } from '../../prisma/generated/planner';
 import { ObjectID } from 'bson';
 
 import { Semester } from '@/components/planner/types';

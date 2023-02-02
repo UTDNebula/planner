@@ -1,4 +1,4 @@
-import { SemesterCode, SemesterType } from '@prisma/client';
+import { SemesterCode, SemesterType } from '../../../prisma/generated/planner';
 import { createProxySSGHelpers } from '@trpc/react-query/ssg';
 import { type RouterInputs } from '@utils/trpc';
 import { GetServerSidePropsContext } from 'next';

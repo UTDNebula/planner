@@ -1,4 +1,4 @@
-import { SemesterCode } from '@prisma/client';
+import { SemesterCode } from '../../../../prisma/generated/planner';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { createProxySSGHelpers } from '@trpc/react-query/ssg';
 import { ObjectID } from 'bson';

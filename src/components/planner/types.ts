@@ -1,5 +1,5 @@
 import { UniqueIdentifier } from '@dnd-kit/core';
-import { SemesterCode } from '@prisma/client';
+import { SemesterCode } from '../../../prisma/generated/planner';
 import { ObjectID } from 'bson';
 
 // Temporary semester type

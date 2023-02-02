@@ -2,7 +2,7 @@ import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import { SemesterCode, SemesterType } from '@prisma/client';
+import { SemesterCode, SemesterType } from '../../../prisma/generated/planner';
 import { FC, useMemo, useState } from 'react';
 
 import { trpc } from '@/utils/trpc';

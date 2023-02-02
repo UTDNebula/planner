@@ -2,7 +2,7 @@
  * Manage user credits
  */
 
-import { SemesterType } from '@prisma/client';
+import { SemesterType } from '../../../prisma/generated/planner';
 
 /**
  * **A credit is considered transfer if its semester is null** \
