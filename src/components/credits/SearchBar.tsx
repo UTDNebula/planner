@@ -18,7 +18,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ placeholder, updateQuery, ...prop
 
   return (
     <div
-      className="bg-white top-0 flex flex-row justify-between z-20 rounded-[10px] overflow-hidden min-h-[55px] border-[2px] border-[#EDEFF7]"
+      className="top-0 z-20 flex min-h-[55px] flex-row justify-between overflow-hidden rounded-[10px] border-[2px] border-[#EDEFF7] bg-white"
       {...props}
     >
       <InputBase
@@ -28,7 +28,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ placeholder, updateQuery, ...prop
         value={query}
         onChange={handleQueryUpdate}
       />
-      <div className="bg-[#3E61ED] min-w-[55px] flex justify-center items-center">
+      <div className="flex min-w-[55px] items-center justify-center bg-[#3E61ED]">
         <IconButton className="p-2 text-white" aria-label="search" size="large">
           <SearchIcon />
         </IconButton>

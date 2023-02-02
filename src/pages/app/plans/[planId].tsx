@@ -60,11 +60,11 @@ export default function PlanDetailPage(
     return <div>Loading</div>;
   }
   return (
-    <div className="w-screen flex flex-col p-4 h-screen max-h-screen overflow-y-scroll overflow-x-hidden">
+    <div className="flex h-screen max-h-screen w-screen flex-col overflow-x-hidden overflow-y-scroll p-4">
       <div className=" mb-10 flex flex-row items-center gap-2">
         <BackArrowIcon
           onClick={() => router.push('/app/home')}
-          className={`w-5 h-5 cursor-pointer mr-2`}
+          className={`mr-2 h-5 w-5 cursor-pointer`}
           strokeWidth={2.5}
         />
         <div className="text-2xl">My Plan</div>
@@ -88,7 +88,7 @@ export default function PlanDetailPage(
             {({ loading }) => (loading ? 'Loading document...' : 'EXPORT PLAN')}
           </PDFDownloadLink>
         )}
-        <SettingsIcon className={`w-5 h-5 cursor-pointer ml-5`} strokeWidth={2.5} />
+        <SettingsIcon className={`ml-5 h-5 w-5 cursor-pointer`} strokeWidth={2.5} />
       </div>
       <Planner
         degreeRequirements={degreeData}

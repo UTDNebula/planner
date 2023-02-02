@@ -31,7 +31,7 @@ const RowLayout = <T extends { [key: string]: unknown }>({
 }: InternalRowLayoutProps<T>) => {
   return (
     <li
-      className="w-full grid grid-flow-col auto-cols-fr justify-items-start relative"
+      className="relative grid w-full auto-cols-fr grid-flow-col justify-items-start"
       {...props}
       onClick={() => rowOnClick(row!)}
     >

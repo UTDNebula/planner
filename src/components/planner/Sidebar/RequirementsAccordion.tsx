@@ -27,7 +27,7 @@ function RequirementsAccordion({
 }) {
   return (
     <div className={`w-full ${!carousel ? 'h-full' : 'h-0'}`}>
-      <button className="flex flex-row w-full justify-between px-2" onClick={toggleAccordion}>
+      <button className="flex w-full flex-row justify-between px-2" onClick={toggleAccordion}>
         <div className="">{data.name}</div>
         {accordion ? <ExpandLessIcon /> : <ExpandMoreIcon />}
       </button>

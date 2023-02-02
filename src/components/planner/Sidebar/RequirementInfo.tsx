@@ -70,7 +70,7 @@ export default function RequirementInfo({
         courses={courseResults}
         getDragId={(course) => getCourseItemDragId(course, degreeRequirement)}
       />
-      <div className="flex flex-row text-[10px] text-[#3E61ED] gap-x-4">
+      <div className="flex flex-row gap-x-4 text-[10px] text-[#3E61ED]">
         <button onClick={() => setAddCourse(true)}>+ ADD COURSE</button>
         <button onClick={() => setAddPlaceholder(true)}>+ ADD PLACEHOLDER</button>
       </div>

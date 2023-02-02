@@ -36,7 +36,7 @@ const SearchBar: FC<SearchBarProps & React.ComponentPropsWithoutRef<'button'>> =
           {...props}
           placement="bottom"
           anchorEl={containerRef.current}
-          className="rounded-[10px] overflow-hidden shadow-lg z-[9999]"
+          className="z-[9999] overflow-hidden rounded-[10px] shadow-lg"
           style={{
             width: width,
             border: '1px solid #EDEFF7',
@@ -49,10 +49,10 @@ const SearchBar: FC<SearchBarProps & React.ComponentPropsWithoutRef<'button'>> =
 
   return (
     <div
-      className="flex items-center gap-5 h-[55px] border-[2px] rounded-[10px] overflow-hidden relative"
+      className="relative flex h-[55px] items-center gap-5 overflow-hidden rounded-[10px] border-[2px]"
       {...props}
     >
-      <div ref={containerRef} className="absolute -bottom-3 left-0 w-full h-full"></div>
+      <div ref={containerRef} className="absolute -bottom-3 left-0 h-full w-full"></div>
       <Autocomplete
         style={{ width: '100%' }}
         onChange={(_, value) => onValueChange(value ?? '')}
@@ -80,7 +80,7 @@ const SearchBar: FC<SearchBarProps & React.ComponentPropsWithoutRef<'button'>> =
           );
         }}
       />
-      <div className="bg-[#3E61ED] h-full min-w-[55px] flex justify-center items-center">
+      <div className="flex h-full min-w-[55px] items-center justify-center bg-[#3E61ED]">
         <IconButton className="p-2 text-white" aria-label="search" size="large">
           <SearchIcon />
         </IconButton>
