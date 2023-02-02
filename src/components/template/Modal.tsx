@@ -63,8 +63,6 @@ export default function TemplateModal({ setOpenTemplateModal }: TemplateModalPro
 
     try {
       const planId = await createUserPlan.mutateAsync(selectedTemplate[0].id);
-      console.log('HM');
-      console.log(planId);
       if (!planId) {
         return router.push('/app/home');
       }
