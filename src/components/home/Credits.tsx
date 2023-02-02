@@ -142,8 +142,13 @@ const UploadTranscriptDialog = (props: { open: boolean; onClose: () => void }) =
       }
       return acc
     }, [] as Credit[]);
+    if (dedupedCredits.length === 0) {
+      setError(`No credits found. Please ensure the file '${file.name}' is a UT Dallas issued transcript`);
+      return;
+    }
     addManyCredits.mutate(dedupedCredits);
     data.destroy()
+    onClose();
   }
 
   return (
@@ -168,7 +173,6 @@ const UploadTranscriptDialog = (props: { open: boolean; onClose: () => void }) =
                 }
                 setLoading(true);
                 await parseTranscript(file);
-                onClose();
               } catch (e) {
                 setError("An error occurred");
               } finally {
