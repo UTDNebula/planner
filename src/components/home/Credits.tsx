@@ -10,7 +10,6 @@ import ErrorMessage from '../common/ErrorMessage';
 import Button from '../credits/Button';
 import CreditsForm from '../credits/CreditsForm';
 import CreditsTable from '../credits/CreditsTable';
-import {getDocument, GlobalWorkerOptions} from "pdfjs-dist"
 import courseCode from '@/data/courseCode.json';
 import { SemesterType, SemesterCode } from '@prisma/client';
 import { trpc } from '@/utils/trpc';
@@ -84,9 +83,10 @@ const UploadTranscriptDialog = (props: { open: boolean; onClose: () => void }) =
   });
 
   const parseTranscript = async (file: File) => {
+    const pdf = await import('pdfjs-dist')
     // TODO: How to use local import for this?
-    GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/3.3.122/pdf.worker.js`;
-    const data = await getDocument(await file.arrayBuffer()).promise
+    pdf.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/3.3.122/pdf.worker.js`;
+    const data = await pdf.getDocument(await file.arrayBuffer()).promise
 
     // store keywords that arn't "[""]"
     const keywords = [];
