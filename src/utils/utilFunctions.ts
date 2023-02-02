@@ -139,7 +139,7 @@ export function generateSemesters(
   return result;
 }
 
-function createNewSemesterCode(pastSemesterCode: SemesterCode): SemesterCode {
+export function createNewSemesterCode(pastSemesterCode: SemesterCode): SemesterCode {
   if (pastSemesterCode.semester === 'f') {
     return { semester: 's', year: pastSemesterCode.year + 1 };
   } else if (pastSemesterCode.semester === 's') {

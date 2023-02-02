@@ -3,7 +3,7 @@ import { TRPCError } from '@trpc/server';
 import { ObjectID } from 'bson';
 import { z } from 'zod';
 
-import { createNewYear } from '@/utils/utilFunctions';
+import { createNewYear, createSemesterCodeRange } from '@/utils/utilFunctions';
 
 import { protectedProcedure, router } from '../trpc';
 import { getStartingPlanSemester, isEarlierSemester } from '@/utils/plannerUtils';
@@ -114,34 +114,22 @@ export const userRouter = router({
           },
         };
 
-      const dummySemesterData: Prisma.SemesterCreateInput[] = [
-        {
-          id: new ObjectID().toString(),
-          code: {
-            year: 2022,
-            semester: 'f' as SemesterType,
-          },
-          courses: [],
+      const user = await ctx.prisma.user.findFirst({
+        where: { id: userId },
+        select: {
+          profile: true,
         },
-        {
-          id: new ObjectID().toString(),
-          code: {
-            year: 2023,
-            semester: 's' as SemesterType,
-          },
-          courses: [],
-        },
-        {
-          id: new ObjectID().toString(),
-          code: {
-            year: 2023,
-            semester: 'u' as SemesterType,
-          },
-          courses: [],
-        },
-      ];
+      });
+
+      const semesterData: Prisma.SemesterCreateInput[] = createSemesterCodeRange(
+        getStartingPlanSemester(),
+        user?.profile?.endSemester ?? { semester: 'u', year: 2026 },
+        true,
+      ).map((semCode) => {
+        return { code: semCode };
+      });
       const semesters: Prisma.SemesterUncheckedCreateNestedManyWithoutPlanInput = {
-        create: dummySemesterData, // Prepopulate with semester
+        create: semesterData, // Prepopulate with semester
       };
 
       const plansInput: Prisma.PlanUncheckedCreateWithoutUserInput = {
@@ -245,28 +233,37 @@ export const userRouter = router({
           : profile.endSemester.year
         : startYear + 4;
 
-      for (let i = startYear; i < endYear + 1; i++) {
+      const numEnd = startingPlanSemester.semester === 'f' ? startYear + 4 : startYear + 5;
+      // Create semesters
+      for (let i = startYear; i < Math.max(endYear, numEnd); i++) {
         // Create new year
         createNewYear({ year: i, semester: 'u' })
           .map((sem) => {
             return { ...sem, courses: [] as string[], id: sem.id.toString() };
           })
           .map((sem) => semestersInput.push(sem));
-
-        // Add courses to year from both semester templates
-        for (let j = 0; j < 2; j++) {
-          templateData[j + 2 * i].items.forEach((item) => {
-            if (!credits.includes(item.name)) {
-              semestersInput[i * 3 + j].courses.push(item.name);
-            }
-          });
-        }
       }
 
       // Remove extra semesters (beginning only)
       semestersInput = semestersInput.filter(
         (sem) => !isEarlierSemester(sem.code, startingPlanSemester),
       );
+
+      let heh = 0;
+      templateData.forEach((tempSem) => {
+        console.log(heh);
+        if (semestersInput[heh].code.semester === 'u') {
+          heh++;
+        }
+        tempSem.items.forEach((item) => {
+          // Skip if summer
+
+          if (!credits.includes(item.name)) {
+            semestersInput[heh].courses.push(item.name);
+          }
+        });
+        heh++;
+      });
 
       const semesters: Prisma.SemesterUncheckedCreateNestedManyWithoutPlanInput = {
         create: [...semestersInput],
