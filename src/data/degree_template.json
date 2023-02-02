@@ -207,41 +207,10 @@
     ]
   ],
   "Biology(BS)": [
-    [
-      "CHEM 1311",
-      "CHEM 1111",
-      "HIST 1301",
-      "MATH 2413",
-      "COMM 1311",
-      "NATHS 1101",
-      "UNIV 1010"
-    ],
-    [
-      "CHEM 1312",
-      "CHEM 1112",
-      "HIST 1302",
-      "MATH 2414",
-      "PHYS 2325",
-      "PHYS 2125"
-    ],
-    [
-      "CHEM 2323",
-      "CHEM 2123",
-      "BIOL 2311",
-      "BIOL 2111",
-      "PHYS 2326",
-      "PHYS 2126",
-      "RHET 1302"
-    ],
-    [
-      "CHEM 2325",
-      "CHEM 2125",
-      "BIOL 2312",
-      "BIOL 2112",
-      "BIOL 2281",
-      "ARTS 1301",
-      "PSY 2301"
-    ],
+    ["CHEM 1311", "CHEM 1111", "HIST 1301", "MATH 2413", "COMM 1311", "NATHS 1101", "UNIV 1010"],
+    ["CHEM 1312", "CHEM 1112", "HIST 1302", "MATH 2414", "PHYS 2325", "PHYS 2125"],
+    ["CHEM 2323", "CHEM 2123", "BIOL 2311", "BIOL 2111", "PHYS 2326", "PHYS 2126", "RHET 1302"],
+    ["CHEM 2325", "CHEM 2125", "BIOL 2312", "BIOL 2112", "BIOL 2281", "ARTS 1301", "PSY 2301"],
     [
       "GOVT 2305",
       "BIOL 3361",
@@ -340,14 +309,7 @@
       "ITSS 3300",
       "ITSS 3311"
     ],
-    [
-      "FIN 3320",
-      "OPRE 3360",
-      "ITSS 3312",
-      "MKT 3300",
-      "ITSS 4300",
-      "UNIV 2020"
-    ],
+    ["FIN 3320", "OPRE 3360", "ITSS 3312", "MKT 3300", "ITSS 4300", "UNIV 2020"],
     [
       "BCOM 4300",
       "ITSS 4360",
@@ -358,11 +320,7 @@
       },
       "ITSS 4090"
     ],
-    [
-      "OPRE 3310",
-      "OBHR 3310",
-      "ITSS 4370"
-    ]
+    ["OPRE 3310", "OBHR 3310", "ITSS 4370"]
   ],
   "Economics(BS)": [
     [
@@ -376,13 +334,7 @@
       "EPPS 1110",
       "UNIV 1010"
     ],
-    [
-      "COMM 1311",
-      "ECON 2302",
-      "GOVT 2306",
-      "MATH 1325",
-      "EPPS 2301"
-    ],
+    ["COMM 1311", "ECON 2302", "GOVT 2306", "MATH 1325", "EPPS 2301"],
     [
       {
         "options": "030"
@@ -510,14 +462,7 @@
       "GOVT 2306",
       "OPRE 3360"
     ],
-    [
-      "FIN 3320",
-      "ACCT 3331",
-      "ACCT 3341",
-      "ITSS 3300",
-      "MKT 3300",
-      "UNIV 2020"
-    ],
+    ["FIN 3320", "ACCT 3331", "ACCT 3341", "ITSS 3300", "MKT 3300", "UNIV 2020"],
     [
       "BCOM 4300",
       "ACCT 3332",
@@ -689,23 +634,8 @@
       "MECH 2330",
       "MECH 3310"
     ],
-    [
-      "GOVT 2305",
-      "ECS 3390",
-      "MECH 3305",
-      "MECH 3105",
-      "MECH 3315",
-      "MECH 3350"
-    ],
-    [
-      "GOVT 2306",
-      "ECON 2301",
-      "MECH 3115",
-      "MECH 3150",
-      "MECH 3320",
-      "MECH 3351",
-      "MECH 4310"
-    ],
+    ["GOVT 2305", "ECS 3390", "MECH 3305", "MECH 3105", "MECH 3315", "MECH 3350"],
+    ["GOVT 2306", "ECON 2301", "MECH 3115", "MECH 3150", "MECH 3320", "MECH 3351", "MECH 4310"],
     [
       {
         "options": "050"
@@ -875,13 +805,7 @@
         "options": "040"
       }
     ],
-    [
-      "ACCT 2302",
-      "GOVT 2306",
-      "OPRE 3360",
-      "MKT 3330",
-      "MKT 4330"
-    ],
+    ["ACCT 2302", "GOVT 2306", "OPRE 3360", "MKT 3330", "MKT 4330"],
     [
       {
         "options": "090"
@@ -980,14 +904,7 @@
       "ACCT 2302",
       "ITSS 4300"
     ],
-    [
-      "FIN 3320",
-      "OPRE 3310",
-      "MKT 3300",
-      "ITSS 4351",
-      "ITSS 4380",
-      "UNIV 2020"
-    ],
+    ["FIN 3320", "OPRE 3310", "MKT 3300", "ITSS 4351", "ITSS 4380", "UNIV 2020"],
     [
       {
         "options": "030"
@@ -1121,33 +1038,9 @@
     ]
   ],
   "Heathcare Studies(BS)": [
-    [
-      "CHEM 1311",
-      "CHEM 1111",
-      "GOVT 2305",
-      "MATH 1325",
-      "RHET 1302",
-      "BIS 1100",
-      "UNIV 1010"
-    ],
-    [
-      "CHEM 1312",
-      "CHEM 1112",
-      "COMM 1311",
-      "GOVT 2306",
-      "HIST 1301",
-      "HLTH 1100",
-      "STAT 2332"
-    ],
-    [
-      "BIOL 2311",
-      "BIOL 2111",
-      "CHEM 2323",
-      "CHEM 2123",
-      "PHYS 1301",
-      "PHYS 2125",
-      "HIST 1302"
-    ],
+    ["CHEM 1311", "CHEM 1111", "GOVT 2305", "MATH 1325", "RHET 1302", "BIS 1100", "UNIV 1010"],
+    ["CHEM 1312", "CHEM 1112", "COMM 1311", "GOVT 2306", "HIST 1301", "HLTH 1100", "STAT 2332"],
+    ["BIOL 2311", "BIOL 2111", "CHEM 2323", "CHEM 2123", "PHYS 1301", "PHYS 2125", "HIST 1302"],
     [
       "BIOL 2312",
       "BIOL 2112",
@@ -1168,20 +1061,8 @@
         "options": "040"
       }
     ],
-    [
-      "BIOL 3520",
-      "BIOL 3456",
-      "HLTH 3315",
-      "HLTH 4304"
-    ],
-    [
-      "BIOL 4385",
-      "PSY 4328",
-      "BIS 3320",
-      "HLTH 3300",
-      "ARTS 1301",
-      "UNIV 2020"
-    ],
+    ["BIOL 3520", "BIOL 3456", "HLTH 3315", "HLTH 4304"],
+    ["BIOL 4385", "PSY 4328", "BIS 3320", "HLTH 3300", "ARTS 1301", "UNIV 2020"],
     [
       "HLTH 4305",
       {
@@ -1207,14 +1088,7 @@
       "ECS 1100",
       "UNIV 1010"
     ],
-    [
-      "ENGR 2300",
-      "EE 1202",
-      "MATH 2419",
-      "EE 2310",
-      "PHYS 2325",
-      "PHYS 2125"
-    ],
+    ["ENGR 2300", "EE 1202", "MATH 2419", "EE 2310", "PHYS 2325", "PHYS 2125"],
     [
       {
         "options": "Core"
@@ -1239,14 +1113,7 @@
       "EE 3320",
       "EE 3201"
     ],
-    [
-      "EE 3161",
-      "ECS 3390",
-      "EE 3302",
-      "CHEM 1311",
-      "EE 3310",
-      "EE 3202"
-    ],
+    ["EE 3161", "ECS 3390", "EE 3302", "CHEM 1311", "EE 3310", "EE 3202"],
     [
       {
         "options": "Core"
@@ -1303,22 +1170,8 @@
       "ECS 1100",
       "UNIV 1010"
     ],
-    [
-      "ENGR 2300",
-      "CE 1202",
-      "MATH 2419",
-      "CE 2310",
-      "PHYS 2325",
-      "PHYS 2125"
-    ],
-    [
-      "CE 2305",
-      "CE 2336",
-      "ENGR 3341",
-      "MATH 2420",
-      "PHYS 2326",
-      "PHYS 2126"
-    ],
+    ["ENGR 2300", "CE 1202", "MATH 2419", "CE 2310", "PHYS 2325", "PHYS 2125"],
+    ["CE 2305", "CE 2336", "ENGR 3341", "MATH 2420", "PHYS 2326", "PHYS 2126"],
     [
       {
         "options": "Core"
@@ -1328,14 +1181,7 @@
       "CE 3201",
       "CE 3345"
     ],
-    [
-      "ECS 3390",
-      "CE 3303",
-      "CE 3310",
-      "CE 3202",
-      "CE 3354",
-      "CE 3161"
-    ],
+    ["ECS 3390", "CE 3303", "CE 3310", "CE 3202", "CE 3354", "CE 3161"],
     [
       {
         "options": "Core"
@@ -1394,23 +1240,8 @@
       "RHET 1302",
       "UNIV 1010"
     ],
-    [
-      "BMEN 1208",
-      "CHEM 1312",
-      "ENGR 2300",
-      "MATH 2419",
-      "PHYS 2325",
-      "PHYS 2125"
-    ],
-    [
-      "BIOL 2311",
-      "BIOL 2111",
-      "BMEN 2320",
-      "CHEM 2324",
-      "MATH 2420",
-      "PHYS 2326",
-      "PHYS 2126"
-    ],
+    ["BMEN 1208", "CHEM 1312", "ENGR 2300", "MATH 2419", "PHYS 2325", "PHYS 2125"],
+    ["BIOL 2311", "BIOL 2111", "BMEN 2320", "CHEM 2324", "MATH 2420", "PHYS 2326", "PHYS 2126"],
     [
       {
         "options": "Core"
@@ -1464,14 +1295,7 @@
     ]
   ],
   "Arts, Technology, and Emerging Communication(BA)": [
-    [
-      "ATCM 1100",
-      "UNIV 1010",
-      "ATCM 2300",
-      "CS1334",
-      "ATCM 2301",
-      "RHET 1302"
-    ],
+    ["ATCM 1100", "UNIV 1010", "ATCM 2300", "CS1334", "ATCM 2301", "RHET 1302"],
     [
       "ATCM 2302",
       {
@@ -2104,21 +1928,8 @@
     ]
   ],
   "Cognitive Science(BS)": [
-    [
-      "CGS 2301 ",
-      "HIST 1301 ",
-      "MATH 2413 ",
-      " PSY 2301 ",
-      "BBSU 1100 ",
-      "UNIV 1010 "
-    ],
-    [
-      " CS 1337 ",
-      "HIST 1302 ",
-      "MATH 2414 ",
-      "GOVT 2306 ",
-      "RHET 1302 "
-    ],
+    ["CGS 2301 ", "HIST 1301 ", "MATH 2413 ", " PSY 2301 ", "BBSU 1100 ", "UNIV 1010 "],
+    [" CS 1337 ", "HIST 1302 ", "MATH 2414 ", "GOVT 2306 ", "RHET 1302 "],
     [
       {
         "options": "050"
@@ -2299,14 +2110,7 @@
     ]
   ],
   "Criminology(BA)": [
-    [
-      "RHET 1302",
-      "CRIM 1301",
-      "GOVT 2305",
-      "ECON 2301",
-      "MATH 1314",
-      "EPPS 1110"
-    ],
+    ["RHET 1302", "CRIM 1301", "GOVT 2305", "ECON 2301", "MATH 1314", "EPPS 1110"],
     [
       {
         "options": "030"
@@ -2648,13 +2452,7 @@
       "PHYS 2326",
       "PHYS 2126"
     ],
-    [
-      "MATH 2418",
-      "GOVT 2306",
-      "SE 3341",
-      "SE 3345",
-      "SE 3377"
-    ],
+    ["MATH 2418", "GOVT 2306", "SE 3341", "SE 3345", "SE 3377"],
     [
       {
         "options": "050"
@@ -2738,13 +2536,7 @@
       "GOVT 2305",
       "OPRE 3333"
     ],
-    [
-      "MKT 3330",
-      "ACCT 2302",
-      "ECON 2302",
-      "GOVT 2306",
-      "OPRE 3360"
-    ],
+    ["MKT 3330", "ACCT 2302", "ECON 2302", "GOVT 2306", "OPRE 3360"],
     [
       "MKT 3300",
       "IMS 3310",
@@ -2830,13 +2622,7 @@
         "options": "090"
       }
     ],
-    [
-      "ACCT 2302",
-      "GOVT 2306",
-      "OPRE 3360",
-      "ITSS 3300",
-      "HMGT 3301"
-    ],
+    ["ACCT 2302", "GOVT 2306", "OPRE 3360", "ITSS 3300", "HMGT 3301"],
     [
       {
         "options": "050"
@@ -2922,13 +2708,7 @@
       "BA 1310",
       "BLAW 3301"
     ],
-    [
-      "ACCT 2302",
-      "GOVT 2306",
-      "OPRE 3360",
-      "OBHR 4331",
-      "OBHR 4333"
-    ],
+    ["ACCT 2302", "GOVT 2306", "OPRE 3360", "OBHR 4331", "OBHR 4333"],
     [
       {
         "options": "030"
@@ -2980,51 +2760,12 @@
     ]
   ],
   "Actuarial Science(BS)": [
-    [
-      "ACCT 2301",
-      "CS 1336",
-      "CS 1136",
-      "MATH 2417",
-      "RHET 1302",
-      "NATS 1101",
-      "UNIV 1010"
-    ],
-    [
-      "ACCT 2302",
-      "CS 1337",
-      "ECON 2301",
-      "MATH 2418",
-      "MATH 2419"
-    ],
-    [
-      "ACTS 4308",
-      "ECON 2302",
-      "BCOM 3300",
-      "PHYS 2325",
-      "MATH 3351",
-      "PHYS 2126"
-    ],
-    [
-      "STAT 3355",
-      "COMM 1311",
-      "HIST 1301",
-      "ITSS 3300",
-      "PHYS 2326"
-    ],
-    [
-      "ARTS 1301",
-      "GOVT 2305",
-      "HIST 1302",
-      "ITSS 4301",
-      "STAT 4351"
-    ],
-    [
-      "ACTS 4301",
-      "ACTS 4302",
-      "GOVT 2306",
-      "HUMA 1301",
-      "STAT 4352"
-    ],
+    ["ACCT 2301", "CS 1336", "CS 1136", "MATH 2417", "RHET 1302", "NATS 1101", "UNIV 1010"],
+    ["ACCT 2302", "CS 1337", "ECON 2301", "MATH 2418", "MATH 2419"],
+    ["ACTS 4308", "ECON 2302", "BCOM 3300", "PHYS 2325", "MATH 3351", "PHYS 2126"],
+    ["STAT 3355", "COMM 1311", "HIST 1301", "ITSS 3300", "PHYS 2326"],
+    ["ARTS 1301", "GOVT 2305", "HIST 1302", "ITSS 4301", "STAT 4351"],
+    ["ACTS 4301", "ACTS 4302", "GOVT 2306", "HUMA 1301", "STAT 4352"],
     [
       "ACTS 4303",
       "ACTS 4304",
@@ -3034,53 +2775,14 @@
         "options": "Elective"
       }
     ],
-    [
-      "ACTS 4305",
-      "MATH 2420",
-      "MATH 4334",
-      "STAT 4382"
-    ]
+    ["ACTS 4305", "MATH 2420", "MATH 4334", "STAT 4382"]
   ],
   "Biochemistry(BS)": [
-    [
-      "CHEM 1311",
-      "CHEM 1111",
-      "HIST 1301",
-      "MATH 2413",
-      "COMM 1311",
-      "NATS 1101",
-      "UNIV 1010"
-    ],
-    [
-      "CHEM 1312",
-      "CHEM 1112",
-      "HIST 1302",
-      "MATH 2414",
-      "PHYS 2325"
-    ],
-    [
-      "CHEM 2323",
-      "CHEM 2123",
-      "BIOL 2311",
-      "BIOL 2111",
-      "PHYS 2326",
-      "PHYS 2126",
-      "RHET 1302"
-    ],
-    [
-      "CHEM 2325",
-      "CHEM 2125",
-      "CHEM 2401",
-      "PSY 2301",
-      "MATH 2415"
-    ],
-    [
-      "GOVT 2305",
-      "CHEM 3321",
-      "CHEM 3361",
-      "CHEM 3472",
-      "BIOL 3161"
-    ],
+    ["CHEM 1311", "CHEM 1111", "HIST 1301", "MATH 2413", "COMM 1311", "NATS 1101", "UNIV 1010"],
+    ["CHEM 1312", "CHEM 1112", "HIST 1302", "MATH 2414", "PHYS 2325"],
+    ["CHEM 2323", "CHEM 2123", "BIOL 2311", "BIOL 2111", "PHYS 2326", "PHYS 2126", "RHET 1302"],
+    ["CHEM 2325", "CHEM 2125", "CHEM 2401", "PSY 2301", "MATH 2415"],
+    ["GOVT 2305", "CHEM 3321", "CHEM 3361", "CHEM 3472", "BIOL 3161"],
     [
       "GOVT 2306",
       "CHEM 3322",
@@ -3091,13 +2793,7 @@
         "options": "Elective"
       }
     ],
-    [
-      "BIOL 3301",
-      "BIOL 3101",
-      "ARTS 1301",
-      "HUMA 1301",
-      "STAT 2332"
-    ],
+    ["BIOL 3301", "BIOL 3101", "ARTS 1301", "HUMA 1301", "STAT 2332"],
     [
       "BIOL 3302",
       "BIOL 3102",
@@ -3110,44 +2806,11 @@
     ]
   ],
   "Chemistry(BS)": [
-    [
-      "CHEM 1311",
-      "CHEM 1111",
-      "HIST 1301",
-      "MATH 2413",
-      "COMM 1311",
-      "NATS 1101",
-      "UNIV 1010"
-    ],
-    [
-      "CHEM 1312",
-      "CHEM 1112",
-      "HIST 1302",
-      "MATH 2414",
-      "PHYS 2325"
-    ],
-    [
-      "CHEM 2323",
-      "CHEM 2123",
-      "PHYS 2326",
-      "PHYS 2126",
-      "MATH 2415",
-      "RHET 1302"
-    ],
-    [
-      "CHEM 2325",
-      "CHEM 2125",
-      "CHEM 2401",
-      "PSY 2301",
-      "MATH 2418"
-    ],
-    [
-      "CHEM 3321",
-      "CHEM 3472",
-      "CHEM 3361",
-      "BIOL 3161",
-      "GOVT 2305"
-    ],
+    ["CHEM 1311", "CHEM 1111", "HIST 1301", "MATH 2413", "COMM 1311", "NATS 1101", "UNIV 1010"],
+    ["CHEM 1312", "CHEM 1112", "HIST 1302", "MATH 2414", "PHYS 2325"],
+    ["CHEM 2323", "CHEM 2123", "PHYS 2326", "PHYS 2126", "MATH 2415", "RHET 1302"],
+    ["CHEM 2325", "CHEM 2125", "CHEM 2401", "PSY 2301", "MATH 2418"],
+    ["CHEM 3321", "CHEM 3472", "CHEM 3361", "BIOL 3161", "GOVT 2305"],
     [
       "CHEM 3322",
       "CHEM 3471",
@@ -3191,34 +2854,10 @@
     ]
   ],
   "Mathematics(BS)": [
-    [
-      "HIST 1301",
-      "MATH 2417",
-      "MATH 2370",
-      "COMM 1311",
-      "UNIV 1010"
-    ],
-    [
-      "HIST 1302",
-      "MATH 2419",
-      "PHYS 2325",
-      "ARTS 1301",
-      "NATS 1101"
-    ],
-    [
-      "GOVT 2305",
-      "MATH 2418",
-      "PHYS 2326",
-      "PHYS 2126",
-      "RHET 1302"
-    ],
-    [
-      "GOVT 2306",
-      "MATH 2420",
-      "MATH 3310",
-      "MATH 3351",
-      "PSY 2301"
-    ],
+    ["HIST 1301", "MATH 2417", "MATH 2370", "COMM 1311", "UNIV 1010"],
+    ["HIST 1302", "MATH 2419", "PHYS 2325", "ARTS 1301", "NATS 1101"],
+    ["GOVT 2305", "MATH 2418", "PHYS 2326", "PHYS 2126", "RHET 1302"],
+    ["GOVT 2306", "MATH 2420", "MATH 3310", "MATH 3351", "PSY 2301"],
     [
       "MATH 3311",
       "MATH 4334",

@@ -2,6 +2,7 @@ import { SemesterCode, SemesterType } from '@prisma/client';
 import { ObjectID } from 'bson';
 
 import { Semester } from '@/components/planner/types';
+import { Course } from '@/components/planner/types';
 
 /**
  * Creates 3 new semesters based on given year in SemesterCode
@@ -40,8 +41,6 @@ export const createNewYear = (semesterCode: SemesterCode): Semester[] => {
     },
   ];
 };
-
-import { Course } from '@/components/planner/types';
 
 /**
  * Load all supported courses from file.
@@ -94,4 +93,46 @@ export function getSemesterHourFromCourseCode(code: string): number | null {
   if (Number.isNaN(hoursNum) || hoursNum.toString().length < 2) return null;
 
   return Number(hoursNum.toString()[1]);
+}
+
+export function displaySemesterCode(semesterCode: SemesterCode): string {
+  let semesterName;
+  if (semesterCode.semester === 'f') {
+    semesterName = 'Fall';
+  } else if (semesterCode.semester === 's') semesterName = 'Spring';
+  else {
+    semesterName = 'Summer';
+  }
+  return `${semesterName} ${semesterCode.year}`;
+}
+
+export function generateSemesters(
+  count: number,
+  startYear: number,
+  startSemester: SemesterType,
+  includeSummer = true,
+): Semester[] {
+  const result = [];
+  let semester = startSemester;
+  let year = startYear;
+  for (let i = 0; i < count; ++i) {
+    const code = { year, semester };
+    const newSemester = {
+      id: new ObjectID(),
+      title: `${displaySemesterCode({ semester, year })}`,
+      code: code,
+      courses: [],
+    };
+    result.push(newSemester);
+    if (semester === SemesterType.f) {
+      year = year + 1;
+      semester = SemesterType.s;
+    } else if (semester === SemesterType.s && includeSummer) {
+      semester = SemesterType.u;
+    } else {
+      semester = SemesterType.f;
+    }
+  }
+
+  return result;
 }

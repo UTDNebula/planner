@@ -1,8 +1,8 @@
 import { UniqueIdentifier, useDroppable } from '@dnd-kit/core';
-import { SemesterCode } from '@prisma/client';
 import { FC, forwardRef } from 'react';
 
-import { getFirstNewSemester,isEarlierSemester } from '@/utils/plannerUtils';
+import { getFirstNewSemester, isEarlierSemester } from '@/utils/plannerUtils';
+import { displaySemesterCode } from '@/utils/utilFunctions';
 
 import {
   DragDataToSemesterTile,
@@ -19,17 +19,6 @@ export interface SemesterTileProps {
   isValid: boolean;
   isDisabled: boolean;
   onRemoveCourse: (semester: Semester, course: DraggableCourse) => void;
-}
-
-export function displaySemesterCode(semesterCode: SemesterCode): string {
-  let semesterName;
-  if (semesterCode.semester === 'f') {
-    semesterName = 'Fall';
-  } else if (semesterCode.semester === 's') semesterName = 'Spring';
-  else {
-    semesterName = 'Summer';
-  }
-  return `${semesterName} ${semesterCode.year}`;
 }
 
 function getTitleText({ isValid, isDisabled }: { isValid: boolean; isDisabled: boolean }) {
