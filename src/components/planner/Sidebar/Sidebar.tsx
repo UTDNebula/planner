@@ -22,7 +22,7 @@ function CourseSelectorContainer({
   console.log('RERENDER');
   console.log(degreeRequirements);
   // TODO: Provide UI indicator for errors
-  const q = trpc.courses.getAllCourses.useQuery(undefined, {
+  const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
     refetchOnWindowFocus: false
   })
   const { results, updateQuery } = useSearch({

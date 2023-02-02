@@ -21,7 +21,7 @@ export default function AddCourseContainer({
   handleCourseCancel: () => void;
   handleCourseSubmit: () => void;
 }) {
-  const q = trpc.courses.getAllCourses.useQuery(undefined, {
+  const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
     refetchOnWindowFocus: false
   })
   // TODO: Clean this logic up hella xD

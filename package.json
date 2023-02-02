@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prisma:generate": "prisma generate --schema prisma/schema.prisma && prisma generate --schema prisma/platform.prisma",
+    "prisma:generate": "prisma generate --schema prisma/platform.prisma && prisma generate --schema prisma/schema.prisma",
     "build": "npm run prisma:generate && prisma db push && prisma db seed && next build",
     "start": "next start",
     "lint": "NODE_ENV=test eslint --fix .",

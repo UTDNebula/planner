@@ -29,7 +29,7 @@ export default function RequirementInfo({
   React.useEffect(() => {
     updateQuery('');
   }, [courses]);
-  const q = trpc.courses.getAllCourses.useQuery(undefined, {
+  const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
     refetchOnWindowFocus: false
   })
   // TODO: Change this later when connecting to API

@@ -1,11 +1,11 @@
-import { protectedProcedure, router } from '../trpc';
+import { router, publicProcedure } from '../trpc';
 
 export const coursesRouter = router({
-  getAllCourses: protectedProcedure.query(async ({ ctx }) => {
+  publicGetAllCourses: publicProcedure.query(async ({ ctx }) => {
     return await ctx.platformPrisma.courses.findMany({
       select: {
-        subject_prefix:true,
-        course_number:true,
+        subject_prefix: true,
+        course_number: true,
     }
   });
   })

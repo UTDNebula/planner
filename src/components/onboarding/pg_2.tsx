@@ -37,7 +37,7 @@ export default function PageTwo({ handleChange, data }: Page2data): JSX.Element 
 
   const [semesterCode, setSemester] = useState<SemesterCode>(semesters[0]);
 
-  const q = trpc.courses.getAllCourses.useQuery(undefined, {
+  const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
     refetchOnWindowFocus: false
   })
   const { results, updateQuery } = useSearch({
