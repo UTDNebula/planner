@@ -1,4 +1,4 @@
-import { Prisma, SemesterCode, SemesterType } from '../../prisma/generated/planner';
+import { Prisma, SemesterCode, SemesterType } from '../../../../prisma/generated/planner';
 import { TRPCError } from '@trpc/server';
 import { ObjectID } from 'bson';
 import { z } from 'zod';

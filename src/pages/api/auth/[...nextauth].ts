@@ -19,6 +19,8 @@ export const authOptions: NextAuthOptions = {
     },
   },
   // Configure one or more authentication providers
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore ignore-next-line
   adapter: PrismaAdapter(prisma as unknown as PrismaClient),
   providers: [
     DiscordProvider({
