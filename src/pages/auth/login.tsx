@@ -60,14 +60,15 @@ export default function AuthPage({
                 </div>
                 <button
                   onClick={handleEmailSignIn}
-                  className="w-full text-center bg-blue-700 hover:bg-blue-800 text-lg rounded-lg text-white py-3"
+                  className="w-full rounded-lg bg-blue-700 py-3 text-center text-lg text-white hover:bg-blue-800"
                 >
                   Sign in
                 </button>
-                {providers && 
-                  <div className="items-center border-2 border-red-400 mx-auto rounded-lg -mb-6 pb-1">
-                    <h4 className="text-center text-s text-gray-700">or</h4>
-                  </div>}
+                {providers && (
+                  <div className="mx-auto -mb-6 items-center rounded-lg border-2 border-red-400 pb-1">
+                    <h4 className="text-s text-center text-gray-700">or</h4>
+                  </div>
+                )}
                 {providers &&
                   Object.values(providers).map((provider, idx) => (
                     <button
@@ -78,13 +79,13 @@ export default function AuthPage({
                       <h4 className="text-center text-lg text-blue-700">
                         Sign in with {provider.name}
                       </h4>
-                    </button>)
-                  )}
+                    </button>
+                  ))}
                 <div className="flex place-content-center">
-                  <h4 className='text-lg'>
+                  <h4 className="text-lg">
                     New to Nebula?
                     <Link legacyBehavior href="/auth/signup">
-                      <a className="ml-2 text-blue-700 text-lg font-semibold hover:bg-blue-200 hover:rounded-lg">
+                      <a className="ml-2 text-lg font-semibold text-blue-700 hover:rounded-lg hover:bg-blue-200">
                         Sign Up
                       </a>
                     </Link>
