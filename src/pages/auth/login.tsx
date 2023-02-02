@@ -32,22 +32,22 @@ export default function AuthPage({
   };
   return (
     <>
-      <div className="relative flex flex-col items-center justify-center h-screen space-y-10 bg-gradient-to-r from-purple-500 to-blue-500">
+      <div className="relative flex h-screen flex-col items-center justify-center space-y-10 bg-gradient-to-r from-purple-500 to-blue-500">
         <section>
           <div className="m-2 bg-white md:rounded-md md:shadow-md">
-            <div className="bg-white md:shadow-lg shadow-none rounded p-6 w-96 ">
-              <div className="mb-4 flex justify-center items-center">
+            <div className="w-96 rounded bg-white p-6 shadow-none md:shadow-lg ">
+              <div className="mb-4 flex items-center justify-center">
                 <Image src={logo} alt="Logo" width="120" height="120" className="rounded-full" />
               </div>
-              <h1 className="text-center text-3xl mb-2 font-semibold leading-normal">Sign in</h1>
+              <h1 className="mb-2 text-center text-3xl font-semibold leading-normal">Sign in</h1>
               <p className="text-sm leading-normal">
                 Log in to your Nebula Profile to continue to Planner.
               </p>
-              <section className="space-y-5 mt-5">
-                <div className="mb-4 relative">
+              <section className="mt-5 space-y-5">
+                <div className="relative mb-4">
                   <input
                     type="email"
-                    className="w-full border border-black p-3 rounded outline-none focus:border-black"
+                    className="w-full rounded border border-black p-3 outline-none focus:border-black"
                     value={email}
                     onChange={handleEmailChange}
                     placeholder="Email"
@@ -60,34 +60,35 @@ export default function AuthPage({
                 </div>
                 <button
                   onClick={handleEmailSignIn}
-                  className="w-full text-center bg-blue-700 hover:bg-blue-800 rounded-lg text-white py-3 font-medium"
+                  className="w-full text-center bg-blue-700 hover:bg-blue-800 text-lg rounded-lg text-white py-3"
                 >
                   Sign in
                 </button>
-                <div className="items-center border-2 border-red-500 mx-auto -mb-6 pb-1">
-                  <h1 className="text-center text-s text-gray-700">or</h1>
-                </div>
+                {providers && 
+                  <div className="items-center border-2 border-red-400 mx-auto rounded-lg -mb-6 pb-1">
+                    <h4 className="text-center text-s text-gray-700">or</h4>
+                  </div>}
                 {providers &&
                   Object.values(providers).map((provider, idx) => (
                     <button
                       key={idx}
                       onClick={() => signIn(provider.id)}
-                      className="appearance-none items-center justify-center block w-full bg-gray-100 text-gray-700 shadow border border-gray-500 rounded-lg py-3 px-3 leading-tight hover:bg-gray-200 hover:text-gray-700 focus:outline-none"
+                      className="block w-full appearance-none items-center justify-center rounded-lg border border-gray-500 bg-gray-100 py-3 px-3 leading-tight text-gray-700 shadow hover:bg-gray-200 hover:text-gray-700 focus:outline-none"
                     >
-                      <h1 className="text-center text-xl text-blue-700">
+                      <h4 className="text-center text-lg text-blue-700">
                         Sign in with {provider.name}
-                      </h1>
-                    </button>
-                  ))}
+                      </h4>
+                    </button>)
+                  )}
                 <div className="flex place-content-center">
-                  <p>
+                  <h4 className='text-lg'>
                     New to Nebula?
                     <Link legacyBehavior href="/auth/signup">
-                      <a className="ml-2 text-blue-700 font-semibold hover:bg-blue-200 hover:rounded-lg">
+                      <a className="ml-2 text-blue-700 text-lg font-semibold hover:bg-blue-200 hover:rounded-lg">
                         Sign Up
                       </a>
                     </Link>
-                  </p>
+                  </h4>
                 </div>
               </section>
             </div>
@@ -107,6 +108,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   }
   const csrfToken = await getCsrfToken(context);
   const providers = await getProviders();
+
+  if (providers && providers['email']) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-ignore
+    delete providers['email'];
+  }
   return {
     props: { providers, csrfToken },
   };

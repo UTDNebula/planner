@@ -23,15 +23,14 @@ export default function CreditsPage(): JSX.Element {
   const [openAddCredit, setOpenAddCredit] = useState(false);
   const [openTranscriptDialog, setOpenTranscriptDialog] = useState(false);
   return (
-    <main className="overflow-y-scroll h-[90vh] w-full">
+    <main className="h-[90vh] w-full overflow-y-scroll">
       <Head>
         <title>Nebula - Your credits</title>
       </Head>
       <UploadTranscriptDialog
         open={openTranscriptDialog}
         onClose={() => setOpenTranscriptDialog(false)}
-      />
-      <div className="w-full  p-5 lg:p-20 overflow-y-auto flex flex-col gap-10">
+      <div className="flex  w-full flex-col gap-10 overflow-y-auto p-5 lg:p-20">
         <h1 className="text-[40px] font-semibold text-[#1C2A6D]">Credits</h1>
         <div className="flex gap-10">
           <Button onClick={() => setOpenAddCredit(true)} icon={<AddIcon />} className="w-[140px]">
@@ -50,7 +49,7 @@ export default function CreditsPage(): JSX.Element {
           onClose={() => setOpenAddCredit(false)}
           className="flex items-center justify-center"
         >
-          <div className="p-20 w-full sm:max-w-[500px] bg-white rounded-lg relative">
+          <div className="relative w-full rounded-lg bg-white p-20 sm:max-w-[500px]">
             <IconButton
               className="absolute right-10 top-10"
               onClick={() => setOpenAddCredit(false)}
@@ -60,7 +59,7 @@ export default function CreditsPage(): JSX.Element {
             <CreditsForm />
           </div>
         </Modal>
-        <div className="shadow-md rounded-[25px] border-[#EDEFF7] border-[1px] p-10 lg:p-20 bg-white max-w-[1000px]">
+        <div className="max-w-[1000px] rounded-[25px] border-[1px] border-[#EDEFF7] bg-white p-10 shadow-md lg:p-20">
           <CreditsTable />
         </div>
       </div>
@@ -155,7 +154,7 @@ const UploadTranscriptDialog = (props: { open: boolean; onClose: () => void }) =
 
   return (
     <Dialog open={open} onClose={onClose}>
-      <div className="p-10 flex flex-col gap-3">
+      <div className="flex flex-col gap-3 p-10">
         <h1>Upload Transcript</h1>
         <p>
           Upload a PDF of your UT Dallas transcript and we&apos;ll add your earned credits to the

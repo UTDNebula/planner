@@ -8,7 +8,7 @@ export default function Layout({
   const isDesktop = useMedia('(min-width: 900px)');
 
   return (
-    <div className="flex w-full h-full bg-[#F5F5F5]">
+    <div className="flex h-full w-full bg-[#F5F5F5]">
       <Sidebar isMobile={!isDesktop} />
       {children}
     </div>

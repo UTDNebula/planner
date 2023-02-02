@@ -10,7 +10,7 @@ export function SidebarCourseItem({ course }: { course: DraggableCourse }): JSX.
   // Maybe DraggableCourse needs to take a prop specifying if it's needed or nah?
   // TODO: Update course status tag
   return (
-    <div className="text-[#1C2A6D] bg-white text-[10px] items-center drop-shadow-sm py-1.5 px-2 flex flex-row justify-between border border-[#EDEFF7] rounded-md">
+    <div className="flex flex-row items-center justify-between rounded-md border border-[#EDEFF7] bg-white py-1.5 px-2 text-[10px] text-[#1C2A6D] drop-shadow-sm">
       {course.code}
       {typeof course.status !== 'undefined' && <StatusTag status={course.status === 'complete'} />}
     </div>

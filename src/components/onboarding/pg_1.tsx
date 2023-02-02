@@ -60,12 +60,12 @@ export default function PageOne({
   }, []);
 
   return (
-    <div className="animate-intro w-full">
-      <h2 className="text-4xl text-left font-bold mb-10 text-gray-800">
+    <div className="w-full animate-intro">
+      <h2 className="mb-10 text-left text-4xl font-bold text-gray-800">
         <div>Personal </div>
         <div> Information</div>
       </h2>
-      <div className="lg:grid lg:grid-cols-2 mb-12 lg:mb-0 gap-x-32">
+      <div className="mb-12 gap-x-32 lg:mb-0 lg:grid lg:grid-cols-2">
         <div>
           <div className="mb-10 flex flex-col">
             <TextField

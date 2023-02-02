@@ -36,16 +36,16 @@ export default function Sidebar({ isMobile }: { isMobile: boolean }): JSX.Elemen
       <div
         className={`${
           open ? 'w-[240px] shrink-0' : 'w-auto'
-        } flex flex-col bg-white border-r-[1px] border-r-[#e0e0e0] h-screen max-h-screen  transition-all`}
+        } flex h-screen max-h-screen flex-col border-r-[1px] border-r-[#e0e0e0] bg-white  transition-all`}
       >
         {!isMobile && (
           <div
-            className={`${open ? 'justify-between' : 'justify-center'} flex items-center h-16 p-4`}
+            className={`${open ? 'justify-between' : 'justify-center'} flex h-16 items-center p-4`}
           >
             {open && <h4 className="text-defaultText">Planner</h4>}
             <ChevronIcon
               onClick={() => setOpen(!open)}
-              className={`w-5 h-5 cursor-pointer ${!open ? '' : 'rotate-180'}`}
+              className={`h-5 w-5 cursor-pointer ${!open ? '' : 'rotate-180'}`}
               strokeWidth={2.5}
             />
           </div>
@@ -53,8 +53,8 @@ export default function Sidebar({ isMobile }: { isMobile: boolean }): JSX.Elemen
         <ul className="flex flex-col">
           {sidebarItems.map(({ url, label, Icon }, i) => (
             <Link key={url + i} href={url}>
-              <li className="flex gap-6 items-center px-5 py-3 cursor-pointer">
-                <Icon className="w-6 h-6" />
+              <li className="flex cursor-pointer items-center gap-6 px-5 py-3">
+                <Icon className="h-6 w-6" />
                 {open && <span>{label}</span>}
               </li>
             </Link>
@@ -63,10 +63,10 @@ export default function Sidebar({ isMobile }: { isMobile: boolean }): JSX.Elemen
         <div className="flex-grow"></div>
 
         <button
-          className="align-bottom px-5  pb-5 flex gap-6 items-center"
+          className="flex items-center  gap-6 px-5 pb-5 align-bottom"
           onClick={() => signOut()}
         >
-          <LogoutIcon className="w-6 h-6" />
+          <LogoutIcon className="h-6 w-6" />
           {open && <span>Log Out</span>}
         </button>
       </div>

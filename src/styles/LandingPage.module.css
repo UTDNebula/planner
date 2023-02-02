@@ -15,5 +15,5 @@
 
 .heroBox {
   min-width: 600px;
-  @apply bg-white flex flex-col;
+  @apply flex flex-col bg-white;
 }

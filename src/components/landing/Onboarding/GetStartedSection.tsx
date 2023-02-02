@@ -65,7 +65,7 @@ export default function NebFeatureDisplay(): JSX.Element {
 
               fontSize: '15px',
             }}
-            onClick={() => router.push('/auth/signup')}
+            onClick={() => router.push('/auth/login')}
           >
             GET STARTED
           </Button>
