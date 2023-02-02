@@ -49,7 +49,7 @@ export default function PlanDetailPage(
       <div className=" mb-10 flex flex-row items-center gap-2">
         <BackArrowIcon
           onClick={handleBack}
-          className={`w-5 h-5 cursor-pointer mr-2`}
+          className={`mr-2 h-5 w-5 cursor-pointer`}
           strokeWidth={2.5}
         />
         <div className="text-2xl">My Plan</div>
