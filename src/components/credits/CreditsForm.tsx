@@ -55,7 +55,7 @@ const CreditsForm: FC = () => {
 
   return (
     <Layout>
-      <h1 className="text-[#1C2A6D] text-4xl font-semibold">Add Credit</h1>
+      <h1 className="text-4xl font-semibold text-[#1C2A6D]">Add Credit</h1>
 
       <AutoCompleteSearchBar
         onValueChange={(value) => setCredit(value)}
@@ -66,7 +66,7 @@ const CreditsForm: FC = () => {
       />
 
       <FormControl className="flex flex-col gap-3">
-        <label htmlFor="transfer" className="text-black font-medium">
+        <label htmlFor="transfer" className="font-medium text-black">
           Is Transfer Credit?
         </label>
 
@@ -107,7 +107,7 @@ const CreditsForm: FC = () => {
         </RadioGroup>
 
         <>
-          <label htmlFor="semester" className="text-black font-medium">
+          <label htmlFor="semester" className="font-medium text-black">
             Semester
           </label>
           <DropdownSelect

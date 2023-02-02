@@ -16,7 +16,7 @@ function RequirementsList({
       {data.map((elm, idx) => (
         <div className="flex justify-between px-2 py-1" key={idx}>
           <div className="text-sm">{elm.name}</div>
-          <div className="text-[11px] flex flex-row items-center px-[5px]">
+          <div className="flex flex-row items-center px-[5px] text-[11px]">
             <StatusTag status={elm.isfilled} />
             <button
               onClick={() => {

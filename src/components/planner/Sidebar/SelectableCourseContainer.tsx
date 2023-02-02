@@ -11,7 +11,7 @@ export default function SelectableCourseContainer({
   updateSelectedCourses: (course: DraggableCourse, add: boolean) => void;
 }) {
   return (
-    <div className="bg-white flex flex-col gap-y-4 text-[#757575]">
+    <div className="flex flex-col gap-y-4 bg-white text-[#757575]">
       {results.map((elm, idx) => {
         let selected = false;
         if (selectedCourses[elm.code] !== undefined) {

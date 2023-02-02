@@ -49,7 +49,7 @@ export default function AddCourseContainer({
         )}
         updateSelectedCourses={updateSelectedCourses}
       />
-      <div className="flex flex-row justify-between text-[10px] text-[#3E61ED] gap-x-4">
+      <div className="flex flex-row justify-between gap-x-4 text-[10px] text-[#3E61ED]">
         <button onClick={handleCourseCancel}>CANCEL</button>
         <button onClick={handleCourseSubmit}>SELECT</button>
       </div>
