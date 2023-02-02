@@ -60,13 +60,14 @@ export default function AuthPage({
                 </div>
                 <button
                   onClick={handleEmailSignIn}
-                  className="w-full rounded-lg bg-blue-700 py-3 text-center font-medium text-white hover:bg-blue-800"
+                  className="w-full text-center bg-blue-700 hover:bg-blue-800 text-lg rounded-lg text-white py-3"
                 >
                   Sign in
                 </button>
-                <div className="mx-auto -mb-6 items-center border-2 border-red-500 pb-1">
-                  <h1 className="text-s text-center text-gray-700">or</h1>
-                </div>
+                {providers && 
+                  <div className="items-center border-2 border-red-400 mx-auto rounded-lg -mb-6 pb-1">
+                    <h4 className="text-center text-s text-gray-700">or</h4>
+                  </div>}
                 {providers &&
                   Object.values(providers).map((provider, idx) => (
                     <button
@@ -74,20 +75,20 @@ export default function AuthPage({
                       onClick={() => signIn(provider.id)}
                       className="block w-full appearance-none items-center justify-center rounded-lg border border-gray-500 bg-gray-100 py-3 px-3 leading-tight text-gray-700 shadow hover:bg-gray-200 hover:text-gray-700 focus:outline-none"
                     >
-                      <h1 className="text-center text-xl text-blue-700">
+                      <h4 className="text-center text-lg text-blue-700">
                         Sign in with {provider.name}
-                      </h1>
-                    </button>
-                  ))}
+                      </h4>
+                    </button>)
+                  )}
                 <div className="flex place-content-center">
-                  <p>
+                  <h4 className='text-lg'>
                     New to Nebula?
-                    <Link legacyBehavior href="/auth/login">
-                      <a className="ml-2 font-semibold text-blue-700 hover:rounded-lg hover:bg-blue-200">
+                    <Link legacyBehavior href="/auth/signup">
+                      <a className="ml-2 text-blue-700 text-lg font-semibold hover:bg-blue-200 hover:rounded-lg">
                         Sign Up
                       </a>
                     </Link>
-                  </p>
+                  </h4>
                 </div>
               </section>
             </div>
