@@ -58,10 +58,10 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
     return <div>Loading...</div>;
   }
   return (
-    <main className="h-full w-full flex flex-col overflow-y-auto">
-      <div className="flex flex-col gap-y-4 mt-4 self-center items-center">
-        <section className="bg-white rounded-2xl w-full">
-          <article className="rounded-t-lg relative bg-gradient-to-r from-purple-500 to-blue-500 h-40 w-full z-10">
+    <main className="flex h-full w-full flex-col overflow-y-auto">
+      <div className="mt-4 flex flex-col items-center gap-y-4 self-center">
+        <section className="w-full rounded-2xl bg-white">
+          <article className="relative z-10 h-40 w-full rounded-t-lg bg-gradient-to-r from-purple-500 to-blue-500">
             <Avatar
               alt="Remy Sharp"
               sx={{
@@ -76,8 +76,8 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
               {dumbInitialsParser}
             </Avatar>
           </article>
-          <article className="grid md:grid-cols-2 md:gap-x-12 lg:gap-x-32 gap-y-16 px-8 py-4">
-            <h1 className="mb-[-40px] col-span-full">Profile</h1>
+          <article className="grid gap-y-16 px-8 py-4 md:grid-cols-2 md:gap-x-12 lg:gap-x-32">
+            <h1 className="col-span-full mb-[-40px]">Profile</h1>
             <TextField
               name="name"
               id="outlined-basic"
@@ -123,29 +123,29 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
             />
             <button
               onClick={handleSubmit}
-              className="col-span-full self-center text-white justify-center items-center w-40 h-12 flex p-4 bg-[#3E61ED] rounded-2xl"
+              className="col-span-full flex h-12 w-40 items-center justify-center self-center rounded-2xl bg-[#3E61ED] p-4 text-white"
             >
               Update Profile
             </button>
           </article>
         </section>
-        <section className="bg-white flex flex-col w-full px-8 py-4 rounded-2xl">
+        <section className="flex w-full flex-col rounded-2xl bg-white px-8 py-4">
           <h1>Reset Password</h1>
           <div className="text-sm ">Click this button to reset your password</div>
           <button
             onClick={handleResetPassword}
-            className="mt-5 text-white justify-center items-center w-20 h-8 flex p-4 bg-[#3E61ED] rounded-xl"
+            className="mt-5 flex h-8 w-20 items-center justify-center rounded-xl bg-[#3E61ED] p-4 text-white"
           >
             Reset
           </button>
         </section>
-        <section className="bg-white flex flex-col w-full px-8 py-4 rounded-2xl mb-8">
+        <section className="mb-8 flex w-full flex-col rounded-2xl bg-white px-8 py-4">
           <h1>Delete My Account</h1>
           <div className="text-sm ">Deleting your account will remove all user data</div>
           <button
             disabled={true} // temporary measure for beta
             onClick={() => console.log('Hi')}
-            className="mt-5 text-white justify-center items-center w-20 h-8 flex p-4 bg-[#FF0041] disabled:opacity-40 rounded-xl"
+            className="mt-5 flex h-8 w-20 items-center justify-center rounded-xl bg-[#FF0041] p-4 text-white disabled:opacity-40"
           >
             Delete
           </button>
