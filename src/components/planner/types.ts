@@ -78,9 +78,3 @@ export type GetDragIdByCourseAndSemester = (
   course: DraggableCourse,
   semester: Semester,
 ) => UniqueIdentifier;
-
-// Toast message passed back to Planner component
-export interface ToastMessage {
-  message: string;
-  level: 'ok' | 'warn' | 'error';
-}

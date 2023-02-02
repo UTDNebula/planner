@@ -1,11 +1,13 @@
 /* eslint-disable react/prop-types */
 import '../styles/globals.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { createTheme, StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
 import { AnimateSharedLayout } from 'framer-motion';
 import { type AppType, AppProps } from 'next/app';
 // import type { AppProps } from 'next/app';
 import Head from 'next/head';
+import { ToastContainer } from 'react-toastify';
 import { type Session } from 'next-auth';
 import { SessionProvider, useSession } from 'next-auth/react';
 import { FC } from 'react';
@@ -100,6 +102,7 @@ const NebulaApp: AppType<{ session: Session | null }> = ({
               ) : (
                 <Component {...pageProps} />
               )}
+              <ToastContainer />
             </main>
           </ThemeProvider>
         </StyledEngineProvider>
