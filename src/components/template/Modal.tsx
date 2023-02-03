@@ -14,13 +14,13 @@ export default function TemplateModal({ setOpenTemplateModal }: TemplateModalPro
   const router = useRouter();
   const [templateQuery, setTemplateQuery] = useState('');
   const utils = trpc.useContext();
-  const createUserPlan = trpc.user.createUserPlan.useMutation({
+  const createTemplateUserPlan = trpc.user.createTemplateUserPlan.useMutation({
     async onSuccess() {
       await utils.user.getUser.invalidate();
     },
   });
 
-  const createEmptyUserPlan = trpc.user.createEmptyUserPlan.useMutation({
+  const createUserPlan = trpc.user.createUserPlan.useMutation({
     async onSuccess() {
       await utils.user.getUser.invalidate();
     },
@@ -48,7 +48,7 @@ export default function TemplateModal({ setOpenTemplateModal }: TemplateModalPro
   const handleTemplateCreation = async (major: string) => {
     if (major === 'empty') {
       try {
-        const planId = await createEmptyUserPlan.mutateAsync('empty');
+        const planId = await createUserPlan.mutateAsync('empty');
         if (!planId) {
           return router.push('/app/home');
         }
@@ -62,7 +62,7 @@ export default function TemplateModal({ setOpenTemplateModal }: TemplateModalPro
     });
 
     try {
-      const planId = await createUserPlan.mutateAsync(selectedTemplate[0].id);
+      const planId = await createTemplateUserPlan.mutateAsync(selectedTemplate[0].id);
       if (!planId) {
         return router.push('/app/home');
       }

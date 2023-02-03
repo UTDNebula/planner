@@ -28,17 +28,6 @@ export const planRouter = router({
   }),
   getPlanById: protectedProcedure.input(z.string().min(1)).query(async ({ ctx, input }) => {
     try {
-      // Fetch credits
-      const creditData = await ctx.prisma.credit.findMany({
-        where: {
-          userId: ctx.session.user.id,
-        },
-        select: {
-          courseCode: true,
-          semesterCode: true,
-        },
-      });
-
       // Fetch current plan
       const planData = await ctx.prisma.plan.findUnique({
         where: {
@@ -58,17 +47,10 @@ export const planRouter = router({
         });
       }
 
-      // Add credits to plan
-
-      const semesters = addCreditsToPlan(planData.semesters, creditData, planData.id);
-
-      planData.semesters = semesters;
-
       // FIX THIS LATER IDC RN
-
       const temporaryFunctionPlzDeleteThis = async () => {
         const validCourses = await getAllCourses();
-        return semesters.map((sem) => {
+        return planData.semesters.map((sem) => {
           const courses = sem.courses.filter((course) => course in validCourses);
           return { ...sem, courses };
         });
