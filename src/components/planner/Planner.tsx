@@ -37,7 +37,7 @@ import {
   DraggableCourse,
   Semester,
 } from './types';
-import { createNewYear } from '@/utils/utilFunctions';
+import { createNewYear, isSemCodeEqual } from '@/utils/utilFunctions';
 
 /** PlannerTool Props */
 export interface PlannerProps {
@@ -67,9 +67,11 @@ export default function Planner({
     }),
   );
 
-  // Extend Course object to contain fields for prereq validation & other stuff ig
-
   const utils = trpc.useContext();
+
+  // Get credits to check if semester invalid
+  const creditsQuery = trpc.credits.getCredits.useQuery(undefined, { staleTime: 10000000000 });
+  const credits = creditsQuery.data;
 
   const { addTask } = useTaskQueue({ shouldProcess: true });
 
@@ -305,7 +307,6 @@ export default function Planner({
     () => semesters.flatMap((sem) => sem.courses).map((course) => course.code),
     [semesters],
   );
-  console.log('courses', courses);
   const handleOnDragStart = ({ active }: { active: Active }) => {
     const originData = active.data.current as DragEventOriginData;
     setActiveCourse({ from: originData.from, course: originData.course });
@@ -379,6 +380,17 @@ export default function Planner({
                 semester.courses.length > 0 &&
                 semester.courses.some((course) => course.validation && !course.validation.isValid);
 
+              // Calculate if sync needs to appear or not here
+              const semesterCredits =
+                credits
+                  ?.filter((credit) => isSemCodeEqual(credit.semesterCode, semester.code))
+                  .map((credit) => credit.courseCode) ?? [];
+
+              const creditsSynced =
+                semesterCredits.length === 0 ||
+                (semesterCredits.length === semester.courses.length &&
+                  semester.courses.every((course) => semesterCredits.includes(course.code)));
+
               return (
                 <DroppableSemesterTile
                   onRemoveCourse={handleRemoveCourseFromSemester}
@@ -389,6 +401,7 @@ export default function Planner({
                   }
                   semester={semester}
                   isValid={!hasInvalidCourse}
+                  creditsSynced={creditsSynced}
                 />
               );
             })}

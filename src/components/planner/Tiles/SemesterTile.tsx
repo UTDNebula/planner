@@ -1,8 +1,8 @@
 import { UniqueIdentifier, useDroppable } from '@dnd-kit/core';
 import { FC, forwardRef } from 'react';
 
-import { getStartingPlanSemester, isEarlierSemester } from '@/utils/plannerUtils';
 import { displaySemesterCode } from '@/utils/utilFunctions';
+import SyncProblemIcon from '@mui/icons-material/SyncProblem';
 
 import {
   DragDataToSemesterTile,
@@ -17,6 +17,7 @@ export interface SemesterTileProps {
   isOver: boolean;
   getDragId: GetDragIdByCourseAndSemester;
   isValid: boolean;
+  creditsSynced: boolean;
   onRemoveCourse: (semester: Semester, course: DraggableCourse) => void;
 }
 
@@ -27,20 +28,27 @@ function getTitleText({ isValid }: { isValid: boolean }) {
  * Strictly UI implementation of a semester tile
  */
 export const SemesterTile = forwardRef<HTMLDivElement, SemesterTileProps>(function SemesterTile(
-  { semester, getDragId, isValid, isOver, onRemoveCourse },
+  { semester, getDragId, isValid, isOver, creditsSynced, onRemoveCourse },
   ref,
 ) {
   return (
     <div
       ref={ref}
-      className={`flex max-h-full min-h-[184px] w-[256px] select-none flex-col gap-[10px] overflow-hidden rounded-md bg-white px-[12px] py-[8px] shadow-md transition-all duration-300 ${
+      className={`flex max-h-full min-h-[184px] w-[256px] select-none flex-col gap-[10px] rounded-md bg-white px-[12px] py-[8px] shadow-md transition-all duration-300 ${
         isOver ? 'scale-105 shadow-lg' : ''
       } border-b-[9px] ${isValid ? 'border-b-[#3E61ED]' : 'border-b-red-500'}`}
     >
-      <div className="flex justify-between">
-        <h3 className={`text-[15px] font-medium ${getTitleText({ isValid })}`}>
-          {displaySemesterCode(semester.code)}
-        </h3>
+      <div className="flex flex-row justify-between">
+        <div className="flex flex-row">
+          <h3 className={`text-[15px] font-medium ${getTitleText({ isValid })}`}>
+            {displaySemesterCode(semester.code)}
+          </h3>
+          {!creditsSynced && (
+            <div className="tooltip tooltip-top" data-tip="Courses not synced with credits">
+              <SyncProblemIcon />
+            </div>
+          )}
+        </div>
         {!isValid && <h3 className="text-[15px] font-medium text-red-500">{'Invalid Course'}</h3>}
       </div>
 
@@ -63,6 +71,7 @@ export interface DroppableSemesterTileProps {
   semester: Semester;
   getSemesterCourseDragId: GetDragIdByCourseAndSemester;
   isValid: boolean;
+  creditsSynced: boolean;
   onRemoveCourse: (semester: Semester, course: DraggableCourse) => void;
 }
 

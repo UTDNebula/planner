@@ -39,8 +39,6 @@ export default function PlanDetailPage(
 
   const [semesters, setSemesters] = useState<Semester[]>(getSemestersInfo(data?.plan));
 
-  // Add useEffect logic here for credits
-
   // Indicate UI loading
   if (isLoading) {
     return <div>Loading</div>;
