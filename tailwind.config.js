@@ -140,5 +140,8 @@ module.exports = {
       jost: ['Jost', 'Roboto', 'ui-sans-serif', 'system-ui'],
     },
   },
-  plugins: [],
+  plugins: [require('daisyui')],
+  daisyui: {
+    themes: false,
+  },
 };
