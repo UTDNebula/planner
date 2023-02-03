@@ -38,6 +38,7 @@ import {
   Semester,
 } from './types';
 import { createNewYear, isSemCodeEqual } from '@/utils/utilFunctions';
+import { SemesterCode } from '@prisma/client';
 
 /** PlannerTool Props */
 export interface PlannerProps {
@@ -381,15 +382,30 @@ export default function Planner({
                 semester.courses.some((course) => course.validation && !course.validation.isValid);
 
               // Calculate if sync needs to appear or not here
-              const semesterCredits =
+              const semesterCredits: {
+                [key: string]: { semesterCode: SemesterCode; transfer: boolean };
+              } =
                 credits
                   ?.filter((credit) => isSemCodeEqual(credit.semesterCode, semester.code))
-                  .map((credit) => credit.courseCode) ?? [];
+                  .reduce((prev, curr) => ({ ...prev, [curr.courseCode]: curr }), {}) ?? [];
+
+              const creditNames = Object.keys(semesterCredits);
+              console.log(creditNames);
 
               const creditsSynced =
-                semesterCredits.length === 0 ||
-                (semesterCredits.length === semester.courses.length &&
-                  semester.courses.every((course) => semesterCredits.includes(course.code)));
+                creditNames.length === 0 ||
+                (creditNames.length === semester.courses.length &&
+                  semester.courses.every((course) => course.code in semesterCredits));
+
+              // Add if course is a transfer credit here
+              const coursesWithTransfer: DraggableCourse[] = semester.courses.map((course) => {
+                return {
+                  ...course,
+                  transfer: course.code in semesterCredits && semesterCredits[course.code].transfer,
+                };
+              });
+
+              semester.courses = coursesWithTransfer;
 
               return (
                 <DroppableSemesterTile

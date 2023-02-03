@@ -20,6 +20,7 @@ export interface DraggableCourse extends Course {
   validation?: { isValid: boolean; override: boolean };
   status?: 'complete' | 'incomplete';
   taken?: boolean;
+  transfer?: boolean;
 }
 
 export interface DegreeRequirementGroup {

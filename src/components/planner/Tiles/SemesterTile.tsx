@@ -44,7 +44,7 @@ export const SemesterTile = forwardRef<HTMLDivElement, SemesterTileProps>(functi
             {displaySemesterCode(semester.code)}
           </h3>
           {!creditsSynced && (
-            <div className="tooltip tooltip-top" data-tip="Courses not synced with credits">
+            <div className="tooltip tooltip-top" data-tip="Courses not synced with course history">
               <SyncProblemIcon />
             </div>
           )}

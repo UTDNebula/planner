@@ -9,19 +9,20 @@ import { DragDataFromSemesterTile, DraggableCourse, Semester } from '../types';
 export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'> {
   course: DraggableCourse;
   isValid?: boolean;
+  isTransfer?: boolean;
   onRemove?: (course: DraggableCourse) => void;
 }
 
 /** UI implementation of a semester course */
 export const SemesterCourseItem = forwardRef<HTMLDivElement, SemesterCourseItemProps>(
-  function SemesterCourseItem({ course, isValid, onRemove, ...props }, ref) {
+  function SemesterCourseItem({ course, isValid, isTransfer, onRemove, ...props }, ref) {
     return (
       <div
         ref={ref}
         {...props}
         className={`flex h-[22px] w-full items-center justify-between rounded-md py-[1px] px-[8px] shadow-md  ${
           isValid ? 'border-[1px] border-red-500' : ''
-        }`}
+        }  ${course.transfer && 'bg-yellow-500'}`}
       >
         <span className="text-[12px] font-medium text-[#1C2A6D]">{course.code}</span>
         <div
