@@ -33,7 +33,7 @@ export const SemesterTile = forwardRef<HTMLDivElement, SemesterTileProps>(functi
   return (
     <div
       ref={ref}
-      className={`flex h-full w-[256px] select-none flex-col gap-[10px] overflow-hidden rounded-md bg-white px-[12px] py-[8px] shadow-md transition-all duration-300 ${
+      className={`flex max-h-full min-h-[184px] w-[256px] select-none flex-col gap-[10px] overflow-hidden rounded-md bg-white px-[12px] py-[8px] shadow-md transition-all duration-300 ${
         isOver ? 'scale-105 shadow-lg' : ''
       } border-b-[9px] ${isValid ? 'border-b-[#3E61ED]' : 'border-b-red-500'}`}
     >
