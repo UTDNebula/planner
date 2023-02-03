@@ -44,6 +44,7 @@ import { SemesterCode } from '@prisma/client';
 export interface PlannerProps {
   degreeRequirements: DegreeRequirementGroup[];
   semesters: Semester[];
+  showTransfer: boolean;
   planId: string;
   setSemesters: React.Dispatch<React.SetStateAction<Semester[]>>;
 }
@@ -52,6 +53,7 @@ export interface PlannerProps {
 export default function Planner({
   degreeRequirements,
   semesters,
+  showTransfer,
   setSemesters,
   planId,
 }: PlannerProps): JSX.Element {
@@ -405,7 +407,12 @@ export default function Planner({
                 };
               });
 
-              semester.courses = coursesWithTransfer;
+              const newSem = {
+                ...semester,
+                courses: showTransfer
+                  ? coursesWithTransfer
+                  : coursesWithTransfer.filter((course) => !course.transfer),
+              };
 
               return (
                 <DroppableSemesterTile
@@ -415,7 +422,7 @@ export default function Planner({
                   getSemesterCourseDragId={(course, semester) =>
                     `semester-tile-course-${semester.id}-${course.id}`
                   }
-                  semester={semester}
+                  semester={newSem}
                   isValid={!hasInvalidCourse}
                   creditsSynced={creditsSynced}
                 />

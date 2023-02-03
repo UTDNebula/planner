@@ -29,6 +29,8 @@ export default function PlanDetailPage(
   const { planId } = props;
   const planQuery = trpc.plan.getPlanById.useQuery(planId);
 
+  const [showTransfer, setShowTransfer] = useState(true);
+
   const { data, isLoading } = planQuery;
   const { data: session } = useSession();
   const degreeData = data?.validation ?? [];
@@ -54,7 +56,20 @@ export default function PlanDetailPage(
         />
         <div className="text-2xl">My Plan</div>
 
+        <div className="form-control">
+          <label className="label cursor-pointer">
+            <span className="label-text">Show Transfer Credits</span>
+            <input
+              type="checkbox"
+              className="toggle-success toggle"
+              onClick={() => setShowTransfer(!showTransfer)}
+              defaultChecked
+            />
+          </label>
+        </div>
+
         <div className=" ml-auto">Majors: Computer Science</div>
+
         <div>Minors: Cognitive Science</div>
         <div>Fast Track</div>
         <div>Import Plan</div>
@@ -79,6 +94,7 @@ export default function PlanDetailPage(
         degreeRequirements={degreeData}
         semesters={semesters}
         planId={planId}
+        showTransfer={showTransfer}
         setSemesters={setSemesters}
       />
       <button onClick={handlePlanDelete}>Delete</button>
