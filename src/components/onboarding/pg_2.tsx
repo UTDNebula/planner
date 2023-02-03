@@ -2,10 +2,10 @@ import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import { FormControl, InputLabel, Switch } from '@mui/material';
 import { SemesterCode, SemesterType } from '@prisma/client';
 import React, { useMemo, useState } from 'react';
-
 import AutoCompleteSearchBar from '@/components/credits/AutoCompleteSearchBar';
 import Button from '@/components/credits/Button';
 import DataGrid from '@/components/credits/DataGrid';
+import AddIcon from '@mui/icons-material/Add';
 import DropdownSelect from '@/components/credits/DropdownSelect';
 import { Credit } from '@/components/credits/types';
 import useSearch from '@/components/search/search';
@@ -15,6 +15,7 @@ import {
   loadDummyCourses,
 } from '@/utils/utilFunctions';
 import { getStartingPlanSemester } from '@/utils/plannerUtils';
+import { UploadTranscriptDialog } from '../home/Credits';
 
 // Array of values to choose from for form
 
@@ -31,9 +32,8 @@ export type Page2data = {
 export default function PageTwo({ handleChange, data, startSemester }: Page2data): JSX.Element {
   const { credits } = data;
 
-  // TODO: Change start semester to when they first joined UTD - 2
   const semesters = useMemo(
-    () => createSemesterCodeRange(startSemester, getStartingPlanSemester(), false),
+    () => createSemesterCodeRange(startSemester, getStartingPlanSemester(), true),
     [],
   );
 
@@ -47,6 +47,7 @@ export default function PageTwo({ handleChange, data, startSemester }: Page2data
 
   const [courseCode, setCourseCode] = useState('');
   const [transfer, setTransfer] = useState(true);
+  const [openTranscriptDialog, setOpenTranscriptDialog] = useState(false);
 
   const handleAddCredit = () => {
     if (courseCode) {
@@ -67,10 +68,8 @@ export default function PageTwo({ handleChange, data, startSemester }: Page2data
   return (
     <div className="flex animate-intro flex-col gap-16">
       <div>
-        <div className="text-[40px]">Add Credits</div>
-        <div className="text-[16px]">
-          Add credits that you have already taken in your degree plan here!
-        </div>
+        <div className="text-[40px]">Add Courses</div>
+        <div className="text-[16px]">Add the courses that you have taken below!</div>
       </div>
 
       <div className="flex w-[350px] flex-col gap-4">
@@ -84,7 +83,7 @@ export default function PageTwo({ handleChange, data, startSemester }: Page2data
 
         <div className="flex flex-row items-center justify-between">
           <FormControl variant="outlined" className="w-44">
-            <InputLabel id="demo-simple-select-autowidth-label">Start Date</InputLabel>
+            <InputLabel id="demo-simple-select-autowidth-label">Semester</InputLabel>
             <DropdownSelect
               id="semester"
               value={semesterCode}
@@ -100,6 +99,17 @@ export default function PageTwo({ handleChange, data, startSemester }: Page2data
           </div>
         </div>
         <Button onClick={handleAddCredit}>{'Add Credit'}</Button>
+        <UploadTranscriptDialog
+          open={openTranscriptDialog}
+          onClose={() => setOpenTranscriptDialog(false)}
+        />
+        <Button
+          onClick={() => setOpenTranscriptDialog(true)}
+          icon={<AddIcon />}
+          className="w-[200px]"
+        >
+          Upload Transcript
+        </Button>
       </div>
 
       <div className="max-h-[400px] gap-2 px-2 py-4">

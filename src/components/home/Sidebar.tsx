@@ -16,17 +16,17 @@ export default function Sidebar({ isMobile }: { isMobile: boolean }): JSX.Elemen
   const sidebarItems = [
     {
       url: '/app/home',
-      label: 'Home',
+      label: 'Home Page',
       Icon: HomeIcon,
     },
     {
       url: '/app/profile',
-      label: 'Profile',
+      label: 'My Profile',
       Icon: ProfileIcon,
     },
     {
       url: '/app/credits',
-      label: 'Credits',
+      label: 'Course History',
       Icon: CreditsIcon,
     },
   ];

@@ -17,6 +17,7 @@ import AutoCompleteSearchBar from './AutoCompleteSearchBar';
 import Button from './Button';
 import DropdownSelect from './DropdownSelect';
 import { getStartingPlanSemester } from '@/utils/plannerUtils';
+import InfoIcon from '@mui/icons-material/Info';
 
 const Layout: FC = ({ children }) => <section className="flex flex-col gap-10">{children}</section>;
 
@@ -31,7 +32,7 @@ const CreditsForm: FC = () => {
       createSemesterCodeRange(
         user.data?.profile?.startSemester ?? { semester: 'f', year: 2022 },
         getStartingPlanSemester(),
-        false,
+        true,
       ),
     [],
   );
@@ -74,9 +75,15 @@ const CreditsForm: FC = () => {
         autoFocus
       />
 
-      <FormControl className="flex flex-col gap-3">
+      <FormControl className="flex flex-col items-start gap-3">
         <label htmlFor="transfer" className="font-medium text-black">
-          Is Transfer Credit?
+          Is Transfer Credit?{' '}
+          <div
+            className="tooltip tooltip-top"
+            data-tip="If you have transfer credits, select the course that the transfer credit corresponds to and the semester it was transferred in."
+          >
+            <InfoIcon fontSize="small" />
+          </div>
         </label>
 
         <RadioGroup
