@@ -374,7 +374,7 @@ export default function Planner({
         </DragOverlay>
 
         <div className="min-h-fit">
-          <div className="grid w-fit grid-cols-3 grid-rows-4 gap-[32px]">
+          <div className="grid h-auto w-fit grid-cols-3 gap-[32px]">
             {semesters.map((semester) => {
               const hasInvalidCourse =
                 semester.courses.length > 0 &&
