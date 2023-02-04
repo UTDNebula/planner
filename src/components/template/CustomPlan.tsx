@@ -22,9 +22,9 @@ export default function CustomPlan({ setPage }: { setPage: Dispatch<SetStateActi
     },
   });
 
-  const handleSubmit = () => {
-    const planId = createUserPlan.mutateAsync({ name, major });
-    router.push(`/app/plan/${planId}`);
+  const handleSubmit = async () => {
+    const planId = await createUserPlan.mutateAsync({ name, major });
+    router.push(`/app/plans/${planId}`);
   };
 
   return (
