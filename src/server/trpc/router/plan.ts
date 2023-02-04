@@ -18,6 +18,7 @@ export const planRouter = router({
           plans: {
             select: {
               name: true,
+              requirements: true,
               id: true,
             },
           },
