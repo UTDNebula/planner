@@ -18,9 +18,10 @@ export interface Course {
 export interface DraggableCourse extends Course {
   id: ObjectID;
   validation?: { isValid: boolean; override: boolean };
-  status?: 'complete' | 'incomplete';
+  status?: 'complete' | 'incomplete'; // TODO: Clean this up later once prereq is done
   taken?: boolean;
   transfer?: boolean;
+  sync?: { isSynced: boolean; correctSemester: SemesterCode | undefined };
 }
 
 export interface DegreeRequirementGroup {

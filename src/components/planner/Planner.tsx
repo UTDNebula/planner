@@ -383,7 +383,11 @@ export default function Planner({
                 semester.courses.length > 0 &&
                 semester.courses.some((course) => course.validation && !course.validation.isValid);
 
-              // Calculate if sync needs to appear or not here
+              // Get map of credits (faster to query later down the line)
+              const creditsMap: {
+                [key: string]: { semesterCode: SemesterCode; transfer: boolean };
+              } = credits?.reduce((prev, curr) => ({ ...prev, [curr.courseCode]: curr }), {}) ?? [];
+
               const semesterCredits: {
                 [key: string]: { semesterCode: SemesterCode; transfer: boolean };
               } =
@@ -391,27 +395,49 @@ export default function Planner({
                   ?.filter((credit) => isSemCodeEqual(credit.semesterCode, semester.code))
                   .reduce((prev, curr) => ({ ...prev, [curr.courseCode]: curr }), {}) ?? [];
 
-              const creditNames = Object.keys(semesterCredits);
-              console.log(creditNames);
+              const numSemesterCredits = Object.keys(semesterCredits).length;
 
-              const creditsSynced =
-                creditNames.length === 0 ||
-                (creditNames.length === semester.courses.length &&
-                  semester.courses.every((course) => course.code in semesterCredits));
+              const semesterErrors: SemesterErrors = {
+                isError: false,
+                prerequisites: [],
+                sync: { missing: [], extra: [] },
+              };
 
-              // Add if course is a transfer credit here
-              const coursesWithTransfer: DraggableCourse[] = semester.courses.map((course) => {
+              const coursesWithErrors: DraggableCourse[] = semester.courses.map((course) => {
+                let correctSemester: SemesterCode | undefined;
+
+                const isSynced =
+                  (numSemesterCredits === 0 && !(course.code in creditsMap)) ||
+                  (course.code in creditsMap &&
+                    isSemCodeEqual(creditsMap[course.code].semesterCode, semester.code));
+                if (isSynced) {
+                  delete semesterCredits[course.code];
+                } else {
+                  semesterErrors.isError = true;
+                  semesterErrors.sync.extra.push(course.code);
+
+                  // Check course in credits
+                  if (course.code in creditsMap)
+                    correctSemester = creditsMap[course.code].semesterCode;
+                }
+
+                // TODO: This is prolly where prereq validation should take place
                 return {
                   ...course,
-                  transfer: course.code in semesterCredits && semesterCredits[course.code].transfer,
+                  transfer: course.code in creditsMap && creditsMap[course.code].transfer,
+                  taken: course.code in creditsMap,
+                  sync: { isSynced, correctSemester },
                 };
               });
+
+              // Add missing courses
+              semesterErrors.sync.missing = Object.keys(semesterCredits);
 
               const newSem = {
                 ...semester,
                 courses: showTransfer
-                  ? coursesWithTransfer
-                  : coursesWithTransfer.filter((course) => !course.transfer),
+                  ? coursesWithErrors
+                  : coursesWithErrors.filter((course) => !course.transfer),
               };
 
               return (
@@ -424,7 +450,7 @@ export default function Planner({
                   }
                   semester={newSem}
                   isValid={!hasInvalidCourse}
-                  creditsSynced={creditsSynced}
+                  semesterErrors={semesterErrors}
                 />
               );
             })}
@@ -438,3 +464,12 @@ export default function Planner({
     </DndContext>
   );
 }
+
+export type SemesterErrors = {
+  isError: boolean;
+  prerequisites: string[];
+  sync: {
+    missing: string[];
+    extra: string[];
+  };
+};
