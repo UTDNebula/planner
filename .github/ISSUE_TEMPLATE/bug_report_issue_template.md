@@ -6,13 +6,15 @@ labels: 'Status: Unconfirmed'
 
 ---
 
+## Bug description
+
 <!--
   Please provide a clear and concise description of what the bug is. Include
   screenshots if needed. Please test using the latest version of the relevant
   React packages to make sure your issue has not already been fixed.
 -->
 
-React version:
+
 
 ## Steps To Reproduce
 
@@ -25,7 +27,7 @@ React version:
   code examples may be immediately closed as not actionable.
 -->
 
-Link to code example:
+Link to code example (optional):
 
 <!--
   Please provide a CodeSandbox (https://codesandbox.io/s/new), a link to a
@@ -34,8 +36,5 @@ Link to code example:
   relevant to your bug report. Here are some tips for providing a minimal
   example: https://stackoverflow.com/help/mcve.
 -->
-
-## The current behavior
-
 
 ## The expected behavior
