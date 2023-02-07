@@ -1,4 +1,4 @@
-import { SemesterCode, SemesterType } from '../../prisma/generated/planner';
+import { SemesterCode, SemesterType } from '@prisma/client';
 
 import { createNewYear } from './utilFunctions';
 

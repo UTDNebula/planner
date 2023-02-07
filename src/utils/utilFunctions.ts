@@ -1,4 +1,4 @@
-import { SemesterCode, SemesterType } from '../../prisma/generated/planner';
+import { SemesterCode, SemesterType } from '@prisma/client';
 import { ObjectID } from 'bson';
 
 import { Semester } from '@/components/planner/types';
@@ -54,7 +54,6 @@ export type JSONCourseType = {
   period: string;
   prerequisites: string[];
 };
-
 
 /**
  * Get the semester hour from course code
