@@ -54,16 +54,16 @@ export const SemesterTile = forwardRef<HTMLDivElement, SemesterTileProps>(functi
     >
       <div className="flex flex-row justify-between">
         <div className="flex flex-row">
-          <h3 className={`text-[15px] font-medium ${getTitleText({ isValid })}`}>
+          <h3 className={`text-[16px] font-medium ${getTitleText({ isValid })}`}>
             {displaySemesterCode(semester.code)}
           </h3>
         </div>
         {numProblems > 0 && (
           <div
-            className="tooltip tooltip-top flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-white"
+            className="tooltip tooltip-top  items-center justify-center text-[15px] text-[#EF4444]"
             data-tip={`${generateErrorMsg()}`}
           >
-            {numProblems}
+            {numProblems} errors
           </div>
         )}
         {!isValid && <h3 className="text-[15px] font-medium text-red-500">{'Invalid Course'}</h3>}

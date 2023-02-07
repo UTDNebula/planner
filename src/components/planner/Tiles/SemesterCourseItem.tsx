@@ -7,6 +7,7 @@ import { getStartingPlanSemester, isEarlierSemester } from '@/utils/plannerUtils
 import { DragDataFromSemesterTile, DraggableCourse, Semester } from '../types';
 import SyncProblemIcon from '@mui/icons-material/SyncProblem';
 import { displaySemesterCode } from '@/utils/utilFunctions';
+import CheckIcon from '@mui/icons-material/Check';
 
 export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'> {
   course: DraggableCourse;
@@ -31,11 +32,19 @@ export const SemesterCourseItem = forwardRef<HTMLDivElement, SemesterCourseItemP
           isValid ? 'border-[1px] border-red-500' : ''
         }`}
       >
-        <span className="w-28 text-[12px] font-medium text-[#1C2A6D]">{course.code}</span>
+        <span className="w-32 text-[16px] text-[#1C2A6D]">{course.code}</span>
 
-        <div className="flex flex-grow gap-1 text-[12px] font-semibold">
-          {course.taken && <span className=" text-blue-500">C</span>}
-          {course.transfer && <span className="  text-green-500">T</span>}
+        <div className="flex flex-grow text-[12px] font-semibold">
+          {course.taken && (
+            <span className=" tooltip text-[#22C55E]" data-tip="Completed">
+              <CheckIcon fontSize="small" />
+            </span>
+          )}
+          {course.transfer && (
+            <span className="tooltip text-green-500" data-tip="Transfer">
+              T
+            </span>
+          )}
           {!course.sync?.isSynced && (
             <div className="tooltip" data-tip={`${correctSemester}`}>
               <SyncProblemIcon fontSize="small" />
