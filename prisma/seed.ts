@@ -1,4 +1,4 @@
-import { PrismaClient, TemplateDataType } from './generated/planner';
+import { PrismaClient, TemplateDataType } from '@prisma/client';
 
 import dummyTemplate from '../src/data/degree_template.json';
 const prisma = new PrismaClient();

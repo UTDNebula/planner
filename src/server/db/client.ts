@@ -1,5 +1,4 @@
-import { PrismaClient as PrismaClient1 } from '../../../prisma/generated/planner';
-import { PrismaClient as PrismaClient2 } from '../../../prisma/generated/platform';
+import { PrismaClient } from '@prisma/client';
 
 import { env } from '../../env/server.mjs';
 
@@ -8,26 +7,15 @@ import { env } from '../../env/server.mjs';
 
 declare global {
   // eslint-disable-next-line no-var
-  var prisma: PrismaClient1 | undefined;
-  // eslint-disable-next-line no-var
-  var platformPrisma: PrismaClient2 | undefined;
+  var prisma: PrismaClient | undefined;
 }
 
 export const prisma =
   global.prisma ||
-  new PrismaClient1({
+  new PrismaClient({
     log: env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
   });
 
 if (env.NODE_ENV !== 'production') {
   global.prisma = prisma;
-}
-
-
-export const platformPrisma = global.platformPrisma || new PrismaClient2({
-  log: env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
-});
-
-if (env.NODE_ENV !== 'production') {
-  global.platformPrisma = platformPrisma;
 }
