@@ -2,12 +2,11 @@ import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import { SemesterCode, SemesterType } from '../../../prisma/generated/planner';
+import { SemesterCode, SemesterType } from '@prisma/client';
 import { FC, useMemo, useState } from 'react';
 
 import { trpc } from '@/utils/trpc';
 import { displaySemesterCode, generateSemesters } from '@/utils/utilFunctions';
-
 
 import useSearch from '../search/search';
 import AutoCompleteSearchBar from './AutoCompleteSearchBar';
@@ -39,11 +38,12 @@ const CreditsForm: FC = () => {
   });
 
   const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
-    refetchOnWindowFocus: false
-  })
+    refetchOnWindowFocus: false,
+  });
 
   const { results, updateQuery } = useSearch({
-    getData: async () => q.data ? q.data.map((c)=>({code: c.subject_prefix + c.course_number})) : [],
+    getData: async () =>
+      q.data ? q.data.map((c) => ({ code: c.subject_prefix + c.course_number })) : [],
     initialQuery: '',
     filterFn: (course, query) => course.code.toLowerCase().includes(query.toLowerCase()),
   });
