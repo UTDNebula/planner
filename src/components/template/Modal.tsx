@@ -63,8 +63,6 @@ export default function TemplateModal({ setOpenTemplateModal }: TemplateModalPro
 
     try {
       const planId = await createUserPlan.mutateAsync(selectedTemplate[0].id);
-      console.log('HM');
-      console.log(planId);
       if (!planId) {
         return router.push('/app/home');
       }
@@ -76,16 +74,16 @@ export default function TemplateModal({ setOpenTemplateModal }: TemplateModalPro
   return (
     <div
       onClick={() => setOpenTemplateModal(false)}
-      className="w-full h-full left-0 top-0  absolute flex items-center justify-center backdrop-blur-md z-10"
+      className="absolute left-0 top-0 z-10  flex h-full w-full items-center justify-center backdrop-blur-md"
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-white relative max-w-4xl m-8 max-h-[90vh] w-full overflow-y-scroll flex-col gap-2 rounded-lg items-center justify-center p-10"
+        className="relative m-8 max-h-[90vh] w-full max-w-4xl flex-col items-center justify-center gap-2 overflow-y-scroll rounded-lg bg-white p-10"
       >
-        <div className="flex flex-col gap-2 justify-center items-center">
+        <div className="flex flex-col items-center justify-center gap-2">
           <div className="p-3 text-2xl">Start fresh with an</div>
           <button
-            className="p-2 rounded-lg font-semibold bg-[#3E61ED] hover:bg-[#3552C9] text-white transition-colors border-2 border-[#3e61ed]"
+            className="rounded-lg border-2 border-[#3e61ed] bg-[#3E61ED] p-2 font-semibold text-white transition-colors hover:bg-[#3552C9]"
             onClick={() => handleTemplateCreation('empty')}
           >
             Empty Plan
@@ -94,14 +92,14 @@ export default function TemplateModal({ setOpenTemplateModal }: TemplateModalPro
           <div className="text-center text-2xl ">OR</div>
           <div className="text-center text-2xl font-medium">One of the templates</div>
         </div>
-        <div className="sticky pt-10 -top-10 bg-white z-50">
+        <div className="sticky -top-10 z-50 bg-white pt-10">
           <SearchBar
             placeholder="Search template"
             updateQuery={(query) => setTemplateQuery(query)}
           />
         </div>
 
-        <div className="gap-2 px-2 py-4 max-h-[400px]">
+        <div className="max-h-[400px] gap-2 px-2 py-4">
           <DataGrid
             columns={[
               {
@@ -143,7 +141,7 @@ export default function TemplateModal({ setOpenTemplateModal }: TemplateModalPro
         </div>
         <button
           onClick={() => setOpenTemplateModal(false)}
-          className="top-0 right-0 absolute border-black border-2 rounded-lg m-2 hover:bg-slate-700 hover:text-white transition-colors"
+          className="absolute top-0 right-0 m-2 rounded-lg border-2 border-black transition-colors hover:bg-slate-700 hover:text-white"
         >
           <CloseIcon fontSize="medium" />
         </button>

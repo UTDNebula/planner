@@ -18,20 +18,20 @@ export default function PlansPage(): JSX.Element {
 
   return (
     <>
-      <section className="flex flex-col w-full h-full p-20 gap-12 overflow-auto">
+      <section className="flex h-full w-full flex-col gap-12 overflow-auto p-20">
         <h1 className="col-span-full">Home</h1>
         <button
           onClick={() => setOpenTemplateModal(true)}
-          className="col-span-full text-white rounded-xl w-32 h-12 p-2 flex justify-center items-center flex-row bg-[#3E61ED]"
+          className="col-span-full flex h-12 w-32 flex-row items-center justify-center rounded-xl bg-[#3E61ED] p-2 text-white"
         >
           <div className="flex flex-row items-center">
-            <div className="text-3xl flex flex-col justify-center items-center mr-2">
+            <div className="mr-2 flex flex-col items-center justify-center text-3xl">
               <AddIcon fontSize="inherit" />
             </div>
             <div className="mr-2 text-xl">New</div> {/* Hacky css to make it look centered */}
           </div>
         </button>
-        <div className="w-fit flex flex-wrap gap-8">
+        <div className="flex w-fit flex-wrap gap-8">
           {data.plans.map((plan) => (
             <PlanCard key={plan.id} id={plan.id} name={plan.name} />
           ))}

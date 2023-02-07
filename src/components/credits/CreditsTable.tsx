@@ -67,8 +67,8 @@ const CreditsTable: FC = () => {
 
   return (
     <Layout>
-      <div className="grid grid-rows-2 gap-2 lg:gap-0 lg:grid-cols-2">
-        <h1 className="text-[#1C2A6D] text-[30px] font-semibold">Existing Credits</h1>
+      <div className="grid grid-rows-2 gap-2 lg:grid-cols-2 lg:gap-0">
+        <h1 className="text-[30px] font-semibold text-[#1C2A6D]">Existing Credits</h1>
         <div>
           <SearchBar
             updateQuery={(query) => setQuery(query)}
@@ -88,7 +88,7 @@ const CreditsTable: FC = () => {
             },
             {
               title: 'Transfer',
-              valueGetter: (credit) => (!credit.transfer ? 'Yes' : 'No'),
+              valueGetter: (credit) => (credit.transfer ? 'Yes' : 'No'),
             },
             {
               title: 'Semester',
@@ -114,7 +114,7 @@ const CreditsTable: FC = () => {
               },
               injectedComponent: {
                 Element: () => (
-                  <DeleteIcon className="text-red-500 cursor-pointer absolute right-5 top-1/2 -translate-y-1/2" />
+                  <DeleteIcon className="absolute right-5 top-1/2 -translate-y-1/2 cursor-pointer text-red-500" />
                 ),
                 onClick: (_, row) => {
                   return removeCredit.mutateAsync({

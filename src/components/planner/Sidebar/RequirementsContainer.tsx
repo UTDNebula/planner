@@ -6,11 +6,13 @@ import RequirementsAccordion from './RequirementsAccordion';
 
 export interface RequirementsCarouselProps {
   degreeRequirement: DegreeRequirementGroup;
+  courses: string[];
   getCourseItemDragId: GetDragIdByCourseAndReq;
 }
 
 function RequirementsCarousel({
   degreeRequirement,
+  courses,
   getCourseItemDragId,
 }: RequirementsCarouselProps) {
   const [carousel, setCarousel] = React.useState<boolean>(false);
@@ -46,10 +48,10 @@ function RequirementsCarousel({
       <div
         className={`${
           (overflow || !carousel) && 'overflow-hidden'
-        } rounded-md flex flex-row bg-white`}
+        } flex flex-row rounded-md bg-white`}
       >
         <div
-          className={`min-w-full h-fit px-4 py-4 rounded-md z-30 duration-500 ${
+          className={`z-30 h-fit min-w-full rounded-md px-4 py-4 duration-500 ${
             carousel && '-translate-x-full'
           } `}
         >
@@ -68,12 +70,13 @@ function RequirementsCarousel({
         </div>
 
         <div
-          className={`flex flex-col gap-4 relative min-w-full p-4 bg-white rounded-md min-h-fit duration-500 ${
+          className={`relative flex min-h-fit min-w-full flex-col gap-4 rounded-md bg-white p-4 duration-500 ${
             accordian && carousel ? '-translate-x-full' : 'max-h-0'
           }  `}
         >
           <RequirementContainer
             degreeRequirement={degreeRequirement.requirements[requirementIdx]}
+            courses={courses}
             setCarousel={toggleCarousel}
             getCourseItemDragId={getCourseItemDragId}
           />

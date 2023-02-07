@@ -8,10 +8,12 @@ import { FC, useMemo, useState } from 'react';
 import { trpc } from '@/utils/trpc';
 import { displaySemesterCode, generateSemesters } from '@/utils/utilFunctions';
 
+
 import useSearch from '../search/search';
 import AutoCompleteSearchBar from './AutoCompleteSearchBar';
 import Button from './Button';
 import DropdownSelect from './DropdownSelect';
+import { getStartingPlanSemester } from '@/utils/plannerUtils';
 
 const Layout: FC = ({ children }) => <section className="flex flex-col gap-10">{children}</section>;
 
@@ -19,11 +21,15 @@ const CreditsForm: FC = () => {
   const [credit, setCredit] = useState<string | null>();
   const [isTransfer, setIsTransfer] = useState(false);
 
+  const user = trpc.user.getUser.useQuery();
+
   const semesters = useMemo(
     () =>
-      generateSemesters(8, new Date().getFullYear() - 4, SemesterType.f)
-        .reverse()
-        .map((sem) => sem.code),
+      createSemesterCodeRange(
+        user.data?.profile?.startSemester ?? { semester: 'f', year: 2022 },
+        getStartingPlanSemester(),
+        false,
+      ),
     [],
   );
 
@@ -60,7 +66,7 @@ const CreditsForm: FC = () => {
 
   return (
     <Layout>
-      <h1 className="text-[#1C2A6D] text-4xl font-semibold">Add Credit</h1>
+      <h1 className="text-4xl font-semibold text-[#1C2A6D]">Add Credit</h1>
 
       <AutoCompleteSearchBar
         onValueChange={(value) => setCredit(value)}
@@ -71,7 +77,7 @@ const CreditsForm: FC = () => {
       />
 
       <FormControl className="flex flex-col gap-3">
-        <label htmlFor="transfer" className="text-black font-medium">
+        <label htmlFor="transfer" className="font-medium text-black">
           Is Transfer Credit?
         </label>
 
@@ -112,7 +118,7 @@ const CreditsForm: FC = () => {
         </RadioGroup>
 
         <>
-          <label htmlFor="semester" className="text-black font-medium">
+          <label htmlFor="semester" className="font-medium text-black">
             Semester
           </label>
           <DropdownSelect

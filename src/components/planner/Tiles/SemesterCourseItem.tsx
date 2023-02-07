@@ -2,7 +2,7 @@ import { UniqueIdentifier, useDraggable } from '@dnd-kit/core';
 import CloseIcon from '@mui/icons-material/Close';
 import { ComponentPropsWithoutRef, FC, forwardRef } from 'react';
 
-import { getFirstNewSemester, isEarlierSemester } from '@/utils/plannerUtils';
+import { getStartingPlanSemester, isEarlierSemester } from '@/utils/plannerUtils';
 
 import { DragDataFromSemesterTile, DraggableCourse, Semester } from '../types';
 
@@ -20,9 +20,9 @@ export const SemesterCourseItem = forwardRef<HTMLDivElement, SemesterCourseItemP
       <div
         ref={ref}
         {...props}
-        className={`shadow-md w-full h-[22px] rounded-md py-[1px] px-[8px] flex items-center justify-between ${
-          isDisabled ? 'bg-gray-100' : 'bg-white'
-        } ${isValid ? 'border-red-500 border-[1px]' : ''}`}
+        className={`flex h-[22px] w-full items-center justify-between rounded-md py-[1px] px-[8px] shadow-md ${
+          isDisabled && 'opacity-60'
+        } ${isValid ? 'border-[1px] border-red-500' : ''}`}
       >
         <span className="text-[12px] font-medium text-[#1C2A6D]">{course.code}</span>
         {!isDisabled && (
@@ -55,7 +55,7 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
   course,
   onRemove,
 }) => {
-  const isDisabled = isEarlierSemester(semester.code, getFirstNewSemester());
+  const isDisabled = isEarlierSemester(semester.code, getStartingPlanSemester());
   const { setNodeRef, attributes, listeners, isDragging } = useDraggable({
     id: dragId,
     data: { from: 'semester-tile', semester, course } as DragDataFromSemesterTile,

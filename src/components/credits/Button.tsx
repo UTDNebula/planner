@@ -19,7 +19,7 @@ const Button: FC<ButtonProps> = ({
   return (
     <button
       {...props}
-      className={`${colorClasses[color]} flex items-center justify-center h-[50px] w-[200px] transition duration-200 ease-in-out rounded-[10px] ${className} font-medium text-white gap-x-2`}
+      className={`${colorClasses[color]} flex h-[50px] w-[200px] items-center justify-center rounded-[10px] transition duration-200 ease-in-out ${className} gap-x-2 font-medium text-white`}
     >
       {icon}
       {children}

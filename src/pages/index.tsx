@@ -58,7 +58,7 @@ export default function LandingPage(): JSX.Element {
           </DialogContentText>
           <div className="flex flex-row">
             <div className="flex-grow"></div>
-            <Button className="flex justify-center items-center" onClick={onClose}>
+            <Button className="flex items-center justify-center" onClick={onClose}>
               Close
             </Button>
           </div>

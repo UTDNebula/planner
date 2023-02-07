@@ -10,12 +10,14 @@ import { trpc } from '@/utils/trpc';
 
 export default function AddCourseContainer({
   allCourses,
+  validCourses,
   selectedCourses,
   updateSelectedCourses,
   handleCourseCancel,
   handleCourseSubmit,
 }: {
-  allCourses: Set<string>;
+  allCourses: string[];
+  validCourses: string[];
   selectedCourses: { [key: string]: Course };
   updateSelectedCourses: (course: Course, add: boolean) => void;
   handleCourseCancel: () => void;
@@ -33,7 +35,11 @@ export default function AddCourseContainer({
   });
 
   const courseResults = results.map((result) => {
-    return { ...result, status: allCourses.has(result.code) ? 'complete' : undefined };
+    return {
+      ...result,
+      status: allCourses.includes(result.code) ? 'complete' : undefined,
+      taken: validCourses.includes(result.code),
+    };
   }) as unknown as DraggableCourse[];
 
   const newSelectedCourses: DraggableCourse[] = Object.values(selectedCourses).map((course) => {
@@ -53,7 +59,7 @@ export default function AddCourseContainer({
         )}
         updateSelectedCourses={updateSelectedCourses}
       />
-      <div className="flex flex-row justify-between text-[10px] text-[#3E61ED] gap-x-4">
+      <div className="flex flex-row justify-between gap-x-4 text-[10px] text-[#3E61ED]">
         <button onClick={handleCourseCancel}>CANCEL</button>
         <button onClick={handleCourseSubmit}>SELECT</button>
       </div>

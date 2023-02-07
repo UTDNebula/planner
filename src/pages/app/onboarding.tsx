@@ -115,6 +115,7 @@ export default function OnboardingPage() {
         handleOnboardingDataUpdate as React.Dispatch<React.SetStateAction<PageTwoTypes>>
       }
       data={{ credits }}
+      startSemester={startSemester}
     ></PageTwo>,
   ];
   const incrementPage = () => {
@@ -135,22 +136,22 @@ export default function OnboardingPage() {
   // TODO: Find better way to structure this glorified form.
   return (
     <>
-      <div className="min-h-screen flex items-center justify-center bg-blue-400">
-        <div className="w-full h-screen flex justify-center items-center p-5 transition-all sm:h-auto sm:my-16 sm:py-16 sm:px-32 sm:w-3/4 rounded shadow-2xl bg-white">
+      <div className="flex min-h-screen items-center justify-center bg-blue-400">
+        <div className="flex h-screen w-full items-center justify-center rounded bg-white p-5 shadow-2xl transition-all sm:my-16 sm:h-auto sm:w-3/4 sm:py-16 sm:px-32">
           <div className="flex flex-col items-center justify-center">
             {jsxElem[page]}
             <div className="justify-start">
               <button
                 onClick={decrementPage}
                 disabled={page == 0}
-                className="mr-10 text-blue-500 hover:text-yellow-500 font-bold rounded disabled:opacity-50"
+                className="mr-10 rounded font-bold text-blue-500 hover:text-yellow-500 disabled:opacity-50"
               >
                 BACK
               </button>
               <button
                 onClick={incrementPage}
                 disabled={!validNextPage}
-                className="text-blue-500 hover:text-yellow-500 font-bold rounded disabled:opacity-50"
+                className="rounded font-bold text-blue-500 hover:text-yellow-500 disabled:opacity-50"
               >
                 NEXT
               </button>

@@ -6,9 +6,11 @@ import useSearch from '@/components/search/search';
 
 import { DegreeRequirementGroup, DraggableCourse, GetDragIdByCourse } from '../types';
 import DraggableCourseList from './DraggableCourseList';
+import { ObjectID } from 'bson';
 
 export interface CourseSelectorContainerProps {
   degreeRequirements: DegreeRequirementGroup[];
+  courses: string[];
   getSearchedDragId: GetDragIdByCourse;
   getRequirementDragId: GetDragIdByCourse;
 }
@@ -16,11 +18,10 @@ import { trpc } from '@/utils/trpc';
 
 function CourseSelectorContainer({
   degreeRequirements,
+  courses,
   getSearchedDragId,
   getRequirementDragId,
 }: CourseSelectorContainerProps) {
-  console.log('RERENDER');
-  console.log(degreeRequirements);
   // TODO: Provide UI indicator for errors
   const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
     refetchOnWindowFocus: false
@@ -43,24 +44,22 @@ function CourseSelectorContainer({
   // Include tag rendering information here (yes for tag & which tag)
   // TODO: Obviously have a better way of computing all courses user has taken
   // Idea is allCourses will be available as context or props or smthn
-  const allCourses: Set<string> = new Set();
 
   // TODO: Prolly have a context for this
   // Get all courses user has taken
-  degreeRequirements.forEach((reqGroup) => {
-    reqGroup.requirements.forEach((req) => {
-      req.validCourses.forEach((course) => {
-        allCourses.add(course);
-      });
-    });
-  });
 
-  const courseResults = results.map((result) => {
-    return { ...result, status: allCourses.has(result.code) ? 'complete' : undefined };
-  }) as DraggableCourse[];
+  const courseResults = React.useMemo(() => {
+    return results.map((result) => {
+      return {
+        ...result,
+        id: new ObjectID(),
+        status: courses.includes(result.code) ? 'complete' : undefined,
+      };
+    }) as DraggableCourse[];
+  }, [results, courses]);
 
   return (
-    <div className="flex flex-col gap-y-8 w-[344px] h-full overflow-hidden">
+    <div className="flex h-full w-[344px] flex-col gap-y-8 overflow-hidden">
       <SearchBar updateQuery={updateQueryWrapper} placeholder="Search courses" />
 
       {results.length > 0 && (
@@ -72,6 +71,7 @@ function CourseSelectorContainer({
         <RequirementsContainer
           key={idx}
           degreeRequirement={req}
+          courses={courses}
           getCourseItemDragId={getRequirementDragId}
         />
       ))}

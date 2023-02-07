@@ -1,6 +1,6 @@
 import { SemesterCode, SemesterType } from '@prisma/client';
 
-import { createNewYear } from './utilFunctions';
+import { createNewYear, displaySemesterCode } from './utilFunctions';
 
 export interface RecentSemester {
   year: number;
@@ -122,7 +122,7 @@ export function addCreditsToPlan(
     }
   });
   // Add credit years to plan
-  const creditSemesters: {
+  let creditSemesters: {
     courses: string[];
     id: string;
     code: SemesterCode;
@@ -133,7 +133,7 @@ export function addCreditsToPlan(
 
   for (let year = minYear; year < endSemester; year++) {
     const newYear = createNewYear({ semester: 'u', year }).map((sem) => {
-      return { ...sem, courses: [] as string[], id: sem.id.toString() };
+      return { ...sem, courses: [] as string[], id: displaySemesterCode(sem.code) };
     });
 
     // Add credits to year
@@ -151,25 +151,39 @@ export function addCreditsToPlan(
     });
   }
 
+  // Remove extra semester if needed
+  creditSemesters = creditSemesters.filter((sem) => isEarlierSemester(sem.code, semesters[0].code));
   const newSem = creditSemesters.concat(semesters);
   return newSem;
 }
 
+/**
+ * Is semesterOne earlier than semesterTwo
+ */
 export const isEarlierSemester = (semesterOne: SemesterCode, semesterTwo: SemesterCode) => {
-  if (JSON.stringify(semesterOne) === JSON.stringify(semesterTwo)) {
+  if (
+    JSON.stringify({ semester: semesterOne.semester, year: semesterOne.year }) ===
+    JSON.stringify({ semester: semesterTwo.semester, year: semesterTwo.year })
+  ) {
     return false;
   } else if (semesterOne.year > semesterTwo.year) {
     return false;
   } else if (
     semesterOne.year === semesterTwo.year &&
-    (semesterOne.semester === 'f' || semesterOne.semester > semesterTwo.semester)
+    (semesterOne.semester === 'f' || (semesterOne.semester === 'u' && semesterTwo.semester === 's'))
   ) {
     return false;
   }
   return true;
 };
 
-// TODO: Add actual logic to this
-export const getFirstNewSemester = () => {
-  return { semester: 's' as SemesterType, year: 2023 };
+export const getStartingPlanSemester = (): SemesterCode => {
+  const d = new Date();
+  if (d.getMonth() < 5) {
+    return { year: d.getFullYear(), semester: 's' };
+  } else if (d.getMonth() > 7) {
+    return { year: d.getFullYear(), semester: 'f' };
+  } else {
+    return { year: d.getFullYear(), semester: 'u' };
+  }
 };
