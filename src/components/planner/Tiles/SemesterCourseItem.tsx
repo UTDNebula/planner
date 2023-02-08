@@ -8,6 +8,7 @@ import { DragDataFromSemesterTile, DraggableCourse, Semester } from '../types';
 import SyncProblemIcon from '@mui/icons-material/SyncProblem';
 import { displaySemesterCode } from '@/utils/utilFunctions';
 import CheckIcon from '@mui/icons-material/Check';
+import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 
 export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'> {
   course: DraggableCourse;
@@ -28,13 +29,17 @@ export const SemesterCourseItem = forwardRef<HTMLDivElement, SemesterCourseItemP
       <div
         ref={ref}
         {...props}
-        className={`flex h-[22px] w-full items-center rounded-md py-[1px] px-[8px] shadow-md  ${
+        data-tip="delete here"
+        className={`tooltip tooltip-left flex h-[40px] w-full flex-row items-center justify-between rounded-md py-[1px] px-[8px] shadow-md  ${
           isValid ? 'border-[1px] border-red-500' : ''
         }`}
       >
-        <span className="w-32 text-[16px] text-[#1C2A6D]">{course.code}</span>
+        <span className="text-[16px] text-[#1C2A6D]">
+          <DragIndicatorIcon fontSize="inherit" className="mr-3 text-[16px] text-[#D4D4D4]" />
+          {course.code}
+        </span>
 
-        <div className="flex flex-grow text-[12px] font-semibold">
+        <div className="flex  text-[12px] font-semibold">
           {course.taken && (
             <span className=" tooltip text-[#22C55E]" data-tip="Completed">
               <CheckIcon fontSize="small" />
@@ -51,14 +56,14 @@ export const SemesterCourseItem = forwardRef<HTMLDivElement, SemesterCourseItemP
             </div>
           )}
         </div>
-        <div
+        {/* <div
           onClick={(e) => {
             e.stopPropagation();
             onRemove && onRemove(course);
           }}
         >
           <CloseIcon className="self-end" fontSize="small" />
-        </div>
+        </div> */}
       </div>
     );
   },
