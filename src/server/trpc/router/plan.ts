@@ -59,11 +59,8 @@ const { semesters } = planData;
             }
             return true
           });
-        const validCourses = await ctx.platformPrisma.courses.findMany();
-        return planData.semesters.map((sem) => {
-          const courses = sem.courses.filter((course) => course in validCourses);
           return { ...sem, courses };
-        });
+        })}
 
       const hehe = await temporaryFunctionPlzDeleteThis();
 
@@ -413,7 +410,3 @@ const { semesters } = planData;
     }),
 });
 
-
-const getAllCourses = async () => {
-
-}
