@@ -6,7 +6,7 @@ import { SemesterCode, SemesterType } from '@prisma/client';
 import { FC, useMemo, useState } from 'react';
 
 import { trpc } from '@/utils/trpc';
-import { displaySemesterCode, generateSemesters } from '@/utils/utilFunctions';
+import { createSemesterCodeRange, displaySemesterCode, generateSemesters } from '@/utils/utilFunctions';
 
 
 import useSearch from '../search/search';

@@ -9,8 +9,9 @@ import DataGrid from '@/components/credits/DataGrid';
 import DropdownSelect from '@/components/credits/DropdownSelect';
 import { Credit } from '@/components/credits/types';
 import useSearch from '@/components/search/search';
-import { displaySemesterCode, generateSemesters } from '@/utils/utilFunctions';
+import { createSemesterCodeRange, displaySemesterCode, generateSemesters } from '@/utils/utilFunctions';
 import { trpc } from '@/utils/trpc';
+import { getStartingPlanSemester } from '@/utils/plannerUtils';
 
 
 // Array of values to choose from for form
