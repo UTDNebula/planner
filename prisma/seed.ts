@@ -1,5 +1,5 @@
 import { Prisma, PrismaClient, TemplateDataType } from '@prisma/client';
-import { ObjectId } from 'bson';
+import { ObjectID, ObjectId } from 'bson';
 
 import dummyTemplate from '../src/data/degree_template.json';
 const prisma = new PrismaClient();
@@ -35,22 +35,33 @@ async function main() {
       const value = orderedTemplate[name];
 
       for (let i = 0; i < value.length; i++) {
-        const templateDataItems: Array<TemplateDataItems> = [];
+        // Create TemplateData ID
+        const id = new ObjectID().toString();
+
+        const templateDataItems: Array<Prisma.TemplateItemCreateManyInput> = [];
         for (let j = 0; j < value[i].length; j++) {
           if (typeof value[i][j] === 'object') {
             templateDataItems.push({
               name: (value[i][j] as { options: string }).options + ' Course',
               type: 'OPTIONAL',
+              templateDataId: id,
             });
           } else {
-            templateDataItems.push({ name: value[i][j] as string, type: 'CORE' });
+            templateDataItems.push({
+              templateDataId: id,
+              name: value[i][j] as string,
+              type: 'CORE',
+            });
           }
         }
 
         templateDataArray.push({
+          id: id,
           semester: i + 1,
           templateId,
         });
+
+        await prisma.templateItem.createMany({ data: templateDataItems });
       }
 
       console.log(`Adding template ${name}`);

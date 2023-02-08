@@ -33,7 +33,12 @@ export default function PlansPage(): JSX.Element {
         </button>
         <div className="flex w-fit flex-wrap gap-8">
           {data.plans.map((plan) => (
-            <PlanCard key={plan.id} id={plan.id} name={plan.name} />
+            <PlanCard
+              key={plan.id}
+              id={plan.id}
+              name={plan.name}
+              major={plan.requirements?.major ?? 'undecided'}
+            />
           ))}
         </div>
       </section>

@@ -37,12 +37,14 @@ import {
   DraggableCourse,
   Semester,
 } from './types';
-import { createNewYear } from '@/utils/utilFunctions';
+import { createNewYear, isSemCodeEqual } from '@/utils/utilFunctions';
+import { SemesterCode } from '@prisma/client';
 
 /** PlannerTool Props */
 export interface PlannerProps {
   degreeRequirements: DegreeRequirementGroup[];
   semesters: Semester[];
+  showTransfer: boolean;
   planId: string;
   setSemesters: React.Dispatch<React.SetStateAction<Semester[]>>;
 }
@@ -51,6 +53,7 @@ export interface PlannerProps {
 export default function Planner({
   degreeRequirements,
   semesters,
+  showTransfer,
   setSemesters,
   planId,
 }: PlannerProps): JSX.Element {
@@ -67,9 +70,11 @@ export default function Planner({
     }),
   );
 
-  // Extend Course object to contain fields for prereq validation & other stuff ig
-
   const utils = trpc.useContext();
+
+  // Get credits to check if semester invalid
+  const creditsQuery = trpc.credits.getCredits.useQuery(undefined, { staleTime: 10000000000 });
+  const credits = creditsQuery.data;
 
   const { addTask } = useTaskQueue({ shouldProcess: true });
 
@@ -305,7 +310,6 @@ export default function Planner({
     () => semesters.flatMap((sem) => sem.courses).map((course) => course.code),
     [semesters],
   );
-  console.log('courses', courses);
   const handleOnDragStart = ({ active }: { active: Active }) => {
     const originData = active.data.current as DragEventOriginData;
     setActiveCourse({ from: originData.from, course: originData.course });
@@ -366,18 +370,75 @@ export default function Planner({
         <DragOverlay dropAnimation={null}>
           {activeCourse &&
             (activeCourse.from === 'semester-tile' ? (
-              <SemesterCourseItem course={activeCourse.course} isDisabled={false} />
+              <SemesterCourseItem course={activeCourse.course} />
             ) : activeCourse.from === 'course-list' ? (
               <SidebarCourseItem course={activeCourse.course} />
             ) : null)}
         </DragOverlay>
 
         <div className="min-h-fit">
-          <div className="grid w-fit grid-cols-3 grid-rows-4 gap-[32px]">
+          <div className="grid h-auto w-fit grid-cols-3 gap-[32px]">
             {semesters.map((semester) => {
               const hasInvalidCourse =
                 semester.courses.length > 0 &&
                 semester.courses.some((course) => course.validation && !course.validation.isValid);
+
+              // Get map of credits (faster to query later down the line)
+              const creditsMap: {
+                [key: string]: { semesterCode: SemesterCode; transfer: boolean };
+              } = credits?.reduce((prev, curr) => ({ ...prev, [curr.courseCode]: curr }), {}) ?? [];
+
+              const semesterCredits: {
+                [key: string]: { semesterCode: SemesterCode; transfer: boolean };
+              } =
+                credits
+                  ?.filter((credit) => isSemCodeEqual(credit.semesterCode, semester.code))
+                  .reduce((prev, curr) => ({ ...prev, [curr.courseCode]: curr }), {}) ?? [];
+
+              const numSemesterCredits = Object.keys(semesterCredits).length;
+
+              const semesterErrors: SemesterErrors = {
+                isError: false,
+                prerequisites: [],
+                sync: { missing: [], extra: [] },
+              };
+
+              const coursesWithErrors: DraggableCourse[] = semester.courses.map((course) => {
+                let correctSemester: SemesterCode | undefined;
+
+                const isSynced =
+                  (numSemesterCredits === 0 && !(course.code in creditsMap)) ||
+                  (course.code in creditsMap &&
+                    isSemCodeEqual(creditsMap[course.code].semesterCode, semester.code));
+                if (isSynced) {
+                  delete semesterCredits[course.code];
+                } else {
+                  semesterErrors.isError = true;
+                  semesterErrors.sync.extra.push(course.code);
+
+                  // Check course in credits
+                  if (course.code in creditsMap)
+                    correctSemester = creditsMap[course.code].semesterCode;
+                }
+
+                // TODO: This is prolly where prereq validation should take place
+                return {
+                  ...course,
+                  transfer: course.code in creditsMap && creditsMap[course.code].transfer,
+                  taken: course.code in creditsMap,
+                  sync: { isSynced, correctSemester },
+                };
+              });
+
+              // Add missing courses
+              semesterErrors.sync.missing = Object.keys(semesterCredits);
+
+              const newSem = {
+                ...semester,
+                courses: showTransfer
+                  ? coursesWithErrors
+                  : coursesWithErrors.filter((course) => !course.transfer),
+              };
 
               return (
                 <DroppableSemesterTile
@@ -387,8 +448,9 @@ export default function Planner({
                   getSemesterCourseDragId={(course, semester) =>
                     `semester-tile-course-${semester.id}-${course.id}`
                   }
-                  semester={semester}
+                  semester={newSem}
                   isValid={!hasInvalidCourse}
+                  semesterErrors={semesterErrors}
                 />
               );
             })}
@@ -402,3 +464,12 @@ export default function Planner({
     </DndContext>
   );
 }
+
+export type SemesterErrors = {
+  isError: boolean;
+  prerequisites: string[];
+  sync: {
+    missing: string[];
+    extra: string[];
+  };
+};

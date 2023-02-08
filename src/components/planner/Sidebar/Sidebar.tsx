@@ -25,18 +25,10 @@ function CourseSelectorContainer({
   // TODO: Provide UI indicator for errors
   const { results, updateQuery } = useSearch({
     getData: loadDummyCourses,
-    initialQuery: '@',
+    initialQuery: '',
     filterFn: (elm, query) => elm['code'].toLowerCase().includes(query.toLowerCase()),
     constraints: [0, 5],
   });
-
-  // TODO: Change later!!! This code hides search bar when no input
-  const updateQueryWrapper = (query: string) => {
-    if (query === '') {
-      query = '@';
-    }
-    updateQuery(query);
-  };
 
   // Include tag rendering information here (yes for tag & which tag)
   // TODO: Obviously have a better way of computing all courses user has taken
@@ -57,7 +49,7 @@ function CourseSelectorContainer({
 
   return (
     <div className="flex h-full w-[344px] flex-col gap-y-8 overflow-hidden">
-      <SearchBar updateQuery={updateQueryWrapper} placeholder="Search courses" />
+      <SearchBar updateQuery={updateQuery} placeholder="Search courses" />
 
       {results.length > 0 && (
         <div className="bg-white p-4">
