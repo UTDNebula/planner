@@ -32,14 +32,16 @@ export default function RequirementInfo({
     updateQuery('');
   }, [courses]);
   const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
-    refetchOnWindowFocus: false
-  })
+    refetchOnWindowFocus: false,
+  });
   // TODO: Change this later when connecting to API
   const getCourses = async (): Promise<DraggableCourse[]> => {
-    const courseData = q.data ? q.data.reduce((acc, curr) => {
-      acc[curr.subject_prefix + curr.course_number] = curr;
-      return acc;
-    }, {} as Record<string, typeof q.data[0]>) : {};
+    const courseData = q.data
+      ? q.data.reduce((acc, curr) => {
+          acc[curr.subject_prefix + curr.course_number] = curr;
+          return acc;
+        }, {} as Record<string, typeof q.data[0]>)
+      : {};
     const temp = courses;
 
     const courseInfoList: (DraggableCourse | undefined)[] = temp.map((elm) => {

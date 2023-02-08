@@ -48,19 +48,20 @@ export const planRouter = router({
         });
       }
 
-const { semesters } = planData;
+      const { semesters } = planData;
       // FIX THIS LATER IDC RN
       const temporaryFunctionPlzDeleteThis = async () => {
         return semesters.map((sem) => {
           const courses = sem.courses.filter((course) => {
-            const [possiblePrefix, possibleCode] = course.split(" ")
+            const [possiblePrefix, possibleCode] = course.split(' ');
             if (Number.isNaN(Number(possibleCode)) || !Number.isNaN(Number(possiblePrefix))) {
-              return false
+              return false;
             }
-            return true
+            return true;
           });
           return { ...sem, courses };
-        })}
+        });
+      };
 
       const hehe = await temporaryFunctionPlzDeleteThis();
 
@@ -409,4 +410,3 @@ const { semesters } = planData;
       }
     }),
 });
-

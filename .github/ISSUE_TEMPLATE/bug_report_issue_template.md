@@ -1,9 +1,8 @@
 ---
-name: "🐛 Bug Report"
+name: '🐛 Bug Report'
 about: Report a reproducible bug or regression.
 title: 'Bug: '
 labels: 'Status: Unconfirmed'
-
 ---
 
 ## Bug description
@@ -13,8 +12,6 @@ labels: 'Status: Unconfirmed'
   screenshots if needed. Please test using the latest version of the relevant
   React packages to make sure your issue has not already been fixed.
 -->
-
-
 
 ## Steps To Reproduce
 

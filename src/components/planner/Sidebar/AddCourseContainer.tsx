@@ -7,7 +7,6 @@ import RequirementSearchBar from './RequirementSearchBar';
 import SelectableCourseContainer from './SelectableCourseContainer';
 import { trpc } from '@/utils/trpc';
 
-
 export default function AddCourseContainer({
   allCourses,
   validCourses,
@@ -24,11 +23,12 @@ export default function AddCourseContainer({
   handleCourseSubmit: () => void;
 }) {
   const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
-    refetchOnWindowFocus: false
-  })
+    refetchOnWindowFocus: false,
+  });
   // TODO: Clean this logic up hella xD
   const { results, updateQuery }: SearchReturn<Course, string> = useSearch({
-    getData: async () => q.data ? q.data.map((c)=>({code: c.subject_prefix + c.course_number})) : [],
+    getData: async () =>
+      q.data ? q.data.map((c) => ({ code: c.subject_prefix + c.course_number })) : [],
     initialQuery: '',
     filterFn: (elm, query) => elm.code.toLowerCase().includes(query.toLowerCase()),
     constraints: [0, 5],

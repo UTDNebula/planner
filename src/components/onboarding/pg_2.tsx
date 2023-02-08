@@ -9,11 +9,14 @@ import AddIcon from '@mui/icons-material/Add';
 import DropdownSelect from '@/components/credits/DropdownSelect';
 import { Credit } from '@/components/credits/types';
 import useSearch from '@/components/search/search';
-import { createSemesterCodeRange, displaySemesterCode, generateSemesters } from '@/utils/utilFunctions';
+import {
+  createSemesterCodeRange,
+  displaySemesterCode,
+  generateSemesters,
+} from '@/utils/utilFunctions';
 import { trpc } from '@/utils/trpc';
 import { getStartingPlanSemester } from '@/utils/plannerUtils';
 import { UploadTranscriptDialog } from '../home/Credits';
-
 
 // Array of values to choose from for form
 
@@ -38,10 +41,11 @@ export default function PageTwo({ handleChange, data, startSemester }: Page2data
   const [semesterCode, setSemester] = useState<SemesterCode>(semesters[0]);
 
   const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
-    refetchOnWindowFocus: false
-  })
+    refetchOnWindowFocus: false,
+  });
   const { results, updateQuery } = useSearch({
-    getData: async () => q.data ? q.data.map((c)=>({code: c.subject_prefix + c.course_number})) : [],
+    getData: async () =>
+      q.data ? q.data.map((c) => ({ code: c.subject_prefix + c.course_number })) : [],
     initialQuery: '',
     filterFn: (course, query) => course.code.toLowerCase().includes(query.toLowerCase()),
   });

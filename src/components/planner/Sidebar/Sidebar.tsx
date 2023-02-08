@@ -24,10 +24,11 @@ function CourseSelectorContainer({
 }: CourseSelectorContainerProps) {
   // TODO: Provide UI indicator for errors
   const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
-    refetchOnWindowFocus: false
-  })
+    refetchOnWindowFocus: false,
+  });
   const { results, updateQuery } = useSearch({
-    getData: async () => q.data ? q.data.map((c)=>({code: c.subject_prefix + c.course_number})) : [],
+    getData: async () =>
+      q.data ? q.data.map((c) => ({ code: c.subject_prefix + c.course_number })) : [],
     initialQuery: '@',
     filterFn: (elm, query) => elm['code'].toLowerCase().includes(query.toLowerCase()),
     constraints: [0, 5],
