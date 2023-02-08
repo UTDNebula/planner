@@ -19,9 +19,13 @@ print(result)
 unfilled_reqs = result.get_unfilled_reqs()
 
 if unfilled_reqs:
-    print('\n--------------------------------\nUnsatisfied requirements (cannot graduate):')
+    print(
+        "\n--------------------------------\nUnsatisfied requirements (cannot graduate):"
+    )
     for req, hours in unfilled_reqs:
-        print(f'  {req.name}: ({hours}/{req.hours})')
+        print(f"  {req.name}: ({hours}/{req.hours})")
 
 else:
-    print('\n--------------------------------\nAll requirements filled. You can graduate!')
+    print(
+        "\n--------------------------------\nAll requirements filled. You can graduate!"
+    )

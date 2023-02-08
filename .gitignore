@@ -1,5 +1,11 @@
 .idea/
+.vscode/
+
 __pycache__/
-pyvenv.cfg
+.mypy_cache/
+
+venv/
+
 scratch
+pyvenv.cfg
 .env
