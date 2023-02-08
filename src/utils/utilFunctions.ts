@@ -142,3 +142,7 @@ export function createSemesterCodeRange(
   }
   return semesterCodes;
 }
+
+export function isSemCodeEqual(semCodeOne: SemesterCode, semCodeTwo: SemesterCode) {
+  return semCodeOne.semester === semCodeTwo.semester && semCodeOne.year === semCodeTwo.year;
+}

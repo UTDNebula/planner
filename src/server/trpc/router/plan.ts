@@ -18,6 +18,7 @@ export const planRouter = router({
           plans: {
             select: {
               name: true,
+              requirements: true,
               id: true,
             },
           },
@@ -28,17 +29,6 @@ export const planRouter = router({
   }),
   getPlanById: protectedProcedure.input(z.string().min(1)).query(async ({ ctx, input }) => {
     try {
-      // Fetch credits
-      const creditData = await ctx.prisma.credit.findMany({
-        where: {
-          userId: ctx.session.user.id,
-        },
-        select: {
-          courseCode: true,
-          semesterCode: true,
-        },
-      });
-
       // Fetch current plan
       const planData = await ctx.prisma.plan.findUnique({
         where: {
@@ -58,14 +48,8 @@ export const planRouter = router({
         });
       }
 
-      // Add credits to plan
-
-      const semesters = addCreditsToPlan(planData.semesters, creditData, planData.id);
-
-      planData.semesters = semesters;
-
+const { semesters } = planData;
       // FIX THIS LATER IDC RN
-
       const temporaryFunctionPlzDeleteThis = async () => {
         return semesters.map((sem) => {
           const courses = sem.courses.filter((course) => {
@@ -75,9 +59,11 @@ export const planRouter = router({
             }
             return true
           });
+        const validCourses = await ctx.platformPrisma.courses.findMany();
+        return planData.semesters.map((sem) => {
+          const courses = sem.courses.filter((course) => course in validCourses);
           return { ...sem, courses };
         });
-      };
 
       const hehe = await temporaryFunctionPlzDeleteThis();
 
@@ -426,3 +412,8 @@ export const planRouter = router({
       }
     }),
 });
+
+
+const getAllCourses = async () => {
+
+}

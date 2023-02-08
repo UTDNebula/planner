@@ -1,5 +1,5 @@
 {
-  "computer_science_bs": [
+  "Computer Science(BS)": [
     [
       "MATH 2413",
       "CS 1200",
@@ -91,7 +91,7 @@
       }
     ]
   ],
-  "psychology_bs": [
+  "Psychology(BS)": [
     [
       "PSY 2301",
       "BBSU 1100",
@@ -206,7 +206,7 @@
       }
     ]
   ],
-  "biology_bs": [
+  "Biology(BS)": [
     ["CHEM 1311", "CHEM 1111", "HIST 1301", "MATH 2413", "COMM 1311", "NATHS 1101", "UNIV 1010"],
     ["CHEM 1312", "CHEM 1112", "HIST 1302", "MATH 2414", "PHYS 2325", "PHYS 2125"],
     ["CHEM 2323", "CHEM 2123", "BIOL 2311", "BIOL 2111", "PHYS 2326", "PHYS 2126", "RHET 1302"],
@@ -262,7 +262,7 @@
       }
     ]
   ],
-  "information_technology_and_systems_bs": [
+  "Information Technology and Systems(BS)": [
     [
       {
         "options": "010"
@@ -322,7 +322,7 @@
     ],
     ["OPRE 3310", "OBHR 3310", "ITSS 4370"]
   ],
-  "economics_bs": [
+  "Economics(BS)": [
     [
       {
         "options": "030"
@@ -416,7 +416,7 @@
       }
     ]
   ],
-  "accounting_bs": [
+  "Accounting(BS)": [
     [
       {
         "options": "010"
@@ -497,7 +497,7 @@
       "BA 4090"
     ]
   ],
-  "finance_bs": [
+  "Finance(BS)": [
     [
       {
         "options": "010"
@@ -593,7 +593,7 @@
       }
     ]
   ],
-  "mechanical_engineering": [
+  "Mechanical Engineering(BS)": [
     [
       "RHET 1302",
       "MATH 2417",
@@ -667,7 +667,7 @@
       }
     ]
   ],
-  "neuroscience_bs": [
+  "Neuroscience(BS)": [
     [
       {
         "options": "020"
@@ -768,7 +768,7 @@
       }
     ]
   ],
-  "marketing_bs": [
+  "Marketing(BS)": [
     [
       {
         "options": "010"
@@ -862,7 +862,7 @@
       }
     ]
   ],
-  "business_analytics_bs": [
+  "Business Analytics(BS)": [
     [
       {
         "options": "010"
@@ -939,7 +939,7 @@
       }
     ]
   ],
-  "business_administration_bs": [
+  "Business Administration(BS)": [
     [
       {
         "options": "010"
@@ -1037,7 +1037,7 @@
       }
     ]
   ],
-  "healthcare_studies_bs": [
+  "Heathcare Studies(BS)": [
     ["CHEM 1311", "CHEM 1111", "GOVT 2305", "MATH 1325", "RHET 1302", "BIS 1100", "UNIV 1010"],
     ["CHEM 1312", "CHEM 1112", "COMM 1311", "GOVT 2306", "HIST 1301", "HLTH 1100", "STAT 2332"],
     ["BIOL 2311", "BIOL 2111", "CHEM 2323", "CHEM 2123", "PHYS 1301", "PHYS 2125", "HIST 1302"],
@@ -1076,7 +1076,7 @@
       }
     ]
   ],
-  "electrical_engineering_bsee": [
+  "Electrical Engineering(BSEE)": [
     [
       {
         "options": "Core"
@@ -1158,7 +1158,7 @@
       }
     ]
   ],
-  "computer_engineering_bs": [
+  "Computer Engineering(BS)": [
     [
       {
         "options": "Core"
@@ -1229,7 +1229,7 @@
       }
     ]
   ],
-  "biomedical_engineering_bs": [
+  "Biomedical Engineering(BS)": [
     [
       "BMEN 1100",
       "CHEM 1311",
@@ -1294,7 +1294,7 @@
       }
     ]
   ],
-  "arts_technology_and_emerging_communication_ba": [
+  "Arts, Technology, and Emerging Communication(BA)": [
     ["ATCM 1100", "UNIV 1010", "ATCM 2300", "CS1334", "ATCM 2301", "RHET 1302"],
     [
       "ATCM 2302",
@@ -1401,7 +1401,7 @@
       }
     ]
   ],
-  "history_ba": [
+  "History(BA)": [
     [
       {
         "options": "010"
@@ -1532,7 +1532,7 @@
       }
     ]
   ],
-  "literature_ba": [
+  "Literature(BA)": [
     [
       {
         "options": "010"
@@ -1669,7 +1669,7 @@
       }
     ]
   ],
-  "visual_and_performing_arts_ba": [
+  "Visual and Performing Arts(BA)": [
     [
       {
         "options": "010"
@@ -1806,7 +1806,7 @@
       }
     ]
   ],
-  "child_learning_and_development_bs": [
+  "Child Learning and Development(BS)": [
     [
       {
         "options": "010"
@@ -1927,7 +1927,7 @@
       }
     ]
   ],
-  "cognitive_science_bs": [
+  "Cognitive Science(BS)": [
     ["CGS 2301 ", "HIST 1301 ", "MATH 2413 ", " PSY 2301 ", "BBSU 1100 ", "UNIV 1010 "],
     [" CS 1337 ", "HIST 1302 ", "MATH 2414 ", "GOVT 2306 ", "RHET 1302 "],
     [
@@ -2014,7 +2014,7 @@
       }
     ]
   ],
-  "speech_language_and_hearing_sciences_bs": [
+  "Speech, Language, and Hearing Sciences(BS)": [
     [
       {
         "options": "030"
@@ -2109,7 +2109,7 @@
       }
     ]
   ],
-  "criminology_ba": [
+  "Criminology(BA)": [
     ["RHET 1302", "CRIM 1301", "GOVT 2305", "ECON 2301", "MATH 1314", "EPPS 1110"],
     [
       {
@@ -2200,7 +2200,7 @@
       }
     ]
   ],
-  "political_science_ba": [
+  "Political Science(BA)": [
     [
       {
         "options": "030"
@@ -2322,7 +2322,7 @@
       }
     ]
   ],
-  "public_affairs_bs": [
+  "Public Affairs(BS)": [
     [
       {
         "options": "030"
@@ -2420,7 +2420,7 @@
       }
     ]
   ],
-  "software_engineering_bs": [
+  "Software Engineering(BS)": [
     [
       {
         "options": "060"
@@ -2503,7 +2503,7 @@
       }
     ]
   ],
-  "global_business_bs": [
+  "Global Business(BS)": [
     [
       {
         "options": "040"
@@ -2583,7 +2583,7 @@
       }
     ]
   ],
-  "healthcare_management_bs": [
+  "Healthcare Management(BS)": [
     [
       {
         "options": "010"
@@ -2673,7 +2673,7 @@
       }
     ]
   ],
-  "human_resource_management_bs": [
+  "Human Resource Management(BS)": [
     [
       {
         "options": "010"
@@ -2759,7 +2759,7 @@
       "BA 4095"
     ]
   ],
-  "actuarial_science_bs": [
+  "Actuarial Science(BS)": [
     ["ACCT 2301", "CS 1336", "CS 1136", "MATH 2417", "RHET 1302", "NATS 1101", "UNIV 1010"],
     ["ACCT 2302", "CS 1337", "ECON 2301", "MATH 2418", "MATH 2419"],
     ["ACTS 4308", "ECON 2302", "BCOM 3300", "PHYS 2325", "MATH 3351", "PHYS 2126"],
@@ -2777,7 +2777,7 @@
     ],
     ["ACTS 4305", "MATH 2420", "MATH 4334", "STAT 4382"]
   ],
-  "biochemistry_bs": [
+  "Biochemistry(BS)": [
     ["CHEM 1311", "CHEM 1111", "HIST 1301", "MATH 2413", "COMM 1311", "NATS 1101", "UNIV 1010"],
     ["CHEM 1312", "CHEM 1112", "HIST 1302", "MATH 2414", "PHYS 2325"],
     ["CHEM 2323", "CHEM 2123", "BIOL 2311", "BIOL 2111", "PHYS 2326", "PHYS 2126", "RHET 1302"],
@@ -2805,7 +2805,7 @@
       }
     ]
   ],
-  "chemistry_bs": [
+  "Chemistry(BS)": [
     ["CHEM 1311", "CHEM 1111", "HIST 1301", "MATH 2413", "COMM 1311", "NATS 1101", "UNIV 1010"],
     ["CHEM 1312", "CHEM 1112", "HIST 1302", "MATH 2414", "PHYS 2325"],
     ["CHEM 2323", "CHEM 2123", "PHYS 2326", "PHYS 2126", "MATH 2415", "RHET 1302"],
@@ -2853,7 +2853,7 @@
       }
     ]
   ],
-  "mathematics_bs": [
+  "Mathematics(BS)": [
     ["HIST 1301", "MATH 2417", "MATH 2370", "COMM 1311", "UNIV 1010"],
     ["HIST 1302", "MATH 2419", "PHYS 2325", "ARTS 1301", "NATS 1101"],
     ["GOVT 2305", "MATH 2418", "PHYS 2326", "PHYS 2126", "RHET 1302"],

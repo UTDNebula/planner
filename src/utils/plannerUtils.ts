@@ -83,6 +83,11 @@ export function formatDegreeValidationRequest(
   semesters: { code: SemesterCode; id: string; courses: string[] }[],
   degree = 'computer_science_bs',
 ) {
+  const getDegreeName = (degree: string) => {
+    const temp = degree.split(' ').join('_').split('(').join('_');
+    return temp?.substring(0, temp.length - 1).toLowerCase();
+  };
+
   return {
     courses: semesters
       .flatMap((s) => s.courses)
@@ -100,7 +105,7 @@ export function formatDegreeValidationRequest(
         };
       }),
     bypasses: [],
-    degree,
+    degree: getDegreeName(degree),
   };
 }
 

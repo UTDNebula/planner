@@ -14,7 +14,6 @@ import courseCode from '@/data/courseCode.json';
 import { SemesterType, SemesterCode } from '@prisma/client';
 import { trpc } from '@/utils/trpc';
 import { Credit } from '../credits/types';
-// import type { TextItem } from 'pdfjs-dist/types/src/display/api';
 
 /**
  * A page containing student attributes and other account settings.
@@ -23,16 +22,19 @@ export default function CreditsPage(): JSX.Element {
   const [openAddCredit, setOpenAddCredit] = useState(false);
   const [openTranscriptDialog, setOpenTranscriptDialog] = useState(false);
   return (
-    <main className="h-[90vh] w-full overflow-y-scroll">
+    <main className="w-full overflow-y-scroll">
       <Head>
-        <title>Nebula - Your credits</title>
+        <title>Nebula - Your course history</title>
       </Head>
       <UploadTranscriptDialog
         open={openTranscriptDialog}
         onClose={() => setOpenTranscriptDialog(false)}
       />
       <div className="flex  w-full flex-col gap-10 overflow-y-auto p-5 lg:p-20">
-        <h1 className="text-[40px] font-semibold text-[#1C2A6D]">Credits</h1>
+        <div>
+          <h1 className="text-[40px] font-semibold text-[#1C2A6D]">Course History</h1>
+          <div className=" text-[#1C2A6D]">Add the courses that you have taken below!</div>
+        </div>
         <div className="flex gap-10">
           <Button onClick={() => setOpenAddCredit(true)} icon={<AddIcon />} className="w-[140px]">
             Add Credit
@@ -68,7 +70,7 @@ export default function CreditsPage(): JSX.Element {
   );
 }
 
-const UploadTranscriptDialog = (props: { open: boolean; onClose: () => void }) => {
+export const UploadTranscriptDialog = (props: { open: boolean; onClose: () => void }) => {
   const { open, onClose } = props;
   const [loading, setLoading] = useState(false);
   const [file, setFile] = useState<File | null>(null);
@@ -82,9 +84,10 @@ const UploadTranscriptDialog = (props: { open: boolean; onClose: () => void }) =
   });
 
   const parseTranscript = async (file: File) => {
-    const pdf = (await import('pdfjs-dist')).default;
+    const pdf = await import('pdfjs-dist');
     // TODO: How to use local import for this?
     pdf.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/3.3.122/pdf.worker.js`;
+
     const data = await pdf.getDocument(await file.arrayBuffer()).promise;
 
     // store keywords that arn't "[""]"
@@ -125,7 +128,11 @@ const UploadTranscriptDialog = (props: { open: boolean; onClose: () => void }) =
       if (courseCode.includes(code) && j < keywords.length - 1) {
         const digit = keywords[j + 1].slice(0, 4).replace(/^\s+|\s+$/g, '');
         if (/^[\d-]+$/.test(digit)) {
-          credits.push({ semesterCode: term, courseCode: code + digit, transfer: isTransfer });
+          credits.push({
+            semesterCode: term,
+            courseCode: `${code} ${digit}`,
+            transfer: isTransfer,
+          });
         }
       } else {
         const t = isTerm(code + ' ' + keywords[j + 1]);

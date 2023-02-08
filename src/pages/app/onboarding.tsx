@@ -15,8 +15,9 @@ import { trpc } from '@/utils/trpc';
 import { generateSemesters } from '@/utils/utilFunctions';
 
 import PageOne, { PageOneTypes } from '../../components/onboarding/pg_1';
-import PageTwo, { PageTwoTypes } from '../../components/onboarding/pg_2';
+import { PageTwoTypes } from '../../components/onboarding/pg_2';
 import { authOptions } from '../api/auth/[...nextauth]';
+import dynamic from 'next/dynamic';
 
 /**
  * The first onboarding page for the application.
@@ -47,7 +48,8 @@ const initialOnboardingData: OnboardingData = {
 };
 
 export default function OnboardingPage() {
-  // Generate semesters here bc MUI annoying
+  // dynamically importing pg_2 bc library too phat
+  const PageTwo = dynamic(() => import('@/components/onboarding/pg_2'), { ssr: false });
 
   const [onboardingData, setOnboardingData] = useState<OnboardingData>(initialOnboardingData);
 
