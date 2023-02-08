@@ -38,7 +38,7 @@ jobs:
         env:
           # Prisma
           DATABASE_URL: mongodb://localhost:27017/db
-
+          PLATFORM_DATABASE_URL: mongodb://localhost:27017/platformDB
           # Next Auth
           NEXTAUTH_URL: http://localhost:3000
           NEXTAUTH_SECRET: abc

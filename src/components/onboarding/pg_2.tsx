@@ -12,8 +12,9 @@ import useSearch from '@/components/search/search';
 import {
   createSemesterCodeRange,
   displaySemesterCode,
-  loadDummyCourses,
+  generateSemesters,
 } from '@/utils/utilFunctions';
+import { trpc } from '@/utils/trpc';
 import { getStartingPlanSemester } from '@/utils/plannerUtils';
 import { UploadTranscriptDialog } from '../home/Credits';
 
@@ -39,8 +40,12 @@ export default function PageTwo({ handleChange, data, startSemester }: Page2data
 
   const [semesterCode, setSemester] = useState<SemesterCode>(semesters[0]);
 
+  const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
+    refetchOnWindowFocus: false,
+  });
   const { results, updateQuery } = useSearch({
-    getData: loadDummyCourses,
+    getData: async () =>
+      q.data ? q.data.map((c) => ({ code: c.subject_prefix + c.course_number })) : [],
     initialQuery: '',
     filterFn: (course, query) => course.code.toLowerCase().includes(query.toLowerCase()),
   });

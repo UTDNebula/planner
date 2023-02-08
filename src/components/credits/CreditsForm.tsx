@@ -9,7 +9,7 @@ import { trpc } from '@/utils/trpc';
 import {
   createSemesterCodeRange,
   displaySemesterCode,
-  loadDummyCourses,
+  generateSemesters,
 } from '@/utils/utilFunctions';
 
 import useSearch from '../search/search';
@@ -47,8 +47,13 @@ const CreditsForm: FC = () => {
     },
   });
 
+  const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
+    refetchOnWindowFocus: false,
+  });
+
   const { results, updateQuery } = useSearch({
-    getData: loadDummyCourses,
+    getData: async () =>
+      q.data ? q.data.map((c) => ({ code: c.subject_prefix + c.course_number })) : [],
     initialQuery: '',
     filterFn: (course, query) => course.code.toLowerCase().includes(query.toLowerCase()),
   });
