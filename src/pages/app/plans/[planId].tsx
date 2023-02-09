@@ -29,6 +29,9 @@ export default function PlanDetailPage(
   const { planId } = props;
   const planQuery = trpc.plan.getPlanById.useQuery(planId);
 
+  const bypassQuery = trpc.plan.getBypass.useQuery({ planId });
+  const bypass = bypassQuery?.data;
+
   const [showTransfer, setShowTransfer] = useState(true);
 
   const { data, isLoading } = planQuery;
@@ -39,7 +42,9 @@ export default function PlanDetailPage(
     planId: planId,
   });
 
-  const [semesters, setSemesters] = useState<Semester[]>(getSemestersInfo(data?.plan));
+  const [semesters, setSemesters] = useState<Semester[]>(
+    getSemestersInfo(data?.plan, bypass ?? []),
+  );
 
   // Indicate UI loading
   if (isLoading) {
@@ -121,6 +126,11 @@ export async function getServerSideProps(context: GetServerSidePropsContext<{ pl
   };
 }
 
+type Bypass = {
+  name: string;
+  hours: number;
+  requirement: string;
+};
 // Not sure if tRPC autogenerates the type
 function getSemestersInfo(
   plan:
@@ -130,16 +140,21 @@ function getSemestersInfo(
         name: string;
       }
     | undefined,
+  bypass: Bypass[],
 ): Semester[] {
   if (!plan) {
     return [];
   }
   return plan.semesters.map((sem) => {
     const courses = sem.courses.map((course: string): DraggableCourse => {
-      const newCourse = {
-        id: new ObjectID(),
-        code: course,
-      };
+      const bypassVal = bypass.find((item) => item.name === course);
+
+      const newCourse = bypassVal
+        ? { id: new ObjectID(), code: course, bypass: bypassVal }
+        : {
+            id: new ObjectID(),
+            code: course,
+          };
       return newCourse;
     });
     const semester: Semester = { code: sem.code, id: sem.id as unknown as ObjectID, courses };

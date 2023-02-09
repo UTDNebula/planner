@@ -38,6 +38,7 @@ export const planRouter = router({
           name: true,
           id: true,
           semesters: true,
+          requirements: true,
         },
       });
 
@@ -48,6 +49,13 @@ export const planRouter = router({
         });
       }
 
+      // Fetch bypasses
+      const bypasses = await ctx.prisma.bypass.findMany({
+        where: {
+          degreeRequirementsId: planData?.requirements?.id,
+        },
+      });
+
       const { semesters } = planData;
       // FIX THIS LATER IDC RN
       const temporaryFunctionPlzDeleteThis = async () => {
@@ -55,7 +63,8 @@ export const planRouter = router({
           const courses = sem.courses.filter((course) => {
             const [possiblePrefix, possibleCode] = course.split(' ');
             if (Number.isNaN(Number(possibleCode)) || !Number.isNaN(Number(possiblePrefix))) {
-              return false;
+              // still return true if in bypass
+              return bypasses.find((bypass) => course === bypass.name) ? true : false;
             }
             return true;
           });
@@ -77,7 +86,7 @@ export const planRouter = router({
         return { plan: planData, validation: [] };
       }
 
-      const body = formatDegreeValidationRequest(hehe, degreeRequirements?.major);
+      const body = formatDegreeValidationRequest(hehe, degreeRequirements?.major, bypasses);
 
       const validationData = await fetch(`${process.env.VALIDATOR}/validate-degree-plan`, {
         method: 'POST',
@@ -420,44 +429,72 @@ export const planRouter = router({
       }
     }),
   addBypass: protectedProcedure
-    .input(z.object({ name: z.string(), hours: z.number(), requirement: z.string() }))
+    .input(
+      z.object({
+        planId: z.string(),
+        name: z.string(),
+        hours: z.number(),
+        requirement: z.string(),
+      }),
+    )
     .mutation(async ({ ctx, input }) => {
       try {
-        const userId = ctx.session.user.id;
+        const { planId, name, hours, requirement } = input;
 
-        const { name, hours, requirement } = input;
-
-        const plan = await ctx.prisma.plan.findUnique({
+        const plan = await ctx.prisma.plan.findFirst({
           where: {
-            id: userId,
+            id: planId,
           },
           select: {
+            id: true,
             requirements: true,
           },
         });
 
+        console.log(plan?.id);
+        console.log('MAUBE?');
         await ctx.prisma.degreeRequirements.update({
           where: {
-            id: plan?.requirements?.id,
+            planId: plan?.id,
           },
           data: {
             bypasses: {
-              create: { name, hours, requirement },
+              create: [{ name, hours, requirement }],
             },
           },
         });
       } catch (error) {}
     }),
   removeBypass: protectedProcedure
-    .input(z.object({ id: z.string() }))
+    .input(z.object({ name: z.string() }))
     .mutation(async ({ ctx, input }) => {
-      const { id } = input;
+      const { name } = input;
       try {
-        await ctx.prisma.bypass.delete({
+        await ctx.prisma.bypass.deleteMany({
           where: {
-            id,
+            name,
           },
         });
       } catch (error) {}
+    }),
+  getBypass: protectedProcedure
+    .input(z.object({ planId: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const { planId } = input;
+      try {
+        const degreeRequirements = await ctx.prisma.degreeRequirements.findUnique({
+          where: {
+            planId: planId,
+          },
+        });
+
+        return await ctx.prisma.bypass.findMany({
+          where: {
+            degreeRequirementsId: degreeRequirements?.id,
+          },
+        });
+      } catch (error) {
+        console.error(error);
+      }
     }),
 });

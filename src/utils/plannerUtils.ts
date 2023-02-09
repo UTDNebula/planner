@@ -1,4 +1,4 @@
-import { SemesterCode, SemesterType } from '@prisma/client';
+import { Bypass, SemesterCode, SemesterType } from '@prisma/client';
 
 import { createNewYear, displaySemesterCode } from './utilFunctions';
 
@@ -82,6 +82,7 @@ export function reorderList<T>(list: T[], startIndex: number, endIndex: number) 
 export function formatDegreeValidationRequest(
   semesters: { code: SemesterCode; id: string; courses: string[] }[],
   degree = 'computer_science_bs',
+  bypasses: Bypass[] = [],
 ) {
   const getDegreeName = (degree: string) => {
     const temp = degree.split(' ').join('_').split('(').join('_');
@@ -104,7 +105,9 @@ export function formatDegreeValidationRequest(
           hours,
         };
       }),
-    bypasses: [],
+    bypasses: bypasses.map((bypass) => {
+      return { course: bypass.name, requirement: bypass.requirement, hours: bypass.hours };
+    }),
     degree: getDegreeName(degree),
   };
 }
