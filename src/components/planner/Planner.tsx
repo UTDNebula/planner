@@ -114,7 +114,7 @@ export default function Planner({
     },
   });
 
-  const removeBypass = trpc.plan.addBypass.useMutation({
+  const removeBypass = trpc.plan.removeBypass.useMutation({
     async onSuccess() {
       await utils.plan.getPlanById.invalidate(planId);
     },
@@ -131,6 +131,7 @@ export default function Planner({
   }) => {
     try {
       addBypass.mutateAsync({
+        planId,
         name,
         hours,
         requirement,
@@ -138,20 +139,10 @@ export default function Planner({
     } catch (error) {}
   };
 
-  const handleRemoveBypass = async ({
-    name,
-    hours,
-    requirement,
-  }: {
-    name: string;
-    hours: number;
-    requirement: string;
-  }) => {
+  const handleRemoveBypass = async ({ name }: { name: string }) => {
     try {
       removeBypass.mutateAsync({
         name,
-        hours,
-        requirement,
       });
     } catch (error) {}
   };
@@ -290,8 +281,7 @@ export default function Planner({
     );
 
     if (targetCourse.bypass) {
-      const { hours, requirement } = targetCourse.bypass;
-      handleRemoveBypass({ name: targetCourse.code, hours, requirement });
+      handleRemoveBypass({ name: targetCourse.code });
     }
 
     const semesterId = targetSemester.id.toString();
