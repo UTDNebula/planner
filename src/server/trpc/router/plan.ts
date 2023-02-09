@@ -66,6 +66,7 @@ export const planRouter = router({
       const hehe = await temporaryFunctionPlzDeleteThis();
 
       // Get degree requirements
+      // TODO: Prolly add bypasses back here
       const degreeRequirements = await ctx.prisma.degreeRequirements.findFirst({
         where: {
           planId: planData.id,
@@ -417,5 +418,46 @@ export const planRouter = router({
       } catch (error) {
         console.log(error);
       }
+    }),
+  addBypass: protectedProcedure
+    .input(z.object({ name: z.string(), hours: z.number(), requirement: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      try {
+        const userId = ctx.session.user.id;
+
+        const { name, hours, requirement } = input;
+
+        const plan = await ctx.prisma.plan.findUnique({
+          where: {
+            id: userId,
+          },
+          select: {
+            requirements: true,
+          },
+        });
+
+        await ctx.prisma.degreeRequirements.update({
+          where: {
+            id: plan?.requirements?.id,
+          },
+          data: {
+            bypasses: {
+              create: { name, hours, requirement },
+            },
+          },
+        });
+      } catch (error) {}
+    }),
+  removeBypass: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const { id } = input;
+      try {
+        await ctx.prisma.bypass.delete({
+          where: {
+            id,
+          },
+        });
+      } catch (error) {}
     }),
 });
