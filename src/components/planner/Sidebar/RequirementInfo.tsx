@@ -43,7 +43,7 @@ export default function RequirementInfo({
   const getCourses = async (): Promise<DraggableCourse[]> => {
     const courseData = q.data
       ? q.data.reduce((acc, curr) => {
-          acc[curr.subject_prefix + curr.course_number] = curr;
+          acc[`${curr.subject_prefix} ${curr.course_number}`] = curr;
           return acc;
         }, {} as Record<string, typeof q.data[0]>)
       : {};
@@ -67,7 +67,7 @@ export default function RequirementInfo({
     getData: getCourses,
     initialQuery: '',
     filterFn: (elm, query) => elm['code'].toLowerCase().includes(query.toLowerCase()),
-    constraints: [0, 5],
+    constraints: [0, 1000],
   });
 
   const courseResults = results.map((result) => {
@@ -78,6 +78,8 @@ export default function RequirementInfo({
     };
   }) as DraggableCourse[];
 
+  console.log(courseResults);
+  console.log(degreeRequirement.name);
   return (
     <>
       <RequirementSearchBar updateQuery={updateQuery} />
