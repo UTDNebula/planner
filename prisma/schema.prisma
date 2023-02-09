@@ -61,12 +61,12 @@ model DegreeRequirements {
 }
 
 model Bypass {
-  id                   String             @id @default(auto()) @map("_id") @db.ObjectId
+  id                   String              @id @default(auto()) @map("_id") @db.ObjectId
   name                 String
   requirement          String
   hours                Int
-  degreeRequirements   DegreeRequirements @relation(fields: [degreeRequirementsId], references: [id])
-  degreeRequirementsId String             @db.ObjectId
+  degreeRequirements   DegreeRequirements? @relation(fields: [degreeRequirementsId], references: [id])
+  degreeRequirementsId String?             @db.ObjectId
 }
 
 model Semester {
