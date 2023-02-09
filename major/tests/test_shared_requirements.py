@@ -33,9 +33,8 @@ def test_and_requirement():
             CourseRequirement("HIST 1302"),
         ]
     )
-    and_req.attempt_fulfill("HIST 1301")
-    and_req.attempt_fulfill("HIST 1302")
-
+    assert and_req.attempt_fulfill("HIST 1301")
+    assert and_req.attempt_fulfill("HIST 1302")
     assert and_req.is_fulfilled()
 
     data = json.loads(
@@ -58,9 +57,8 @@ def test_and_requirement():
 
     and_req = AndRequirement.from_json(data)
 
-    and_req.attempt_fulfill("HIST 1301")
-    and_req.attempt_fulfill("HIST 1302")
-
+    assert and_req.attempt_fulfill("HIST 1301")
+    assert and_req.attempt_fulfill("HIST 1302")
     assert and_req.is_fulfilled()
 
 
@@ -71,8 +69,7 @@ def test_or_requirement():
             CourseRequirement("HIST 1302"),
         ]
     )
-    or_req.attempt_fulfill("HIST 1301")
-
+    assert or_req.attempt_fulfill("HIST 1301")
     assert or_req.is_fulfilled()
 
     data = json.loads(
@@ -95,8 +92,7 @@ def test_or_requirement():
 
     or_req = OrRequirement.from_json(data)
 
-    or_req.attempt_fulfill("HIST 1301")
-
+    assert or_req.attempt_fulfill("HIST 1301")
     assert or_req.is_fulfilled()
 
 
@@ -107,10 +103,11 @@ def test_free_elective_requirement():
 
     assert free_elective_req.fulfilled_hours == 0
 
-    free_elective_req.attempt_fulfill("CS 9999")
+    assert free_elective_req.attempt_fulfill("CS 9999")
     assert free_elective_req.fulfilled_hours == 9
 
-    free_elective_req.attempt_fulfill("CS 9199")
+    assert free_elective_req.attempt_fulfill("CS 9199")
+    assert free_elective_req.attempt_fulfill("CS 9199") == False  # already at 10 hours
     assert free_elective_req.is_fulfilled()
 
     data = json.loads(

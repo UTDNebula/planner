@@ -6,7 +6,7 @@ class MajorRequirementsSolver:
     def __init__(
         self, courses: list[str], requirements: list[AbstractRequirement]
     ) -> None:
-        self.courses = courses
+        self.courses = set(courses)
         self.requirements = requirements
 
     def solve(self) -> MajorRequirementsSolver:
