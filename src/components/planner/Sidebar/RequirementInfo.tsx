@@ -22,7 +22,6 @@ export default function RequirementInfo({
   courses,
   validCourses,
   allUserCourses,
-  setAddCourse,
   setAddPlaceholder,
   getCourseItemDragId,
   degreeRequirement,
@@ -78,8 +77,6 @@ export default function RequirementInfo({
     };
   }) as DraggableCourse[];
 
-  console.log(courseResults);
-  console.log(degreeRequirement.name);
   return (
     <>
       <RequirementSearchBar updateQuery={updateQuery} />
@@ -88,8 +85,7 @@ export default function RequirementInfo({
         getDragId={(course) => getCourseItemDragId(course, degreeRequirement)}
       />
       <div className="flex flex-row gap-x-4 text-[10px] text-[#3E61ED]">
-        <button onClick={() => setAddCourse(true)}>+ ADD COURSE</button>
-        <button onClick={() => setAddPlaceholder(true)}>+ ADD PLACEHOLDER</button>
+        <button onClick={() => setAddPlaceholder(true)}>+ ADD COURSE NOT HERE</button>
       </div>
     </>
   );

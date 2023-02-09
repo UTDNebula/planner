@@ -69,6 +69,7 @@ function RequirementContainer({
 
     // TODO: Connect this to DegreeRequirementGroup
     console.log(placeholderCourse);
+    // Connect to bypass
 
     setPlaceholderName('');
     setPlaceholderHours(0);
@@ -92,16 +93,6 @@ function RequirementContainer({
           setAddPlaceholder={setAddPlaceholder}
           getCourseItemDragId={getCourseItemDragId}
           degreeRequirement={degreeRequirement}
-        />
-      )}
-      {addCourse && (
-        <AddCourseContainer
-          allCourses={courses}
-          validCourses={validCourses}
-          selectedCourses={selectedCourses}
-          updateSelectedCourses={updateSelectedCourses}
-          handleCourseCancel={handleCourseCancel}
-          handleCourseSubmit={handleCourseSubmit}
         />
       )}
       {addPlaceholder && (
