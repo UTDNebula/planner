@@ -26,10 +26,20 @@ function CourseSelectorContainer({
   const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
     refetchOnWindowFocus: false,
   });
+
+  const defaultQuery = 'CS';
+
+  const { data, isLoading } = q;
+
+  // Hacky
+  React.useEffect(() => {
+    updateQuery(defaultQuery);
+  }, [isLoading]);
+
   const { results, updateQuery } = useSearch({
     getData: async () =>
-      q.data ? q.data.map((c) => ({ code: c.subject_prefix + c.course_number })) : [],
-    initialQuery: '@',
+      data ? data.map((c) => ({ code: `${c.subject_prefix} ${c.course_number}` })) : [],
+    initialQuery: defaultQuery,
     filterFn: (elm, query) => elm['code'].toLowerCase().includes(query.toLowerCase()),
     constraints: [0, 5],
   });
