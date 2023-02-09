@@ -15,9 +15,9 @@ def test_or_requirement() -> None:
         ],
     )
 
-    req.attempt_fulfill("HIST 1301")
-    req.attempt_fulfill("HIST 1302")
-    req.attempt_fulfill("HIST 1302")
+    assert req.attempt_fulfill("HIST 1301")
+    assert req.attempt_fulfill("HIST 1302")
+    assert not req.attempt_fulfill("HIST 1302")
     req.attempt_fulfill("CS 3000")
 
     assert req.is_fulfilled() == False

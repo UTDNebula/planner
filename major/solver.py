@@ -1,3 +1,4 @@
+from __future__ import annotations
 from major.requirements import AbstractRequirement
 
 
@@ -8,14 +9,17 @@ class MajorRequirementsSolver:
         self.courses = courses
         self.requirements = requirements
 
-    def solve(self) -> None:
+    def solve(self) -> MajorRequirementsSolver:
         for course in self.courses:
             for requirement in self.requirements:
-                requirement.attempt_fulfill(course)
+                fulfilled = requirement.attempt_fulfill(course)
+                if fulfilled:
+                    break
 
-    def print(self) -> None:
-        for requirement in self.requirements:
-            print(str(requirement))
+        return self
 
     def can_graduate(self) -> bool:
         return all(requirement.is_fulfilled() for requirement in self.requirements)
+
+    def __str__(self) -> str:
+        return "\n".join(str(req) for req in self.requirements)

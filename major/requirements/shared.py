@@ -16,9 +16,16 @@ class CourseRequirement(AbstractRequirement):
         self.course = course
         self.filled = False
 
-    def attempt_fulfill(self, course: str) -> None:
+    def attempt_fulfill(self, course: str) -> bool:
+        # fail duplicate attempt to fulfill
+        if self.is_fulfilled():
+            return False
+
         if course == self.course:
             self.filled = True
+            return True
+
+        return False
 
     def is_fulfilled(self) -> bool:
         return self.filled
@@ -42,9 +49,15 @@ class AndRequirement(AbstractRequirement):
     def __init__(self, requirements: list[AbstractRequirement]) -> None:
         self.requirements = set(requirements)
 
-    def attempt_fulfill(self, course: str) -> None:
+    def attempt_fulfill(self, course: str) -> bool:
+        if self.is_fulfilled():
+            return False
+
+        filled_one = False
         for requirements in self.requirements:
-            requirements.attempt_fulfill(course)
+            filled_one = filled_one or requirements.attempt_fulfill(course)
+
+        return filled_one
 
     def is_fulfilled(self) -> bool:
         return all(requirement.is_fulfilled() for requirement in self.requirements)
@@ -80,9 +93,15 @@ class OrRequirement(AbstractRequirement):
     def __init__(self, requirements: list[AbstractRequirement]) -> None:
         self.requirements = set(requirements)
 
-    def attempt_fulfill(self, course: str) -> None:
+    def attempt_fulfill(self, course: str) -> bool:
+        if self.is_fulfilled():
+            return False
+
+        filled_one = False
         for requirements in self.requirements:
-            requirements.attempt_fulfill(course)
+            filled_one = filled_one or requirements.attempt_fulfill(course)
+
+        return filled_one
 
     def is_fulfilled(self) -> bool:
         return any(requirement.is_fulfilled() for requirement in self.requirements)
@@ -129,9 +148,15 @@ class FreeElectiveRequirement(AbstractRequirement):
         self.excluded_courses = set(excluded_courses)
         self.fulfilled_hours = 0
 
-    def attempt_fulfill(self, course: str) -> None:
+    def attempt_fulfill(self, course: str) -> bool:
+        if self.is_fulfilled():
+            return False
+
         if not course in self.excluded_courses:
             self.fulfilled_hours += utils.get_hours_from_course(course)
+            return True
+
+        return False
 
     def is_fulfilled(self) -> bool:
         return self.fulfilled_hours >= self.required_hours
