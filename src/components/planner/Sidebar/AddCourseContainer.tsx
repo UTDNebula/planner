@@ -28,7 +28,7 @@ export default function AddCourseContainer({
   // TODO: Clean this logic up hella xD
   const { results, updateQuery }: SearchReturn<Course, string> = useSearch({
     getData: async () =>
-      q.data ? q.data.map((c) => ({ code: c.subject_prefix + c.course_number })) : [],
+      q.data ? q.data.map((c) => ({ code: `${c.subject_prefix} ${c.course_number}` })) : [],
     initialQuery: '',
     filterFn: (elm, query) => elm.code.toLowerCase().includes(query.toLowerCase()),
     constraints: [0, 5],

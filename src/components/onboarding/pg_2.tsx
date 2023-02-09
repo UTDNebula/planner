@@ -45,7 +45,7 @@ export default function PageTwo({ handleChange, data, startSemester }: Page2data
   });
   const { results, updateQuery } = useSearch({
     getData: async () =>
-      q.data ? q.data.map((c) => ({ code: c.subject_prefix + c.course_number })) : [],
+      q.data ? q.data.map((c) => ({ code: `${c.subject_prefix} ${c.course_number}` })) : [],
     initialQuery: '',
     filterFn: (course, query) => course.code.toLowerCase().includes(query.toLowerCase()),
   });
