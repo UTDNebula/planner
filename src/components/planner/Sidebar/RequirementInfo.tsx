@@ -28,12 +28,17 @@ export default function RequirementInfo({
   degreeRequirement,
 }: RequirementInfoProps) {
   // TODO: Make better solution to update results when carousel changes
-  React.useEffect(() => {
-    updateQuery('');
-  }, [courses]);
+
   const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
     refetchOnWindowFocus: false,
   });
+
+  const { isLoading } = q;
+
+  React.useEffect(() => {
+    updateQuery('');
+  }, [courses, isLoading]);
+
   // TODO: Change this later when connecting to API
   const getCourses = async (): Promise<DraggableCourse[]> => {
     const courseData = q.data
