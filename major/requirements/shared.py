@@ -28,3 +28,73 @@ class CourseRequirement(AbstractRequirement):
     @classmethod
     def from_json(cls, json: JSON) -> CourseRequirement:
         return cls(json["course"])
+
+
+class AndRequirement(AbstractRequirement):
+    """Requires all requirements to be fulfilled
+    CS 1200 and HIST 1301 and CS 1337 -> must fulfill all courses
+    """
+
+    def __init__(self, requirements: list[AbstractRequirement]) -> None:
+        self.requirements = set(requirements)
+
+    def attempt_fulfill(self, course: str) -> None:
+        for requirements in self.requirements:
+            requirements.attempt_fulfill(course)
+
+    def is_fulfilled(self) -> bool:
+        return all(requirement.is_fulfilled() for requirement in self.requirements)
+
+    class Req(TypedDict):
+        matcher: str
+
+    class JSON(TypedDict):
+        requirements: list[AndRequirement.Req]
+
+    @classmethod
+    def from_json(cls, json: JSON) -> AbstractRequirement:
+        from .map import REQUIREMENTS_MAP
+
+        matchers: list[AbstractRequirement] = []
+        for requirement_data in json["requirements"]:
+            matcher = REQUIREMENTS_MAP[requirement_data["matcher"]].from_json(
+                requirement_data
+            )
+            matchers.append(matcher)
+
+        return cls(matchers)
+
+
+class OrRequirement(AbstractRequirement):
+    """Requires one requirement to fulfilled
+    CS 1200 fills -> HIST 1301 or CS 1200 requirement
+    """
+
+    def __init__(self, requirements: list[AbstractRequirement]) -> None:
+        self.requirements = set(requirements)
+
+    def attempt_fulfill(self, course: str) -> None:
+        for requirements in self.requirements:
+            requirements.attempt_fulfill(course)
+
+    def is_fulfilled(self) -> bool:
+        return any(requirement.is_fulfilled() for requirement in self.requirements)
+
+    class Req(TypedDict):
+        matcher: str
+
+    class JSON(TypedDict):
+        requirements: list[AndRequirement.Req]
+
+    @classmethod
+    def from_json(cls, json: JSON) -> AbstractRequirement:
+        from .map import REQUIREMENTS_MAP
+
+        matchers: list[AbstractRequirement] = []
+        for requirement_data in json["requirements"]:
+            matcher = REQUIREMENTS_MAP[requirement_data["matcher"]].from_json(
+                requirement_data
+            )
+            matchers.append(matcher)
+
+        return cls(matchers)

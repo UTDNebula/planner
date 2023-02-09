@@ -5,14 +5,13 @@ from abc import abstractmethod, ABC
 
 from typing import Any
 
-"""
-Base class all requirements should inherit from
-
-When implementing, define your own TypedDict dervied type to override from_json()
-"""
-
 
 class AbstractRequirement(ABC):
+    """Base class all requirements should inherit from
+
+    When implementing, define your own TypedDict dervied type to override from_json()
+    """
+
     @abstractmethod
     def attempt_fulfill(self, course: str) -> None:
         pass

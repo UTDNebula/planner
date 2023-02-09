@@ -1,4 +1,4 @@
-from .requirements.base import AbstractRequirement
+from major.requirements import AbstractRequirement
 
 
 class MajorRequirementsSolver:
@@ -12,3 +12,7 @@ class MajorRequirementsSolver:
         for course in self.courses:
             for requirement in self.requirements:
                 requirement.attempt_fulfill(course)
+
+    def print(self) -> None:
+        for requirement in self.requirements:
+            print(requirement.is_fulfilled())

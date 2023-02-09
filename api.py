@@ -8,6 +8,7 @@ from flask import Flask, Response, request, make_response
 from flask_cors import CORS
 
 from core import GraduationRequirementsSolver, Course, SingleAssignment
+from major.solver import MajorRequirementsSolver
 
 
 class APIError(Exception):
