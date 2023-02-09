@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { Course, DegreeRequirement, GetDragIdByCourseAndReq } from '../types';
-import AddCourseContainer from './AddCourseContainer';
 import PlaceholderComponent from './PlaceholderComponent';
 import RequirementContainerHeader from './RequirementContainerHeader';
 import RequirementInfo from './RequirementInfo';
@@ -21,8 +20,6 @@ function RequirementContainer({
 }: RequirementContainerProps): JSX.Element {
   const [addCourse, setAddCourse] = React.useState<boolean>(false);
   const [addPlaceholder, setAddPlaceholder] = React.useState<boolean>(false);
-  const [placeholderName, setPlaceholderName] = React.useState<string>('');
-  const [placeholderHours, setPlaceholderHours] = React.useState<number>(0);
 
   // Include tag rendering information here (yes for tag & which tag)
   const validCourses = degreeRequirement.validCourses ?? [];
@@ -49,8 +46,6 @@ function RequirementContainer({
   };
 
   const handlePlaceholderCancel = () => {
-    setPlaceholderName('');
-    setPlaceholderHours(0);
     setAddPlaceholder(false);
   };
 
@@ -60,19 +55,6 @@ function RequirementContainer({
     requirement: string;
   }
   const handlePlaceholderSubmit = () => {
-    // Create placeholder object
-    const placeholderCourse: PlaceholderCourse = {
-      name: placeholderName,
-      hours: placeholderHours,
-      requirement: degreeRequirement.name,
-    };
-
-    // TODO: Connect this to DegreeRequirementGroup
-    console.log(placeholderCourse);
-    // Connect to bypass
-
-    setPlaceholderName('');
-    setPlaceholderHours(0);
     setAddPlaceholder(false);
   };
   return (
@@ -97,10 +79,7 @@ function RequirementContainer({
       )}
       {addPlaceholder && (
         <PlaceholderComponent
-          placeholderName={placeholderName}
-          placeholderHours={placeholderHours}
-          setPlaceholderName={setPlaceholderName}
-          setPlaceholderHours={setPlaceholderHours}
+          requirement={degreeRequirement.name}
           handlePlaceholderCancel={handlePlaceholderCancel}
           handlePlaceholderSubmit={handlePlaceholderSubmit}
         />
