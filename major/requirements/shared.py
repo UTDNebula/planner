@@ -29,6 +29,9 @@ class CourseRequirement(AbstractRequirement):
     def from_json(cls, json: JSON) -> CourseRequirement:
         return cls(json["course"])
 
+    def __str__(self) -> str:
+        return f"{self.course} - {self.is_fulfilled()}"
+
 
 class AndRequirement(AbstractRequirement):
     """Requires all requirements to be fulfilled
@@ -64,6 +67,9 @@ class AndRequirement(AbstractRequirement):
 
         return cls(matchers)
 
+    def __str__(self) -> str:
+        return f"({' and '.join([str(req) for req in self.requirements])}) -> {self.is_fulfilled()}"
+
 
 class OrRequirement(AbstractRequirement):
     """Requires one requirement to fulfilled
@@ -98,3 +104,6 @@ class OrRequirement(AbstractRequirement):
             matchers.append(matcher)
 
         return cls(matchers)
+
+    def __str__(self) -> str:
+        return f"({' or '.join([str(req) for req in self.requirements])}) -> {self.is_fulfilled()}"

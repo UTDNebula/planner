@@ -141,248 +141,31 @@
         "course": "CS 4485"
       },
       {
-        "matcher": "CourseRequirement",
-        "course": "CS 4314"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4315"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4334"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4336"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4352"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4353"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4361"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4365"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4375"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4376"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4386"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4389"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4390"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4391"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4392"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4393"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4394"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4395"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4396"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4397"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4398"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4399"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "EE 4325"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "SE 4351"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "SE 4352"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "SE 4367"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "SE 4381"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "ECS 1100"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 2305"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 2340"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 3305"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 3341"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 3345"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 3354"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4141"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4337"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4341"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4348"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4349"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4384"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4485"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 1337"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 2305"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 2336"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 3305"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 3345"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 3354"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4390"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 1337"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 2305"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 2336"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 3305"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 3345"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4347"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4348"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4389"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4393"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4398"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4389"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4393"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4398"
+        "matcher": "CS_MajorGuidedElectiveRequirement",
+        "required_course_count": 3,
+        "starts_with": "CS 43",
+        "also_fulfills": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 4325"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "SE 4351"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "SE 4352"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "SE 4367"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "SE 4381"
+          }
+        ]
       }
     ]
   }

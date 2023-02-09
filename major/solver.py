@@ -15,4 +15,4 @@ class MajorRequirementsSolver:
 
     def print(self) -> None:
         for requirement in self.requirements:
-            print(requirement.is_fulfilled())
+            print(str(requirement))
