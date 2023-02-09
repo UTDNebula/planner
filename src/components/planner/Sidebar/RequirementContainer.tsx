@@ -81,7 +81,7 @@ function RequirementContainer({
         numCredits={numCredits}
         setCarousel={setCarousel}
       />
-      <div className="text-[11px]">{description}</div>
+      <div className="text-[14px]">{description}</div>
 
       {!addCourse && !addPlaceholder && (
         <RequirementInfo

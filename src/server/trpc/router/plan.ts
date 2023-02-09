@@ -107,11 +107,20 @@ export const planRouter = router({
           if (req.includes('Free Electives')) {
             electives.requirements.push({ name: req, ...rawData[req] });
           } else if (req.includes('Core - ')) {
-            core.requirements.push({ name: req, ...rawData[req] });
+            const description = `Select ${rawData[req].hours} credit hours from a list of courses`;
+            core.requirements.push({ name: req, ...rawData[req], description });
           } else if ('Minimum Cumulative Hours Upper Level Hour Requirement'.includes(req)) {
-            university.requirements.push({ name: req, ...rawData[req] });
+            const description = `Select ${rawData[req].hours} credit hours from a list of courses`;
+            university.requirements.push({ name: req, ...rawData[req], description });
           } else {
-            major.requirements.push({ name: req, ...rawData[req] });
+            // Dynamically add description based on case
+            // TODO: Should return this info from API kekw
+
+            const description = req.includes('Electives')
+              ? `Select ${rawData[req].hours} credit hours from a list of courses`
+              : 'Select all courses';
+
+            major.requirements.push({ name: req, ...rawData[req], description });
           }
         });
         return [core, major, electives, university];
