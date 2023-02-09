@@ -62,7 +62,7 @@ model DegreeRequirements {
 
 model Bypass {
   id                   String             @id @default(auto()) @map("_id") @db.ObjectId
-  courseCode           String
+  name                 String
   requirement          String
   hours                Int
   degreeRequirements   DegreeRequirements @relation(fields: [degreeRequirementsId], references: [id])
