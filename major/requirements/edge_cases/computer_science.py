@@ -1,5 +1,5 @@
 from __future__ import annotations
-from major.requirements import AbstractRequirement
+from major.requirements import AbstractRequirement, map
 
 from functools import reduce
 from typing import TypedDict
@@ -79,12 +79,11 @@ class MajorGuidedElectiveRequirement(AbstractRequirement):
                 }
             ]
         """
-        from major.requirements import REQUIREMENTS_MAP
 
         also_fulfills: list[AbstractRequirement] = []
         for requirement in json["also_fulfills"]:
             also_fulfills.append(
-                REQUIREMENTS_MAP[requirement["matcher"]].from_json(requirement)
+                map.REQUIREMENTS_MAP[requirement["matcher"]].from_json(requirement)
             )
 
         return cls(json["required_course_count"], json["starts_with"], also_fulfills)

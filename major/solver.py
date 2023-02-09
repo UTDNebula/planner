@@ -16,3 +16,6 @@ class MajorRequirementsSolver:
     def print(self) -> None:
         for requirement in self.requirements:
             print(str(requirement))
+
+    def can_graduate(self) -> bool:
+        return all(requirement.is_fulfilled() for requirement in self.requirements)

@@ -1,4 +1,9 @@
-from requirements import CourseRequirement, AndRequirement, OrRequirement
+from requirements import (
+    CourseRequirement,
+    AndRequirement,
+    OrRequirement,
+    FreeElectiveRequirement,
+)
 import json
 
 
@@ -73,7 +78,7 @@ def test_or_requirement():
     data = json.loads(
         """
         {
-            "matcher": "AndRequirement",
+            "matcher": "OrRequirement",
             "requirements": [
                 {
                     "matcher": "CourseRequirement",
@@ -93,3 +98,32 @@ def test_or_requirement():
     or_req.attempt_fulfill("HIST 1301")
 
     assert or_req.is_fulfilled()
+
+
+def test_free_elective_requirement():
+    free_elective_req = FreeElectiveRequirement(10, ["HIST 1301", "HIST 1302"])
+    free_elective_req.attempt_fulfill("HIST 1301")
+    free_elective_req.attempt_fulfill("HIST 1302")
+
+    assert free_elective_req.fulfilled_hours == 0
+
+    free_elective_req.attempt_fulfill("CS 9999")
+    assert free_elective_req.fulfilled_hours == 9
+
+    free_elective_req.attempt_fulfill("CS 9199")
+    assert free_elective_req.is_fulfilled()
+
+    data = json.loads(
+        """
+        {
+            "matcher": "FreeElectiveRequirement",
+            "required_hours": 10,
+            "excluded_courses": ["HIST 1301", "HIST 1302"]
+        }
+        """
+    )
+
+    free_elective_req = FreeElectiveRequirement.from_json(data)
+    free_elective_req.attempt_fulfill("HIST 1301")
+
+    assert free_elective_req.fulfilled_hours == 0

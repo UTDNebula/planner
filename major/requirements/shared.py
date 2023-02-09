@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 from .base import AbstractRequirement
+import utils
 
 from typing import TypedDict
 
@@ -107,3 +108,55 @@ class OrRequirement(AbstractRequirement):
 
     def __str__(self) -> str:
         return f"({' or '.join([str(req) for req in self.requirements])}) -> {self.is_fulfilled()}"
+
+
+class FreeElectiveRequirement(AbstractRequirement):
+    """Defines Major Free Electives
+
+    Requires minimum of required_hours to be fulfilled
+
+    Parameters
+    __________
+    required_hours: int
+        Minimum # of hours before requirement is fulfilled
+
+    excluded_courses: list[str]
+        Courses that cannot fulfill this requirement
+    """
+
+    def __init__(self, required_hours: int, excluded_courses: list[str]) -> None:
+        self.required_hours = required_hours
+        self.excluded_courses = set(excluded_courses)
+        self.fulfilled_hours = 0
+
+    def attempt_fulfill(self, course: str) -> None:
+        if not course in self.excluded_courses:
+            self.fulfilled_hours += utils.get_hours_from_course(course)
+
+    def is_fulfilled(self) -> bool:
+        return self.fulfilled_hours >= self.required_hours
+
+    class JSON(TypedDict):
+        excluded_courses: list[str]
+        required_hours: int
+
+    @classmethod
+    def from_json(cls, json: JSON) -> AbstractRequirement:
+        """
+        {
+            "required_hours": 10,
+            "excluded_courses": [
+                "CS 1200",
+                "ECS 1100"
+            ]
+        """
+
+        return cls(json["required_hours"], json["excluded_courses"])
+
+    def __str__(self) -> str:
+        s = f"""{FreeElectiveRequirement.__name__} 
+        required_hours: {self.required_hours}
+        excluded_courses: {", ".join(self.excluded_courses)}
+        fulfilled_hours: {self.fulfilled_hours}
+        """
+        return s

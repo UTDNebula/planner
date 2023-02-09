@@ -8,5 +8,6 @@ def test_computer_science():
 
     requirements = data["requirements"]["major"]
 
+    # make sure all requirements are parseable
     for requirement in requirements:
         REQUIREMENTS_MAP[requirement["matcher"]].from_json(requirement)
