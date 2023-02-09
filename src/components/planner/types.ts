@@ -22,6 +22,7 @@ export interface DraggableCourse extends Course {
   taken?: boolean;
   transfer?: boolean;
   sync?: { isSynced: boolean; correctSemester: SemesterCode | undefined };
+  bypass?: { requirement: string; hours: number };
 }
 
 export interface DegreeRequirementGroup {

@@ -108,6 +108,54 @@ export default function Planner({
     },
   });
 
+  const addBypass = trpc.plan.addBypass.useMutation({
+    async onSuccess() {
+      await utils.plan.getPlanById.invalidate(planId);
+    },
+  });
+
+  const removeBypass = trpc.plan.addBypass.useMutation({
+    async onSuccess() {
+      await utils.plan.getPlanById.invalidate(planId);
+    },
+  });
+
+  const handleAddBypass = async ({
+    name,
+    hours,
+    requirement,
+  }: {
+    name: string;
+    hours: number;
+    requirement: string;
+  }) => {
+    try {
+      addBypass.mutateAsync({
+        name,
+        hours,
+        requirement,
+      });
+    } catch (error) {}
+  };
+
+  const handleRemoveBypass = async ({
+    name,
+    hours,
+    requirement,
+  }: {
+    name: string;
+    hours: number;
+    requirement: string;
+  }) => {
+    try {
+      removeBypass.mutateAsync({
+        name,
+        hours,
+        requirement,
+      });
+    } catch (error) {}
+  };
+
   const handleYearCreate = async ({ semesterIds }: { [key: string]: string[] }) => {
     try {
       await toast.promise(
@@ -241,6 +289,11 @@ export default function Planner({
       }),
     );
 
+    if (targetCourse.bypass) {
+      const { hours, requirement } = targetCourse.bypass;
+      handleRemoveBypass({ name: targetCourse.code, hours, requirement });
+    }
+
     const semesterId = targetSemester.id.toString();
     const courseName = targetCourse.code;
     addTask({ func: handleRemoveCourse, args: { semesterId, courseName } });
@@ -265,6 +318,13 @@ export default function Planner({
           : semester,
       ),
     );
+
+    // Add bypass to semester if applicable
+
+    if (newCourse.bypass) {
+      const { hours, requirement } = newCourse.bypass;
+      handleAddBypass({ name: newCourse.code, hours, requirement });
+    }
     const semesterId = targetSemester.id.toString();
     const courseName = newCourse.code;
     addTask({ func: handleAddCourse, args: { semesterId, courseName } });
