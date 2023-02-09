@@ -49,11 +49,6 @@ export default function PlanDetailPage(
   return (
     <div className="flex h-screen max-h-screen w-screen flex-col overflow-x-hidden overflow-y-scroll p-4">
       <div className=" mb-10 flex flex-row items-center gap-2">
-        <BackArrowIcon
-          onClick={handleBack}
-          className={`mr-2 h-5 w-5 cursor-pointer`}
-          strokeWidth={2.5}
-        />
         <div className="text-2xl">My Plan</div>
 
         <div className="form-control">
