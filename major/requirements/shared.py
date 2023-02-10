@@ -186,3 +186,61 @@ class FreeElectiveRequirement(AbstractRequirement):
         """
         return s
 
+class SelectRequirement(AbstractRequirement):
+    """Matches x requirements out of a list to be fulfilled
+
+    Requires minimum of required_count # of requirements to be fulfilled
+
+    Parameters
+    __________
+    required_count: int
+        Minimum # of fulfillments before requirement is fulfilled
+    """
+
+    def __init__(self, requirements: list[AbstractRequirement], required_count: int) -> None:
+        self.requirements = set(requirements)
+        self.required_count = required_count
+        self.fulfilled_count = 0
+
+    def attempt_fulfill(self, course: str) -> bool:
+        if self.is_fulfilled():
+            return False
+
+        filled_one = False
+        for requirements in self.requirements:
+            filled_one = filled_one or requirements.attempt_fulfill(course)
+
+        return filled_one
+
+    def is_fulfilled(self) -> bool:
+        curr = 0
+        
+        for requirement in self.requirements:
+            if requirement.is_fulfilled():
+                curr +=  1
+        return curr >= self.fulfilled_count
+
+    class Req(TypedDict):
+        matcher: str
+
+    class JSON(TypedDict):
+        requirements: list[AndRequirement.Req]
+        required_course_count: int
+
+    @classmethod
+    def from_json(cls, json: JSON) -> AbstractRequirement:
+        from .map import REQUIREMENTS_MAP
+
+        matchers: list[AbstractRequirement] = []
+        for requirement_data in json["requirements"]:
+            matcher = REQUIREMENTS_MAP[requirement_data["matcher"]].from_json(
+                requirement_data
+            )
+            matchers.append(matcher)
+
+        return cls(matchers, json["required_course_count"])
+
+    def __str__(self) -> str:
+        return f"({' or '.join([str(req) for req in self.requirements])}) -> {self.is_fulfilled()}"
+       
+        
