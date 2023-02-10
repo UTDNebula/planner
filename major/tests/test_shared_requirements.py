@@ -4,7 +4,8 @@ from requirements import (
     OrRequirement,
     HoursRequirement,
     FreeElectiveRequirement,
-    SelectRequirement
+    SelectRequirement,
+    PrefixRequirement
 )
 import json
 
@@ -185,3 +186,13 @@ def test_select_requirement() -> None:
     select_req.attempt_fulfill("ECON 2301") 
     assert select_req.fulfilled_count == 2
     assert select_req.is_fulfilled() == True
+
+def test_prefix_requirement() -> None:
+    prefix_req = PrefixRequirement('CS')
+    assert prefix_req.filled == False
+
+    prefix_req.attempt_fulfill('BCOM 1000')
+    assert prefix_req.filled == False
+
+    prefix_req.attempt_fulfill('CS 1336')
+    assert prefix_req.filled == True   
