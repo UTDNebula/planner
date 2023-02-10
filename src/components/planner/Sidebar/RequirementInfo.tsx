@@ -47,16 +47,21 @@ export default function RequirementInfo({
         }, {} as Record<string, typeof q.data[0]>)
       : {};
     const temp = courses;
+    validCourses.forEach((course) => {
+      if (!temp.includes(course)) {
+        temp.push(course);
+      }
+    });
 
     const courseInfoList: (DraggableCourse | undefined)[] = temp.map((elm) => {
-      if (courseData[elm] !== undefined) {
-        const newCourse: DraggableCourse = {
-          id: new ObjectID(),
-          code: elm,
-          validation: { isValid: true, override: false },
-        };
-        return newCourse;
-      }
+      // if (courseData[elm] !== undefined) {
+      const newCourse: DraggableCourse = {
+        id: new ObjectID(),
+        code: elm,
+        validation: { isValid: true, override: false },
+      };
+      return newCourse;
+      //   }
     });
     return courseInfoList.filter((elm) => typeof elm !== 'undefined') as DraggableCourse[];
   };
@@ -69,6 +74,7 @@ export default function RequirementInfo({
     constraints: [0, 1000],
   });
 
+  console.log(results);
   const courseResults = results.map((result) => {
     return {
       ...result,
