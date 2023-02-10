@@ -6,8 +6,9 @@
   "school": "Naveen Jindal School of Management",
   "subtype": "Major",
   "year": "2022-2023",
-  "requirements": [
-    [
+  "requirements": {
+    "core": "@import ./core.json",
+    "major": [
       {
         "matcher": "CourseRequirement",
         "course": "MATH 1325"
@@ -288,5 +289,5 @@
         "excluded_courses": []
       }
     ]
-  ]
+  }
 }
