@@ -48,10 +48,21 @@
           {
             "matcher": "CourseRequirement",
             "course": "OPRE 3333"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MATH 2333"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MATH 2418"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 2305"
           }
         ]
       },
-
       {
         "matcher": "OrRequirement",
         "requirements": [
