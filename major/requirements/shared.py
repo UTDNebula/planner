@@ -128,6 +128,65 @@ class OrRequirement(AbstractRequirement):
     def __str__(self) -> str:
         return f"({' or '.join([str(req) for req in self.requirements])}) -> {self.is_fulfilled()}"
 
+class HoursRequirement(AbstractRequirement):
+    """Any requirement with minimum # hours
+
+    Requires minimum of required_hours to be fulfilled
+
+    Parameters
+    __________
+    required_hours: int
+        Minimum # of hours before requirement is fulfilled
+
+    """
+
+    def __init__(self, required_hours: int, requirements: list[AbstractRequirement]) -> None:
+        self.required_hours = required_hours
+        self.fulfilled_hours = 0
+        self.requirements = set(requirements)
+
+    def attempt_fulfill(self, course: str) -> bool:
+        if self.is_fulfilled():
+            return False
+
+        filled_one = False
+        for requirement in self.requirements:
+            filled_one = filled_one or requirement.attempt_fulfill(course)
+
+        return filled_one
+
+    def is_fulfilled(self) -> bool:
+        return self.fulfilled_hours >= self.required_hours
+
+    class JSON(TypedDict):
+        required_hours: int
+        requirements: list[AbstractRequirement]
+
+    @classmethod
+    def from_json(cls, json: JSON) -> AbstractRequirement:
+        """
+        {
+            "required_hours": 10,
+            "requirements": [
+              {
+                        "matcher": "CourseRequirement",
+                        "course": "ACCT 4V80"
+                      },
+                      {
+                        "matcher": "CourseRequirement",
+                        "course": "BA 4090"
+                      } 
+            ]
+        """
+
+        return cls(json["required_hours"], json["requirements"])
+
+    def __str__(self) -> str:
+        s = f"""{FreeElectiveRequirement.__name__} 
+        required_hours: {self.required_hours}
+        fulfilled_hours: {self.fulfilled_hours}
+        """
+        return s
 
 class FreeElectiveRequirement(AbstractRequirement):
     """Defines Major Free Electives
