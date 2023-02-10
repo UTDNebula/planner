@@ -11,6 +11,7 @@ REQUIREMENTS_MAP: dict[str, Type[AbstractRequirement]] = {
     "FreeElectiveRequirement": FreeElectiveRequirement,
     "SelectRequirement": SelectRequirement,
     "HoursRequirement": HoursRequirement,
+    "PrefixRequirement": PrefixRequirement,
     # Computer Science Edge Cases
     "CS_MajorGuidedElectiveRequirement": computer_science.MajorGuidedElectiveRequirement,
     # Business Administration Edge Cases
