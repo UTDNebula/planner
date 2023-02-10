@@ -54,8 +54,8 @@ class AndRequirement(AbstractRequirement):
             return False
 
         filled_one = False
-        for requirements in self.requirements:
-            filled_one = filled_one or requirements.attempt_fulfill(course)
+        for requirement in self.requirements:
+            filled_one = filled_one or requirement.attempt_fulfill(course)
 
         return filled_one
 
@@ -98,8 +98,8 @@ class OrRequirement(AbstractRequirement):
             return False
 
         filled_one = False
-        for requirements in self.requirements:
-            filled_one = filled_one or requirements.attempt_fulfill(course)
+        for requirement in self.requirements:
+            filled_one = filled_one or requirement.attempt_fulfill(course)
 
         return filled_one
 
@@ -185,3 +185,4 @@ class FreeElectiveRequirement(AbstractRequirement):
         fulfilled_hours: {self.fulfilled_hours}
         """
         return s
+
