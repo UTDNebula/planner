@@ -12,10 +12,10 @@ REQUIREMENTS_MAP: dict[str, Type[AbstractRequirement]] = {
     "SelectRequirement": SelectRequirement,
     "HoursRequirement": HoursRequirement,
     "PrefixRequirement": PrefixRequirement,
+    "PrefixBucketRequirement": PrefixBucketRequirement,
     # Computer Science Edge Cases
     "CS_MajorGuidedElectiveRequirement": computer_science.MajorGuidedElectiveRequirement,
     # Business Administration Edge Cases
     "BA_ElectiveRequirement": business_administration.BusinessAdministrationElectiveRequirement,
     "SomeRequirement": business_administration.SomeRequirement,
-    "PrefixBucketRequirement": business_administration.PrefixBucketRequirement,
 }

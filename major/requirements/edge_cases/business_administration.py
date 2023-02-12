@@ -26,15 +26,6 @@ class SomeRequirement(OrRequirement):
         return filled_one
 
 
-class PrefixBucketRequirement(PrefixRequirement):
-    def attempt_fulfill(self, course: str) -> bool:
-        if utils.get_course_prefix(course) == self.prefix:
-            self.filled = True
-            return True
-
-        return False
-
-
 class BusinessAdministrationElectiveRequirement(AbstractRequirement):
     """Matches Business Administration Electives
 
