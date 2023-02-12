@@ -241,7 +241,7 @@
           },
           {
             "matcher": "PrefixBucketRequirement",
-            "course": "MECO"
+            "prefix": "MECO"
           }
         ]
       },
