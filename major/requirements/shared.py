@@ -322,3 +322,43 @@ class SelectRequirement(AbstractRequirement):
 
     def __str__(self) -> str:
         return f"({' or '.join([str(req) for req in self.requirements])}) -> {self.is_fulfilled()}"
+
+
+class PrefixRequirement(AbstractRequirement):
+    """Matches course requirement if it starts with a certain prefix
+
+    i.e. PrefixRequirement("CS") will match any course that begins with "CS"
+
+    Parameters
+    __________
+    prefix: str
+        Course name prefix
+    """
+
+    def __init__(self, prefix: str) -> None:
+        self.prefix = prefix
+        self.filled = False
+
+    def attempt_fulfill(self, course: str) -> bool:
+        # fail duplicate attempt to fulfill
+        if self.is_fulfilled():
+            return False
+
+        if utils.get_course_prefix(course) == self.prefix:
+            self.filled = True
+            return True
+
+        return False
+
+    def is_fulfilled(self) -> bool:
+        return self.filled
+
+    class JSON(TypedDict):
+        prefix: str
+
+    @classmethod
+    def from_json(cls, json: JSON) -> PrefixRequirement:
+        return cls(json["prefix"])
+
+    def __str__(self) -> str:
+        return f"{self.prefix} - {self.is_fulfilled()}"
