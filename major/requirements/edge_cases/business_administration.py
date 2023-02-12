@@ -90,7 +90,6 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
         for group in self.prefix_groups:
             if group.is_fulfilled():
                 count += 1
-        print(count, "F")
         return count
 
     def is_fulfilled(self) -> bool:
