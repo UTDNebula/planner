@@ -18,13 +18,13 @@ class SomeRequirement(OrRequirement):
     Allows attempt_filled to work even if is_fulfilled() is true
     """
 
-
     def attempt_fulfill(self, course: str) -> bool:
         filled_one = False
         for requirement in self.requirements:
             filled_one = filled_one or requirement.attempt_fulfill(course)
 
         return filled_one
+
 
 class PrefixBucketRequirement(PrefixRequirement):
     def attempt_fulfill(self, course: str) -> bool:
@@ -34,7 +34,6 @@ class PrefixBucketRequirement(PrefixRequirement):
 
         return False
 
-    
 
 class BusinessAdministrationElectiveRequirement(AbstractRequirement):
     """Matches Business Administration Electives
@@ -74,15 +73,15 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
         # First check if upper level elective
         if utils.get_level_from_course(course) < 3:
             return False
-        
+
         # Now check if course satisfies a group
         for group in self.prefix_groups:
-            
-            if (group.attempt_fulfill(course)):
+
+            if group.attempt_fulfill(course):
                 self.fulfilled_hours += utils.get_hours_from_course(course)
                 self.fulfilled_count = self.get_fulfilled_count()
                 return True
-            
+
         return False
 
     def get_fulfilled_count(self) -> int:
@@ -95,7 +94,10 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
         return count
 
     def is_fulfilled(self) -> bool:
-        return self.get_fulfilled_count() >= self.required_count and self.fulfilled_hours >= self.required_hours
+        return (
+            self.get_fulfilled_count() >= self.required_count
+            and self.fulfilled_hours >= self.required_hours
+        )
 
     class JSONReq(TypedDict):
         matcher: str
@@ -145,9 +147,7 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
             )
             matchers.append(matcher)
 
-
         return cls(json["required_count"], json["required_hours"], matchers)
-    
 
     def __str__(self) -> str:
         s = f"""{BusinessAdministrationElectiveRequirement.__name__} 
