@@ -12,6 +12,7 @@ def test_computer_science() -> None:
     for requirement in requirements:
         REQUIREMENTS_MAP[requirement["matcher"]].from_json(requirement)
 
+
 def test_accounting() -> None:
     data = json.loads(open("./degree_data/accounting.json", "r").read())
 
@@ -20,3 +21,18 @@ def test_accounting() -> None:
     # make sure all requirements are parseable
     for requirement in requirements:
         REQUIREMENTS_MAP[requirement["matcher"]].from_json(requirement)
+
+
+"""Add tests for:
+
+Business administration & all the variants
+Business analytics
+Finanace
+Global business and all the variants
+Healthcare Management and all the variants
+Information Technology and Systems
+Marketing
+Supply Chain Management
+All the double majors
+
+"""
