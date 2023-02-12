@@ -135,11 +135,10 @@ def test_accounting_solver() -> None:
         "ACCT 4301",
         "ACCT 4302",
         "ACCT 4336",
-
     ]
 
     GRADUATEABLE_COURSES = [
-           "MATH 1325",
+        "MATH 1325",
         "OPRE 3340",
         "ACCT 2301",
         "ACCT 2302",
