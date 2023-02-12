@@ -147,7 +147,6 @@ class HoursRequirement(AbstractRequirement):
         self.required_hours = required_hours
         self.fulfilled_hours = 0
         self.requirements = set(requirements)
-        print(self.requirements)
 
     def attempt_fulfill(self, course: str) -> bool:
         if self.is_fulfilled():

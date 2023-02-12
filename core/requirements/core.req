@@ -18,4 +18,4 @@ REQUIRE "Core - Government/Political Science (070)"     Core070                 
 REQUIRE "Core - Social and Behavioral Sciences (080)"   Core080                                     3   %Core080%
 REQUIRE "Core - Component Area Option (090)"            Core090                                     6   %Core090%
 
-Core010 Core020 Core030 Core040 Core050 Core060 Core070 Core080 Core090
+GROUP Core010 Core020 Core030 Core040 Core050 Core060 Core070 Core080 Core090

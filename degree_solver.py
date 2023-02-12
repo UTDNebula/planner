@@ -2,7 +2,7 @@ from __future__ import annotations
 from collections import defaultdict
 from enum import Enum
 import json
-from core.solver import GraduationRequirementsSolver
+from core.solver import AssignmentStore, GraduationRequirementsSolver
 from major.requirements import AbstractRequirement
 from dataclasses import dataclass
 
@@ -50,22 +50,21 @@ class DegreeRequirementsSolver:
         bypasses: list[Bypass],
     ) -> None:
         self.courses = set(courses)
-        self.requirements = self.load_requirements(requirements)
+        self.degree_requirements = self.load_requirements(requirements)
+        self.validate_core = requirements.core
         self.bypasses = bypasses
-        self.core_solver = GraduationRequirementsSolver()  # type: ignore
+        self.solved_core = AssignmentStore()
 
-    def load_core(self) -> None:
-        filename = f"./core/requirements/core.req"
-        self.core_solver.load_requirements_from_file(filename)
+    def load_core(self) -> GraduationRequirementsSolver:
+        core_solver = GraduationRequirementsSolver()
+        filename = "./core/requirements/core.req"
+        core_solver.load_requirements_from_file(filename)
+        return core_solver
 
     def load_requirements(
         self, degree_requirements_input: DegreeRequirementsInput
     ) -> list[DegreeRequirement]:
-
-        # Initialize degree requirements
-        if degree_requirements_input.core:
-            self.load_core()
-
+        
         degree_requirements = []
 
         # Logic for adding majors
@@ -88,28 +87,34 @@ class DegreeRequirementsSolver:
         return degree_requirements
 
     def solve(self) -> DegreeRequirementsSolver:
-        for degree_req in self.requirements:
-            # Implement core solver
-            if degree_req.type == DegreeRequirementType.core:
-                self.core_solver.solve(
-                    [course for course in self.courses], []
-                )  # Convert to list
-
-            else:
-                for course in self.courses:
-                    for requirement in degree_req.requirements:
-                        fulfilled = requirement.attempt_fulfill(course)
-                        if fulfilled:
-                            break
+        # Run for major
+        if self.validate_core:
+            core_solver = self.load_core()  # type: ignore
+            self.solved_core = core_solver.solve(
+                [course for course in self.courses], []
+            )  # Convert to list
+        
+            print(self.solved_core)
+        # Run for major
+        for degree_req in self.degree_requirements:
+            for course in self.courses:
+                for requirement in degree_req.requirements:
+                    fulfilled = requirement.attempt_fulfill(course)
+                    if fulfilled:
+                        break
 
         return self
 
     def can_graduate(self) -> bool:
 
+        # TODO: Maybe change logic in future
+        # Run core on demand if needed
+
         return all(
+            (
             all([requirement.is_fulfilled() for requirement in degree_req.requirements])
-            for degree_req in self.requirements
-        )
+            for degree_req in self.degree_requirements)
+        ) and self.solved_core.can_graduate()
 
     # def to_json(self) -> DegreeRequirementOutput:
     #     return {

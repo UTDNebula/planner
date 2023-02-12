@@ -53,6 +53,7 @@ class AssignmentStore:
         return unfilled_reqs
 
     def can_graduate(self):
+        print([req[0] for req in self.get_unfilled_reqs()], "R")
         return len(self.get_unfilled_reqs()) == 0
 
     def to_json(self):
@@ -260,7 +261,7 @@ class GraduationRequirementsSolver:
         newCourses = []
         for course in courses:
             sub_prefix, course_num = course.split(" ")
-            newCourses.append(Course(course, course_num[0], course_num[1], sub_prefix))
+            newCourses.append(Course(course, int(course_num[0]), int(course_num[1]), sub_prefix))
         courses = newCourses
 
         # Pre-process bypasses into an assignment, and validate them
