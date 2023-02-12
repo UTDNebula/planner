@@ -4,7 +4,7 @@ from requirements import (
     OrRequirement,
     HoursRequirement,
     FreeElectiveRequirement,
-    SelectRequirement
+    SelectRequirement,
 )
 import json
 
@@ -97,23 +97,29 @@ def test_or_requirement() -> None:
     assert or_req.attempt_fulfill("HIST 1301")
     assert or_req.is_fulfilled()
 
+
 def test_hours_requirement() -> None:
-    hours_req = HoursRequirement(12, [CourseRequirement("ACCT 3322"),
-		CourseRequirement("ACCT 4301"),
-		CourseRequirement("ACCT 4302"),
-		CourseRequirement("ACCT 4336"),
-		CourseRequirement("ACCT 4337"),
-		CourseRequirement("ACCT 4340"),
-		CourseRequirement("FIN 3330"),
-		CourseRequirement("FIN 3360"),
-		CourseRequirement("FIN 3380"),
-		CourseRequirement("FIN 3390"),
-		CourseRequirement("ITSS 4340"),
-		CourseRequirement("OPRE 4350")])
-    
+    hours_req = HoursRequirement(
+        12,
+        [
+            CourseRequirement("ACCT 3322"),
+            CourseRequirement("ACCT 4301"),
+            CourseRequirement("ACCT 4302"),
+            CourseRequirement("ACCT 4336"),
+            CourseRequirement("ACCT 4337"),
+            CourseRequirement("ACCT 4340"),
+            CourseRequirement("FIN 3330"),
+            CourseRequirement("FIN 3360"),
+            CourseRequirement("FIN 3380"),
+            CourseRequirement("FIN 3390"),
+            CourseRequirement("ITSS 4340"),
+            CourseRequirement("OPRE 4350"),
+        ],
+    )
+
     assert hours_req.fulfilled_hours == 0
     assert hours_req.is_fulfilled() == False
-    
+
     hours_req.attempt_fulfill("ACCT 3322")
     hours_req.attempt_fulfill("FFFF 1111")
 
@@ -123,7 +129,6 @@ def test_hours_requirement() -> None:
     hours_req.attempt_fulfill("ACCT 3322")
     assert hours_req.fulfilled_hours == 3
     assert hours_req.is_fulfilled() == False
-
 
     hours_req.attempt_fulfill("ACCT 4301")
     hours_req.attempt_fulfill("FIN 3380")
@@ -135,6 +140,7 @@ def test_hours_requirement() -> None:
     hours_req.attempt_fulfill("FIN 3330")
     assert hours_req.fulfilled_hours == 12
     assert hours_req.is_fulfilled() == True
+
 
 def test_free_elective_requirement() -> None:
     free_elective_req = FreeElectiveRequirement(10, ["HIST 1301", "HIST 1302"])
@@ -165,8 +171,17 @@ def test_free_elective_requirement() -> None:
 
     assert free_elective_req.fulfilled_hours == 0
 
+
 def test_select_requirement() -> None:
-    select_req = SelectRequirement(2, [CourseRequirement("BA 1310"), CourseRequirement("BA 1320"), CourseRequirement("ECON 2301"), CourseRequirement("ECON 2302")])
+    select_req = SelectRequirement(
+        2,
+        [
+            CourseRequirement("BA 1310"),
+            CourseRequirement("BA 1320"),
+            CourseRequirement("ECON 2301"),
+            CourseRequirement("ECON 2302"),
+        ],
+    )
     assert select_req.fulfilled_count == 0
     assert select_req.is_fulfilled() == False
 
@@ -174,14 +189,14 @@ def test_select_requirement() -> None:
     assert select_req.fulfilled_count == 0
     assert select_req.is_fulfilled() == False
 
-    select_req.attempt_fulfill("BA 1320") 
+    select_req.attempt_fulfill("BA 1320")
     assert select_req.fulfilled_count == 1
     assert select_req.is_fulfilled() == False
 
-    select_req.attempt_fulfill("BA 1310") 
+    select_req.attempt_fulfill("BA 1310")
     assert select_req.fulfilled_count == 2
     assert select_req.is_fulfilled() == True
 
-    select_req.attempt_fulfill("ECON 2301") 
+    select_req.attempt_fulfill("ECON 2301")
     assert select_req.fulfilled_count == 2
     assert select_req.is_fulfilled() == True
