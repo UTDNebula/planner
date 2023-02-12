@@ -5,7 +5,7 @@ from major.requirements import CourseRequirement
 import json
 
 
-def test_or_requirement() -> None:
+def test_major_guided_elective_requirement() -> None:
     req = MajorGuidedElectiveRequirement(
         3,
         "CS 43",

@@ -54,8 +54,8 @@ class AndRequirement(AbstractRequirement):
             return False
 
         filled_one = False
-        for requirements in self.requirements:
-            filled_one = filled_one or requirements.attempt_fulfill(course)
+        for requirement in self.requirements:
+            filled_one = filled_one or requirement.attempt_fulfill(course)
 
         return filled_one
 
@@ -98,8 +98,8 @@ class OrRequirement(AbstractRequirement):
             return False
 
         filled_one = False
-        for requirements in self.requirements:
-            filled_one = filled_one or requirements.attempt_fulfill(course)
+        for requirement in self.requirements:
+            filled_one = filled_one or requirement.attempt_fulfill(course)
 
         return filled_one
 
@@ -110,7 +110,7 @@ class OrRequirement(AbstractRequirement):
         matcher: str
 
     class JSON(TypedDict):
-        requirements: list[AndRequirement.Req]
+        requirements: list[OrRequirement.Req]
 
     @classmethod
     def from_json(cls, json: JSON) -> AbstractRequirement:
@@ -127,6 +127,82 @@ class OrRequirement(AbstractRequirement):
 
     def __str__(self) -> str:
         return f"({' or '.join([str(req) for req in self.requirements])}) -> {self.is_fulfilled()}"
+
+
+class HoursRequirement(AbstractRequirement):
+    """Any requirement with minimum # hours
+
+    Requires minimum of required_hours to be fulfilled
+
+    Parameters
+    __________
+    required_hours: int
+        Minimum # of hours before requirement is fulfilled
+
+    """
+
+    def __init__(
+        self, required_hours: int, requirements: list[AbstractRequirement]
+    ) -> None:
+        self.required_hours = required_hours
+        self.fulfilled_hours = 0
+        self.requirements = set(requirements)
+        print(self.requirements)
+
+    def attempt_fulfill(self, course: str) -> bool:
+        if self.is_fulfilled():
+            return False
+
+        for requirement in self.requirements:
+            if requirement.attempt_fulfill(course):
+                self.fulfilled_hours += utils.get_hours_from_course(course)
+
+        return False
+
+    def is_fulfilled(self) -> bool:
+        return self.fulfilled_hours >= self.required_hours
+
+    class Req(TypedDict):
+        matcher: str
+
+    class JSON(TypedDict):
+        required_hours: int
+        requirements: list[HoursRequirement.Req]
+
+    @classmethod
+    def from_json(cls, json: JSON) -> AbstractRequirement:
+        """
+        {
+            "required_hours": 10,
+            "requirements": [
+              {
+                        "matcher": "CourseRequirement",
+                        "course": "ACCT 4V80"
+                      },
+                      {
+                        "matcher": "CourseRequirement",
+                        "course": "BA 4090"
+                      }
+            ]
+        """
+
+        from .map import REQUIREMENTS_MAP
+
+        matchers: list[AbstractRequirement] = []
+        for requirement_data in json["requirements"]:
+            matcher = REQUIREMENTS_MAP[requirement_data["matcher"]].from_json(
+                requirement_data
+            )
+            matchers.append(matcher)
+
+        return cls(json["required_hours"], matchers)
+
+    def __str__(self) -> str:
+        s = f"""{FreeElectiveRequirement.__name__} 
+        required_hours: {self.required_hours}
+        fulfilled_hours: {self.fulfilled_hours}
+        """
+        return s
 
 
 class FreeElectiveRequirement(AbstractRequirement):
@@ -185,3 +261,64 @@ class FreeElectiveRequirement(AbstractRequirement):
         fulfilled_hours: {self.fulfilled_hours}
         """
         return s
+
+
+class SelectRequirement(AbstractRequirement):
+    """Matches x requirements out of a list to be fulfilled
+
+    Requires minimum of required_count # of requirements to be fulfilled
+
+    Parameters
+    __________
+    required_count: int
+        Minimum # of fulfillments before requirement is fulfilled
+    """
+
+    def __init__(
+        self, required_count: int, requirements: list[AbstractRequirement]
+    ) -> None:
+        self.required_count = required_count
+        self.fulfilled_count = 0
+        self.requirements = set(requirements)
+
+    def attempt_fulfill(self, course: str) -> bool:
+        if self.is_fulfilled():
+            return False
+
+        for requirements in self.requirements:
+            if requirements.attempt_fulfill(course):
+                self.fulfilled_count += 1
+                return True
+
+        return False
+
+    def is_fulfilled(self) -> bool:
+        curr = 0
+
+        for requirement in self.requirements:
+            if requirement.is_fulfilled():
+                curr += 1
+        return curr >= self.required_count
+
+    class Req(TypedDict):
+        matcher: str
+
+    class JSON(TypedDict):
+        requirements: list[AndRequirement.Req]
+        required_course_count: int
+
+    @classmethod
+    def from_json(cls, json: JSON) -> AbstractRequirement:
+        from .map import REQUIREMENTS_MAP
+
+        matchers: list[AbstractRequirement] = []
+        for requirement_data in json["requirements"]:
+            matcher = REQUIREMENTS_MAP[requirement_data["matcher"]].from_json(
+                requirement_data
+            )
+            matchers.append(matcher)
+
+        return cls(json["required_course_count"], matchers)
+
+    def __str__(self) -> str:
+        return f"({' or '.join([str(req) for req in self.requirements])}) -> {self.is_fulfilled()}"

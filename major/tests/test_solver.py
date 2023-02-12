@@ -101,3 +101,91 @@ def test_computer_science_solver() -> None:
     print(str(solver))
 
     assert solver.can_graduate()
+
+
+def test_accounting_solver() -> None:
+    MISSING_FREE_ELECTIVES = [
+        "MATH 1325",
+        "OPRE 3340",
+        "ACCT 2301",
+        "ACCT 2302",
+        "BLAW 2301",
+        "CS 2305",
+        "OPRE 3360",
+        "BA 1310",
+        "BA 1320",
+        "BCOM 1300",
+        "BCOM 4300",
+        "IMS 3310",
+        "FIN 3320",
+        "ITSS 3300",
+        "OPRE 3310",
+        "OBHR 3310",
+        "MKT 3300",
+        "ENTP 4395",
+        "ACCT 3312",
+        "ACCT 3331",
+        "ACCT 3332",
+        "ACCT 3341",
+        "ACCT 3350",
+        "ACCT 4334",
+        "ACCT 4342",
+        "BA 4090",
+        "ACCT 3322",
+        "ACCT 4301",
+        "ACCT 4302",
+        "ACCT 4336",
+    ]
+
+    GRADUATEABLE_COURSES = [
+        "MATH 1325",
+        "OPRE 3340",
+        "ACCT 2301",
+        "ACCT 2302",
+        "BLAW 2301",
+        "CS 2305",
+        "OPRE 3360",
+        "BA 1310",
+        "BA 1320",
+        "BCOM 1300",
+        "BCOM 4300",
+        "IMS 3310",
+        "FIN 3320",
+        "ITSS 3300",
+        "OPRE 3310",
+        "OBHR 3310",
+        "MKT 3300",
+        "ENTP 4395",
+        "ACCT 3312",
+        "ACCT 3331",
+        "ACCT 3332",
+        "ACCT 3341",
+        "ACCT 3350",
+        "ACCT 4334",
+        "ACCT 4342",
+        "BA 4090",
+        "ACCT 3322",
+        "ACCT 4301",
+        "ACCT 4302",
+        "ACCT 4336",
+        "MKT 4360",
+    ]
+
+    data = json.loads(open("degree_data/accounting.json", "r").read())
+
+    requirements_data = data["requirements"]["major"]
+
+    requirements: list[AbstractRequirement] = []
+
+    for req_data in requirements_data:
+        requirements.append(REQUIREMENTS_MAP[req_data["matcher"]].from_json(req_data))
+
+    solver = MajorRequirementsSolver(MISSING_FREE_ELECTIVES, requirements).solve()
+    print(str(solver))
+
+    assert solver.can_graduate() == False
+
+    solver = MajorRequirementsSolver(GRADUATEABLE_COURSES, requirements).solve()
+    print(str(solver))
+
+    assert solver.can_graduate()
