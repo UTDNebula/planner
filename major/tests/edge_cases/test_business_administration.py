@@ -1,5 +1,7 @@
 from major.requirements.edge_cases.business_administration import (
-    BusinessAdministrationElectiveRequirement, SomeRequirement, PrefixBucketRequirement
+    BusinessAdministrationElectiveRequirement,
+    SomeRequirement,
+    PrefixBucketRequirement,
 )
 import json
 
@@ -8,13 +10,19 @@ def test_major_guided_elective_requirement() -> None:
     req = BusinessAdministrationElectiveRequirement(
         2,
         9,
-       [SomeRequirement([PrefixBucketRequirement('CS'), PrefixBucketRequirement('SE')]), SomeRequirement([PrefixBucketRequirement('PHIL'), PrefixBucketRequirement('ECON')])] 
+        [
+            SomeRequirement(
+                [PrefixBucketRequirement("CS"), PrefixBucketRequirement("SE")]
+            ),
+            SomeRequirement(
+                [PrefixBucketRequirement("PHIL"), PrefixBucketRequirement("ECON")]
+            ),
+        ],
     )
 
     assert req.is_fulfilled() == False
     assert req.fulfilled_count == 0
     assert req.fulfilled_hours == 0
-
 
     req.attempt_fulfill("HIST 1301")
 
@@ -26,8 +34,6 @@ def test_major_guided_elective_requirement() -> None:
     assert req.is_fulfilled() == False
     assert req.fulfilled_hours == 3
     assert req.fulfilled_count == 1
-
-
 
     req.attempt_fulfill("CS 4322")
     assert req.is_fulfilled() == False

@@ -275,9 +275,9 @@ class SelectRequirement(AbstractRequirement):
     """
 
     def __init__(
-        self, required_count: int, requirements: list[AbstractRequirement]
+        self, required_course_count: int, requirements: list[AbstractRequirement]
     ) -> None:
-        self.required_count = required_count
+        self.required_course_count = required_course_count
         self.fulfilled_count = 0
         self.requirements = set(requirements)
 
@@ -298,7 +298,7 @@ class SelectRequirement(AbstractRequirement):
         for requirement in self.requirements:
             if requirement.is_fulfilled():
                 curr += 1
-        return curr >= self.required_count
+        return curr >= self.required_course_count
 
     class Req(TypedDict):
         matcher: str

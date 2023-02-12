@@ -1,10 +1,16 @@
 from __future__ import annotations
+from collections import defaultdict
 from enum import Enum
 import json
+from core.solver import GraduationRequirementsSolver
 from major.requirements import AbstractRequirement
 from dataclasses import dataclass
 
 from major.requirements.map import REQUIREMENTS_MAP
+
+"""
+TODO: 
+"""
 
 
 @dataclass
@@ -46,13 +52,20 @@ class DegreeRequirementsSolver:
         self.courses = set(courses)
         self.requirements = self.load_requirements(requirements)
         self.bypasses = bypasses
+        self.core_solver = GraduationRequirementsSolver()  # type: ignore
+
+    def load_core(self) -> None:
+        filename = f"./core/requirements/core.req"
+        self.core_solver.load_requirements_from_file(filename)
 
     def load_requirements(
         self, degree_requirements_input: DegreeRequirementsInput
     ) -> list[DegreeRequirement]:
 
         # Initialize degree requirements
-        # TODO: Also add core reqs here
+        if degree_requirements_input.core:
+            self.load_core()
+
         degree_requirements = []
 
         # Logic for adding majors
@@ -78,7 +91,9 @@ class DegreeRequirementsSolver:
         for degree_req in self.requirements:
             # Implement core solver
             if degree_req.type == DegreeRequirementType.core:
-                continue
+                self.core_solver.solve(
+                    [course for course in self.courses], []
+                )  # Convert to list
 
             else:
                 for course in self.courses:

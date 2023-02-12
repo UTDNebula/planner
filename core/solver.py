@@ -255,7 +255,14 @@ class GraduationRequirementsSolver:
         # Ensure requirements are valid
         self.validate()
 
-    def solve(self, courses: list[Course], bypasses: list[SingleAssignment]):
+    def solve(self, courses: list[str], bypasses: list[SingleAssignment]):
+        # Convert list of str into list of courses
+        newCourses = []
+        for course in courses:
+            sub_prefix, course_num = course.split(" ")
+            newCourses.append(Course(course, course_num[0], course_num[1], sub_prefix))
+        courses = newCourses
+
         # Pre-process bypasses into an assignment, and validate them
         bypass_assignments = AssignmentStore()
         courses_dict: dict[str, Course] = {course.name: course for course in courses}
