@@ -345,7 +345,7 @@ class PrefixRequirement(AbstractRequirement):
         if self.is_fulfilled():
             return False
 
-        if utils.get_course_prefix(course) == self.prefix:
+        if course.startswith(self.prefix):
             self.filled = True
             return True
 
@@ -367,7 +367,7 @@ class PrefixRequirement(AbstractRequirement):
 
 class PrefixBucketRequirement(PrefixRequirement):
     def attempt_fulfill(self, course: str) -> bool:
-        if utils.get_course_prefix(course) == self.prefix:
+        if course.startswith(self.prefix):
             self.filled = True
             return True
 

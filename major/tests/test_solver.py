@@ -278,6 +278,7 @@ def test_software_engineering_solver() -> None:
         "CS 4314",
         "CS 4315",
         "CS 4334",
+        "SE 4399",
         # Free Electives
         "ABC 4499",
     ]

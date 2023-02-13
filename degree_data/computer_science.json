@@ -166,7 +166,7 @@
           },
           {
             "matcher": "PrefixBucketRequirement",
-            "prefix": "CS"
+            "prefix": "CS 43"
           }
         ]
       },
