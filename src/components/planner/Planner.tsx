@@ -329,9 +329,6 @@ export default function Planner({
         destinationData.to === 'semester-tile' &&
         originData.semester.id === destinationData.semester.id
       ) {
-        toast.warn(
-          `You're already taking ${originData.course.code} in ${originData.semester.code.year}${originData.semester.code.semester}`,
-        );
         return;
       }
 
