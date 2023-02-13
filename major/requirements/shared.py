@@ -93,6 +93,7 @@ class AndRequirement(AbstractRequirement):
             "matcher": "And",
             "filled": self.is_fulfilled(),
             "requirements": [req.to_json() for req in self.requirements],
+            "metadata": self.metadata,
         }
 
     def __str__(self) -> str:
