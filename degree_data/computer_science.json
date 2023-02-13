@@ -141,10 +141,9 @@
         "course": "CS 4485"
       },
       {
-        "matcher": "CS_MajorGuidedElectiveRequirement",
-        "required_course_count": 3,
-        "starts_with": "CS 43",
-        "also_fulfills": [
+        "matcher": "HoursRequirement",
+        "required_hours": 9,
+        "requirements": [
           {
             "matcher": "CourseRequirement",
             "course": "EE 4325"
@@ -164,6 +163,10 @@
           {
             "matcher": "CourseRequirement",
             "course": "SE 4381"
+          },
+          {
+            "matcher": "PrefixBucketRequirement",
+            "prefix": "CS"
           }
         ]
       },

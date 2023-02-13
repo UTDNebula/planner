@@ -1,6 +1,7 @@
-from solver import MajorRequirementsSolver
-from requirements import AbstractRequirement, REQUIREMENTS_MAP
+from major.solver import MajorRequirementsSolver
+from major.requirements import AbstractRequirement, REQUIREMENTS_MAP
 import json
+import copy
 
 
 def test_computer_science_solver() -> None:
@@ -92,12 +93,16 @@ def test_computer_science_solver() -> None:
     for req_data in requirements_data:
         requirements.append(REQUIREMENTS_MAP[req_data["matcher"]].from_json(req_data))
 
-    solver = MajorRequirementsSolver(MISSING_FREE_ELECTIVES, requirements).solve()
+    solver = MajorRequirementsSolver(
+        MISSING_FREE_ELECTIVES, copy.deepcopy(requirements)
+    ).solve()
     print(str(solver))
 
     assert solver.can_graduate() == False
 
-    solver = MajorRequirementsSolver(GRADUATEABLE_COURSES, requirements).solve()
+    solver = MajorRequirementsSolver(
+        GRADUATEABLE_COURSES, copy.deepcopy(requirements)
+    ).solve()
     print(str(solver))
 
     assert solver.can_graduate()
@@ -180,12 +185,122 @@ def test_accounting_solver() -> None:
     for req_data in requirements_data:
         requirements.append(REQUIREMENTS_MAP[req_data["matcher"]].from_json(req_data))
 
-    solver = MajorRequirementsSolver(MISSING_FREE_ELECTIVES, requirements).solve()
+    solver = MajorRequirementsSolver(
+        MISSING_FREE_ELECTIVES, copy.deepcopy(requirements)
+    ).solve()
     print(str(solver))
 
     assert solver.can_graduate() == False
 
-    solver = MajorRequirementsSolver(GRADUATEABLE_COURSES, requirements).solve()
+    solver = MajorRequirementsSolver(
+        GRADUATEABLE_COURSES, copy.deepcopy(requirements)
+    ).solve()
+    print(str(solver))
+
+    assert solver.can_graduate()
+
+
+def test_software_engineering_solver() -> None:
+    MISSING_GUIDED_ELECTIVE = [
+        "ECS 1100",
+        "CS 1200",
+        "CS 1136",
+        "CS 1336",
+        "CS 1337",
+        "CS 2305",
+        "CS 2336",
+        "CS 2340",
+        "MATH 2413",
+        "MATH 2414",
+        "MATH 2418",
+        "PHYS 2125",
+        "PHYS 2126",
+        "PHYS 2325",
+        "PHYS 2326",
+        "SE 2340",
+        "MATH 2415",
+        "SE 3162",
+        "SE 3306",
+        "SE 3341",
+        "SE 3345",
+        "SE 3354",
+        "SE 3377",
+        "ECS 3390",
+        "SE 4347",
+        "SE 4348",
+        "SE 4351",
+        "SE 4352",
+        "SE 4367",
+        "SE 4381",
+        "SE 4485",
+        # Major Guided Electives, missing 2 hours
+        "CS 4141",
+        "CS 4314",
+        "CS 4315",
+        # Free Electives
+        "ABC 4499",
+    ]
+
+    GRADUATEABLE_COURSES = [
+        "ECS 1100",
+        "CS 1200",
+        "CS 1136",
+        "CS 1336",
+        "CS 1337",
+        "CS 2305",
+        "CS 2336",
+        "CS 2340",
+        "MATH 2413",
+        "MATH 2414",
+        "MATH 2418",
+        "PHYS 2125",
+        "PHYS 2126",
+        "PHYS 2325",
+        "PHYS 2326",
+        "SE 2340",
+        "MATH 2415",
+        "SE 3162",
+        "SE 3306",
+        "SE 3341",
+        "SE 3345",
+        "SE 3354",
+        "SE 3377",
+        "ECS 3390",
+        "SE 4347",
+        "SE 4348",
+        "SE 4351",
+        "SE 4352",
+        "SE 4367",
+        "SE 4381",
+        "SE 4485",
+        # Major Guided Electives
+        "CS 4141",
+        "CS 4314",
+        "CS 4315",
+        "CS 4334",
+        # Free Electives
+        "ABC 4499",
+    ]
+
+    data = json.loads(open("degree_data/software_engineering.json", "r").read())
+
+    requirements_data = data["requirements"]["major"]
+
+    requirements: list[AbstractRequirement] = []
+
+    for req_data in requirements_data:
+        requirements.append(REQUIREMENTS_MAP[req_data["matcher"]].from_json(req_data))
+
+    solver = MajorRequirementsSolver(
+        MISSING_GUIDED_ELECTIVE, copy.deepcopy(requirements)
+    ).solve()
+    print(str(solver))
+
+    assert solver.can_graduate() == False
+
+    solver = MajorRequirementsSolver(
+        GRADUATEABLE_COURSES, copy.deepcopy(requirements)
+    ).solve()
     print(str(solver))
 
     assert solver.can_graduate()

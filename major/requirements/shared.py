@@ -69,7 +69,7 @@ class AndRequirement(AbstractRequirement):
         requirements: list[AndRequirement.Req]
 
     @classmethod
-    def from_json(cls, json: JSON) -> AbstractRequirement:
+    def from_json(cls, json: JSON) -> AndRequirement:
         from .map import REQUIREMENTS_MAP
 
         matchers: list[AbstractRequirement] = []
@@ -113,7 +113,7 @@ class OrRequirement(AbstractRequirement):
         requirements: list[OrRequirement.Req]
 
     @classmethod
-    def from_json(cls, json: JSON) -> AbstractRequirement:
+    def from_json(cls, json: JSON) -> OrRequirement:
         from .map import REQUIREMENTS_MAP
 
         matchers: list[AbstractRequirement] = []
@@ -156,6 +156,7 @@ class HoursRequirement(AbstractRequirement):
         for requirement in self.requirements:
             if requirement.attempt_fulfill(course):
                 self.fulfilled_hours += utils.get_hours_from_course(course)
+                return True
 
         return False
 
@@ -198,7 +199,7 @@ class HoursRequirement(AbstractRequirement):
         return cls(json["required_hours"], matchers)
 
     def __str__(self) -> str:
-        s = f"""{FreeElectiveRequirement.__name__} 
+        s = f"""{HoursRequirement.__name__} 
         required_hours: {self.required_hours}
         fulfilled_hours: {self.fulfilled_hours}
         """
@@ -242,7 +243,7 @@ class FreeElectiveRequirement(AbstractRequirement):
         required_hours: int
 
     @classmethod
-    def from_json(cls, json: JSON) -> AbstractRequirement:
+    def from_json(cls, json: JSON) -> FreeElectiveRequirement:
         """
         {
             "required_hours": 10,
@@ -362,3 +363,12 @@ class PrefixRequirement(AbstractRequirement):
 
     def __str__(self) -> str:
         return f"{self.prefix} - {self.is_fulfilled()}"
+
+
+class PrefixBucketRequirement(PrefixRequirement):
+    def attempt_fulfill(self, course: str) -> bool:
+        if utils.get_course_prefix(course) == self.prefix:
+            self.filled = True
+            return True
+
+        return False

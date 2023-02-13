@@ -26,15 +26,6 @@ class SomeRequirement(OrRequirement):
         return filled_one
 
 
-class PrefixBucketRequirement(PrefixRequirement):
-    def attempt_fulfill(self, course: str) -> bool:
-        if utils.get_course_prefix(course) == self.prefix:
-            self.filled = True
-            return True
-
-        return False
-
-
 class BusinessAdministrationElectiveRequirement(AbstractRequirement):
     """Matches Business Administration Electives
 
@@ -76,7 +67,6 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
 
         # Now check if course satisfies a group
         for group in self.prefix_groups:
-
             if group.attempt_fulfill(course):
                 self.fulfilled_hours += utils.get_hours_from_course(course)
                 self.fulfilled_count = self.get_fulfilled_count()
