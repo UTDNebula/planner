@@ -93,12 +93,10 @@ def test_computer_science_solver() -> None:
         requirements.append(REQUIREMENTS_MAP[req_data["matcher"]].from_json(req_data))
 
     solver = MajorRequirementsSolver(MISSING_FREE_ELECTIVES, requirements).solve()
-    print(str(solver))
 
     assert solver.can_graduate() == False
 
     solver = MajorRequirementsSolver(GRADUATEABLE_COURSES, requirements).solve()
-    print(str(solver))
 
     assert solver.can_graduate()
 
@@ -181,11 +179,9 @@ def test_accounting_solver() -> None:
         requirements.append(REQUIREMENTS_MAP[req_data["matcher"]].from_json(req_data))
 
     solver = MajorRequirementsSolver(MISSING_FREE_ELECTIVES, requirements).solve()
-    print(str(solver))
 
     assert solver.can_graduate() == False
 
     solver = MajorRequirementsSolver(GRADUATEABLE_COURSES, requirements).solve()
-    print(str(solver))
 
     assert solver.can_graduate()

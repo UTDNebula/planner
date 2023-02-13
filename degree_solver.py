@@ -94,7 +94,6 @@ class DegreeRequirementsSolver:
                 [course for course in self.courses], []
             )  # Convert to list
         
-            print(self.solved_core)
         # Run for major
         for degree_req in self.degree_requirements:
             for course in self.courses:

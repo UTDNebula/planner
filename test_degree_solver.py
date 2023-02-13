@@ -52,4 +52,4 @@ solver = DegreeRequirementsSolver(GRADUATEABLE_COURSES, input, [])
 
 solver.solve()
 
-print(solver.can_graduate())
+assert solver.can_graduate()
