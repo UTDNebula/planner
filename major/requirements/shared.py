@@ -74,6 +74,7 @@ class AndRequirement(AbstractRequirement):
 
     class JSON(TypedDict):
         requirements: list[AndRequirement.Req]
+        metadata: dict
 
     @classmethod
     def from_json(cls, json: JSON) -> AbstractRequirement:
@@ -86,7 +87,7 @@ class AndRequirement(AbstractRequirement):
             )
             matchers.append(matcher)
 
-        return cls(matchers)
+        return cls(matchers, json["metadata"])
 
     def to_json(self) -> JSON:
         return {

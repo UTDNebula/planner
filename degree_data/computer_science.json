@@ -10,135 +10,151 @@
     "core": "@import ./core.json",
     "major": [
       {
-        "matcher": "CourseRequirement",
-        "course": "ECS 1100"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 1200"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 1136"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 1336"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 1337"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 2305"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 2336"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 2340"
-      },
-      {
-        "matcher": "OrRequirement",
+        "matcher": "AndRequirement",
+        "metadata": { "name": "Major Preparatory Courses" },
         "requirements": [
           {
-            "matcher": "AndRequirement",
+            "matcher": "CourseRequirement",
+            "course": "ECS 1100"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 1200"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 1136"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 1336"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 1337"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 2305"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 2336"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 2340"
+          },
+          {
+            "matcher": "OrRequirement",
             "requirements": [
-              { "matcher": "CourseRequirement", "course": "MATH 2413" },
-              { "matcher": "CourseRequirement", "course": "MATH 2414" }
+              {
+                "matcher": "AndRequirement",
+                "metadata": {},
+                "requirements": [
+                  { "matcher": "CourseRequirement", "course": "MATH 2413" },
+                  { "matcher": "CourseRequirement", "course": "MATH 2414" }
+                ]
+              },
+              {
+                "matcher": "AndRequirement",
+                "metadata": {},
+                "requirements": [
+                  { "matcher": "CourseRequirement", "course": "MATH 2417" },
+                  { "matcher": "CourseRequirement", "course": "MATH 2419" }
+                ]
+              }
             ]
           },
           {
-            "matcher": "AndRequirement",
-            "requirements": [
-              { "matcher": "CourseRequirement", "course": "MATH 2417" },
-              { "matcher": "CourseRequirement", "course": "MATH 2419" }
-            ]
+            "matcher": "CourseRequirement",
+            "course": "MATH 2418"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "PHYS 2125"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "PHYS 2126"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "PHYS 2325"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "PHYS 2326"
           }
         ]
       },
       {
-        "matcher": "CourseRequirement",
-        "course": "MATH 2418"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "PHYS 2125"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "PHYS 2126"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "PHYS 2325"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "PHYS 2326"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 3162"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 3305"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 3341"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 3345"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 3354"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 3377"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "ECS 3390"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4141"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4337"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4341"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4347"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4348"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4349"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4384"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "CS 4485"
+        "matcher": "AndRequirement",
+        "metadata": {
+          "name": "Major Core Courses"
+        },
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 3162"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 3305"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 3341"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 3345"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 3354"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 3377"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ECS 3390"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4141"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4337"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4341"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4347"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4348"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4349"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4384"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4485"
+          }
+        ]
       },
       {
         "matcher": "CS_MajorGuidedElectiveRequirement",
