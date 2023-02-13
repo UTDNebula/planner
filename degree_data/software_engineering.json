@@ -1,0 +1,325 @@
+{
+  "abbreviation": "Software Engineering (BS)",
+  "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ecs/software-engineering",
+  "minimum_credit_hours": 123,
+  "name": "Bachelor of Science in Software Engineering",
+  "school": "Erik Jonsson School of Engineering and Computer Science",
+  "subtype": "Major",
+  "year": "2022-2023",
+  "requirements": {
+    "major": [
+      {
+        "matcher": "CourseRequirement",
+        "course": "ECS 1100"
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "CS 1200"
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "CS 1136"
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "CS 1336"
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "CS 1337"
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "CS 2305"
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "CS 2336"
+      },
+      {
+        "matcher": "OrRequirement",
+        "requirements": [
+          {
+            "matcher": "AndRequirement",
+            "requirements": [
+              { "matcher": "CourseRequirement", "course": "MATH 2413" },
+              { "matcher": "CourseRequirement", "course": "MATH 2414" }
+            ]
+          },
+          {
+            "matcher": "AndRequirement",
+            "requirements": [
+              { "matcher": "CourseRequirement", "course": "MATH 2417" },
+              { "matcher": "CourseRequirement", "course": "MATH 2419" }
+            ]
+          }
+        ]
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "MATH 2418"
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "PHYS 2125"
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "PHYS 2126"
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "PHYS 2325"
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "PHYS 2326"
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "SE 2340"
+      },
+      {
+        "matcher": "HoursRequirement",
+        "required_hours": 3,
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "MATH 2415"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MATH 2420"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MATH 2451"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MATH 3310"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MATH 3311"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MATH 3321"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MATH 3323"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MATH 3351"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MATH 3397"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MATH 4332"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MATH 4334"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MATH 4381"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "STAT 3355"
+          }
+        ]
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "SE 3162"
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "SE 3306"
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "SE 3341"
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "SE 3345"
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "SE 3354"
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "SE 3377"
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "ECS 3390"
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "SE 4347"
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "SE 4348"
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "SE 4351"
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "SE 4352"
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "SE 4367"
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "SE 4381"
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "SE 4485"
+      },
+      {
+        "matcher": "HoursRequirement",
+        "required_hours": 12,
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4141"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4314"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4315"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4334"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4337"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4341"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4349"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4352"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4353"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4361"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4365"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4375"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4384"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4386"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4389"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4390"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4391"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4392"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4393"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4394"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4395"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4396"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4397"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4398"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4485"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 4325"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "SE 4376"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "SE 4399"
+          },
+          {
+            "matcher": "PrefixBucketRequirement",
+            "prefix": "CS"
+          }
+        ]
+      },
+      {
+        "matcher": "FreeElectiveRequirement",
+        "required_hours": 4,
+        "excluded_courses": []
+      }
+    ]
+  }
+}
