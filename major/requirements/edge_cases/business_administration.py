@@ -67,7 +67,6 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
 
         # Now check if course satisfies a group
         for group in self.prefix_groups:
-
             if group.attempt_fulfill(course):
                 self.fulfilled_hours += utils.get_hours_from_course(course)
                 self.fulfilled_count = self.get_fulfilled_count()
