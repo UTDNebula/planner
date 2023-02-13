@@ -36,6 +36,12 @@ function DegreeRequirement({ degreeReq }) {
   );
 }
 
+/**
+ * Group of Requirements
+ * i.e. Major Preparatory Courses, Free Electives
+ * @param param0
+ * @returns
+ */
 function RequirementGroup({ reqGroup }) {
   return (
     <div>
@@ -45,22 +51,30 @@ function RequirementGroup({ reqGroup }) {
           return <RecursiveRequirementGroup idx={idx} req={req} />;
         })
       ) : (
-        <div>{reqGroup.valid_courses}</div>
+        <div className="border-2 border-pink-500">
+          <div>{reqGroup.valid_courses}</div>
+        </div>
       )}
     </div>
   );
 }
 
+/**
+ * Group of requirements that's recursive?
+ * @param param0
+ * @returns
+ */
 function RecursiveRequirementGroup({ req }) {
   if (req.matcher === 'Or' || req.matcher === 'And') {
     return (
-      <>
+      <div className="border-2 border-blue-500">
+        <div>{req.matcher}</div>
         {req.requirements.map((newReq, idx) => (
           <div key={idx}>
             <RecursiveRequirementGroup req={newReq} />
           </div>
         ))}
-      </>
+      </div>
     );
   } else {
     return <CourseRequirement req={req} />;
