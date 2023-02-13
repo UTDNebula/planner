@@ -1,16 +1,16 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
 
-import { DraggableCourse } from '../types';
+import { PlanCourse } from '../types';
 
 export default function SelectableCourse({
   course,
   selected,
   selectCourse,
 }: {
-  course: DraggableCourse;
+  course: PlanCourse;
   selected: boolean;
-  selectCourse: (course: DraggableCourse, add: boolean) => void;
+  selectCourse: (course: PlanCourse, add: boolean) => void;
 }) {
   const id = uuid();
 

@@ -2,7 +2,7 @@ import { ObjectID } from 'bson';
 
 import useSearch, { SearchReturn } from '@/components/search/search';
 
-import { Course, DraggableCourse } from '../types';
+import { PlanCourse } from '../types';
 import RequirementSearchBar from './RequirementSearchBar';
 import SelectableCourseContainer from './SelectableCourseContainer';
 import { trpc } from '@/utils/trpc';
@@ -26,7 +26,7 @@ export default function AddCourseContainer({
     refetchOnWindowFocus: false,
   });
   // TODO: Clean this logic up hella xD
-  const { results, updateQuery }: SearchReturn<Course, string> = useSearch({
+  const { results, updateQuery }: SearchReturn<{ code: string }, string> = useSearch({
     getData: async () =>
       q.data ? q.data.map((c) => ({ code: `${c.subject_prefix} ${c.course_number}` })) : [],
     initialQuery: '',
@@ -40,9 +40,9 @@ export default function AddCourseContainer({
       status: allCourses.includes(result.code) ? 'complete' : undefined,
       taken: validCourses.includes(result.code),
     };
-  }) as unknown as DraggableCourse[];
+  }) as unknown as PlanCourse[];
 
-  const newSelectedCourses: DraggableCourse[] = Object.values(selectedCourses).map((course) => {
+  const newSelectedCourses: PlanCourse[] = Object.values(selectedCourses).map((course) => {
     return { id: new ObjectID(), code: course.code };
   });
   return (

@@ -11,7 +11,7 @@ import superjson from 'superjson';
 
 import DegreePlanPDF from '@/components/planner/DegreePlanPDF/DegreePlanPDF';
 import Planner from '@/components/planner/Planner';
-import { DraggableCourse, Semester } from '@/components/planner/types';
+import { PlanCourse, PlanId } from '@/components/planner/types';
 import BackArrowIcon from '@/icons/BackArrowIcon';
 import SettingsIcon from '@/icons/SettingsIcon';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
@@ -39,7 +39,7 @@ export default function PlanDetailPage(
     planId: planId,
   });
 
-  const [semesters, setSemesters] = useState<Semester[]>(getSemestersInfo(data?.plan));
+  const [semesters, setSemesters] = useState<PlanId[]>(getSemestersInfo(data?.plan));
 
   // Indicate UI loading
   if (isLoading) {
@@ -125,19 +125,19 @@ function getSemestersInfo(
         name: string;
       }
     | undefined,
-): Semester[] {
+): PlanId[] {
   if (!plan) {
     return [];
   }
   return plan.semesters.map((sem) => {
-    const courses = sem.courses.map((course: string): DraggableCourse => {
+    const courses = sem.courses.map((course: string): PlanCourse => {
       const newCourse = {
         id: new ObjectID(),
         code: course,
       };
       return newCourse;
     });
-    const semester: Semester = { code: sem.code, id: sem.id as unknown as ObjectID, courses };
+    const semester: PlanId = { code: sem.code, id: sem.id as unknown as ObjectID, courses };
     return semester;
   });
 }

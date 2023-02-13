@@ -1,28 +1,18 @@
 import { UniqueIdentifier } from '@dnd-kit/core';
+import { SortableData } from '@dnd-kit/sortable';
 import { SemesterCode } from '@prisma/client';
 import { ObjectID } from 'bson';
 
 // Temporary semester type
 // TODO: Remove
-export interface Semester {
+export interface PlanSemester {
   id: ObjectID;
   code: SemesterCode;
-  courses: DraggableCourse[];
-}
-
-export interface Course {
-  code: string;
+  courses: PlanCourse[];
 }
 
 /* Represents a Course inside a Plan */
-export interface DraggableCourse extends Course {
-  id: ObjectID;
-  validation?: { isValid: boolean; override: boolean };
-  status?: 'complete' | 'incomplete'; // TODO: Clean this up later once prereq is done
-  taken?: boolean;
-  transfer?: boolean;
-  sync?: { isSynced: boolean; correctSemester: SemesterCode | undefined };
-}
+export type PlanCourse = Course;
 
 export interface DegreeRequirementGroup {
   name: string;
@@ -45,39 +35,43 @@ export interface DegreeRequirement {
  */
 export type DragEventOriginData = DragDataFromSemesterTile | DragDataFromCourseList;
 
-export interface DragDataFromSemesterTile {
+export interface DragDataFromSemesterTile extends SortableData {
   from: 'semester-tile';
-  semester: Semester;
-  course: DraggableCourse;
+  semester: PlanSemester;
+  course: PlanCourse;
 }
 
 export interface DragDataFromCourseList {
   from: 'course-list';
-  course: DraggableCourse;
+  course: PlanCourse;
 }
 
-export type DragEventDestinationData = DragDataToSemesterTile;
+/**
+ * DestinationData can be DragDataFromSemesterTile when changing order of courses
+ * - To narrow, use ``'from' in data`` or ``'to' in data``
+ */
+export type DragEventDestinationData = DragDataToSemesterTile | DragDataFromSemesterTile;
 
 export interface DragDataToSemesterTile {
   to: 'semester-tile';
-  semester: Semester;
+  semester: PlanSemester;
 }
 
 // Date stored during drag
 export interface ActiveDragData {
   from: 'semester-tile' | 'course-list';
-  course: DraggableCourse;
+  course: PlanCourse;
 }
 
 // Callbacks to generate drag and drop id's
-export type GetDragIdByCourse = (course: DraggableCourse) => UniqueIdentifier;
+export type GetDragIdByCourse = (course: PlanCourse) => UniqueIdentifier;
 
 export type GetDragIdByCourseAndReq = (
-  course: DraggableCourse,
+  course: PlanCourse,
   requirement: DegreeRequirement,
 ) => UniqueIdentifier;
 
 export type GetDragIdByCourseAndSemester = (
-  course: DraggableCourse,
-  semester: Semester,
+  course: PlanCourse,
+  semester: PlanSemester,
 ) => UniqueIdentifier;

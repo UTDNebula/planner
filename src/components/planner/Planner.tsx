@@ -34,8 +34,8 @@ import {
   DegreeRequirementGroup,
   DragEventDestinationData,
   DragEventOriginData,
-  DraggableCourse,
-  Semester,
+  PlanCourse,
+  PlanSemester,
 } from './types';
 import { createNewYear, isSemCodeEqual } from '@/utils/utilFunctions';
 import { SemesterCode } from '@prisma/client';
@@ -43,10 +43,10 @@ import { SemesterCode } from '@prisma/client';
 /** PlannerTool Props */
 export interface PlannerProps {
   degreeRequirements: DegreeRequirementGroup[];
-  semesters: Semester[];
+  semesters: PlanSemester[];
   showTransfer: boolean;
   planId: string;
-  setSemesters: React.Dispatch<React.SetStateAction<Semester[]>>;
+  setSemesters: React.Dispatch<React.SetStateAction<PlanSemester[]>>;
 }
 
 /** Controlled wrapper around course list and semester tiles */
@@ -208,7 +208,7 @@ export default function Planner({
   };
 
   const handleAddYear = () => {
-    const newYear: Semester[] = createNewYear(
+    const newYear: PlanSemester[] = createNewYear(
       semesters.length ? semesters[semesters.length - 1].code : { semester: 'u', year: 2022 },
     );
     const semesterIds = newYear.map((sem) => sem.id);
@@ -225,8 +225,8 @@ export default function Planner({
   };
 
   const handleRemoveCourseFromSemester = (
-    targetSemester: Semester,
-    targetCourse: DraggableCourse,
+    targetSemester: PlanSemester,
+    targetCourse: PlanCourse,
   ) => {
     setSemesters((semesters) =>
       semesters.map((semester) => {
@@ -246,7 +246,7 @@ export default function Planner({
     addTask({ func: handleRemoveCourse, args: { semesterId, courseName } });
   };
 
-  const handleAddCourseToSemester = (targetSemester: Semester, newCourse: DraggableCourse) => {
+  const handleAddCourseToSemester = (targetSemester: PlanSemester, newCourse: PlanCourse) => {
     // check for duplicate course
     const isDuplicate = Boolean(
       targetSemester.courses.find((course) => course.code === newCourse.code),
@@ -271,9 +271,9 @@ export default function Planner({
   };
 
   const handleMoveCourseFromSemesterToSemester = (
-    originSemester: Semester,
-    destinationSemester: Semester,
-    courseToMove: DraggableCourse,
+    originSemester: PlanSemester,
+    destinationSemester: PlanSemester,
+    courseToMove: PlanCourse,
   ) => {
     const isDuplicate = Boolean(
       destinationSemester.courses.find((course) => course.code === courseToMove.code),
@@ -321,6 +321,24 @@ export default function Planner({
     if (active && over) {
       const originData = active.data.current as DragEventOriginData;
       const destinationData = over.data.current as DragEventDestinationData;
+
+      if ('from' in destinationData) {
+        if (
+          originData.from === 'semester-tile' &&
+          destinationData.from === 'semester-tile' &&
+          originData.semester.id === destinationData.semester.id
+        ) {
+          console.log('==============================================');
+          console.log(active.id);
+          console.log(over.id);
+          console.log(originData.sortable.items);
+          console.log(destinationData.sortable.items);
+          console.log('==============================================');
+          return;
+        }
+
+        return;
+      }
 
       // from semester -> current semester
       // attempting to drop semester course on current tile
@@ -400,7 +418,7 @@ export default function Planner({
                 sync: { missing: [], extra: [] },
               };
 
-              const coursesWithErrors: DraggableCourse[] = semester.courses.map((course) => {
+              const coursesWithErrors: PlanCourse[] = semester.courses.map((course) => {
                 let correctSemester: SemesterCode | undefined;
 
                 const isSynced =

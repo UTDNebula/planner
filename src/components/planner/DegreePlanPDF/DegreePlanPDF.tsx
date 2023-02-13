@@ -2,7 +2,7 @@ import { displaySemesterCode } from '@/utils/utilFunctions';
 import { Document, Page, StyleSheet, View } from '@react-pdf/renderer';
 import React, { FC } from 'react';
 
-import { Semester } from '../types';
+import { PlanId } from '../types';
 import Header from './Header';
 import SemesterHeader from './SemesterHeader';
 import SemesterTable from './SemesterTable';
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
 interface DegreePlanPDFProps {
   studentName: string;
   planTitle: string;
-  semesters: Semester[];
+  semesters: PlanId[];
 }
 
 // Create Document Component containing the user's degree plan

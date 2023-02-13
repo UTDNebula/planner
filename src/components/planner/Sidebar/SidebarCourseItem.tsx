@@ -1,12 +1,12 @@
 import { UniqueIdentifier, useDraggable } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities';
 
-import { DragDataFromCourseList, DraggableCourse } from '../types';
+import { DragDataFromCourseList, PlanCourse } from '../types';
 import StatusTag from './StatusTag';
 
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 /** UI Implementation of sidebar course */
-export function SidebarCourseItem({ course }: { course: DraggableCourse }): JSX.Element {
+export function SidebarCourseItem({ course }: { course: PlanCourse }): JSX.Element {
   // Course would be marked incomplete ONLY if requirement needed course
   // Maybe DraggableCourse needs to take a prop specifying if it's needed or nah?
   // TODO: Update course status tag
@@ -30,7 +30,7 @@ export default function DraggableSidebarCourseItem({
   course,
 }: {
   dragId: UniqueIdentifier;
-  course: DraggableCourse;
+  course: PlanCourse;
 }) {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: dragId,

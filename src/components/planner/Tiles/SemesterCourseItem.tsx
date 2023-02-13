@@ -1,20 +1,19 @@
-import { UniqueIdentifier, useDraggable } from '@dnd-kit/core';
-import CloseIcon from '@mui/icons-material/Close';
+import { UniqueIdentifier } from '@dnd-kit/core';
+import { CSS } from '@dnd-kit/utilities';
 import { ComponentPropsWithoutRef, FC, forwardRef } from 'react';
 
-import { getStartingPlanSemester, isEarlierSemester } from '@/utils/plannerUtils';
-
-import { DragDataFromSemesterTile, DraggableCourse, Semester } from '../types';
+import { DragDataFromSemesterTile, PlanCourse, PlanId } from '../types';
 import SyncProblemIcon from '@mui/icons-material/SyncProblem';
 import { displaySemesterCode } from '@/utils/utilFunctions';
 import CheckIcon from '@mui/icons-material/Check';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
+import { useSortable } from '@dnd-kit/sortable';
 
 export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'> {
-  course: DraggableCourse;
+  course: PlanCourse;
   isValid?: boolean;
   isTransfer?: boolean;
-  onRemove?: (course: DraggableCourse) => void;
+  onRemove?: (course: PlanCourse) => void;
 }
 
 /** UI implementation of a semester course */
@@ -71,10 +70,10 @@ export const SemesterCourseItem = forwardRef<HTMLDivElement, SemesterCourseItemP
 
 export interface DraggableSemesterCourseItemProps {
   dragId: UniqueIdentifier;
-  semester: Semester;
-  course: DraggableCourse;
+  semester: PlanId;
+  course: PlanCourse;
   isValid: boolean;
-  onRemove: (course: DraggableCourse) => void;
+  onRemove: (course: PlanCourse) => void;
 }
 
 /** Compositional wrapper around SemesterCourseItem */
@@ -84,7 +83,7 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
   course,
   onRemove,
 }) => {
-  const { setNodeRef, attributes, listeners, isDragging } = useDraggable({
+  const { setNodeRef, attributes, listeners, isDragging, transition, transform } = useSortable({
     id: dragId,
     data: { from: 'semester-tile', semester, course } as DragDataFromSemesterTile,
   });
@@ -93,6 +92,8 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
     <SemesterCourseItem
       ref={setNodeRef}
       style={{
+        transform: CSS.Transform.toString(transform),
+        transition,
         visibility: isDragging ? 'hidden' : 'unset',
       }}
       {...attributes}

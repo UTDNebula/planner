@@ -4,7 +4,7 @@ import React from 'react';
 import RequirementsContainer from '@/components/planner/Sidebar/RequirementsContainer';
 import useSearch from '@/components/search/search';
 
-import { DegreeRequirementGroup, DraggableCourse, GetDragIdByCourse } from '../types';
+import { DegreeRequirementGroup, PlanCourse, GetDragIdByCourse } from '../types';
 import DraggableCourseList from './DraggableCourseList';
 import { ObjectID } from 'bson';
 
@@ -58,7 +58,7 @@ function CourseSelectorContainer({
         id: new ObjectID(),
         status: courses.includes(result.code) ? 'complete' : undefined,
       };
-    }) as DraggableCourse[];
+    }) as PlanCourse[];
   }, [results, courses]);
 
   return (

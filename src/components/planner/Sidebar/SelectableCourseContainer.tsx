@@ -1,4 +1,4 @@
-import { DraggableCourse } from '../types';
+import { PlanCourse } from '../types';
 import SelectableCourse from './SelectableCourse';
 
 export default function SelectableCourseContainer({
@@ -6,9 +6,9 @@ export default function SelectableCourseContainer({
   selectedCourses,
   updateSelectedCourses,
 }: {
-  results: DraggableCourse[];
-  selectedCourses: { [key: string]: DraggableCourse };
-  updateSelectedCourses: (course: DraggableCourse, add: boolean) => void;
+  results: PlanCourse[];
+  selectedCourses: { [key: string]: PlanCourse };
+  updateSelectedCourses: (course: PlanCourse, add: boolean) => void;
 }) {
   return (
     <div className="flex flex-col gap-y-4 bg-white text-[#757575]">

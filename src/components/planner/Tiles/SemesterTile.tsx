@@ -1,25 +1,21 @@
 import { UniqueIdentifier, useDroppable } from '@dnd-kit/core';
+import { SortableContext } from '@dnd-kit/sortable';
 import { FC, forwardRef } from 'react';
 
 import { displaySemesterCode } from '@/utils/utilFunctions';
 import SyncProblemIcon from '@mui/icons-material/SyncProblem';
 
-import {
-  DragDataToSemesterTile,
-  DraggableCourse,
-  GetDragIdByCourseAndSemester,
-  Semester,
-} from '../types';
+import { DragDataToSemesterTile, PlanCourse, GetDragIdByCourseAndSemester, PlanId } from '../types';
 import DraggableSemesterCourseItem from './SemesterCourseItem';
 import { SemesterErrors } from '../Planner';
 
 export interface SemesterTileProps {
-  semester: Semester;
+  semester: PlanId;
   isOver: boolean;
   getDragId: GetDragIdByCourseAndSemester;
   isValid: boolean;
   semesterErrors: SemesterErrors;
-  onRemoveCourse: (semester: Semester, course: DraggableCourse) => void;
+  onRemoveCourse: (semester: PlanId, course: PlanCourse) => void;
 }
 
 function getTitleText({ isValid }: { isValid: boolean }) {
@@ -70,27 +66,29 @@ export const SemesterTile = forwardRef<HTMLDivElement, SemesterTileProps>(functi
         {!isValid && <h3 className="text-[15px] font-medium text-red-500">{'Invalid Course'}</h3>}
       </div>
 
-      {semester.courses.map((course) => (
-        <DraggableSemesterCourseItem
-          key={course.id.toString()}
-          dragId={getDragId(course, semester)}
-          isValid={course.validation?.isValid === false}
-          course={course}
-          semester={semester}
-          onRemove={(course) => onRemoveCourse(semester, course)}
-        />
-      ))}
+      <SortableContext items={semester.courses.map((course) => getDragId(course, semester))}>
+        {semester.courses.map((course) => (
+          <DraggableSemesterCourseItem
+            key={course.id.toString()}
+            dragId={getDragId(course, semester)}
+            isValid={course.validation?.isValid === false}
+            course={course}
+            semester={semester}
+            onRemove={(course) => onRemoveCourse(semester, course)}
+          />
+        ))}
+      </SortableContext>
     </div>
   );
 });
 
 export interface DroppableSemesterTileProps {
   dropId: UniqueIdentifier;
-  semester: Semester;
+  semester: PlanId;
   getSemesterCourseDragId: GetDragIdByCourseAndSemester;
   isValid: boolean;
   semesterErrors: SemesterErrors;
-  onRemoveCourse: (semester: Semester, course: DraggableCourse) => void;
+  onRemoveCourse: (semester: PlanId, course: PlanCourse) => void;
 }
 
 /**

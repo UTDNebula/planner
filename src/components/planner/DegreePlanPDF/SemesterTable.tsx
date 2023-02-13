@@ -3,7 +3,6 @@ import React, { FC } from 'react';
 
 import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
 
-import { Course } from '../types';
 import TableFooter from './TableFooter';
 import TableHeader from './TableHeader';
 import TableRow from './TableRow';
