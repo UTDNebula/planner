@@ -1,4 +1,4 @@
-from requirements import REQUIREMENTS_MAP
+from major.requirements import REQUIREMENTS_MAP
 import json
 from os import DirEntry, scandir
 import pytest
@@ -11,7 +11,7 @@ DEGREE_DATA_FILES = list(scandir("./degree_data"))
 @pytest.mark.parametrize(
     "file", DEGREE_DATA_FILES, ids=lambda file: "file={}".format(file)
 )
-def test_degrees(file: DirEntry) -> None:
+def test_degrees(file: DirEntry[str]) -> None:
     data = json.loads(open(file, "r").read())
 
     requirements = data["requirements"]["major"]

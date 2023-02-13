@@ -69,7 +69,7 @@ class AndRequirement(AbstractRequirement):
         requirements: list[AndRequirement.Req]
 
     @classmethod
-    def from_json(cls, json: JSON) -> AbstractRequirement:
+    def from_json(cls, json: JSON) -> AndRequirement:
         from .map import REQUIREMENTS_MAP
 
         matchers: list[AbstractRequirement] = []
@@ -113,7 +113,7 @@ class OrRequirement(AbstractRequirement):
         requirements: list[OrRequirement.Req]
 
     @classmethod
-    def from_json(cls, json: JSON) -> AbstractRequirement:
+    def from_json(cls, json: JSON) -> OrRequirement:
         from .map import REQUIREMENTS_MAP
 
         matchers: list[AbstractRequirement] = []
@@ -243,7 +243,7 @@ class FreeElectiveRequirement(AbstractRequirement):
         required_hours: int
 
     @classmethod
-    def from_json(cls, json: JSON) -> AbstractRequirement:
+    def from_json(cls, json: JSON) -> FreeElectiveRequirement:
         """
         {
             "required_hours": 10,

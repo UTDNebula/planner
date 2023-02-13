@@ -1,5 +1,5 @@
-from solver import MajorRequirementsSolver
-from requirements import AbstractRequirement, REQUIREMENTS_MAP
+from major.solver import MajorRequirementsSolver
+from major.requirements import AbstractRequirement, REQUIREMENTS_MAP
 import json
 
 
