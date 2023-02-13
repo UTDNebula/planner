@@ -261,7 +261,9 @@ class GraduationRequirementsSolver:
         newCourses = []
         for course in courses:
             sub_prefix, course_num = course.split(" ")
-            newCourses.append(Course(course, int(course_num[0]), int(course_num[1]), sub_prefix))
+            newCourses.append(
+                Course(course, int(course_num[0]), int(course_num[1]), sub_prefix)
+            )
         courses = newCourses
 
         # Pre-process bypasses into an assignment, and validate them

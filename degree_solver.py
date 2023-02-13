@@ -7,6 +7,7 @@ from major.requirements import AbstractRequirement
 from dataclasses import dataclass
 
 from major.requirements.map import REQUIREMENTS_MAP
+import json
 
 """
 TODO: 
@@ -41,6 +42,13 @@ class DegreeRequirement:
     type: DegreeRequirementType
     requirements: list[AbstractRequirement]
 
+    def to_json(self):
+        return {
+            "name": self.name,
+            "type": self.type.value,
+            "requirements": [req.to_json() for req in self.requirements],
+        }
+
 
 class DegreeRequirementsSolver:
     def __init__(
@@ -64,7 +72,6 @@ class DegreeRequirementsSolver:
     def load_requirements(
         self, degree_requirements_input: DegreeRequirementsInput
     ) -> list[DegreeRequirement]:
-        
         degree_requirements = []
 
         # Logic for adding majors
@@ -93,7 +100,6 @@ class DegreeRequirementsSolver:
             self.solved_core = core_solver.solve(
                 [course for course in self.courses], []
             )  # Convert to list
-        
         # Run for major
         for degree_req in self.degree_requirements:
             for course in self.courses:
@@ -109,11 +115,34 @@ class DegreeRequirementsSolver:
         # TODO: Maybe change logic in future
         # Run core on demand if needed
 
-        return all(
-            (
-            all([requirement.is_fulfilled() for requirement in degree_req.requirements])
-            for degree_req in self.degree_requirements)
-        ) and self.solved_core.can_graduate()
+        return (
+            all(
+                (
+                    all(
+                        [
+                            requirement.is_fulfilled()
+                            for requirement in degree_req.requirements
+                        ]
+                    )
+                    for degree_req in self.degree_requirements
+                )
+            )
+            and self.solved_core.can_graduate()
+        )
+
+    # TODO: Figure out how to clean up json tings
+    def to_json(cls) -> any:
+        degree_reqs = []
+        # Add core first
+        degree_reqs.append(cls.solved_core.to_json())
+
+        # Add majors
+        for degree_req in cls.degree_requirements:
+
+            degree_reqs.append(degree_req.to_json())
+        return json.dumps(
+            {"can_graduate": str(cls.can_graduate()), "requirements": degree_reqs}
+        )
 
     # def to_json(self) -> DegreeRequirementOutput:
     #     return {

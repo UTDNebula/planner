@@ -6,7 +6,16 @@ GRADUATEABLE_COURSES = [
     "ATCM 2340",
     "COMM 1311",
     "MATH 1306",
-    'BIOL 1300', 'BIOL 1318','AMS 2300','AHST 1303','HIST 1301', 'HIST 1302','GOVT 2306', "GOVT 2305",'BA 1310','ARAB 1311',
+    "BIOL 1300",
+    "BIOL 1318",
+    "AMS 2300",
+    "AHST 1303",
+    "HIST 1301",
+    "HIST 1302",
+    "GOVT 2306",
+    "GOVT 2305",
+    "BA 1310",
+    "ARAB 1311",
     "ECS 1100",
     "CS 1200",
     "CS 1136",
@@ -53,3 +62,5 @@ solver = DegreeRequirementsSolver(GRADUATEABLE_COURSES, input, [])
 solver.solve()
 
 assert solver.can_graduate()
+
+print(solver.to_json())

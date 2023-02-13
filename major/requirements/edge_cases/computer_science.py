@@ -95,6 +95,15 @@ class MajorGuidedElectiveRequirement(AbstractRequirement):
 
         return cls(json["required_course_count"], json["starts_with"], also_fulfills)
 
+    def to_json(self) -> JSON:
+        return {
+            "matcher": "CS Guided Elective",
+            "required_count": self.required_count,
+            "starts_with": self.starts_with,
+            "also_fulfills": [req.to_json() for req in self.also_fulfills],
+            "fulfilled_count": self.fulfilled_count,
+        }
+
     def __str__(self) -> str:
         s = f"""{MajorGuidedElectiveRequirement.__name__} 
         required_course_count: {self.required_count}

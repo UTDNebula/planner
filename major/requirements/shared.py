@@ -1,6 +1,7 @@
 """ Definitions for shared requirements """
 
 from __future__ import annotations
+import json
 from .base import AbstractRequirement
 import utils
 
@@ -37,6 +38,11 @@ class CourseRequirement(AbstractRequirement):
     def from_json(cls, json: JSON) -> CourseRequirement:
         return cls(json["course"])
 
+    def to_json(self) -> JSON:
+        format = self.__dict__
+        format["matcher"] = "course"
+        return format
+
     def __str__(self) -> str:
         return f"{self.course} - {self.is_fulfilled()}"
 
@@ -46,8 +52,9 @@ class AndRequirement(AbstractRequirement):
     CS 1200 and HIST 1301 and CS 1337 -> must fulfill all courses
     """
 
-    def __init__(self, requirements: list[AbstractRequirement]) -> None:
+    def __init__(self, requirements: list[AbstractRequirement], metadata={}) -> None:
         self.requirements = set(requirements)
+        self.metadata = metadata
 
     def attempt_fulfill(self, course: str) -> bool:
         if self.is_fulfilled():
@@ -80,6 +87,13 @@ class AndRequirement(AbstractRequirement):
             matchers.append(matcher)
 
         return cls(matchers)
+
+    def to_json(self) -> JSON:
+        return {
+            "matcher": "And",
+            "filled": self.is_fulfilled(),
+            "requirements": [req.to_json() for req in self.requirements],
+        }
 
     def __str__(self) -> str:
         return f"({' and '.join([str(req) for req in self.requirements])}) -> {self.is_fulfilled()}"
@@ -124,6 +138,16 @@ class OrRequirement(AbstractRequirement):
             matchers.append(matcher)
 
         return cls(matchers)
+
+    def to_json(self) -> JSON:
+        return "hi"
+
+    def to_json(self) -> JSON:
+        return {
+            "matcher": "Or",
+            "filled": self.is_fulfilled(),
+            "requirements": [req.to_json() for req in self.requirements],
+        }
 
     def __str__(self) -> str:
         return f"({' or '.join([str(req) for req in self.requirements])}) -> {self.is_fulfilled()}"
@@ -196,6 +220,15 @@ class HoursRequirement(AbstractRequirement):
 
         return cls(json["required_hours"], matchers)
 
+    def to_json(self) -> JSON:
+        return {
+            "matcher": "Hours",
+            "filled": self.is_fulfilled(),
+            "required_hours": self.required_hours,
+            "fulfilled_hours": self.fulfilled_hours,
+            "requirements": [req.to_json() for req in self.requirements],
+        }
+
     def __str__(self) -> str:
         s = f"""{FreeElectiveRequirement.__name__} 
         required_hours: {self.required_hours}
@@ -252,6 +285,15 @@ class FreeElectiveRequirement(AbstractRequirement):
         """
 
         return cls(json["required_hours"], json["excluded_courses"])
+
+    def to_json(self) -> JSON:
+        return {
+            "matcher": "FreeElectives",
+            "filled": self.is_fulfilled(),
+            "required_hours": self.required_hours,
+            "fulfilled_hours": self.fulfilled_hours,
+            "excluded_courses": list(self.excluded_courses),
+        }
 
     def __str__(self) -> str:
         s = f"""{FreeElectiveRequirement.__name__} 
@@ -319,6 +361,15 @@ class SelectRequirement(AbstractRequirement):
 
         return cls(json["required_course_count"], matchers)
 
+    def to_json(self) -> JSON:
+        return {
+            "matcher": "Select",
+            "filled": self.is_fulfilled(),
+            "required_course_count": self.required_course_count,
+            "fulfilled_count": self.fulfilled_count,
+            "requirements": [req.to_json() for req in self.requirements],
+        }
+
     def __str__(self) -> str:
         return f"({' or '.join([str(req) for req in self.requirements])}) -> {self.is_fulfilled()}"
 
@@ -358,6 +409,12 @@ class PrefixRequirement(AbstractRequirement):
     @classmethod
     def from_json(cls, json: JSON) -> PrefixRequirement:
         return cls(json["prefix"])
+
+    def to_json(self) -> JSON:
+        return {
+            "matcher": "Prefix",
+            "filled": self.is_fulfilled(),
+        }
 
     def __str__(self) -> str:
         return f"{self.prefix} - {self.is_fulfilled()}"
