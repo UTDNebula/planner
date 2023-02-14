@@ -1,0 +1,135 @@
+{
+  "can_graduate": true,
+  "requirements": [
+    {
+      "name": "computer_science",
+      "type": "major",
+      "requirements": [
+        {
+          "matcher": "And",
+          "filled": true,
+          "requirements": [
+            { "course": "PHYS 2126", "filled": true, "matcher": "course" },
+            { "course": "PHYS 2326", "filled": true, "matcher": "course" },
+            { "course": "CS 1200", "filled": true, "matcher": "course" },
+            { "course": "CS 2340", "filled": true, "matcher": "course" },
+            { "course": "CS 2336", "filled": true, "matcher": "course" },
+            { "course": "PHYS 2125", "filled": true, "matcher": "course" },
+            { "course": "PHYS 2325", "filled": true, "matcher": "course" },
+            {
+              "matcher": "Or",
+              "filled": true,
+              "requirements": [
+                {
+                  "matcher": "And",
+                  "filled": false,
+                  "requirements": [
+                    { "course": "MATH 2419", "filled": false, "matcher": "course" },
+                    { "course": "MATH 2417", "filled": false, "matcher": "course" }
+                  ],
+                  "metadata": {}
+                },
+                {
+                  "matcher": "And",
+                  "filled": true,
+                  "requirements": [
+                    { "course": "MATH 2413", "filled": true, "matcher": "course" },
+                    { "course": "MATH 2414", "filled": true, "matcher": "course" }
+                  ],
+                  "metadata": {}
+                }
+              ]
+            },
+            { "course": "CS 1136", "filled": true, "matcher": "course" },
+            { "course": "MATH 2418", "filled": true, "matcher": "course" },
+            { "course": "ECS 1100", "filled": true, "matcher": "course" },
+            { "course": "CS 1337", "filled": true, "matcher": "course" },
+            { "course": "CS 2305", "filled": true, "matcher": "course" },
+            { "course": "CS 1336", "filled": true, "matcher": "course" }
+          ],
+          "metadata": { "name": "Major Preparatory Courses" }
+        },
+        {
+          "matcher": "And",
+          "filled": true,
+          "requirements": [
+            { "course": "CS 4485", "filled": true, "matcher": "course" },
+            { "course": "CS 4341", "filled": true, "matcher": "course" },
+            { "course": "CS 3341", "filled": true, "matcher": "course" },
+            { "course": "CS 3354", "filled": true, "matcher": "course" },
+            { "course": "CS 3162", "filled": true, "matcher": "course" },
+            { "course": "CS 4141", "filled": true, "matcher": "course" },
+            { "course": "CS 4384", "filled": true, "matcher": "course" },
+            { "course": "CS 4347", "filled": true, "matcher": "course" },
+            { "course": "ECS 3390", "filled": true, "matcher": "course" },
+            { "course": "CS 3377", "filled": true, "matcher": "course" },
+            { "course": "CS 4348", "filled": true, "matcher": "course" },
+            { "course": "CS 4349", "filled": true, "matcher": "course" },
+            { "course": "CS 4337", "filled": true, "matcher": "course" },
+            { "course": "CS 3345", "filled": true, "matcher": "course" },
+            { "course": "CS 3305", "filled": true, "matcher": "course" }
+          ],
+          "metadata": { "name": "Major Core Courses" }
+        },
+        {
+          "matcher": "CS Guided Elective",
+          "metadata": { "name": "CS Guided Electives" },
+          "required_count": 3,
+          "starts_with": "CS 43",
+          "also_fulfills": [
+            { "course": "EE 4325", "filled": false, "matcher": "course" },
+            { "course": "SE 4351", "filled": false, "matcher": "course" },
+            { "course": "SE 4352", "filled": false, "matcher": "course" },
+            { "course": "SE 4367", "filled": false, "matcher": "course" },
+            { "course": "SE 4381", "filled": false, "matcher": "course" }
+          ],
+          "fulfilled_count": 3,
+          "valid_courses": ["CS 4315", "CS 4334", "CS 4314"]
+        },
+        {
+          "matcher": "FreeElectives",
+          "metadata": { "name": "Free Electives" },
+          "filled": true,
+          "required_hours": 10,
+          "fulfilled_hours": 12,
+          "excluded_courses": [
+            "CS 2336",
+            "MATH 2418",
+            "CS 4485",
+            "CS 3162",
+            "CS 1200",
+            "ECS 3390",
+            "CS 2337",
+            "CS 2340",
+            "MATH 2413",
+            "ECS 1100",
+            "PHYS 2421",
+            "CS 4341",
+            "MATH 2414",
+            "CS 3341",
+            "CS 2305",
+            "CS 3345",
+            "CS 1337",
+            "PHYS 2125",
+            "MATH 2419",
+            "CS 4349",
+            "CS 3377",
+            "CS 4384",
+            "PHYS 2126",
+            "PHYS 2325",
+            "CS 4347",
+            "CS 3305",
+            "CS 3354",
+            "CS 1336",
+            "CS 4141",
+            "MATH 2417",
+            "CS 1136",
+            "CS 4348",
+            "CS 4337"
+          ],
+          "valid_courses": ["BA 1310", "GOVT 2306", "ARAB 1311", "MATH 1306"]
+        }
+      ]
+    }
+  ]
+}
