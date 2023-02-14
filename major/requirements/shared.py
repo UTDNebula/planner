@@ -173,6 +173,7 @@ class HoursRequirement(AbstractRequirement):
         self.required_hours = required_hours
         self.fulfilled_hours = 0
         self.requirements = set(requirements)
+        self.valid_courses = []
 
     def attempt_fulfill(self, course: str) -> bool:
         if self.is_fulfilled():
@@ -181,6 +182,7 @@ class HoursRequirement(AbstractRequirement):
         for requirement in self.requirements:
             if requirement.attempt_fulfill(course):
                 self.fulfilled_hours += utils.get_hours_from_course(course)
+                self.valid_courses.append(course)
 
         return False
 
@@ -229,6 +231,7 @@ class HoursRequirement(AbstractRequirement):
             "required_hours": self.required_hours,
             "fulfilled_hours": self.fulfilled_hours,
             "requirements": [req.to_json() for req in self.requirements],
+            "valid_courses": self.valid_courses,
         }
 
     def __str__(self) -> str:
@@ -257,6 +260,7 @@ class FreeElectiveRequirement(AbstractRequirement):
         self.required_hours = required_hours
         self.excluded_courses = set(excluded_courses)
         self.fulfilled_hours = 0
+        self.valid_courses = []
 
     def attempt_fulfill(self, course: str) -> bool:
         if self.is_fulfilled():
@@ -264,6 +268,7 @@ class FreeElectiveRequirement(AbstractRequirement):
 
         if not course in self.excluded_courses:
             self.fulfilled_hours += utils.get_hours_from_course(course)
+            self.valid_courses.append(course)
             return True
 
         return False
@@ -295,6 +300,7 @@ class FreeElectiveRequirement(AbstractRequirement):
             "required_hours": self.required_hours,
             "fulfilled_hours": self.fulfilled_hours,
             "excluded_courses": list(self.excluded_courses),
+            "valid_courses": self.valid_courses,
         }
 
     def __str__(self) -> str:

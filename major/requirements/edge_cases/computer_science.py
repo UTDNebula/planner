@@ -35,6 +35,7 @@ class MajorGuidedElectiveRequirement(AbstractRequirement):
         self.starts_with = starts_with
         self.also_fulfills = also_fulfills
         self.fulfilled_count = 0
+        self.valid_courses = []
 
     def attempt_fulfill(self, course: str) -> bool:
         if self.is_fulfilled():
@@ -42,13 +43,15 @@ class MajorGuidedElectiveRequirement(AbstractRequirement):
 
         if course.startswith(self.starts_with):
             self.fulfilled_count += 1
+            self.valid_courses.append(course)
             return True
         else:
-            filled_one = False
             for requirement in self.also_fulfills:
-                filled_one = filled_one or requirement.attempt_fulfill(course)
+                if requirement.attempt_fulfill(course):
+                    return True
+                    self.valid_courses.append(course)
 
-            return filled_one
+            return False
 
     def __true_fulfilled_total(self) -> int:
         # real_count is fulfilled_count + # of courses that fulfilled self.also_match requirements
@@ -102,6 +105,7 @@ class MajorGuidedElectiveRequirement(AbstractRequirement):
             "starts_with": self.starts_with,
             "also_fulfills": [req.to_json() for req in self.also_fulfills],
             "fulfilled_count": self.fulfilled_count,
+            "valid_courses": self.valid_courses,
         }
 
     def __str__(self) -> str:
