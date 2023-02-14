@@ -50,9 +50,11 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
         required_count: int,
         required_hours: int,
         prefix_groups: list[AbstractRequirement],
+        minimum_level: int
     ) -> None:
         self.prefix_groups = prefix_groups
         self.required_count = required_count
+        self.minimum_level = minimum_level
         self.fulfilled_count = 0
         self.required_hours = required_hours
         self.fulfilled_hours = 0
@@ -62,7 +64,7 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
             return False
 
         # First check if upper level elective
-        if utils.get_level_from_course(course) < 3:
+        if utils.get_level_from_course(course) < self.minimum_level:
             return False
 
         # Now check if course satisfies a group
@@ -103,6 +105,7 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
             "matcher": "BA_ElectiveRequirement",
             "required_count": 3,
             "required_hours": 15,
+            "minimum_level": 3,
             "prefix_groups": [
             {
                 "matcher": "SomeRequirement",

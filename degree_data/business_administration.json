@@ -192,6 +192,7 @@
         "matcher": "BA_ElectiveRequirement",
         "required_count": 3,
         "required_hours": 15,
+        "minimum_level": 3,
         "prefix_groups": [
           {
             "matcher": "OrRequirement",
