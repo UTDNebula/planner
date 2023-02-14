@@ -12,7 +12,7 @@ module.exports = {
     // project: ['./tsconfig.json'],
   },
 
-  plugins: ['simple-import-sort', 'unused-imports'],
+  plugins: ['simple-import-sort', 'unused-imports', 'react-hooks'],
   extends: [
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
@@ -22,6 +22,7 @@ module.exports = {
   rules: {
     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
     // e.g. '@typescript-eslint/explicit-function-return-type': 'off',
+    'react-hooks/exhaustive-deps': 'warn',
     'react/prop-types': 'warn',
     'react/jsx-key': 'warn',
     'simple-import-sort/imports': process.env.NODE_ENV === 'test' ? 'error' : 'off',

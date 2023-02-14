@@ -304,7 +304,6 @@ export default function Planner({
         }
 
         if (semester.id === originSemester.id) {
-          console.error('MOOVVVVVVEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE');
           return {
             ...semester,
             courses: semester.courses.filter((course) => course.id !== courseToMove.id),
