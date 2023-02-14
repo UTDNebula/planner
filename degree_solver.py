@@ -9,10 +9,6 @@ from dataclasses import dataclass
 from major.requirements.map import REQUIREMENTS_MAP
 import json
 
-"""
-TODO: 
-"""
-
 
 @dataclass
 class Bypass:
@@ -141,7 +137,7 @@ class DegreeRequirementsSolver:
 
             degree_reqs.append(degree_req.to_json())
         return json.dumps(
-            {"can_graduate": str(cls.can_graduate()), "requirements": degree_reqs}
+            {"can_graduate": cls.can_graduate(), "requirements": degree_reqs}
         )
 
     # def to_json(self) -> DegreeRequirementOutput:
