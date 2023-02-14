@@ -1,4 +1,3 @@
-import { Course } from '@/components/planner/types';
 import reqOutput from '@data/test_degree.json';
 
 type DegreeRequirements = {
@@ -32,7 +31,7 @@ type FreeElectiveRequirementGroup = Requirement & {
 type CSGuidedElectiveGroup = Requirement & {
   matcher: 'CS Guided Elective';
   required_count: number;
-  also_fulfills: string[];
+  also_fulfills: CourseRequirement[];
   starts_with: string;
   fulfilled_count: number;
   valid_courses: string[];
@@ -59,10 +58,12 @@ type OrRequirement = Requirement & {
 export default function Test() {
   const data: DegreeRequirements = reqOutput as DegreeRequirements;
   return (
-    <div className="flex h-full w-[300px] flex-col items-center border-2">
+    <div className="flex w-[300px] flex-col items-center border-2">
       <div className="text-xl">Your Requirements</div>
       {data.requirements.map((degreeReq, idx) => (
-        <DegreeRequirement degreeReq={degreeReq} key={idx} />
+        <AccordianWrapper name={degreeReq.name} key={idx}>
+          <DegreeRequirement degreeReq={degreeReq} />
+        </AccordianWrapper>
       ))}
     </div>
   );
@@ -76,14 +77,12 @@ export default function Test() {
  */
 function DegreeRequirement({ degreeReq }: { degreeReq: DegreeRequirement }) {
   return (
-    <div className="w-full rounded-md border-2 border-black">
-      <div className="">
-        <span>{degreeReq.name} </span>
-        <span>{degreeReq.type}</span>
-      </div>
+    <div className=" w-full rounded-md border-2 border-black">
       {degreeReq.requirements ? (
         degreeReq.requirements.map((reqTest, idx) => (
-          <RequirementGroup reqGroup={reqTest} key={idx} />
+          <AccordianWrapper name={reqTest.metadata.name} key={idx}>
+            <RequirementGroup reqGroup={reqTest} />
+          </AccordianWrapper>
         ))
       ) : (
         <div>NOT SUPPORTED</div>
@@ -92,6 +91,20 @@ function DegreeRequirement({ degreeReq }: { degreeReq: DegreeRequirement }) {
   );
 }
 
+function CSGuidedElectiveComponent({ req }: { req: CSGuidedElectiveGroup }) {
+  return (
+    <div>
+      Completed Courses:
+      {req.valid_courses.map((course, idx) => (
+        <div key={idx}>{course}</div>
+      ))}
+      Select Courses:
+      {req.also_fulfills.map((course, idx) => (
+        <CourseRequirement key={idx} req={course} />
+      ))}
+    </div>
+  );
+}
 /**
  * Group of Requirements
  * i.e. Major Preparatory Courses, Free Electives
@@ -108,16 +121,11 @@ function RequirementGroup({ reqGroup }: { reqGroup: RequirementGroupTypes }) {
       case 'FreeElectives':
         return <div>Free Elective</div>;
       case 'CS Guided Elective':
-        return <div>CS Guided Elective</div>;
+        return <CSGuidedElectiveComponent req={reqGroup} />;
     }
   };
 
-  return (
-    <div>
-      <div>{reqGroup.metadata?.name}</div>
-      {getRequirementGroup()}
-    </div>
-  );
+  return <div>{getRequirementGroup()}</div>;
 }
 
 /**
@@ -133,15 +141,25 @@ function RecursiveRequirementGroup({ req }: { req: RequirementTypes }) {
       case 'Or':
         return (
           <div className="flex flex-col">
-            <div>Or</div>
-            <div className="">
+            <AccordianWrapper name={req.matcher}>
               {req.requirements.map((req2, idx) => (
                 <RecursiveRequirementGroup key={idx} req={req2} />
               ))}
-            </div>{' '}
-            {/* This should be accordian wrapper */}
+            </AccordianWrapper>
           </div>
         );
+      case 'And':
+        return (
+          <div className="flex flex-col">
+            <AccordianWrapper name={req.matcher}>
+              {req.requirements.map((req2, idx) => (
+                <RecursiveRequirementGroup key={idx} req={req2} />
+              ))}
+            </AccordianWrapper>
+          </div>
+        );
+      default:
+        return <div>NOT SUPPORTED</div>;
     }
   };
   return <>{getRequirement()}</>;
@@ -151,6 +169,21 @@ function CourseRequirement({ req }: { req: CourseRequirement }) {
   return (
     <div>
       <div>{req.course}</div>
+    </div>
+  );
+}
+
+/**
+ * TODO: Make this custom because it's causing annoying behaviors
+ * @param param0
+ * @returns
+ */
+function AccordianWrapper({ name, children }: { name: string; children: any }) {
+  return (
+    <div className="collapse-arrow collapse border-2 border-pink-500" tabIndex={0}>
+      <input type="checkbox" className="border-32 border-orange-500" />
+      <div className="collapse-title">{name}</div>
+      <div className="collapse-content">{children}</div>
     </div>
   );
 }
