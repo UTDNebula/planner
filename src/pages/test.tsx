@@ -1,26 +1,26 @@
 import reqOutput from '@data/test_degree.json';
 
-type DegreeRequirements = {
+export type DegreeRequirements = {
   can_graduate: boolean;
   requirements: DegreeRequirement[];
 };
-type DegreeRequirement = {
+export type DegreeRequirement = {
   name: string;
   type: string;
   requirements: RequirementGroupTypes[];
 };
 
-interface Requirement {
+export interface Requirement {
   matcher: string;
   metadata: { [key: string]: string };
 }
-type AndRequirementGroup = Requirement & {
+export type AndRequirementGroup = Requirement & {
   matcher: 'And';
   requirements: RequirementTypes[];
   filled: boolean;
 };
 
-type FreeElectiveRequirementGroup = Requirement & {
+export type FreeElectiveRequirementGroup = Requirement & {
   matcher: 'FreeElectives';
   required_hours: number;
   fulfilled_hours: number;
@@ -28,7 +28,7 @@ type FreeElectiveRequirementGroup = Requirement & {
   valid_courses: string[];
 };
 
-type CSGuidedElectiveGroup = Requirement & {
+export type CSGuidedElectiveGroup = Requirement & {
   matcher: 'CS Guided Elective';
   required_count: number;
   also_fulfills: CourseRequirement[];
@@ -38,19 +38,19 @@ type CSGuidedElectiveGroup = Requirement & {
 };
 // type Requirement = { matcher: string; filled: boolean };
 
-type CourseRequirement = {
+export type CourseRequirement = {
   matcher: 'course';
   course: string;
 };
 
-type RequirementGroupTypes =
+export type RequirementGroupTypes =
   | AndRequirementGroup
   | FreeElectiveRequirementGroup
   | CSGuidedElectiveGroup;
 
-type RequirementTypes = CourseRequirement | OrRequirement | AndRequirementGroup;
+export type RequirementTypes = CourseRequirement | OrRequirement | AndRequirementGroup;
 
-type OrRequirement = Requirement & {
+export type OrRequirement = Requirement & {
   matcher: 'Or';
   requirements: RequirementTypes[];
 };
