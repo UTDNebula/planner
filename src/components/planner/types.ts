@@ -60,6 +60,8 @@ export interface DragDataToSemesterTile {
 // Date stored during drag
 export interface ActiveDragData {
   from: 'semester-tile' | 'course-list';
+  // index: number;
+  dragId: UniqueIdentifier;
   course: PlanCourse;
 }
 

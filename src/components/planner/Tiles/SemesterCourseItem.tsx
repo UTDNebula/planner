@@ -60,6 +60,20 @@ export const SemesterCourseItem = forwardRef<HTMLDivElement, SemesterCourseItemP
   },
 );
 
+type LineProps = ComponentPropsWithoutRef<'div'>;
+
+const Line = forwardRef<HTMLDivElement, LineProps>(function Line({ ...props }, ref) {
+  return (
+    <div
+      ref={ref}
+      className="w-[200px]c flex h-[40px] items-center justify-center py-[1px]"
+      {...props}
+    >
+      <div className="h-[1px] w-full border-b-2 border-black"></div>
+    </div>
+  );
+});
+
 export interface DraggableSemesterCourseItemProps {
   dragId: UniqueIdentifier;
   semester: PlanSemester;
@@ -80,13 +94,22 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
     data: { from: 'semester-tile', semester, course } as DragDataFromSemesterTile,
   });
 
-  return (
+  return isDragging ? (
+    <Line
+      ref={setNodeRef}
+      style={{
+        transform: CSS.Transform.toString(transform),
+        transition,
+      }}
+      {...attributes}
+      {...listeners}
+    />
+  ) : (
     <SemesterCourseItem
       ref={setNodeRef}
       style={{
         transform: CSS.Transform.toString(transform),
         transition,
-        visibility: isDragging ? 'hidden' : 'unset',
       }}
       {...attributes}
       {...listeners}

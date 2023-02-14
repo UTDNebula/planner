@@ -1,5 +1,5 @@
 import { useDroppable } from '@dnd-kit/core';
-import { SortableContext } from '@dnd-kit/sortable';
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { FC, forwardRef } from 'react';
 
 import { displaySemesterCode } from '@/utils/utilFunctions';
@@ -65,7 +65,10 @@ export const SemesterTile = forwardRef<HTMLDivElement, SemesterTileProps>(functi
         {!isValid && <h3 className="text-[15px] font-medium text-red-500">{'Invalid Course'}</h3>}
       </div>
 
-      <SortableContext items={semester.courses.map((course) => course.dragId)}>
+      <SortableContext
+        items={semester.courses.map((course) => course.dragId)}
+        strategy={verticalListSortingStrategy}
+      >
         {semester.courses.map((course) => (
           <DraggableSemesterCourseItem
             key={course.id.toString()}

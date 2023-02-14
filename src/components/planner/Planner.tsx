@@ -325,7 +325,7 @@ export default function Planner({
   );
   const handleOnDragStart = ({ active }: { active: Active }) => {
     const originData = active.data.current as DragEventOriginData;
-    setActiveCourse({ from: originData.from, course: originData.course });
+    setActiveCourse({ from: originData.from, course: originData.course, dragId: active.id });
   };
 
   const handleOnDragEnd = ({ active, over }: { active: Active; over: Over | null }) => {
@@ -404,6 +404,82 @@ export default function Planner({
       sensors={sensors}
       collisionDetection={pointerWithin}
       onDragStart={handleOnDragStart}
+      onDragOver={({ active, over }) => {
+        if (over?.id == null) {
+          return;
+        }
+
+        const activeSemesterTile = semestersWithDragIds.find(
+          (semester) =>
+            typeof semester.courses.find((course) => course.dragId === active.id) !== 'undefined',
+        );
+
+        const overSemesterTile = semestersWithDragIds.find(
+          (semester) =>
+            typeof semester.courses.find((course) => course.dragId === over.id) !== 'undefined',
+        );
+
+        if (!activeSemesterTile || !overSemesterTile) {
+          return;
+        }
+
+        if (activeSemesterTile !== overSemesterTile) {
+          const originData = active.data.current as DragEventOriginData;
+          const destinationData = over.data.current as DragEventDestinationData;
+
+          // check for duplicate course
+          const isDuplicate = Boolean(
+            destinationData.semester.courses.find(
+              (course) => course.code === originData.course.code,
+            ),
+          );
+
+          if (isDuplicate) return;
+
+          const activeCourseIndex = activeSemesterTile.courses.findIndex(
+            (course) => course.dragId === active.id,
+          );
+          const overCourseIndex = overSemesterTile.courses.findIndex(
+            (course) => course.dragId === over.id,
+          );
+
+          const isBelowOverItem =
+            over &&
+            active.rect.current.translated &&
+            active.rect.current.translated.top > over.rect.top + over.rect.height;
+
+          const modifier = isBelowOverItem ? 1 : 0;
+
+          const newIndex =
+            overCourseIndex >= 0 ? overCourseIndex + modifier : overSemesterTile.courses.length + 1;
+
+          setSemesters((semesters) =>
+            semesters.map((semester) => {
+              if (activeSemesterTile.id === semester.id) {
+                return {
+                  ...semester,
+                  courses: semester.courses.filter(
+                    (course) => course.id !== semester.courses[activeCourseIndex].id,
+                  ),
+                };
+              }
+
+              if (overSemesterTile.id === semester.id) {
+                return {
+                  ...semester,
+                  courses: [
+                    ...semester.courses.slice(0, newIndex),
+                    activeSemesterTile.courses[activeCourseIndex],
+                    ...semester.courses.slice(newIndex, semester.courses.length),
+                  ],
+                };
+              }
+
+              return semester;
+            }),
+          );
+        }
+      }}
       onDragEnd={handleOnDragEnd}
     >
       <div className="grid w-full grid-cols-[auto_1fr] gap-[52px]">

@@ -1,4 +1,4 @@
-import { UniqueIdentifier, useDraggable } from '@dnd-kit/core';
+import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
 import { DragDataFromCourseList, PlanCourse } from '../types';
@@ -26,7 +26,7 @@ export function SidebarCourseItem({ course }: { course: PlanCourse }): JSX.Eleme
 }
 
 export default function DraggableSidebarCourseItem({ course }: { course: PlanCourse }) {
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+  const { attributes, listeners, setNodeRef, transform } = useSortable({
     id: course.dragId,
     data: { from: 'course-list', course } as DragDataFromCourseList,
   });
