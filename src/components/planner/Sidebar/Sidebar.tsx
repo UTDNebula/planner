@@ -7,6 +7,7 @@ import useSearch from '@/components/search/search';
 import { DegreeRequirementGroup, DraggableCourse, GetDragIdByCourse } from '../types';
 import DraggableCourseList from './DraggableCourseList';
 import { ObjectID } from 'bson';
+import reqOutput from '@data/test_degree.json';
 
 export interface CourseSelectorContainerProps {
   degreeRequirements: DegreeRequirementGroup[];
@@ -15,6 +16,7 @@ export interface CourseSelectorContainerProps {
   getRequirementDragId: GetDragIdByCourse;
 }
 import { trpc } from '@/utils/trpc';
+import { DegreeRequirements } from '@/pages/test';
 
 function CourseSelectorContainer({
   degreeRequirements,
@@ -27,6 +29,8 @@ function CourseSelectorContainer({
     refetchOnWindowFocus: false,
   });
 
+  // Hehe
+  const newDegreeRequirements = reqOutput as DegreeRequirements;
   const defaultQuery = 'CS';
 
   const { data, isLoading } = q;
@@ -70,7 +74,7 @@ function CourseSelectorContainer({
           <DraggableCourseList courses={courseResults} getDragId={getSearchedDragId} />
         </div>
       )}
-      {degreeRequirements.map((req, idx) => (
+      {newDegreeRequirements.requirements.map((req, idx) => (
         <RequirementsContainer
           key={idx}
           degreeRequirement={req}

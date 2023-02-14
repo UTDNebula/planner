@@ -1,3 +1,4 @@
+import { RequirementGroupTypes } from '@/pages/test';
 import { DegreeRequirement } from '../types';
 
 export default function RequirementContainerHeader({
@@ -5,7 +6,7 @@ export default function RequirementContainerHeader({
   numCredits,
   setCarousel,
 }: {
-  data: DegreeRequirement;
+  data: RequirementGroupTypes;
   numCredits: number;
   setCarousel: (state: boolean) => void;
 }) {
@@ -28,7 +29,7 @@ export default function RequirementContainerHeader({
         </svg>
       </button>
       <div>
-        <div className="text-base">{data.name}</div>
+        <div className="text-base">{data.metadata.name}</div>
         <div className="text-[10px]">{`${numCredits}/${data.hours} credits`}</div>
       </div>
     </div>

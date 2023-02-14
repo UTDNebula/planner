@@ -1,3 +1,4 @@
+import { DegreeRequirement } from '@/pages/test';
 import React, { useEffect, useRef, useState } from 'react';
 
 import { DegreeRequirementGroup, GetDragIdByCourseAndReq } from '../types';
@@ -5,7 +6,7 @@ import RequirementContainer from './RequirementContainer';
 import RequirementsAccordion from './RequirementsAccordion';
 
 export interface RequirementsCarouselProps {
-  degreeRequirement: DegreeRequirementGroup;
+  degreeRequirement: DegreeRequirement;
   courses: string[];
   getCourseItemDragId: GetDragIdByCourseAndReq;
 }

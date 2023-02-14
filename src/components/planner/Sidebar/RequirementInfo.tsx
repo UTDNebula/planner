@@ -78,8 +78,6 @@ export default function RequirementInfo({
     };
   }) as DraggableCourse[];
 
-  console.log(courseResults);
-  console.log(degreeRequirement.name);
   return (
     <>
       <RequirementSearchBar updateQuery={updateQuery} />
