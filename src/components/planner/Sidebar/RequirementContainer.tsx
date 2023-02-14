@@ -168,21 +168,6 @@ function bRequirement({ req }: { req: CourseRequirement }) {
 
 const CourseRequirement = React.memo(bRequirement);
 
-function CSGuidedElectiveComponent({ req }: { req: CSGuidedElectiveGroup }) {
-  return (
-    <div>
-      Completed Courses:
-      {req.valid_courses.map((course, idx) => (
-        <div key={idx}>{course}</div>
-      ))}
-      Select Courses:
-      {req.also_fulfills.map((course, idx) => (
-        <CourseRequirement key={idx} req={course} />
-      ))}
-    </div>
-  );
-}
-
 /**
  * TODO: Make this custom because it's causing annoying behaviors
  * @param param0
