@@ -109,7 +109,7 @@ function RequirementContainer({
     <>
       <RequirementContainerHeader name={name} status={status} setCarousel={setCarousel} />
       <div className="text-[14px]">{description}</div>
-      <div className="relative h-[300px] overflow-x-hidden overflow-y-scroll">
+      <div className=" h-[300px] overflow-x-hidden overflow-y-scroll">
         <RequirementSearchBar updateQuery={updateQuery} />
         {results.map((req, idx) => {
           return <RecursiveRequirementGroup key={idx} req={req} />;
