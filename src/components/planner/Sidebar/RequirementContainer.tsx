@@ -1,10 +1,13 @@
+import useSearch from '@/components/search/search';
 import {
   CSGuidedElectiveGroup,
   RequirementGroupTypes,
   RequirementTypes,
   CourseRequirement,
 } from '@/pages/test';
+import { trpc } from '@/utils/trpc';
 import { ObjectID } from 'bson';
+import { filter } from 'cypress/types/bluebird';
 import React from 'react';
 
 import { Course, DegreeRequirement, GetDragIdByCourseAndReq } from '../types';
@@ -22,84 +25,102 @@ export interface RequirementContainerProps {
 
 function RequirementContainer({
   degreeRequirement,
-  courses,
   setCarousel,
-  getCourseItemDragId,
 }: RequirementContainerProps): JSX.Element {
-  const [addCourse, setAddCourse] = React.useState<boolean>(false);
-  const [addPlaceholder, setAddPlaceholder] = React.useState<boolean>(false);
-  const [placeholderName, setPlaceholderName] = React.useState<string>('');
-  const [placeholderHours, setPlaceholderHours] = React.useState<number>(0);
-
-  // Include tag rendering information here (yes for tag & which tag)
-
-  const [selectedCourses, setSelectedCourses] = React.useState<{ [key: string]: Course }>({});
-
   const getRequirementGroup = (): {
     name: string;
     status: string;
     description: string;
-    body: JSX.Element | JSX.Element[];
+    getData: () => Promise<RequirementTypes[]>;
+    filterFunction: (elm: RequirementTypes, query: string) => boolean;
   } => {
+    const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
+      refetchOnWindowFocus: false,
+    });
+
+    const filterFunc = (elm: RequirementTypes, query: string) => {
+      query = query.toLowerCase();
+      switch (elm.matcher) {
+        case 'course':
+          return elm.course.toLowerCase().includes(query);
+        case 'Or':
+          return elm.metadata ? elm.metadata.name.toLowerCase().includes(query) : true;
+        case 'And':
+          return elm.metadata ? elm.metadata.name.toLowerCase().includes(query) : true;
+      }
+    };
+
     switch (degreeRequirement.matcher) {
       case 'And':
         return {
           name: degreeRequirement.metadata.name,
           status: 'hi',
           description: 'not fulfilled',
-          body: degreeRequirement.requirements.map((req, idx) => (
-            <RecursiveRequirementGroup key={idx} req={req} />
-          )),
+          getData: () => Promise.resolve(degreeRequirement.requirements),
+          filterFunction: filterFunc,
         };
       case 'FreeElectives':
+        // Some function to get courses
         return {
           name: degreeRequirement.metadata.name,
           status: 'hi',
           description: 'not fulfilled',
-          body: <div>Free Elective</div>,
+          getData: async () =>
+            q.data
+              ? q.data.map((c) => ({
+                  course: `${c.subject_prefix} ${c.course_number}`,
+                  matcher: 'course',
+                }))
+              : [],
+          filterFunction: filterFunc,
         };
       case 'CS Guided Elective':
         return {
           name: degreeRequirement.metadata.name,
           status: 'hi',
           description: 'not fulfilled',
-          body: <CSGuidedElectiveComponent req={degreeRequirement} />,
+          getData: async () =>
+            q.data
+              ? (q.data
+                  .map((c) => ({
+                    course: `${c.subject_prefix} ${c.course_number}`,
+                    matcher: 'course',
+                  }))
+                  .filter((c) => c.course.includes('CS 43')) as CourseRequirement[])
+              : [],
+          filterFunction: filterFunc,
         };
     }
   };
 
-  const { name, status, description, body } = getRequirementGroup();
+  const { name, status, description, getData, filterFunction } = getRequirementGroup();
+
+  const { results, updateQuery } = useSearch({
+    getData: getData,
+    initialQuery: 'C',
+    filterFn: filterFunction,
+  });
+
+  React.useEffect(() => {
+    updateQuery('');
+  }, [degreeRequirement]);
 
   return (
     <>
       <RequirementContainerHeader name={name} status={status} setCarousel={setCarousel} />
       <div className="text-[14px]">{description}</div>
       <div className="relative h-[300px] overflow-x-hidden overflow-y-scroll">
-        <RequirementSearchBar updateQuery={() => console.log('HI')} />
-        {body}
+        <RequirementSearchBar updateQuery={updateQuery} />
+        {results.map((req, idx) => {
+          return <RecursiveRequirementGroup key={idx} req={req} />;
+        })}
       </div>
-      <button onClick={() => setAddPlaceholder(true)}>+ ADD PLACEHOLDER</button>
+      {/* <button onClick={() => setAddPlaceholder(true)}>+ ADD PLACEHOLDER</button> */}
     </>
   );
 }
 
 export default React.memo(RequirementContainer);
-
-const sumList = (values: number[]): number => {
-  return values.reduce((prev: number, curr: number) => prev + curr);
-};
-
-const getCreditHours = (validCourses: string[]): number => {
-  return validCourses.length > 0
-    ? sumList(
-        Object.values(
-          validCourses.map((elm) => {
-            return parseInt(elm.split(' ')[1].substring(1, 2));
-          }),
-        ),
-      )
-    : 0;
-};
 
 /**
  * Group of requirements that's recursive?
