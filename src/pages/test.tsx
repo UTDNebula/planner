@@ -180,7 +180,7 @@ function CourseRequirement({ req }: { req: CourseRequirement }) {
  */
 function AccordianWrapper({ name, children }: { name: string; children: any }) {
   return (
-    <div className="collapse-arrow collapse border-2 border-pink-500" tabIndex={0}>
+    <div className="collapse-arrow collapse" tabIndex={0}>
       <input type="checkbox" className="border-32 border-orange-500" />
       <div className="collapse-title">{name}</div>
       <div className="collapse-content">{children}</div>

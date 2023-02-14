@@ -6,13 +6,11 @@ import {
 } from '@/pages/test';
 import { ObjectID } from 'bson';
 import React from 'react';
-import { SemesterCourseItem } from '../Tiles/SemesterCourseItem';
 
 import { Course, DegreeRequirement, GetDragIdByCourseAndReq } from '../types';
-import AddCourseContainer from './AddCourseContainer';
-import PlaceholderComponent from './PlaceholderComponent';
 import RequirementContainerHeader from './RequirementContainerHeader';
 import RequirementInfo from './RequirementInfo';
+import RequirementSearchBar from './RequirementSearchBar';
 import DraggableSidebarCourseItem from './SidebarCourseItem';
 
 export interface RequirementContainerProps {
@@ -34,92 +32,53 @@ function RequirementContainer({
   const [placeholderHours, setPlaceholderHours] = React.useState<number>(0);
 
   // Include tag rendering information here (yes for tag & which tag)
-  const validCourses = degreeRequirement.validCourses ?? [];
-  const numCredits = getCreditHours(validCourses);
-  const description = degreeRequirement.description ?? '';
 
   const [selectedCourses, setSelectedCourses] = React.useState<{ [key: string]: Course }>({});
 
-  const updateSelectedCourses = (course: Course, add: boolean) => {
-    const modifySelectedCourses = { ...selectedCourses };
-    add ? (modifySelectedCourses[course.code] = course) : delete modifySelectedCourses[course.code];
-    setSelectedCourses(modifySelectedCourses);
-  };
-
-  const handleCourseCancel = () => {
-    setSelectedCourses({});
-    setAddCourse(false);
-  };
-
-  const handleCourseSubmit = () => {
-    // TODO: Update DegreeRequirementsGroup here
-    setSelectedCourses({});
-    setAddCourse(false);
-  };
-
-  const handlePlaceholderCancel = () => {
-    setPlaceholderName('');
-    setPlaceholderHours(0);
-    setAddPlaceholder(false);
-  };
-
-  interface PlaceholderCourse {
+  const getRequirementGroup = (): {
     name: string;
-    hours: number;
-    requirement: string;
-  }
-  const handlePlaceholderSubmit = () => {
-    // Create placeholder object
-    const placeholderCourse: PlaceholderCourse = {
-      name: placeholderName,
-      hours: placeholderHours,
-      requirement: degreeRequirement.name,
-    };
-
-    // TODO: Connect this to DegreeRequirementGroup
-    console.log(placeholderCourse);
-
-    setPlaceholderName('');
-    setPlaceholderHours(0);
-    setAddPlaceholder(false);
-  };
-
-  const getRequirementGroup = () => {
+    status: string;
+    description: string;
+    body: JSX.Element | JSX.Element[];
+  } => {
     switch (degreeRequirement.matcher) {
       case 'And':
-        return degreeRequirement.requirements.map((req, idx) => (
-          <RecursiveRequirementGroup key={idx} req={req} />
-        ));
+        return {
+          name: degreeRequirement.metadata.name,
+          status: 'hi',
+          description: 'not fulfilled',
+          body: degreeRequirement.requirements.map((req, idx) => (
+            <RecursiveRequirementGroup key={idx} req={req} />
+          )),
+        };
       case 'FreeElectives':
-        return <div>Free Elective</div>;
+        return {
+          name: degreeRequirement.metadata.name,
+          status: 'hi',
+          description: 'not fulfilled',
+          body: <div>Free Elective</div>,
+        };
       case 'CS Guided Elective':
-        return <CSGuidedElectiveComponent req={degreeRequirement} />;
+        return {
+          name: degreeRequirement.metadata.name,
+          status: 'hi',
+          description: 'not fulfilled',
+          body: <CSGuidedElectiveComponent req={degreeRequirement} />,
+        };
     }
   };
 
+  const { name, status, description, body } = getRequirementGroup();
+
   return (
     <>
-      <RequirementContainerHeader
-        data={degreeRequirement}
-        numCredits={numCredits}
-        setCarousel={setCarousel}
-      />
+      <RequirementContainerHeader name={name} status={status} setCarousel={setCarousel} />
       <div className="text-[14px]">{description}</div>
-
-      {getRequirementGroup()}
-
-      {/* {!addCourse && !addPlaceholder && (
-        <RequirementInfo
-          courses={degreeRequirement.courses}
-          validCourses={validCourses}
-          allUserCourses={courses}
-          setAddCourse={setAddCourse}
-          setAddPlaceholder={setAddPlaceholder}
-          getCourseItemDragId={getCourseItemDragId}
-          degreeRequirement={degreeRequirement}
-        />
-      )}
-      )} */}
+      <div className="relative h-[300px] overflow-x-hidden overflow-y-scroll">
+        <RequirementSearchBar updateQuery={() => console.log('HI')} />
+        {body}
+      </div>
+      <button onClick={() => setAddPlaceholder(true)}>+ ADD PLACEHOLDER</button>
     </>
   );
 }
@@ -155,7 +114,7 @@ function RecursiveRequirementGroup({ req }: { req: RequirementTypes }) {
       case 'Or':
         return (
           <div className="flex flex-col">
-            <AccordianWrapper name={req.matcher}>
+            <AccordianWrapper name={`Select one of the following:`}>
               {req.requirements.map((req2, idx) => (
                 <RecursiveRequirementGroup key={idx} req={req2} />
               ))}
@@ -165,7 +124,7 @@ function RecursiveRequirementGroup({ req }: { req: RequirementTypes }) {
       case 'And':
         return (
           <div className="flex flex-col">
-            <AccordianWrapper name={req.matcher}>
+            <AccordianWrapper name={`Select all of the following`}>
               {req.requirements.map((req2, idx) => (
                 <RecursiveRequirementGroup key={idx} req={req2} />
               ))}
@@ -210,7 +169,7 @@ function CSGuidedElectiveComponent({ req }: { req: CSGuidedElectiveGroup }) {
  */
 function AccordianWrapper({ name, children }: { name: string; children: any }) {
   return (
-    <div className="collapse-arrow collapse border-2 border-pink-500" tabIndex={0}>
+    <div className="collapse-arrow collapse" tabIndex={0}>
       <input type="checkbox" className="border-32 border-orange-500" />
       <div className="collapse-title">{name}</div>
       <div className="collapse-content">{children}</div>

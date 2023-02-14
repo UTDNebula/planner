@@ -69,11 +69,10 @@ function CourseSelectorContainer({
     <div className="flex h-full w-[344px] flex-col gap-y-8 overflow-hidden">
       <SearchBar updateQuery={updateQuery} placeholder="Search courses" />
 
-      {results.length > 0 && (
-        <div className="bg-white p-4">
-          <DraggableCourseList courses={courseResults} getDragId={getSearchedDragId} />
-        </div>
-      )}
+      <div className="bg-white p-4">
+        <DraggableCourseList courses={courseResults} getDragId={getSearchedDragId} />
+      </div>
+
       {newDegreeRequirements.requirements.map((req, idx) => (
         <RequirementsContainer
           key={idx}
