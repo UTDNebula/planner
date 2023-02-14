@@ -13,9 +13,9 @@ class CourseRequirement(AbstractRequirement):
     CS 1200 fills -> CS 1200 requirement
     """
 
-    def __init__(self, course: str) -> None:
+    def __init__(self, course: str, filled: bool = False) -> None:
         self.course = course
-        self.filled = False
+        self.filled = filled
 
     def attempt_fulfill(self, course: str) -> bool:
         # fail duplicate attempt to fulfill

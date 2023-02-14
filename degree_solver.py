@@ -2,12 +2,16 @@ from __future__ import annotations
 from collections import defaultdict
 from enum import Enum
 import json
+
+from pyparsing import Any
 from core.solver import AssignmentStore, GraduationRequirementsSolver
 from major.requirements import AbstractRequirement
 from dataclasses import dataclass
 
 from major.requirements.map import REQUIREMENTS_MAP
 import json
+
+from major.requirements.shared import AndRequirement, CourseRequirement
 
 
 @dataclass
@@ -130,12 +134,18 @@ class DegreeRequirementsSolver:
     def to_json(cls) -> any:
         degree_reqs = []
         # Add core first
-        degree_reqs.append(cls.solved_core.to_json())
+        core_reqs = format_core_reqs(cls.solved_core.to_json())
+
+        degree_reqs.append(
+            DegreeRequirement(
+                "Core Curriculum", DegreeRequirementType.core, core_reqs
+            ).to_json()
+        )
 
         # Add majors
         for degree_req in cls.degree_requirements:
-
             degree_reqs.append(degree_req.to_json())
+
         return json.dumps(
             {"can_graduate": cls.can_graduate(), "requirements": degree_reqs}
         )
@@ -176,3 +186,23 @@ class RequirementOutput:
     bypasses: list[Bypass]
     # courses: list[str] # Change to be more complex output later?
     # filter: list[str]
+
+
+def format_core_reqs(reqs: dict[str, dict[str, Any]]) -> list[AbstractRequirement]:
+    print(reqs)
+    core_reqs = []
+    for req_name, req_info in reqs.items():
+
+        # Create set for all valid courses
+        valid_courses = set(req_info["validCourses"])
+
+        # Create AndRequirement
+        core_req = AndRequirement(
+            [
+                CourseRequirement(course, course in valid_courses)
+                for course in req_info["courses"]
+            ],
+            {"name": req_name},
+        )
+        core_reqs.append(core_req)
+    return core_reqs
