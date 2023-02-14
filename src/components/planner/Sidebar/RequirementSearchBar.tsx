@@ -22,7 +22,7 @@ export default function SearchBar({ updateQuery }: SearchBarProps): JSX.Element 
     <div className="flex min-h-[30px] flex-row items-center justify-between rounded-md border border-[#1C2A6D] pl-5 pr-2">
       <input
         className="text-xs outline-none"
-        placeholder="Filter courses"
+        placeholder="Filter requirements"
         value={query}
         onChange={handleQueryUpdate}
       />
