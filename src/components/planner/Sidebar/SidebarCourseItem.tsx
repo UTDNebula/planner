@@ -25,15 +25,9 @@ export function SidebarCourseItem({ course }: { course: PlanCourse }): JSX.Eleme
   );
 }
 
-export default function DraggableSidebarCourseItem({
-  dragId,
-  course,
-}: {
-  dragId: UniqueIdentifier;
-  course: PlanCourse;
-}) {
+export default function DraggableSidebarCourseItem({ course }: { course: PlanCourse }) {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id: dragId,
+    id: course.dragId,
     data: { from: 'course-list', course } as DragDataFromCourseList,
   });
 

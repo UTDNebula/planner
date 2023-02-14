@@ -2,7 +2,7 @@ import { UniqueIdentifier } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities';
 import { ComponentPropsWithoutRef, FC, forwardRef } from 'react';
 
-import { DragDataFromSemesterTile, PlanCourse, PlanId } from '../types';
+import { DragDataFromSemesterTile, PlanCourse, PlanSemester } from '../types';
 import SyncProblemIcon from '@mui/icons-material/SyncProblem';
 import { displaySemesterCode } from '@/utils/utilFunctions';
 import CheckIcon from '@mui/icons-material/Check';
@@ -55,14 +55,6 @@ export const SemesterCourseItem = forwardRef<HTMLDivElement, SemesterCourseItemP
             </div>
           )}
         </div>
-        {/* <div
-          onClick={(e) => {
-            e.stopPropagation();
-            onRemove && onRemove(course);
-          }}
-        >
-          <CloseIcon className="self-end" fontSize="small" />
-        </div> */}
       </div>
     );
   },
@@ -70,7 +62,7 @@ export const SemesterCourseItem = forwardRef<HTMLDivElement, SemesterCourseItemP
 
 export interface DraggableSemesterCourseItemProps {
   dragId: UniqueIdentifier;
-  semester: PlanId;
+  semester: PlanSemester;
   course: PlanCourse;
   isValid: boolean;
   onRemove: (course: PlanCourse) => void;

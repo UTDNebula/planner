@@ -1,7 +1,7 @@
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
-import { DegreeRequirementGroup, PlanId } from '@/components/planner/types';
+import { DegreeRequirementGroup } from '@/components/planner/types';
 import { addCreditsToPlan, formatDegreeValidationRequest } from '@/utils/plannerUtils';
 import { createNewYear } from '@/utils/utilFunctions';
 
@@ -214,7 +214,7 @@ export const planRouter = router({
           });
         }
 
-        const newYear: PlanId[] = createNewYear(
+        const newYear: Semester[] = createNewYear(
           plan.semesters[0] ? plan.semesters[0].code : { semester: 'u', year: 2022 },
         );
 

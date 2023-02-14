@@ -1,12 +1,11 @@
 import { UniqueIdentifier } from '@dnd-kit/core';
 import React from 'react';
 
-import { PlanCourse } from '../types';
 import DraggableSidebarCourseItem from './SidebarCourseItem';
 
 export interface DraggableCourseListProps {
-  courses: PlanCourse[];
-  getDragId: (course: PlanCourse) => UniqueIdentifier;
+  courses: Course[];
+  getDragId: (course: Course) => UniqueIdentifier;
 }
 
 function DraggableCourseList({ courses, getDragId }: DraggableCourseListProps) {
@@ -14,7 +13,7 @@ function DraggableCourseList({ courses, getDragId }: DraggableCourseListProps) {
   return (
     <div className="flex flex-col gap-y-4 bg-white text-[#757575]">
       {courses.map((course, idx) => (
-        <DraggableSidebarCourseItem dragId={getDragId(course)} key={idx} course={course} />
+        <DraggableSidebarCourseItem key={idx} course={{ ...course, dragId: getDragId(course) }} />
       ))}
     </div>
   );

@@ -1,18 +1,18 @@
 import { UniqueIdentifier } from '@dnd-kit/core';
 import { SortableData } from '@dnd-kit/sortable';
-import { SemesterCode } from '@prisma/client';
-import { ObjectID } from 'bson';
 
 // Temporary semester type
 // TODO: Remove
-export interface PlanSemester {
-  id: ObjectID;
-  code: SemesterCode;
+export interface PlanSemester extends Semester {
+  dragId: UniqueIdentifier;
   courses: PlanCourse[];
 }
 
 /* Represents a Course inside a Plan */
-export type PlanCourse = Course;
+// export type PlanCourse = Course;
+export interface PlanCourse extends Course {
+  dragId: UniqueIdentifier;
+}
 
 export interface DegreeRequirementGroup {
   name: string;
@@ -64,14 +64,14 @@ export interface ActiveDragData {
 }
 
 // Callbacks to generate drag and drop id's
-export type GetDragIdByCourse = (course: PlanCourse) => UniqueIdentifier;
+export type GetDragIdByCourse = (course: Course) => UniqueIdentifier;
 
 export type GetDragIdByCourseAndReq = (
-  course: PlanCourse,
+  course: Course,
   requirement: DegreeRequirement,
 ) => UniqueIdentifier;
 
 export type GetDragIdByCourseAndSemester = (
-  course: PlanCourse,
+  course: Course,
   semester: PlanSemester,
 ) => UniqueIdentifier;

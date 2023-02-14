@@ -143,3 +143,14 @@ export function createSemesterCodeRange(
 export function isSemCodeEqual(semCodeOne: SemesterCode, semCodeTwo: SemesterCode) {
   return semCodeOne.semester === semCodeTwo.semester && semCodeOne.year === semCodeTwo.year;
 }
+
+export function swapElementsAtIndices<T extends Array<K>, K>(
+  array: T,
+  from: number,
+  to: number,
+): Array<K> {
+  const newArray = Array.from(array);
+  newArray.splice(to < 0 ? newArray.length + to : to, 0, newArray.splice(from, 1)[0]);
+
+  return newArray;
+}

@@ -37,16 +37,16 @@ import {
   PlanCourse,
   PlanSemester,
 } from './types';
-import { createNewYear, isSemCodeEqual } from '@/utils/utilFunctions';
+import { createNewYear, isSemCodeEqual, swapElementsAtIndices } from '@/utils/utilFunctions';
 import { SemesterCode } from '@prisma/client';
 
 /** PlannerTool Props */
 export interface PlannerProps {
   degreeRequirements: DegreeRequirementGroup[];
-  semesters: PlanSemester[];
+  semesters: Semester[];
   showTransfer: boolean;
   planId: string;
-  setSemesters: React.Dispatch<React.SetStateAction<PlanSemester[]>>;
+  setSemesters: React.Dispatch<React.SetStateAction<Semester[]>>;
 }
 
 /** Controlled wrapper around course list and semester tiles */
@@ -59,6 +59,19 @@ export default function Planner({
 }: PlannerProps): JSX.Element {
   // Course that is currently being dragged
   const [activeCourse, setActiveCourse] = useState<ActiveDragData | null>(null);
+
+  const semestersWithDragIds: PlanSemester[] = useMemo(
+    () =>
+      semesters.map((semester) => ({
+        ...semester,
+        dragId: `semester-${semester.id}`,
+        courses: semester.courses.map((course) => ({
+          ...course,
+          dragId: `semester-tile-course-${semester.id}-${course.id}`,
+        })),
+      })),
+    [semesters],
+  );
 
   // Delay necessary so events inside draggables propagate
   // valid sensors: https://github.com/clauderic/dnd-kit/discussions/82#discussioncomment-347608
@@ -208,7 +221,7 @@ export default function Planner({
   };
 
   const handleAddYear = () => {
-    const newYear: PlanSemester[] = createNewYear(
+    const newYear = createNewYear(
       semesters.length ? semesters[semesters.length - 1].code : { semester: 'u', year: 2022 },
     );
     const semesterIds = newYear.map((sem) => sem.id);
@@ -291,6 +304,7 @@ export default function Planner({
         }
 
         if (semester.id === originSemester.id) {
+          console.error('MOOVVVVVVEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE');
           return {
             ...semester,
             courses: semester.courses.filter((course) => course.id !== courseToMove.id),
@@ -328,12 +342,30 @@ export default function Planner({
           destinationData.from === 'semester-tile' &&
           originData.semester.id === destinationData.semester.id
         ) {
-          console.log('==============================================');
-          console.log(active.id);
-          console.log(over.id);
-          console.log(originData.sortable.items);
-          console.log(destinationData.sortable.items);
-          console.log('==============================================');
+          const activeCourseIndex = originData.semester.courses.findIndex(
+            (course) => course.dragId === active.id,
+          );
+          const overCourseIndex = originData.semester.courses.findIndex(
+            (course) => course.dragId === over.id,
+          );
+
+          setSemesters((semester) =>
+            semester.map((semester) => {
+              if (semester.id === originData.semester.id) {
+                return {
+                  ...semester,
+                  courses: swapElementsAtIndices(
+                    semester.courses,
+                    activeCourseIndex,
+                    overCourseIndex,
+                  ),
+                };
+              }
+
+              return semester;
+            }),
+          );
+
           return;
         }
 
@@ -393,7 +425,7 @@ export default function Planner({
 
         <div className="min-h-fit">
           <div className="grid h-auto w-fit grid-cols-3 gap-[32px]">
-            {semesters.map((semester) => {
+            {semestersWithDragIds.map((semester) => {
               const hasInvalidCourse =
                 semester.courses.length > 0 &&
                 semester.courses.some((course) => course.validation && !course.validation.isValid);
@@ -459,10 +491,6 @@ export default function Planner({
                 <DroppableSemesterTile
                   onRemoveCourse={handleRemoveCourseFromSemester}
                   key={semester.id.toString()}
-                  dropId={`semester-${semester.id}`}
-                  getSemesterCourseDragId={(course, semester) =>
-                    `semester-tile-course-${semester.id}-${course.id}`
-                  }
                   semester={newSem}
                   isValid={!hasInvalidCourse}
                   semesterErrors={semesterErrors}

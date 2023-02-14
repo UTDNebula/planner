@@ -1,21 +1,20 @@
-import { UniqueIdentifier, useDroppable } from '@dnd-kit/core';
+import { useDroppable } from '@dnd-kit/core';
 import { SortableContext } from '@dnd-kit/sortable';
 import { FC, forwardRef } from 'react';
 
 import { displaySemesterCode } from '@/utils/utilFunctions';
 import SyncProblemIcon from '@mui/icons-material/SyncProblem';
 
-import { DragDataToSemesterTile, PlanCourse, GetDragIdByCourseAndSemester, PlanId } from '../types';
+import { DragDataToSemesterTile, PlanCourse, PlanSemester } from '../types';
 import DraggableSemesterCourseItem from './SemesterCourseItem';
 import { SemesterErrors } from '../Planner';
 
 export interface SemesterTileProps {
-  semester: PlanId;
+  semester: PlanSemester;
   isOver: boolean;
-  getDragId: GetDragIdByCourseAndSemester;
   isValid: boolean;
   semesterErrors: SemesterErrors;
-  onRemoveCourse: (semester: PlanId, course: PlanCourse) => void;
+  onRemoveCourse: (semester: PlanSemester, course: PlanCourse) => void;
 }
 
 function getTitleText({ isValid }: { isValid: boolean }) {
@@ -25,7 +24,7 @@ function getTitleText({ isValid }: { isValid: boolean }) {
  * Strictly UI implementation of a semester tile
  */
 export const SemesterTile = forwardRef<HTMLDivElement, SemesterTileProps>(function SemesterTile(
-  { semester, getDragId, isValid, isOver, semesterErrors, onRemoveCourse },
+  { semester, isValid, isOver, semesterErrors, onRemoveCourse },
   ref,
 ) {
   const { sync, prerequisites } = semesterErrors;
@@ -66,11 +65,11 @@ export const SemesterTile = forwardRef<HTMLDivElement, SemesterTileProps>(functi
         {!isValid && <h3 className="text-[15px] font-medium text-red-500">{'Invalid Course'}</h3>}
       </div>
 
-      <SortableContext items={semester.courses.map((course) => getDragId(course, semester))}>
+      <SortableContext items={semester.courses.map((course) => course.dragId)}>
         {semester.courses.map((course) => (
           <DraggableSemesterCourseItem
             key={course.id.toString()}
-            dragId={getDragId(course, semester)}
+            dragId={course.dragId}
             isValid={course.validation?.isValid === false}
             course={course}
             semester={semester}
@@ -83,37 +82,22 @@ export const SemesterTile = forwardRef<HTMLDivElement, SemesterTileProps>(functi
 });
 
 export interface DroppableSemesterTileProps {
-  dropId: UniqueIdentifier;
-  semester: PlanId;
-  getSemesterCourseDragId: GetDragIdByCourseAndSemester;
+  semester: PlanSemester;
   isValid: boolean;
   semesterErrors: SemesterErrors;
-  onRemoveCourse: (semester: PlanId, course: PlanCourse) => void;
+  onRemoveCourse: (semester: PlanSemester, course: PlanCourse) => void;
 }
 
 /**
  * Strictly compositional wrapper around SemesterTile
  */
-const DroppableSemesterTile: FC<DroppableSemesterTileProps> = ({
-  dropId,
-  semester,
-  getSemesterCourseDragId,
-  ...props
-}) => {
+const DroppableSemesterTile: FC<DroppableSemesterTileProps> = ({ semester, ...props }) => {
   const { setNodeRef, isOver } = useDroppable({
-    id: dropId,
+    id: semester.dragId,
     data: { to: 'semester-tile', semester } as DragDataToSemesterTile,
   });
 
-  return (
-    <SemesterTile
-      ref={setNodeRef}
-      isOver={isOver}
-      semester={semester}
-      getDragId={getSemesterCourseDragId}
-      {...props}
-    />
-  );
+  return <SemesterTile ref={setNodeRef} isOver={isOver} semester={semester} {...props} />;
 };
 
 export default DroppableSemesterTile;

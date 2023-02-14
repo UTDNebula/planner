@@ -1,11 +1,11 @@
 interface Semester {
-  id: import('bson').ObjectIDj;
+  id: import('bson').ObjectID;
   code: import('@prisma/client').SemesterCode;
   courses: Course[];
 }
 
 interface Course {
-  id: ObjectID;
+  id: import('bson').ObjectID;
   code: string;
   validation?: { isValid: boolean; override: boolean };
   status?: 'complete' | 'incomplete'; // TODO: Clean this up later once prereq is done

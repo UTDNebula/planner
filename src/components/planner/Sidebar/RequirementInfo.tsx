@@ -3,7 +3,7 @@ import React from 'react';
 
 import useSearch from '@/components/search/search';
 
-import { DegreeRequirement, PlanCourse, GetDragIdByCourseAndReq } from '../types';
+import { DegreeRequirement, GetDragIdByCourseAndReq } from '../types';
 import DraggableCourseList from './DraggableCourseList';
 import RequirementSearchBar from './RequirementSearchBar';
 import { trpc } from '@/utils/trpc';
@@ -40,7 +40,7 @@ export default function RequirementInfo({
   }, [courses, isLoading]);
 
   // TODO: Change this later when connecting to API
-  const getCourses = async (): Promise<PlanCourse[]> => {
+  const getCourses = async (): Promise<Course[]> => {
     const courseData = q.data
       ? q.data.reduce((acc, curr) => {
           acc[`${curr.subject_prefix} ${curr.course_number}`] = curr;
@@ -49,9 +49,9 @@ export default function RequirementInfo({
       : {};
     const temp = courses;
 
-    const courseInfoList: (PlanCourse | undefined)[] = temp.map((elm) => {
+    const courseInfoList: (Course | undefined)[] = temp.map((elm) => {
       if (courseData[elm] !== undefined) {
-        const newCourse: PlanCourse = {
+        const newCourse: Course = {
           id: new ObjectID(),
           code: elm,
           validation: { isValid: true, override: false },
@@ -59,7 +59,7 @@ export default function RequirementInfo({
         return newCourse;
       }
     });
-    return courseInfoList.filter((elm) => typeof elm !== 'undefined') as PlanCourse[];
+    return courseInfoList.filter((elm) => typeof elm !== 'undefined') as Course[];
   };
 
   // TODO: Add error UI
@@ -76,10 +76,8 @@ export default function RequirementInfo({
       status: validCourses.includes(result.code) ? 'complete' : undefined,
       taken: allUserCourses.includes(result.code),
     };
-  }) as PlanCourse[];
+  }) as Course[];
 
-  console.log(courseResults);
-  console.log(degreeRequirement.name);
   return (
     <>
       <RequirementSearchBar updateQuery={updateQuery} />

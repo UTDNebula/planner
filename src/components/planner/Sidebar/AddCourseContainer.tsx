@@ -2,7 +2,6 @@ import { ObjectID } from 'bson';
 
 import useSearch, { SearchReturn } from '@/components/search/search';
 
-import { PlanCourse } from '../types';
 import RequirementSearchBar from './RequirementSearchBar';
 import SelectableCourseContainer from './SelectableCourseContainer';
 import { trpc } from '@/utils/trpc';
@@ -40,9 +39,9 @@ export default function AddCourseContainer({
       status: allCourses.includes(result.code) ? 'complete' : undefined,
       taken: validCourses.includes(result.code),
     };
-  }) as unknown as PlanCourse[];
+  }) as unknown as Course[];
 
-  const newSelectedCourses: PlanCourse[] = Object.values(selectedCourses).map((course) => {
+  const newSelectedCourses: Course[] = Object.values(selectedCourses).map((course) => {
     return { id: new ObjectID(), code: course.code };
   });
   return (
