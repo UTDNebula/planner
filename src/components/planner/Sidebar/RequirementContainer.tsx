@@ -172,6 +172,7 @@ const CourseRequirement = React.memo(bRequirement);
 
 /**
  * TODO: Make this custom because it's causing annoying behaviors
+ * TODO: Add progress here
  * @param param0
  * @returns
  */
