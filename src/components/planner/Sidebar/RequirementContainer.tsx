@@ -1,18 +1,11 @@
 import useSearch from '@/components/search/search';
-import {
-  CSGuidedElectiveGroup,
-  RequirementGroupTypes,
-  RequirementTypes,
-  CourseRequirement,
-} from '@/pages/test';
+import { RequirementGroupTypes, RequirementTypes, CourseRequirement } from '@/pages/test';
 import { trpc } from '@/utils/trpc';
 import { ObjectID } from 'bson';
-import { filter } from 'cypress/types/bluebird';
 import React from 'react';
 
-import { Course, DegreeRequirement, GetDragIdByCourseAndReq } from '../types';
+import { GetDragIdByCourseAndReq } from '../types';
 import RequirementContainerHeader from './RequirementContainerHeader';
-import RequirementInfo from './RequirementInfo';
 import RequirementSearchBar from './RequirementSearchBar';
 import DraggableSidebarCourseItem from './SidebarCourseItem';
 
@@ -27,6 +20,7 @@ function RequirementContainer({
   degreeRequirement,
   setCarousel,
 }: RequirementContainerProps): JSX.Element {
+  // Handles logic for displaying correct requirement group
   const getRequirementGroup = (): {
     name: string;
     status: string;
@@ -41,12 +35,16 @@ function RequirementContainer({
     const filterFunc = (elm: RequirementTypes, query: string) => {
       query = query.toLowerCase();
       switch (elm.matcher) {
-        case 'course':
+        case 'Course':
           return elm.course.toLowerCase().includes(query);
         case 'Or':
           return elm.metadata ? elm.metadata.name.toLowerCase().includes(query) : true;
         case 'And':
           return elm.metadata ? elm.metadata.name.toLowerCase().includes(query) : true;
+        case 'Select':
+          return elm.metadata ? elm.metadata.name.toLowerCase().includes(query) : true;
+        default:
+          return true;
       }
     };
 
@@ -69,14 +67,14 @@ function RequirementContainer({
             q.data
               ? q.data.map((c) => ({
                   course: `${c.subject_prefix} ${c.course_number}`,
-                  matcher: 'course',
+                  matcher: 'Course',
                   filled: false,
                   metadata: {},
                 }))
               : [],
           filterFunction: filterFunc,
         };
-      case 'CS Guided Elective':
+      case 'CS Guided Electives':
         return {
           name: degreeRequirement.metadata.name,
           status: `${degreeRequirement.fulfilled_count} / ${degreeRequirement.required_count} courses`,
@@ -86,12 +84,22 @@ function RequirementContainer({
               ? (q.data
                   .map((c) => ({
                     course: `${c.subject_prefix} ${c.course_number}`,
-                    matcher: 'course',
+                    matcher: 'Course',
                   }))
                   .filter((c) => c.course.includes('CS 43')) as CourseRequirement[])
               : [],
           filterFunction: filterFunc,
         };
+
+      default: {
+        return {
+          name: '',
+          status: 'NOT SUPPORTED',
+          description: '',
+          getData: () => Promise.resolve([] as RequirementTypes[]),
+          filterFunction: (_, __) => true,
+        };
+      }
     }
   };
 
@@ -132,7 +140,7 @@ export default React.memo(RequirementContainer);
 function RecursiveRequirementGroup({ req }: { req: RequirementTypes }) {
   const getRequirement = () => {
     switch (req.matcher) {
-      case 'course':
+      case 'Course':
         return <CourseRequirement req={req} />;
       case 'Or':
         return (
@@ -154,7 +162,52 @@ function RecursiveRequirementGroup({ req }: { req: RequirementTypes }) {
             </AccordianWrapper>
           </div>
         );
+      case 'Select':
+        return (
+          <div className="flex flex-col">
+            <AccordianWrapper name={`Select ${req.required_course_count} of the following`}>
+              {req.requirements.map((req2, idx) => (
+                <RecursiveRequirementGroup key={idx} req={req2} />
+              ))}
+            </AccordianWrapper>
+          </div>
+        );
+      case 'Hours':
+        return (
+          <div className="flex flex-col">
+            <AccordianWrapper
+              name={`Select ${req.required_hours} credit hours from the following classes`}
+            >
+              {req.requirements.map((req2, idx) => (
+                <RecursiveRequirementGroup key={idx} req={req2} />
+              ))}
+            </AccordianWrapper>
+          </div>
+        );
+      case 'BA General Business Electives':
+        return (
+          <div className="flex flex-col">
+            <AccordianWrapper
+              name={`Select ${req.required_hours} credit hours from the following classes`}
+            >
+              {req.prefix_groups.map((req2, idx) => (
+                <RecursiveRequirementGroup key={idx} req={req2} />
+              ))}
+            </AccordianWrapper>
+          </div>
+        );
+      // return {
+      //   name: degreeRequirement.metadata.name,
+      //   status: `${degreeRequirement.fulfilled_count} / ${degreeRequirement.required_count} courses \n ${degreeRequirement.fulfilled_hours} / ${degreeRequirement.required_hours} hours`,
+      //   description: degreeRequirement.metadata.description ?? '',
+      //   getData: () => Promise.resolve(degreeRequirement.prefix_groups),
+      //   filterFunction: filterFunc,
+      // };
+      case 'Prefix':
+        return <div>Classes with {req.prefix}</div>;
       default:
+        console.log(req);
+        console.log('R');
         return <div>NOT SUPPORTED</div>;
     }
   };
