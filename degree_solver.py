@@ -42,10 +42,16 @@ class DegreeRequirement:
     type: DegreeRequirementType
     requirements: list[AbstractRequirement]
 
+    def get_num_fulfilled_requirements(self) -> int:
+        return sum([1 for req in self.requirements if req.is_fulfilled()])
+
     def to_json(self):
+
         return {
             "name": self.name,
             "type": self.type.value,
+            "num_fulfilled_requirements": self.get_num_fulfilled_requirements(),
+            "num_requirements": len(self.requirements),
             "requirements": [req.to_json() for req in self.requirements],
         }
 
@@ -189,7 +195,6 @@ class RequirementOutput:
 
 
 def format_core_reqs(reqs: dict[str, dict[str, Any]]) -> list[AbstractRequirement]:
-    print(reqs)
     core_reqs = []
     for req_name, req_info in reqs.items():
 

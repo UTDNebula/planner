@@ -69,6 +69,9 @@ class AndRequirement(AbstractRequirement):
     def is_fulfilled(self) -> bool:
         return all(requirement.is_fulfilled() for requirement in self.requirements)
 
+    def get_num_fulfilled_requirements(self) -> int:
+        return sum([1 for req in self.requirements if req.is_fulfilled()])
+
     class Req(TypedDict):
         matcher: str
 
@@ -95,6 +98,8 @@ class AndRequirement(AbstractRequirement):
             "filled": self.is_fulfilled(),
             "requirements": [req.to_json() for req in self.requirements],
             "metadata": self.metadata,
+            "num_fulfilled_requirements": self.get_num_fulfilled_requirements(),
+            "num_requirements": len(self.requirements),
         }
 
     def __str__(self) -> str:
@@ -301,6 +306,7 @@ class FreeElectiveRequirement(AbstractRequirement):
             "fulfilled_hours": self.fulfilled_hours,
             "excluded_courses": list(self.excluded_courses),
             "valid_courses": self.valid_courses,
+            "metadata": {"name": "Free Electives"},
         }
 
     def __str__(self) -> str:
