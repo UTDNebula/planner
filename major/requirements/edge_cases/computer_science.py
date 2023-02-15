@@ -106,6 +106,7 @@ class MajorGuidedElectiveRequirement(AbstractRequirement):
             "also_fulfills": [req.to_json() for req in self.also_fulfills],
             "fulfilled_count": self.fulfilled_count,
             "valid_courses": self.valid_courses,
+            "metadata": {"name": "CS Guided Electives"},
         }
 
     def __str__(self) -> str:
