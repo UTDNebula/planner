@@ -157,7 +157,7 @@
         ]
       },
       {
-        "matcher": "CS_MajorGuidedElectiveRequirement",
+        "matcher": "CSGuidedElectiveRequirement",
         "required_course_count": 3,
         "starts_with": "CS 43",
         "also_fulfills": [

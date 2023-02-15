@@ -178,7 +178,6 @@ def test_validate() -> Response:
 
         # bypasses = [SingleAssignment.from_json(b) for b in j["bypasses"]]
         solver = DegreeRequirementsSolver(courses, requirements, [])
-
         solver.solve()
 
         # TODO: breaking change, wrap in json with message component
