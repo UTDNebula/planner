@@ -40,7 +40,7 @@ class CourseRequirement(AbstractRequirement):
 
     def to_json(self) -> JSON:
         format = self.__dict__
-        format["matcher"] = "course"
+        format["matcher"] = "Course"
         return format
 
     def __str__(self) -> str:
@@ -178,7 +178,7 @@ class HoursRequirement(AbstractRequirement):
         self.required_hours = required_hours
         self.fulfilled_hours = 0
         self.requirements = set(requirements)
-        self.valid_courses = []
+        self.valid_courses: list[str] = []
 
     def attempt_fulfill(self, course: str) -> bool:
         if self.is_fulfilled():
@@ -265,7 +265,7 @@ class FreeElectiveRequirement(AbstractRequirement):
         self.required_hours = required_hours
         self.excluded_courses = set(excluded_courses)
         self.fulfilled_hours = 0
-        self.valid_courses = []
+        self.valid_courses: list[str] = []
 
     def attempt_fulfill(self, course: str) -> bool:
         if self.is_fulfilled():
@@ -388,7 +388,7 @@ class SelectRequirement(AbstractRequirement):
         return f"({' or '.join([str(req) for req in self.requirements])}) -> {self.is_fulfilled()}"
 
 
-class PrefixRequirement(AbstractRequirement):
+class PrefixBucketRequirement(AbstractRequirement):
     """Matches course requirement if it starts with a certain prefix
 
     i.e. PrefixRequirement("CS") will match any course that begins with "CS"
@@ -402,14 +402,13 @@ class PrefixRequirement(AbstractRequirement):
     def __init__(self, prefix: str) -> None:
         self.prefix = prefix
         self.filled = False
+        self.valid_courses: list[str] = []
 
     def attempt_fulfill(self, course: str) -> bool:
-        # fail duplicate attempt to fulfill
-        if self.is_fulfilled():
-            return False
 
         if utils.get_course_prefix(course) == self.prefix:
             self.filled = True
+            self.valid_courses.append(course)
             return True
 
         return False
@@ -421,13 +420,15 @@ class PrefixRequirement(AbstractRequirement):
         prefix: str
 
     @classmethod
-    def from_json(cls, json: JSON) -> PrefixRequirement:
+    def from_json(cls, json: JSON) -> PrefixBucketRequirement:
         return cls(json["prefix"])
 
     def to_json(self) -> JSON:
         return {
             "matcher": "Prefix",
             "filled": self.is_fulfilled(),
+            "valid_courses": self.valid_courses,
+            "prefix": self.prefix,
         }
 
     def __str__(self) -> str:

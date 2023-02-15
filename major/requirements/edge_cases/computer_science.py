@@ -35,7 +35,7 @@ class MajorGuidedElectiveRequirement(AbstractRequirement):
         self.starts_with = starts_with
         self.also_fulfills = also_fulfills
         self.fulfilled_count = 0
-        self.valid_courses = []
+        self.valid_courses: list[str] = []
 
     def attempt_fulfill(self, course: str) -> bool:
         if self.is_fulfilled():
@@ -100,7 +100,7 @@ class MajorGuidedElectiveRequirement(AbstractRequirement):
 
     def to_json(self) -> JSON:
         return {
-            "matcher": "CS Guided Elective",
+            "matcher": "CS Guided Electives",
             "required_count": self.required_count,
             "starts_with": self.starts_with,
             "also_fulfills": [req.to_json() for req in self.also_fulfills],

@@ -1,9 +1,10 @@
 from __future__ import annotations
+import json
 from major.requirements import AbstractRequirement, map
 
 from functools import reduce
 from typing import TypedDict
-from major.requirements.shared import OrRequirement, PrefixRequirement
+from major.requirements.shared import OrRequirement
 
 import utils
 
@@ -18,7 +19,6 @@ class SomeRequirement(OrRequirement):
     Allows attempt_filled to work even if is_fulfilled() is true
     """
 
-
     def attempt_fulfill(self, course: str) -> bool:
         filled_one = False
         for requirement in self.requirements:
@@ -26,15 +26,6 @@ class SomeRequirement(OrRequirement):
 
         return filled_one
 
-class PrefixBucketRequirement(PrefixRequirement):
-    def attempt_fulfill(self, course: str) -> bool:
-        if utils.get_course_prefix(course) == self.prefix:
-            self.filled = True
-            return True
-
-        return False
-
-    
 
 class BusinessAdministrationElectiveRequirement(AbstractRequirement):
     """Matches Business Administration Electives
@@ -66,6 +57,7 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
         self.fulfilled_count = 0
         self.required_hours = required_hours
         self.fulfilled_hours = 0
+        self.valid_courses: list[str] = []
 
     def attempt_fulfill(self, course: str) -> bool:
         if self.is_fulfilled():
@@ -74,15 +66,16 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
         # First check if upper level elective
         if utils.get_level_from_course(course) < 3:
             return False
-        
+
         # Now check if course satisfies a group
         for group in self.prefix_groups:
-            
-            if (group.attempt_fulfill(course)):
+
+            if group.attempt_fulfill(course):
                 self.fulfilled_hours += utils.get_hours_from_course(course)
                 self.fulfilled_count = self.get_fulfilled_count()
+                self.valid_courses.append(course)
                 return True
-            
+
         return False
 
     def get_fulfilled_count(self) -> int:
@@ -94,7 +87,10 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
         return count
 
     def is_fulfilled(self) -> bool:
-        return self.get_fulfilled_count() >= self.required_count and self.fulfilled_hours >= self.required_hours
+        return (
+            self.get_fulfilled_count() >= self.required_count
+            and self.fulfilled_hours >= self.required_hours
+        )
 
     class JSONReq(TypedDict):
         matcher: str
@@ -144,9 +140,18 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
             )
             matchers.append(matcher)
 
-
         return cls(json["required_count"], json["required_hours"], matchers)
-    
+
+    def to_json(self) -> json:
+        return {
+            "matcher": "BA General Business Electives",
+            "required_count": self.required_count,
+            "required_hours": self.required_hours,
+            "fulfilled_count": self.fulfilled_count,
+            "fulfilled_hours": self.fulfilled_hours,
+            "valid_courses": self.valid_courses,
+            "prefix_groups": [req.to_json() for req in self.prefix_groups],
+        }
 
     def __str__(self) -> str:
         s = f"""{BusinessAdministrationElectiveRequirement.__name__} 
