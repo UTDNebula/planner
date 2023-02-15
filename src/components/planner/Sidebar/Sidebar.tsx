@@ -4,13 +4,12 @@ import React from 'react';
 import RequirementsContainer from '@/components/planner/Sidebar/RequirementsContainer';
 import useSearch from '@/components/search/search';
 
-import { DegreeRequirementGroup, DraggableCourse, GetDragIdByCourse } from '../types';
+import { DraggableCourse, GetDragIdByCourse } from '../types';
 import DraggableCourseList from './DraggableCourseList';
 import { ObjectID } from 'bson';
-import reqOutput from '@data/test_degree.json';
 
 export interface CourseSelectorContainerProps {
-  degreeRequirements: DegreeRequirementGroup[];
+  degreeRequirements: DegreeRequirements;
   courses: string[];
   getSearchedDragId: GetDragIdByCourse;
   getRequirementDragId: GetDragIdByCourse;
@@ -29,8 +28,6 @@ function CourseSelectorContainer({
     refetchOnWindowFocus: false,
   });
 
-  // Hehe
-  const newDegreeRequirements = reqOutput as DegreeRequirements;
   const defaultQuery = 'CS';
 
   const { data, isLoading } = q;
@@ -73,7 +70,7 @@ function CourseSelectorContainer({
         <DraggableCourseList courses={courseResults} getDragId={getSearchedDragId} />
       </div>
 
-      {newDegreeRequirements.requirements.map((req, idx) => (
+      {degreeRequirements.requirements.map((req, idx) => (
         <RequirementsContainer
           key={idx}
           degreeRequirement={req}

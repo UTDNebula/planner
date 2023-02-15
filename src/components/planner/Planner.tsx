@@ -39,10 +39,11 @@ import {
 } from './types';
 import { createNewYear, isSemCodeEqual } from '@/utils/utilFunctions';
 import { SemesterCode } from '@prisma/client';
+import { DegreeRequirements } from '@/pages/test';
 
 /** PlannerTool Props */
 export interface PlannerProps {
-  degreeRequirements: DegreeRequirementGroup[];
+  degreeRequirements: DegreeRequirements;
   semesters: Semester[];
   showTransfer: boolean;
   planId: string;
