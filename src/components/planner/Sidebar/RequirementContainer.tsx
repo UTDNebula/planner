@@ -55,7 +55,7 @@ function RequirementContainer({
         return {
           name: degreeRequirement.metadata.name,
           status: `${degreeRequirement.num_fulfilled_requirements} / ${degreeRequirement.num_requirements} requirements`,
-          description: 'not fulfilled',
+          description: degreeRequirement.metadata.description ?? '',
           getData: () => Promise.resolve(degreeRequirement.requirements),
           filterFunction: filterFunc,
         };
@@ -63,8 +63,8 @@ function RequirementContainer({
         // Some function to get courses
         return {
           name: degreeRequirement.metadata.name,
-          status: 'hi',
-          description: 'not fulfilled',
+          status: `${degreeRequirement.fulfilled_hours} / ${degreeRequirement.required_hours} hours`,
+          description: degreeRequirement.metadata.description ?? '',
           getData: async () =>
             q.data
               ? q.data.map((c) => ({
@@ -79,8 +79,8 @@ function RequirementContainer({
       case 'CS Guided Elective':
         return {
           name: degreeRequirement.metadata.name,
-          status: 'hi',
-          description: 'not fulfilled',
+          status: `${degreeRequirement.fulfilled_count} / ${degreeRequirement.required_count} courses`,
+          description: degreeRequirement.metadata.description ?? '',
           getData: async () =>
             q.data
               ? (q.data
