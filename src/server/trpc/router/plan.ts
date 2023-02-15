@@ -78,7 +78,7 @@ export const planRouter = router({
 
       const body = formatDegreeValidationRequest(hehe, {
         core: true,
-        majors: [degreeRequirements.major],
+        majors: ['computer_science'], // TODO: Standardize names
         minors: [],
       });
 
