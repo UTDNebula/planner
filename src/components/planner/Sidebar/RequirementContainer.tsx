@@ -54,7 +54,7 @@ function RequirementContainer({
       case 'And':
         return {
           name: degreeRequirement.metadata.name,
-          status: 'hi',
+          status: `${degreeRequirement.num_fulfilled_requirements} / ${degreeRequirement.num_requirements} requirements`,
           description: 'not fulfilled',
           getData: () => Promise.resolve(degreeRequirement.requirements),
           filterFunction: filterFunc,
@@ -70,6 +70,8 @@ function RequirementContainer({
               ? q.data.map((c) => ({
                   course: `${c.subject_prefix} ${c.course_number}`,
                   matcher: 'course',
+                  filled: false,
+                  metadata: {},
                 }))
               : [],
           filterFunction: filterFunc,

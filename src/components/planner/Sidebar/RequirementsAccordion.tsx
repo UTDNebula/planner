@@ -5,7 +5,7 @@ import React from 'react';
 import { RefObject } from 'react';
 
 import { DegreeRequirementGroup } from '../types';
-import RequirementsList from './RequirementsList';
+import RequirementsList, { ProgressComponent } from './RequirementsList';
 
 function RequirementsAccordion({
   data,
@@ -26,11 +26,18 @@ function RequirementsAccordion({
   height: string;
   accordianRef: RefObject<HTMLDivElement>;
 }) {
+  const value = data.num_fulfilled_requirements;
+
+  const max = data.num_requirements;
+
   return (
     <div className={`w-full ${!carousel ? 'h-full' : 'h-0'}`}>
       <button className="flex w-full flex-row justify-between px-2" onClick={toggleAccordion}>
         <div className="">{data.name}</div>
-        {accordion ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+        <div className="flex-fow flex items-center">
+          <ProgressComponent value={value} max={max} />
+          {accordion ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+        </div>
       </button>
 
       <div

@@ -4,20 +4,28 @@ export type DegreeRequirements = {
   can_graduate: boolean;
   requirements: DegreeRequirement[];
 };
+/**
+ * A DegreeRequirement is a specific requirement
+ * i.e. Core Curriculum, Computer Science, Psychology
+ */
 export type DegreeRequirement = {
   name: string;
   type: string;
   requirements: RequirementGroupTypes[];
+  num_fulfilled_requirements: number;
+  num_requirements: number;
 };
 
 export interface Requirement {
   matcher: string;
   metadata: { [key: string]: string };
+  filled: boolean;
 }
 export type AndRequirementGroup = Requirement & {
   matcher: 'And';
   requirements: RequirementTypes[];
-  filled: boolean;
+  num_requirements: number;
+  num_fulfilled_requirements: number;
 };
 
 export type FreeElectiveRequirementGroup = Requirement & {
@@ -38,7 +46,7 @@ export type CSGuidedElectiveGroup = Requirement & {
 };
 // type Requirement = { matcher: string; filled: boolean };
 
-export type CourseRequirement = {
+export type CourseRequirement = Requirement & {
   matcher: 'course';
   course: string;
 };
@@ -53,6 +61,8 @@ export type RequirementTypes = CourseRequirement | OrRequirement | AndRequiremen
 export type OrRequirement = Requirement & {
   matcher: 'Or';
   requirements: RequirementTypes[];
+  num_requirements: number;
+  num_fulfilled_requirements: number;
 };
 
 export default function Test() {
