@@ -8,6 +8,7 @@ from flask import Flask, Response, request, make_response
 from flask_cors import CORS
 
 from core import GraduationRequirementsSolver, Course, SingleAssignment
+from degree_solver import DegreeRequirementsInput, DegreeRequirementsSolver
 from major.solver import MajorRequirementsSolver
 
 
@@ -143,6 +144,45 @@ def validate_degree_plan() -> Response:
 
         # TODO: breaking change, wrap in json with message component
         return make_response(assignment.to_json(), 200)
+
+    except APIError as e:
+        return make_response(
+            {
+                "message": "Error in validate-degree-plan",
+                "error": str(e),
+            },
+            e.http_response_code,
+        )
+    except Exception as e:
+        return make_response(
+            {
+                "message": "Error in validate-degree-plan",
+                "error": str(e),
+            },
+            500,
+        )
+
+
+@app.route("/test-validate", methods=["POST"])
+def test_validate() -> Response:
+    try:
+        j = request.get_json()
+        if not j:
+            raise APIError("bad request", 400)
+
+        courses = j["courses"]
+        rawReqs = j["requirements"]
+        requirements = DegreeRequirementsInput(
+            rawReqs["core"], rawReqs["majors"], rawReqs["minors"], []
+        )
+
+        # bypasses = [SingleAssignment.from_json(b) for b in j["bypasses"]]
+        solver = DegreeRequirementsSolver(courses, requirements, [])
+
+        solver.solve()
+
+        # TODO: breaking change, wrap in json with message component
+        return make_response(solver.to_json(), 200)
 
     except APIError as e:
         return make_response(
