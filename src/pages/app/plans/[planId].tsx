@@ -12,7 +12,6 @@ import superjson from 'superjson';
 import DegreePlanPDF from '@/components/planner/DegreePlanPDF/DegreePlanPDF';
 import Planner from '@/components/planner/Planner';
 import { DraggableCourse, Semester } from '@/components/planner/types';
-import BackArrowIcon from '@/icons/BackArrowIcon';
 import SettingsIcon from '@/icons/SettingsIcon';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { createContextInner } from '@/server/trpc/context';
@@ -28,19 +27,21 @@ export default function PlanDetailPage(
 ): JSX.Element {
   const { planId } = props;
   const planQuery = trpc.plan.getPlanById.useQuery(planId);
-
+  const courseMapQuery = trpc.courses.publicGetSanitizedCourses.useQuery();
+  const { data: courseData, isLoading: courseLoading } = courseMapQuery;
   const [showTransfer, setShowTransfer] = useState(true);
 
   const { data, isLoading } = planQuery;
   const { data: session } = useSession();
   const degreeData = data?.validation ?? [];
 
-  const { handlePlanDelete, handleBack } = usePlannerHooks({
+  const { handlePlanDelete } = usePlannerHooks({
     planId: planId,
   });
 
   const [semesters, setSemesters] = useState<Semester[]>(getSemestersInfo(data?.plan));
 
+  console.log(courseData);
   // Indicate UI loading
   if (isLoading) {
     return <div>Loading</div>;
@@ -107,6 +108,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext<{ pl
 
   const planId = context.params?.planId as string;
 
+  await ssg.courses.publicGetSanitizedCourses.prefetch();
   await ssg.plan.getPlanById.prefetch(planId);
   return {
     props: {

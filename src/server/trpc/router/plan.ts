@@ -6,6 +6,7 @@ import { addCreditsToPlan, formatDegreeValidationRequest } from '@/utils/planner
 import { createNewYear } from '@/utils/utilFunctions';
 
 import { protectedProcedure, router } from '../trpc';
+import { Prisma } from '@prisma/client';
 
 export const planRouter = router({
   getUserPlans: protectedProcedure.query(async ({ ctx }) => {
@@ -47,7 +48,74 @@ export const planRouter = router({
           message: 'Plan not found',
         });
       }
+      const coursesFromApi = await ctx.platformPrisma.courses.findMany({
+        select: {
+          course_number: true,
+          subject_prefix: true,
+          id: true,
+          prerequisites: true,
+        },
+      });
 
+      const courseMapWithIdKey = new Map<string, Prisma.JsonValue>();
+      const courseMapWithCodeKey = new Map<string, Prisma.JsonValue>();
+      const preReqHash = new Map<string, boolean>();
+      for (const course of coursesFromApi) {
+        courseMapWithCodeKey.set(
+          `${course.subject_prefix} ${course.course_number}`,
+          course.prerequisites,
+        );
+        courseMapWithIdKey.set(course.id, `${course.subject_prefix} ${course.course_number}`);
+      }
+
+      const checkForPreRecursive = (requirements: CollectionOptions): boolean => {
+        if (requirements.options.length === 0) {
+          return true;
+        }
+        let flag = 0;
+        for (const option of requirements.options) {
+          if (option.type === 'course') {
+            const course = courseMapWithIdKey.get(option.class_reference);
+            if (course) {
+              const preReq = courseMapWithCodeKey.get(course as any as string);
+              if (preReq) {
+                if (preReqHash.has(course as any as string)) {
+                  flag++;
+                }
+              }
+            }
+          } else if (option.type === 'collection') {
+            if (checkForPreRecursive(option)) {
+              flag++;
+            }
+          }
+        }
+
+        if (flag >= requirements.required) {
+          const required = requirements.required;
+          return true;
+        }
+        return false;
+      };
+      const prereqValidation = async (planData: any) => {
+        for (let i = 0; i < planData?.semesters.length; i++) {
+          if (!planData?.semesters[i] || !planData?.semesters[i].courses) continue;
+          for (let j = 0; j < planData?.semesters[i].courses.length; j++) {
+            const course = planData?.semesters[i].courses[j];
+            const preReqsForCourse = courseMapWithCodeKey.get(course);
+            if (!preReqsForCourse) {
+              continue;
+            }
+            const flag = checkForPreRecursive(preReqsForCourse as any as CollectionOptions);
+            preReqHash.set(course, flag);
+            console.log({ course, flag });
+          }
+        }
+      };
+      // time to check for prereqs
+      console.time('prereq');
+      await prereqValidation(planData);
+      console.timeEnd('prereq');
       const { semesters } = planData;
       // FIX THIS LATER IDC RN
       const temporaryFunctionPlzDeleteThis = async () => {
@@ -126,7 +194,7 @@ export const planRouter = router({
         return [core, major, electives, university];
       });
 
-      return { plan: planData, validation: validationData };
+      return { plan: planData, validation: validationData, prereqValidation: preReqHash };
     } catch (error) {
       console.log(error);
     }
@@ -419,3 +487,16 @@ export const planRouter = router({
       }
     }),
 });
+
+type PreReqRequirements = CourseOptions | CollectionOptions;
+
+type CourseOptions = {
+  class_reference: string;
+  type: 'course';
+};
+
+type CollectionOptions = {
+  required: number;
+  type: 'collection';
+  options: Array<CourseOptions> | Array<CollectionOptions>;
+};
