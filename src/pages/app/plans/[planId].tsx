@@ -11,13 +11,18 @@ import superjson from 'superjson';
 
 import DegreePlanPDF from '@/components/planner/DegreePlanPDF/DegreePlanPDF';
 import Planner from '@/components/planner/Planner';
-import { PlanCourse } from '@/components/planner/types';
+import { PlanCourse, PlanSemestersMap } from '@/components/planner/types';
 import BackArrowIcon from '@/icons/BackArrowIcon';
 import SettingsIcon from '@/icons/SettingsIcon';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { createContextInner } from '@/server/trpc/context';
 import { appRouter } from '@/server/trpc/router/_app';
 import { trpc } from '@/utils/trpc';
+import {
+  planSemesterArrayToMap,
+  planSemesterMaptoSemesterArray,
+  semestersToPlanSemestersArray,
+} from '@/components/planner/utils';
 
 /**
  * A page that displays the details of a specific student academic plan.
@@ -39,12 +44,15 @@ export default function PlanDetailPage(
     planId: planId,
   });
 
-  const [semesters, setSemesters] = useState<Semester[]>(getSemestersInfo(data?.plan));
+  const [semesters, setSemesters] = useState<PlanSemestersMap>(
+    planSemesterArrayToMap(semestersToPlanSemestersArray(getSemestersInfo(data?.plan))),
+  );
 
   // Indicate UI loading
   if (isLoading) {
     return <div>Loading</div>;
   }
+  console.log({ semesters1111: semesters });
 
   return (
     <div className="flex h-screen max-h-screen w-screen flex-col overflow-x-hidden overflow-y-scroll p-4">
@@ -75,7 +83,7 @@ export default function PlanDetailPage(
               <DegreePlanPDF
                 studentName={session?.user?.email || ''}
                 planTitle={data.plan.name}
-                semesters={semesters}
+                semesters={planSemesterMaptoSemesterArray(semesters)}
               />
             }
             fileName={data.plan.name + '.pdf'}
@@ -129,6 +137,7 @@ function getSemestersInfo(
   if (!plan) {
     return [];
   }
+
   return plan.semesters.map((sem) => {
     const courses = sem.courses.map((course: string) => {
       const newCourse = {

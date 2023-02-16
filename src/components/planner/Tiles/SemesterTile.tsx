@@ -96,7 +96,7 @@ export interface DroppableSemesterTileProps {
  */
 const DroppableSemesterTile: FC<DroppableSemesterTileProps> = ({ semester, ...props }) => {
   const { setNodeRef, isOver } = useDroppable({
-    id: semester.dragId,
+    id: semester.id.toString(),
     data: { to: 'semester-tile', semester } as DragDataToSemesterTile,
   });
 

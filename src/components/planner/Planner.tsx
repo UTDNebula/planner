@@ -36,17 +36,20 @@ import {
   DragEventOriginData,
   PlanCourse,
   PlanSemester,
+  PlanSemestersMap,
 } from './types';
 import { createNewYear, isSemCodeEqual, swapElementsAtIndices } from '@/utils/utilFunctions';
 import { SemesterCode } from '@prisma/client';
+import { planSemesterArrayToMap } from './utils';
+import { ObjectID } from 'bson';
 
 /** PlannerTool Props */
 export interface PlannerProps {
   degreeRequirements: DegreeRequirementGroup[];
-  semesters: Semester[];
+  semesters: PlanSemestersMap;
   showTransfer: boolean;
   planId: string;
-  setSemesters: React.Dispatch<React.SetStateAction<Semester[]>>;
+  setSemesters: React.Dispatch<React.SetStateAction<PlanSemestersMap>>;
 }
 
 /** Controlled wrapper around course list and semester tiles */
@@ -60,18 +63,19 @@ export default function Planner({
   // Course that is currently being dragged
   const [activeCourse, setActiveCourse] = useState<ActiveDragData | null>(null);
 
-  const semestersWithDragIds: PlanSemester[] = useMemo(
-    () =>
-      semesters.map((semester) => ({
-        ...semester,
-        dragId: `semester-${semester.id}`,
-        courses: semester.courses.map((course) => ({
-          ...course,
-          dragId: `semester-tile-course-${course.id}`,
-        })),
-      })),
-    [semesters],
-  );
+  console.log({ semesters: semesters });
+  // const semestersWithDragIds: PlanSemester[] = useMemo(
+  //   () =>
+  //     semesters.map((semester) => ({
+  //       ...semester,
+  //       dragId: `semester-${semester.id}`,
+  //       courses: semester.courses.map((course) => ({
+  //         ...course,
+  //         dragId: `semester-tile-course-${course.id}`,
+  //       })),
+  //     })),
+  //   [semesters],
+  // );
 
   // Delay necessary so events inside draggables propagate
   // valid sensors: https://github.com/clauderic/dnd-kit/discussions/82#discussioncomment-347608
@@ -221,19 +225,21 @@ export default function Planner({
   };
 
   const handleAddYear = () => {
-    const newYear = createNewYear(
-      semesters.length ? semesters[semesters.length - 1].code : { semester: 'u', year: 2022 },
-    );
-    const semesterIds = newYear.map((sem) => sem.id);
-    setSemesters([...semesters, ...newYear]);
-    addTask({
-      func: handleYearCreate,
-      args: { semesterIds: semesterIds.map((id) => id.toString()) },
-    });
+    // TODO
+    // const newYear = createNewYear(
+    //   semesters.length ? semesters[semesters.length - 1].code : { semester: 'u', year: 2022 },
+    // );
+    // const semesterIds = newYear.map((sem) => sem.id);
+    // setSemesters([...semesters, ...newYear]);
+    // addTask({
+    //   func: handleYearCreate,
+    //   args: { semesterIds: semesterIds.map((id) => id.toString()) },
+    // });
   };
 
   const handleRemoveYear = () => {
-    setSemesters(semesters.filter((_, idx) => idx < semesters.length - 3));
+    // TODO
+    // setSemesters(semesters.filter((_, idx) => idx < semesters.length - 3));
     addTask({ func: handleYearDelete, args: {} });
   };
 
@@ -241,18 +247,26 @@ export default function Planner({
     targetSemester: PlanSemester,
     targetCourse: PlanCourse,
   ) => {
-    setSemesters((semesters) =>
-      semesters.map((semester) => {
-        if (semester.id === targetSemester.id) {
-          return {
-            ...semester,
-            courses: semester.courses.filter((course) => course.id !== targetCourse.id),
-          };
-        }
+    // setSemesters((semesters) =>
+    //   semesters.map((semester) => {
+    //     if (semester.id === targetSemester.id) {
+    //       return {
+    //         ...semester,
+    //         courses: semester.courses.filter((course) => course.id !== targetCourse.id),
+    //       };
+    //     }
 
-        return semester;
-      }),
-    );
+    //     return semester;
+    //   }),
+    // );
+
+    setSemesters((semesters) => ({
+      ...semesters,
+      [targetSemester.id.toString()]: {
+        ...targetSemester,
+        courses: targetSemester.courses.filter((course) => course.id !== targetCourse.id),
+      },
+    }));
 
     const semesterId = targetSemester.id.toString();
     const courseName = targetCourse.code;
@@ -271,13 +285,20 @@ export default function Planner({
       return;
     }
 
-    setSemesters((semesters) =>
-      semesters.map((semester) =>
-        semester.id === targetSemester.id
-          ? { ...semester, courses: [...semester.courses, newCourse] }
-          : semester,
-      ),
-    );
+    setSemesters((semesters) => ({
+      ...semesters,
+      [targetSemester.id.toString()]: {
+        ...targetSemester,
+        courses: [...targetSemester.courses, newCourse],
+      },
+    }));
+    // setSemesters((semesters) =>
+    //   semesters.map((semester) =>
+    //     semester.id === targetSemester.id
+    //       ? { ...semester, courses: [...semester.courses, newCourse] }
+    //       : semester,
+    //   ),
+    // );
     const semesterId = targetSemester.id.toString();
     const courseName = newCourse.code;
     addTask({ func: handleAddCourse, args: { semesterId, courseName } });
@@ -297,32 +318,54 @@ export default function Planner({
       );
       return;
     }
-    setSemesters((semesters) =>
-      semesters.map((semester) => {
-        if (semester.id === destinationSemester.id) {
-          return { ...semester, courses: [...semester.courses, courseToMove] };
-        }
 
-        if (semester.id === originSemester.id) {
-          return {
-            ...semester,
-            courses: semester.courses.filter((course) => course.id !== courseToMove.id),
-          };
-        }
-        return semester;
-      }),
-    );
+    setSemesters((semesters) => ({
+      ...semesters,
+      [destinationSemester.id.toString()]: {
+        ...destinationSemester,
+        courses: [...destinationSemester.courses, courseToMove],
+      },
+      [originSemester.id.toString()]: {
+        ...originSemester,
+        courses: originSemester.courses.filter((course) => course.id !== courseToMove.id),
+      },
+    }));
+    // setSemesters((semesters) =>
+    //   semesters.map((semester) => {
+    //     if (semester.id === destinationSemester.id) {
+    //       return { ...semester, courses: [...semester.courses, courseToMove] };
+    //     }
+
+    //     if (semester.id === originSemester.id) {
+    //       return {
+    //         ...semester,
+    //         courses: semester.courses.filter((course) => course.id !== courseToMove.id),
+    //       };
+    //     }
+    //     return semester;
+    //   }),
+    // );
 
     const oldSemesterId = originSemester.id.toString();
     const newSemesterId = destinationSemester.id.toString();
     const courseName = courseToMove.code;
 
-    addTask({ func: handleMoveCourse, args: { oldSemesterId, newSemesterId, courseName } });
+    // addTask({ func: handleMoveCourse, args: { oldSemesterId, newSemesterId, courseName } });
   };
+
   const courses = useMemo(
-    () => semesters.flatMap((sem) => sem.courses).map((course) => course.code),
+    () =>
+      Object.values(semesters)
+        .flatMap((semester) => semester.courses)
+        .map((course) => course.code),
     [semesters],
   );
+
+  // const courses = useMemo(
+  //   () => semesters.flatMap((sem) => sem.courses).map((course) => course.code),
+  //   [semesters],
+  // );
+
   const handleOnDragStart = ({ active }: { active: Active }) => {
     const originData = active.data.current as DragEventOriginData;
     setActiveCourse({ from: originData.from, course: originData.course, dragId: active.id });
@@ -348,22 +391,33 @@ export default function Planner({
             (course) => course.dragId === over.id,
           );
 
-          setSemesters((semester) =>
-            semester.map((semester) => {
-              if (semester.id === originData.semester.id) {
-                return {
-                  ...semester,
-                  courses: swapElementsAtIndices(
-                    semester.courses,
-                    activeCourseIndex,
-                    overCourseIndex,
-                  ),
-                };
-              }
+          setSemesters((semesters) => ({
+            ...semesters,
+            [originData.semester.id.toString()]: {
+              ...originData.semester,
+              courses: swapElementsAtIndices(
+                originData.semester.courses,
+                activeCourseIndex,
+                overCourseIndex,
+              ),
+            },
+          }));
+          // setSemesters((semester) =>
+          //   semester.map((semester) => {
+          //     if (semester.id === originData.semester.id) {
+          //       return {
+          //         ...semester,
+          //         courses: swapElementsAtIndices(
+          //           semester.courses,
+          //           activeCourseIndex,
+          //           overCourseIndex,
+          //         ),
+          //       };
+          //     }
 
-              return semester;
-            }),
-          );
+          //     return semester;
+          //   }),
+          // );
 
           return;
         }
@@ -398,77 +452,73 @@ export default function Planner({
   };
 
   const handleOnDragOver = ({ active, over }: { active: Active; over: Over | null }) => {
+    if (!active || !over) return;
+
+    const originData = active.data.current as DragEventOriginData;
+    const destinationData = over.data.current as DragEventDestinationData;
+
     if (over?.id == null) {
       return;
     }
 
-    const activeSemesterTile = semestersWithDragIds.find(
-      (semester) =>
-        typeof semester.courses.find((course) => course.dragId === active.id) !== 'undefined',
-    );
+    if (
+      originData.from === 'semester-tile' &&
+      'from' in destinationData &&
+      destinationData.from === 'semester-tile'
+    ) {
+      const activeSemesterTile = originData.semester;
 
-    const overSemesterTile = semestersWithDragIds.find(
-      (semester) =>
-        typeof semester.courses.find((course) => course.dragId === over.id) !== 'undefined',
-    );
+      const overSemesterTile = destinationData.semester;
 
-    if (!activeSemesterTile || !overSemesterTile) {
-      return;
-    }
+      if (!activeSemesterTile || !overSemesterTile) {
+        return;
+      }
 
-    if (activeSemesterTile !== overSemesterTile) {
-      const originData = active.data.current as DragEventOriginData;
-      const destinationData = over.data.current as DragEventDestinationData;
+      if (activeSemesterTile !== overSemesterTile) {
+        // check for duplicate course
+        const isDuplicate = false;
+        // Boolean(
+        //   destinationData.semester.courses.find((course) => course.code === originData.course.code),
+        // );
 
-      // check for duplicate course
-      const isDuplicate = Boolean(
-        destinationData.semester.courses.find((course) => course.code === originData.course.code),
-      );
+        if (isDuplicate) return;
 
-      if (isDuplicate) return;
+        console.time('dragOver');
+        const activeCourseIndex = activeSemesterTile.courses.findIndex(
+          (course) => course.dragId === active.id,
+        );
+        const overCourseIndex = overSemesterTile.courses.findIndex(
+          (course) => course.dragId === over.id,
+        );
 
-      const activeCourseIndex = activeSemesterTile.courses.findIndex(
-        (course) => course.dragId === active.id,
-      );
-      const overCourseIndex = overSemesterTile.courses.findIndex(
-        (course) => course.dragId === over.id,
-      );
+        const isBelowOverItem =
+          over &&
+          active.rect.current.translated &&
+          active.rect.current.translated.top > over.rect.top + over.rect.height;
 
-      const isBelowOverItem =
-        over &&
-        active.rect.current.translated &&
-        active.rect.current.translated.top > over.rect.top + over.rect.height;
+        const modifier = isBelowOverItem ? 1 : 0;
 
-      const modifier = isBelowOverItem ? 1 : 0;
+        const newIndex =
+          overCourseIndex >= 0 ? overCourseIndex + modifier : overSemesterTile.courses.length + 1;
 
-      const newIndex =
-        overCourseIndex >= 0 ? overCourseIndex + modifier : overSemesterTile.courses.length + 1;
-
-      setSemesters((semesters) =>
-        semesters.map((semester) => {
-          if (activeSemesterTile.id === semester.id) {
-            return {
-              ...semester,
-              courses: semester.courses.filter(
-                (course) => course.id !== semester.courses[activeCourseIndex].id,
-              ),
-            };
-          }
-
-          if (overSemesterTile.id === semester.id) {
-            return {
-              ...semester,
-              courses: [
-                ...semester.courses.slice(0, newIndex),
-                activeSemesterTile.courses[activeCourseIndex],
-                ...semester.courses.slice(newIndex, semester.courses.length),
-              ],
-            };
-          }
-
-          return semester;
-        }),
-      );
+        setSemesters((semesters) => ({
+          ...semesters,
+          [activeSemesterTile.id.toString()]: {
+            ...activeSemesterTile,
+            courses: activeSemesterTile.courses.filter(
+              (course) => course.id !== activeSemesterTile.courses[activeCourseIndex].id,
+            ),
+          },
+          [overSemesterTile.id.toString()]: {
+            ...overSemesterTile,
+            courses: [
+              ...overSemesterTile.courses.slice(0, newIndex),
+              activeSemesterTile.courses[activeCourseIndex],
+              ...overSemesterTile.courses.slice(newIndex, overSemesterTile.courses.length),
+            ],
+          },
+        }));
+      }
     }
   };
 
@@ -500,7 +550,7 @@ export default function Planner({
 
         <div className="min-h-fit">
           <div className="grid h-auto w-fit grid-cols-3 gap-[32px]">
-            {semestersWithDragIds.map((semester) => {
+            {Object.values(semesters).map((semester) => {
               const hasInvalidCourse =
                 semester.courses.length > 0 &&
                 semester.courses.some((course) => course.validation && !course.validation.isValid);

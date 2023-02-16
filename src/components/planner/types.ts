@@ -4,9 +4,13 @@ import { SortableData } from '@dnd-kit/sortable';
 // Temporary semester type
 // TODO: Remove
 export interface PlanSemester extends Semester {
-  dragId: UniqueIdentifier;
   courses: PlanCourse[];
 }
+
+export interface PlanSemestersMap {
+  [key: UniqueIdentifier]: PlanSemester;
+}
+// export type PlanSemestersMap = Map<UniqueIdentifier, PlanSemester>;
 
 /* Represents a Course inside a Plan */
 // export type PlanCourse = Course;

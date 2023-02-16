@@ -95,14 +95,17 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
   });
 
   return isDragging ? (
-    <Line
+    <SemesterCourseItem
       ref={setNodeRef}
       style={{
         transform: CSS.Transform.toString(transform),
         transition,
+        opacity: 0.2,
       }}
       {...attributes}
       {...listeners}
+      course={course}
+      onRemove={onRemove}
     />
   ) : (
     <SemesterCourseItem
