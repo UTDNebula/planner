@@ -31,7 +31,6 @@ import { SemesterCourseItem } from './Tiles/SemesterCourseItem';
 import DroppableSemesterTile from './Tiles/SemesterTile';
 import {
   ActiveDragData,
-  DegreeRequirementGroup,
   DragEventDestinationData,
   DragEventOriginData,
   DraggableCourse,

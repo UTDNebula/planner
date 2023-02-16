@@ -9,6 +9,7 @@ import RequirementContainerHeader from './RequirementContainerHeader';
 import RequirementSearchBar from './RequirementSearchBar';
 import DraggableSidebarCourseItem from './SidebarCourseItem';
 
+import CheckIcon from '@mui/icons-material/Check';
 export interface RequirementContainerProps {
   degreeRequirement: RequirementGroupTypes;
   courses: string[];
@@ -19,6 +20,7 @@ export interface RequirementContainerProps {
 function RequirementContainer({
   degreeRequirement,
   setCarousel,
+  courses,
 }: RequirementContainerProps): JSX.Element {
   // Handles logic for displaying correct requirement group
   const getRequirementGroup = (): {
@@ -122,7 +124,7 @@ function RequirementContainer({
       <div className=" h-[300px] overflow-x-hidden overflow-y-scroll">
         <RequirementSearchBar updateQuery={updateQuery} />
         {results.map((req, idx) => {
-          return <RecursiveRequirementGroup key={idx} req={req} />;
+          return <RecursiveRequirementGroup key={idx} req={req} courses={courses} />;
         })}
       </div>
       {/* <button onClick={() => setAddPlaceholder(true)}>+ ADD PLACEHOLDER</button> */}
@@ -137,17 +139,17 @@ export default React.memo(RequirementContainer);
  * @param param0
  * @returns
  */
-function RecursiveRequirementGroup({ req }: { req: RequirementTypes }) {
+function RecursiveRequirementGroup({ req, courses }: { req: RequirementTypes; courses: string[] }) {
   const getRequirement = () => {
     switch (req.matcher) {
       case 'Course':
-        return <CourseRequirement req={req} />;
+        return <CourseRequirement req={req} courses={courses} />;
       case 'Or':
         return (
           <div className="flex flex-col">
-            <AccordianWrapper name={`Select one of the following:`}>
+            <AccordianWrapper name={`Select one of the following:`} {...req} filled={req.filled}>
               {req.requirements.map((req2, idx) => (
-                <RecursiveRequirementGroup key={idx} req={req2} />
+                <RecursiveRequirementGroup key={idx} req={req2} courses={courses} />
               ))}
             </AccordianWrapper>
           </div>
@@ -155,9 +157,9 @@ function RecursiveRequirementGroup({ req }: { req: RequirementTypes }) {
       case 'And':
         return (
           <div className="flex flex-col">
-            <AccordianWrapper name={`Select all of the following`}>
+            <AccordianWrapper name={`Select all of the following`} filled={req.filled}>
               {req.requirements.map((req2, idx) => (
-                <RecursiveRequirementGroup key={idx} req={req2} />
+                <RecursiveRequirementGroup key={idx} req={req2} courses={courses} />
               ))}
             </AccordianWrapper>
           </div>
@@ -165,9 +167,12 @@ function RecursiveRequirementGroup({ req }: { req: RequirementTypes }) {
       case 'Select':
         return (
           <div className="flex flex-col">
-            <AccordianWrapper name={`Select ${req.required_course_count} of the following`}>
+            <AccordianWrapper
+              name={`Select ${req.required_course_count} of the following`}
+              filled={req.filled}
+            >
               {req.requirements.map((req2, idx) => (
-                <RecursiveRequirementGroup key={idx} req={req2} />
+                <RecursiveRequirementGroup key={idx} req={req2} courses={courses} />
               ))}
             </AccordianWrapper>
           </div>
@@ -177,9 +182,10 @@ function RecursiveRequirementGroup({ req }: { req: RequirementTypes }) {
           <div className="flex flex-col">
             <AccordianWrapper
               name={`Select ${req.required_hours} credit hours from the following classes`}
+              filled={req.filled}
             >
               {req.requirements.map((req2, idx) => (
-                <RecursiveRequirementGroup key={idx} req={req2} />
+                <RecursiveRequirementGroup key={idx} req={req2} courses={courses} />
               ))}
             </AccordianWrapper>
           </div>
@@ -189,9 +195,10 @@ function RecursiveRequirementGroup({ req }: { req: RequirementTypes }) {
           <div className="flex flex-col">
             <AccordianWrapper
               name={`Select ${req.required_hours} credit hours from the following classes`}
+              filled={req.filled}
             >
               {req.prefix_groups.map((req2, idx) => (
-                <RecursiveRequirementGroup key={idx} req={req2} />
+                <RecursiveRequirementGroup key={idx} req={req2} courses={courses} />
               ))}
             </AccordianWrapper>
           </div>
@@ -214,10 +221,18 @@ function RecursiveRequirementGroup({ req }: { req: RequirementTypes }) {
   return <>{getRequirement()}</>;
 }
 
-function bRequirement({ req }: { req: CourseRequirement }) {
+function bRequirement({ req, courses }: { req: CourseRequirement; courses: string[] }) {
   const id = new ObjectID();
   return (
-    <DraggableSidebarCourseItem course={{ id: id, code: req.course }} dragId={id.toString()} />
+    <DraggableSidebarCourseItem
+      course={{
+        id: id,
+        code: req.course,
+        taken: courses.includes(req.course),
+        status: req.filled ? 'complete' : 'incomplete',
+      }}
+      dragId={id.toString()}
+    />
   );
 }
 
@@ -229,11 +244,21 @@ const CourseRequirement = React.memo(bRequirement);
  * @param param0
  * @returns
  */
-function AccordianWrapper({ name, children }: { name: string; children: any }) {
+function AccordianWrapper({
+  name,
+  filled,
+  children,
+}: {
+  name: string;
+  filled?: boolean;
+  children: any;
+}) {
   return (
-    <div className="collapse-arrow collapse" tabIndex={0}>
+    <div className={`collapse-arrow collapse ${filled && 'opacity-50'}`} tabIndex={0}>
       <input type="checkbox" className="border-32 border-orange-500" />
-      <div className="collapse-title">{name}</div>
+      <div className="collapse-title flex flex-row items-center">
+        {name} {filled && <CheckIcon fontSize="small" />}
+      </div>
       <div className="collapse-content">{children}</div>
     </div>
   );

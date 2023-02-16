@@ -39,8 +39,10 @@ export default React.memo(RequirementsList);
 
 export const ProgressComponent = ({ value, max }: { value: number; max: number }) => {
   return (
-    <div className="flex flex-col justify-center">
-      <span className="text-[8px]"> {((value * 100) / max).toFixed(1)}%</span>
+    <div className="flex flex-col items-center justify-center">
+      <span className="text-[10px]">
+        {value}/{max} done
+      </span>
       <progress id="file" value={value} max={max} className="h-2 w-10" />
     </div>
   );
