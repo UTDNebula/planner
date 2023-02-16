@@ -57,9 +57,11 @@ export const planRouter = router({
         },
       });
 
+      /*  sanitizing data from API db.
+       *  TODO: Fix this later somehow
+       */
       const courseMapWithIdKey = new Map<string, Prisma.JsonValue>();
       const courseMapWithCodeKey = new Map<string, Prisma.JsonValue>();
-      const preReqHash = new Map<string, boolean>();
       for (const course of coursesFromApi) {
         courseMapWithCodeKey.set(
           `${course.subject_prefix} ${course.course_number}`,
@@ -68,6 +70,14 @@ export const planRouter = router({
         courseMapWithIdKey.set(course.id, `${course.subject_prefix} ${course.course_number}`);
       }
 
+      /* Hash to store pre req data.
+       *  key: course id
+       *  value: boolean to represent validity
+       */
+      const preReqHash = new Map<string, boolean>();
+      /* Recursive function to check for prereqs.
+       *  TODO: Move to a client side function. Possibly a hook.
+       */
       const checkForPreRecursive = (requirements: CollectionOptions): boolean => {
         if (requirements.options.length === 0) {
           return true;
@@ -90,9 +100,7 @@ export const planRouter = router({
             }
           }
         }
-
         if (flag >= requirements.required) {
-          const required = requirements.required;
           return true;
         }
         return false;
@@ -112,10 +120,9 @@ export const planRouter = router({
           }
         }
       };
-      // time to check for prereqs
-      console.time('prereq');
+
       await prereqValidation(planData);
-      console.timeEnd('prereq');
+
       const { semesters } = planData;
       // FIX THIS LATER IDC RN
       const temporaryFunctionPlzDeleteThis = async () => {
