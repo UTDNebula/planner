@@ -1,6 +1,6 @@
 import { UniqueIdentifier } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities';
-import { ComponentPropsWithoutRef, FC, forwardRef } from 'react';
+import { ComponentPropsWithoutRef, FC, forwardRef, memo } from 'react';
 
 import { DragDataFromSemesterTile, PlanCourse, PlanSemester } from '../types';
 import SyncProblemIcon from '@mui/icons-material/SyncProblem';
@@ -8,6 +8,8 @@ import { displaySemesterCode } from '@/utils/utilFunctions';
 import CheckIcon from '@mui/icons-material/Check';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import { useSortable } from '@dnd-kit/sortable';
+import lang from 'lodash-es/lang';
+import object from 'lodash-es/object';
 
 export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'> {
   course: PlanCourse;
@@ -122,4 +124,9 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
   );
 };
 
-export default DraggableSemesterCourseItem;
+export default memo(DraggableSemesterCourseItem, (oldProps, newProps) => {
+  return lang.isEqual(
+    object.omit(oldProps, object.functions(oldProps)),
+    object.omit(newProps, object.functions(newProps)),
+  );
+});

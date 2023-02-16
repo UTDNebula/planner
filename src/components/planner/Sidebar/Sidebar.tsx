@@ -15,6 +15,8 @@ export interface CourseSelectorContainerProps {
   getRequirementDragId: GetDragIdByCourse;
 }
 import { trpc } from '@/utils/trpc';
+import lang from 'lodash-es/lang';
+import object from 'lodash-es/object';
 
 function CourseSelectorContainer({
   degreeRequirements,
@@ -82,4 +84,9 @@ function CourseSelectorContainer({
   );
 }
 
-export default React.memo(CourseSelectorContainer);
+export default React.memo(CourseSelectorContainer, (oldProps, newProps) => {
+  return lang.isEqual(
+    object.omit(oldProps, object.functions(oldProps)),
+    object.omit(newProps, object.functions(newProps)),
+  );
+});

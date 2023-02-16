@@ -1,6 +1,6 @@
 import { useDroppable } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
-import { FC, forwardRef } from 'react';
+import { FC, forwardRef, memo } from 'react';
 
 import { displaySemesterCode } from '@/utils/utilFunctions';
 import SyncProblemIcon from '@mui/icons-material/SyncProblem';
@@ -8,6 +8,8 @@ import SyncProblemIcon from '@mui/icons-material/SyncProblem';
 import { DragDataToSemesterTile, PlanCourse, PlanSemester } from '../types';
 import DraggableSemesterCourseItem from './SemesterCourseItem';
 import { SemesterErrors } from '../Planner';
+import lang from 'lodash-es/lang';
+import object from 'lodash-es/object';
 
 export interface SemesterTileProps {
   semester: PlanSemester;
@@ -103,4 +105,9 @@ const DroppableSemesterTile: FC<DroppableSemesterTileProps> = ({ semester, ...pr
   return <SemesterTile ref={setNodeRef} isOver={isOver} semester={semester} {...props} />;
 };
 
-export default DroppableSemesterTile;
+export default memo(DroppableSemesterTile, (oldProps, newProps) => {
+  return lang.isEqual(
+    object.omit(oldProps, object.functions(oldProps)),
+    object.omit(newProps, object.functions(newProps)),
+  );
+});
