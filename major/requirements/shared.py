@@ -53,7 +53,7 @@ class AndRequirement(AbstractRequirement):
     """
 
     def __init__(self, requirements: list[AbstractRequirement], metadata={}) -> None:
-        self.requirements = set(requirements)
+        self.requirements = requirements
         self.metadata = metadata
 
     def attempt_fulfill(self, course: str) -> bool:
@@ -112,7 +112,7 @@ class OrRequirement(AbstractRequirement):
     """
 
     def __init__(self, requirements: list[AbstractRequirement]) -> None:
-        self.requirements = set(requirements)
+        self.requirements = requirements
 
     def attempt_fulfill(self, course: str) -> bool:
         if self.is_fulfilled():
@@ -177,7 +177,7 @@ class HoursRequirement(AbstractRequirement):
     ) -> None:
         self.required_hours = required_hours
         self.fulfilled_hours = 0
-        self.requirements = set(requirements)
+        self.requirements = requirements
         self.valid_courses: list[str] = []
 
     def attempt_fulfill(self, course: str) -> bool:
@@ -334,7 +334,7 @@ class SelectRequirement(AbstractRequirement):
     ) -> None:
         self.required_course_count = required_course_count
         self.fulfilled_count = 0
-        self.requirements = set(requirements)
+        self.requirements = requirements
 
     def attempt_fulfill(self, course: str) -> bool:
         if self.is_fulfilled():
