@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "NODE_OPTIONS='--inspect' next dev",
     "prisma:generate": "prisma generate --schema prisma/platform.prisma && prisma generate --schema prisma/schema.prisma",
     "build": "npm run prisma:generate && prisma db push && prisma db seed && next build",
     "start": "next start",

@@ -2,9 +2,6 @@ import { RequirementGroupTypes, RequirementTypes } from '@/pages/test';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import React from 'react';
 
-import { DegreeRequirement } from '../types';
-import StatusTag from './StatusTag';
-
 function RequirementsList({
   data,
   updateRequirementInfo,
@@ -53,9 +50,11 @@ export const displayRequirementProgress = (elm: RequirementGroupTypes) => {
   switch (elm.matcher) {
     case 'And':
       return { value: elm.num_fulfilled_requirements, max: elm.num_requirements };
-    case 'CS Guided Elective':
+    case 'CS Guided Electives':
       return { value: elm.fulfilled_count, max: elm.required_count };
     case 'FreeElectives':
       return { value: elm.fulfilled_hours, max: elm.required_hours };
+    default:
+      return { value: 0, max: 100 };
   }
 };

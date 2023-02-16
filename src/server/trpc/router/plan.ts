@@ -78,7 +78,7 @@ export const planRouter = router({
 
       const body = formatDegreeValidationRequest(hehe, {
         core: true,
-        majors: ['computer_science'], // TODO: Standardize names
+        majors: ['business_administration'], // TODO: Standardize names
         minors: [],
       });
 
@@ -93,13 +93,14 @@ export const planRouter = router({
 
         // Throw error if bad
         if (res.status !== 200) {
-          return [];
+          return { can_graduate: false, requirements: [] };
         }
         return rawData;
       });
 
       return { plan: planData, validation: validationData };
     } catch (error) {
+      console.log('ERROR');
       console.log(error);
     }
   }),
