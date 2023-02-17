@@ -4,6 +4,8 @@ from major.requirements import AbstractRequirement, map
 from functools import reduce
 from typing import TypedDict
 
+import utils
+
 
 class MajorGuidedElectiveRequirement(AbstractRequirement):
     """Matches CS Major Guided Electives
@@ -35,7 +37,7 @@ class MajorGuidedElectiveRequirement(AbstractRequirement):
         self.starts_with = starts_with
         self.also_fulfills = also_fulfills
         self.fulfilled_count = 0
-        self.valid_courses: list[str] = []
+        self.valid_courses: dict[str:int] = []
 
     def attempt_fulfill(self, course: str) -> bool:
         if self.is_fulfilled():
@@ -43,7 +45,7 @@ class MajorGuidedElectiveRequirement(AbstractRequirement):
 
         if course.startswith(self.starts_with):
             self.fulfilled_count += 1
-            self.valid_courses.append(course)
+            self.valid_courses[course] = utils.get_hours_from_course(course)
             return True
         else:
             for requirement in self.also_fulfills:

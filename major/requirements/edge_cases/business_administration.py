@@ -57,7 +57,7 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
         self.fulfilled_count = 0
         self.required_hours = required_hours
         self.fulfilled_hours = 0
-        self.valid_courses: list[str] = []
+        self.valid_courses: dict[str:int] = []
 
     def attempt_fulfill(self, course: str) -> bool:
         if self.is_fulfilled():
@@ -71,9 +71,10 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
         for group in self.prefix_groups:
 
             if group.attempt_fulfill(course):
-                self.fulfilled_hours += utils.get_hours_from_course(course)
+                course_hrs = utils.get_hours_from_course(course)
+                self.fulfilled_hours += course_hrs
                 self.fulfilled_count = self.get_fulfilled_count()
-                self.valid_courses.append(course)
+                self.valid_courses[course] = course_hrs
                 return True
 
         return False

@@ -178,7 +178,11 @@ class HoursRequirement(AbstractRequirement):
         self.required_hours = required_hours
         self.fulfilled_hours = 0
         self.requirements = requirements
-        self.valid_courses: list[str] = []
+        self.valid_courses: dict[
+            str:int
+        ] = (
+            []
+        )  # Stores map of course & # hours fulfilled (i.e. {"CS 1200": 2}). This is done due to course splitting (1 course can be used to satisfy multiple requirements)
 
     def attempt_fulfill(self, course: str) -> bool:
         if self.is_fulfilled():
@@ -186,8 +190,9 @@ class HoursRequirement(AbstractRequirement):
 
         for requirement in self.requirements:
             if requirement.attempt_fulfill(course):
-                self.fulfilled_hours += utils.get_hours_from_course(course)
-                self.valid_courses.append(course)
+                course_hrs = utils.get_hours_from_course(course)
+                self.fulfilled_hours += course_hrs
+                self.valid_courses[course] = course_hrs
 
         return False
 
@@ -265,15 +270,16 @@ class FreeElectiveRequirement(AbstractRequirement):
         self.required_hours = required_hours
         self.excluded_courses = set(excluded_courses)
         self.fulfilled_hours = 0
-        self.valid_courses: list[str] = []
+        self.valid_courses: dict[str:int] = []
 
     def attempt_fulfill(self, course: str) -> bool:
         if self.is_fulfilled():
             return False
 
         if not course in self.excluded_courses:
-            self.fulfilled_hours += utils.get_hours_from_course(course)
-            self.valid_courses.append(course)
+            course_hrs = utils.get_hours_from_course(course)
+            self.fulfilled_hours += course_hrs
+            self.valid_courses[course] = course_hrs
             return True
 
         return False
@@ -402,13 +408,13 @@ class PrefixBucketRequirement(AbstractRequirement):
     def __init__(self, prefix: str) -> None:
         self.prefix = prefix
         self.filled = False
-        self.valid_courses: list[str] = []
+        self.valid_courses: dict[str:int] = []
 
     def attempt_fulfill(self, course: str) -> bool:
 
         if utils.get_course_prefix(course) == self.prefix:
             self.filled = True
-            self.valid_courses.append(course)
+            self.valid_courses[course] = utils.get_hours_from_course(course)
             return True
 
         return False
