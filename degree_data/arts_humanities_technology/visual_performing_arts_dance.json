@@ -1,0 +1,66 @@
+{
+    "abbreviation": "Visual and Performing Arts with Dance Concentration (BA)",
+    "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ah/visual-and-performing-arts-art-history",
+    "minimum_credit_hours": 120,
+    "name": "Bachelor of Arts in Visual and Performing Arts with Dance Concentration",
+    "school": "School of Arts, Humanities, and Technology",
+    "subtype": "Major",
+    "year": "2022-2023",
+    "requirements": {
+        "core": "@import ./core.json",
+        "major": [
+            // MARK: II. Major Requirements, Lower-Division: 6 semester credit hours beyond Core Curriculum
+            {
+                "matcher": "CourseRequirement",
+                "course": "DANC 1310"
+            },
+            {
+                "matcher": "CourseRequirement",
+                "course": "DANC 1305"
+            },
+            // TODO: Need to create some sort of other requirement for "3 semester credit hours from a DANC studio"
+            // TODO: Need to create some sort of other requirement for "3 semester credit hours from a DANC/THEA/MUSI studio ensemble course"
+            // END: II. Major Requirements, Lower-Division: 6 semester credit hours beyond Core Curriculum
+            // MARK: III. Major Requirements, Upper-Division: 39 semester credit hours
+            { "type": "CourseRequirement", "course": "VPAS 3340" }, { "type": "CourseRequirement", "course": "VPAS 4389" },
+            {
+                "type": "OrRequirement",
+                "requirements": [
+                    { "type": "CourseRequirement", "course": "VPAS 4390" },
+                    { "type": "CourseRequirement", "course": "VPAS 4V99" }
+                ]
+            },
+            // TODO: Need to create some sort of other requirement for "3 semester credit hours of upper-level Related Courses from the School of Arts and Humanities (excluding the DANC prefix)"
+            {
+                "type": "HoursRequirement",
+                "required_hours": 3,
+                "requirements": [
+                    { "type": "CourseRequirement", "course": "ARTS 3311" },
+                    { "type": "CourseRequirement", "course": "ARTS 4310" },
+                    { "type": "CourseRequirement", "course": "COMM 4370" },
+                    { "type": "CourseRequirement", "course": "COMM 4371" },
+                    { "type": "CourseRequirement", "course": "ENTP 3301" },
+                    { "type": "CourseRequirement", "course": "ISAH 4V50" },
+                    { "type": "CourseRequirement", "course": "VPAS 4310" }
+                ]
+            },
+            {
+                "type": "OrRequirement", "requirements": [
+                    { "type": "CourseRequirement", "course": "DANC 3340" },
+                    // TODO: Other req for "Upper-Level Visual and Performing Arts Historical Context course"
+                ]
+            },
+            // TODO: other req, '12 semester credit hours of 3000/4000-level Dance Studio and Ensemble courses'
+            { "type": "CourseRequirement", "course": "DANC 3347" },
+            { "type": "OrRequirement", "requirements": [{ "type": "CourseRequirement", "course": "DANC 3345" }, { "type": "CourseRequirement", "course": "DANC 4317" }] },
+            // TODO: other req, "3 semester credit hours of upper-division Visual and Performing Arts elective"
+            // END: III. Major Requirements, Upper-Division: 39 semester credit hours
+            { "type": "CourseRequirement", "course": "ARHM 1100" },
+            {
+                "matcher": "FreeElectiveRequirement",
+                "required_hours": 0,
+                "excluded_courses": []
+            }
+        ]
+    }
+}
