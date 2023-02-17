@@ -199,7 +199,7 @@ def format_core_reqs(reqs: dict[str, dict[str, Any]]) -> list[AbstractRequiremen
     for req_name, req_info in reqs.items():
 
         # Create set for all valid courses
-        valid_courses = set(req_info["validCourses"])
+        valid_courses = req_info["validCourses"]
 
         # Create AndRequirement
         core_req = AndRequirement(
