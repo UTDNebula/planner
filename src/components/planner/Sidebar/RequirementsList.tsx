@@ -56,6 +56,8 @@ export const displayRequirementProgress = (elm: RequirementGroupTypes) => {
       return { value: elm.fulfilled_count, max: elm.required_count };
     case 'FreeElectives':
       return { value: elm.fulfilled_hours, max: elm.required_hours };
+    case 'Hours':
+      return { value: elm.fulfilled_hours, max: elm.required_hours };
     default:
       return { value: 0, max: 100 };
   }

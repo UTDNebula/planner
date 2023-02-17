@@ -5,6 +5,7 @@ import { DragDataFromCourseList, DraggableCourse } from '../types';
 
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import CheckIcon from '@mui/icons-material/Check';
+import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
 /** UI Implementation of sidebar course */
 export function SidebarCourseItem({ course }: { course: DraggableCourse }): JSX.Element {
   // Course would be marked incomplete ONLY if requirement needed course
@@ -20,6 +21,9 @@ export function SidebarCourseItem({ course }: { course: DraggableCourse }): JSX.
         <DragIndicatorIcon fontSize="inherit" className="mr-3 text-[16px] text-[#D4D4D4]" />
         {course.code}
       </span>
+      {course.hours && course.hours < getSemesterHourFromCourseCode(course.code)! && (
+        <div>{course.hours}</div>
+      )}
       {course.status === 'complete' && <CheckIcon fontSize="small" />}
     </div>
   );

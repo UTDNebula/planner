@@ -10,6 +10,7 @@ import RequirementSearchBar from './RequirementSearchBar';
 import DraggableSidebarCourseItem from './SidebarCourseItem';
 
 import CheckIcon from '@mui/icons-material/Check';
+import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
 export interface RequirementContainerProps {
   degreeRequirement: RequirementGroupTypes;
   courses: string[];
@@ -55,6 +56,14 @@ function RequirementContainer({
         return {
           name: degreeRequirement.metadata.name,
           status: `${degreeRequirement.num_fulfilled_requirements} / ${degreeRequirement.num_requirements} requirements`,
+          description: degreeRequirement.metadata.description ?? '',
+          getData: () => Promise.resolve(degreeRequirement.requirements),
+          filterFunction: filterFunc,
+        };
+      case 'Hours':
+        return {
+          name: degreeRequirement.metadata.name,
+          status: `${degreeRequirement.fulfilled_hours} / ${degreeRequirement.required_hours} hours`,
           description: degreeRequirement.metadata.description ?? '',
           getData: () => Promise.resolve(degreeRequirement.requirements),
           filterFunction: filterFunc,
@@ -117,6 +126,8 @@ function RequirementContainer({
     updateQuery('');
   }, [degreeRequirement]);
 
+  console.log('CLOSE');
+  console.log(degreeRequirement);
   return (
     <>
       <RequirementContainerHeader name={name} status={status} setCarousel={setCarousel} />
@@ -124,7 +135,16 @@ function RequirementContainer({
       <div className=" h-[300px] overflow-x-hidden overflow-y-scroll">
         <RequirementSearchBar updateQuery={updateQuery} />
         {results.map((req, idx) => {
-          return <RecursiveRequirementGroup key={idx} req={req} courses={courses} />;
+          return (
+            <RecursiveRequirementGroup
+              key={idx}
+              req={req}
+              courses={courses}
+              validCourses={
+                degreeRequirement.matcher === 'Hours' ? degreeRequirement.valid_courses : {}
+              }
+            />
+          );
         })}
       </div>
       {/* <button onClick={() => setAddPlaceholder(true)}>+ ADD PLACEHOLDER</button> */}
@@ -139,17 +159,30 @@ export default React.memo(RequirementContainer);
  * @param param0
  * @returns
  */
-function RecursiveRequirementGroup({ req, courses }: { req: RequirementTypes; courses: string[] }) {
+function RecursiveRequirementGroup({
+  req,
+  courses,
+  validCourses = {},
+}: {
+  req: RequirementTypes;
+  courses: string[];
+  validCourses: { [key: string]: number };
+}) {
   const getRequirement = () => {
     switch (req.matcher) {
       case 'Course':
-        return <CourseRequirement req={req} courses={courses} />;
+        return <CourseRequirement req={req} courses={courses} validCourses={validCourses} />;
       case 'Or':
         return (
           <div className="flex flex-col">
             <AccordianWrapper name={`Select one of the following:`} {...req} filled={req.filled}>
               {req.requirements.map((req2, idx) => (
-                <RecursiveRequirementGroup key={idx} req={req2} courses={courses} />
+                <RecursiveRequirementGroup
+                  key={idx}
+                  req={req2}
+                  courses={courses}
+                  validCourses={validCourses}
+                />
               ))}
             </AccordianWrapper>
           </div>
@@ -159,7 +192,12 @@ function RecursiveRequirementGroup({ req, courses }: { req: RequirementTypes; co
           <div className="flex flex-col">
             <AccordianWrapper name={`Select all of the following`} filled={req.filled}>
               {req.requirements.map((req2, idx) => (
-                <RecursiveRequirementGroup key={idx} req={req2} courses={courses} />
+                <RecursiveRequirementGroup
+                  key={idx}
+                  req={req2}
+                  courses={courses}
+                  validCourses={validCourses}
+                />
               ))}
             </AccordianWrapper>
           </div>
@@ -172,7 +210,12 @@ function RecursiveRequirementGroup({ req, courses }: { req: RequirementTypes; co
               filled={req.filled}
             >
               {req.requirements.map((req2, idx) => (
-                <RecursiveRequirementGroup key={idx} req={req2} courses={courses} />
+                <RecursiveRequirementGroup
+                  key={idx}
+                  req={req2}
+                  courses={courses}
+                  validCourses={validCourses}
+                />
               ))}
             </AccordianWrapper>
           </div>
@@ -185,7 +228,12 @@ function RecursiveRequirementGroup({ req, courses }: { req: RequirementTypes; co
               filled={req.filled}
             >
               {req.requirements.map((req2, idx) => (
-                <RecursiveRequirementGroup key={idx} req={req2} courses={courses} />
+                <RecursiveRequirementGroup
+                  key={idx}
+                  req={req2}
+                  courses={courses}
+                  validCourses={req.valid_courses}
+                />
               ))}
             </AccordianWrapper>
           </div>
@@ -198,7 +246,12 @@ function RecursiveRequirementGroup({ req, courses }: { req: RequirementTypes; co
               filled={req.filled}
             >
               {req.prefix_groups.map((req2, idx) => (
-                <RecursiveRequirementGroup key={idx} req={req2} courses={courses} />
+                <RecursiveRequirementGroup
+                  key={idx}
+                  req={req2}
+                  courses={courses}
+                  validCourses={validCourses}
+                />
               ))}
             </AccordianWrapper>
           </div>
@@ -221,8 +274,18 @@ function RecursiveRequirementGroup({ req, courses }: { req: RequirementTypes; co
   return <>{getRequirement()}</>;
 }
 
-function bRequirement({ req, courses }: { req: CourseRequirement; courses: string[] }) {
+function bRequirement({
+  req,
+  courses,
+  validCourses = {},
+}: {
+  req: CourseRequirement;
+  courses: string[];
+  validCourses: { [key: string]: number };
+}) {
   const id = new ObjectID();
+  console.log(validCourses);
+  console.log(req.course);
   return (
     <DraggableSidebarCourseItem
       course={{
@@ -230,6 +293,7 @@ function bRequirement({ req, courses }: { req: CourseRequirement; courses: strin
         code: req.course,
         taken: courses.includes(req.course),
         status: req.filled ? 'complete' : 'incomplete',
+        hours: validCourses[req.course],
       }}
       dragId={id.toString()}
     />

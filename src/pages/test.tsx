@@ -26,12 +26,21 @@ export type AndRequirementGroup = Requirement & {
   num_fulfilled_requirements: number;
 };
 
+export type HoursRequirementGroup = Requirement & {
+  matcher: 'Hours';
+  metadata: { [key: string]: string };
+  required_hours: number;
+  fulfilled_hours: number;
+  requirements: RequirementTypes[];
+  valid_courses: { [course: string]: number };
+};
+
 export type FreeElectiveRequirementGroup = Requirement & {
   matcher: 'FreeElectives';
   required_hours: number;
   fulfilled_hours: number;
   excluded_courses: string[];
-  valid_courses: string[];
+  valid_courses: { [course: string]: number };
 };
 
 export type CSGuidedElectiveGroup = Requirement & {
@@ -40,7 +49,7 @@ export type CSGuidedElectiveGroup = Requirement & {
   also_fulfills: CourseRequirement[];
   starts_with: string;
   fulfilled_count: number;
-  valid_courses: string[];
+  valid_courses: { [course: string]: number };
 };
 
 export type BAGuidedElectives = Requirement & {
@@ -49,7 +58,7 @@ export type BAGuidedElectives = Requirement & {
   required_hours: number;
   fulfilled_count: number;
   fulfilled_hours: number;
-  valid_courses: string[];
+  valid_courses: { [course: string]: number };
   prefix_groups: RequirementTypes[];
 };
 // type Requirement = { matcher: string; filled: boolean };
@@ -64,7 +73,7 @@ export type HoursRequirement = Requirement & {
   required_hours: number;
   fulfilled_hours: number;
   requirements: RequirementTypes[];
-  valid_courses: RequirementTypes[];
+  valid_courses: { [course: string]: number };
 };
 
 /**
@@ -73,6 +82,7 @@ export type HoursRequirement = Requirement & {
  */
 export type RequirementGroupTypes =
   | AndRequirementGroup
+  | HoursRequirementGroup
   | FreeElectiveRequirementGroup
   | CSGuidedElectiveGroup;
 
@@ -101,6 +111,6 @@ export type OrRequirement = Requirement & {
 
 export type PrefixBucketRequirement = Requirement & {
   matcher: 'Prefix';
-  valid_courses: string[];
+  valid_courses: { [course: string]: number };
   prefix: string;
 };
