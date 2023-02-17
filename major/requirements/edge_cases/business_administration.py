@@ -57,7 +57,7 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
         self.fulfilled_count = 0
         self.required_hours = required_hours
         self.fulfilled_hours = 0
-        self.valid_courses: dict[str:int] = []
+        self.valid_courses: dict[str:int] = {}
 
     def attempt_fulfill(self, course: str) -> bool:
         if self.is_fulfilled():

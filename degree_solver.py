@@ -11,7 +11,10 @@ from dataclasses import dataclass
 from major.requirements.map import REQUIREMENTS_MAP
 import json
 
-from major.requirements.shared import AndRequirement, CourseRequirement
+from major.requirements.shared import (
+    CourseRequirement,
+    HoursRequirement,
+)
 
 
 @dataclass
@@ -199,15 +202,18 @@ def format_core_reqs(reqs: dict[str, dict[str, Any]]) -> list[AbstractRequiremen
     for req_name, req_info in reqs.items():
 
         # Create set for all valid courses
-        valid_courses = req_info["validCourses"]
+        valid_courses = req_info["valid_courses"]
 
         # Create AndRequirement
-        core_req = AndRequirement(
+        core_req = HoursRequirement(
+            req_info["hours"],
             [
-                CourseRequirement(course, course in valid_courses)
+                CourseRequirement(course, course in valid_courses.keys())
                 for course in req_info["courses"]
             ],
+            valid_courses,
             {"name": req_name},
         )
+
         core_reqs.append(core_req)
     return core_reqs

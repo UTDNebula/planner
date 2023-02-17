@@ -37,7 +37,7 @@ class MajorGuidedElectiveRequirement(AbstractRequirement):
         self.starts_with = starts_with
         self.also_fulfills = also_fulfills
         self.fulfilled_count = 0
-        self.valid_courses: dict[str:int] = []
+        self.valid_courses: dict[str:int] = {}
 
     def attempt_fulfill(self, course: str) -> bool:
         if self.is_fulfilled():

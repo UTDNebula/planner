@@ -173,16 +173,20 @@ class HoursRequirement(AbstractRequirement):
     """
 
     def __init__(
-        self, required_hours: int, requirements: list[AbstractRequirement]
+        self,
+        required_hours: int,
+        requirements: list[AbstractRequirement],
+        valid_courses={},
+        metadata={},
     ) -> None:
         self.required_hours = required_hours
-        self.fulfilled_hours = 0
         self.requirements = requirements
-        self.valid_courses: dict[
-            str:int
-        ] = (
-            []
-        )  # Stores map of course & # hours fulfilled (i.e. {"CS 1200": 2}). This is done due to course splitting (1 course can be used to satisfy multiple requirements)
+        self.valid_courses: dict[str:int] = valid_courses
+        self.metadata: dict[str:str] = metadata
+        print(valid_courses)
+        # Compute fulfilled hours from metadata field
+        self.fulfilled_hours = sum(valid_courses.values())
+        # Stores map of course & # hours fulfilled (i.e. {"CS 1200": 2}). This is done due to course splitting (1 course can be used to satisfy multiple requirements)
 
     def attempt_fulfill(self, course: str) -> bool:
         if self.is_fulfilled():
@@ -237,6 +241,7 @@ class HoursRequirement(AbstractRequirement):
     def to_json(self) -> JSON:
         return {
             "matcher": "Hours",
+            "metadata": self.metadata,
             "filled": self.is_fulfilled(),
             "required_hours": self.required_hours,
             "fulfilled_hours": self.fulfilled_hours,
@@ -245,7 +250,7 @@ class HoursRequirement(AbstractRequirement):
         }
 
     def __str__(self) -> str:
-        s = f"""{FreeElectiveRequirement.__name__} 
+        s = f"""{HoursRequirement.__name__} 
         required_hours: {self.required_hours}
         fulfilled_hours: {self.fulfilled_hours}
         """
@@ -270,7 +275,7 @@ class FreeElectiveRequirement(AbstractRequirement):
         self.required_hours = required_hours
         self.excluded_courses = set(excluded_courses)
         self.fulfilled_hours = 0
-        self.valid_courses: dict[str:int] = []
+        self.valid_courses: dict[str:int] = {}
 
     def attempt_fulfill(self, course: str) -> bool:
         if self.is_fulfilled():
@@ -408,7 +413,7 @@ class PrefixBucketRequirement(AbstractRequirement):
     def __init__(self, prefix: str) -> None:
         self.prefix = prefix
         self.filled = False
-        self.valid_courses: dict[str:int] = []
+        self.valid_courses: dict[str:int] = {}
 
     def attempt_fulfill(self, course: str) -> bool:
 
