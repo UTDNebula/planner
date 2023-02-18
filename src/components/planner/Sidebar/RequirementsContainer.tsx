@@ -2,9 +2,10 @@ import { DegreeRequirement } from '@/pages/test';
 import React, { useEffect, useRef, useState } from 'react';
 
 import { DegreeRequirementGroup, GetDragIdByCourseAndReq } from '../types';
+import Accordion from './Accordion';
 import RequirementContainer from './RequirementContainer';
-import RequirementsAccordion from './RequirementsAccordion';
-
+import { displayRequirementProgress, ProgressComponent } from './RequirementsList';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 export interface RequirementsCarouselProps {
   degreeRequirement: DegreeRequirement;
   courses: string[];
@@ -17,20 +18,7 @@ function RequirementsCarousel({
   getCourseItemDragId,
 }: RequirementsCarouselProps) {
   const [carousel, setCarousel] = React.useState<boolean>(false);
-  const [accordian, setAccordian] = React.useState<boolean>(false);
   const [requirementIdx, setRequirementIdx] = React.useState<number>(0);
-  const [height, setHeight] = useState<string>('0px');
-
-  const accordianRef = useRef<HTMLDivElement>(null);
-
-  function toggleAccordion() {
-    setAccordian(!accordian);
-    setHeight(
-      accordian
-        ? '0px'
-        : `${Math.max(accordianRef.current ? accordianRef.current.scrollHeight + 20 : 0)}px`,
-    );
-  }
 
   function toggleCarousel() {
     setOverflow(true);
@@ -56,23 +44,46 @@ function RequirementsCarousel({
             carousel && '-translate-x-full'
           } `}
         >
-          {(!carousel || overflow) && (
-            <RequirementsAccordion
-              data={degreeRequirement}
-              toggleAccordion={toggleAccordion}
-              accordion={accordian}
-              carousel={carousel}
-              setCarousel={toggleCarousel}
-              setRequirementIdx={setRequirementIdx}
-              height={height}
-              accordianRef={accordianRef}
-            />
-          )}
+          <Accordion
+            header={
+              <div className="flex w-full flex-row items-center justify-between ">
+                <div className="">{degreeRequirement.name}</div>
+
+                <ProgressComponent
+                  value={degreeRequirement.num_fulfilled_requirements}
+                  max={degreeRequirement.num_requirements}
+                />
+              </div>
+            }
+          >
+            <>
+              {degreeRequirement.requirements.map((elm, idx) => {
+                const { value, max } = displayRequirementProgress(elm);
+                return (
+                  <div className="flex justify-between px-2 py-1" key={idx}>
+                    <div className="text-sm">{elm.metadata ? elm.metadata.name : 'hi'}</div>
+                    <div className="flex flex-row items-center px-[5px] text-[11px]">
+                      <ProgressComponent value={value} max={max} />
+
+                      <button
+                        onClick={() => {
+                          toggleCarousel();
+                          setRequirementIdx(idx);
+                        }}
+                      >
+                        <ChevronRightIcon />
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </>
+          </Accordion>
         </div>
 
         <div
           className={`relative flex min-h-fit min-w-full flex-col gap-4 rounded-md bg-white p-4 duration-500 ${
-            accordian && carousel ? '-translate-x-full' : 'max-h-0'
+            carousel ? '-translate-x-full' : 'max-h-0'
           }  `}
         >
           <RequirementContainer
@@ -87,4 +98,8 @@ function RequirementsCarousel({
   );
 }
 
-export default React.memo(RequirementsCarousel);
+export default RequirementsCarousel;
+
+/**
+ * Create a component to handle passing the requirement info; pass all re
+ */
