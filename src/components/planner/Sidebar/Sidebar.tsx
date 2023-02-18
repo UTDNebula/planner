@@ -45,13 +45,6 @@ function CourseSelectorContainer({
     constraints: [0, 5],
   });
 
-  // Include tag rendering information here (yes for tag & which tag)
-  // TODO: Obviously have a better way of computing all courses user has taken
-  // Idea is allCourses will be available as context or props or smthn
-
-  // TODO: Prolly have a context for this
-  // Get all courses user has taken
-
   const courseResults = React.useMemo(() => {
     return results.map((result) => {
       return {
@@ -65,6 +58,7 @@ function CourseSelectorContainer({
   return (
     <div className="flex h-full w-[344px] flex-col gap-y-8 overflow-hidden">
       <SearchBar updateQuery={updateQuery} placeholder="Search courses" />
+      <div>Drag courses onto your plan!</div>
 
       <div className="bg-white p-4">
         <DraggableCourseList courses={courseResults} getDragId={getSearchedDragId} />

@@ -126,8 +126,6 @@ function RequirementContainer({
     updateQuery('');
   }, [degreeRequirement]);
 
-  console.log('CLOSE');
-  console.log(degreeRequirement);
   return (
     <>
       <RequirementContainerHeader name={name} status={status} setCarousel={setCarousel} />
