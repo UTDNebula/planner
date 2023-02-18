@@ -33,7 +33,7 @@ export default function PlanDetailPage(
 
   const { data, isLoading } = planQuery;
   const { data: session } = useSession();
-  const degreeData = data?.validation ?? [];
+  const degreeData = data?.validation ?? { can_graduate: false, requirements: [] };
 
   const { handlePlanDelete, handleBack } = usePlannerHooks({
     planId: planId,

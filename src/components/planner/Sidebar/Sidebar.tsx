@@ -15,7 +15,7 @@ export interface CourseSelectorContainerProps {
   getRequirementDragId: GetDragIdByCourse;
 }
 import { trpc } from '@/utils/trpc';
-import { DegreeRequirements } from '@/pages/test';
+import { DegreeRequirements } from './types';
 
 function CourseSelectorContainer({
   degreeRequirements,
