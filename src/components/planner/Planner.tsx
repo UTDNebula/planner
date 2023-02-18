@@ -38,7 +38,7 @@ import {
 } from './types';
 import { createNewYear, isSemCodeEqual } from '@/utils/utilFunctions';
 import { SemesterCode } from '@prisma/client';
-import { DegreeRequirements } from '@/pages/test';
+import { DegreeRequirements } from './Sidebar/types';
 
 /** PlannerTool Props */
 export interface PlannerProps {
