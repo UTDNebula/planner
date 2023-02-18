@@ -61,8 +61,8 @@ class AssignmentStore:
             req.name: {
                 "courses": list_matcher_requirements(req.course_matcher),
                 "hours": req.hours,
-                "isfilled": self._get_req_hours_filled(req) >= req.hours,
-                "validCourses": [c.name for c in req_fills.keys()],
+                "filled": self._get_req_hours_filled(req) >= req.hours,
+                "valid_courses": {c.name: hours for c, hours in req_fills.items()},
             }
             for req, req_fills in self.reqs_to_courses.items()
         }
