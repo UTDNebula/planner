@@ -42,7 +42,7 @@ export default function Sidebar({ isMobile }: { isMobile: boolean }): JSX.Elemen
           <div
             className={`${open ? 'justify-between' : 'justify-center'} flex h-16 items-center p-4`}
           >
-            {open && <h4 className="text-defaultText">Planner</h4>}
+            {open && <h4 className="text-primary-900">Planner</h4>}
             <ChevronIcon
               onClick={() => setOpen(!open)}
               className={`h-5 w-5 cursor-pointer ${!open ? '' : 'rotate-180'}`}

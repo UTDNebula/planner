@@ -39,6 +39,7 @@ import {
 } from './types';
 import { createNewYear, isSemCodeEqual } from '@/utils/utilFunctions';
 import { SemesterCode } from '@prisma/client';
+import Toolbar from './Toolbar';
 
 /** PlannerTool Props */
 export interface PlannerProps {
@@ -376,13 +377,10 @@ export default function Planner({
             ) : null)}
         </DragOverlay>
 
-        <div className="min-h-fit">
+        <section className="flex min-h-fit w-fit flex-col gap-y-6">
+          <Toolbar title="Plan Your Courses" />
           <div className="grid h-auto w-fit grid-cols-3 gap-[32px]">
             {semesters.map((semester) => {
-              const hasInvalidCourse =
-                semester.courses.length > 0 &&
-                semester.courses.some((course) => course.validation && !course.validation.isValid);
-
               // Get map of credits (faster to query later down the line)
               const creditsMap: {
                 [key: string]: { semesterCode: SemesterCode; transfer: boolean };
@@ -449,7 +447,6 @@ export default function Planner({
                     `semester-tile-course-${semester.id}-${course.id}`
                   }
                   semester={newSem}
-                  isValid={!hasInvalidCourse}
                   semesterErrors={semesterErrors}
                 />
               );
@@ -459,7 +456,7 @@ export default function Planner({
               <button onClick={handleAddYear}>+ Add Year</button>
             </div>
           </div>
-        </div>
+        </section>
       </div>
     </DndContext>
   );
