@@ -45,7 +45,7 @@ export default function Sidebar({ isMobile }: { isMobile: boolean }): JSX.Elemen
             {open && <h4 className="text-primary-900">Planner</h4>}
             <ChevronIcon
               onClick={() => setOpen(!open)}
-              className={`h-5 w-5 cursor-pointer ${!open ? '' : 'rotate-180'}`}
+              className={`h-4 w-4 cursor-pointer ${!open ? '' : 'rotate-180'}`}
               strokeWidth={2.5}
             />
           </div>

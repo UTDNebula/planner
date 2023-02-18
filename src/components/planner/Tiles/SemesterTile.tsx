@@ -54,7 +54,7 @@ export const SemesterTile = forwardRef<HTMLDivElement, SemesterTileProps>(functi
         <ChevronIcon
           className={`${
             open ? 'rotate-90' : '-rotate-90'
-          } ml-auto h-5 w-5 transform cursor-pointer text-neutral-500 transition-all duration-500`}
+          } ml-auto h-3 w-3 transform cursor-pointer text-neutral-500 transition-all duration-500`}
           fontSize="inherit"
           onClick={() => setOpen(!open)}
         />
