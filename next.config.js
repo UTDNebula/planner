@@ -13,9 +13,9 @@ const nextConfig = withBundleAnalyzer({
       transform: '@mui/icons-material/{{member}}',
     },
   },
-  // compiler: {
-  //   removeConsole: true,
-  // },
+  compiler: {
+    removeConsole: true,
+  },
 });
 
 module.exports = nextConfig;
