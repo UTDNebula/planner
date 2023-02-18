@@ -1,6 +1,7 @@
 import React, { FC, useRef, useState } from 'react';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import CheckIcon from '@mui/icons-material/Check';
 export default function Accordian({
   header,
   children,
@@ -36,6 +37,32 @@ export default function Accordian({
       >
         {children}
       </div>
+    </div>
+  );
+}
+
+/**
+ * TODO: Make this custom because it's causing annoying behaviors
+ * TODO: Add progress here
+ * @param param0
+ * @returns
+ */
+export function AccordianWrapper({
+  name,
+  filled,
+  children,
+}: {
+  name: string;
+  filled?: boolean;
+  children: any;
+}) {
+  return (
+    <div className={`collapse-arrow collapse ${filled && 'opacity-50'}`} tabIndex={0}>
+      <input type="checkbox" className="border-32 border-orange-500" />
+      <div className="collapse-title flex flex-row items-center">
+        {name} {filled && <CheckIcon fontSize="small" />}
+      </div>
+      <div className="collapse-content">{children}</div>
     </div>
   );
 }

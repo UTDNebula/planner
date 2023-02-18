@@ -2,7 +2,7 @@ import { ObjectID } from 'bson';
 import React from 'react';
 import DraggableSidebarCourseItem from './SidebarCourseItem';
 import { CourseRequirement, RequirementTypes } from './types';
-import CheckIcon from '@mui/icons-material/Check';
+import { AccordianWrapper } from './Accordion';
 
 /**
  * Group of requirements that's recursive?
@@ -108,18 +108,9 @@ export function RecursiveRequirement({
             </AccordianWrapper>
           </div>
         );
-      // return {
-      //   name: degreeRequirement.metadata.name,
-      //   status: `${degreeRequirement.fulfilled_count} / ${degreeRequirement.required_count} courses \n ${degreeRequirement.fulfilled_hours} / ${degreeRequirement.required_hours} hours`,
-      //   description: degreeRequirement.metadata.description ?? '',
-      //   getData: () => Promise.resolve(degreeRequirement.prefix_groups),
-      //   filterFunction: filterFunc,
-      // };
       case 'Prefix':
         return <div>Classes with {req.prefix}</div>;
       default:
-        console.log(req);
-        console.log('R');
         return <div>NOT SUPPORTED</div>;
     }
   };
@@ -147,31 +138,5 @@ function CourseRequirementComponent({
       }}
       dragId={id.toString()}
     />
-  );
-}
-
-/**
- * TODO: Make this custom because it's causing annoying behaviors
- * TODO: Add progress here
- * @param param0
- * @returns
- */
-function AccordianWrapper({
-  name,
-  filled,
-  children,
-}: {
-  name: string;
-  filled?: boolean;
-  children: any;
-}) {
-  return (
-    <div className={`collapse-arrow collapse ${filled && 'opacity-50'}`} tabIndex={0}>
-      <input type="checkbox" className="border-32 border-orange-500" />
-      <div className="collapse-title flex flex-row items-center">
-        {name} {filled && <CheckIcon fontSize="small" />}
-      </div>
-      <div className="collapse-content">{children}</div>
-    </div>
   );
 }
