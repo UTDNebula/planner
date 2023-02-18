@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next/types';
 import { unstable_getServerSession } from 'next-auth';
 import { useSession } from 'next-auth/react';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import superjson from 'superjson';
 
 import DegreePlanPDF from '@/components/planner/DegreePlanPDF/DegreePlanPDF';
@@ -18,6 +18,7 @@ import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { createContextInner } from '@/server/trpc/context';
 import { appRouter } from '@/server/trpc/router/_app';
 import { trpc } from '@/utils/trpc';
+import { customCourseSort } from '@/components/planner/utils';
 
 /**
  * A page that displays the details of a specific student academic plan.
@@ -40,6 +41,15 @@ export default function PlanDetailPage(
   });
 
   const [semesters, setSemesters] = useState<Semester[]>(getSemestersInfo(data?.plan));
+
+  const sortedSemesters = useMemo(
+    () =>
+      semesters.map((semester) => ({
+        ...semester,
+        courses: customCourseSort([...semester.courses]),
+      })),
+    [semesters],
+  );
 
   // Indicate UI loading
   if (isLoading) {
@@ -87,7 +97,7 @@ export default function PlanDetailPage(
       </div>
       <Planner
         degreeRequirements={degreeData}
-        semesters={semesters}
+        semesters={sortedSemesters}
         planId={planId}
         showTransfer={showTransfer}
         setSemesters={setSemesters}
