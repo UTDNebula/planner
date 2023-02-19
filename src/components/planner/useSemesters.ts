@@ -47,8 +47,6 @@ type SemestersReducerAction =
     };
 
 const useSemesters = ({ plan, planId }: useSemestersProps): useSemestersReturn => {
-  const utils = trpc.useContext();
-
   const { addTask } = useTaskQueue({ shouldProcess: true });
 
   const [semesters, dispatch] = useReducer<
@@ -114,35 +112,15 @@ const useSemesters = ({ plan, planId }: useSemestersProps): useSemestersReturn =
     [semesters],
   );
 
-  const addCourse = trpc.plan.addCourseToSemester.useMutation({
-    async onSuccess() {
-      await utils.plan.getPlanById.invalidate(planId);
-    },
-  });
+  const addCourse = trpc.plan.addCourseToSemester.useMutation();
 
-  const removeCourse = trpc.plan.removeCourseFromSemester.useMutation({
-    async onSuccess() {
-      await utils.plan.getPlanById.invalidate(planId);
-    },
-  });
+  const removeCourse = trpc.plan.removeCourseFromSemester.useMutation();
 
-  const moveCourse = trpc.plan.moveCourseFromSemester.useMutation({
-    async onSuccess() {
-      await utils.plan.getPlanById.invalidate(planId);
-    },
-  });
+  const moveCourse = trpc.plan.moveCourseFromSemester.useMutation();
 
-  const createYear = trpc.plan.addYear.useMutation({
-    async onSuccess() {
-      await utils.plan.getPlanById.invalidate(planId);
-    },
-  });
+  const createYear = trpc.plan.addYear.useMutation();
 
-  const deleteYear = trpc.plan.deleteYear.useMutation({
-    async onSuccess() {
-      await utils.plan.getPlanById.invalidate(planId);
-    },
-  });
+  const deleteYear = trpc.plan.deleteYear.useMutation();
 
   const handleAddYear = () => {
     const newYear: Semester[] = createNewYear(
