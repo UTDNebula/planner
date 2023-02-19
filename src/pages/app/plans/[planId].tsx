@@ -1,24 +1,19 @@
-import { SemesterCode } from '@prisma/client';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { createProxySSGHelpers } from '@trpc/react-query/ssg';
-import { ObjectID } from 'bson';
-import { useRouter } from 'next/router';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next/types';
 import { unstable_getServerSession } from 'next-auth';
 import { useSession } from 'next-auth/react';
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import superjson from 'superjson';
 
 import DegreePlanPDF from '@/components/planner/DegreePlanPDF/DegreePlanPDF';
 import Planner from '@/components/planner/Planner';
-import { DraggableCourse, Semester } from '@/components/planner/types';
-import BackArrowIcon from '@/icons/BackArrowIcon';
 import SettingsIcon from '@/icons/SettingsIcon';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { createContextInner } from '@/server/trpc/context';
 import { appRouter } from '@/server/trpc/router/_app';
-import { trpc } from '@/utils/trpc';
-import { customCourseSort } from '@/components/planner/utils';
+import usePlan from '@/components/planner/usePlan';
+import useSemesters from '@/components/planner/useSemesters';
 
 /**
  * A page that displays the details of a specific student academic plan.
@@ -28,28 +23,13 @@ export default function PlanDetailPage(
   props: InferGetServerSidePropsType<typeof getServerSideProps>,
 ): JSX.Element {
   const { planId } = props;
-  const planQuery = trpc.plan.getPlanById.useQuery(planId);
+  const { plan, validation, isLoading, handlePlanDelete } = usePlan({ planId });
+  const { semesters, setSemesters } = useSemesters({ plan });
 
   const [showTransfer, setShowTransfer] = useState(true);
 
-  const { data, isLoading } = planQuery;
   const { data: session } = useSession();
-  const degreeData = data?.validation ?? [];
-
-  const { handlePlanDelete, handleBack } = usePlannerHooks({
-    planId: planId,
-  });
-
-  const [semesters, setSemesters] = useState<Semester[]>(getSemestersInfo(data?.plan));
-
-  const sortedSemesters = useMemo(
-    () =>
-      semesters.map((semester) => ({
-        ...semester,
-        courses: customCourseSort([...semester.courses]),
-      })),
-    [semesters],
-  );
+  const degreeData = validation ?? [];
 
   // Indicate UI loading
   if (isLoading) {
@@ -78,17 +58,17 @@ export default function PlanDetailPage(
         <div>Minors: Cognitive Science</div>
         <div>Fast Track</div>
         <div>Import Plan</div>
-        {data && (
+        {plan && (
           <PDFDownloadLink
             className="text-base font-normal"
             document={
               <DegreePlanPDF
                 studentName={session?.user?.email || ''}
-                planTitle={data.plan.name}
+                planTitle={plan.name}
                 semesters={semesters}
               />
             }
-            fileName={data.plan.name + '.pdf'}
+            fileName={plan.name + '.pdf'}
           >
             {({ loading }) => (loading ? 'Loading document...' : 'EXPORT PLAN')}
           </PDFDownloadLink>
@@ -97,7 +77,7 @@ export default function PlanDetailPage(
       </div>
       <Planner
         degreeRequirements={degreeData}
-        semesters={sortedSemesters}
+        semesters={semesters}
         planId={planId}
         showTransfer={showTransfer}
         setSemesters={setSemesters}
@@ -126,61 +106,4 @@ export async function getServerSideProps(context: GetServerSidePropsContext<{ pl
   };
 }
 
-// Not sure if tRPC autogenerates the type
-function getSemestersInfo(
-  plan:
-    | {
-        semesters: { code: SemesterCode; id: string; courses: string[] }[];
-        id: string;
-        name: string;
-      }
-    | undefined,
-): Semester[] {
-  if (!plan) {
-    return [];
-  }
-  return plan.semesters.map((sem) => {
-    const courses = sem.courses.map((course: string): DraggableCourse => {
-      const newCourse = {
-        id: new ObjectID(),
-        code: course,
-      };
-      return newCourse;
-    });
-    const semester: Semester = { code: sem.code, id: sem.id as unknown as ObjectID, courses };
-    return semester;
-  });
-}
 PlanDetailPage.auth = true;
-
-const usePlannerHooks = ({ planId }: { planId: string }) => {
-  const utils = trpc.useContext();
-  const router = useRouter();
-
-  // useMutation primitives
-  const deletePlan = trpc.plan.deletePlanById.useMutation({
-    async onSuccess() {
-      await utils.user.getUser.invalidate();
-    },
-  });
-
-  const handlePlanDelete = async () => {
-    try {
-      const deletedPlan = await deletePlan.mutateAsync(planId);
-      if (deletedPlan) {
-        router.push('/app/home');
-      }
-
-      // TODO: Handle delete error
-      router.push('/app/home');
-    } catch (error) {}
-  };
-  const handleBack = () => {
-    return router.push('/app/home');
-  };
-
-  return {
-    handlePlanDelete,
-    handleBack,
-  };
-};
