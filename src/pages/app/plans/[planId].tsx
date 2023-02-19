@@ -24,7 +24,14 @@ export default function PlanDetailPage(
 ): JSX.Element {
   const { planId } = props;
   const { plan, validation, isLoading, handlePlanDelete } = usePlan({ planId });
-  const { semesters, setSemesters } = useSemesters({ plan });
+  const {
+    semesters,
+    handleAddCourseToSemester,
+    handleAddYear,
+    handleMoveCourseFromSemesterToSemester,
+    handleRemoveCourseFromSemester,
+    handleRemoveYear,
+  } = useSemesters({ plan, planId });
 
   const [showTransfer, setShowTransfer] = useState(true);
 
@@ -78,9 +85,12 @@ export default function PlanDetailPage(
       <Planner
         degreeRequirements={degreeData}
         semesters={semesters}
-        planId={planId}
         showTransfer={showTransfer}
-        setSemesters={setSemesters}
+        handleAddCourseToSemester={handleAddCourseToSemester}
+        handleAddYear={handleAddYear}
+        handleMoveCourseFromSemesterToSemester={handleMoveCourseFromSemesterToSemester}
+        handleRemoveCourseFromSemester={handleRemoveCourseFromSemester}
+        handleRemoveYear={handleRemoveYear}
       />
       <button onClick={handlePlanDelete}>Delete</button>
     </div>
