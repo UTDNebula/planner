@@ -89,6 +89,7 @@ export default function Planner({
     () => semesters.flatMap((sem) => sem.courses).map((course) => course.code),
     [semesters],
   );
+
   const handleOnDragStart = ({ active }: { active: Active }) => {
     const originData = active.data.current as DragEventOriginData;
     setActiveCourse({ from: originData.from, course: originData.course });
@@ -101,26 +102,17 @@ export default function Planner({
       const originData = active.data.current as DragEventOriginData;
       const destinationData = over.data.current as DragEventDestinationData;
 
-      // from semester -> current semester
-      // attempting to drop semester course on current tile
-      if (
-        originData.from === 'semester-tile' &&
-        destinationData.to === 'semester-tile' &&
-        originData.semester.id === destinationData.semester.id
-      ) {
-        toast.warn(
-          `You're already taking ${originData.course.code} in ${originData.semester.code.year}${originData.semester.code.semester}`,
-        );
-        return;
-      }
-
       // from course list -> semester
       if (originData.from === 'course-list' && destinationData.to === 'semester-tile') {
         handleAddCourseToSemester(destinationData.semester, originData.course);
       }
 
       // from semester -> another semester
-      if (originData.from === 'semester-tile' && destinationData.to === 'semester-tile') {
+      if (
+        originData.from === 'semester-tile' &&
+        destinationData.to === 'semester-tile' &&
+        originData.semester.id !== destinationData.semester.id
+      ) {
         handleMoveCourseFromSemesterToSemester(
           originData.semester,
           destinationData.semester,
