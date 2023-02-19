@@ -28,6 +28,8 @@ export const customCourseSort = <T extends { code: string }>(courses: T[]): T[] 
       const c1IsLetter = c1.match('/[a-z]/i') !== null;
       const c2IsLetter = c1.match('/[a-z]/i') !== null;
 
+      if (c1 == c2) continue;
+
       if (c1IsLetter && c2IsLetter) {
         return c1 < c2 ? 1 : -1;
       } else {

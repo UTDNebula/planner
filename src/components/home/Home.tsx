@@ -1,6 +1,7 @@
 import AddIcon from '@mui/icons-material/Add';
 import { trpc } from '@utils/trpc';
 import React, { useState } from 'react';
+import Button from '../Button';
 
 import PlanCard from '../landing/PlanCard';
 import TemplateModal from '../template/Modal';
@@ -20,17 +21,14 @@ export default function PlansPage(): JSX.Element {
     <>
       <section className="flex h-full w-full flex-col gap-12 overflow-auto p-20">
         <h1 className="col-span-full">Home</h1>
-        <button
+        <Button
+          color="primary"
+          size="large"
           onClick={() => setOpenTemplateModal(true)}
-          className="col-span-full flex h-12 w-32 flex-row items-center justify-center rounded-xl bg-[#3E61ED] p-2 text-white"
+          icon={<AddIcon fontSize="inherit" />}
         >
-          <div className="flex flex-row items-center">
-            <div className="mr-2 flex flex-col items-center justify-center text-3xl">
-              <AddIcon fontSize="inherit" />
-            </div>
-            <div className="mr-2 text-xl">New</div> {/* Hacky css to make it look centered */}
-          </div>
-        </button>
+          New
+        </Button>
         <div className="flex w-fit flex-wrap gap-8">
           {data.plans.map((plan) => (
             <PlanCard

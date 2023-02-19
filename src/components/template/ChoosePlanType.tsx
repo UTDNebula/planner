@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import Button from '../credits/Button';
+import Button from '../Button';
 
 export default function ChoosePlanType({ setPage }: { setPage: Dispatch<SetStateAction<number>> }) {
   return (

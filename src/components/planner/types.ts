@@ -1,6 +1,11 @@
+import { RouterOutputs } from '@/utils/trpc';
 import { UniqueIdentifier } from '@dnd-kit/core';
 import { SemesterCode } from '@prisma/client';
 import { ObjectID } from 'bson';
+
+export type Plan = NonNullable<RouterOutputs['plan']['getPlanById']>['plan'];
+
+export type DegreeValidation = NonNullable<RouterOutputs['plan']['getPlanById']>['validation'];
 
 // Temporary semester type
 // TODO: Remove
