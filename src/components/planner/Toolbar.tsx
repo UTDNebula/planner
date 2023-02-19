@@ -4,6 +4,7 @@ import EditIcon from '@/icons/EditIcon';
 import { FC } from 'react';
 import Button from '../Button';
 import Toggle from '../Toggle';
+import SortByDropdown from './SortByDropdown';
 
 export interface ToolbarProps {
   title: string;
@@ -16,6 +17,7 @@ const Toolbar: FC<ToolbarProps> = ({ title, major }) => {
       <article className="flex justify-between">
         <h1 className="text-[36px] font-semibold text-primary-900">{title}</h1>
         <div className="flex gap-3">
+          <SortByDropdown />
           <Button size="large" icon={<AddFileIcon className="h-6 w-5" />} />
           <Button size="large" icon={<DownloadIcon />}>
             Export Degree Plan
