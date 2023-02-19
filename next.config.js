@@ -14,7 +14,7 @@ const nextConfig = withBundleAnalyzer({
     },
   },
   compiler: {
-    // removeConsole: true,
+    removeConsole: true,
   },
 });
 
