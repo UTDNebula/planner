@@ -378,8 +378,9 @@ export default function Planner({
         </DragOverlay>
 
         <section className="flex min-h-fit w-fit flex-col gap-y-6">
-          <Toolbar title="Plan Your Courses" />
-          <div className="grid h-auto w-fit grid-cols-3 gap-[32px]">
+          <Toolbar title="Plan Your Courses" major="Computer Science" />
+
+          <section className="grid h-auto w-fit grid-cols-3 gap-[32px]">
             {semesters.map((semester) => {
               // Get map of credits (faster to query later down the line)
               const creditsMap: {
@@ -455,7 +456,7 @@ export default function Planner({
               <button onClick={handleRemoveYear}>- Remove Year</button>
               <button onClick={handleAddYear}>+ Add Year</button>
             </div>
-          </div>
+          </section>
         </section>
       </div>
     </DndContext>
