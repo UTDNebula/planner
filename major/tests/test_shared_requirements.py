@@ -5,6 +5,7 @@ from requirements import (
     HoursRequirement,
     FreeElectiveRequirement,
     SelectRequirement,
+    PrefixBucketRequirement,
 )
 import json
 
@@ -202,8 +203,8 @@ def test_select_requirement() -> None:
     assert select_req.is_fulfilled() == True
 
 
-def test_prefix_requirement() -> None:
-    prefix_req = PrefixRequirement("CS")
+def test_prefix_bucket_requirement() -> None:
+    prefix_req = PrefixBucketRequirement("CS")
     assert prefix_req.filled == False
 
     prefix_req.attempt_fulfill("BCOM 1000")

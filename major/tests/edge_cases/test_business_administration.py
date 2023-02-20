@@ -4,6 +4,8 @@ from major.requirements.edge_cases.business_administration import (
 )
 import json
 
+from major.requirements.shared import PrefixBucketRequirement
+
 
 def test_major_guided_elective_requirement() -> None:
     req = BusinessAdministrationElectiveRequirement(
