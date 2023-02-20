@@ -1,12 +1,13 @@
 {
-  "abbreviation": "Business Analytics (BS)",
-  "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/business-analytics",
+  "abbreviation": "Information Technology and Systems (BS)",
+  "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/information-technology-systems",
   "minimum_credit_hours": 120,
-  "name": "Bachelor of Science in Business Analytics",
+  "name": "Bachelor of Science in Information Technology and Systems",
   "school": "Naveen Jindal School of Management",
   "subtype": "Major",
   "year": "2022-2023",
   "requirements": {
+    "core": "@import ./core.json",
     "major": [
       {
         "matcher": "CourseRequirement",
@@ -25,8 +26,17 @@
         "course": "MATH 1325"
       },
       {
-        "matcher": "CourseRequirement",
-        "course": "MATH 1326"
+        "matcher": "OrRequirement",
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "MATH 1326"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "OPRE 3340"
+          }
+        ]
       },
       {
         "matcher": "OrRequirement",
@@ -54,13 +64,28 @@
           }
         ]
       },
+
       {
         "matcher": "CourseRequirement",
         "course": "ITSS 3311"
       },
+
+      {
+        "matcher": "OrRequirement",
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "ITSS 3312"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ITSS 4381"
+          }
+        ]
+      },
       {
         "matcher": "SelectRequirement",
-        "required_course_count": 2,
+        "required_count": 2,
         "requirements": [
           {
             "matcher": "CourseRequirement",
@@ -131,30 +156,23 @@
         "matcher": "CourseRequirement",
         "course": "MKT 3300"
       },
+
       {
-        "matcher": "OrRequirement",
-        "requirements": [
-          {
-            "matcher": "CourseRequirement",
-            "course": "IMS 4335"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "ENTP 4340"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "MKT 4360"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "BA 4095"
-          }
-        ]
+        "matcher": "CourseRequirement",
+        "course": "BA 4095"
       },
+
       {
         "matcher": "CourseRequirement",
         "course": "ITSS 4300"
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "ITSS 4330"
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "ITSS 4360"
       },
       {
         "matcher": "CourseRequirement",
@@ -162,38 +180,27 @@
       },
       {
         "matcher": "CourseRequirement",
-        "course": "ITSS 4352"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "ITSS 4353"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "ITSS 4354"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "ITSS 4355"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "ITSS 4380"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "ITSS 4381"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "BUAN 4395"
+        "course": "ITSS 4370"
       },
       {
         "matcher": "OrRequirement",
         "requirements": [
           {
             "matcher": "CourseRequirement",
-            "course": "BUAN 4090"
+            "course": "ITSS 4395"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "BPS 4395"
+          }
+        ]
+      },
+      {
+        "matcher": "OrRequirement",
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "ITSS 4090"
           },
           {
             "matcher": "CourseRequirement",
@@ -206,103 +213,110 @@
         "requirements": [
           {
             "matcher": "HoursRequirement",
-            "required_hours": 9,
+            "required_hours": 12,
             "requirements": [
               {
                 "matcher": "CourseRequirement",
-                "course": "MKT 4330"
+                "course": "ITSS 4352"
               },
               {
                 "matcher": "CourseRequirement",
-                "course": "MKT 4331"
+                "course": "ITSS 4353"
               },
               {
                 "matcher": "CourseRequirement",
-                "course": "MKT 4334"
+                "course": "ITSS 4354"
               },
               {
                 "matcher": "CourseRequirement",
-                "course": "MKT 4337"
+                "course": "ITSS 4355"
               }
             ]
           },
           {
             "matcher": "HoursRequirement",
-            "required_hours": 9,
+            "required_hours": 12,
             "requirements": [
-              {
-                "matcher": "CourseRequirement",
-                "course": "OPRE 3320"
-              },
-              {
-                "matcher": "CourseRequirement",
-                "course": "OPRE 4320"
-              },
-              {
-                "matcher": "CourseRequirement",
-                "course": "OPRE 4330"
-              },
-              {
-                "matcher": "CourseRequirement",
-                "course": "OPRE 4350"
-              },
-              {
-                "matcher": "CourseRequirement",
-                "course": "OPRE 4357"
-              }
-            ]
-          },
-          {
-            "matcher": "HoursRequirement",
-            "required_hours": 9,
-            "requirements": [
-              {
-                "matcher": "CourseRequirement",
-                "course": "FIN 3370"
-              },
-              {
-                "matcher": "CourseRequirement",
-                "course": "FIN 3390"
-              },
-              {
-                "matcher": "CourseRequirement",
-                "course": "FIN 4338"
-              },
-              {
-                "matcher": "CourseRequirement",
-                "course": "FIN 4345"
-              }
-            ]
-          },
-          {
-            "matcher": "HoursRequirement",
-            "required_hours": 9,
-            "requirements": [
-              {
-                "matcher": "CourseRequirement",
-                "course": "ITSS 4330"
-              },
               {
                 "matcher": "CourseRequirement",
                 "course": "ITSS 4340"
               },
               {
                 "matcher": "CourseRequirement",
+                "course": "ITSS 4343"
+              },
+              {
+                "matcher": "CourseRequirement",
                 "course": "ITSS 4344"
               },
               {
-                "matcher": "CourseRequirement",
-                "course": "ITSS 4356"
-              },
-              {
-                "matcher": "CourseRequirement",
-                "course": "ITSS 4360"
+                "matcher": "OrRequirement",
+                "requirements": [
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "ACCT 4342"
+                  },
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "ACCT 3322"
+                  }
+                ]
               }
             ]
           },
           {
             "matcher": "HoursRequirement",
-            "required_hours": 9,
+            "required_hours": 12,
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "ITSS 4340"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MKT 3330"
+              },
+
+              {
+                "matcher": "OrRequirement",
+                "requirements": [
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "MKT 4331"
+                  },
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "MKT 4332"
+                  }
+                ]
+              },
+              {
+                "matcher": "PrefixBucketRequirement",
+                "prefix": "ITSS"
+              }
+            ]
+          },
+          {
+            "matcher": "HoursRequirement",
+            "required_hours": 12,
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "ENTP 3301"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ENTP 3320"
+              },
+              {
+                "matcher": "PrefixBucketRequirement",
+                "prefix": "ITSS"
+              }
+            ]
+          },
+          {
+            "matcher": "HoursRequirement",
+            "required_hours": 12,
             "requirements": [
               {
                 "matcher": "CourseRequirement",
@@ -310,23 +324,34 @@
               },
               {
                 "matcher": "CourseRequirement",
-                "course": "ITSS 4382"
+                "course": "ITSS 4361"
               },
               {
                 "matcher": "CourseRequirement",
-                "course": "ITSS 4383"
+                "course": "ITSS 4362"
               },
               {
-                "matcher": "CourseRequirement",
-                "course": "MECO 4352"
-              },
+                "matcher": "PrefixBucketRequirement",
+                "prefix": "ITSS"
+              }
+            ]
+          },
+          {
+            "matcher": "HoursRequirement",
+            "required_hours": 12,
+            "requirements": [
               {
-                "matcher": "CourseRequirement",
-                "course": "MECO 4370"
+                "matcher": "PrefixBucketRequirement",
+                "prefix": "ITSS"
               }
             ]
           }
         ]
+      },
+      {
+        "matcher": "FreeElectiveRequirement",
+        "required_hours": 0,
+        "excluded_courses": []
       }
     ]
   }

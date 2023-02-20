@@ -1,8 +1,8 @@
 {
-  "abbreviation": "Business Administration (BS)",
-  "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/business-administration",
+  "abbreviation": "Marketing (BS)",
+  "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/marketing",
   "minimum_credit_hours": 120,
-  "name": "Bachelor of Science in Business Administration",
+  "name": "Bachelor of Science in Marketing",
   "school": "Naveen Jindal School of Management",
   "subtype": "Major",
   "year": "2022-2023",
@@ -40,7 +40,7 @@
       },
       {
         "matcher": "SelectRequirement",
-        "required_course_count": 2,
+        "required_count": 2,
         "requirements": [
           {
             "matcher": "CourseRequirement",
@@ -60,7 +60,6 @@
           }
         ]
       },
-
       {
         "matcher": "OrRequirement",
         "requirements": [
@@ -81,10 +80,6 @@
       },
       {
         "matcher": "CourseRequirement",
-        "course": "BA 3300"
-      },
-      {
-        "matcher": "CourseRequirement",
         "course": "IMS 3310"
       },
       {
@@ -100,44 +95,45 @@
         "course": "OPRE 3310"
       },
       {
-        "matcher": "CourseRequirement",
-        "course": "OPRE 3330"
-      },
-
-      {
         "matcher": "OrRequirement",
         "requirements": [
           {
             "matcher": "CourseRequirement",
-            "course": "OBHR 3310"
+            "course": "OBHR 3330"
           },
           {
             "matcher": "CourseRequirement",
-            "course": "OBHR 3330"
+            "course": "OBHR 3310"
           }
         ]
       },
-
       {
         "matcher": "CourseRequirement",
         "course": "MKT 3300"
       },
       {
-        "matcher": "OrRequirement",
-        "requirements": [
-          {
-            "matcher": "CourseRequirement",
-            "course": "BPS 4305"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "ENTP 3320"
-          }
-        ]
+        "matcher": "CourseRequirement",
+        "course": "MKT 3340"
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "MKT 4330"
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "MKT 3330"
       },
       {
         "matcher": "OrRequirement",
         "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "MKT 4395"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ENTP 3320"
+          },
           {
             "matcher": "CourseRequirement",
             "course": "BPS 4395"
@@ -145,6 +141,23 @@
           {
             "matcher": "CourseRequirement",
             "course": "ENTP 4395"
+          }
+        ]
+      },
+      {
+        "matcher": "OrRequirement",
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "MKT 4V90"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MKT 4090"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "BA 4090"
           }
         ]
       },
@@ -169,112 +182,108 @@
           }
         ]
       },
-
       {
-        "matcher": "CourseRequirement",
-        "course": "ENTP 3301"
-      },
-      {
-        "matcher": "OrRequirement",
+        "matcher": "HoursRequirement",
+        "required_hours": 12,
         "requirements": [
           {
             "matcher": "CourseRequirement",
-            "course": "BA 4V90"
+            "course": "MKT 3320"
           },
           {
             "matcher": "CourseRequirement",
-            "course": "BA 4090"
-          }
-        ]
-      },
-
-      {
-        "matcher": "BA_ElectiveRequirement",
-        "required_count": 3,
-        "required_hours": 15,
-        "prefix_groups": [
+            "course": "MKT 3331"
+          },
           {
-            "matcher": "OrRequirement",
-            "requirements": [
-              {
-                "matcher": "PrefixRequirement",
-                "prefix": "MKT"
-              }
-            ]
+            "matcher": "CourseRequirement",
+            "course": "MKT 4331"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MKT 4332"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MKT 4333"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MKT 4334"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MKT 4335"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MKT 4336"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MKT 4337"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MKT 4338"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MKT 4339"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MKT 4340"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MKT 4341"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MKT 4350"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MKT 4360"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MKT 4370"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MKT 4390"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MKT 4V83"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MKT 4V90"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MKT 4V93"
           },
           {
             "matcher": "OrRequirement",
             "requirements": [
               {
-                "matcher": "PrefixRequirement",
-                "prefix": "ACCT"
+                "matcher": "CourseRequirement",
+                "course": "ENTP 3301"
               },
               {
-                "matcher": "PrefixRequirement",
-                "prefix": "ENGY"
+                "matcher": "CourseRequirement",
+                "course": "ENTP 4311"
               },
               {
-                "matcher": "PrefixRequirement",
-                "prefix": "FIN"
+                "matcher": "CourseRequirement",
+                "course": "ENTP 4340"
               },
               {
-                "matcher": "PrefixRequirement",
-                "prefix": "MECO"
-              },
-              {
-                "matcher": "PrefixRequirement",
-                "prefix": "REAL"
-              },
-              {
-                "matcher": "PrefixRequirement",
-                "prefix": "RMIS"
-              }
-            ]
-          },
-          {
-            "matcher": "OrRequirement",
-            "requirements": [
-              {
-                "matcher": "PrefixRequirement",
-                "prefix": "ITSS"
-              }
-            ]
-          },
-          {
-            "matcher": "OrRequirement",
-            "requirements": [
-              {
-                "matcher": "PrefixRequirement",
-                "prefix": "BA"
-              },
-              {
-                "matcher": "PrefixRequirement",
-                "prefix": "BCOM"
-              },
-              {
-                "matcher": "PrefixRequirement",
-                "prefix": "BPS"
-              },
-              {
-                "matcher": "PrefixRequirement",
-                "prefix": "BLAW"
-              },
-              {
-                "matcher": "PrefixRequirement",
-                "prefix": "HMGT"
-              },
-              {
-                "matcher": "PrefixRequirement",
-                "prefix": "IMS"
-              }
-            ]
-          },
-          {
-            "matcher": "OrRequirement",
-            "requirements": [
-              {
-                "matcher": "PrefixRequirement",
-                "prefix": "OPRE"
+                "matcher": "CourseRequirement",
+                "course": "IMS 4310"
               }
             ]
           }
@@ -282,7 +291,7 @@
       },
       {
         "matcher": "FreeElectiveRequirement",
-        "required_hours": 3,
+        "required_hours": 18,
         "excluded_courses": []
       }
     ]

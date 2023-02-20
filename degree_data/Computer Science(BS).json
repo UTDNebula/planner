@@ -1,0 +1,227 @@
+{
+  "abbreviation": "Computer Science (BS)",
+  "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ecs/computer-science",
+  "minimum_credit_hours": 124,
+  "name": "Bachelor of Science in Computer Science",
+  "school": "Erik Jonsson School of Engineering and Computer Science",
+  "subtype": "Major",
+  "year": "2022-2023",
+  "requirements": {
+    "core": "@import ./core.json",
+    "major": [
+      {
+        "matcher": "AndRequirement",
+        "metadata": { "name": "Major Preparatory Courses" },
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "ECS 1100"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 1200"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 1136"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 1336"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 1337"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 2305"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 2336"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 2340"
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "AndRequirement",
+                "metadata": {},
+                "requirements": [
+                  { "matcher": "CourseRequirement", "course": "MATH 2413" },
+                  { "matcher": "CourseRequirement", "course": "MATH 2414" }
+                ]
+              },
+              {
+                "matcher": "AndRequirement",
+                "metadata": {},
+                "requirements": [
+                  { "matcher": "CourseRequirement", "course": "MATH 2417" },
+                  { "matcher": "CourseRequirement", "course": "MATH 2419" }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MATH 2418"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "PHYS 2125"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "PHYS 2126"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "PHYS 2325"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "PHYS 2326"
+          }
+        ]
+      },
+      {
+        "matcher": "AndRequirement",
+        "metadata": {
+          "name": "Major Core Courses"
+        },
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 3162"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 3305"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 3341"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 3345"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 3354"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 3377"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ECS 3390"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4141"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4337"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4341"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4347"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4348"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4349"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4384"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4485"
+          }
+        ]
+      },
+      {
+        "matcher": "CSGuidedElectiveRequirement",
+        "required_count": 3,
+        "starts_with": "CS 43",
+        "also_fulfills": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 4325"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "SE 4351"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "SE 4352"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "SE 4367"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "SE 4381"
+          }
+        ]
+      },
+      {
+        "matcher": "FreeElectiveRequirement",
+        "required_hours": 10,
+        "excluded_courses": [
+          "ECS 3390",
+          "MATH 2413",
+          "MATH 2417",
+          "MATH 2414",
+          "MATH 2419",
+          "PHYS 2325",
+          "PHYS 2421",
+          "CS 1136",
+          "CS 1336",
+          "CS 1337",
+          "CS 2305",
+          "CS 2336",
+          "CS 2337",
+          "CS 2340",
+          "MATH 2418",
+          "PHYS 2125",
+          "PHYS 2126",
+          "ECS 1100",
+          "CS 1200",
+          "CS 3305",
+          "CS 4337",
+          "CS 4349",
+          "CS 4384",
+          "CS 4485",
+          "CS 3341",
+          "CS 3345",
+          "CS 3354",
+          "CS 4141",
+          "CS 4348",
+          "CS 4341",
+          "CS 3377",
+          "CS 4347",
+          "CS 3162"
+        ]
+      }
+    ]
+  }
+}

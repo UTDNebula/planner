@@ -1,8 +1,8 @@
 {
-  "abbreviation": "Finance (BS)",
-  "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/finance",
+  "abbreviation": "Supply Chain Management (BS)",
+  "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/supply-chain-management",
   "minimum_credit_hours": 120,
-  "name": "Bachelor of Science in Finance",
+  "name": "Bachelor of Science in Supply Chain Management",
   "school": "Naveen Jindal School of Management",
   "subtype": "Major",
   "year": "2022-2023",
@@ -43,11 +43,11 @@
         "requirements": [
           {
             "matcher": "CourseRequirement",
-            "course": "MATH 2333"
+            "course": "OPRE 3333"
           },
           {
             "matcher": "CourseRequirement",
-            "course": "OPRE 3333"
+            "course": "MATH 2333"
           }
         ]
       },
@@ -61,16 +61,12 @@
           {
             "matcher": "CourseRequirement",
             "course": "STAT 3360"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "STAT 4351"
           }
         ]
       },
       {
         "matcher": "SelectRequirement",
-        "required_course_count": 2,
+        "required_count": 2,
         "requirements": [
           {
             "matcher": "CourseRequirement",
@@ -142,35 +138,11 @@
         "course": "MKT 3300"
       },
       {
-        "matcher": "CourseRequirement",
-        "course": "FIN 3390"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "FIN 4300"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "FIN 4310"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "FIN 4395"
-      },
-      {
         "matcher": "OrRequirement",
         "requirements": [
           {
             "matcher": "CourseRequirement",
-            "course": "FIN 4328"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "FIN 4333"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "FIN 4380"
+            "course": "OPRE 4395"
           },
           {
             "matcher": "CourseRequirement",
@@ -183,15 +155,49 @@
         ]
       },
       {
+        "matcher": "SelectRequirement",
+        "required_count": 6,
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "OPRE 3320"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "OPRE 3330"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "OPRE 4310"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "OPRE 4320"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "OPRE 4330"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "OPRE 4340"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "OPRE 4362"
+          }
+        ]
+      },
+      {
         "matcher": "OrRequirement",
         "requirements": [
           {
             "matcher": "CourseRequirement",
-            "course": "FIN 4V80"
+            "course": "OPRE 4V90"
           },
           {
             "matcher": "CourseRequirement",
-            "course": "FIN 4080"
+            "course": "OPRE 4090"
           },
           {
             "matcher": "CourseRequirement",
@@ -222,15 +228,15 @@
       },
       {
         "matcher": "HoursRequirement",
-        "required_hours": 21,
+        "required_hours": 12,
         "requirements": [
           {
             "matcher": "CourseRequirement",
-            "course": "FIN 4V80"
+            "course": "OPRE 4V90"
           },
           {
             "matcher": "CourseRequirement",
-            "course": "FIN 4080"
+            "course": "OPRE 4090"
           },
           {
             "matcher": "CourseRequirement",
@@ -254,174 +260,58 @@
           },
           {
             "matcher": "CourseRequirement",
-            "course": "FIN 3305"
+            "course": "OPRE 4350"
           },
           {
             "matcher": "CourseRequirement",
-            "course": "FIN 3330"
+            "course": "OPRE 4357"
           },
           {
             "matcher": "CourseRequirement",
-            "course": "FIN 3340"
+            "course": "ITSS 4340"
           },
           {
             "matcher": "CourseRequirement",
-            "course": "FIN 3350"
+            "course": "MKT 4330"
           },
           {
             "matcher": "CourseRequirement",
-            "course": "FIN 3360"
+            "course": "MKT 3330"
           },
           {
             "matcher": "CourseRequirement",
-            "course": "FIN 3365"
+            "course": "OBHR 4352"
           },
           {
             "matcher": "CourseRequirement",
-            "course": "FIN 3370"
+            "course": "MKT 3320"
           },
           {
             "matcher": "CourseRequirement",
-            "course": "FIN 3380"
+            "course": "OPRE 4355"
           },
           {
             "matcher": "CourseRequirement",
-            "course": "FIN 3395"
+            "course": "OPRE 4345"
           },
           {
             "matcher": "CourseRequirement",
-            "course": "FIN 4303"
+            "course": "IMS 4310"
           },
           {
             "matcher": "CourseRequirement",
-            "course": "FIN 4305"
+            "course": "BPS 4305"
           },
           {
             "matcher": "CourseRequirement",
-            "course": "FIN 4307"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "FIN 4313"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "FIN 4315"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "FIN 4320"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "FIN 4321"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "FIN 4328"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "FIN 4330"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "FIN 4333"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "FIN 4335"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "FIN 4336"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "FIN 4337"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "FIN 4338"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "FIN 4340"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "FIN 4345"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "FIN 4380"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "FIN 4390"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "FIN 4399"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "FIN 4V90"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "FIN 4V99"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "MECO 3360"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "MECO 3361"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "MECO 4352"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "RMIS 3375"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "RMIS 4331"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "RMIS 4332"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "RMIS 4333"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "RMIS 4334"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "RMIS 4336"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "RMIS 4338"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "ENTP 4V00"
-          },
-          {
-            "matcher": "FreeElectiveRequirement",
-            "required_hours": 3,
-            "excluded_courses": []
+            "course": "OPRE 4362"
           }
         ]
+      },
+      {
+        "matcher": "FreeElectiveRequirement",
+        "required_hours": 3,
+        "excluded_courses": []
       }
     ]
   }

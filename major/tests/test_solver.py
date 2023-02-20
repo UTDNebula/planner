@@ -84,7 +84,7 @@ def test_computer_science_solver() -> None:
         "DEF 9199",
     ]
 
-    data = json.loads(open("degree_data/computer_science.json", "r").read())
+    data = json.loads(open("degree_data/Computer Science(BS).json", "r").read())
 
     requirements_data = data["requirements"]["major"]
 
@@ -176,7 +176,7 @@ def test_accounting_solver() -> None:
         "MKT 4360",
     ]
 
-    data = json.loads(open("degree_data/accounting.json", "r").read())
+    data = json.loads(open("degree_data/Accounting(BS).json", "r").read())
 
     requirements_data = data["requirements"]["major"]
 

@@ -5,7 +5,7 @@ from major.requirements import (
     HoursRequirement,
     FreeElectiveRequirement,
     SelectRequirement,
-    PrefixRequirement,
+    PrefixBucketRequirement,
 )
 import json
 
@@ -142,6 +142,31 @@ def test_hours_requirement() -> None:
     assert hours_req.fulfilled_hours == 12
     assert hours_req.is_fulfilled() == True
 
+    data = json.loads(
+        """
+        {
+            "matcher": "HoursRequirement",
+            "required_hours": 3,
+            "requirements": [  
+                {
+                    "matcher": "CourseRequirement",
+                    "course": "HIST 1301"
+                },
+                {
+                    "matcher": "CourseRequirement",
+                    "course": "HIST 1302"
+                }
+            ]
+        }
+        """
+    )
+
+    hours_req = HoursRequirement.from_json(data)
+    hours_req.attempt_fulfill("HIST 1301")
+
+    assert hours_req.fulfilled_hours == 3
+    assert hours_req.is_fulfilled() == True
+
 
 def test_free_elective_requirement() -> None:
     free_elective_req = FreeElectiveRequirement(10, ["HIST 1301", "HIST 1302"])
@@ -202,9 +227,38 @@ def test_select_requirement() -> None:
     assert select_req.fulfilled_count == 2
     assert select_req.is_fulfilled() == True
 
+    data = json.loads(
+        """
+        {
+            "matcher": "SelectRequirement",
+            "required_count": 2,
+            "requirements": [
+                {
+                    "matcher": "CourseRequirement",
+                    "course": "HIST 1301"
+                },
+                {
+                    "matcher": "CourseRequirement",
+                    "course": "HIST 1302"
+                },
+                {
+                    "matcher": "CourseRequirement",
+                    "course": "HIST 3301"
+                }
+            ]
+        }
+        """
+    )
 
-def test_prefix_requirement() -> None:
-    prefix_req = PrefixRequirement("CS")
+    select_req = SelectRequirement.from_json(data)
+
+    assert select_req.attempt_fulfill("HIST 1301")
+    assert select_req.is_fulfilled() == False
+    assert select_req.fulfilled_count == 1
+
+
+def test_prefix_bucket_requirement() -> None:
+    prefix_req = PrefixBucketRequirement("CS")
     assert prefix_req.filled == False
 
     prefix_req.attempt_fulfill("BCOM 1000")

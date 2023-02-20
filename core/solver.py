@@ -53,6 +53,7 @@ class AssignmentStore:
         return unfilled_reqs
 
     def can_graduate(self):
+        print([req[0] for req in self.get_unfilled_reqs()], "R")
         return len(self.get_unfilled_reqs()) == 0
 
     def to_json(self):
@@ -60,8 +61,8 @@ class AssignmentStore:
             req.name: {
                 "courses": list_matcher_requirements(req.course_matcher),
                 "hours": req.hours,
-                "isfilled": self._get_req_hours_filled(req) >= req.hours,
-                "validCourses": [c.name for c in req_fills.keys()],
+                "filled": self._get_req_hours_filled(req) >= req.hours,
+                "valid_courses": {c.name: hours for c, hours in req_fills.items()},
             }
             for req, req_fills in self.reqs_to_courses.items()
         }
@@ -255,7 +256,16 @@ class GraduationRequirementsSolver:
         # Ensure requirements are valid
         self.validate()
 
-    def solve(self, courses: list[Course], bypasses: list[SingleAssignment]):
+    def solve(self, courses: list[str], bypasses: list[SingleAssignment]):
+        # Convert list of str into list of courses
+        newCourses = []
+        for course in courses:
+            sub_prefix, course_num = course.split(" ")
+            newCourses.append(
+                Course(course, int(course_num[0]), int(course_num[1]), sub_prefix)
+            )
+        courses = newCourses
+
         # Pre-process bypasses into an assignment, and validate them
         bypass_assignments = AssignmentStore()
         courses_dict: dict[str, Course] = {course.name: course for course in courses}
