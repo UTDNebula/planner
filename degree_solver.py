@@ -112,7 +112,7 @@ class DegreeRequirementsSolver:
     def solve(self) -> DegreeRequirementsSolver:
         # Run for major
         if self.validate_core:
-            core_solver = self.load_core()  # type: ignore
+            core_solver = self.load_core()
             self.solved_core = core_solver.solve(
                 [course for course in self.courses], []
             )  # Convert to list
@@ -146,7 +146,6 @@ class DegreeRequirementsSolver:
             and self.solved_core.can_graduate()
         )
 
-    # TODO: Figure out how to clean up json tings
     def to_json(cls) -> Json:
         degree_reqs = []
         # Add core first
@@ -171,19 +170,8 @@ class DegreeRequirementsSolver:
             }
         )
 
-    # def to_json(self) -> DegreeRequirementOutput:
-    #     return {
-    #         req.name: {
-    #             "courses": list_matcher_requirements(req.course_matcher),
-    #             "hours": req.hours,
-    #             "isfilled": self._get_req_hours_filled(req) >= req.hours,
-    #             "validCourses": [c.name for c in req_fills.keys()],
-    #         }
-    #         for req, req_fills in self.requirements
-    #     }
-
     def __str__(self) -> str:
-        return "\n".join(str(req) for req in self.requirements)
+        return "\n".join(str(req) for req in self.degree_requirements)
 
 
 @dataclass
@@ -215,7 +203,7 @@ def format_core_reqs(reqs: dict[str, dict[str, Any]]) -> list[AbstractRequiremen
         valid_courses = req_info["valid_courses"]
 
         # Create AndRequirement
-        core_req = HoursRequirement(
+        core_req: AbstractRequirement = HoursRequirement(
             req_info["hours"],
             [
                 CourseRequirement(course, course in valid_courses.keys())
