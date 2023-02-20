@@ -5,7 +5,7 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import DataGrid from '../credits/DataGrid';
 import CloseIcon from '@mui/icons-material/Close';
 import SearchBar from '../credits/SearchBar';
-import Button from '../credits/Button';
+import Button from '../Button';
 
 export default function TemplateView({ setPage }: { setPage: Dispatch<SetStateAction<number>> }) {
   const utils = trpc.useContext();

@@ -29,17 +29,19 @@ export const SemesterCourseItem = forwardRef<HTMLDivElement, SemesterCourseItemP
       <div
         ref={ref}
         {...props}
-        data-tip="delete here"
-        className={`tooltip tooltip-left flex h-[40px] w-full flex-row items-center justify-between rounded-md py-[1px] px-[8px] shadow-md  ${
-          isValid ? 'border-[1px] border-red-500' : ''
-        }`}
+        data-tip="Drag!"
+        className={`tooltip tooltip-left flex h-[40px] w-full items-center justify-between overflow-hidden rounded-md border border-neutral-200 bg-generic-white py-4 px-5`}
       >
-        <span className="text-[16px] text-[#1C2A6D]">
-          <DragIndicatorIcon fontSize="inherit" className="mr-3 text-[16px] text-[#D4D4D4]" />
-          {course.code}
-        </span>
+        <div className="flex items-center gap-x-3">
+          <DragIndicatorIcon fontSize="inherit" className="text-[16px] text-neutral-300" />
+          <input
+            type="checkbox"
+            className="checkbox-primary checkbox h-5 w-5 rounded-[3.5px] border-1.25 border-neutral-300 bg-generic-white accent-primary"
+          />
+          <span className="text-[16px] text-[#1C2A6D]">{course.code}</span>
+        </div>
 
-        <div className="flex  text-[12px] font-semibold">
+        <div className="flex text-[12px] font-semibold">
           {course.taken && (
             <span className=" tooltip text-[#22C55E]" data-tip="Completed">
               <CheckIcon fontSize="small" />
@@ -56,14 +58,6 @@ export const SemesterCourseItem = forwardRef<HTMLDivElement, SemesterCourseItemP
             </div>
           )}
         </div>
-        {/* <div
-          onClick={(e) => {
-            e.stopPropagation();
-            onRemove && onRemove(course);
-          }}
-        >
-          <CloseIcon className="self-end" fontSize="small" />
-        </div> */}
       </div>
     );
   },

@@ -3,7 +3,7 @@ import { FormControl, InputLabel, Switch } from '@mui/material';
 import { SemesterCode, SemesterType } from '@prisma/client';
 import React, { useMemo, useState } from 'react';
 import AutoCompleteSearchBar from '@/components/credits/AutoCompleteSearchBar';
-import Button from '@/components/credits/Button';
+import Button from '@/components/Button';
 import DataGrid from '@/components/credits/DataGrid';
 import AddIcon from '@mui/icons-material/Add';
 import DropdownSelect from '@/components/credits/DropdownSelect';

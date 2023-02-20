@@ -4,112 +4,42 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 module.exports = {
   content: ['./src/pages/**/*.{js,ts,jsx,tsx}', './src/components/**/*.{js,ts,jsx,tsx}'],
   theme: {
+    borderWidth: {
+      DEFAULT: '1px',
+      1.25: '1.25px',
+      2: '2px',
+    },
     extend: {
       colors: {
-        defaultText: '#1C2A6D', // use this as override if text color not working
-        general: {
-          primary: '#4659A7',
-          secondary: '#BCC9FD',
-          accentOne: '#FBBB78',
-          accentTwo: '#A7EDE9',
+        generic: {
+          white: '#FFFFFF',
+          black: '#000000',
         },
         primary: {
-          light: '#BCC9FD',
-          DEFAULT: '#7486CE',
-          dark: '#4659A7',
+          50: 'var(--color-primary-50)',
+          100: 'var(--color-primary-100)',
+          200: 'var(--color-primary-200)',
+          300: 'var(--color-primary-300)',
+          400: 'var(--color-primary-400)',
+          DEFAULT: 'var(--color-primary-500)',
+          500: 'var(--color-primary-500)',
+          600: 'var(--color-primary-600)',
+          700: 'var(--color-primary-700)',
+          800: 'var(--color-primary-800)',
+          900: 'var(--color-primary-900)',
         },
-        secondary1: {
-          light: '#FFE2C5',
-          DEFAULT: '#FFCF9D',
-          dark: '#FBBB78',
+        neutral: {
+          50: 'var(--color-neutral-50)',
+          100: 'var(--color-neutral-100)',
+          200: 'var(--color-neutral-200)',
+          300: 'var(--color-neutral-300)',
+          400: 'var(--color-neutral-400)',
+          500: 'var(--color-neutral-500)',
+          600: 'var(--color-neutral-600)',
+          700: 'var(--color-neutral-700)',
+          800: 'var(--color-neutral-800)',
+          900: 'var(--color-neutral-900)',
         },
-        secondary2: {
-          light: '#A7EDE9',
-          DEFAULT: '#69CCC6',
-          dark: '#4BA6A0',
-        },
-      },
-      fontSize: {
-        headline1: [
-          '96px',
-          {
-            letterSpacing: '-1.5px',
-          },
-        ],
-        headline2: [
-          '60px',
-          {
-            letterSpacing: '-0.5px',
-          },
-        ],
-        headline3: [
-          '48px',
-          {
-            letterSpacing: '0px',
-          },
-        ],
-        headline4: [
-          '34px',
-          {
-            letterSpacing: '0.25px',
-          },
-        ],
-
-        headline5: [
-          '24px',
-          {
-            letterSpacing: '0px',
-          },
-        ],
-
-        headline6: [
-          '20px',
-          {
-            letterSpacing: '0.15px',
-          },
-        ],
-        subtitle1: [
-          '16px',
-          {
-            letterSpacing: '0.15px',
-          },
-        ],
-        subtitle2: [
-          '14px',
-          {
-            letterSpacing: '0.1px',
-          },
-        ],
-        body1: [
-          '16px',
-          {
-            letterSpacing: '0.5px',
-          },
-        ],
-        body2: [
-          '14px',
-          {
-            letterSpacing: '0.25px',
-          },
-        ],
-        button: [
-          '14px',
-          {
-            letterSpacing: '1.25px',
-          },
-        ],
-        caption: [
-          '12px',
-          {
-            letterSpacing: '0.4px',
-          },
-        ],
-        overline: [
-          '10px',
-          {
-            letterSpacing: '1.5px',
-          },
-        ],
       },
       keyframes: {
         fadeInTwo: {
@@ -123,6 +53,26 @@ module.exports = {
         fadeDown: {
           '0%': { transform: 'translateY(-1rem)', opacity: '0' },
           '100%': { transform: 'translateX(0)', opacity: '100' },
+        },
+        slideUpAndFade: {
+          '0%': {
+            opacity: 0,
+            transform: 'translateY(2px)',
+          },
+          '100%': {
+            opacity: 1,
+            transform: 'translateY(0)',
+          },
+        },
+        slideLeftAndFade: {
+          '0%': {
+            opacity: 0,
+            transform: 'translateX(2px)',
+          },
+          '100%': {
+            opacity: 1,
+            transform: 'translateX(0)',
+          },
         },
       },
       animation: {
