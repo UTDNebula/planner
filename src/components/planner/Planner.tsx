@@ -41,7 +41,6 @@ import { DegreeRequirements } from './Sidebar/types';
 
 import Toolbar from './Toolbar';
 
-
 /** PlannerTool Props */
 export interface PlannerProps {
   degreeRequirements: DegreeRequirements;
