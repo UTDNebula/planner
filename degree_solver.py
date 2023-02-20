@@ -205,7 +205,7 @@ class DegreeRequirementsSolver:
         for degree_req in cls.degree_requirements:
             degree_reqs.append(json.loads(degree_req.to_json()))
 
-        degree_reqs_output: DegreeRequirementsSolverOutput = {
+        degree_reqs_output = {
             "can_graduate": cls.can_graduate(),
             "requirements": degree_reqs,
         }
