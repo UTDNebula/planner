@@ -66,7 +66,7 @@
       },
       {
         "matcher": "SelectRequirement",
-        "required_course_count": 2,
+        "required_count": 2,
         "requirements": [
           {
             "matcher": "CourseRequirement",
@@ -156,7 +156,7 @@
       },
       {
         "matcher": "SelectRequirement",
-        "required_course_count": 6,
+        "required_count": 6,
         "requirements": [
           {
             "matcher": "CourseRequirement",

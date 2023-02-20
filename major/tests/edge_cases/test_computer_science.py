@@ -30,7 +30,7 @@ def test_major_guided_elective_requirement() -> None:
         """
         {
             "matcher": "MajorGuidedElectiveRequirement",
-            "required_course_count": 3,
+            "required_count": 3,
             "starts_with": "CS 43",
             "also_fulfills": [
                 {
