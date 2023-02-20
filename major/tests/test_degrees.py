@@ -4,7 +4,7 @@ import json
 
 # just make sure none of the matchers throw an error
 def test_computer_science() -> None:
-    data = json.loads(open("./degree_data/computer_science.json", "r").read())
+    data = json.loads(open("./degree_data/Computer Science(BS).json", "r").read())
 
     requirements = data["requirements"]["major"]
 
@@ -14,7 +14,7 @@ def test_computer_science() -> None:
 
 
 def test_accounting() -> None:
-    data = json.loads(open("./degree_data/accounting.json", "r").read())
+    data = json.loads(open("./degree_data/Accounting(BS).json", "r").read())
 
     requirements = data["requirements"]["major"]
 
