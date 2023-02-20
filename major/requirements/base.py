@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 from abc import abstractmethod, ABC
-import json
+from dataclasses import dataclass
 
 from typing import Any
+
+from pydantic import Json
 
 
 class AbstractRequirement(ABC):
@@ -21,6 +23,10 @@ class AbstractRequirement(ABC):
     def is_fulfilled(self) -> bool:
         pass
 
+    @dataclass
+    class JSON(ABC):
+        matcher: str
+
     @classmethod
     @abstractmethod
     def from_json(cls, json: Any) -> AbstractRequirement:
@@ -29,9 +35,8 @@ class AbstractRequirement(ABC):
         """
         pass
 
-    @classmethod
     @abstractmethod
-    def to_json(self) -> json:
+    def to_json(self) -> Json:
         """Converts the requirement into JSON-serializable format
         Includes all the attributes within a Requirement class
         """
