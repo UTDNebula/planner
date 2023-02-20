@@ -40,7 +40,7 @@ class MajorGuidedElectiveRequirement(AbstractRequirement):
         self.starts_with = starts_with
         self.also_fulfills = also_fulfills
         self.fulfilled_count = 0
-        self.valid_courses: dict[str:int] = {}
+        self.valid_courses: dict[str, int] = {}
 
     def attempt_fulfill(self, course: str) -> bool:
         if self.is_fulfilled():
@@ -73,7 +73,7 @@ class MajorGuidedElectiveRequirement(AbstractRequirement):
         matcher: str
 
     class JSON(TypedDict):
-        required_course_count: int
+        required_count: int
         starts_with: str
         also_fulfills: list[MajorGuidedElectiveRequirement.JSONReq]
 
@@ -81,7 +81,7 @@ class MajorGuidedElectiveRequirement(AbstractRequirement):
     def from_json(cls, json: JSON) -> MajorGuidedElectiveRequirement:
         """
         {
-            "required_course_count": 3,
+            "required_count": 3,
             "starts_with": "CS 43",
             "also_fulfills": [
                 {
@@ -101,7 +101,7 @@ class MajorGuidedElectiveRequirement(AbstractRequirement):
                 map.REQUIREMENTS_MAP[requirement["matcher"]].from_json(requirement)
             )
 
-        return cls(json["required_course_count"], json["starts_with"], also_fulfills)
+        return cls(json["required_count"], json["starts_with"], also_fulfills)
 
     def to_json(self) -> Json:
         return json.dumps(
@@ -120,7 +120,7 @@ class MajorGuidedElectiveRequirement(AbstractRequirement):
 
     def __str__(self) -> str:
         s = f"""{MajorGuidedElectiveRequirement.__name__} 
-        required_course_count: {self.required_count}
+        required_count: {self.required_count}
         starts_with: '{self.starts_with}' or
         is one of the following: ({[str(req) for req in self.also_fulfills]})
         fulfilled_count: {self.__true_fulfilled_total()}
