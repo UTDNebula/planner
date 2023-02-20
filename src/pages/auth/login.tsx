@@ -19,6 +19,7 @@ export default function AuthPage({
   csrfToken,
 }: InferGetServerSidePropsType<typeof getServerSideProps>): JSX.Element {
   const [email, setEmail] = React.useState('');
+  const [showSignIn, setShowSignIn] = React.useState(true);
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -83,12 +84,13 @@ export default function AuthPage({
                   ))}
                 <div className="flex place-content-center">
                   <h4 className="text-lg">
-                    New to Nebula?
-                    <Link legacyBehavior href="/auth/signup">
-                      <a className="ml-2 text-lg font-semibold text-blue-700 hover:rounded-lg hover:bg-blue-200">
-                        Sign Up
-                      </a>
-                    </Link>
+                    {showSignIn ? 'New to Nebula?' : 'Existing User?'}
+                    <button
+                      onClick={() => setShowSignIn(false)}
+                      className="ml-2 text-lg font-semibold text-blue-700 hover:rounded-lg hover:bg-blue-200"
+                    >
+                      {showSignIn ? 'Sign Up' : 'Sign In'}
+                    </button>
                   </h4>
                 </div>
               </section>
