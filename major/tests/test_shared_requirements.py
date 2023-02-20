@@ -1,4 +1,4 @@
-from requirements import (
+from major.requirements import (
     CourseRequirement,
     AndRequirement,
     OrRequirement,

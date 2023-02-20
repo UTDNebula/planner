@@ -2,6 +2,7 @@ from major.requirements.edge_cases.business_administration import (
     BusinessAdministrationElectiveRequirement,
     SomeRequirement,
 )
+from major.requirements.shared import PrefixBucketRequirement
 import json
 
 from major.requirements.shared import PrefixBucketRequirement

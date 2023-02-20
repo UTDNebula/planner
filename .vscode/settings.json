@@ -1,0 +1,8 @@
+{
+  "python.linting.mypyEnabled": true,
+  "python.linting.enabled": true,
+  "python.linting.ignorePatterns": ["core/*.py", "tests/*.py"],
+  "python.testing.pytestArgs": ["major"],
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestEnabled": true
+}

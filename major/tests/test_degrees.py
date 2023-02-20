@@ -1,24 +1,21 @@
-from requirements import REQUIREMENTS_MAP
+from major.requirements import REQUIREMENTS_MAP
 import json
+from os import DirEntry, scandir
+import pytest
 
 
-# just make sure none of the matchers throw an error
-def test_computer_science() -> None:
-    data = json.loads(open("./degree_data/Computer Science(BS).json", "r").read())
-
-    requirements = data["requirements"]["major"]
-
-    # make sure all requirements are parseable
-    for requirement in requirements:
-        REQUIREMENTS_MAP[requirement["matcher"]].from_json(requirement)
+DEGREE_DATA_FILES = list(scandir("./degree_data"))
 
 
-def test_accounting() -> None:
-    data = json.loads(open("./degree_data/Accounting(BS).json", "r").read())
+# ensure degree data's are valid
+@pytest.mark.parametrize(
+    "file", DEGREE_DATA_FILES, ids=lambda file: "file={}".format(file)
+)
+def test_degrees(file: DirEntry[str]) -> None:
+    data = json.loads(open(file, "r").read())
 
     requirements = data["requirements"]["major"]
 
-    # make sure all requirements are parseable
     for requirement in requirements:
         REQUIREMENTS_MAP[requirement["matcher"]].from_json(requirement)
 

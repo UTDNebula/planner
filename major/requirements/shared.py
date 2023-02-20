@@ -84,7 +84,7 @@ class AndRequirement(AbstractRequirement):
         metadata: dict[str, str]
 
     @classmethod
-    def from_json(cls, json: JSON) -> AbstractRequirement:
+    def from_json(cls, json: JSON) -> AndRequirement:
         from .map import REQUIREMENTS_MAP
 
         # Get all requirements that are inside AndRequirement
@@ -146,7 +146,7 @@ class OrRequirement(AbstractRequirement):
         requirements: list[OrRequirement.Req]
 
     @classmethod
-    def from_json(cls, json: JSON) -> AbstractRequirement:
+    def from_json(cls, json: JSON) -> OrRequirement:
         from .map import REQUIREMENTS_MAP
 
         requirements: list[AbstractRequirement] = []
@@ -454,7 +454,7 @@ class PrefixBucketRequirement(AbstractRequirement):
     # as it doesn't check for whether or not the requirement has been filled
     def attempt_fulfill(self, course: str) -> bool:
 
-        if utils.get_course_prefix(course) == self.prefix:
+        if course.startswith(self.prefix):
             self.filled = True
             self.valid_courses[course] = utils.get_hours_from_course(course)
             return True
