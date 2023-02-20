@@ -50,9 +50,6 @@ class DegreeRequirement:
         return sum([1 for req in self.requirements if req.is_fulfilled()])
 
     def to_json(self) -> Json:
-        json_reqs = []
-        for req in self.requirements:
-            json_reqs.append(json.loads(req.to_json()))
         return json.dumps(
             {
                 "name": self.name,
@@ -64,6 +61,27 @@ class DegreeRequirement:
                 ],
             }
         )
+
+
+@dataclass
+class DegreeRequirementsOutput:
+    can_graduate: bool
+    requirements: list[DegreeRequirementOutput]
+
+
+@dataclass
+class DegreeRequirementOutput:
+    name: str
+    type: str
+    requirements: list[RequirementOutput]
+
+
+@dataclass
+class RequirementOutput:
+    requirement_name: str
+    is_fulfilled: bool
+    valid_courses: list[str]
+    bypasses: list[Bypass]
 
 
 class DegreeRequirementsSolver:
@@ -163,36 +181,14 @@ class DegreeRequirementsSolver:
         for degree_req in cls.degree_requirements:
             degree_reqs.append(json.loads(degree_req.to_json()))
 
-        return json.dumps(
-            {
-                "can_graduate": cls.can_graduate(),
-                "requirements": degree_reqs,
-            }
-        )
+        degree_reqs_output: DegreeRequirementOutput = {
+            "can_graduate": cls.can_graduate(),
+            "requirements": degree_reqs,
+        }
+        return json.dumps(degree_reqs_output)
 
     def __str__(self) -> str:
         return "\n".join(str(req) for req in self.degree_requirements)
-
-
-@dataclass
-class DegreeRequirementsOutput:
-    can_graduate: bool
-    requirements: list[DegreeRequirementOutput]
-
-
-@dataclass
-class DegreeRequirementOutput:
-    name: str
-    type: str
-    requirements: list[RequirementOutput]
-
-
-@dataclass
-class RequirementOutput:
-    requirement_name: str
-    is_fulfilled: bool
-    valid_courses: list[str]
-    bypasses: list[Bypass]
 
 
 def format_core_reqs(reqs: dict[str, dict[str, Any]]) -> list[AbstractRequirement]:
