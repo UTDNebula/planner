@@ -88,22 +88,22 @@ class AndRequirement(AbstractRequirement):
         from .map import REQUIREMENTS_MAP
 
         # Get all requirements that are inside AndRequirement
-        matchers: list[AbstractRequirement] = []
+        requirements: list[AbstractRequirement] = []
         for requirement_data in json["requirements"]:
-            matcher = REQUIREMENTS_MAP[requirement_data["matcher"]].from_json(
+            requirement = REQUIREMENTS_MAP[requirement_data["matcher"]].from_json(
                 requirement_data
             )
-            matchers.append(matcher)
+            requirements.append(requirement)
 
         # Check if there's any metadata
         metadata = json["metadata"] if "metadata" in json else {}
 
-        return cls(matchers, metadata)
+        return cls(requirements, metadata)
 
     def to_json(self) -> Json:
         return json.dumps(
             {
-                "matcher": "And",
+                "requirements": "And",
                 "filled": self.is_fulfilled(),
                 "requirements": [
                     json.loads(req.to_json()) for req in self.requirements
@@ -149,14 +149,14 @@ class OrRequirement(AbstractRequirement):
     def from_json(cls, json: JSON) -> AbstractRequirement:
         from .map import REQUIREMENTS_MAP
 
-        matchers: list[AbstractRequirement] = []
+        requirements: list[AbstractRequirement] = []
         for requirement_data in json["requirements"]:
-            matcher = REQUIREMENTS_MAP[requirement_data["matcher"]].from_json(
+            requirement = REQUIREMENTS_MAP[requirement_data["matcher"]].from_json(
                 requirement_data
             )
-            matchers.append(matcher)
+            requirements.append(requirement)
 
-        return cls(matchers)
+        return cls(requirements)
 
     def to_json(self) -> Json:
         return json.dumps(
@@ -221,14 +221,14 @@ class SelectRequirement(AbstractRequirement):
     def from_json(cls, json: JSON) -> AbstractRequirement:
         from .map import REQUIREMENTS_MAP
 
-        matchers: list[AbstractRequirement] = []
+        requirements: list[AbstractRequirement] = []
         for requirement_data in json["requirements"]:
-            matcher = REQUIREMENTS_MAP[requirement_data["matcher"]].from_json(
+            requirement = REQUIREMENTS_MAP[requirement_data["matcher"]].from_json(
                 requirement_data
             )
-            matchers.append(matcher)
+            requirements.append(requirement)
 
-        return cls(json["required_count"], matchers)
+        return cls(json["required_count"], requirements)
 
     def to_json(self) -> Json:
         return json.dumps(
@@ -321,17 +321,17 @@ class HoursRequirement(AbstractRequirement):
 
         from .map import REQUIREMENTS_MAP
 
-        matchers: list[AbstractRequirement] = []
+        requirements: list[AbstractRequirement] = []
         for requirement_data in json["requirements"]:
-            matcher = REQUIREMENTS_MAP[requirement_data["matcher"]].from_json(
+            requirement = REQUIREMENTS_MAP[requirement_data["matcher"]].from_json(
                 requirement_data
             )
-            matchers.append(matcher)
+            requirements.append(requirement)
 
         # Check if there's any metadata
         metadata = json["metadata"] if "metadata" in json else {}
 
-        return cls(json["required_hours"], matchers, {}, metadata)
+        return cls(json["required_hours"], requirements, {}, metadata)
 
     def to_json(self) -> Json:
         return json.dumps(

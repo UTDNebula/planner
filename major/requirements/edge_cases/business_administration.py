@@ -133,14 +133,14 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
         }
         """
 
-        matchers: list[AbstractRequirement] = []
+        requirements: list[AbstractRequirement] = []
         for requirement_data in json["prefix_groups"]:
-            matcher = map.REQUIREMENTS_MAP[requirement_data["matcher"]].from_json(
+            requirement = map.REQUIREMENTS_MAP[requirement_data["matcher"]].from_json(
                 requirement_data
             )
-            matchers.append(matcher)
+            requirements.append(requirement)
 
-        return cls(json["required_count"], json["required_hours"], matchers)
+        return cls(json["required_count"], json["required_hours"], requirements)
 
     def to_json(self) -> Json:
         return json.dumps(
