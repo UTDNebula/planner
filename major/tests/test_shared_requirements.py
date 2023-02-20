@@ -5,7 +5,6 @@ from requirements import (
     HoursRequirement,
     FreeElectiveRequirement,
     SelectRequirement,
-    PrefixRequirement,
 )
 import json
 
