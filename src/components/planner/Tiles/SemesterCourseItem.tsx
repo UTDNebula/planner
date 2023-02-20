@@ -1,8 +1,5 @@
 import { UniqueIdentifier, useDraggable } from '@dnd-kit/core';
-import CloseIcon from '@mui/icons-material/Close';
-import { ComponentPropsWithoutRef, FC, forwardRef } from 'react';
-
-import { getStartingPlanSemester, isEarlierSemester } from '@/utils/plannerUtils';
+import { ComponentPropsWithoutRef, FC, forwardRef, useState } from 'react';
 
 import { DragDataFromSemesterTile, DraggableCourse, Semester } from '../types';
 import SyncProblemIcon from '@mui/icons-material/SyncProblem';
@@ -12,18 +9,33 @@ import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 
 export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'> {
   course: DraggableCourse;
-  isValid?: boolean;
   isTransfer?: boolean;
-  onRemove?: (course: DraggableCourse) => void;
+  onSelectCourse?: () => void;
+  onDeselectCourse?: () => void;
 }
 
 /** UI implementation of a semester course */
 export const SemesterCourseItem = forwardRef<HTMLDivElement, SemesterCourseItemProps>(
-  function SemesterCourseItem({ course, isValid, isTransfer, onRemove, ...props }, ref) {
+  function SemesterCourseItem(
+    { course, isTransfer, onSelectCourse, onDeselectCourse, ...props },
+    ref,
+  ) {
     // Create text output for sync icon
     const correctSemester = course.sync?.correctSemester
       ? `Course already taken in ${displaySemesterCode(course.sync?.correctSemester)}`
       : `No record of this course in Course History`;
+
+    const [checked, setChecked] = useState(false);
+
+    const updateChecked = () => {
+      if (!checked) {
+        onSelectCourse && onSelectCourse();
+        setChecked(true);
+      } else {
+        onDeselectCourse && onDeselectCourse();
+        setChecked(false);
+      }
+    };
 
     return (
       <div
@@ -35,6 +47,7 @@ export const SemesterCourseItem = forwardRef<HTMLDivElement, SemesterCourseItemP
         <div className="flex items-center gap-x-3">
           <DragIndicatorIcon fontSize="inherit" className="text-[16px] text-neutral-300" />
           <input
+            onChange={() => updateChecked()}
             type="checkbox"
             className="checkbox-primary checkbox h-5 w-5 rounded-[3.5px] border-1.25 border-neutral-300 bg-generic-white accent-primary"
           />
@@ -67,8 +80,8 @@ export interface DraggableSemesterCourseItemProps {
   dragId: UniqueIdentifier;
   semester: Semester;
   course: DraggableCourse;
-  isValid: boolean;
-  onRemove: (course: DraggableCourse) => void;
+  onSelectCourse: () => void;
+  onDeselectCourse: () => void;
 }
 
 /** Compositional wrapper around SemesterCourseItem */
@@ -76,7 +89,8 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
   dragId,
   semester,
   course,
-  onRemove,
+  onSelectCourse,
+  onDeselectCourse,
 }) => {
   const { setNodeRef, attributes, listeners, isDragging } = useDraggable({
     id: dragId,
@@ -92,7 +106,8 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
       {...attributes}
       {...listeners}
       course={course}
-      onRemove={onRemove}
+      onSelectCourse={onSelectCourse}
+      onDeselectCourse={onDeselectCourse}
     />
   );
 };

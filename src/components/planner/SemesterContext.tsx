@@ -2,32 +2,61 @@ import { trpc } from '@/utils/trpc';
 import { toast } from 'react-toastify';
 import { createNewYear } from '@/utils/utilFunctions';
 import { ObjectID } from 'bson';
-import { useMemo, useReducer } from 'react';
+import { createContext, FC, useContext, useMemo, useReducer, useState } from 'react';
 import { Plan, Semester, DraggableCourse } from './types';
 import { customCourseSort } from './utils';
 import { useTaskQueue } from '@/utils/useTaskQueue';
 
-export interface useSemestersProps {
-  planId: string;
-  plan?: Plan;
-}
-
-export interface useSemestersReturn {
+export interface SemestersContextState {
   semesters: Semester[];
+  selectedCourseCount: number;
+  handleAddSelectedCourses: AddSelectedCoursesHandler;
+  handleRemoveSelectedCourse: RemoveSelectedCourseHandler;
   handleAddCourseToSemester: (targetSemester: Semester, newCourse: DraggableCourse) => void;
   handleMoveCourseFromSemesterToSemester: (
     originSemester: Semester,
     destinationSemester: Semester,
     courseToMove: DraggableCourse,
   ) => void;
-
   handleRemoveCourseFromSemester: (targetSemester: Semester, targetCourse: DraggableCourse) => void;
   handleAddYear: () => void;
   handleRemoveYear: () => void;
+  handleDeleteAllCoursesFromSemester: (semester: Semester) => void;
 }
 
-type SemestersReducerState = Semester[];
-type SemestersReducerAction =
+export const SemestersContext = createContext<SemestersContextState | null>(null);
+
+export const useSemestersContext = (): SemestersContextState => {
+  const ctx = useContext(SemestersContext);
+
+  if (ctx === null) {
+    throw new Error('SemestersContext consumers used outside provider');
+  }
+
+  return ctx;
+};
+
+export interface SemestersContextProviderProps {
+  planId: string;
+  plan: Plan;
+}
+
+export interface useSemestersProps {
+  planId: string;
+  plan?: Plan;
+}
+
+export type AddSelectedCoursesHandler = (courses: SelectedCourse[]) => void;
+
+export type RemoveSelectedCourseHandler = (course: SelectedCourse) => void;
+
+export type SelectedCourse = { courseId: string; semesterId: string };
+
+export type SelectedCoursesState = SelectedCourse[];
+
+export type SemestersReducerState = Semester[];
+
+export type SemestersReducerAction =
   | {
       type: 'addCourseToSemester';
       semesterId: string;
@@ -44,12 +73,43 @@ type SemestersReducerAction =
       originSemesterId: string;
       destinationSemesterId: string;
       course: DraggableCourse;
+    }
+  | {
+      type: 'deleteAllCoursesFromSemester';
+      semesterId: string;
     };
 
-const useSemesters = ({ plan, planId }: useSemestersProps): useSemestersReturn => {
+export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
+  planId,
+  plan,
+  children,
+}) => {
   const { addTask } = useTaskQueue({ shouldProcess: true });
 
-  const [semesters, dispatch] = useReducer<
+  const [selectedCourses, setSelectedCourses] = useState<SelectedCoursesState>([]);
+
+  const handleAddSelectedCourses = (courses: SelectedCourse[]) => {
+    const nonDuplicateCourses = courses.filter(
+      (incoming) =>
+        !selectedCourses.some(
+          (existing) =>
+            existing.courseId === incoming.courseId && existing.semesterId === incoming.semesterId,
+        ),
+    );
+
+    setSelectedCourses([...selectedCourses, ...nonDuplicateCourses]);
+  };
+
+  const handleRemoveSelectedCourse = (course: SelectedCourse) => {
+    setSelectedCourses(
+      selectedCourses.filter(
+        ({ courseId, semesterId }) =>
+          course.courseId !== courseId && course.semesterId !== semesterId,
+      ),
+    );
+  };
+
+  const [semesters, dispatchSemesters] = useReducer<
     (state: SemestersReducerState, action: SemestersReducerAction) => Semester[]
   >(
     (state, action) => {
@@ -96,6 +156,12 @@ const useSemesters = ({ plan, planId }: useSemestersProps): useSemestersReturn =
 
             return semester;
           });
+
+        case 'deleteAllCoursesFromSemester':
+          return state.map((semester) =>
+            semester.id.toString() === action.semesterId ? { ...semester, courses: [] } : semester,
+          );
+
         default:
           return state;
       }
@@ -122,13 +188,24 @@ const useSemesters = ({ plan, planId }: useSemestersProps): useSemestersReturn =
 
   const deleteYear = trpc.plan.deleteYear.useMutation();
 
+  const deleteAllCourses = trpc.plan.deleteAllCoursesFromSemester.useMutation();
+
+  const handleDeleteAllCoursesFromSemester = (semester: Semester) => {
+    dispatchSemesters({ type: 'deleteAllCoursesFromSemester', semesterId: semester.id.toString() });
+
+    addTask({
+      func: ({ semesterId }) => deleteAllCourses.mutateAsync({ semesterId }),
+      args: { semesterId: semester.id.toString() },
+    });
+  };
+
   const handleAddYear = () => {
     const newYear: Semester[] = createNewYear(
       semesters.length ? semesters[semesters.length - 1].code : { semester: 'u', year: 2022 },
     );
     const semesterIds = newYear.map((sem) => sem.id);
 
-    dispatch({ type: 'addSemesters', newSemesters: newYear });
+    dispatchSemesters({ type: 'addSemesters', newSemesters: newYear });
 
     addTask({
       func: ({ semesterIds }) =>
@@ -151,7 +228,7 @@ const useSemesters = ({ plan, planId }: useSemestersProps): useSemestersReturn =
   };
 
   const handleRemoveYear = () => {
-    dispatch({ type: 'removeYear' });
+    dispatchSemesters({ type: 'removeYear' });
 
     addTask({
       func: () =>
@@ -176,7 +253,7 @@ const useSemesters = ({ plan, planId }: useSemestersProps): useSemestersReturn =
     targetSemester: Semester,
     targetCourse: DraggableCourse,
   ) => {
-    dispatch({
+    dispatchSemesters({
       type: 'removeCourseFromSemester',
       courseId: targetCourse.id.toString(),
       semesterId: targetSemester.id.toString(),
@@ -219,7 +296,7 @@ const useSemesters = ({ plan, planId }: useSemestersProps): useSemestersReturn =
     const semesterId = targetSemester.id.toString();
     const courseName = newCourse.code;
 
-    dispatch({ type: 'addCourseToSemester', semesterId, newCourse });
+    dispatchSemesters({ type: 'addCourseToSemester', semesterId, newCourse });
 
     addTask({
       func: ({ semesterId, courseName }) =>
@@ -257,7 +334,7 @@ const useSemesters = ({ plan, planId }: useSemestersProps): useSemestersReturn =
     const newSemesterId = destinationSemester.id.toString();
     const courseName = courseToMove.code;
 
-    dispatch({
+    dispatchSemesters({
       type: 'moveCourseFromSemesterToSemester',
       originSemesterId: oldSemesterId,
       destinationSemesterId: newSemesterId,
@@ -282,18 +359,25 @@ const useSemesters = ({ plan, planId }: useSemestersProps): useSemestersReturn =
       args: { oldSemesterId, newSemesterId, courseName },
     });
   };
-
-  return {
-    semesters: sortedSemesters,
-    handleAddCourseToSemester,
-    handleAddYear,
-    handleMoveCourseFromSemesterToSemester,
-    handleRemoveCourseFromSemester,
-    handleRemoveYear,
-  };
+  return (
+    <SemestersContext.Provider
+      value={{
+        semesters: sortedSemesters,
+        selectedCourseCount: selectedCourses.length,
+        handleAddSelectedCourses,
+        handleRemoveSelectedCourse,
+        handleAddCourseToSemester,
+        handleAddYear,
+        handleMoveCourseFromSemesterToSemester,
+        handleRemoveCourseFromSemester,
+        handleRemoveYear,
+        handleDeleteAllCoursesFromSemester,
+      }}
+    >
+      {children}
+    </SemestersContext.Provider>
+  );
 };
-
-export default useSemesters;
 
 const parsePlanSemestersFromPlan = (plan: Plan): Semester[] => {
   return plan.semesters.map((sem) => ({

@@ -8,12 +8,11 @@ import superjson from 'superjson';
 
 import DegreePlanPDF from '@/components/planner/DegreePlanPDF/DegreePlanPDF';
 import Planner from '@/components/planner/Planner';
-import SettingsIcon from '@/icons/SettingsIcon';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { createContextInner } from '@/server/trpc/context';
 import { appRouter } from '@/server/trpc/router/_app';
 import usePlan from '@/components/planner/usePlan';
-import useSemesters from '@/components/planner/useSemesters';
+import { SemestersContextProvider } from '@/components/planner/SemesterContext';
 
 /**
  * A page that displays the details of a specific student academic plan.
@@ -24,14 +23,6 @@ export default function PlanDetailPage(
 ): JSX.Element {
   const { planId } = props;
   const { plan, validation, isLoading, handlePlanDelete } = usePlan({ planId });
-  const {
-    semesters,
-    handleAddCourseToSemester,
-    handleAddYear,
-    handleMoveCourseFromSemesterToSemester,
-    handleRemoveCourseFromSemester,
-    handleRemoveYear,
-  } = useSemesters({ plan, planId });
 
   const [showTransfer, setShowTransfer] = useState(true);
 
@@ -44,7 +35,7 @@ export default function PlanDetailPage(
 
   return (
     <div className="flex h-screen max-h-screen w-screen flex-col overflow-x-hidden overflow-y-scroll p-4">
-      <div className=" mb-10 flex flex-row items-center gap-2">
+      {/* <div className=" mb-10 flex flex-row items-center gap-2">
         <div className="text-2xl">My Plan</div>
 
         <div className="form-control">
@@ -80,17 +71,12 @@ export default function PlanDetailPage(
           </PDFDownloadLink>
         )}
         <SettingsIcon className={`ml-5 h-5 w-5 cursor-pointer`} strokeWidth={2.5} />
-      </div>
-      <Planner
-        degreeRequirements={validation}
-        semesters={semesters}
-        showTransfer={showTransfer}
-        handleAddCourseToSemester={handleAddCourseToSemester}
-        handleAddYear={handleAddYear}
-        handleMoveCourseFromSemesterToSemester={handleMoveCourseFromSemesterToSemester}
-        handleRemoveCourseFromSemester={handleRemoveCourseFromSemester}
-        handleRemoveYear={handleRemoveYear}
-      />
+      </div> */}
+      {plan && validation && (
+        <SemestersContextProvider planId={planId} plan={plan}>
+          <Planner degreeRequirements={validation} showTransfer={showTransfer} />
+        </SemestersContextProvider>
+      )}
       <button onClick={handlePlanDelete}>Delete</button>
     </div>
   );

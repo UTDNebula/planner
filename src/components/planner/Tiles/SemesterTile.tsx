@@ -3,33 +3,33 @@ import { FC, forwardRef, useState } from 'react';
 
 import { displaySemesterCode } from '@/utils/utilFunctions';
 
-import {
-  DragDataToSemesterTile,
-  DraggableCourse,
-  GetDragIdByCourseAndSemester,
-  Semester,
-} from '../types';
+import { DragDataToSemesterTile, GetDragIdByCourseAndSemester, Semester } from '../types';
 import DraggableSemesterCourseItem from './SemesterCourseItem';
 import { SemesterErrors } from '../Planner';
 import ChevronIcon from '@/icons/ChevronIcon';
 import SemesterTileDropdown from './SemesterTileDropdown';
+import { useSemestersContext } from '../SemesterContext';
 
 export interface SemesterTileProps {
   semester: Semester;
-  isOver: boolean;
   getDragId: GetDragIdByCourseAndSemester;
   semesterErrors: SemesterErrors;
-  onRemoveCourse: (semester: Semester, course: DraggableCourse) => void;
 }
 
 /**
  * Strictly UI implementation of a semester tile
  */
 export const SemesterTile = forwardRef<HTMLDivElement, SemesterTileProps>(function SemesterTile(
-  { semester, getDragId, isOver, semesterErrors, onRemoveCourse },
+  { semester, getDragId, semesterErrors },
   ref,
 ) {
   const [open, setOpen] = useState(true);
+
+  const {
+    handleAddSelectedCourses,
+    handleRemoveSelectedCourse,
+    handleDeleteAllCoursesFromSemester,
+  } = useSemestersContext();
 
   const { sync, prerequisites } = semesterErrors;
   const { extra, missing } = sync;
@@ -75,7 +75,17 @@ export const SemesterTile = forwardRef<HTMLDivElement, SemesterTileProps>(functi
           </div>
         )}
 
-        <SemesterTileDropdown />
+        <SemesterTileDropdown
+          deleteAllCourses={() => handleDeleteAllCoursesFromSemester(semester)}
+          selectAllCourses={() =>
+            handleAddSelectedCourses(
+              semester.courses.map((course) => ({
+                courseId: course.id.toString(),
+                semesterId: semester.id.toString(),
+              })),
+            )
+          }
+        />
       </div>
 
       <article
@@ -85,12 +95,21 @@ export const SemesterTile = forwardRef<HTMLDivElement, SemesterTileProps>(functi
       >
         {semester.courses.map((course) => (
           <DraggableSemesterCourseItem
+            onSelectCourse={() =>
+              handleAddSelectedCourses([
+                { courseId: course.id.toString(), semesterId: semester.id.toString() },
+              ])
+            }
+            onDeselectCourse={() =>
+              handleRemoveSelectedCourse({
+                courseId: course.id.toString(),
+                semesterId: semester.id.toString(),
+              })
+            }
             key={course.id.toString()}
             dragId={getDragId(course, semester)}
-            isValid={course.validation?.isValid === false}
             course={course}
             semester={semester}
-            onRemove={(course) => onRemoveCourse(semester, course)}
           />
         ))}
       </article>
@@ -103,7 +122,6 @@ export interface DroppableSemesterTileProps {
   semester: Semester;
   getSemesterCourseDragId: GetDragIdByCourseAndSemester;
   semesterErrors: SemesterErrors;
-  onRemoveCourse: (semester: Semester, course: DraggableCourse) => void;
 }
 
 /**
@@ -115,7 +133,7 @@ const DroppableSemesterTile: FC<DroppableSemesterTileProps> = ({
   getSemesterCourseDragId,
   ...props
 }) => {
-  const { setNodeRef, isOver } = useDroppable({
+  const { setNodeRef } = useDroppable({
     id: dropId,
     data: { to: 'semester-tile', semester } as DragDataToSemesterTile,
   });
@@ -123,7 +141,6 @@ const DroppableSemesterTile: FC<DroppableSemesterTileProps> = ({
   return (
     <SemesterTile
       ref={setNodeRef}
-      isOver={isOver}
       semester={semester}
       getDragId={getSemesterCourseDragId}
       {...props}
