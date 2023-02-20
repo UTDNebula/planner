@@ -36,15 +36,6 @@ export default function PlanDetailPage(
   const [showTransfer, setShowTransfer] = useState(true);
 
   const { data: session } = useSession();
-  
-  const degreeData = data?.validation ?? { can_graduate: false, requirements: [] };
-
-  const { handlePlanDelete, handleBack } = usePlannerHooks({
-    planId: planId,
-  });
-
-  const [semesters, setSemesters] = useState<Semester[]>(getSemestersInfo(data?.plan));
-
 
   // Indicate UI loading
   if (isLoading) {
@@ -91,7 +82,7 @@ export default function PlanDetailPage(
         <SettingsIcon className={`ml-5 h-5 w-5 cursor-pointer`} strokeWidth={2.5} />
       </div>
       <Planner
-        degreeRequirements={degreeData}
+        degreeRequirements={validation}
         semesters={semesters}
         showTransfer={showTransfer}
         handleAddCourseToSemester={handleAddCourseToSemester}
