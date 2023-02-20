@@ -5,7 +5,7 @@ from pydantic import Json
 from major.requirements import AbstractRequirement, map
 
 from functools import reduce
-from typing import TypedDict
+from typing import Any, TypedDict
 
 import utils
 
@@ -103,7 +103,7 @@ class MajorGuidedElectiveRequirement(AbstractRequirement):
 
         return cls(json["required_count"], json["starts_with"], also_fulfills)
 
-    def to_json(self) -> Json:
+    def to_json(self) -> Json[Any]:
         return json.dumps(
             {
                 "matcher": "CS Guided Electives",

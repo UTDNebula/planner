@@ -36,7 +36,7 @@ class AbstractRequirement(ABC):
         pass
 
     @abstractmethod
-    def to_json(self) -> Json:
+    def to_json(self) -> Json[Any]:
         """Converts the requirement into JSON-serializable format
         Includes all the attributes within a Requirement class
         """

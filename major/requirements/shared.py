@@ -7,7 +7,7 @@ from pydantic import Json
 from .base import AbstractRequirement
 import utils
 
-from typing import TypedDict
+from typing import Any, TypedDict
 
 
 class CourseRequirement(AbstractRequirement):
@@ -40,7 +40,7 @@ class CourseRequirement(AbstractRequirement):
     def from_json(cls, json: JSON) -> CourseRequirement:
         return cls(json["course"])
 
-    def to_json(self) -> Json:
+    def to_json(self) -> Json[Any]:
         return json.dumps(
             {"matcher": "Course", "course": self.course, "filled": self.filled}
         )
@@ -100,7 +100,7 @@ class AndRequirement(AbstractRequirement):
 
         return cls(requirements, metadata)
 
-    def to_json(self) -> Json:
+    def to_json(self) -> Json[Any]:
         return json.dumps(
             {
                 "matcher": "And",
@@ -158,7 +158,7 @@ class OrRequirement(AbstractRequirement):
 
         return cls(requirements)
 
-    def to_json(self) -> Json:
+    def to_json(self) -> Json[Any]:
         return json.dumps(
             {
                 "matcher": "Or",
@@ -230,7 +230,7 @@ class SelectRequirement(AbstractRequirement):
 
         return cls(json["required_count"], requirements)
 
-    def to_json(self) -> Json:
+    def to_json(self) -> Json[Any]:
         return json.dumps(
             {
                 "matcher": "Select",
@@ -333,7 +333,7 @@ class HoursRequirement(AbstractRequirement):
 
         return cls(json["required_hours"], requirements, {}, metadata)
 
-    def to_json(self) -> Json:
+    def to_json(self) -> Json[Any]:
         return json.dumps(
             {
                 "matcher": "Hours",
@@ -409,7 +409,7 @@ class FreeElectiveRequirement(AbstractRequirement):
 
         return cls(json["required_hours"], json["excluded_courses"])
 
-    def to_json(self) -> Json:
+    def to_json(self) -> Json[Any]:
         return json.dumps(
             {
                 "matcher": "FreeElectives",
@@ -471,7 +471,7 @@ class PrefixBucketRequirement(AbstractRequirement):
     def from_json(cls, json: JSON) -> PrefixBucketRequirement:
         return cls(json["prefix"])
 
-    def to_json(self) -> Json:
+    def to_json(self) -> Json[Any]:
         return json.dumps(
             {
                 "matcher": "Prefix",

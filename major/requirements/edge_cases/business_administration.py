@@ -5,7 +5,7 @@ from pydantic import Json
 from major.requirements import AbstractRequirement, map
 
 from functools import reduce
-from typing import TypedDict
+from typing import Any, TypedDict
 from major.requirements.shared import OrRequirement
 
 import utils
@@ -146,7 +146,7 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
 
         return cls(json["required_count"], json["required_hours"], requirements)
 
-    def to_json(self) -> Json:
+    def to_json(self) -> Json[Any]:
         return json.dumps(
             {
                 "matcher": "BA General Business Electives",
