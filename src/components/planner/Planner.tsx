@@ -30,7 +30,6 @@ import { SemesterCourseItem } from './Tiles/SemesterCourseItem';
 import DroppableSemesterTile from './Tiles/SemesterTile';
 import {
   ActiveDragData,
-  DegreeRequirementGroup,
   DragEventDestinationData,
   DragEventOriginData,
   DraggableCourse,
@@ -38,11 +37,13 @@ import {
 } from './types';
 import { isSemCodeEqual } from '@/utils/utilFunctions';
 import { SemesterCode } from '@prisma/client';
+import { DegreeRequirements } from './Sidebar/types';
+
 import Toolbar from './Toolbar';
 
 /** PlannerTool Props */
 export interface PlannerProps {
-  degreeRequirements: DegreeRequirementGroup[];
+  degreeRequirements: DegreeRequirements;
   semesters: Semester[];
   showTransfer: boolean;
   handleAddCourseToSemester: (targetSemester: Semester, newCourse: DraggableCourse) => void;

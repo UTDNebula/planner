@@ -81,7 +81,7 @@ export function reorderList<T>(list: T[], startIndex: number, endIndex: number) 
 
 export function formatDegreeValidationRequest(
   semesters: { code: SemesterCode; id: string; courses: string[] }[],
-  degree = 'computer_science_bs',
+  requirements = { core: true, majors: ['computer_science'], minors: [] },
 ) {
   const getDegreeName = (degree: string) => {
     const temp = degree.split(' ').join('_').split('(').join('_');
@@ -89,23 +89,9 @@ export function formatDegreeValidationRequest(
   };
 
   return {
-    courses: semesters
-      .flatMap((s) => s.courses)
-      .map((c) => {
-        const split = c.split(' ');
-        const department = split[0];
-        const courseNumber = Number(split[1]);
-        const level = Math.floor(courseNumber / 1000);
-        const hours = Math.floor((courseNumber - level * 1000) / 100);
-        return {
-          name: c,
-          department: department,
-          level,
-          hours,
-        };
-      }),
+    courses: semesters.flatMap((s) => s.courses),
+    requirements: requirements,
     bypasses: [],
-    degree: getDegreeName(degree),
   };
 }
 
