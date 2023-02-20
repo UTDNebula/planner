@@ -1,5 +1,5 @@
 import { UniqueIdentifier, useDraggable } from '@dnd-kit/core';
-import { ComponentPropsWithoutRef, FC, forwardRef, useState } from 'react';
+import React, { ComponentPropsWithoutRef, FC, forwardRef, useState } from 'react';
 
 import { DragDataFromSemesterTile, DraggableCourse, Semester } from '../types';
 import SyncProblemIcon from '@mui/icons-material/SyncProblem';
@@ -15,8 +15,9 @@ export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'>
 }
 
 /** UI implementation of a semester course */
-export const SemesterCourseItem = forwardRef<HTMLDivElement, SemesterCourseItemProps>(
-  function SemesterCourseItem(
+/* eslint-disable react/prop-types */
+export const MemoizedSemesterCourseItem = React.memo(
+  forwardRef<HTMLDivElement, SemesterCourseItemProps>(function SemesterCourseItem(
     { course, isTransfer, onSelectCourse, onDeselectCourse, ...props },
     ref,
   ) {
@@ -73,8 +74,10 @@ export const SemesterCourseItem = forwardRef<HTMLDivElement, SemesterCourseItemP
         </div>
       </div>
     );
-  },
+  }),
 );
+
+export const SemesterCourseItem = MemoizedSemesterCourseItem;
 
 export interface DraggableSemesterCourseItemProps {
   dragId: UniqueIdentifier;
@@ -112,4 +115,4 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
   );
 };
 
-export default DraggableSemesterCourseItem;
+export default React.memo(DraggableSemesterCourseItem);
