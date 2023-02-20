@@ -20,17 +20,17 @@ from major.requirements.shared import (
 
 @dataclass
 class Bypass:
+    """Sometimes, we may want to manually assign a course to a requirement.
+    For example, to specify what would be an arbitrary choice to the algorithm,
+    or to allow something that doesn't normally happen. One common example
+    of this is replacing CS 1136 with hours from a different CS course.
+
+    Each bypass is a triple containing a course, a requirement, and a number of hours to assign.
+    """
+
     name: str
     requirement: str
     hours: int
-
-
-@dataclass
-class DegreeRequirementsInput:
-    core: bool
-    majors: list[str]  # TODO: Change to Enum in the future
-    minors: list[str]  # TODO: Change to Enum in the future
-    other: list[str]  # TODO: Change to Enum in the future
 
 
 class DegreeRequirementType(Enum):
@@ -41,7 +41,47 @@ class DegreeRequirementType(Enum):
 
 
 @dataclass
+class RequirementOutput:
+    requirement_name: str
+    is_fulfilled: bool
+    valid_courses: list[str]
+    bypasses: list[Bypass]
+
+
+@dataclass
+class DegreeRequirementsInput:
+    """This tells the solver what Degree Requirements to attempt
+    to solve with the given courses and bypasses input.
+
+    Sample DegreeRequirementsInput:
+        core: true
+        majors: ["Computer Science(BS)"]
+        minors: ["History"]
+        other: []
+
+    This tells the solver to attempt to solve for the Core Curriculum,
+    Computer Science, and History requirements.
+    """
+
+    core: bool
+    majors: list[str]  # TODO: Change to Enum in the future
+    minors: list[str]  # TODO: Change to Enum in the future
+    other: list[str]  # TODO: Change to Enum in the future
+
+
+@dataclass
+class DegreeRequirementOutput:
+    name: str
+    type: str
+    requirements: list[RequirementOutput]
+
+
+@dataclass
 class DegreeRequirement:
+    """A DegreeRequirement is a substantial grouping of requirements, like the
+    Core Curriulum, a major (i.e. Psychology(BS)), or a minor (i.e. Music)
+    """
+
     name: str
     type: DegreeRequirementType
     requirements: list[AbstractRequirement]
@@ -64,24 +104,9 @@ class DegreeRequirement:
 
 
 @dataclass
-class DegreeRequirementsOutput:
+class DegreeRequirementsSolverOutput:
     can_graduate: bool
     requirements: list[DegreeRequirementOutput]
-
-
-@dataclass
-class DegreeRequirementOutput:
-    name: str
-    type: str
-    requirements: list[RequirementOutput]
-
-
-@dataclass
-class RequirementOutput:
-    requirement_name: str
-    is_fulfilled: bool
-    valid_courses: list[str]
-    bypasses: list[Bypass]
 
 
 class DegreeRequirementsSolver:
@@ -181,9 +206,11 @@ class DegreeRequirementsSolver:
         for degree_req in cls.degree_requirements:
             degree_reqs.append(json.loads(degree_req.to_json()))
 
-        degree_reqs_output: DegreeRequirementsOutput = DegreeRequirementsOutput(
-            cls.can_graduate(),
-            degree_reqs,
+        degree_reqs_output: DegreeRequirementsSolverOutput = (
+            DegreeRequirementsSolverOutput(
+                cls.can_graduate(),
+                degree_reqs,
+            )
         )
         return json.dumps(degree_reqs_output)
 
