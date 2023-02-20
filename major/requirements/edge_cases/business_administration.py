@@ -146,14 +146,14 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
         return json.dumps(
             {
                 "matcher": "BA General Business Electives",
-                "required_count": self.required_count,
-                "required_hours": self.required_hours,
                 "fulfilled_count": self.fulfilled_count,
                 "fulfilled_hours": self.fulfilled_hours,
-                "valid_courses": self.valid_courses,
+                "required_count": self.required_count,
+                "required_hours": self.required_hours,
                 "prefix_groups": [
                     json.loads(req.to_json()) for req in self.prefix_groups
                 ],
+                "valid_courses": self.valid_courses,
             }
         )
 

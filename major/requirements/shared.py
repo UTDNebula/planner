@@ -41,9 +41,9 @@ class CourseRequirement(AbstractRequirement):
         return cls(json["course"])
 
     def to_json(self) -> Json:
-        format = self.__dict__
-        format["matcher"] = "Course"
-        return json.dumps(format)
+        return json.dumps(
+            {"matcher": "Course", "course": self.course, "filled": self.filled}
+        )
 
     def __str__(self) -> str:
         return f"{self.course} - {self.is_fulfilled()}"
@@ -103,14 +103,14 @@ class AndRequirement(AbstractRequirement):
     def to_json(self) -> Json:
         return json.dumps(
             {
-                "requirements": "And",
+                "matcher": "And",
+                "metadata": self.metadata,
+                "num_fulfilled_requirements": self.get_num_fulfilled_requirements(),
+                "num_requirements": len(self.requirements),
                 "filled": self.is_fulfilled(),
                 "requirements": [
                     json.loads(req.to_json()) for req in self.requirements
                 ],
-                "metadata": self.metadata,
-                "num_fulfilled_requirements": self.get_num_fulfilled_requirements(),
-                "num_requirements": len(self.requirements),
             }
         )
 
@@ -234,9 +234,9 @@ class SelectRequirement(AbstractRequirement):
         return json.dumps(
             {
                 "matcher": "Select",
-                "filled": self.is_fulfilled(),
-                "required_count": self.required_count,
                 "fulfilled_count": self.fulfilled_count,
+                "required_count": self.required_count,
+                "filled": self.is_fulfilled(),
                 "requirements": [
                     json.loads(req.to_json()) for req in self.requirements
                 ],
@@ -338,9 +338,9 @@ class HoursRequirement(AbstractRequirement):
             {
                 "matcher": "Hours",
                 "metadata": self.metadata,
-                "filled": self.is_fulfilled(),
-                "required_hours": self.required_hours,
                 "fulfilled_hours": self.fulfilled_hours,
+                "required_hours": self.required_hours,
+                "filled": self.is_fulfilled(),
                 "requirements": [
                     json.loads(req.to_json()) for req in self.requirements
                 ],
@@ -413,12 +413,12 @@ class FreeElectiveRequirement(AbstractRequirement):
         return json.dumps(
             {
                 "matcher": "FreeElectives",
-                "filled": self.is_fulfilled(),
-                "required_hours": self.required_hours,
+                "metadata": {"name": "Free Electives"},
                 "fulfilled_hours": self.fulfilled_hours,
+                "required_hours": self.required_hours,
+                "filled": self.is_fulfilled(),
                 "excluded_courses": list(self.excluded_courses),
                 "valid_courses": self.valid_courses,
-                "metadata": {"name": "Free Electives"},
             }
         )
 
@@ -475,9 +475,9 @@ class PrefixBucketRequirement(AbstractRequirement):
         return json.dumps(
             {
                 "matcher": "Prefix",
+                "prefix": self.prefix,
                 "filled": self.is_fulfilled(),
                 "valid_courses": self.valid_courses,
-                "prefix": self.prefix,
             }
         )
 
