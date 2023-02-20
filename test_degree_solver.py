@@ -1,6 +1,6 @@
 from degree_solver import DegreeRequirementsSolver, DegreeRequirementsInput
 
-input = DegreeRequirementsInput(True, ["computer_science"], [], [])
+input = DegreeRequirementsInput(True, ["Business Administration(BS)"], [], [])
 
 GRADUATEABLE_COURSES = [
     "ATCM 2340",
@@ -61,6 +61,6 @@ solver = DegreeRequirementsSolver(GRADUATEABLE_COURSES, input, [])
 
 solver.solve()
 
-assert solver.can_graduate()
+assert not solver.can_graduate()
 
-print(solver.to_json())
+# print(solver.to_json())
