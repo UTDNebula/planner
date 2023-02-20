@@ -1,4 +1,7 @@
 from __future__ import annotations
+import json
+
+from pydantic import Json
 from major.requirements import AbstractRequirement, map
 
 from functools import reduce
@@ -100,16 +103,20 @@ class MajorGuidedElectiveRequirement(AbstractRequirement):
 
         return cls(json["required_course_count"], json["starts_with"], also_fulfills)
 
-    def to_json(self) -> JSON:
-        return {
-            "matcher": "CS Guided Electives",
-            "required_count": self.required_count,
-            "starts_with": self.starts_with,
-            "also_fulfills": [req.to_json() for req in self.also_fulfills],
-            "fulfilled_count": self.fulfilled_count,
-            "valid_courses": self.valid_courses,
-            "metadata": {"name": "CS Guided Electives"},
-        }
+    def to_json(self) -> Json:
+        return json.dumps(
+            {
+                "matcher": "CS Guided Electives",
+                "required_count": self.required_count,
+                "starts_with": self.starts_with,
+                "also_fulfills": [
+                    json.loads(req.to_json()) for req in self.also_fulfills
+                ],
+                "fulfilled_count": self.fulfilled_count,
+                "valid_courses": self.valid_courses,
+                "metadata": {"name": "CS Guided Electives"},
+            }
+        )
 
     def __str__(self) -> str:
         s = f"""{MajorGuidedElectiveRequirement.__name__} 

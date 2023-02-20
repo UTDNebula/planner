@@ -1,5 +1,7 @@
 from __future__ import annotations
 import json
+
+from pydantic import Json
 from major.requirements import AbstractRequirement, map
 
 from functools import reduce
@@ -93,9 +95,6 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
             and self.fulfilled_hours >= self.required_hours
         )
 
-    class JSONReq(TypedDict):
-        matcher: str
-
     class JSON(TypedDict):
         required_count: int
         required_hours: int
@@ -143,16 +142,20 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
 
         return cls(json["required_count"], json["required_hours"], matchers)
 
-    def to_json(self) -> json:
-        return {
-            "matcher": "BA General Business Electives",
-            "required_count": self.required_count,
-            "required_hours": self.required_hours,
-            "fulfilled_count": self.fulfilled_count,
-            "fulfilled_hours": self.fulfilled_hours,
-            "valid_courses": self.valid_courses,
-            "prefix_groups": [req.to_json() for req in self.prefix_groups],
-        }
+    def to_json(self) -> Json:
+        return json.dumps(
+            {
+                "matcher": "BA General Business Electives",
+                "required_count": self.required_count,
+                "required_hours": self.required_hours,
+                "fulfilled_count": self.fulfilled_count,
+                "fulfilled_hours": self.fulfilled_hours,
+                "valid_courses": self.valid_courses,
+                "prefix_groups": [
+                    json.loads(req.to_json()) for req in self.prefix_groups
+                ],
+            }
+        )
 
     def __str__(self) -> str:
         s = f"""{BusinessAdministrationElectiveRequirement.__name__} 

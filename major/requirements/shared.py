@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 import json
+
+from pydantic import Json
 from .base import AbstractRequirement
 import utils
 
@@ -38,10 +40,10 @@ class CourseRequirement(AbstractRequirement):
     def from_json(cls, json: JSON) -> CourseRequirement:
         return cls(json["course"])
 
-    def to_json(self) -> JSON:
+    def to_json(self) -> Json:
         format = self.__dict__
         format["matcher"] = "Course"
-        return format
+        return json.dumps(format)
 
     def __str__(self) -> str:
         return f"{self.course} - {self.is_fulfilled()}"
@@ -92,15 +94,19 @@ class AndRequirement(AbstractRequirement):
 
         return cls(matchers, json["metadata"])
 
-    def to_json(self) -> JSON:
-        return {
-            "matcher": "And",
-            "filled": self.is_fulfilled(),
-            "requirements": [req.to_json() for req in self.requirements],
-            "metadata": self.metadata,
-            "num_fulfilled_requirements": self.get_num_fulfilled_requirements(),
-            "num_requirements": len(self.requirements),
-        }
+    def to_json(self) -> Json:
+        return json.dumps(
+            {
+                "matcher": "And",
+                "filled": self.is_fulfilled(),
+                "requirements": [
+                    json.loads(req.to_json()) for req in self.requirements
+                ],
+                "metadata": self.metadata,
+                "num_fulfilled_requirements": self.get_num_fulfilled_requirements(),
+                "num_requirements": len(self.requirements),
+            }
+        )
 
     def __str__(self) -> str:
         return f"({' and '.join([str(req) for req in self.requirements])}) -> {self.is_fulfilled()}"
@@ -146,15 +152,16 @@ class OrRequirement(AbstractRequirement):
 
         return cls(matchers)
 
-    def to_json(self) -> JSON:
-        return "hi"
-
-    def to_json(self) -> JSON:
-        return {
-            "matcher": "Or",
-            "filled": self.is_fulfilled(),
-            "requirements": [req.to_json() for req in self.requirements],
-        }
+    def to_json(self) -> Json:
+        return json.dumps(
+            {
+                "matcher": "Or",
+                "filled": self.is_fulfilled(),
+                "requirements": [
+                    json.loads(req.to_json()) for req in self.requirements
+                ],
+            }
+        )
 
     def __str__(self) -> str:
         return f"({' or '.join([str(req) for req in self.requirements])}) -> {self.is_fulfilled()}"
@@ -183,7 +190,6 @@ class HoursRequirement(AbstractRequirement):
         self.requirements = requirements
         self.valid_courses: dict[str:int] = valid_courses
         self.metadata: dict[str:str] = metadata
-        print(valid_courses)
         # Compute fulfilled hours from metadata field
         self.fulfilled_hours = sum(valid_courses.values())
         # Stores map of course & # hours fulfilled (i.e. {"CS 1200": 2}). This is done due to course splitting (1 course can be used to satisfy multiple requirements)
@@ -238,16 +244,20 @@ class HoursRequirement(AbstractRequirement):
 
         return cls(json["required_hours"], matchers)
 
-    def to_json(self) -> JSON:
-        return {
-            "matcher": "Hours",
-            "metadata": self.metadata,
-            "filled": self.is_fulfilled(),
-            "required_hours": self.required_hours,
-            "fulfilled_hours": self.fulfilled_hours,
-            "requirements": [req.to_json() for req in self.requirements],
-            "valid_courses": self.valid_courses,
-        }
+    def to_json(self) -> Json:
+        return json.dumps(
+            {
+                "matcher": "Hours",
+                "metadata": self.metadata,
+                "filled": self.is_fulfilled(),
+                "required_hours": self.required_hours,
+                "fulfilled_hours": self.fulfilled_hours,
+                "requirements": [
+                    json.loads(req.to_json()) for req in self.requirements
+                ],
+                "valid_courses": self.valid_courses,
+            }
+        )
 
     def __str__(self) -> str:
         s = f"""{HoursRequirement.__name__} 
@@ -309,16 +319,18 @@ class FreeElectiveRequirement(AbstractRequirement):
 
         return cls(json["required_hours"], json["excluded_courses"])
 
-    def to_json(self) -> JSON:
-        return {
-            "matcher": "FreeElectives",
-            "filled": self.is_fulfilled(),
-            "required_hours": self.required_hours,
-            "fulfilled_hours": self.fulfilled_hours,
-            "excluded_courses": list(self.excluded_courses),
-            "valid_courses": self.valid_courses,
-            "metadata": {"name": "Free Electives"},
-        }
+    def to_json(self) -> Json:
+        return json.dumps(
+            {
+                "matcher": "FreeElectives",
+                "filled": self.is_fulfilled(),
+                "required_hours": self.required_hours,
+                "fulfilled_hours": self.fulfilled_hours,
+                "excluded_courses": list(self.excluded_courses),
+                "valid_courses": self.valid_courses,
+                "metadata": {"name": "Free Electives"},
+            }
+        )
 
     def __str__(self) -> str:
         s = f"""{FreeElectiveRequirement.__name__} 
@@ -386,14 +398,18 @@ class SelectRequirement(AbstractRequirement):
 
         return cls(json["required_course_count"], matchers)
 
-    def to_json(self) -> JSON:
-        return {
-            "matcher": "Select",
-            "filled": self.is_fulfilled(),
-            "required_course_count": self.required_course_count,
-            "fulfilled_count": self.fulfilled_count,
-            "requirements": [req.to_json() for req in self.requirements],
-        }
+    def to_json(self) -> Json:
+        return json.dumps(
+            {
+                "matcher": "Select",
+                "filled": self.is_fulfilled(),
+                "required_course_count": self.required_course_count,
+                "fulfilled_count": self.fulfilled_count,
+                "requirements": [
+                    json.loads(req.to_json()) for req in self.requirements
+                ],
+            }
+        )
 
     def __str__(self) -> str:
         return f"({' or '.join([str(req) for req in self.requirements])}) -> {self.is_fulfilled()}"
@@ -434,13 +450,15 @@ class PrefixBucketRequirement(AbstractRequirement):
     def from_json(cls, json: JSON) -> PrefixBucketRequirement:
         return cls(json["prefix"])
 
-    def to_json(self) -> JSON:
-        return {
-            "matcher": "Prefix",
-            "filled": self.is_fulfilled(),
-            "valid_courses": self.valid_courses,
-            "prefix": self.prefix,
-        }
+    def to_json(self) -> Json:
+        return json.dumps(
+            {
+                "matcher": "Prefix",
+                "filled": self.is_fulfilled(),
+                "valid_courses": self.valid_courses,
+                "prefix": self.prefix,
+            }
+        )
 
     def __str__(self) -> str:
         return f"{self.prefix} - {self.is_fulfilled()}"

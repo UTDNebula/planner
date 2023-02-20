@@ -2,6 +2,7 @@ from __future__ import annotations
 from collections import defaultdict
 from enum import Enum
 import json
+from pydantic import Json
 
 from pyparsing import Any
 from core.solver import AssignmentStore, GraduationRequirementsSolver
@@ -48,15 +49,21 @@ class DegreeRequirement:
     def get_num_fulfilled_requirements(self) -> int:
         return sum([1 for req in self.requirements if req.is_fulfilled()])
 
-    def to_json(self):
-
-        return {
-            "name": self.name,
-            "type": self.type.value,
-            "num_fulfilled_requirements": self.get_num_fulfilled_requirements(),
-            "num_requirements": len(self.requirements),
-            "requirements": [req.to_json() for req in self.requirements],
-        }
+    def to_json(self) -> Json:
+        json_reqs = []
+        for req in self.requirements:
+            json_reqs.append(json.loads(req.to_json()))
+        return json.dumps(
+            {
+                "name": self.name,
+                "type": self.type.value,
+                "num_fulfilled_requirements": self.get_num_fulfilled_requirements(),
+                "num_requirements": len(self.requirements),
+                "requirements": [
+                    json.loads(req.to_json()) for req in self.requirements
+                ],
+            }
+        )
 
 
 class DegreeRequirementsSolver:
@@ -140,23 +147,28 @@ class DegreeRequirementsSolver:
         )
 
     # TODO: Figure out how to clean up json tings
-    def to_json(cls) -> any:
+    def to_json(cls) -> Json:
         degree_reqs = []
         # Add core first
         core_reqs = format_core_reqs(cls.solved_core.to_json())
 
         degree_reqs.append(
-            DegreeRequirement(
-                "Core Curriculum", DegreeRequirementType.core, core_reqs
-            ).to_json()
+            json.loads(
+                DegreeRequirement(
+                    "Core Curriculum", DegreeRequirementType.core, core_reqs
+                ).to_json()
+            )
         )
 
         # Add majors
         for degree_req in cls.degree_requirements:
-            degree_reqs.append(degree_req.to_json())
+            degree_reqs.append(json.loads(degree_req.to_json()))
 
         return json.dumps(
-            {"can_graduate": cls.can_graduate(), "requirements": degree_reqs}
+            {
+                "can_graduate": cls.can_graduate(),
+                "requirements": degree_reqs,
+            }
         )
 
     # def to_json(self) -> DegreeRequirementOutput:
@@ -193,8 +205,6 @@ class RequirementOutput:
     is_fulfilled: bool
     valid_courses: list[str]
     bypasses: list[Bypass]
-    # courses: list[str] # Change to be more complex output later?
-    # filter: list[str]
 
 
 def format_core_reqs(reqs: dict[str, dict[str, Any]]) -> list[AbstractRequirement]:
