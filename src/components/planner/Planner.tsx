@@ -39,6 +39,7 @@ import { DegreeRequirements } from './Sidebar/types';
 
 import Toolbar from './Toolbar';
 import { useSemestersContext } from './SemesterContext';
+import SelectedCoursesToast from './SelectedCoursesToast';
 
 /** PlannerTool Props */
 export interface PlannerProps {
@@ -53,12 +54,13 @@ export default function Planner({ degreeRequirements, showTransfer }: PlannerPro
     handleAddCourseToSemester,
     handleAddYear,
     handleMoveCourseFromSemesterToSemester,
-    handleRemoveCourseFromSemester,
     handleRemoveYear,
     selectedCourseCount,
+    handleDeselectAllCourses,
+    handleSelectCourses,
+    handleDeleteAllSelectedCourses,
   } = useSemestersContext();
 
-  console.log('SELECTED COURSE COUNT: ' + selectedCourseCount);
   // Course that is currently being dragged
   const [activeCourse, setActiveCourse] = useState<ActiveDragData | null>(null);
 
@@ -76,8 +78,13 @@ export default function Planner({ degreeRequirements, showTransfer }: PlannerPro
   const creditsQuery = trpc.credits.getCredits.useQuery(undefined, { staleTime: 10000000000 });
   const credits = creditsQuery.data;
 
-  const courses = useMemo(
+  const courseCodes = useMemo(
     () => semesters.flatMap((sem) => sem.courses).map((course) => course.code),
+    [semesters],
+  );
+
+  const courseIds = useMemo(
+    () => semesters.flatMap((sem) => sem.courses).map((course) => course.id.toString()),
     [semesters],
   );
 
@@ -122,9 +129,17 @@ export default function Planner({ degreeRequirements, showTransfer }: PlannerPro
       onDragStart={handleOnDragStart}
       onDragEnd={handleOnDragEnd}
     >
+      <SelectedCoursesToast
+        show={selectedCourseCount > 0}
+        selectedCount={selectedCourseCount}
+        areAllCoursesSelected={selectedCourseCount === courseIds.length}
+        deleteSelectedCourses={handleDeleteAllSelectedCourses}
+        deselectAllCourses={handleDeselectAllCourses}
+        selectAllCourses={() => handleSelectCourses(courseIds)}
+      />
       <div className="grid w-full grid-cols-[auto_1fr] gap-[52px]">
         <CourseSelectorContainer
-          courses={courses}
+          courses={courseCodes}
           degreeRequirements={degreeRequirements}
           getSearchedDragId={(course) => `course-list-searched-${course.id}`}
           getRequirementDragId={(course) => `course-list-requirement-${course.id}`}
@@ -138,7 +153,7 @@ export default function Planner({ degreeRequirements, showTransfer }: PlannerPro
             ) : null)}
         </DragOverlay>
 
-        <section className="flex min-h-fit w-fit flex-col gap-y-6">
+        <section className="mt-[150px] flex min-h-fit w-fit flex-col gap-y-6">
           <Toolbar title="Plan Your Courses" major="Computer Science" />
 
           <section className="flex h-auto w-fit flex-wrap gap-5">

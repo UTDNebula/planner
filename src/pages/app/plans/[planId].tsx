@@ -35,43 +35,6 @@ export default function PlanDetailPage(
 
   return (
     <div className="flex h-screen max-h-screen w-screen flex-col overflow-x-hidden overflow-y-scroll p-4">
-      {/* <div className=" mb-10 flex flex-row items-center gap-2">
-        <div className="text-2xl">My Plan</div>
-
-        <div className="form-control">
-          <label className="label cursor-pointer">
-            <span className="label-text">Show Transfer Credits</span>
-            <input
-              type="checkbox"
-              className="toggle-success toggle"
-              onClick={() => setShowTransfer(!showTransfer)}
-              defaultChecked
-            />
-          </label>
-        </div>
-
-        <div className=" ml-auto">Majors: Computer Science</div>
-
-        <div>Minors: Cognitive Science</div>
-        <div>Fast Track</div>
-        <div>Import Plan</div>
-        {plan && (
-          <PDFDownloadLink
-            className="text-base font-normal"
-            document={
-              <DegreePlanPDF
-                studentName={session?.user?.email || ''}
-                planTitle={plan.name}
-                semesters={semesters}
-              />
-            }
-            fileName={plan.name + '.pdf'}
-          >
-            {({ loading }) => (loading ? 'Loading document...' : 'EXPORT PLAN')}
-          </PDFDownloadLink>
-        )}
-        <SettingsIcon className={`ml-5 h-5 w-5 cursor-pointer`} strokeWidth={2.5} />
-      </div> */}
       {plan && validation && (
         <SemestersContextProvider planId={planId} plan={plan}>
           <Planner degreeRequirements={validation} showTransfer={showTransfer} />

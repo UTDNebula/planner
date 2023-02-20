@@ -74,6 +74,17 @@ module.exports = {
             transform: 'translateX(0)',
           },
         },
+        checkboxCheckmark: {
+          '0%': {
+            transform: 'translateY(20px)',
+          },
+          '75%': {
+            transform: 'translateY(-2px)',
+          },
+          '100%': {
+            transform: 'translateY(0)',
+          },
+        },
       },
       animation: {
         hide: 'fadeInTwo 1s ease-in-out',

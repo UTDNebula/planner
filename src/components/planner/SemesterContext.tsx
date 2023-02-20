@@ -10,8 +10,11 @@ import { useTaskQueue } from '@/utils/useTaskQueue';
 export interface SemestersContextState {
   semesters: Semester[];
   selectedCourseCount: number;
-  handleAddSelectedCourses: AddSelectedCoursesHandler;
-  handleRemoveSelectedCourse: RemoveSelectedCourseHandler;
+  courseIsSelected: (courseId: string) => boolean;
+  handleSelectCourses: (courseId: string[]) => void;
+  handleDeselectCourses: (courseId: string[]) => void;
+  handleDeselectAllCourses: () => void;
+  handleDeleteAllSelectedCourses: () => void;
   handleAddCourseToSemester: (targetSemester: Semester, newCourse: DraggableCourse) => void;
   handleMoveCourseFromSemesterToSemester: (
     originSemester: Semester,
@@ -46,14 +49,6 @@ export interface useSemestersProps {
   plan?: Plan;
 }
 
-export type AddSelectedCoursesHandler = (courses: SelectedCourse[]) => void;
-
-export type RemoveSelectedCourseHandler = (course: SelectedCourse) => void;
-
-export type SelectedCourse = { courseId: string; semesterId: string };
-
-export type SelectedCoursesState = SelectedCourse[];
-
 export type SemestersReducerState = Semester[];
 
 export type SemestersReducerAction =
@@ -86,28 +81,45 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
 }) => {
   const { addTask } = useTaskQueue({ shouldProcess: true });
 
-  const [selectedCourses, setSelectedCourses] = useState<SelectedCoursesState>([]);
+  const [selectedCourseIds, setSelectedCourseIds] = useState<Set<string>>(new Set());
 
-  const handleAddSelectedCourses = (courses: SelectedCourse[]) => {
-    const nonDuplicateCourses = courses.filter(
-      (incoming) =>
-        !selectedCourses.some(
-          (existing) =>
-            existing.courseId === incoming.courseId && existing.semesterId === incoming.semesterId,
-        ),
-    );
-
-    setSelectedCourses([...selectedCourses, ...nonDuplicateCourses]);
+  const handleSelectCourses = (courseIds: string[]) => {
+    setSelectedCourseIds((existingCourseIds) => {
+      const newSet = new Set(existingCourseIds);
+      courseIds.forEach((courseId) => newSet.add(courseId));
+      return newSet;
+    });
   };
 
-  const handleRemoveSelectedCourse = (course: SelectedCourse) => {
-    setSelectedCourses(
-      selectedCourses.filter(
-        ({ courseId, semesterId }) =>
-          course.courseId !== courseId && course.semesterId !== semesterId,
-      ),
-    );
+  const handleDeselectCourses = (courseIds: string[]) => {
+    setSelectedCourseIds((existingCourseIds) => {
+      const newSet = new Set(existingCourseIds);
+      courseIds.forEach((courseId) => newSet.delete(courseId));
+      return newSet;
+    });
   };
+
+  const handleDeleteAllSelectedCourses = () => {
+    for (const semester of semesters) {
+      for (const { id } of semester.courses) {
+        const courseId = id.toString();
+
+        if (selectedCourseIds.has(courseId)) {
+          dispatchSemesters({
+            type: 'removeCourseFromSemester',
+            courseId,
+            semesterId: semester.id.toString(),
+          });
+        }
+      }
+    }
+
+    setSelectedCourseIds(new Set());
+  };
+
+  const courseIsSelected = (courseId: string): boolean => selectedCourseIds.has(courseId);
+
+  const handleDeselectAllCourses = () => setSelectedCourseIds(new Set());
 
   const [semesters, dispatchSemesters] = useReducer<
     (state: SemestersReducerState, action: SemestersReducerAction) => Semester[]
@@ -191,6 +203,8 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
   const deleteAllCourses = trpc.plan.deleteAllCoursesFromSemester.useMutation();
 
   const handleDeleteAllCoursesFromSemester = (semester: Semester) => {
+    handleDeselectCourses(semester.courses.map((course) => course.id.toString()));
+
     dispatchSemesters({ type: 'deleteAllCoursesFromSemester', semesterId: semester.id.toString() });
 
     addTask({
@@ -363,9 +377,12 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
     <SemestersContext.Provider
       value={{
         semesters: sortedSemesters,
-        selectedCourseCount: selectedCourses.length,
-        handleAddSelectedCourses,
-        handleRemoveSelectedCourse,
+        selectedCourseCount: selectedCourseIds.size,
+        courseIsSelected,
+        handleSelectCourses,
+        handleDeselectCourses,
+        handleDeselectAllCourses,
+        handleDeleteAllSelectedCourses,
         handleAddCourseToSemester,
         handleAddYear,
         handleMoveCourseFromSemesterToSemester,

@@ -31,7 +31,7 @@ const Button: FC<ButtonProps> = ({
       className={`${colorClasses[color]} ${sizeClasses[size]} flex h-fit w-fit items-center justify-center rounded-md font-medium transition duration-200 ease-in-out ${className}`}
     >
       {icon}
-      {children}
+      <span className="whitespace-nowrap">{children}</span>
     </button>
   );
 };

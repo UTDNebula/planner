@@ -6,9 +6,11 @@ import SyncProblemIcon from '@mui/icons-material/SyncProblem';
 import { displaySemesterCode } from '@/utils/utilFunctions';
 import CheckIcon from '@mui/icons-material/Check';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
+import Checkbox from '@/components/Checkbox';
 
 export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'> {
   course: DraggableCourse;
+  isSelected?: boolean;
   isTransfer?: boolean;
   onSelectCourse?: () => void;
   onDeselectCourse?: () => void;
@@ -18,25 +20,13 @@ export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'>
 /* eslint-disable react/prop-types */
 export const MemoizedSemesterCourseItem = React.memo(
   forwardRef<HTMLDivElement, SemesterCourseItemProps>(function SemesterCourseItem(
-    { course, isTransfer, onSelectCourse, onDeselectCourse, ...props },
+    { course, isTransfer, onSelectCourse, onDeselectCourse, isSelected, ...props },
     ref,
   ) {
     // Create text output for sync icon
     const correctSemester = course.sync?.correctSemester
       ? `Course already taken in ${displaySemesterCode(course.sync?.correctSemester)}`
       : `No record of this course in Course History`;
-
-    const [checked, setChecked] = useState(false);
-
-    const updateChecked = () => {
-      if (!checked) {
-        onSelectCourse && onSelectCourse();
-        setChecked(true);
-      } else {
-        onDeselectCourse && onDeselectCourse();
-        setChecked(false);
-      }
-    };
 
     return (
       <div
@@ -47,10 +37,18 @@ export const MemoizedSemesterCourseItem = React.memo(
       >
         <div className="flex items-center gap-x-3">
           <DragIndicatorIcon fontSize="inherit" className="text-[16px] text-neutral-300" />
-          <input
-            onChange={() => updateChecked()}
-            type="checkbox"
-            className="checkbox-primary checkbox h-5 w-5 rounded-[3.5px] border-1.25 border-neutral-300 bg-generic-white accent-primary"
+          <Checkbox
+            style={{ width: '20px', height: '20px' }}
+            checked={isSelected}
+            onCheckedChange={(checked) => {
+              if (checked && onSelectCourse) {
+                onSelectCourse();
+              }
+
+              if (!checked && onDeselectCourse) {
+                onDeselectCourse();
+              }
+            }}
           />
           <span className="text-[16px] text-[#1C2A6D]">{course.code}</span>
         </div>
@@ -81,6 +79,7 @@ export const SemesterCourseItem = MemoizedSemesterCourseItem;
 
 export interface DraggableSemesterCourseItemProps {
   dragId: UniqueIdentifier;
+  isSelected: boolean;
   semester: Semester;
   course: DraggableCourse;
   onSelectCourse: () => void;
@@ -94,6 +93,7 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
   course,
   onSelectCourse,
   onDeselectCourse,
+  isSelected,
 }) => {
   const { setNodeRef, attributes, listeners, isDragging } = useDraggable({
     id: dragId,
@@ -111,6 +111,7 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
       course={course}
       onSelectCourse={onSelectCourse}
       onDeselectCourse={onDeselectCourse}
+      isSelected={isSelected}
     />
   );
 };

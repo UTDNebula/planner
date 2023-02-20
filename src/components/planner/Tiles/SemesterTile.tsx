@@ -28,9 +28,10 @@ export const MemoizedSemesterTile = React.memo(
     const [open, setOpen] = useState(true);
 
     const {
-      handleAddSelectedCourses,
-      handleRemoveSelectedCourse,
+      handleSelectCourses,
+      handleDeselectCourses,
       handleDeleteAllCoursesFromSemester,
+      courseIsSelected,
     } = useSemestersContext();
 
     const { sync, prerequisites } = semesterErrors;
@@ -80,12 +81,7 @@ export const MemoizedSemesterTile = React.memo(
           <SemesterTileDropdown
             deleteAllCourses={() => handleDeleteAllCoursesFromSemester(semester)}
             selectAllCourses={() =>
-              handleAddSelectedCourses(
-                semester.courses.map((course) => ({
-                  courseId: course.id.toString(),
-                  semesterId: semester.id.toString(),
-                })),
-              )
+              handleSelectCourses(semester.courses.map((course) => course.id.toString()))
             }
           />
         </div>
@@ -97,17 +93,10 @@ export const MemoizedSemesterTile = React.memo(
         >
           {semester.courses.map((course) => (
             <DraggableSemesterCourseItem
-              onSelectCourse={() =>
-                handleAddSelectedCourses([
-                  { courseId: course.id.toString(), semesterId: semester.id.toString() },
-                ])
-              }
-              onDeselectCourse={() =>
-                handleRemoveSelectedCourse({
-                  courseId: course.id.toString(),
-                  semesterId: semester.id.toString(),
-                })
-              }
+              isSelected={courseIsSelected(course.id.toString())}
+              // isSelected={true}
+              onSelectCourse={() => handleSelectCourses([course.id.toString()])}
+              onDeselectCourse={() => handleDeselectCourses([course.id.toString()])}
               key={course.id.toString()}
               dragId={getDragId(course, semester)}
               course={course}
