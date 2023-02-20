@@ -1,7 +1,7 @@
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { createProxySSGHelpers } from '@trpc/react-query/ssg';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next/types';
-import { unstable_getServerSession } from 'next-auth';
+import { getServerSession } from 'next-auth';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import superjson from 'superjson';
@@ -97,7 +97,7 @@ export default function PlanDetailPage(
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext<{ planId: string }>) {
-  const session = await unstable_getServerSession(context.req, context.res, authOptions);
+  const session = await getServerSession(context.req, context.res, authOptions);
   const ssg = createProxySSGHelpers({
     router: appRouter,
     ctx: await createContextInner({ session }),

@@ -2,7 +2,7 @@ import logo from '@public/Nebula_Planner_Logo.png';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { unstable_getServerSession } from 'next-auth/next';
+import { getServerSession } from 'next-auth/next';
 import { getCsrfToken, getProviders, signIn } from 'next-auth/react';
 import React from 'react';
 
@@ -101,7 +101,7 @@ export default function AuthPage({
 }
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   // TODO: rethink this to prevent checking for session twice on redirect
-  const session = await unstable_getServerSession(context.req, context.res, authOptions);
+  const session = await getServerSession(context.req, context.res, authOptions);
   if (session) {
     return {
       redirect: { destination: '/app' },
