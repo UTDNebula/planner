@@ -218,7 +218,7 @@ class SelectRequirement(AbstractRequirement):
         required_count: int
 
     @classmethod
-    def from_json(cls, json: JSON) -> AbstractRequirement:
+    def from_json(cls, json: JSON) -> SelectRequirement:
         from .map import REQUIREMENTS_MAP
 
         requirements: list[AbstractRequirement] = []
@@ -303,7 +303,7 @@ class HoursRequirement(AbstractRequirement):
         metadata: dict[str, str]
 
     @classmethod
-    def from_json(cls, json: JSON) -> AbstractRequirement:
+    def from_json(cls, json: JSON) -> HoursRequirement:
         """
         {
             "required_hours": 10,
@@ -397,7 +397,7 @@ class FreeElectiveRequirement(AbstractRequirement):
         required_hours: int
 
     @classmethod
-    def from_json(cls, json: JSON) -> AbstractRequirement:
+    def from_json(cls, json: JSON) -> FreeElectiveRequirement:
         """
         {
             "required_hours": 10,

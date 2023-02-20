@@ -165,7 +165,7 @@ def test_hours_requirement() -> None:
     hours_req.attempt_fulfill("HIST 1301")
 
     assert hours_req.fulfilled_hours == 3
-    assert hours_req.is_fulfilled
+    assert hours_req.is_fulfilled() == True
 
 
 def test_free_elective_requirement() -> None:

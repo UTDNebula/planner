@@ -1,6 +1,6 @@
 from .base import AbstractRequirement
 from .shared import *
-from .edge_cases import business_administration
+from .edge_cases import business_administration, computer_science
 from typing import Type
 
 REQUIREMENTS_MAP: dict[str, Type[AbstractRequirement]] = {
