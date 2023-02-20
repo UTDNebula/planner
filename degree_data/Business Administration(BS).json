@@ -210,7 +210,7 @@
             "required_hours": 15,
             "prefix_groups": [
               {
-                "matcher": "OrRequirement",
+                "matcher": "SomeRequirement",
                 "requirements": [
                   {
                     "matcher": "PrefixBucketRequirement",
@@ -219,7 +219,7 @@
                 ]
               },
               {
-                "matcher": "OrRequirement",
+                "matcher": "SomeRequirement",
                 "requirements": [
                   {
                     "matcher": "PrefixBucketRequirement",
@@ -248,7 +248,7 @@
                 ]
               },
               {
-                "matcher": "OrRequirement",
+                "matcher": "SomeRequirement",
                 "requirements": [
                   {
                     "matcher": "PrefixBucketRequirement",
@@ -257,7 +257,7 @@
                 ]
               },
               {
-                "matcher": "OrRequirement",
+                "matcher": "SomeRequirement",
                 "requirements": [
                   {
                     "matcher": "PrefixBucketRequirement",
@@ -286,7 +286,7 @@
                 ]
               },
               {
-                "matcher": "OrRequirement",
+                "matcher": "SomeRequirement",
                 "requirements": [
                   {
                     "matcher": "PrefixBucketRequirement",

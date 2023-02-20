@@ -18,15 +18,16 @@ Note: assuming BA 4V90 & BA 4090 cover one of the groups
 class SomeRequirement(OrRequirement):
     """Requires one requirement to fulfilled
     CS 1200 fills -> HIST 1301 or CS 1200 requirement
-    Allows attempt_filled to work even if is_fulfilled() is true
+    NOTE: Allows attempt_filled to work even if is_fulfilled() is true
     """
 
     def attempt_fulfill(self, course: str) -> bool:
-        filled_one = False
-        for requirement in self.requirements:
-            filled_one = filled_one or requirement.attempt_fulfill(course)
 
-        return filled_one
+        for requirement in self.requirements:
+            if requirement.attempt_fulfill(course):
+                return True
+
+        return False
 
 
 class BusinessAdministrationElectiveRequirement(AbstractRequirement):
@@ -41,9 +42,12 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
     Parameters
     __________
     required_count: int
-        Minimum # of fulfillments before requirement is fulfilled
+        Minimum # of groups needed to fulfill requirement
 
-    starts_with_groups: list[list[str]]
+    required_hours: int
+        Minimum # of credit hours needed to fulfill requirement
+
+    prefix_groups: list[list[str]]
         Groups of department prefixes
 
     """
@@ -98,13 +102,13 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
     class JSON(TypedDict):
         required_count: int
         required_hours: int
-        prefix_groups: list[SomeRequirement.Req]
+        prefix_groups: list[OrRequirement.Req]
 
     @classmethod
     def from_json(cls, json: JSON) -> BusinessAdministrationElectiveRequirement:
         """
         {
-            "matcher": "BA_ElectiveRequirement",
+            "matcher": "BAGuidedElectiveRequirement",
             "required_count": 3,
             "required_hours": 15,
             "prefix_groups": [
