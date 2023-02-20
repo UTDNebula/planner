@@ -1,10 +1,9 @@
 from __future__ import annotations
-from collections import defaultdict
 from enum import Enum
 import json
 from pydantic import Json
 
-from pyparsing import Any
+from typing import Any
 from core.solver import AssignmentStore, GraduationRequirementsSolver
 from major.requirements import AbstractRequirement
 from dataclasses import dataclass
@@ -89,7 +88,7 @@ class DegreeRequirement:
     def get_num_fulfilled_requirements(self) -> int:
         return sum([1 for req in self.requirements if req.is_fulfilled()])
 
-    def to_json(self) -> Json:
+    def to_json(self) -> Json[Any]:
         return json.dumps(
             {
                 "name": self.name,
@@ -120,10 +119,10 @@ class DegreeRequirementsSolver:
         self.degree_requirements = self.load_requirements(requirements)
         self.validate_core = requirements.core
         self.bypasses = bypasses
-        self.solved_core = AssignmentStore()
+        self.solved_core = AssignmentStore()  # type: ignore
 
     def load_core(self) -> GraduationRequirementsSolver:
-        core_solver = GraduationRequirementsSolver()
+        core_solver = GraduationRequirementsSolver()  # type: ignore
         filename = "./core/requirements/core.req"
         core_solver.load_requirements_from_file(filename)
         return core_solver
@@ -186,10 +185,10 @@ class DegreeRequirementsSolver:
                     for degree_req in self.degree_requirements
                 )
             )
-            and self.solved_core.can_graduate()
+            and self.solved_core.can_graduate()  # type: ignore
         )
 
-    def to_json(cls) -> Json:
+    def to_json(cls) -> Json[Any]:
         degree_reqs = []
         # Add core first
         core_reqs = format_core_reqs(cls.solved_core.to_json())
