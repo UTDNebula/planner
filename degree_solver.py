@@ -205,12 +205,11 @@ class DegreeRequirementsSolver:
         for degree_req in cls.degree_requirements:
             degree_reqs.append(json.loads(degree_req.to_json()))
 
-        degree_reqs_output: DegreeRequirementsSolverOutput = (
-            DegreeRequirementsSolverOutput(
-                cls.can_graduate(),
-                degree_reqs,
-            )
-        )
+        degree_reqs_output: DegreeRequirementsSolverOutput = {
+            "can_graduate": cls.can_graduate(),
+            "requirements": degree_reqs,
+        }
+
         return json.dumps(degree_reqs_output)
 
     def __str__(self) -> str:
