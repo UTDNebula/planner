@@ -5,8 +5,9 @@ import { DragDataFromSemesterTile, DraggableCourse, Semester } from '../types';
 import SyncProblemIcon from '@mui/icons-material/SyncProblem';
 import { displaySemesterCode } from '@/utils/utilFunctions';
 import CheckIcon from '@mui/icons-material/Check';
-import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import Checkbox from '@/components/Checkbox';
+import SemesterCourseItemDropdown from './SemesterCourseItemDropdown';
+import { useSemestersContext } from '../SemesterContext';
 
 export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'> {
   course: DraggableCourse;
@@ -14,13 +15,14 @@ export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'>
   isTransfer?: boolean;
   onSelectCourse?: () => void;
   onDeselectCourse?: () => void;
+  onDeleteCourse?: () => void;
 }
 
 /** UI implementation of a semester course */
 /* eslint-disable react/prop-types */
 export const MemoizedSemesterCourseItem = React.memo(
   forwardRef<HTMLDivElement, SemesterCourseItemProps>(function SemesterCourseItem(
-    { course, isTransfer, onSelectCourse, onDeselectCourse, isSelected, ...props },
+    { course, isTransfer, onSelectCourse, onDeselectCourse, isSelected, onDeleteCourse, ...props },
     ref,
   ) {
     // Create text output for sync icon
@@ -33,10 +35,10 @@ export const MemoizedSemesterCourseItem = React.memo(
         ref={ref}
         {...props}
         data-tip="Drag!"
-        className={`tooltip tooltip-left flex h-[40px] w-full items-center justify-between overflow-hidden rounded-md border border-neutral-200 bg-generic-white py-4 px-5`}
+        className={`tooltip tooltip-left flex h-[40px] w-full cursor-grab items-center justify-between overflow-hidden rounded-md border border-neutral-200 bg-generic-white py-4 px-5`}
       >
         <div className="flex items-center gap-x-3">
-          <DragIndicatorIcon fontSize="inherit" className="text-[16px] text-neutral-300" />
+          <SemesterCourseItemDropdown deleteCourse={() => onDeleteCourse && onDeleteCourse()} />
           <Checkbox
             style={{ width: '20px', height: '20px' }}
             checked={isSelected}
@@ -84,6 +86,7 @@ export interface DraggableSemesterCourseItemProps {
   course: DraggableCourse;
   onSelectCourse: () => void;
   onDeselectCourse: () => void;
+  onDeleteCourse: () => void;
 }
 
 /** Compositional wrapper around SemesterCourseItem */
@@ -93,6 +96,7 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
   course,
   onSelectCourse,
   onDeselectCourse,
+  onDeleteCourse,
   isSelected,
 }) => {
   const { setNodeRef, attributes, listeners, isDragging } = useDraggable({
@@ -111,6 +115,7 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
       course={course}
       onSelectCourse={onSelectCourse}
       onDeselectCourse={onDeselectCourse}
+      onDeleteCourse={onDeleteCourse}
       isSelected={isSelected}
     />
   );

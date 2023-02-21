@@ -14,6 +14,7 @@ import {
 } from './types';
 import { GetDragIdByCourseAndReq } from '../types';
 import { RecursiveRequirement } from './RecursiveRequirement';
+import { DragIndicator } from '@mui/icons-material';
 
 function RequirementContainerHeader({
   name,
@@ -207,8 +208,10 @@ export default function RequirementsContainer({
       requirementsList={
         <Accordion
           header={
-            <div className="flex w-full flex-row items-center justify-between ">
-              <div className="text-[20px] font-medium">{degreeRequirement.name}</div>
+            <div className="flex w-full flex-row items-center justify-between">
+              <div className="my-4 whitespace-nowrap text-2xl font-semibold">
+                {degreeRequirement.name}
+              </div>
 
               <ProgressComponent
                 value={degreeRequirement.num_fulfilled_requirements}
@@ -221,20 +224,26 @@ export default function RequirementsContainer({
             {degreeRequirement.requirements.map((elm, idx) => {
               const { value, max } = displayRequirementProgress(elm);
               return (
-                <div className="flex justify-between px-2 py-1" key={idx}>
-                  <div className="text-sm">{elm.metadata ? elm.metadata.name : 'hi'}</div>
+                <div
+                  className="flex items-center gap-x-4 rounded-md border border-neutral-300 px-5 py-4"
+                  key={idx}
+                >
+                  <DragIndicator fontSize="inherit" className="mr-3 text-[16px] text-[#D4D4D4]" />
+                  <div className="max-w-[50%] overflow-hidden text-ellipsis whitespace-nowrap text-sm">
+                    {elm.metadata ? elm.metadata.name : 'hi'}
+                  </div>
                   <div className="flex flex-row items-center px-[5px] text-[11px]">
                     <ProgressComponent value={value} max={max} />
-
-                    <button
-                      onClick={() => {
-                        toggleCarousel();
-                        setRequirementIdx(idx);
-                      }}
-                    >
-                      <ChevronRightIcon />
-                    </button>
                   </div>
+
+                  <button
+                    onClick={() => {
+                      toggleCarousel();
+                      setRequirementIdx(idx);
+                    }}
+                  >
+                    <ChevronRightIcon />
+                  </button>
                 </div>
               );
             })}
@@ -283,7 +292,7 @@ function RequirementContainer({
     <>
       <RequirementContainerHeader name={name} status={status} setCarousel={setCarousel} />
       <div className="text-[14px]">{description}</div>
-      <div className=" h-[300px] overflow-x-hidden overflow-y-scroll">
+      <div className=" flex h-[300px] flex-col gap-y-2 overflow-x-hidden overflow-y-scroll">
         <RequirementSearchBar updateQuery={updateQuery} />
         {results.map((req, idx) => {
           return (
