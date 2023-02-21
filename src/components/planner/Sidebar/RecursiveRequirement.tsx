@@ -1,5 +1,5 @@
 import { ObjectID } from 'bson';
-import React from 'react';
+import React, { useMemo } from 'react';
 import DraggableSidebarCourseItem from './SidebarCourseItem';
 import { CourseRequirement, RequirementTypes } from './types';
 import Accordion from './Accordion';
@@ -140,7 +140,8 @@ function CourseRequirementComponent({
   courses: string[];
   validCourses: { [key: string]: number };
 }) {
-  const id = new ObjectID();
+  const id = useMemo(() => new ObjectID(), []);
+
   return (
     <DraggableSidebarCourseItem
       course={{

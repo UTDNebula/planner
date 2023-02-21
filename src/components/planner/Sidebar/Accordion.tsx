@@ -34,7 +34,7 @@ export default function Accordian({
           open ? 'max-h-[999px]' : 'max-h-0'
         }`}
       >
-        <div className="pt-2">{children}</div>
+        <div className="flex flex-col gap-y-4 pt-2">{children}</div>
       </div>
     </div>
   );

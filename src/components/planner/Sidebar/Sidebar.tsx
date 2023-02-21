@@ -57,7 +57,7 @@ function CourseSelectorContainer({
 
   return (
     <div className="flex h-full w-[500px] flex-col gap-y-8 overflow-hidden bg-white p-4">
-      <h1 className="text-[36px]">Plan Requirements</h1>
+      <h1 className="text-3xl">Plan Requirements</h1>
       <SearchBarTwo updateQuery={updateQuery} placeholder="Search courses" />
       <div>Drag courses onto your plan!</div>
 

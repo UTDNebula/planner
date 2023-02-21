@@ -15,7 +15,7 @@ export function SidebarCourseItem({ course }: { course: DraggableCourse }): JSX.
     <div
       className={`cursor-grab ${
         course.taken && 'opacity-50'
-      } flex h-[40px] flex-row items-center justify-between rounded-md border border-[#EDEFF7] bg-white py-1.5 px-2 text-[10px] text-[#1C2A6D] drop-shadow-sm`}
+      } flex h-[40px] flex-row items-center justify-between rounded-md border border-neutral-300 bg-white py-4 px-5 text-[10px] text-[#1C2A6D] drop-shadow-sm`}
     >
       <span className="text-[16px] text-[#1C2A6D]">
         <DragIndicatorIcon fontSize="inherit" className="mr-3 text-[16px] text-[#D4D4D4]" />

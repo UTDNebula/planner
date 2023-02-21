@@ -23,7 +23,7 @@ export default function RequirementsCarousel({
       <div
         className={`${
           (overflow || !carousel) && 'overflow-hidden'
-        } flex flex-row rounded-2xl border-2 border-[#D4D4D4] `}
+        } flex flex-row rounded-2xl border border-neutral-300`}
       >
         <div
           className={`z-30 h-fit min-w-full rounded-md px-4 py-4 duration-500 ${
