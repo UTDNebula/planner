@@ -3,15 +3,17 @@ import DownloadIcon from '@/icons/DownloadIcon';
 import EditIcon from '@/icons/EditIcon';
 import { FC } from 'react';
 import Button from '../Button';
-import Toggle from '../Toggle';
+import Switch from '../Switch';
 import SortByDropdown from './SortByDropdown';
 
 export interface ToolbarProps {
   title: string;
   major: string;
+  showTransfer: boolean;
+  toggleShowTransfer: (show: boolean) => void;
 }
 
-const Toolbar: FC<ToolbarProps> = ({ title, major }) => {
+const Toolbar: FC<ToolbarProps> = ({ title, major, showTransfer, toggleShowTransfer }) => {
   return (
     <section className="flex w-full flex-col justify-center gap-y-6">
       <article className="flex justify-between">
@@ -32,7 +34,12 @@ const Toolbar: FC<ToolbarProps> = ({ title, major }) => {
         </button>
 
         <form className="flex items-center gap-x-3">
-          <Toggle size="small" id="transfer-toggle" />
+          <Switch
+            size="small"
+            id="transfer-toggle"
+            checked={showTransfer}
+            onCheckedChange={toggleShowTransfer}
+          />
           <label htmlFor="transfer-toggle" className="text-base text-neutral-900">
             Show Transfer Credits
           </label>

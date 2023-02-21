@@ -1,4 +1,3 @@
-import { PDFDownloadLink } from '@react-pdf/renderer';
 import { createProxySSGHelpers } from '@trpc/react-query/ssg';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next/types';
 import { getServerSession } from 'next-auth';
@@ -6,7 +5,6 @@ import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import superjson from 'superjson';
 
-import DegreePlanPDF from '@/components/planner/DegreePlanPDF/DegreePlanPDF';
 import Planner from '@/components/planner/Planner';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { createContextInner } from '@/server/trpc/context';
@@ -24,10 +22,6 @@ export default function PlanDetailPage(
   const { planId } = props;
   const { plan, validation, isLoading, handlePlanDelete } = usePlan({ planId });
 
-  const [showTransfer, setShowTransfer] = useState(true);
-
-  const { data: session } = useSession();
-
   // Indicate UI loading
   if (isLoading) {
     return <div>Loading</div>;
@@ -37,7 +31,7 @@ export default function PlanDetailPage(
     <div className="flex h-screen max-h-screen w-screen flex-col overflow-x-hidden overflow-y-scroll p-4">
       {plan && validation && (
         <SemestersContextProvider planId={planId} plan={plan}>
-          <Planner degreeRequirements={validation} showTransfer={showTransfer} />
+          <Planner degreeRequirements={validation} />
         </SemestersContextProvider>
       )}
       <button onClick={handlePlanDelete}>Delete</button>

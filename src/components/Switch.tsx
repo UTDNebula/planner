@@ -1,4 +1,4 @@
-import * as Switch from '@radix-ui/react-switch';
+import * as RSwitch from '@radix-ui/react-switch';
 import { FC } from 'react';
 
 const rootSizeClasses = {
@@ -9,21 +9,21 @@ const thumbSizeClasses = {
   small: 'h-[14px] w-[14px]',
 };
 
-export interface ToggleProps extends Switch.SwitchProps {
+export interface SwitchProps extends RSwitch.SwitchProps {
   size?: keyof typeof rootSizeClasses;
 }
 
-const Toggle: FC<ToggleProps> = ({ size = 'small', ...props }) => {
+const Switch: FC<SwitchProps> = ({ size = 'small', ...props }) => {
   return (
-    <Switch.Root
+    <RSwitch.Root
       {...props}
       className={`${rootSizeClasses[size]} relative rounded-full bg-neutral-300 data-[state=checked]:bg-primary`}
     >
-      <Switch.Thumb
+      <RSwitch.Thumb
         className={`${thumbSizeClasses[size]} duration-400 block h-[14px] w-[14px] translate-x-[1px] transform rounded-full bg-generic-white transition-transform will-change-transform data-[state=checked]:translate-x-[10px]`}
       />
-    </Switch.Root>
+    </RSwitch.Root>
   );
 };
 
-export default Toggle;
+export default Switch;

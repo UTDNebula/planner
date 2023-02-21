@@ -44,11 +44,10 @@ import SelectedCoursesToast from './SelectedCoursesToast';
 /** PlannerTool Props */
 export interface PlannerProps {
   degreeRequirements: DegreeRequirements;
-  showTransfer: boolean;
 }
 
 /** Controlled wrapper around course list and semester tiles */
-export default function Planner({ degreeRequirements, showTransfer }: PlannerProps): JSX.Element {
+export default function Planner({ degreeRequirements }: PlannerProps): JSX.Element {
   const {
     semesters,
     handleAddCourseToSemester,
@@ -60,6 +59,9 @@ export default function Planner({ degreeRequirements, showTransfer }: PlannerPro
     handleSelectCourses,
     handleDeleteAllSelectedCourses,
   } = useSemestersContext();
+
+  // toggle transfered courses state
+  const [showTransfer, setShowTransfer] = useState(true);
 
   // Course that is currently being dragged
   const [activeCourse, setActiveCourse] = useState<ActiveDragData | null>(null);
@@ -154,7 +156,12 @@ export default function Planner({ degreeRequirements, showTransfer }: PlannerPro
         </DragOverlay>
 
         <section className="mt-[150px] flex min-h-fit w-fit flex-col gap-y-6">
-          <Toolbar title="Plan Your Courses" major="Computer Science" />
+          <Toolbar
+            title="Plan Your Courses"
+            major="Computer Science"
+            showTransfer={showTransfer}
+            toggleShowTransfer={() => setShowTransfer(!showTransfer)}
+          />
 
           <section className="flex h-auto w-fit flex-wrap gap-5">
             {semesters.map((semester) => {
