@@ -11,6 +11,7 @@ import DragAndDropSection from '../components/landing/Onboarding/DragAndDropSect
 import FeatureSection from '../components/landing/Onboarding/FeatureSection';
 import GetStartedSection from '../components/landing/Onboarding/GetStartedSection';
 import LearnMoreSection from '../components/landing/Onboarding/LearnMoreSection';
+import { trpc } from '@/utils/trpc';
 
 /**
  * The primary landing page for the application.
@@ -25,6 +26,10 @@ export default function LandingPage(): JSX.Element {
   const { ref: appBarRef, inView: appBarVisible } = useInView({
     triggerOnce: true,
   });
+
+  // This line purely exists to start the MongoDB at the landing page.
+  // This is done to mitigate cold start. Please keep this line here
+  const notUsed = trpc.template.getAllTemplates.useQuery(undefined, { staleTime: 1000000000 });
 
   const [open, setOpen] = React.useState(true);
 
