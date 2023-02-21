@@ -14,7 +14,7 @@ export default function Accordian({
     setOpen(!open);
   }
   return (
-    <div className={filled ? 'opacity-50' : ''}>
+    <div className={`rounded-2xl  ${filled ? 'opacity-50' : ''}`}>
       <button
         className="flex w-full flex-row items-center justify-between px-2 duration-500"
         onClick={toggleAccordion}
