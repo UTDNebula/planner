@@ -22,7 +22,7 @@ const Toolbar: FC<ToolbarProps> = ({ title, major, showTransfer, toggleShowTrans
           <SortByDropdown />
           <Button size="large" icon={<AddFileIcon className="h-6 w-5" />} />
           <Button size="large" icon={<DownloadIcon />}>
-            Export Degree Plan
+            <span className="whitespace-nowrap">Export Degree Plan</span>
           </Button>
         </div>
       </article>

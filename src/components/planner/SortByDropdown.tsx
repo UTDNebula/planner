@@ -16,7 +16,7 @@ const SortByDropdown: FC = () => {
       <DropdownMenu.Trigger asChild>
         <button aria-label="Sort by options">
           <Button size="large" color="secondary" icon={<SwitchVerticalIcon />} className="mr-8">
-            Sort By
+            <span className="whitespace-nowrap">Sort By</span>
           </Button>
         </button>
       </DropdownMenu.Trigger>
