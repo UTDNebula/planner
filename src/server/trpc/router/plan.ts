@@ -90,12 +90,11 @@ export const planRouter = router({
           'content-type': 'application/json',
         },
       }).then(async (res) => {
-        const rawData = await res.json();
-
         // Throw error if bad
         if (res.status !== 200) {
           return { can_graduate: false, requirements: [] };
         }
+        const rawData = await res.json();
         return rawData;
       });
 
