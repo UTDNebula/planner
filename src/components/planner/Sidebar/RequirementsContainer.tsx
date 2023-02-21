@@ -144,11 +144,16 @@ const getRequirementGroup = (
 
 export const ProgressComponent = ({ value, max }: { value: number; max: number }) => {
   return (
-    <div className="flex flex-col items-center justify-center">
-      <span className="text-[10px]">
+    <div className="relative flex w-fit flex-col items-center justify-center">
+      <span className="w-fit text-[10px]">
         {value}/{max} done
       </span>
-      <progress id="file" value={value} max={max} className="h-2 w-10" />
+      <progress
+        id="file"
+        value={value}
+        max={max}
+        className="h-2 w-24 appearance-none rounded-full"
+      />
     </div>
   );
 };
@@ -203,7 +208,7 @@ export default function RequirementsContainer({
         <Accordion
           header={
             <div className="flex w-full flex-row items-center justify-between ">
-              <div className="">{degreeRequirement.name}</div>
+              <div className="text-[20px] font-medium">{degreeRequirement.name}</div>
 
               <ProgressComponent
                 value={degreeRequirement.num_fulfilled_requirements}

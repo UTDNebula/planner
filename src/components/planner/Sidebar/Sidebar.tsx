@@ -1,4 +1,4 @@
-import SearchBar from '@components/credits/SearchBar';
+import SearchBar, { SearchBarTwo } from '@components/credits/SearchBar';
 import React from 'react';
 
 import RequirementsContainer from '@/components/planner/Sidebar/RequirementsContainer';
@@ -56,8 +56,9 @@ function CourseSelectorContainer({
   }, [results, courses]);
 
   return (
-    <div className="flex h-full w-[344px] flex-col gap-y-8 overflow-hidden">
-      <SearchBar updateQuery={updateQuery} placeholder="Search courses" />
+    <div className="flex h-full w-[500px] flex-col gap-y-8 overflow-hidden bg-white p-4">
+      <h1 className="text-[36px]">Plan Requirements</h1>
+      <SearchBarTwo updateQuery={updateQuery} placeholder="Search courses" />
       <div>Drag courses onto your plan!</div>
 
       <div className="bg-white p-4">

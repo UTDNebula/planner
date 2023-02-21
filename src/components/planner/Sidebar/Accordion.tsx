@@ -1,68 +1,41 @@
-import React, { FC, useRef, useState } from 'react';
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import CheckIcon from '@mui/icons-material/Check';
+import React from 'react';
+import ChevronIcon from '@/icons/ChevronIcon';
 export default function Accordian({
   header,
   children,
+  filled = false,
 }: {
   header: JSX.Element;
   children: JSX.Element;
+  filled?: boolean;
 }) {
-  const [accordion, setAccordion] = React.useState(false);
-  const [height, setHeight] = useState<string>('0px');
-  const accordionRef = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = React.useState(false);
   function toggleAccordion() {
-    setAccordion(!accordion);
-    setHeight(
-      accordion
-        ? '0px'
-        : `${Math.max(accordionRef.current ? accordionRef.current.scrollHeight + 20 : 0)}px`,
-    );
+    setOpen(!open);
   }
   return (
-    <div>
+    <div className={`rounded-2xl  ${filled ? 'opacity-50' : ''}`}>
       <button
-        className="flex w-full flex-row items-center justify-between px-2"
+        className="flex w-full flex-row items-center justify-between px-2 duration-500"
         onClick={toggleAccordion}
       >
         {header}
-        {accordion ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+        <ChevronIcon
+          className={`${
+            open ? '-rotate-90' : 'rotate-90'
+          } ml-2 h-3 w-3 transform cursor-pointer text-neutral-500 transition-all duration-500`}
+          fontSize="inherit"
+          onClick={() => setOpen(!open)}
+        />
       </button>
 
       <div
-        ref={accordionRef}
-        className={`overflow-auto duration-500 ease-in-out ${accordion && 'pt-4'}`}
-        style={{ height }}
+        className={`overflow-hidden transition-all duration-700 ${
+          open ? 'max-h-[999px]' : 'max-h-0'
+        }`}
       >
-        {children}
+        <div className="pt-2">{children}</div>
       </div>
-    </div>
-  );
-}
-
-/**
- * TODO: Make this custom because it's causing annoying behaviors
- * TODO: Add progress here
- * @param param0
- * @returns
- */
-export function AccordianWrapper({
-  name,
-  filled,
-  children,
-}: {
-  name: string;
-  filled?: boolean;
-  children: any;
-}) {
-  return (
-    <div className={`collapse-arrow collapse ${filled && 'opacity-50'}`} tabIndex={0}>
-      <input type="checkbox" className="border-32 border-orange-500" />
-      <div className="collapse-title flex flex-row items-center">
-        {name} {filled && <CheckIcon fontSize="small" />}
-      </div>
-      <div className="collapse-content">{children}</div>
     </div>
   );
 }

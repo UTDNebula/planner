@@ -2,7 +2,7 @@ import { ObjectID } from 'bson';
 import React from 'react';
 import DraggableSidebarCourseItem from './SidebarCourseItem';
 import { CourseRequirement, RequirementTypes } from './types';
-import { AccordianWrapper } from './Accordion';
+import Accordion from './Accordion';
 
 /**
  * Group of requirements that's recursive?
@@ -27,85 +27,99 @@ export function RecursiveRequirement({
       case 'Or':
         return (
           <div className="flex flex-col">
-            <AccordianWrapper name={`Select one of the following:`} {...req} filled={req.filled}>
-              {req.requirements.map((req2, idx) => (
-                <RecursiveRequirement
-                  key={idx}
-                  req={req2}
-                  courses={courses}
-                  validCourses={validCourses}
-                />
-              ))}
-            </AccordianWrapper>
+            <Accordion header={<div>Select one of the following</div>} filled={req.filled}>
+              <>
+                {req.requirements.map((req2, idx) => (
+                  <RecursiveRequirement
+                    key={idx}
+                    req={req2}
+                    courses={courses}
+                    validCourses={validCourses}
+                  />
+                ))}
+              </>
+            </Accordion>
           </div>
         );
       case 'And':
         return (
           <div className="flex flex-col">
-            <AccordianWrapper name={`Select all of the following`} filled={req.filled}>
-              {req.requirements.map((req2, idx) => (
-                <RecursiveRequirement
-                  key={idx}
-                  req={req2}
-                  courses={courses}
-                  validCourses={validCourses}
-                />
-              ))}
-            </AccordianWrapper>
+            <Accordion header={<div>Select all of the following</div>} filled={req.filled}>
+              <>
+                {req.requirements.map((req2, idx) => (
+                  <RecursiveRequirement
+                    key={idx}
+                    req={req2}
+                    courses={courses}
+                    validCourses={validCourses}
+                  />
+                ))}
+              </>
+            </Accordion>
           </div>
         );
       case 'Select':
         return (
           <div className="flex flex-col">
-            <AccordianWrapper
-              name={`Select ${req.required_course_count} of the following`}
+            <Accordion
+              header={<div>Select ${req.required_count} of the following</div>}
               filled={req.filled}
             >
-              {req.requirements.map((req2, idx) => (
-                <RecursiveRequirement
-                  key={idx}
-                  req={req2}
-                  courses={courses}
-                  validCourses={validCourses}
-                />
-              ))}
-            </AccordianWrapper>
+              <>
+                {req.requirements.map((req2, idx) => (
+                  <RecursiveRequirement
+                    key={idx}
+                    req={req2}
+                    courses={courses}
+                    validCourses={validCourses}
+                  />
+                ))}
+              </>
+            </Accordion>
           </div>
         );
       case 'Hours':
         return (
           <div className="flex flex-col">
-            <AccordianWrapper
-              name={`Select ${req.required_hours} credit hours from the following classes`}
+            <Accordion
+              header={
+                <div>Select ${req.required_hours} credit hours from the following classes</div>
+              }
               filled={req.filled}
             >
-              {req.requirements.map((req2, idx) => (
-                <RecursiveRequirement
-                  key={idx}
-                  req={req2}
-                  courses={courses}
-                  validCourses={req.valid_courses}
-                />
-              ))}
-            </AccordianWrapper>
+              <>
+                {req.requirements.map((req2, idx) => (
+                  <RecursiveRequirement
+                    key={idx}
+                    req={req2}
+                    courses={courses}
+                    validCourses={validCourses}
+                  />
+                ))}
+              </>
+            </Accordion>
           </div>
         );
       case 'BA General Business Electives':
         return (
           <div className="flex flex-col">
-            <AccordianWrapper
-              name={`Select ${req.required_hours} credit hours from the following classes`}
+            <Accordion
+              header={
+                <div>Select ${req.required_hours} credit hours from the following classes</div>
+              }
               filled={req.filled}
             >
-              {req.prefix_groups.map((req2, idx) => (
-                <RecursiveRequirement
-                  key={idx}
-                  req={req2}
-                  courses={courses}
-                  validCourses={validCourses}
-                />
-              ))}
-            </AccordianWrapper>
+              <>
+                {req.prefix_groups.map((req2, idx) => (
+                  <RecursiveRequirement
+                    key={idx}
+                    req={req2}
+                    courses={courses}
+                    validCourses={validCourses}
+                  />
+                ))}
+              </>
+            </Accordion>
           </div>
         );
       case 'Prefix':

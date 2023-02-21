@@ -56,7 +56,7 @@ export const MemoizedSemesterTile = React.memo(
         <article className="w-full">
           <ChevronIcon
             className={`${
-              open ? 'rotate-90' : '-rotate-90'
+              open ? '-rotate-90' : 'rotate-90'
             } ml-auto h-3 w-3 transform cursor-pointer text-neutral-500 transition-all duration-500`}
             fontSize="inherit"
             onClick={() => setOpen(!open)}
@@ -68,22 +68,23 @@ export const MemoizedSemesterTile = React.memo(
               {displaySemesterCode(semester.code)}
             </h3>
           </div>
+          <>
+            {numProblems > 0 && (
+              <div
+                className="opacity-0.5 tooltip tooltip-top h-fit rounded-full text-[14px] font-medium "
+                data-tip={`${generateErrorMsg()}`}
+              >
+                <div className="badge border-none bg-red-50 text-red-500">{numProblems} errors</div>
+              </div>
+            )}
 
-          {numProblems > 0 && (
-            <div
-              className="opacity-0.5 tooltip tooltip-top h-fit rounded-full text-[14px] font-medium "
-              data-tip={`${generateErrorMsg()}`}
-            >
-              <div className="badge border-none bg-red-50 text-red-500">{numProblems} errors</div>
-            </div>
-          )}
-
-          <SemesterTileDropdown
-            deleteAllCourses={() => handleDeleteAllCoursesFromSemester(semester)}
-            selectAllCourses={() =>
-              handleSelectCourses(semester.courses.map((course) => course.id.toString()))
-            }
-          />
+            <SemesterTileDropdown
+              deleteAllCourses={() => handleDeleteAllCoursesFromSemester(semester)}
+              selectAllCourses={() =>
+                handleSelectCourses(semester.courses.map((course) => course.id.toString()))
+              }
+            />
+          </>
         </div>
 
         <article

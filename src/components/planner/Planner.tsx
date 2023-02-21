@@ -139,7 +139,7 @@ export default function Planner({ degreeRequirements }: PlannerProps): JSX.Eleme
         deselectAllCourses={handleDeselectAllCourses}
         selectAllCourses={() => handleSelectCourses(courseIds)}
       />
-      <div className="grid w-full grid-cols-[auto_1fr] gap-[52px]">
+      <div className="flex flex-row">
         <CourseSelectorContainer
           courses={courseCodes}
           degreeRequirements={degreeRequirements}
@@ -155,7 +155,7 @@ export default function Planner({ degreeRequirements }: PlannerProps): JSX.Eleme
             ) : null)}
         </DragOverlay>
 
-        <section className="mt-[150px] flex min-h-fit w-fit flex-col gap-y-6">
+        <section className="flex min-h-fit flex-grow flex-col gap-y-6 p-4">
           <Toolbar
             title="Plan Your Courses"
             major="Computer Science"
@@ -163,82 +163,85 @@ export default function Planner({ degreeRequirements }: PlannerProps): JSX.Eleme
             toggleShowTransfer={() => setShowTransfer(!showTransfer)}
           />
 
-          <section className="flex h-auto w-fit flex-wrap gap-5">
-            {semesters.map((semester) => {
-              // Get map of credits (faster to query later down the line)
-              const creditsMap: {
-                [key: string]: { semesterCode: SemesterCode; transfer: boolean };
-              } = credits?.reduce((prev, curr) => ({ ...prev, [curr.courseCode]: curr }), {}) ?? [];
+          <article className="h-screen max-h-screen flex-grow overflow-x-hidden overflow-y-scroll border-2">
+            <div className="space-around space-between grid h-fit grid-cols-3 gap-5">
+              {semesters.map((semester) => {
+                // Get map of credits (faster to query later down the line)
+                const creditsMap: {
+                  [key: string]: { semesterCode: SemesterCode; transfer: boolean };
+                } =
+                  credits?.reduce((prev, curr) => ({ ...prev, [curr.courseCode]: curr }), {}) ?? [];
 
-              const semesterCredits: {
-                [key: string]: { semesterCode: SemesterCode; transfer: boolean };
-              } =
-                credits
-                  ?.filter((credit) => isSemCodeEqual(credit.semesterCode, semester.code))
-                  .reduce((prev, curr) => ({ ...prev, [curr.courseCode]: curr }), {}) ?? [];
+                const semesterCredits: {
+                  [key: string]: { semesterCode: SemesterCode; transfer: boolean };
+                } =
+                  credits
+                    ?.filter((credit) => isSemCodeEqual(credit.semesterCode, semester.code))
+                    .reduce((prev, curr) => ({ ...prev, [curr.courseCode]: curr }), {}) ?? [];
 
-              const numSemesterCredits = Object.keys(semesterCredits).length;
+                const numSemesterCredits = Object.keys(semesterCredits).length;
 
-              const semesterErrors: SemesterErrors = {
-                isError: false,
-                prerequisites: [],
-                sync: { missing: [], extra: [] },
-              };
-
-              const coursesWithErrors: DraggableCourse[] = semester.courses.map((course) => {
-                let correctSemester: SemesterCode | undefined;
-
-                const isSynced =
-                  (numSemesterCredits === 0 && !(course.code in creditsMap)) ||
-                  (course.code in creditsMap &&
-                    isSemCodeEqual(creditsMap[course.code].semesterCode, semester.code));
-                if (isSynced) {
-                  delete semesterCredits[course.code];
-                } else {
-                  semesterErrors.isError = true;
-                  semesterErrors.sync.extra.push(course.code);
-
-                  // Check course in credits
-                  if (course.code in creditsMap)
-                    correctSemester = creditsMap[course.code].semesterCode;
-                }
-
-                // TODO: This is prolly where prereq validation should take place
-                return {
-                  ...course,
-                  transfer: course.code in creditsMap && creditsMap[course.code].transfer,
-                  taken: course.code in creditsMap,
-                  sync: { isSynced, correctSemester },
+                const semesterErrors: SemesterErrors = {
+                  isError: false,
+                  prerequisites: [],
+                  sync: { missing: [], extra: [] },
                 };
-              });
 
-              // Add missing courses
-              semesterErrors.sync.missing = Object.keys(semesterCredits);
+                const coursesWithErrors: DraggableCourse[] = semester.courses.map((course) => {
+                  let correctSemester: SemesterCode | undefined;
 
-              const newSem = {
-                ...semester,
-                courses: showTransfer
-                  ? coursesWithErrors
-                  : coursesWithErrors.filter((course) => !course.transfer),
-              };
+                  const isSynced =
+                    (numSemesterCredits === 0 && !(course.code in creditsMap)) ||
+                    (course.code in creditsMap &&
+                      isSemCodeEqual(creditsMap[course.code].semesterCode, semester.code));
+                  if (isSynced) {
+                    delete semesterCredits[course.code];
+                  } else {
+                    semesterErrors.isError = true;
+                    semesterErrors.sync.extra.push(course.code);
 
-              return (
-                <DroppableSemesterTile
-                  key={semester.id.toString()}
-                  dropId={`semester-${semester.id}`}
-                  getSemesterCourseDragId={(course, semester) =>
-                    `semester-tile-course-${semester.id}-${course.id}`
+                    // Check course in credits
+                    if (course.code in creditsMap)
+                      correctSemester = creditsMap[course.code].semesterCode;
                   }
-                  semester={newSem}
-                  semesterErrors={semesterErrors}
-                />
-              );
-            })}
-            <div className="col-span-full flex h-10 items-center justify-center gap-8">
-              <button onClick={handleRemoveYear}>- Remove Year</button>
-              <button onClick={handleAddYear}>+ Add Year</button>
+
+                  // TODO: This is prolly where prereq validation should take place
+                  return {
+                    ...course,
+                    transfer: course.code in creditsMap && creditsMap[course.code].transfer,
+                    taken: course.code in creditsMap,
+                    sync: { isSynced, correctSemester },
+                  };
+                });
+
+                // Add missing courses
+                semesterErrors.sync.missing = Object.keys(semesterCredits);
+
+                const newSem = {
+                  ...semester,
+                  courses: showTransfer
+                    ? coursesWithErrors
+                    : coursesWithErrors.filter((course) => !course.transfer),
+                };
+
+                return (
+                  <DroppableSemesterTile
+                    key={semester.id.toString()}
+                    dropId={`semester-${semester.id}`}
+                    getSemesterCourseDragId={(course, semester) =>
+                      `semester-tile-course-${semester.id}-${course.id}`
+                    }
+                    semester={newSem}
+                    semesterErrors={semesterErrors}
+                  />
+                );
+              })}
+              <div className="col-span-full flex h-10 items-center justify-center gap-8">
+                <button onClick={handleRemoveYear}>- Remove Year</button>
+                <button onClick={handleAddYear}>+ Add Year</button>
+              </div>
             </div>
-          </section>
+          </article>
         </section>
       </div>
     </DndContext>

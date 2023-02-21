@@ -97,7 +97,7 @@ export type RequirementTypes =
 
 export type SelectRequirement = Requirement & {
   matcher: 'Select';
-  required_course_count: number;
+  required_count: number;
   fulfilled_count: number;
   requirements: RequirementTypes[];
 };
