@@ -23,8 +23,8 @@ const SemesterTileDropdown: FC<SemesterTileDropdownProps> = ({
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
-        <button aria-label="Customise options">
-          <DotsHorizontalIcon />
+        <button aria-label="Customise options" className="self-stretch pl-2">
+          <DotsHorizontalIcon className="m-auto" />
         </button>
       </DropdownMenu.Trigger>
 
