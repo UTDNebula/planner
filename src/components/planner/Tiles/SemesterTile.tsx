@@ -31,6 +31,7 @@ export const MemoizedSemesterTile = React.memo(
       handleSelectCourses,
       handleDeselectCourses,
       handleDeleteAllCoursesFromSemester,
+      handleRemoveCourseFromSemester,
       courseIsSelected,
     } = useSemestersContext();
 
@@ -95,9 +96,9 @@ export const MemoizedSemesterTile = React.memo(
           {semester.courses.map((course) => (
             <DraggableSemesterCourseItem
               isSelected={courseIsSelected(course.id.toString())}
-              // isSelected={true}
               onSelectCourse={() => handleSelectCourses([course.id.toString()])}
               onDeselectCourse={() => handleDeselectCourses([course.id.toString()])}
+              onDeleteCourse={() => handleRemoveCourseFromSemester(semester, course)}
               key={course.id.toString()}
               dragId={getDragId(course, semester)}
               course={course}
