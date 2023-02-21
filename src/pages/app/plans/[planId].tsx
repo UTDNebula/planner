@@ -28,7 +28,7 @@ export default function PlanDetailPage(
   }
 
   return (
-    <div className="flex h-screen max-h-screen w-screen flex-col overflow-x-hidden overflow-y-scroll p-4">
+    <div className="flex h-screen max-h-screen w-screen flex-col overflow-hidden overflow-y-scroll">
       {plan && validation && (
         <SemestersContextProvider planId={planId} plan={plan}>
           <Planner degreeRequirements={validation} />
