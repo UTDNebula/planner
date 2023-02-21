@@ -6,6 +6,7 @@ import { formatDegreeValidationRequest } from '@/utils/plannerUtils';
 import { createNewYear } from '@/utils/utilFunctions';
 
 import { protectedProcedure, router } from '../trpc';
+import { Prisma } from '@prisma/client';
 
 export const planRouter = router({
   getUserPlans: protectedProcedure.query(async ({ ctx }) => {
@@ -272,6 +273,27 @@ export const planRouter = router({
       } catch (error) {
         console.error(error);
       }
+    }),
+  deleteAllCoursesFromSemester: protectedProcedure
+    .input(z.object({ semesterId: z.string() }))
+    .mutation(async ({ ctx, input: { semesterId } }) => {
+      await ctx.prisma.semester
+        .update({
+          where: { id: semesterId },
+          data: {
+            courses: [],
+          },
+        })
+        .catch((err) => {
+          if (err instanceof Prisma.PrismaClientKnownRequestError) {
+            if (err.code === 'P2025') {
+              throw new TRPCError({
+                code: 'NOT_FOUND',
+                message: 'Semester does not exist',
+              });
+            }
+          }
+        });
     }),
   moveCourseFromSemester: protectedProcedure
     .input(

@@ -1,25 +1,28 @@
 import { UniqueIdentifier, useDraggable } from '@dnd-kit/core';
-import CloseIcon from '@mui/icons-material/Close';
-import { ComponentPropsWithoutRef, FC, forwardRef } from 'react';
-
-import { getStartingPlanSemester, isEarlierSemester } from '@/utils/plannerUtils';
+import React, { ComponentPropsWithoutRef, FC, forwardRef, useState } from 'react';
 
 import { DragDataFromSemesterTile, DraggableCourse, Semester } from '../types';
 import SyncProblemIcon from '@mui/icons-material/SyncProblem';
 import { displaySemesterCode } from '@/utils/utilFunctions';
 import CheckIcon from '@mui/icons-material/Check';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
+import Checkbox from '@/components/Checkbox';
 
 export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'> {
   course: DraggableCourse;
-  isValid?: boolean;
+  isSelected?: boolean;
   isTransfer?: boolean;
-  onRemove?: (course: DraggableCourse) => void;
+  onSelectCourse?: () => void;
+  onDeselectCourse?: () => void;
 }
 
 /** UI implementation of a semester course */
-export const SemesterCourseItem = forwardRef<HTMLDivElement, SemesterCourseItemProps>(
-  function SemesterCourseItem({ course, isValid, isTransfer, onRemove, ...props }, ref) {
+/* eslint-disable react/prop-types */
+export const MemoizedSemesterCourseItem = React.memo(
+  forwardRef<HTMLDivElement, SemesterCourseItemProps>(function SemesterCourseItem(
+    { course, isTransfer, onSelectCourse, onDeselectCourse, isSelected, ...props },
+    ref,
+  ) {
     // Create text output for sync icon
     const correctSemester = course.sync?.correctSemester
       ? `Course already taken in ${displaySemesterCode(course.sync?.correctSemester)}`
@@ -34,9 +37,18 @@ export const SemesterCourseItem = forwardRef<HTMLDivElement, SemesterCourseItemP
       >
         <div className="flex items-center gap-x-3">
           <DragIndicatorIcon fontSize="inherit" className="text-[16px] text-neutral-300" />
-          <input
-            type="checkbox"
-            className="checkbox-primary checkbox h-5 w-5 rounded-[3.5px] border-1.25 border-neutral-300 bg-generic-white accent-primary"
+          <Checkbox
+            style={{ width: '20px', height: '20px' }}
+            checked={isSelected}
+            onCheckedChange={(checked) => {
+              if (checked && onSelectCourse) {
+                onSelectCourse();
+              }
+
+              if (!checked && onDeselectCourse) {
+                onDeselectCourse();
+              }
+            }}
           />
           <span className="text-[16px] text-[#1C2A6D]">{course.code}</span>
         </div>
@@ -60,15 +72,18 @@ export const SemesterCourseItem = forwardRef<HTMLDivElement, SemesterCourseItemP
         </div>
       </div>
     );
-  },
+  }),
 );
+
+export const SemesterCourseItem = MemoizedSemesterCourseItem;
 
 export interface DraggableSemesterCourseItemProps {
   dragId: UniqueIdentifier;
+  isSelected: boolean;
   semester: Semester;
   course: DraggableCourse;
-  isValid: boolean;
-  onRemove: (course: DraggableCourse) => void;
+  onSelectCourse: () => void;
+  onDeselectCourse: () => void;
 }
 
 /** Compositional wrapper around SemesterCourseItem */
@@ -76,7 +91,9 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
   dragId,
   semester,
   course,
-  onRemove,
+  onSelectCourse,
+  onDeselectCourse,
+  isSelected,
 }) => {
   const { setNodeRef, attributes, listeners, isDragging } = useDraggable({
     id: dragId,
@@ -92,9 +109,11 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
       {...attributes}
       {...listeners}
       course={course}
-      onRemove={onRemove}
+      onSelectCourse={onSelectCourse}
+      onDeselectCourse={onDeselectCourse}
+      isSelected={isSelected}
     />
   );
 };
 
-export default DraggableSemesterCourseItem;
+export default React.memo(DraggableSemesterCourseItem);

@@ -11,7 +11,15 @@ const itemClasses =
 
 const contentClasses = 'w-64 rounded-md border border-neutral-300 bg-generic-white';
 
-const SemesterTileDropdown: FC = () => {
+export interface SemesterTileDropdownProps {
+  deleteAllCourses: () => void;
+  selectAllCourses: () => void;
+}
+
+const SemesterTileDropdown: FC<SemesterTileDropdownProps> = ({
+  deleteAllCourses,
+  selectAllCourses,
+}) => {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
@@ -26,11 +34,11 @@ const SemesterTileDropdown: FC = () => {
           sideOffset={10}
           align="start"
         >
-          <DropdownMenu.Item className={itemClasses}>
+          <DropdownMenu.Item className={itemClasses} onClick={deleteAllCourses}>
             <ArchiveIcon />
             <span>Clear courses</span>
           </DropdownMenu.Item>
-          <DropdownMenu.Item className={itemClasses}>
+          <DropdownMenu.Item className={itemClasses} onClick={selectAllCourses}>
             <ClipboardListIcon />
             <span>Select all courses</span>
           </DropdownMenu.Item>

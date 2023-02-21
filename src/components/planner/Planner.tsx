@@ -21,7 +21,6 @@ import {
   Active,
   Over,
 } from '@dnd-kit/core';
-import { toast } from 'react-toastify';
 import React, { useMemo, useState } from 'react';
 
 import CourseSelectorContainer from './Sidebar/Sidebar';
@@ -33,42 +32,37 @@ import {
   DragEventDestinationData,
   DragEventOriginData,
   DraggableCourse,
-  Semester,
 } from './types';
 import { isSemCodeEqual } from '@/utils/utilFunctions';
 import { SemesterCode } from '@prisma/client';
 import { DegreeRequirements } from './Sidebar/types';
 
 import Toolbar from './Toolbar';
+import { useSemestersContext } from './SemesterContext';
+import SelectedCoursesToast from './SelectedCoursesToast';
 
 /** PlannerTool Props */
 export interface PlannerProps {
   degreeRequirements: DegreeRequirements;
-  semesters: Semester[];
-  showTransfer: boolean;
-  handleAddCourseToSemester: (targetSemester: Semester, newCourse: DraggableCourse) => void;
-  handleMoveCourseFromSemesterToSemester: (
-    originSemester: Semester,
-    destinationSemester: Semester,
-    courseToMove: DraggableCourse,
-  ) => void;
-
-  handleRemoveCourseFromSemester: (targetSemester: Semester, targetCourse: DraggableCourse) => void;
-  handleAddYear: () => void;
-  handleRemoveYear: () => void;
 }
 
 /** Controlled wrapper around course list and semester tiles */
-export default function Planner({
-  degreeRequirements,
-  semesters,
-  showTransfer,
-  handleAddCourseToSemester,
-  handleMoveCourseFromSemesterToSemester,
-  handleRemoveCourseFromSemester,
-  handleAddYear,
-  handleRemoveYear,
-}: PlannerProps): JSX.Element {
+export default function Planner({ degreeRequirements }: PlannerProps): JSX.Element {
+  const {
+    semesters,
+    handleAddCourseToSemester,
+    handleAddYear,
+    handleMoveCourseFromSemesterToSemester,
+    handleRemoveYear,
+    selectedCourseCount,
+    handleDeselectAllCourses,
+    handleSelectCourses,
+    handleDeleteAllSelectedCourses,
+  } = useSemestersContext();
+
+  // toggle transfered courses state
+  const [showTransfer, setShowTransfer] = useState(true);
+
   // Course that is currently being dragged
   const [activeCourse, setActiveCourse] = useState<ActiveDragData | null>(null);
 
@@ -86,8 +80,13 @@ export default function Planner({
   const creditsQuery = trpc.credits.getCredits.useQuery(undefined, { staleTime: 10000000000 });
   const credits = creditsQuery.data;
 
-  const courses = useMemo(
+  const courseCodes = useMemo(
     () => semesters.flatMap((sem) => sem.courses).map((course) => course.code),
+    [semesters],
+  );
+
+  const courseIds = useMemo(
+    () => semesters.flatMap((sem) => sem.courses).map((course) => course.id.toString()),
     [semesters],
   );
 
@@ -132,9 +131,17 @@ export default function Planner({
       onDragStart={handleOnDragStart}
       onDragEnd={handleOnDragEnd}
     >
+      <SelectedCoursesToast
+        show={selectedCourseCount > 0}
+        selectedCount={selectedCourseCount}
+        areAllCoursesSelected={selectedCourseCount === courseIds.length}
+        deleteSelectedCourses={handleDeleteAllSelectedCourses}
+        deselectAllCourses={handleDeselectAllCourses}
+        selectAllCourses={() => handleSelectCourses(courseIds)}
+      />
       <div className="grid w-full grid-cols-[auto_1fr] gap-[52px]">
         <CourseSelectorContainer
-          courses={courses}
+          courses={courseCodes}
           degreeRequirements={degreeRequirements}
           getSearchedDragId={(course) => `course-list-searched-${course.id}`}
           getRequirementDragId={(course) => `course-list-requirement-${course.id}`}
@@ -148,10 +155,15 @@ export default function Planner({
             ) : null)}
         </DragOverlay>
 
-        <section className="flex min-h-fit w-fit flex-col gap-y-6">
-          <Toolbar title="Plan Your Courses" major="Computer Science" />
+        <section className="mt-[150px] flex min-h-fit w-fit flex-col gap-y-6">
+          <Toolbar
+            title="Plan Your Courses"
+            major="Computer Science"
+            showTransfer={showTransfer}
+            toggleShowTransfer={() => setShowTransfer(!showTransfer)}
+          />
 
-          <section className="grid h-auto w-fit grid-cols-3 gap-[32px]">
+          <section className="flex h-auto w-fit flex-wrap gap-5">
             {semesters.map((semester) => {
               // Get map of credits (faster to query later down the line)
               const creditsMap: {
@@ -212,7 +224,6 @@ export default function Planner({
 
               return (
                 <DroppableSemesterTile
-                  onRemoveCourse={handleRemoveCourseFromSemester}
                   key={semester.id.toString()}
                   dropId={`semester-${semester.id}`}
                   getSemesterCourseDragId={(course, semester) =>
