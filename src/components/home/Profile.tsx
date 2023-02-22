@@ -2,8 +2,22 @@ import { TextField } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import { purple } from '@mui/material/colors';
 import { useEffect, useMemo, useState } from 'react';
-
 import { trpc } from '@/utils/trpc';
+import {
+  createSemesterCodeRange,
+  displaySemesterCode,
+  generateSemesters,
+} from '@/utils/utilFunctions';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import DropdownSelect from '@/components/credits/DropdownSelect';
+import PageOneData from '../onboarding/pg_1';
+import { SemesterCode, SemesterType } from '@prisma/client';
+import FormHelperText from '@mui/material/FormHelperText';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import { getStartingPlanSemester } from '@/utils/plannerUtils';
+
 
 type ProfilePageProps = {
   isDesktop: boolean;
@@ -17,15 +31,40 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
 
   const { data, isLoading } = userQuery;
 
+  const user = trpc.user.getUser.useQuery();
+  const semesters = useMemo(
+    () =>
+      createSemesterCodeRange(
+        user.data?.profile?.startSemester ?? { semester: 'f', year: 2022 },
+        getStartingPlanSemester(),
+        true,
+      ),
+    [],
+  );
+
+  
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [majors, setMajors] = useState<string[]>([]);
-  const [minors, setMinors] = useState<string[]>([]);
+  const [firstSem, setFirstSem] = useState('');
+  const [firstYear, setFirstYear] = useState('');
+  const [secondSem, setSecondSem] = useState('');
+  const [secondYear, setSecondYear] = useState('');
+
+  //const [startSemester, setStartSemester] = useState<SemesterCode>(semesters[0]);
+  //const [endSemester, setEndSemester] = useState<SemesterCode>(semesters[0]);
+  // const [majors, setMajors] = useState<string[]>([]);
+  // const [minors, setMinors] = useState<string[]>([]);
 
   useEffect(() => {
     if (!isLoading) {
       setName(data?.profile?.name ?? '');
       setEmail(data?.email ?? '');
+      setFirstSem(displaySemesterCode(data?.profile?.startSemester!).split(' ')[0] ?? '');
+      setFirstYear(displaySemesterCode(data?.profile?.startSemester!).split(' ')[1] ?? '');
+      setSecondSem(displaySemesterCode(data?.profile?.endSemester!).split(' ')[0] ?? '');
+      setSecondYear(displaySemesterCode(data?.profile?.endSemester!).split(' ')[1] ?? '');
+     // setStartSemester(data?.profile?.startSemester ??  {semester: 'f', year: 2022});
+     // setEndSemester(data?.profile?.endSemester ??  {semester: 'f', year: 2026});
       // setMajors(data?.profile?.majors ?? []);
       // setMinors(data?.profile?.minors ?? []);
     }
@@ -39,9 +78,61 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
 
   const handleSubmit = () => {
     // TODO: Implement changing profile settings here
-    updateProfile.mutateAsync({ name });
+    type semesterChars = 'f' | 'u' | 's';
+    var firstSemester!: semesterChars;
+   
+    switch(firstSem){
+      case "Fall":
+        firstSemester = 'f';
+        break;
+      case "Spring":
+        firstSemester = 's';
+        break;
+      case "Summer":
+        firstSemester = 'u';
+        break;
+    }
+    console.log(firstSem)
+    var secondSemester!: semesterChars;
+    switch(secondSem){
+      case "Fall":
+        secondSemester = 'f';
+        break;
+      case "Spring":
+        secondSemester = 's';
+        break;
+      case "Summer":
+        secondSemester = 'u';
+        break;
+    }
+    console.log(firstSemester);
+    console.log(secondSemester);
+    updateProfile.mutateAsync({
+      name: name,
+      startSemester:  {semester: firstSemester , year: Number(firstYear)},
+      endSemester: {semester: secondSemester , year: Number(secondYear)},
+    });
     return true;
   };
+
+  const handleFirstSemesterChange = (event: SelectChangeEvent) => {
+    setFirstSem(event.target.value);
+    return true;
+  }
+
+  const handleFirstSemesterChangeYear = (event: SelectChangeEvent) => {
+    setFirstYear(event.target.value)
+    return true;
+  }
+  const handleSecondSemesterChange = (event: SelectChangeEvent) => {
+    setSecondSem(event.target.value)
+    return true;
+  }
+
+  const handleSecondSemesterChangeYear = (event: SelectChangeEvent) => {
+    setSecondYear(event.target.value)
+    return true;
+  }
 
   const handleResetPassword = () => {
     // TODO: Implement resetting password here
@@ -100,27 +191,94 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
               disabled={true}
               onChange={(e) => setEmail(e.target.value)}
             />
-
-            <TextField
-              name="name"
-              id="outlined-basic"
-              className="w-60"
-              label="Major"
-              variant="outlined"
-              value={majors.join(', ') || 'None'}
-              disabled={true}
-              onChange={() => console.log('HI')}
-            />
-            <TextField
-              name="name"
-              id="outlined-basic"
-              className="w-60"
-              label="Minor"
-              variant="outlined"
-              value={minors.join(', ') || 'None'}
-              disabled={true}
-              onChange={() => console.log('HI')}
-            />
+            <article className="grid gap-y-0 px-0 py-0 md:grid-cols-1 md:gap-x-10 lg:gap-x-0 md:auto-rows-min">
+            <h2 className="col-span-full mb-[10px] ml-[5px]">Start Semester</h2>
+            <article className="grid gap-y-0 px-0 py-0 md:grid-cols-2 md:gap-x-10 lg:gap-x-0">
+            <FormControl sx={{ m: 0.5, width: 113 }}>
+              
+              <InputLabel id="demo-simple-select-autowidth-label">Sem</InputLabel>
+              <Select
+                labelId="demo-simple-select-autowidth-label"
+                id="demo-simple-select-autowidth"
+                value={firstSem}
+                onChange={handleFirstSemesterChange}
+                autoWidth
+                label="Age"
+              >
+                <MenuItem value="Fall">Fall</MenuItem>
+                <MenuItem value="Summer">Summer</MenuItem>
+                <MenuItem value="Spring">Spring</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl sx={{ m: 0.5, width: 113 }}>
+              <InputLabel id="demo-simple-select-autowidth-label">Year</InputLabel>
+              <Select
+                labelId="demo-simple-select-autowidth-label"
+                id="demo-simple-select-autowidth"
+                value={firstYear}
+                onChange={handleFirstSemesterChangeYear}
+                autoWidth
+                label="Age"
+              >
+                <MenuItem value="2020">2020</MenuItem>
+                <MenuItem value="2021">2021</MenuItem>
+                <MenuItem value="2022">2022</MenuItem>
+                <MenuItem value="2023">2023</MenuItem>
+                <MenuItem value="2024">2024</MenuItem>
+                <MenuItem value="2025">2025</MenuItem>
+                <MenuItem value="2026">2026</MenuItem>
+                <MenuItem value="2026">2027</MenuItem>
+                <MenuItem value="2026">2028</MenuItem>
+                <MenuItem value="2026">2029</MenuItem>
+                <MenuItem value="2026">2030</MenuItem>
+              </Select>
+            </FormControl>
+            </article>
+            </article>
+            <article className="grid gap-y-0 px-0 py-0 md:grid-cols-1 md:gap-x-10 lg:gap-x-0 md:auto-rows-min">
+            <h2 className="col-span-full mb-[10px] ml-[5px]">End Semester</h2>
+            <article className="grid gap-y-0 px-0 py-0 md:grid-cols-2 md:gap-x-10 lg:gap-x-0">
+            <FormControl sx={{ m: 0.5, width: 113 }}>
+              
+              <InputLabel id="demo-simple-select-autowidth-label">Sem</InputLabel>
+              <Select
+                labelId="demo-simple-select-autowidth-label"
+                id="demo-simple-select-autowidth"
+                value={secondSem}
+                onChange={handleSecondSemesterChange}
+                autoWidth
+                label="Age"
+              >
+                <MenuItem value="Fall">Fall</MenuItem>
+                <MenuItem value="Summer">Summer</MenuItem>
+                <MenuItem value="Spring">Spring</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl sx={{ m: 0.5, width: 113 }}>
+              <InputLabel id="demo-simple-select-autowidth-label">Year</InputLabel>
+              <Select
+                labelId="demo-simple-select-autowidth-label"
+                id="demo-simple-select-autowidth"
+                value={secondYear}
+                onChange={handleSecondSemesterChangeYear}
+                autoWidth
+                label="Age"
+              >
+                <MenuItem value="2020">2020</MenuItem>
+                <MenuItem value="2021">2021</MenuItem>
+                <MenuItem value="2022">2022</MenuItem>
+                <MenuItem value="2023">2023</MenuItem>
+                <MenuItem value="2024">2024</MenuItem>
+                <MenuItem value="2025">2025</MenuItem>
+                <MenuItem value="2026">2026</MenuItem>
+                <MenuItem value="2026">2027</MenuItem>
+                <MenuItem value="2026">2028</MenuItem>
+                <MenuItem value="2026">2029</MenuItem>
+                <MenuItem value="2026">2030</MenuItem>
+              </Select>
+            </FormControl>
+            </article>
+            </article>
             <button
               onClick={handleSubmit}
               className="col-span-full flex h-12 w-40 items-center justify-center self-center rounded-2xl bg-[#3E61ED] p-4 text-white"
@@ -128,6 +286,7 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
               Update Profile
             </button>
           </article>
+          
         </section>
         <section className="flex w-full flex-col rounded-2xl bg-white px-8 py-4">
           <h1>Reset Password</h1>
