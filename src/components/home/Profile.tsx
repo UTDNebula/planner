@@ -50,10 +50,10 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
     if (!isLoading) {
       setName(data?.profile?.name ?? '');
       setEmail(data?.email ?? '');
-      setFirstSem(displaySemesterCode(data?.profile?.startSemester!).split(' ')[0] ?? '');
-      setFirstYear(displaySemesterCode(data?.profile?.startSemester!).split(' ')[1] ?? '');
-      setSecondSem(displaySemesterCode(data?.profile?.endSemester!).split(' ')[0] ?? '');
-      setSecondYear(displaySemesterCode(data?.profile?.endSemester!).split(' ')[1] ?? '');
+      setFirstSem(displaySemesterCode(data?.profile?.startSemester ?? {semester: 'f', year: 404}).split(' ')[0]);
+      setFirstYear(displaySemesterCode(data?.profile?.startSemester ?? {semester: 'f', year: 404}).split(' ')[1]);
+      setSecondSem(displaySemesterCode(data?.profile?.endSemester ?? {semester: 'f', year: 404}).split(' ')[0]);
+      setSecondYear(displaySemesterCode(data?.profile?.endSemester ?? {semester: 'f', year: 404}).split(' ')[1]);
     }
   }, [data]);
 
@@ -66,7 +66,7 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
   const handleSubmit = () => {
     // TODO: Implement changing profile settings here
     type semesterChars = 'f' | 'u' | 's';
-    var firstSemester!: semesterChars;
+    let firstSemester!: semesterChars;
    
     switch(firstSem){
       case "Fall":
@@ -80,7 +80,7 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
         break;
     }
     console.log(firstSem)
-    var secondSemester!: semesterChars;
+    let secondSemester!: semesterChars;
     switch(secondSem){
       case "Fall":
         secondSemester = 'f';
