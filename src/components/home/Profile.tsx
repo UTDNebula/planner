@@ -10,10 +10,6 @@ import {
 } from '@/utils/utilFunctions';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
-import DropdownSelect from '@/components/credits/DropdownSelect';
-import PageOneData from '../onboarding/pg_1';
-import { SemesterCode, SemesterType } from '@prisma/client';
-import FormHelperText from '@mui/material/FormHelperText';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { getStartingPlanSemester } from '@/utils/plannerUtils';
@@ -50,11 +46,6 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
   const [secondSem, setSecondSem] = useState('');
   const [secondYear, setSecondYear] = useState('');
 
-  //const [startSemester, setStartSemester] = useState<SemesterCode>(semesters[0]);
-  //const [endSemester, setEndSemester] = useState<SemesterCode>(semesters[0]);
-  // const [majors, setMajors] = useState<string[]>([]);
-  // const [minors, setMinors] = useState<string[]>([]);
-
   useEffect(() => {
     if (!isLoading) {
       setName(data?.profile?.name ?? '');
@@ -63,10 +54,6 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
       setFirstYear(displaySemesterCode(data?.profile?.startSemester!).split(' ')[1] ?? '');
       setSecondSem(displaySemesterCode(data?.profile?.endSemester!).split(' ')[0] ?? '');
       setSecondYear(displaySemesterCode(data?.profile?.endSemester!).split(' ')[1] ?? '');
-     // setStartSemester(data?.profile?.startSemester ??  {semester: 'f', year: 2022});
-     // setEndSemester(data?.profile?.endSemester ??  {semester: 'f', year: 2026});
-      // setMajors(data?.profile?.majors ?? []);
-      // setMinors(data?.profile?.minors ?? []);
     }
   }, [data]);
 
@@ -227,10 +214,10 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
                 <MenuItem value="2024">2024</MenuItem>
                 <MenuItem value="2025">2025</MenuItem>
                 <MenuItem value="2026">2026</MenuItem>
-                <MenuItem value="2026">2027</MenuItem>
-                <MenuItem value="2026">2028</MenuItem>
-                <MenuItem value="2026">2029</MenuItem>
-                <MenuItem value="2026">2030</MenuItem>
+                <MenuItem value="2027">2027</MenuItem>
+                <MenuItem value="2028">2028</MenuItem>
+                <MenuItem value="2029">2029</MenuItem>
+                <MenuItem value="2030">2030</MenuItem>
               </Select>
             </FormControl>
             </article>
@@ -271,10 +258,10 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
                 <MenuItem value="2024">2024</MenuItem>
                 <MenuItem value="2025">2025</MenuItem>
                 <MenuItem value="2026">2026</MenuItem>
-                <MenuItem value="2026">2027</MenuItem>
-                <MenuItem value="2026">2028</MenuItem>
-                <MenuItem value="2026">2029</MenuItem>
-                <MenuItem value="2026">2030</MenuItem>
+                <MenuItem value="2027">2027</MenuItem>
+                <MenuItem value="2028">2028</MenuItem>
+                <MenuItem value="2029">2029</MenuItem>
+                <MenuItem value="2030">2030</MenuItem>
               </Select>
             </FormControl>
             </article>
