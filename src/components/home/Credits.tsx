@@ -7,7 +7,7 @@ import Head from 'next/head';
 import { useState } from 'react';
 
 import ErrorMessage from '../common/ErrorMessage';
-import Button from '../credits/Button';
+import Button from '../Button';
 import CreditsForm from '../credits/CreditsForm';
 import CreditsTable from '../credits/CreditsTable';
 import courseCode from '@/data/courseCode.json';
@@ -36,12 +36,16 @@ export default function CreditsPage(): JSX.Element {
           <div className=" text-[#1C2A6D]">Add the courses that you have taken below!</div>
         </div>
         <div className="flex gap-10">
-          <Button onClick={() => setOpenAddCredit(true)} icon={<AddIcon />} className="w-[140px]">
+          <Button
+            onClick={() => setOpenAddCredit(true)}
+            icon={<AddIcon fontSize="inherit" />}
+            className="w-[140px]"
+          >
             Add Credit
           </Button>
           <Button
             onClick={() => setOpenTranscriptDialog(true)}
-            icon={<AddIcon />}
+            icon={<AddIcon fontSize="inherit" />}
             className="w-[200px]"
           >
             Upload Transcript

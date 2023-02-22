@@ -14,7 +14,7 @@ import {
 
 import useSearch from '../search/search';
 import AutoCompleteSearchBar from './AutoCompleteSearchBar';
-import Button from './Button';
+import Button from '../Button';
 import DropdownSelect from './DropdownSelect';
 import { getStartingPlanSemester } from '@/utils/plannerUtils';
 import InfoIcon from '@mui/icons-material/Info';

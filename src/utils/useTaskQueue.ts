@@ -1,13 +1,13 @@
 import React from 'react';
 
 export function useTaskQueue(params: { shouldProcess: boolean }): {
-  tasks: ReadonlyArray<Task>;
+  tasks: ReadonlyArray<Task<unknown>>;
   isProcessing: boolean;
-  addTask: (task: Task) => void;
+  addTask: <T>(task: Task<T>) => void;
 } {
   const [queue, setQueue] = React.useState<{
     isProcessing: boolean;
-    tasks: Array<Task>;
+    tasks: Array<Task<unknown>>;
   }>({ isProcessing: false, tasks: [] });
 
   React.useEffect(() => {
@@ -38,13 +38,13 @@ export function useTaskQueue(params: { shouldProcess: boolean }): {
     addTask: React.useCallback((task) => {
       setQueue((prev) => ({
         isProcessing: prev.isProcessing,
-        tasks: [...prev.tasks, task],
+        tasks: [...prev.tasks, task] as Task<unknown>[],
       }));
     }, []),
   };
 }
 
-export type Task = {
-  func: (args: any) => Promise<void>;
-  args: { [key: string]: unknown };
+export type Task<T> = {
+  func: (args: T) => Promise<unknown>;
+  args: T;
 };

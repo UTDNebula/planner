@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import DropdownSelect from '../credits/DropdownSelect';
 import majorsList from '@data/majors.json';
 import { trpc } from '@/utils/trpc';
-import Button from '../credits/Button';
+import Button from '../Button';
 import { useRouter } from 'next/router';
 
 const majors = majorsList as string[];
