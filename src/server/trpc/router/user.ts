@@ -115,13 +115,13 @@ export const userRouter = router({
       const userId = ctx.session.user.id;
       const planId = new ObjectID().toString();
 
-      const { name } = input;
+      const { name, major } = input;
 
       // Create degree requirements
       const degreeRequirements: Prisma.DegreeRequirementsUncheckedCreateNestedOneWithoutPlanInput =
         {
           create: {
-            major: 'Computer Science(BS)', // Hardcode for now
+            major, // Hardcode for now
           },
         };
 

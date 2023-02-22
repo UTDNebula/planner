@@ -3,7 +3,7 @@ import { createProxySSGHelpers } from '@trpc/react-query/ssg';
 import { type RouterInputs } from '@utils/trpc';
 import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
-import { unstable_getServerSession } from 'next-auth/next';
+import { getServerSession } from 'next-auth/next';
 import React, { useEffect, useState } from 'react';
 import superjson from 'superjson';
 
@@ -166,7 +166,7 @@ export default function OnboardingPage() {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const session = await unstable_getServerSession(context.req, context.res, authOptions);
+  const session = await getServerSession(context.req, context.res, authOptions);
   const ssg = createProxySSGHelpers({
     router: appRouter,
     ctx: await createContextInner({ session }),

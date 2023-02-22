@@ -3,14 +3,14 @@ import { createProxySSGHelpers } from '@trpc/react-query/ssg';
 import { trpc } from '@utils/trpc';
 import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
-import { unstable_getServerSession } from 'next-auth';
+import { getServerSession } from 'next-auth';
 import superjson from 'superjson';
 
 import { appRouter } from '@/server/trpc/router/_app';
 
 import { authOptions } from '../api/auth/[...nextauth]';
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const session = await unstable_getServerSession(context.req, context.res, authOptions);
+  const session = await getServerSession(context.req, context.res, authOptions);
   const ssg = createProxySSGHelpers({
     router: appRouter,
     ctx: await createContextInner({ session }),

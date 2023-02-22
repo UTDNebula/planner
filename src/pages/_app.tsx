@@ -13,8 +13,16 @@ import { SessionProvider, useSession } from 'next-auth/react';
 import { FC } from 'react';
 
 import Layout from '@/components/home/Layout';
+import NProgress from 'nprogress'; //nprogress module
 
-// import { AuthProvider } from '../modules/auth/auth-context';
+import 'nprogress/nprogress.css'; //styles of nprogress
+
+// Binding events
+NProgress.configure({ showSpinner: false });
+Router.events.on('routeChangeStart', () => NProgress.start());
+Router.events.on('routeChangeComplete', () => NProgress.done());
+Router.events.on('routeChangeError', () => NProgress.done());
+
 import { trpc } from '../utils/trpc';
 const theme = createTheme({
   typography: {
@@ -42,6 +50,7 @@ const theme = createTheme({
 });
 
 import type { NextComponentType } from 'next'; //Import Component type
+import { Router } from 'next/router';
 
 //Add custom appProp type then use union to add it
 type CustomAppProps = AppProps & {
