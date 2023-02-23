@@ -152,7 +152,7 @@ class DegreeRequirementsSolver:
         return degree_requirements
 
     def solve(self) -> DegreeRequirementsSolver:
-        # Run for major
+        # Run for core
         if self.validate_core:
             core_solver = self.load_core()
             self.solved_core = core_solver.solve(
@@ -169,7 +169,6 @@ class DegreeRequirementsSolver:
         return self
 
     def can_graduate(self) -> bool:
-
         # TODO: Maybe change logic in future
         # Run core on demand if needed
 
@@ -219,7 +218,6 @@ class DegreeRequirementsSolver:
 def format_core_reqs(reqs: dict[str, dict[str, Any]]) -> list[AbstractRequirement]:
     core_reqs = []
     for req_name, req_info in reqs.items():
-
         # Create set for all valid courses
         valid_courses = req_info["valid_courses"]
 
