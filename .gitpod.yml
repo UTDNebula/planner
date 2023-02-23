@@ -5,6 +5,16 @@
 # Learn more from ready-to-use templates: https://www.gitpod.io/docs/introduction/getting-started/quickstart
 
 tasks:
-  - init: pip install -r requirements.txt
+  - name: Install Python 3.10 and Dependencies
+  - init: |
+      pyenv install 3.11 \
+      pyenv global 3.11
+      pip install -r requirements.txt
+  - command: |
+      flask --app api run 
+
+ports:
+  - port: 3000
+    visibility: public
 
 
