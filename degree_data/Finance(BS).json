@@ -26,9 +26,23 @@
             "course": "BLAW 2301"
           },
           {
-            "matcher": "CourseRequirement",
-            "course": "MATH 1325"
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "MATH 1325"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MATH 2413"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MATH 2417"
+              }
+            ]
           },
+
           {
             "matcher": "OrRequirement",
             "requirements": [
@@ -39,6 +53,14 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "OPRE 3340"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MATH 2414"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MATH 2419"
               }
             ]
           },
