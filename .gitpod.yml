@@ -7,8 +7,8 @@
 tasks:
   - name: Install Python 3.10 and Dependencies
   - init: |
-      pyenv install 3.11 \
-      pyenv global 3.11
+      pyenv install 3.11 
+      pyenv local 3.11
       pip install -r requirements.txt
   - command: |
       flask --app api run 
