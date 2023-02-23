@@ -78,7 +78,6 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
   });
 
   const handleSubmit = () => {
-    // TODO: Implement changing profile settings here
     type semesterChars = 'f' | 'u' | 's';
     let firstSemester!: semesterChars;
 
