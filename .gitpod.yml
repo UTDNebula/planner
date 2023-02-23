@@ -7,8 +7,8 @@
 tasks:
   - name: Install Python 3.10 and Dependencies
   - init: |
-      pyenv install 3.11 
-      pyenv local 3.11
+      pyenv install 3.10
+      pyenv local 3.10
       pip install -r requirements.txt
 
 ports:
