@@ -14,7 +14,6 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { getStartingPlanSemester } from '@/utils/plannerUtils';
 
-
 type ProfilePageProps = {
   isDesktop: boolean;
 };
@@ -38,7 +37,6 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
     [],
   );
 
-  
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [firstSem, setFirstSem] = useState('');
@@ -50,10 +48,26 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
     if (!isLoading) {
       setName(data?.profile?.name ?? '');
       setEmail(data?.email ?? '');
-      setFirstSem(displaySemesterCode(data?.profile?.startSemester ?? {semester: 'f', year: 404}).split(' ')[0]);
-      setFirstYear(displaySemesterCode(data?.profile?.startSemester ?? {semester: 'f', year: 404}).split(' ')[1]);
-      setSecondSem(displaySemesterCode(data?.profile?.endSemester ?? {semester: 'f', year: 404}).split(' ')[0]);
-      setSecondYear(displaySemesterCode(data?.profile?.endSemester ?? {semester: 'f', year: 404}).split(' ')[1]);
+      setFirstSem(
+        displaySemesterCode(data?.profile?.startSemester ?? { semester: 'f', year: 404 }).split(
+          ' ',
+        )[0],
+      );
+      setFirstYear(
+        displaySemesterCode(data?.profile?.startSemester ?? { semester: 'f', year: 404 }).split(
+          ' ',
+        )[1],
+      );
+      setSecondSem(
+        displaySemesterCode(data?.profile?.endSemester ?? { semester: 'f', year: 404 }).split(
+          ' ',
+        )[0],
+      );
+      setSecondYear(
+        displaySemesterCode(data?.profile?.endSemester ?? { semester: 'f', year: 404 }).split(
+          ' ',
+        )[1],
+      );
     }
   }, [data]);
 
@@ -67,37 +81,34 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
     // TODO: Implement changing profile settings here
     type semesterChars = 'f' | 'u' | 's';
     let firstSemester!: semesterChars;
-   
-    switch(firstSem){
-      case "Fall":
+
+    switch (firstSem) {
+      case 'Fall':
         firstSemester = 'f';
         break;
-      case "Spring":
+      case 'Spring':
         firstSemester = 's';
         break;
-      case "Summer":
+      case 'Summer':
         firstSemester = 'u';
         break;
     }
-    console.log(firstSem)
     let secondSemester!: semesterChars;
-    switch(secondSem){
-      case "Fall":
+    switch (secondSem) {
+      case 'Fall':
         secondSemester = 'f';
         break;
-      case "Spring":
+      case 'Spring':
         secondSemester = 's';
         break;
-      case "Summer":
+      case 'Summer':
         secondSemester = 'u';
         break;
     }
-    console.log(firstSemester);
-    console.log(secondSemester);
     updateProfile.mutateAsync({
       name: name,
-      startSemester:  {semester: firstSemester , year: Number(firstYear)},
-      endSemester: {semester: secondSemester , year: Number(secondYear)},
+      startSemester: { semester: firstSemester, year: Number(firstYear) },
+      endSemester: { semester: secondSemester, year: Number(secondYear) },
     });
     return true;
   };
@@ -105,21 +116,21 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
   const handleFirstSemesterChange = (event: SelectChangeEvent) => {
     setFirstSem(event.target.value);
     return true;
-  }
+  };
 
   const handleFirstSemesterChangeYear = (event: SelectChangeEvent) => {
-    setFirstYear(event.target.value)
+    setFirstYear(event.target.value);
     return true;
-  }
+  };
   const handleSecondSemesterChange = (event: SelectChangeEvent) => {
-    setSecondSem(event.target.value)
+    setSecondSem(event.target.value);
     return true;
-  }
+  };
 
   const handleSecondSemesterChangeYear = (event: SelectChangeEvent) => {
-    setSecondYear(event.target.value)
+    setSecondYear(event.target.value);
     return true;
-  }
+  };
 
   const handleResetPassword = () => {
     // TODO: Implement resetting password here
@@ -178,93 +189,91 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
               disabled={true}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <article className="grid gap-y-0 px-0 py-0 md:grid-cols-1 md:gap-x-10 lg:gap-x-0 md:auto-rows-min">
-            <h2 className="col-span-full mb-[10px] ml-[5px]">Start Semester</h2>
-            <article className="grid gap-y-0 px-0 py-0 md:grid-cols-2 md:gap-x-10 lg:gap-x-0">
-            <FormControl sx={{ m: 0.5, width: 113 }}>
-              
-              <InputLabel id="demo-simple-select-autowidth-label">Sem</InputLabel>
-              <Select
-                labelId="demo-simple-select-autowidth-label"
-                id="demo-simple-select-autowidth"
-                value={firstSem}
-                onChange={handleFirstSemesterChange}
-                autoWidth
-                label="Age"
-              >
-                <MenuItem value="Fall">Fall</MenuItem>
-                <MenuItem value="Summer">Summer</MenuItem>
-                <MenuItem value="Spring">Spring</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControl sx={{ m: 0.5, width: 113 }}>
-              <InputLabel id="demo-simple-select-autowidth-label">Year</InputLabel>
-              <Select
-                labelId="demo-simple-select-autowidth-label"
-                id="demo-simple-select-autowidth"
-                value={firstYear}
-                onChange={handleFirstSemesterChangeYear}
-                autoWidth
-                label="Age"
-              >
-                <MenuItem value="2020">2020</MenuItem>
-                <MenuItem value="2021">2021</MenuItem>
-                <MenuItem value="2022">2022</MenuItem>
-                <MenuItem value="2023">2023</MenuItem>
-                <MenuItem value="2024">2024</MenuItem>
-                <MenuItem value="2025">2025</MenuItem>
-                <MenuItem value="2026">2026</MenuItem>
-                <MenuItem value="2027">2027</MenuItem>
-                <MenuItem value="2028">2028</MenuItem>
-                <MenuItem value="2029">2029</MenuItem>
-                <MenuItem value="2030">2030</MenuItem>
-              </Select>
-            </FormControl>
+            <article className="grid gap-y-0 px-0 py-0 md:auto-rows-min md:grid-cols-1 md:gap-x-10 lg:gap-x-0">
+              <h2 className="col-span-full mb-[10px] ml-[5px]">Start Semester</h2>
+              <article className="grid gap-y-0 px-0 py-0 md:grid-cols-2 md:gap-x-10 lg:gap-x-0">
+                <FormControl sx={{ m: 0.5, width: 113 }}>
+                  <InputLabel id="demo-simple-select-autowidth-label">Sem</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-autowidth-label"
+                    id="demo-simple-select-autowidth"
+                    value={firstSem}
+                    onChange={handleFirstSemesterChange}
+                    autoWidth
+                    label="Age"
+                  >
+                    <MenuItem value="Fall">Fall</MenuItem>
+                    <MenuItem value="Summer">Summer</MenuItem>
+                    <MenuItem value="Spring">Spring</MenuItem>
+                  </Select>
+                </FormControl>
+                <FormControl sx={{ m: 0.5, width: 113 }}>
+                  <InputLabel id="demo-simple-select-autowidth-label">Year</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-autowidth-label"
+                    id="demo-simple-select-autowidth"
+                    value={firstYear}
+                    onChange={handleFirstSemesterChangeYear}
+                    autoWidth
+                    label="Age"
+                  >
+                    <MenuItem value="2020">2020</MenuItem>
+                    <MenuItem value="2021">2021</MenuItem>
+                    <MenuItem value="2022">2022</MenuItem>
+                    <MenuItem value="2023">2023</MenuItem>
+                    <MenuItem value="2024">2024</MenuItem>
+                    <MenuItem value="2025">2025</MenuItem>
+                    <MenuItem value="2026">2026</MenuItem>
+                    <MenuItem value="2027">2027</MenuItem>
+                    <MenuItem value="2028">2028</MenuItem>
+                    <MenuItem value="2029">2029</MenuItem>
+                    <MenuItem value="2030">2030</MenuItem>
+                  </Select>
+                </FormControl>
+              </article>
             </article>
-            </article>
-            <article className="grid gap-y-0 px-0 py-0 md:grid-cols-1 md:gap-x-10 lg:gap-x-0 md:auto-rows-min">
-            <h2 className="col-span-full mb-[10px] ml-[5px]">End Semester</h2>
-            <article className="grid gap-y-0 px-0 py-0 md:grid-cols-2 md:gap-x-10 lg:gap-x-0">
-            <FormControl sx={{ m: 0.5, width: 113 }}>
-              
-              <InputLabel id="demo-simple-select-autowidth-label">Sem</InputLabel>
-              <Select
-                labelId="demo-simple-select-autowidth-label"
-                id="demo-simple-select-autowidth"
-                value={secondSem}
-                onChange={handleSecondSemesterChange}
-                autoWidth
-                label="Age"
-              >
-                <MenuItem value="Fall">Fall</MenuItem>
-                <MenuItem value="Summer">Summer</MenuItem>
-                <MenuItem value="Spring">Spring</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControl sx={{ m: 0.5, width: 113 }}>
-              <InputLabel id="demo-simple-select-autowidth-label">Year</InputLabel>
-              <Select
-                labelId="demo-simple-select-autowidth-label"
-                id="demo-simple-select-autowidth"
-                value={secondYear}
-                onChange={handleSecondSemesterChangeYear}
-                autoWidth
-                label="Age"
-              >
-                <MenuItem value="2020">2020</MenuItem>
-                <MenuItem value="2021">2021</MenuItem>
-                <MenuItem value="2022">2022</MenuItem>
-                <MenuItem value="2023">2023</MenuItem>
-                <MenuItem value="2024">2024</MenuItem>
-                <MenuItem value="2025">2025</MenuItem>
-                <MenuItem value="2026">2026</MenuItem>
-                <MenuItem value="2027">2027</MenuItem>
-                <MenuItem value="2028">2028</MenuItem>
-                <MenuItem value="2029">2029</MenuItem>
-                <MenuItem value="2030">2030</MenuItem>
-              </Select>
-            </FormControl>
-            </article>
+            <article className="grid gap-y-0 px-0 py-0 md:auto-rows-min md:grid-cols-1 md:gap-x-10 lg:gap-x-0">
+              <h2 className="col-span-full mb-[10px] ml-[5px]">End Semester</h2>
+              <article className="grid gap-y-0 px-0 py-0 md:grid-cols-2 md:gap-x-10 lg:gap-x-0">
+                <FormControl sx={{ m: 0.5, width: 113 }}>
+                  <InputLabel id="demo-simple-select-autowidth-label">Sem</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-autowidth-label"
+                    id="demo-simple-select-autowidth"
+                    value={secondSem}
+                    onChange={handleSecondSemesterChange}
+                    autoWidth
+                    label="Age"
+                  >
+                    <MenuItem value="Fall">Fall</MenuItem>
+                    <MenuItem value="Summer">Summer</MenuItem>
+                    <MenuItem value="Spring">Spring</MenuItem>
+                  </Select>
+                </FormControl>
+                <FormControl sx={{ m: 0.5, width: 113 }}>
+                  <InputLabel id="demo-simple-select-autowidth-label">Year</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-autowidth-label"
+                    id="demo-simple-select-autowidth"
+                    value={secondYear}
+                    onChange={handleSecondSemesterChangeYear}
+                    autoWidth
+                    label="Age"
+                  >
+                    <MenuItem value="2020">2020</MenuItem>
+                    <MenuItem value="2021">2021</MenuItem>
+                    <MenuItem value="2022">2022</MenuItem>
+                    <MenuItem value="2023">2023</MenuItem>
+                    <MenuItem value="2024">2024</MenuItem>
+                    <MenuItem value="2025">2025</MenuItem>
+                    <MenuItem value="2026">2026</MenuItem>
+                    <MenuItem value="2027">2027</MenuItem>
+                    <MenuItem value="2028">2028</MenuItem>
+                    <MenuItem value="2029">2029</MenuItem>
+                    <MenuItem value="2030">2030</MenuItem>
+                  </Select>
+                </FormControl>
+              </article>
             </article>
             <button
               onClick={handleSubmit}
@@ -273,7 +282,6 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
               Update Profile
             </button>
           </article>
-          
         </section>
         <section className="flex w-full flex-col rounded-2xl bg-white px-8 py-4">
           <h1>Reset Password</h1>
