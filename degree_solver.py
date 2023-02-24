@@ -249,7 +249,7 @@ def format_core_reqs(reqs: dict[str, dict[str, Any]]) -> list[AbstractRequiremen
                 for course in req_info["courses"]
             ],
             valid_courses,
-            {"name": req_name},
+            {"name": req_name, "id": req_name},
         )
 
         core_reqs.append(core_req)
