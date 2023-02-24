@@ -410,7 +410,7 @@
         "excluded_courses": [],
         "matcher": "FreeElectiveRequirement",
         "metadata": { "id": 76 },
-        "required_hours": 0
+        "required_hours": 3
       }
     ]
   }
