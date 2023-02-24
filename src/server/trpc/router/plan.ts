@@ -237,6 +237,9 @@ export const planRouter = router({
           },
           data: {
             courses: [...semester!.courses, courseName],
+            courseColors: {
+              push: ""
+            }
           },
         });
         return true;
@@ -257,17 +260,24 @@ export const planRouter = router({
           select: {
             id: true,
             courses: true,
+            courseColors: true
           },
         });
-        // Update courses
-        await ctx.prisma.semester.update({
-          where: {
-            id: semesterId,
-          },
-          data: {
-            courses: semester!.courses.filter((cName) => cName != courseName),
-          },
-        });
+        const index = semester?.courses.findIndex((course)=>courseName==course)
+        if (index) {
+          const newColors = [...semester?.courseColors || []]
+          newColors.splice(index, 1)
+          // Update courses
+          await ctx.prisma.semester.update({
+            where: {
+              id: semesterId,
+            },
+            data: {
+              courses: semester!.courses.filter((cName) => cName != courseName),
+              courseColors: newColors
+            },
+          });
+        }
         return true;
       } catch (error) {
         console.error(error);
@@ -281,6 +291,7 @@ export const planRouter = router({
           where: { id: semesterId },
           data: {
             courses: [],
+            courseColors: []
           },
         })
         .catch((err) => {
@@ -315,9 +326,13 @@ export const planRouter = router({
           select: {
             id: true,
             courses: true,
+            courseColors: true
           },
         });
 
+        const index = oldSemester?.courses.findIndex((course)=>courseName==course)
+        const newColors = [...oldSemester?.courseColors || []]
+        if (index) newColors.splice(index, 1)
         // Update courses
         await ctx.prisma.semester.update({
           where: {
@@ -325,6 +340,7 @@ export const planRouter = router({
           },
           data: {
             courses: oldSemester!.courses.filter((cName) => cName != courseName),
+            courseColors: newColors
           },
         });
 
@@ -344,6 +360,9 @@ export const planRouter = router({
           },
           data: {
             courses: [...semester!.courses, courseName],
+            courseColors: {
+              push: ""
+            }
           },
         });
 
@@ -391,4 +410,32 @@ export const planRouter = router({
         console.log(error);
       }
     }),
+
+    changeCourseColor: protectedProcedure.input(
+      z.object({        planId: z.string(),
+        semesterId: z.string(),
+        courseName: z.string(),
+        color: z.string()
+      })
+    ).mutation(async ({ctx, input})=>{
+      const semester = await ctx.prisma.semester.findUnique(
+        {where: {
+          id: input.semesterId
+        }}
+      )
+      const index = semester?.courses.findIndex((course)=>input.courseName==course)
+      if (index) {
+        const newColors = [...semester?.courseColors || []]
+        newColors[index] = input.color
+        await ctx.prisma.semester.update({
+          where: {
+            id: input.semesterId,
+          },
+          data: {
+            courseColors: newColors
+          },
+        });
+      }
+      return true
+    })
 });

@@ -13,6 +13,7 @@ export interface Semester {
   id: ObjectID;
   code: SemesterCode;
   courses: DraggableCourse[];
+  courseColors: string[]
 }
 
 export interface Course {
