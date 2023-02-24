@@ -30,7 +30,13 @@ export const userRouter = router({
     return userInfo;
   }),
   updateUserProfile: protectedProcedure
-    .input(z.object({ name: z.string().min(1) }))
+    .input(
+      z.object({
+        name: z.string().min(1),
+        startSemester: z.object({ semester: z.enum(['f', 's', 'u']), year: z.number() }),
+        endSemester: z.object({ semester: z.enum(['f', 's', 'u']), year: z.number() }),
+      }),
+    )
     .mutation(async ({ ctx, input }) => {
       const userId = ctx.session.user.id;
       const user = await ctx.prisma.user.update({
@@ -41,6 +47,8 @@ export const userRouter = router({
           profile: {
             update: {
               name: input.name,
+              startSemester: input.startSemester,
+              endSemester: input.endSemester,
             },
           },
         },
