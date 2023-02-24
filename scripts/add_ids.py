@@ -25,7 +25,7 @@ def add_ids(requirement_data) -> None:
             requirement["metadata"] = {}
 
         # Add id
-        requirement["metadata"]["name"] = counter[0]
+        requirement["metadata"]["id"] = counter[0]
         counter[0] += 1
 
         # Add ids to other requirements
