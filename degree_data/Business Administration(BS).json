@@ -11,297 +11,289 @@
     "major": [
       {
         "matcher": "AndRequirement",
-        "metadata": { "name": "Major Preparatory Courses" },
+        "metadata": { "id": 0, "name": "Major Preparatory Courses" },
         "requirements": [
           {
+            "course": "ACCT 2301",
             "matcher": "CourseRequirement",
-            "course": "ACCT 2301"
+            "metadata": { "id": 1 }
           },
           {
+            "course": "ACCT 2302",
             "matcher": "CourseRequirement",
-            "course": "ACCT 2302"
+            "metadata": { "id": 2 }
           },
           {
+            "course": "BLAW 2301",
             "matcher": "CourseRequirement",
-            "course": "BLAW 2301"
+            "metadata": { "id": 3 }
           },
           {
+            "course": "MATH 1325",
             "matcher": "CourseRequirement",
-            "course": "MATH 1325"
+            "metadata": { "id": 4 }
           },
           {
             "matcher": "OrRequirement",
+            "metadata": { "id": 5 },
             "requirements": [
               {
+                "course": "OPRE 3360",
                 "matcher": "CourseRequirement",
-                "course": "OPRE 3360"
+                "metadata": { "id": 6 }
               },
               {
+                "course": "STAT 3360",
                 "matcher": "CourseRequirement",
-                "course": "STAT 3360"
+                "metadata": { "id": 7 }
               }
             ]
           },
           {
             "matcher": "SelectRequirement",
+            "metadata": { "id": 8 },
             "required_count": 2,
             "requirements": [
               {
+                "course": "BA 1310",
                 "matcher": "CourseRequirement",
-                "course": "BA 1310"
+                "metadata": { "id": 9 }
               },
               {
+                "course": "BA 1320",
                 "matcher": "CourseRequirement",
-                "course": "BA 1320"
+                "metadata": { "id": 10 }
               },
               {
+                "course": "ECON 2301",
                 "matcher": "CourseRequirement",
-                "course": "ECON 2301"
+                "metadata": { "id": 11 }
               },
               {
+                "course": "ECON 2302",
                 "matcher": "CourseRequirement",
-                "course": "ECON 2302"
+                "metadata": { "id": 12 }
               }
             ]
           }
         ]
       },
-
       {
         "matcher": "AndRequirement",
-        "metadata": { "name": "Major Core Courses" },
+        "metadata": { "id": 13, "name": "Major Core Courses" },
         "requirements": [
           {
             "matcher": "OrRequirement",
+            "metadata": { "id": 14 },
             "requirements": [
               {
+                "course": "BCOM 1300",
                 "matcher": "CourseRequirement",
-                "course": "BCOM 1300"
+                "metadata": { "id": 15 }
               },
               {
+                "course": "BCOM 3300",
                 "matcher": "CourseRequirement",
-                "course": "BCOM 3300"
-              }
-            ]
-          },
-
-          {
-            "matcher": "CourseRequirement",
-            "course": "BCOM 4300"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "BA 3300"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "IMS 3310"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "FIN 3320"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "ITSS 3300"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "OPRE 3310"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "OPRE 3330"
-          },
-
-          {
-            "matcher": "OrRequirement",
-            "requirements": [
-              {
-                "matcher": "CourseRequirement",
-                "course": "OBHR 3310"
-              },
-              {
-                "matcher": "CourseRequirement",
-                "course": "OBHR 3330"
-              }
-            ]
-          },
-
-          {
-            "matcher": "CourseRequirement",
-            "course": "MKT 3300"
-          },
-          {
-            "matcher": "OrRequirement",
-            "requirements": [
-              {
-                "matcher": "CourseRequirement",
-                "course": "BPS 4305"
-              },
-              {
-                "matcher": "CourseRequirement",
-                "course": "ENTP 3320"
+                "metadata": { "id": 16 }
               }
             ]
           },
           {
+            "course": "BCOM 4300",
+            "matcher": "CourseRequirement",
+            "metadata": { "id": 17 }
+          },
+          {
+            "course": "BA 3300",
+            "matcher": "CourseRequirement",
+            "metadata": { "id": 18 }
+          },
+          {
+            "course": "IMS 3310",
+            "matcher": "CourseRequirement",
+            "metadata": { "id": 19 }
+          },
+          {
+            "course": "FIN 3320",
+            "matcher": "CourseRequirement",
+            "metadata": { "id": 20 }
+          },
+          {
+            "course": "ITSS 3300",
+            "matcher": "CourseRequirement",
+            "metadata": { "id": 21 }
+          },
+          {
+            "course": "OPRE 3310",
+            "matcher": "CourseRequirement",
+            "metadata": { "id": 22 }
+          },
+          {
+            "course": "OPRE 3330",
+            "matcher": "CourseRequirement",
+            "metadata": { "id": 23 }
+          },
+          {
             "matcher": "OrRequirement",
+            "metadata": { "id": 24 },
             "requirements": [
               {
+                "course": "OBHR 3310",
                 "matcher": "CourseRequirement",
-                "course": "BPS 4395"
+                "metadata": { "id": 25 }
               },
               {
+                "course": "OBHR 3330",
                 "matcher": "CourseRequirement",
-                "course": "ENTP 4395"
+                "metadata": { "id": 26 }
+              }
+            ]
+          },
+          {
+            "course": "MKT 3300",
+            "matcher": "CourseRequirement",
+            "metadata": { "id": 27 }
+          },
+          {
+            "matcher": "OrRequirement",
+            "metadata": { "id": 28 },
+            "requirements": [
+              {
+                "course": "BPS 4305",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 29 }
+              },
+              {
+                "course": "ENTP 3320",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 30 }
               }
             ]
           },
           {
             "matcher": "OrRequirement",
+            "metadata": { "id": 31 },
             "requirements": [
               {
+                "course": "BPS 4395",
                 "matcher": "CourseRequirement",
-                "course": "IMS 4335"
+                "metadata": { "id": 32 }
               },
               {
+                "course": "ENTP 4395",
                 "matcher": "CourseRequirement",
-                "course": "ENTP 4340"
+                "metadata": { "id": 33 }
+              }
+            ]
+          },
+          {
+            "matcher": "OrRequirement",
+            "metadata": { "id": 34 },
+            "requirements": [
+              {
+                "course": "IMS 4335",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 35 }
               },
               {
+                "course": "ENTP 4340",
                 "matcher": "CourseRequirement",
-                "course": "MKT 4360"
+                "metadata": { "id": 36 }
               },
               {
+                "course": "MKT 4360",
                 "matcher": "CourseRequirement",
-                "course": "BA 4095"
+                "metadata": { "id": 37 }
+              },
+              {
+                "course": "BA 4095",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 38 }
               }
             ]
           }
         ]
       },
-
       {
         "matcher": "AndRequirement",
-        "metadata": { "name": "Major Related Courses" },
+        "metadata": { "id": 39, "name": "Major Related Courses" },
         "requirements": [
           {
+            "course": "ENTP 3301",
             "matcher": "CourseRequirement",
-            "course": "ENTP 3301"
+            "metadata": { "id": 40 }
           },
           {
             "matcher": "OrRequirement",
+            "metadata": { "id": 41 },
             "requirements": [
               {
+                "course": "BA 4V90",
                 "matcher": "CourseRequirement",
-                "course": "BA 4V90"
+                "metadata": { "id": 42 }
               },
               {
+                "course": "BA 4090",
                 "matcher": "CourseRequirement",
-                "course": "BA 4090"
+                "metadata": { "id": 43 }
               }
             ]
           },
-
           {
             "matcher": "BAGuidedElectiveRequirement",
-            "required_count": 3,
-            "required_hours": 15,
+            "metadata": { "id": 44 },
             "prefix_groups": [
               {
                 "matcher": "SomeRequirement",
                 "requirements": [
-                  {
-                    "matcher": "PrefixBucketRequirement",
-                    "prefix": "MKT"
-                  }
+                  { "matcher": "PrefixBucketRequirement", "prefix": "MKT" }
                 ]
               },
               {
                 "matcher": "SomeRequirement",
                 "requirements": [
-                  {
-                    "matcher": "PrefixBucketRequirement",
-                    "prefix": "ACCT"
-                  },
-                  {
-                    "matcher": "PrefixBucketRequirement",
-                    "prefix": "ENGY"
-                  },
-                  {
-                    "matcher": "PrefixBucketRequirement",
-                    "prefix": "FIN"
-                  },
-                  {
-                    "matcher": "PrefixBucketRequirement",
-                    "prefix": "MECO"
-                  },
-                  {
-                    "matcher": "PrefixBucketRequirement",
-                    "prefix": "REAL"
-                  },
-                  {
-                    "matcher": "PrefixBucketRequirement",
-                    "prefix": "RMIS"
-                  }
+                  { "matcher": "PrefixBucketRequirement", "prefix": "ACCT" },
+                  { "matcher": "PrefixBucketRequirement", "prefix": "ENGY" },
+                  { "matcher": "PrefixBucketRequirement", "prefix": "FIN" },
+                  { "matcher": "PrefixBucketRequirement", "prefix": "MECO" },
+                  { "matcher": "PrefixBucketRequirement", "prefix": "REAL" },
+                  { "matcher": "PrefixBucketRequirement", "prefix": "RMIS" }
                 ]
               },
               {
                 "matcher": "SomeRequirement",
                 "requirements": [
-                  {
-                    "matcher": "PrefixBucketRequirement",
-                    "prefix": "ITSS"
-                  }
+                  { "matcher": "PrefixBucketRequirement", "prefix": "ITSS" }
                 ]
               },
               {
                 "matcher": "SomeRequirement",
                 "requirements": [
-                  {
-                    "matcher": "PrefixBucketRequirement",
-                    "prefix": "BA"
-                  },
-                  {
-                    "matcher": "PrefixBucketRequirement",
-                    "prefix": "BCOM"
-                  },
-                  {
-                    "matcher": "PrefixBucketRequirement",
-                    "prefix": "BPS"
-                  },
-                  {
-                    "matcher": "PrefixBucketRequirement",
-                    "prefix": "BLAW"
-                  },
-                  {
-                    "matcher": "PrefixBucketRequirement",
-                    "prefix": "HMGT"
-                  },
-                  {
-                    "matcher": "PrefixBucketRequirement",
-                    "prefix": "IMS"
-                  }
+                  { "matcher": "PrefixBucketRequirement", "prefix": "BA" },
+                  { "matcher": "PrefixBucketRequirement", "prefix": "BCOM" },
+                  { "matcher": "PrefixBucketRequirement", "prefix": "BPS" },
+                  { "matcher": "PrefixBucketRequirement", "prefix": "BLAW" },
+                  { "matcher": "PrefixBucketRequirement", "prefix": "HMGT" },
+                  { "matcher": "PrefixBucketRequirement", "prefix": "IMS" }
                 ]
               },
               {
                 "matcher": "SomeRequirement",
                 "requirements": [
-                  {
-                    "matcher": "PrefixBucketRequirement",
-                    "prefix": "OPRE"
-                  }
+                  { "matcher": "PrefixBucketRequirement", "prefix": "OPRE" }
                 ]
               }
-            ]
+            ],
+            "required_count": 3,
+            "required_hours": 15
           }
         ]
       },
       {
+        "excluded_courses": [],
         "matcher": "FreeElectiveRequirement",
-        "required_hours": 3,
-        "excluded_courses": []
+        "metadata": { "id": 45 },
+        "required_hours": 3
       }
     ]
   }

@@ -13,6 +13,7 @@ def test_major_guided_elective_requirement() -> None:
             CourseRequirement("HIST 1301"),
             CourseRequirement("HIST 1302"),
         ],
+        {},
     )
 
     assert req.attempt_fulfill("HIST 1301")
@@ -30,15 +31,18 @@ def test_major_guided_elective_requirement() -> None:
         """
         {
             "matcher": "MajorGuidedElectiveRequirement",
+            "metadata": {"id": 1},
             "required_count": 3,
             "starts_with": "CS 43",
             "also_fulfills": [
                 {
                     "matcher": "CourseRequirement",
+                    "metadata": {"id": 2},
                     "course": "EE 4325"
                 },
                 {
                     "matcher": "CourseRequirement",
+                    "metadata": {"id": 3},
                     "course": "SE 4351"
                 }
             ]

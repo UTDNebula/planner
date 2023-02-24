@@ -7,7 +7,7 @@ is utilized in the bypass logic
 TODO: Add typing
 """
 # Parse json file
-FILE_NAME = "Accounting(BS)"
+FILE_NAME = "Software Engineering(BS)"
 
 
 # Get major data from json

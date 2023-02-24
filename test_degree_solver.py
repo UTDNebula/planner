@@ -1,4 +1,4 @@
-from degree_solver import DegreeRequirementsSolver, DegreeRequirementsInput
+from degree_solver import BypassInput, DegreeRequirementsSolver, DegreeRequirementsInput
 
 input = DegreeRequirementsInput(True, ["Business Administration(BS)"], [], [])
 
@@ -56,7 +56,7 @@ GRADUATEABLE_COURSES = [
 ]
 
 
-solver = DegreeRequirementsSolver(GRADUATEABLE_COURSES, input, [])
+solver = DegreeRequirementsSolver(GRADUATEABLE_COURSES, input, BypassInput([], {}))
 
 
 solver.solve()
