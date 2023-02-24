@@ -26,7 +26,7 @@ export default function PlanCard({ id, name, major }: PlanCardProps) {
     <>
     <div className="modal" id="my-modal-2">
       <div className="modal-box">
-        <h3 className="font-bold text-lg">Congratulations random Internet user!</h3>
+        <h3 className="font-bold text-lg">Delete Plan</h3>
         <p className="py-4">Are you sure you would like to delete this plan?</p>
         <div className="modal-action">
         <a href="#" className="btn alert-error" onClick={() => {deletePlan.mutateAsync(id)}}>Yes</a>
