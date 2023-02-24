@@ -43,6 +43,7 @@ class MajorGuidedElectiveRequirement(AbstractRequirement):
         self.fulfilled_count = 0
         self.valid_courses: dict[str, int] = {}
         self.metadata = metadata
+        self.override_filled = False
 
     def attempt_fulfill(self, course: str) -> bool:
         if self.is_fulfilled():
@@ -69,11 +70,13 @@ class MajorGuidedElectiveRequirement(AbstractRequirement):
         )
 
     def is_fulfilled(self) -> bool:
-        return self.__true_fulfilled_total() >= self.required_count
+        return (
+            self.override_filled or self.__true_fulfilled_total() >= self.required_count
+        )
 
     def override_fill(self, index: int) -> bool:
         if self.metadata["id"] == index:
-            self.filled = True
+            self.override_filled = True
             return True
         for requirement in self.also_fulfills:
             if requirement.override_fill(index):
@@ -109,7 +112,6 @@ class MajorGuidedElectiveRequirement(AbstractRequirement):
 
         also_fulfills: list[AbstractRequirement] = []
         for requirement in json["also_fulfills"]:
-            print("requirement: ", requirement, "\n")
             also_fulfills.append(
                 map.REQUIREMENTS_MAP[requirement["matcher"]].from_json(requirement)
             )

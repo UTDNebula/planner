@@ -75,6 +75,7 @@ class AndRequirement(AbstractRequirement):
     ) -> None:
         self.requirements = requirements
         self.metadata = metadata
+        self.override_filled = False
 
     def attempt_fulfill(self, course: str) -> bool:
         if self.is_fulfilled():
@@ -87,14 +88,16 @@ class AndRequirement(AbstractRequirement):
         return False
 
     def is_fulfilled(self) -> bool:
-        return all(requirement.is_fulfilled() for requirement in self.requirements)
+        return self.override_filled or all(
+            requirement.is_fulfilled() for requirement in self.requirements
+        )
 
     def get_num_fulfilled_requirements(self) -> int:
         return sum([1 for req in self.requirements if req.is_fulfilled()])
 
     def override_fill(self, index: int) -> bool:
         if self.metadata["id"] == index:
-            self.filled = True
+            self.override_filled = True
             return True
         for requirement in self.requirements:
             if requirement.override_fill(index):
@@ -120,7 +123,6 @@ class AndRequirement(AbstractRequirement):
             )
             requirements.append(requirement)
 
-        print(json, "HM")
         return cls(requirements, json["metadata"])
 
     def to_json(self) -> Json[Any]:
@@ -151,6 +153,7 @@ class OrRequirement(AbstractRequirement):
     ) -> None:
         self.requirements = requirements
         self.metadata = metadata
+        self.override_filled = False  # use this as override fill
 
     def attempt_fulfill(self, course: str) -> bool:
         if self.is_fulfilled():
@@ -163,11 +166,13 @@ class OrRequirement(AbstractRequirement):
         return False
 
     def is_fulfilled(self) -> bool:
-        return any(requirement.is_fulfilled() for requirement in self.requirements)
+        return self.override_filled or any(
+            requirement.is_fulfilled() for requirement in self.requirements
+        )
 
     def override_fill(self, index: int) -> bool:
         if self.metadata["id"] == index:
-            self.filled = True
+            self.override_filled = True
             return True
         for requirement in self.requirements:
             if requirement.override_fill(index):
@@ -234,6 +239,7 @@ class SelectRequirement(AbstractRequirement):
         self.fulfilled_count = 0
         self.requirements = requirements
         self.metadata = metadata
+        self.override_filled = False
 
     def attempt_fulfill(self, course: str) -> bool:
         if self.is_fulfilled():
@@ -252,11 +258,11 @@ class SelectRequirement(AbstractRequirement):
         for requirement in self.requirements:
             if requirement.is_fulfilled():
                 curr += 1
-        return curr >= self.required_count
+        return self.override_filled or curr >= self.required_count
 
     def override_fill(self, index: int) -> bool:
         if self.metadata["id"] == index:
-            self.filled = True
+            self.override_filled = True
             return True
         for requirement in self.requirements:
             if requirement.override_fill(index):
@@ -331,7 +337,7 @@ class HoursRequirement(AbstractRequirement):
             str, int
         ] = valid_courses  # Stores map of course & # hours fulfilled (i.e. {"CS 1200": 2}). This is done due to course splitting (1 course can be used to satisfy multiple requirements)
         self.metadata: dict[str, Any] = metadata
-        # Compute fulfilled hours from metadata field
+        self.override_filled = False
 
     def attempt_fulfill(self, course: str) -> bool:
         if self.is_fulfilled():
@@ -348,11 +354,11 @@ class HoursRequirement(AbstractRequirement):
         return sum(self.valid_courses.values())
 
     def is_fulfilled(self) -> bool:
-        return self.get_fulfilled_hours() >= self.required_hours
+        return self.override_filled or self.get_fulfilled_hours() >= self.required_hours
 
     def override_fill(self, index: int) -> bool:
         if self.metadata["id"] == index:
-            self.filled = True
+            self.override_filled = True
             return True
         for requirement in self.requirements:
             if requirement.override_fill(index):
@@ -447,6 +453,7 @@ class FreeElectiveRequirement(AbstractRequirement):
         self.fulfilled_hours = 0
         self.valid_courses: dict[str, int] = {}
         self.metadata = metadata
+        self.override_filled = False
 
     def attempt_fulfill(self, course: str) -> bool:
         if self.is_fulfilled():
@@ -461,11 +468,11 @@ class FreeElectiveRequirement(AbstractRequirement):
         return False
 
     def is_fulfilled(self) -> bool:
-        return self.fulfilled_hours >= self.required_hours
+        return self.override_filled or self.fulfilled_hours >= self.required_hours
 
     def override_fill(self, index: int) -> bool:
         if self.metadata["id"] == index:
-            self.filled = True
+            self.override_filled = True
             return True
         return False
 
@@ -545,7 +552,7 @@ class PrefixBucketRequirement(AbstractRequirement):
         return self.filled
 
     def override_fill(self, index: int) -> bool:
-        return super().override_fill(index)
+        return False
 
     class JSON(TypedDict):
         prefix: str

@@ -65,6 +65,7 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
         self.fulfilled_hours = 0
         self.valid_courses: dict[str, int] = {}
         self.metadata = metadata
+        self.override_filled = False
 
     def attempt_fulfill(self, course: str) -> bool:
         if self.is_fulfilled():
@@ -94,14 +95,14 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
         return count
 
     def is_fulfilled(self) -> bool:
-        return (
+        return self.override_filled or (
             self.get_fulfilled_count() >= self.required_count
             and self.fulfilled_hours >= self.required_hours
         )
 
     def override_fill(self, index: int) -> bool:
         if self.metadata["id"] == index:
-            self.filled = True
+            self.override_filled = True
             return True
         return False
 
