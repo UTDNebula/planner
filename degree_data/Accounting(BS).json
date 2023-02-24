@@ -14,9 +14,23 @@
         "metadata": { "name": "Major Preparatory Courses" },
         "requirements": [
           {
-            "matcher": "CourseRequirement",
-            "course": "MATH 1325"
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "MATH 1325"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MATH 2413"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MATH 2417"
+              }
+            ]
           },
+
           {
             "matcher": "OrRequirement",
             "requirements": [
@@ -31,6 +45,14 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "OPRE 3340"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MATH 2414"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MATH 2419"
               }
             ]
           },
@@ -109,82 +131,81 @@
       {
         "matcher": "AndRequirement",
         "metadata": {
-          "name": "Major Core Courses",
-          "requirements": [
-            {
-              "matcher": "OrRequirement",
-              "requirements": [
-                {
-                  "matcher": "CourseRequirement",
-                  "course": "BCOM 1300"
-                },
-                {
-                  "matcher": "CourseRequirement",
-                  "course": "BCOM 3300"
-                }
-              ]
-            },
+          "name": "Major Core Courses"
+        },
+        "requirements": [
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "BCOM 1300"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "BCOM 3300"
+              }
+            ]
+          },
 
-            {
-              "matcher": "CourseRequirement",
-              "course": "BCOM 4300"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "IMS 3310"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "FIN 3320"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "ITSS 3300"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "OPRE 3310"
-            },
+          {
+            "matcher": "CourseRequirement",
+            "course": "BCOM 4300"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "IMS 3310"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "FIN 3320"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ITSS 3300"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "OPRE 3310"
+          },
 
-            {
-              "matcher": "OrRequirement",
-              "requirements": [
-                {
-                  "matcher": "CourseRequirement",
-                  "course": "OBHR 3330"
-                },
-                {
-                  "matcher": "CourseRequirement",
-                  "course": "OBHR 3310"
-                }
-              ]
-            },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "OBHR 3330"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "OBHR 3310"
+              }
+            ]
+          },
 
-            {
-              "matcher": "CourseRequirement",
-              "course": "MKT 3300"
-            },
-            {
-              "matcher": "OrRequirement",
-              "requirements": [
-                {
-                  "matcher": "CourseRequirement",
-                  "course": "ACCT 4395"
-                },
-                {
-                  "matcher": "CourseRequirement",
-                  "course": "BPS 4395"
-                },
-                {
-                  "matcher": "CourseRequirement",
-                  "course": "ENTP 4395"
-                }
-              ]
-            }
-          ]
-        }
+          {
+            "matcher": "CourseRequirement",
+            "course": "MKT 3300"
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "ACCT 4395"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "BPS 4395"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ENTP 4395"
+              }
+            ]
+          }
+        ]
       },
-
       {
         "matcher": "AndRequirement",
         "metadata": { "name": "Major Related Courses" },
@@ -324,7 +345,8 @@
       {
         "matcher": "FreeElectiveRequirement",
         "required_hours": 0,
-        "excluded_courses": []
+        "excluded_courses": [],
+        "repeated_courses": ["PHIL 2303", "OPRE 3340"]
       }
     ]
   }
