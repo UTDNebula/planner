@@ -22,7 +22,6 @@ class SomeRequirement(OrRequirement):
     """
 
     def attempt_fulfill(self, course: str) -> bool:
-
         for requirement in self.requirements:
             if requirement.attempt_fulfill(course):
                 return True
@@ -57,6 +56,7 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
         required_count: int,
         required_hours: int,
         prefix_groups: list[AbstractRequirement],
+        metadata: dict[str, Any] = {},
     ) -> None:
         self.prefix_groups = prefix_groups
         self.required_count = required_count
@@ -64,6 +64,7 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
         self.required_hours = required_hours
         self.fulfilled_hours = 0
         self.valid_courses: dict[str, int] = {}
+        self.metadata = metadata
 
     def attempt_fulfill(self, course: str) -> bool:
         if self.is_fulfilled():
@@ -75,7 +76,6 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
 
         # Now check if course satisfies a group
         for group in self.prefix_groups:
-
             if group.attempt_fulfill(course):
                 course_hrs = utils.get_hours_from_course(course)
                 self.fulfilled_hours += course_hrs
@@ -99,10 +99,17 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
             and self.fulfilled_hours >= self.required_hours
         )
 
+    def override_fill(self, index: int) -> bool:
+        if self.metadata["id"] == index:
+            self.filled = True
+            return True
+        return False
+
     class JSON(TypedDict):
         required_count: int
         required_hours: int
         prefix_groups: list[OrRequirement.Req]
+        metadata: dict[str, Any]
 
     @classmethod
     def from_json(cls, json: JSON) -> BusinessAdministrationElectiveRequirement:
@@ -144,7 +151,12 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
             )
             requirements.append(requirement)
 
-        return cls(json["required_count"], json["required_hours"], requirements)
+        return cls(
+            json["required_count"],
+            json["required_hours"],
+            requirements,
+            json["metadata"],
+        )
 
     def to_json(self) -> Json[Any]:
         return json.dumps(

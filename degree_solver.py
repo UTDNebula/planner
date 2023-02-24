@@ -24,12 +24,23 @@ class Bypass:
     or to allow something that doesn't normally happen. One common example
     of this is replacing CS 1136 with hours from a different CS course.
 
-    Each bypass is a triple containing a course, a requirement, and a number of hours to assign.
+    Each bypass contains a course, total # of hours, and a mapping of requirements to hours.
+
+    TODO: THIS IS CURRENTLY NOT BEING USED
+
     """
 
     name: str
-    requirement: str
+    requirements: dict[
+        str, int
+    ]  # Each requirement is denoted by its id & takes in a certain # of hours
     hours: int
+
+
+@dataclass
+class BypassInput:
+    core: list[str]  # Contains name of each core requirement
+    major: dict[str, list[int]]  # Contains index of each major requirement
 
 
 class DegreeRequirementType(Enum):
@@ -44,7 +55,6 @@ class RequirementOutput:
     requirement_name: str
     is_fulfilled: bool
     valid_courses: list[str]
-    bypasses: list[Bypass]
 
 
 @dataclass
@@ -113,13 +123,13 @@ class DegreeRequirementsSolver:
         self,
         courses: list[str],
         requirements: DegreeRequirementsInput,
-        bypasses: list[Bypass],
+        bypasses: BypassInput,
     ) -> None:
         self.courses = set(courses)
         self.degree_requirements = self.load_requirements(requirements)
         self.validate_core = requirements.core
-        self.bypasses = bypasses
         self.solved_core = AssignmentStore()
+        self.bypasses = bypasses
 
     def load_core(self) -> GraduationRequirementsSolver:
         core_solver = GraduationRequirementsSolver()
@@ -165,6 +175,16 @@ class DegreeRequirementsSolver:
                     fulfilled = requirement.attempt_fulfill(course)
                     if fulfilled:
                         break
+
+            # Handle requirements bypasses for major
+            if not degree_req.name in self.bypasses.major:
+                continue
+            major_bypasses = self.bypasses.major[degree_req.name]
+            # Iterate through all of the requirements
+            # Mark it as fulfilled if it's in the list
+            for requirement in degree_req.requirements:
+                for bypass_idx in major_bypasses:
+                    requirement.override_fill(bypass_idx)
 
         return self
 
