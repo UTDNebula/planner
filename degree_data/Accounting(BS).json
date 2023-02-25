@@ -1,1 +1,417 @@
-{"abbreviation": "Accounting (BS)", "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/accounting", "minimum_credit_hours": 120, "name": "Bachelor of Science in Accounting", "school": "Naveen Jindal School of Management", "subtype": "Major", "year": "2022-2023", "requirements": {"core": "@import ./core.json", "major": [{"matcher": "AndRequirement", "metadata": {"id": 0, "name": "Major Preparatory Courses"}, "requirements": [{"matcher": "OrRequirement", "metadata": {"id": 1}, "requirements": [{"course": "MATH 1325", "matcher": "CourseRequirement", "metadata": {"id": 2}}, {"course": "MATH 2413", "matcher": "CourseRequirement", "metadata": {"id": 3}}, {"course": "MATH 2417", "matcher": "CourseRequirement", "metadata": {"id": 4}}]}, {"matcher": "OrRequirement", "metadata": {"id": 5}, "requirements": [{"course": "MATH 1326", "matcher": "CourseRequirement", "metadata": {"id": 6}}, {"course": "PHIL 2303", "matcher": "CourseRequirement", "metadata": {"id": 7}}, {"course": "OPRE 3340", "matcher": "CourseRequirement", "metadata": {"id": 8}}, {"course": "MATH 2414", "matcher": "CourseRequirement", "metadata": {"id": 9}}, {"course": "MATH 2419", "matcher": "CourseRequirement", "metadata": {"id": 10}}]}, {"course": "ACCT 2301", "matcher": "CourseRequirement", "metadata": {"id": 11}}, {"course": "ACCT 2302", "matcher": "CourseRequirement", "metadata": {"id": 12}}, {"course": "BLAW 2301", "matcher": "CourseRequirement", "metadata": {"id": 13}}, {"matcher": "OrRequirement", "metadata": {"id": 14}, "requirements": [{"course": "OPRE 3333", "matcher": "CourseRequirement", "metadata": {"id": 15}}, {"course": "MATH 2333", "matcher": "CourseRequirement", "metadata": {"id": 16}}, {"course": "MATH 2418", "matcher": "CourseRequirement", "metadata": {"id": 17}}, {"course": "CS 2305", "matcher": "CourseRequirement", "metadata": {"id": 18}}]}, {"matcher": "OrRequirement", "metadata": {"id": 19}, "requirements": [{"course": "OPRE 3360", "matcher": "CourseRequirement", "metadata": {"id": 20}}, {"course": "STAT 3360", "matcher": "CourseRequirement", "metadata": {"id": 21}}]}, {"matcher": "SelectRequirement", "metadata": {"id": 22}, "required_count": 2, "requirements": [{"course": "BA 1310", "matcher": "CourseRequirement", "metadata": {"id": 23}}, {"course": "BA 1320", "matcher": "CourseRequirement", "metadata": {"id": 24}}, {"course": "ECON 2301", "matcher": "CourseRequirement", "metadata": {"id": 25}}, {"course": "ECON 2302", "matcher": "CourseRequirement", "metadata": {"id": 26}}]}]}, {"matcher": "AndRequirement", "metadata": {"id": 27, "name": "Major Core Courses"}, "requirements": [{"matcher": "OrRequirement", "metadata": {"id": 28}, "requirements": [{"course": "BCOM 1300", "matcher": "CourseRequirement", "metadata": {"id": 29}}, {"course": "BCOM 3300", "matcher": "CourseRequirement", "metadata": {"id": 30}}]}, {"course": "BCOM 4300", "matcher": "CourseRequirement", "metadata": {"id": 31}}, {"course": "IMS 3310", "matcher": "CourseRequirement", "metadata": {"id": 32}}, {"course": "FIN 3320", "matcher": "CourseRequirement", "metadata": {"id": 33}}, {"course": "ITSS 3300", "matcher": "CourseRequirement", "metadata": {"id": 34}}, {"course": "OPRE 3310", "matcher": "CourseRequirement", "metadata": {"id": 35}}, {"matcher": "OrRequirement", "metadata": {"id": 36}, "requirements": [{"course": "OBHR 3330", "matcher": "CourseRequirement", "metadata": {"id": 37}}, {"course": "OBHR 3310", "matcher": "CourseRequirement", "metadata": {"id": 38}}]}, {"course": "MKT 3300", "matcher": "CourseRequirement", "metadata": {"id": 39}}, {"matcher": "OrRequirement", "metadata": {"id": 40}, "requirements": [{"course": "ACCT 4395", "matcher": "CourseRequirement", "metadata": {"id": 41}}, {"course": "BPS 4395", "matcher": "CourseRequirement", "metadata": {"id": 42}}, {"course": "ENTP 4395", "matcher": "CourseRequirement", "metadata": {"id": 43}}]}]}, {"matcher": "AndRequirement", "metadata": {"id": 44, "name": "Major Related Courses"}, "requirements": [{"course": "ACCT 3312", "matcher": "CourseRequirement", "metadata": {"id": 45}}, {"course": "ACCT 3331", "matcher": "CourseRequirement", "metadata": {"id": 46}}, {"course": "ACCT 3332", "matcher": "CourseRequirement", "metadata": {"id": 47}}, {"course": "ACCT 3341", "matcher": "CourseRequirement", "metadata": {"id": 48}}, {"course": "ACCT 3350", "matcher": "CourseRequirement", "metadata": {"id": 49}}, {"course": "ACCT 4334", "matcher": "CourseRequirement", "metadata": {"id": 50}}, {"course": "ACCT 4342", "matcher": "CourseRequirement", "metadata": {"id": 51}}]}, {"matcher": "AndRequirement", "metadata": {"id": 52, "name": "Guided Electives"}, "requirements": [{"matcher": "OrRequirement", "metadata": {"id": 53}, "requirements": [{"course": "ACCT 4V80", "matcher": "CourseRequirement", "metadata": {"id": 54}}, {"course": "BA 4090", "matcher": "CourseRequirement", "metadata": {"id": 55}}]}, {"matcher": "HoursRequirement", "metadata": {"id": 56}, "required_hours": 12, "requirements": [{"course": "ACCT 4V80", "matcher": "CourseRequirement", "metadata": {"id": 57}}, {"course": "BA 4090", "matcher": "CourseRequirement", "metadata": {"id": 58}}, {"course": "ACCT 3322", "matcher": "CourseRequirement", "metadata": {"id": 59}}, {"course": "ACCT 4301", "matcher": "CourseRequirement", "metadata": {"id": 60}}, {"course": "ACCT 4302", "matcher": "CourseRequirement", "metadata": {"id": 61}}, {"course": "ACCT 4336", "matcher": "CourseRequirement", "metadata": {"id": 62}}, {"course": "ACCT 4337", "matcher": "CourseRequirement", "metadata": {"id": 63}}, {"course": "ACCT 4340", "matcher": "CourseRequirement", "metadata": {"id": 64}}, {"course": "FIN 3330", "matcher": "CourseRequirement", "metadata": {"id": 65}}, {"course": "FIN 3360", "matcher": "CourseRequirement", "metadata": {"id": 66}}, {"course": "FIN 3380", "matcher": "CourseRequirement", "metadata": {"id": 67}}, {"course": "FIN 3390", "matcher": "CourseRequirement", "metadata": {"id": 68}}, {"course": "ITSS 4340", "matcher": "CourseRequirement", "metadata": {"id": 69}}, {"course": "OPRE 4350", "matcher": "CourseRequirement", "metadata": {"id": 70}}]}, {"matcher": "OrRequirement", "metadata": {"id": 71}, "requirements": [{"course": "IMS 4335", "matcher": "CourseRequirement", "metadata": {"id": 72}}, {"course": "ENTP 4340", "matcher": "CourseRequirement", "metadata": {"id": 73}}, {"course": "MKT 4360", "matcher": "CourseRequirement", "metadata": {"id": 74}}, {"course": "BA 4095", "matcher": "CourseRequirement", "metadata": {"id": 75}}]}]}, {"excluded_courses": [], "matcher": "FreeElectiveRequirement", "metadata": {"id": 76}, "required_hours": 3}]}}
+{
+  "abbreviation": "Accounting (BS)",
+  "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/accounting",
+  "minimum_credit_hours": 120,
+  "name": "Bachelor of Science in Accounting",
+  "school": "Naveen Jindal School of Management",
+  "subtype": "Major",
+  "year": "2022-2023",
+  "requirements": {
+    "core": "@import ./core.json",
+    "major": [
+      {
+        "matcher": "AndRequirement",
+        "metadata": { "id": 0, "name": "Major Preparatory Courses" },
+        "requirements": [
+          {
+            "matcher": "OrRequirement",
+            "metadata": { "id": 1 },
+            "requirements": [
+              {
+                "course": "MATH 1325",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 2 }
+              },
+              {
+                "course": "MATH 2413",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 3 }
+              },
+              {
+                "course": "MATH 2417",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 4 }
+              }
+            ]
+          },
+          {
+            "matcher": "OrRequirement",
+            "metadata": { "id": 5 },
+            "requirements": [
+              {
+                "course": "MATH 1326",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 6 }
+              },
+              {
+                "course": "PHIL 2303",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 7 }
+              },
+              {
+                "course": "OPRE 3340",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 8 }
+              },
+              {
+                "course": "MATH 2414",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 9 }
+              },
+              {
+                "course": "MATH 2419",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 10 }
+              }
+            ]
+          },
+          {
+            "course": "ACCT 2301",
+            "matcher": "CourseRequirement",
+            "metadata": { "id": 11 }
+          },
+          {
+            "course": "ACCT 2302",
+            "matcher": "CourseRequirement",
+            "metadata": { "id": 12 }
+          },
+          {
+            "course": "BLAW 2301",
+            "matcher": "CourseRequirement",
+            "metadata": { "id": 13 }
+          },
+          {
+            "matcher": "OrRequirement",
+            "metadata": { "id": 14 },
+            "requirements": [
+              {
+                "course": "OPRE 3333",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 15 }
+              },
+              {
+                "course": "MATH 2333",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 16 }
+              },
+              {
+                "course": "MATH 2418",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 17 }
+              },
+              {
+                "course": "CS 2305",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 18 }
+              }
+            ]
+          },
+          {
+            "matcher": "OrRequirement",
+            "metadata": { "id": 19 },
+            "requirements": [
+              {
+                "course": "OPRE 3360",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 20 }
+              },
+              {
+                "course": "STAT 3360",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 21 }
+              }
+            ]
+          },
+          {
+            "matcher": "SelectRequirement",
+            "metadata": { "id": 22 },
+            "required_count": 2,
+            "requirements": [
+              {
+                "course": "BA 1310",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 23 }
+              },
+              {
+                "course": "BA 1320",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 24 }
+              },
+              {
+                "course": "ECON 2301",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 25 }
+              },
+              {
+                "course": "ECON 2302",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 26 }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "matcher": "AndRequirement",
+        "metadata": { "id": 27, "name": "Major Core Courses" },
+        "requirements": [
+          {
+            "matcher": "OrRequirement",
+            "metadata": { "id": 28 },
+            "requirements": [
+              {
+                "course": "BCOM 1300",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 29 }
+              },
+              {
+                "course": "BCOM 3300",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 30 }
+              }
+            ]
+          },
+          {
+            "course": "BCOM 4300",
+            "matcher": "CourseRequirement",
+            "metadata": { "id": 31 }
+          },
+          {
+            "course": "IMS 3310",
+            "matcher": "CourseRequirement",
+            "metadata": { "id": 32 }
+          },
+          {
+            "course": "FIN 3320",
+            "matcher": "CourseRequirement",
+            "metadata": { "id": 33 }
+          },
+          {
+            "course": "ITSS 3300",
+            "matcher": "CourseRequirement",
+            "metadata": { "id": 34 }
+          },
+          {
+            "course": "OPRE 3310",
+            "matcher": "CourseRequirement",
+            "metadata": { "id": 35 }
+          },
+          {
+            "matcher": "OrRequirement",
+            "metadata": { "id": 36 },
+            "requirements": [
+              {
+                "course": "OBHR 3330",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 37 }
+              },
+              {
+                "course": "OBHR 3310",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 38 }
+              }
+            ]
+          },
+          {
+            "course": "MKT 3300",
+            "matcher": "CourseRequirement",
+            "metadata": { "id": 39 }
+          },
+          {
+            "matcher": "OrRequirement",
+            "metadata": { "id": 40 },
+            "requirements": [
+              {
+                "course": "ACCT 4395",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 41 }
+              },
+              {
+                "course": "BPS 4395",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 42 }
+              },
+              {
+                "course": "ENTP 4395",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 43 }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "matcher": "AndRequirement",
+        "metadata": { "id": 44, "name": "Major Related Courses" },
+        "requirements": [
+          {
+            "course": "ACCT 3312",
+            "matcher": "CourseRequirement",
+            "metadata": { "id": 45 }
+          },
+          {
+            "course": "ACCT 3331",
+            "matcher": "CourseRequirement",
+            "metadata": { "id": 46 }
+          },
+          {
+            "course": "ACCT 3332",
+            "matcher": "CourseRequirement",
+            "metadata": { "id": 47 }
+          },
+          {
+            "course": "ACCT 3341",
+            "matcher": "CourseRequirement",
+            "metadata": { "id": 48 }
+          },
+          {
+            "course": "ACCT 3350",
+            "matcher": "CourseRequirement",
+            "metadata": { "id": 49 }
+          },
+          {
+            "course": "ACCT 4334",
+            "matcher": "CourseRequirement",
+            "metadata": { "id": 50 }
+          },
+          {
+            "course": "ACCT 4342",
+            "matcher": "CourseRequirement",
+            "metadata": { "id": 51 }
+          }
+        ]
+      },
+      {
+        "matcher": "AndRequirement",
+        "metadata": { "id": 52, "name": "Guided Electives" },
+        "requirements": [
+          {
+            "matcher": "OrRequirement",
+            "metadata": { "id": 53 },
+            "requirements": [
+              {
+                "course": "ACCT 4V80",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 54 }
+              },
+              {
+                "course": "BA 4090",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 55 }
+              }
+            ]
+          },
+          {
+            "matcher": "HoursRequirement",
+            "metadata": { "id": 56 },
+            "required_hours": 12,
+            "requirements": [
+              {
+                "course": "ACCT 4V80",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 57 }
+              },
+              {
+                "course": "BA 4090",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 58 }
+              },
+              {
+                "course": "ACCT 3322",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 59 }
+              },
+              {
+                "course": "ACCT 4301",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 60 }
+              },
+              {
+                "course": "ACCT 4302",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 61 }
+              },
+              {
+                "course": "ACCT 4336",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 62 }
+              },
+              {
+                "course": "ACCT 4337",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 63 }
+              },
+              {
+                "course": "ACCT 4340",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 64 }
+              },
+              {
+                "course": "FIN 3330",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 65 }
+              },
+              {
+                "course": "FIN 3360",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 66 }
+              },
+              {
+                "course": "FIN 3380",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 67 }
+              },
+              {
+                "course": "FIN 3390",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 68 }
+              },
+              {
+                "course": "ITSS 4340",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 69 }
+              },
+              {
+                "course": "OPRE 4350",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 70 }
+              }
+            ]
+          },
+          {
+            "matcher": "OrRequirement",
+            "metadata": { "id": 71 },
+            "requirements": [
+              {
+                "course": "IMS 4335",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 72 }
+              },
+              {
+                "course": "ENTP 4340",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 73 }
+              },
+              {
+                "course": "MKT 4360",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 74 }
+              },
+              {
+                "course": "BA 4095",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 75 }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "excluded_courses": [],
+        "matcher": "FreeElectiveRequirement",
+        "metadata": { "id": 76 },
+        "required_hours": 3
+      }
+    ]
+  }
+}

@@ -1,1 +1,510 @@
-{"abbreviation": "Finance and Economics (BS)", "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/finance", "minimum_credit_hours": 128, "name": "Bachelor of Science in Finance and Economics", "school": "Naveen Jindal School of Management", "subtype": "Major", "year": "2022-2023", "requirements": {"core": "@import ./core.json", "major": [{"matcher": "AndRequirement", "metadata": {"name": "Major Preparatory Courses", "id": 0}, "requirements": [{"matcher": "CourseRequirement", "course": "ACCT 2301", "metadata": {"id": 1}}, {"matcher": "CourseRequirement", "course": "ACCT 2302", "metadata": {"id": 2}}, {"matcher": "CourseRequirement", "course": "BLAW 2301", "metadata": {"id": 3}}, {"matcher": "CourseRequirement", "course": "ECON 2301", "metadata": {"id": 4}}, {"matcher": "CourseRequirement", "course": "ECON 2302", "metadata": {"id": 5}}, {"matcher": "OrRequirement", "metadata": {"id": 6}, "requirements": [{"course": "MATH 1325", "matcher": "CourseRequirement", "metadata": {"id": 7}}, {"course": "MATH 2413", "matcher": "CourseRequirement", "metadata": {"id": 8}}, {"course": "MATH 2417", "matcher": "CourseRequirement", "metadata": {"id": 9}}]}, {"matcher": "OrRequirement", "metadata": {"id": 10}, "requirements": [{"course": "MATH 1326", "matcher": "CourseRequirement", "metadata": {"id": 11}}, {"course": "MATH 2414", "matcher": "CourseRequirement", "metadata": {"id": 12}}, {"course": "MATH 2419", "matcher": "CourseRequirement", "metadata": {"id": 13}}]}, {"matcher": "OrRequirement", "requirements": [{"matcher": "CourseRequirement", "course": "MATH 2333", "metadata": {"id": 15}}, {"matcher": "CourseRequirement", "course": "OPRE 3333", "metadata": {"id": 16}}, {"matcher": "CourseRequirement", "course": "MATH 2418", "metadata": {"id": 17}}, {"matcher": "CourseRequirement", "course": "CS 2305", "metadata": {"id": 18}}], "metadata": {"id": 14}}, {"matcher": "OrRequirement", "requirements": [{"matcher": "CourseRequirement", "course": "OPRE 3360", "metadata": {"id": 20}}, {"matcher": "CourseRequirement", "course": "STAT 3360", "metadata": {"id": 21}}], "metadata": {"id": 19}}]}, {"matcher": "AndRequirement", "metadata": {"name": "Major Core Courses", "id": 22}, "requirements": [{"matcher": "OrRequirement", "requirements": [{"matcher": "CourseRequirement", "course": "BCOM 1300", "metadata": {"id": 24}}, {"matcher": "CourseRequirement", "course": "BCOM 3300", "metadata": {"id": 25}}], "metadata": {"id": 23}}, {"matcher": "CourseRequirement", "course": "BCOM 4300", "metadata": {"id": 26}}, {"matcher": "CourseRequirement", "course": "IMS 3310", "metadata": {"id": 27}}, {"matcher": "CourseRequirement", "course": "FIN 3320", "metadata": {"id": 28}}, {"matcher": "CourseRequirement", "course": "ITSS 3300", "metadata": {"id": 29}}, {"matcher": "CourseRequirement", "course": "OPRE 3310", "metadata": {"id": 30}}, {"matcher": "OrRequirement", "requirements": [{"matcher": "CourseRequirement", "course": "OBHR 3310", "metadata": {"id": 32}}, {"matcher": "CourseRequirement", "course": "OBHR 3330", "metadata": {"id": 33}}], "metadata": {"id": 31}}, {"matcher": "CourseRequirement", "course": "MKT 3300", "metadata": {"id": 34}}, {"matcher": "CourseRequirement", "course": "FIN 3390", "metadata": {"id": 35}}, {"matcher": "CourseRequirement", "course": "FIN 4310", "metadata": {"id": 36}}, {"matcher": "CourseRequirement", "course": "ECON 3310", "metadata": {"id": 37}}, {"matcher": "CourseRequirement", "course": "ECON 3311", "metadata": {"id": 38}}, {"matcher": "CourseRequirement", "course": "ECON 4351", "metadata": {"id": 39}}, {"matcher": "CourseRequirement", "course": "ECON 4355", "metadata": {"id": 40}}, {"matcher": "CourseRequirement", "course": "FIN 4300", "metadata": {"id": 41}}, {"matcher": "OrRequirement", "requirements": [{"matcher": "CourseRequirement", "course": "FIN 4395", "metadata": {"id": 43}}, {"matcher": "CourseRequirement", "course": "FIN 4328", "metadata": {"id": 44}}, {"matcher": "CourseRequirement", "course": "FIN 4333", "metadata": {"id": 45}}, {"matcher": "CourseRequirement", "course": "FIN 4380", "metadata": {"id": 46}}, {"matcher": "CourseRequirement", "course": "BPS 4395", "metadata": {"id": 47}}, {"matcher": "CourseRequirement", "course": "ENTP 4395", "metadata": {"id": 48}}], "metadata": {"id": 42}}]}, {"matcher": "AndRequirement", "metadata": {"name": "Guided Electives", "id": 49}, "requirements": [{"matcher": "OrRequirement", "requirements": [{"matcher": "CourseRequirement", "course": "FIN 4V80", "metadata": {"id": 51}}, {"matcher": "CourseRequirement", "course": "FIN 4080", "metadata": {"id": 52}}, {"matcher": "CourseRequirement", "course": "BA 4090", "metadata": {"id": 53}}], "metadata": {"id": 50}}, {"matcher": "OrRequirement", "requirements": [{"matcher": "CourseRequirement", "course": "IMS 4335", "metadata": {"id": 55}}, {"matcher": "CourseRequirement", "course": "ENTP 4340", "metadata": {"id": 56}}, {"matcher": "CourseRequirement", "course": "MKT 4360", "metadata": {"id": 57}}, {"matcher": "CourseRequirement", "course": "BA 4095", "metadata": {"id": 58}}], "metadata": {"id": 54}}, {"matcher": "HoursRequirement", "required_hours": 11, "requirements": [{"matcher": "CourseRequirement", "course": "FIN 4V80", "metadata": {"id": 60}}, {"matcher": "CourseRequirement", "course": "FIN 4080", "metadata": {"id": 61}}, {"matcher": "CourseRequirement", "course": "BA 4090", "metadata": {"id": 62}}, {"matcher": "CourseRequirement", "course": "IMS 4335", "metadata": {"id": 63}}, {"matcher": "CourseRequirement", "course": "ENTP 4340", "metadata": {"id": 64}}, {"matcher": "CourseRequirement", "course": "MKT 4360", "metadata": {"id": 65}}, {"matcher": "CourseRequirement", "course": "BA 4095", "metadata": {"id": 66}}, {"matcher": "CourseRequirement", "course": "FIN 3305", "metadata": {"id": 67}}, {"matcher": "CourseRequirement", "course": "FIN 3330", "metadata": {"id": 68}}, {"matcher": "CourseRequirement", "course": "FIN 3340", "metadata": {"id": 69}}, {"matcher": "CourseRequirement", "course": "FIN 3350", "metadata": {"id": 70}}, {"matcher": "CourseRequirement", "course": "FIN 3365", "metadata": {"id": 71}}, {"matcher": "CourseRequirement", "course": "FIN 3380", "metadata": {"id": 72}}, {"matcher": "CourseRequirement", "course": "FIN 4313", "metadata": {"id": 73}}, {"matcher": "CourseRequirement", "course": "FIN 4315", "metadata": {"id": 74}}, {"matcher": "CourseRequirement", "course": "FIN 4320", "metadata": {"id": 75}}, {"matcher": "CourseRequirement", "course": "FIN 4321", "metadata": {"id": 76}}, {"matcher": "CourseRequirement", "course": "FIN 4328", "metadata": {"id": 77}}, {"matcher": "CourseRequirement", "course": "FIN 4333", "metadata": {"id": 78}}, {"matcher": "CourseRequirement", "course": "FIN 4336", "metadata": {"id": 79}}, {"matcher": "CourseRequirement", "course": "FIN 4338", "metadata": {"id": 80}}, {"matcher": "CourseRequirement", "course": "FIN 4340", "metadata": {"id": 81}}, {"matcher": "CourseRequirement", "course": "FIN 4345", "metadata": {"id": 82}}, {"matcher": "CourseRequirement", "course": "FIN 4380", "metadata": {"id": 83}}, {"matcher": "CourseRequirement", "course": "FIN 4390", "metadata": {"id": 84}}], "metadata": {"id": 59}}, {"matcher": "HoursRequirement", "required_hours": 12, "requirements": [{"matcher": "CourseRequirement", "course": "ECON 3312", "metadata": {"id": 86}}, {"matcher": "CourseRequirement", "course": "ECON 3332", "metadata": {"id": 87}}, {"matcher": "CourseRequirement", "course": "ECON 4301", "metadata": {"id": 88}}, {"matcher": "CourseRequirement", "course": "ECON 4310", "metadata": {"id": 89}}, {"matcher": "CourseRequirement", "course": "ECON 4342", "metadata": {"id": 90}}, {"matcher": "CourseRequirement", "course": "ECON 4345", "metadata": {"id": 91}}, {"matcher": "CourseRequirement", "course": "ECON 4360", "metadata": {"id": 92}}, {"matcher": "CourseRequirement", "course": "ECON 4382", "metadata": {"id": 93}}, {"matcher": "CourseRequirement", "course": "ECON 4385", "metadata": {"id": 94}}, {"matcher": "CourseRequirement", "course": "ECON 4396", "metadata": {"id": 95}}], "metadata": {"id": 85}}]}]}}
+{
+  "abbreviation": "Finance and Economics (BS)",
+  "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/finance",
+  "minimum_credit_hours": 128,
+  "name": "Bachelor of Science in Finance and Economics",
+  "school": "Naveen Jindal School of Management",
+  "subtype": "Major",
+  "year": "2022-2023",
+  "requirements": {
+    "core": "@import ./core.json",
+    "major": [
+      {
+        "matcher": "AndRequirement",
+        "metadata": { "name": "Major Preparatory Courses", "id": 0 },
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "ACCT 2301",
+            "metadata": { "id": 1 }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ACCT 2302",
+            "metadata": { "id": 2 }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "BLAW 2301",
+            "metadata": { "id": 3 }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ECON 2301",
+            "metadata": { "id": 4 }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ECON 2302",
+            "metadata": { "id": 5 }
+          },
+          {
+            "matcher": "OrRequirement",
+            "metadata": { "id": 6 },
+            "requirements": [
+              {
+                "course": "MATH 1325",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 7 }
+              },
+              {
+                "course": "MATH 2413",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 8 }
+              },
+              {
+                "course": "MATH 2417",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 9 }
+              }
+            ]
+          },
+          {
+            "matcher": "OrRequirement",
+            "metadata": { "id": 10 },
+            "requirements": [
+              {
+                "course": "MATH 1326",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 11 }
+              },
+              {
+                "course": "MATH 2414",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 12 }
+              },
+              {
+                "course": "MATH 2419",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 13 }
+              }
+            ]
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "MATH 2333",
+                "metadata": { "id": 15 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "OPRE 3333",
+                "metadata": { "id": 16 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MATH 2418",
+                "metadata": { "id": 17 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "CS 2305",
+                "metadata": { "id": 18 }
+              }
+            ],
+            "metadata": { "id": 14 }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "OPRE 3360",
+                "metadata": { "id": 20 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "STAT 3360",
+                "metadata": { "id": 21 }
+              }
+            ],
+            "metadata": { "id": 19 }
+          }
+        ]
+      },
+      {
+        "matcher": "AndRequirement",
+        "metadata": { "name": "Major Core Courses", "id": 22 },
+        "requirements": [
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "BCOM 1300",
+                "metadata": { "id": 24 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "BCOM 3300",
+                "metadata": { "id": 25 }
+              }
+            ],
+            "metadata": { "id": 23 }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "BCOM 4300",
+            "metadata": { "id": 26 }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "IMS 3310",
+            "metadata": { "id": 27 }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "FIN 3320",
+            "metadata": { "id": 28 }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ITSS 3300",
+            "metadata": { "id": 29 }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "OPRE 3310",
+            "metadata": { "id": 30 }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "OBHR 3310",
+                "metadata": { "id": 32 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "OBHR 3330",
+                "metadata": { "id": 33 }
+              }
+            ],
+            "metadata": { "id": 31 }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MKT 3300",
+            "metadata": { "id": 34 }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "FIN 3390",
+            "metadata": { "id": 35 }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "FIN 4310",
+            "metadata": { "id": 36 }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ECON 3310",
+            "metadata": { "id": 37 }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ECON 3311",
+            "metadata": { "id": 38 }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ECON 4351",
+            "metadata": { "id": 39 }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ECON 4355",
+            "metadata": { "id": 40 }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "FIN 4300",
+            "metadata": { "id": 41 }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 4395",
+                "metadata": { "id": 43 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 4328",
+                "metadata": { "id": 44 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 4333",
+                "metadata": { "id": 45 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 4380",
+                "metadata": { "id": 46 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "BPS 4395",
+                "metadata": { "id": 47 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ENTP 4395",
+                "metadata": { "id": 48 }
+              }
+            ],
+            "metadata": { "id": 42 }
+          }
+        ]
+      },
+      {
+        "matcher": "AndRequirement",
+        "metadata": { "name": "Guided Electives", "id": 49 },
+        "requirements": [
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 4V80",
+                "metadata": { "id": 51 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 4080",
+                "metadata": { "id": 52 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "BA 4090",
+                "metadata": { "id": 53 }
+              }
+            ],
+            "metadata": { "id": 50 }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "IMS 4335",
+                "metadata": { "id": 55 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ENTP 4340",
+                "metadata": { "id": 56 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MKT 4360",
+                "metadata": { "id": 57 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "BA 4095",
+                "metadata": { "id": 58 }
+              }
+            ],
+            "metadata": { "id": 54 }
+          },
+          {
+            "matcher": "HoursRequirement",
+            "required_hours": 11,
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 4V80",
+                "metadata": { "id": 60 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 4080",
+                "metadata": { "id": 61 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "BA 4090",
+                "metadata": { "id": 62 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "IMS 4335",
+                "metadata": { "id": 63 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ENTP 4340",
+                "metadata": { "id": 64 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MKT 4360",
+                "metadata": { "id": 65 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "BA 4095",
+                "metadata": { "id": 66 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 3305",
+                "metadata": { "id": 67 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 3330",
+                "metadata": { "id": 68 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 3340",
+                "metadata": { "id": 69 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 3350",
+                "metadata": { "id": 70 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 3365",
+                "metadata": { "id": 71 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 3380",
+                "metadata": { "id": 72 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 4313",
+                "metadata": { "id": 73 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 4315",
+                "metadata": { "id": 74 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 4320",
+                "metadata": { "id": 75 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 4321",
+                "metadata": { "id": 76 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 4328",
+                "metadata": { "id": 77 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 4333",
+                "metadata": { "id": 78 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 4336",
+                "metadata": { "id": 79 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 4338",
+                "metadata": { "id": 80 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 4340",
+                "metadata": { "id": 81 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 4345",
+                "metadata": { "id": 82 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 4380",
+                "metadata": { "id": 83 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 4390",
+                "metadata": { "id": 84 }
+              }
+            ],
+            "metadata": { "id": 59 }
+          },
+          {
+            "matcher": "HoursRequirement",
+            "required_hours": 12,
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "ECON 3312",
+                "metadata": { "id": 86 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ECON 3332",
+                "metadata": { "id": 87 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ECON 4301",
+                "metadata": { "id": 88 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ECON 4310",
+                "metadata": { "id": 89 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ECON 4342",
+                "metadata": { "id": 90 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ECON 4345",
+                "metadata": { "id": 91 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ECON 4360",
+                "metadata": { "id": 92 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ECON 4382",
+                "metadata": { "id": 93 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ECON 4385",
+                "metadata": { "id": 94 }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ECON 4396",
+                "metadata": { "id": 95 }
+              }
+            ],
+            "metadata": { "id": 85 }
+          }
+        ]
+      }
+    ]
+  }
+}
