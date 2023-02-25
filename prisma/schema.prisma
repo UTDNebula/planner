@@ -75,6 +75,7 @@ model Semester {
   courses String[] // Store course catalog codes
   plan    Plan?        @relation(fields: [planId], references: [id], onDelete: Cascade)
   planId  String?      @db.ObjectId
+  courseColors String[]
 }
 
 type SemesterCode {

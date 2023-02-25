@@ -33,6 +33,7 @@ export const MemoizedSemesterTile = React.memo(
       handleDeleteAllCoursesFromSemester,
       handleRemoveCourseFromSemester,
       courseIsSelected,
+      handleColorChange,
     } = useSemestersContext();
 
     const { sync, prerequisites } = semesterErrors;
@@ -52,7 +53,7 @@ export const MemoizedSemesterTile = React.memo(
     return (
       <div
         ref={ref}
-        className={`flex h-fit w-[369px] select-none flex-col gap-y-4 overflow-hidden rounded-2xl border border-neutral-300 bg-white py-4 px-5`}
+        className={`flex h-fit select-none flex-col gap-y-4 overflow-hidden rounded-2xl border border-neutral-300 bg-white py-4 px-5`}
       >
         <article className="w-full">
           <ChevronIcon
@@ -99,6 +100,9 @@ export const MemoizedSemesterTile = React.memo(
               onSelectCourse={() => handleSelectCourses([course.id.toString()])}
               onDeselectCourse={() => handleDeselectCourses([course.id.toString()])}
               onDeleteCourse={() => handleRemoveCourseFromSemester(semester, course)}
+              onColorChange={(color) =>
+                handleColorChange(color, course.code, semester.id.toString())
+              }
               key={course.id.toString()}
               dragId={getDragId(course, semester)}
               course={course}
