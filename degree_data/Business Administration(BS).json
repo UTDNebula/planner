@@ -29,7 +29,7 @@
             "metadata": { "id": 3 }
           },
           {
-            "matcher": "AndRequirement",
+            "matcher": "OrRequirement",
             "requirements": [
               {
                 "course": "MATH 1325",

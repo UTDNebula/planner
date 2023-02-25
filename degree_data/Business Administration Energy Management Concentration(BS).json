@@ -29,7 +29,7 @@
             "metadata": { "id": 3 }
           },
           {
-            "matcher": "AndRequirement",
+            "matcher": "OrRequirement",
             "requirements": [
               {
                 "course": "MATH 1325",
@@ -232,7 +232,7 @@
       },
       {
         "matcher": "AndRequirement",
-        "metadata": "Major Related Courses",
+        "metadata": { "name": "Major Related Courses" },
         "requirements": [
           {
             "matcher": "CourseRequirement",

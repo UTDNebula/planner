@@ -22,8 +22,24 @@
         "course": "BLAW 2301"
       },
       {
-        "matcher": "CourseRequirement",
-        "course": "MATH 1325"
+        "matcher": "OrRequirement",
+        "requirements": [
+          {
+            "course": "MATH 1325",
+            "matcher": "CourseRequirement",
+            "metadata": { "id": 4 }
+          },
+          {
+            "course": "MATH 2413",
+            "matcher": "CourseRequirement",
+            "metadata": { "id": 4 }
+          },
+          {
+            "course": "MATH 2417",
+            "matcher": "CourseRequirement",
+            "metadata": { "id": 4 }
+          }
+        ]
       },
       {
         "matcher": "OrRequirement",

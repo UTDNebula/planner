@@ -232,7 +232,7 @@
       },
       {
         "matcher": "AndRequirement",
-        "metadata": "Major Related Courses",
+        "metadata": { "name": "Major Related Courses" },
         "requirements": [
           {
             "matcher": "CourseRequirement",

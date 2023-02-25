@@ -10,153 +10,223 @@
     "core": "@import ./core.json",
     "major": [
       {
-        "matcher": "CourseRequirement",
-        "course": "ENGY 3301"
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "ENGY 3302"
-      },
-      {
-        "matcher": "SelectRequirement",
-        "required_count": 2,
+        "matcher": "AndRequirement",
+        "metadata": { "id": 0, "name": "Major Preparatory Courses" },
         "requirements": [
           {
-            "matcher": "OrRequirement",
-            "requirements": [
-              {
-                "matcher": "CourseRequirement",
-                "course": "ENGY 3340"
-              },
-              {
-                "matcher": "CourseRequirement",
-                "course": "BLAW 4301"
-              }
-            ]
-          },
-          {
-            "matcher": "OrRequirement",
-            "requirements": [
-              {
-                "matcher": "CourseRequirement",
-                "course": "FIN 4313"
-              },
-              {
-                "matcher": "CourseRequirement",
-                "course": "ENGY 4313"
-              }
-            ]
-          },
-          {
+            "course": "ACCT 2301",
             "matcher": "CourseRequirement",
-            "course": "MECO 4342"
+            "metadata": { "id": 1 }
+          },
+          {
+            "course": "ACCT 2302",
+            "matcher": "CourseRequirement",
+            "metadata": { "id": 2 }
+          },
+          {
+            "course": "BLAW 2301",
+            "matcher": "CourseRequirement",
+            "metadata": { "id": 3 }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "course": "MATH 1325",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 4 }
+              },
+              {
+                "course": "MATH 2413",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 4 }
+              },
+              {
+                "course": "MATH 2417",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 4 }
+              }
+            ]
+          },
+
+          {
+            "matcher": "OrRequirement",
+            "metadata": { "id": 5 },
+            "requirements": [
+              {
+                "course": "OPRE 3360",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 6 }
+              },
+              {
+                "course": "STAT 3360",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 7 }
+              }
+            ]
+          },
+          {
+            "matcher": "SelectRequirement",
+            "metadata": { "id": 8 },
+            "required_count": 2,
+            "requirements": [
+              {
+                "course": "BA 1310",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 9 }
+              },
+              {
+                "course": "BA 1320",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 10 }
+              },
+              {
+                "course": "ECON 2301",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 11 }
+              },
+              {
+                "course": "ECON 2302",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 12 }
+              }
+            ]
           }
         ]
       },
-
       {
-        "matcher": "OrRequirement",
+        "matcher": "AndRequirement",
+        "metadata": { "id": 13, "name": "Major Core Courses" },
         "requirements": [
           {
-            "matcher": "CourseRequirement",
-            "course": "BA 4V90"
+            "matcher": "OrRequirement",
+            "metadata": { "id": 14 },
+            "requirements": [
+              {
+                "course": "BCOM 1300",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 15 }
+              },
+              {
+                "course": "BCOM 3300",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 16 }
+              }
+            ]
           },
           {
+            "course": "BCOM 4300",
             "matcher": "CourseRequirement",
-            "course": "BA 4090"
-          }
-        ]
-      },
-
-      {
-        "matcher": "HoursRequirement",
-        "required_hours": 12,
-        "requirements": [
-          {
-            "matcher": "CourseRequirement",
-            "course": "BA 4V90"
+            "metadata": { "id": 17 }
           },
           {
+            "course": "BA 3300",
             "matcher": "CourseRequirement",
-            "course": "BA 4090"
+            "metadata": { "id": 18 }
+          },
+          {
+            "course": "IMS 3310",
+            "matcher": "CourseRequirement",
+            "metadata": { "id": 19 }
+          },
+          {
+            "course": "FIN 3320",
+            "matcher": "CourseRequirement",
+            "metadata": { "id": 20 }
+          },
+          {
+            "course": "ITSS 3300",
+            "matcher": "CourseRequirement",
+            "metadata": { "id": 21 }
+          },
+          {
+            "course": "OPRE 3310",
+            "matcher": "CourseRequirement",
+            "metadata": { "id": 22 }
+          },
+          {
+            "course": "OPRE 3330",
+            "matcher": "CourseRequirement",
+            "metadata": { "id": 23 }
           },
           {
             "matcher": "OrRequirement",
+            "metadata": { "id": 24 },
             "requirements": [
               {
+                "course": "OBHR 3310",
                 "matcher": "CourseRequirement",
-                "course": "ENGY 3340"
+                "metadata": { "id": 25 }
               },
               {
+                "course": "OBHR 3330",
                 "matcher": "CourseRequirement",
-                "course": "BLAW 4301"
+                "metadata": { "id": 26 }
+              }
+            ]
+          },
+          {
+            "course": "MKT 3300",
+            "matcher": "CourseRequirement",
+            "metadata": { "id": 27 }
+          },
+          {
+            "matcher": "OrRequirement",
+            "metadata": { "id": 28 },
+            "requirements": [
+              {
+                "course": "BPS 4305",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 29 }
+              },
+              {
+                "course": "ENTP 3320",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 30 }
               }
             ]
           },
           {
             "matcher": "OrRequirement",
+            "metadata": { "id": 31 },
             "requirements": [
               {
+                "course": "BPS 4395",
                 "matcher": "CourseRequirement",
-                "course": "FIN 4313"
+                "metadata": { "id": 32 }
               },
               {
+                "course": "ENTP 4395",
                 "matcher": "CourseRequirement",
-                "course": "ENGY 4313"
-              }
-            ]
-          },
-
-          {
-            "matcher": "CourseRequirement",
-            "course": "MECO 4342"
-          },
-          {
-            "matcher": "OrRequirement",
-            "requirements": [
-              {
-                "matcher": "CourseRequirement",
-                "course": "MECO 3330"
-              },
-              {
-                "matcher": "CourseRequirement",
-                "course": "ENGY 3330"
+                "metadata": { "id": 33 }
               }
             ]
           },
           {
             "matcher": "OrRequirement",
+            "metadata": { "id": 34 },
             "requirements": [
               {
+                "course": "IMS 4335",
                 "matcher": "CourseRequirement",
-                "course": "MECO 4300"
+                "metadata": { "id": 35 }
               },
               {
+                "course": "ENTP 4340",
                 "matcher": "CourseRequirement",
-                "course": "ENGY 4300"
+                "metadata": { "id": 36 }
+              },
+              {
+                "course": "MKT 4360",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 37 }
+              },
+              {
+                "course": "BA 4095",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 38 }
               }
             ]
-          },
-
-          {
-            "matcher": "CourseRequirement",
-            "course": "OPRE 4330"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "FIN 4340"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "FIN 4345"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "NATS 2333"
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "GEOS 1303"
           }
         ]
       },
@@ -292,6 +362,7 @@
           ]
         }
       },
+
       {
         "matcher": "FreeElectiveRequirement",
         "required_hours": 3,
