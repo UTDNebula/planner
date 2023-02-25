@@ -166,10 +166,9 @@ export default function Planner({ degreeRequirements }: PlannerProps): JSX.Eleme
             <div className="flex h-fit gap-5">
               {semesters
                 .reduce((acc, curr, index) => {
-                  const columns = acc.slice();
-                  columns[index % columnCount].push(curr);
-                  return columns as Semester[][];
-                }, Array(columnCount).fill([]) as Semester[][])
+                  acc[index % 3].push(curr);
+                  return acc as Semester[][];
+                }, [[],[],[]] as Semester[][])
                 .map((column, index) => (
                   <MasonryColumn
                     key={`column-${index}`}
