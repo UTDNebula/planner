@@ -1,8 +1,8 @@
 {
-  "abbreviation": "Business Administration (BS)",
+  "abbreviation": "Business Administration (BS) Business Economics Concentration",
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/business-administration",
   "minimum_credit_hours": 120,
-  "name": "Bachelor of Science in Business Administration",
+  "name": "Bachelor of Science in Business Administration Business Economics Concentration",
   "school": "Naveen Jindal School of Management",
   "subtype": "Major",
   "year": "2022-2023",
@@ -232,84 +232,90 @@
       },
       {
         "matcher": "AndRequirement",
-        "metadata": { "id": 39, "name": "Major Related Courses" },
+        "metadata": "Major Related Courses",
         "requirements": [
           {
-            "course": "ENTP 3301",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 40 }
+            "course": "FIN 3350"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MECO 4303"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MECO 4351"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MECHO 4352"
           },
           {
             "matcher": "OrRequirement",
-            "metadata": { "id": 41 },
             "requirements": [
               {
-                "course": "BA 4V90",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": 42 }
+                "course": "BA 4V90"
               },
               {
-                "course": "BA 4090",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": 43 }
+                "course": "BA 4090"
               }
             ]
           },
+
           {
-            "matcher": "BAGuidedElectiveRequirement",
-            "metadata": { "id": 44 },
-            "prefix_groups": [
+            "matcher": "HoursRequirement",
+            "required_hours": 9,
+            "requirements": [
               {
-                "matcher": "SomeRequirement",
-                "requirements": [
-                  { "matcher": "PrefixBucketRequirement", "prefix": "MKT" }
-                ]
+                "matcher": "CourseRequirement",
+                "course": "BA 4V90"
               },
               {
-                "matcher": "SomeRequirement",
-                "requirements": [
-                  { "matcher": "PrefixBucketRequirement", "prefix": "ACCT" },
-                  { "matcher": "PrefixBucketRequirement", "prefix": "ENGY" },
-                  { "matcher": "PrefixBucketRequirement", "prefix": "FIN" },
-                  { "matcher": "PrefixBucketRequirement", "prefix": "MECO" },
-                  { "matcher": "PrefixBucketRequirement", "prefix": "REAL" },
-                  { "matcher": "PrefixBucketRequirement", "prefix": "RMIS" }
-                ]
+                "matcher": "CourseRequirement",
+                "course": "BA 4090"
               },
               {
-                "matcher": "SomeRequirement",
-                "requirements": [
-                  { "matcher": "PrefixBucketRequirement", "prefix": "ITSS" }
-                ]
+                "matcher": "CourseRequirement",
+                "course": "FIN 3390"
               },
               {
-                "matcher": "SomeRequirement",
-                "requirements": [
-                  { "matcher": "PrefixBucketRequirement", "prefix": "BA" },
-                  { "matcher": "PrefixBucketRequirement", "prefix": "BCOM" },
-                  { "matcher": "PrefixBucketRequirement", "prefix": "BPS" },
-                  { "matcher": "PrefixBucketRequirement", "prefix": "BLAW" },
-                  { "matcher": "PrefixBucketRequirement", "prefix": "HMGT" },
-                  { "matcher": "PrefixBucketRequirement", "prefix": "IMS" }
-                ]
+                "matcher": "CourseRequirement",
+                "course": "MECO 4342"
               },
               {
-                "matcher": "SomeRequirement",
-                "requirements": [
-                  { "matcher": "PrefixBucketRequirement", "prefix": "OPRE" }
-                ]
+                "matcher": "CourseRequirement",
+                "course": "RMIS 3370"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 3370"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "REAL 3305"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 3305"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MKT 3340"
+              },
+              {
+                "matcher": "PrefixBucketRequirement",
+                "prefix": "MECO"
               }
-            ],
-            "required_count": 3,
-            "required_hours": 15
+            ]
           }
         ]
       },
       {
-        "excluded_courses": [],
         "matcher": "FreeElectiveRequirement",
-        "metadata": { "id": 45 },
-        "required_hours": 12
+        "required_hours": 6,
+        "excluded_courses": []
       }
     ]
   }

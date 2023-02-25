@@ -1,8 +1,8 @@
 {
-  "abbreviation": "Marketing (BS)",
-  "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/marketing",
-  "minimum_credit_hours": 120,
-  "name": "Bachelor of Science in Marketing",
+  "abbreviation": "Finance and Economics (BS)",
+  "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/finance",
+  "minimum_credit_hours": 128,
+  "name": "Bachelor of Science in Finance and Economics",
   "school": "Naveen Jindal School of Management",
   "subtype": "Major",
   "year": "2022-2023",
@@ -25,21 +25,74 @@
             "matcher": "CourseRequirement",
             "course": "BLAW 2301"
           },
-
+          {
+            "matcher": "CourseRequirement",
+            "course": "ECON 2301"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ECON 2302"
+          },
+          {
+            "matcher": "OrRequirement",
+            "metadata": { "id": 1 },
+            "requirements": [
+              {
+                "course": "MATH 1325",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 2 }
+              },
+              {
+                "course": "MATH 2413",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 3 }
+              },
+              {
+                "course": "MATH 2417",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 4 }
+              }
+            ]
+          },
+          {
+            "matcher": "OrRequirement",
+            "metadata": { "id": 5 },
+            "requirements": [
+              {
+                "course": "MATH 1326",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 6 }
+              },
+              {
+                "course": "MATH 2414",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 9 }
+              },
+              {
+                "course": "MATH 2419",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 10 }
+              }
+            ]
+          },
           {
             "matcher": "OrRequirement",
             "requirements": [
               {
                 "matcher": "CourseRequirement",
-                "course": "MATH 1325"
+                "course": "MATH 2333"
               },
               {
                 "matcher": "CourseRequirement",
-                "course": "MATH 2413"
+                "course": "OPRE 3333"
               },
               {
                 "matcher": "CourseRequirement",
-                "course": "MATH 2417"
+                "course": "MATH 2418"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "CS 2305"
               }
             ]
           },
@@ -53,28 +106,6 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "STAT 3360"
-              }
-            ]
-          },
-          {
-            "matcher": "SelectRequirement",
-            "required_count": 2,
-            "requirements": [
-              {
-                "matcher": "CourseRequirement",
-                "course": "BA 1310"
-              },
-              {
-                "matcher": "CourseRequirement",
-                "course": "BA 1320"
-              },
-              {
-                "matcher": "CourseRequirement",
-                "course": "ECON 2301"
-              },
-              {
-                "matcher": "CourseRequirement",
-                "course": "ECON 2302"
               }
             ]
           }
@@ -123,46 +154,64 @@
             "requirements": [
               {
                 "matcher": "CourseRequirement",
-                "course": "OBHR 3330"
+                "course": "OBHR 3310"
               },
               {
                 "matcher": "CourseRequirement",
-                "course": "OBHR 3310"
+                "course": "OBHR 3330"
               }
             ]
           },
           {
             "matcher": "CourseRequirement",
             "course": "MKT 3300"
-          }
-        ]
-      },
-      {
-        "matcher": "AndRequirement",
-        "metadata": { "name": "Major Related Courses" },
-        "requirements": [
-          {
-            "matcher": "CourseRequirement",
-            "course": "MKT 3340"
           },
           {
             "matcher": "CourseRequirement",
-            "course": "MKT 4330"
+            "course": "FIN 3390"
           },
           {
             "matcher": "CourseRequirement",
-            "course": "MKT 3330"
+            "course": "FIN 4310"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ECON 3310"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ECON 3311"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ECON 4351"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ECON 4355"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "FIN 4300"
           },
           {
             "matcher": "OrRequirement",
             "requirements": [
               {
                 "matcher": "CourseRequirement",
-                "course": "MKT 4395"
+                "course": "FIN 4395"
               },
               {
                 "matcher": "CourseRequirement",
-                "course": "ENTP 3320"
+                "course": "FIN 4328"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 4333"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 4380"
               },
               {
                 "matcher": "CourseRequirement",
@@ -185,11 +234,11 @@
             "requirements": [
               {
                 "matcher": "CourseRequirement",
-                "course": "MKT 4V90"
+                "course": "FIN 4V80"
               },
               {
                 "matcher": "CourseRequirement",
-                "course": "MKT 4090"
+                "course": "FIN 4080"
               },
               {
                 "matcher": "CourseRequirement",
@@ -220,63 +269,27 @@
           },
           {
             "matcher": "HoursRequirement",
-            "required_hours": 12,
+            "required_hours": 11,
             "requirements": [
               {
                 "matcher": "CourseRequirement",
-                "course": "MKT 3320"
+                "course": "FIN 4V80"
               },
               {
                 "matcher": "CourseRequirement",
-                "course": "MKT 3331"
+                "course": "FIN 4080"
               },
               {
                 "matcher": "CourseRequirement",
-                "course": "MKT 4331"
+                "course": "BA 4090"
               },
               {
                 "matcher": "CourseRequirement",
-                "course": "MKT 4332"
+                "course": "IMS 4335"
               },
               {
                 "matcher": "CourseRequirement",
-                "course": "MKT 4333"
-              },
-              {
-                "matcher": "CourseRequirement",
-                "course": "MKT 4334"
-              },
-              {
-                "matcher": "CourseRequirement",
-                "course": "MKT 4335"
-              },
-              {
-                "matcher": "CourseRequirement",
-                "course": "MKT 4336"
-              },
-              {
-                "matcher": "CourseRequirement",
-                "course": "MKT 4337"
-              },
-              {
-                "matcher": "CourseRequirement",
-                "course": "MKT 4338"
-              },
-              {
-                "matcher": "CourseRequirement",
-                "course": "MKT 4339"
-              },
-              {
-                "matcher": "CourseRequirement",
-                "course": "MKT 4340"
-              },
-              {
-                "matcher": "CourseRequirement",
-                "course": "MKT 4341"
-              },
-              {
-                "matcher": "CourseRequirement",
-                "course": "MKT 4350"
+                "course": "ENTP 4340"
               },
               {
                 "matcher": "CourseRequirement",
@@ -284,53 +297,129 @@
               },
               {
                 "matcher": "CourseRequirement",
-                "course": "MKT 4370"
+                "course": "BA 4095"
               },
               {
                 "matcher": "CourseRequirement",
-                "course": "MKT 4390"
+                "course": "FIN 3305"
               },
               {
                 "matcher": "CourseRequirement",
-                "course": "MKT 4V83"
+                "course": "FIN 3330"
               },
               {
                 "matcher": "CourseRequirement",
-                "course": "MKT 4V90"
+                "course": "FIN 3340"
               },
               {
                 "matcher": "CourseRequirement",
-                "course": "MKT 4V93"
+                "course": "FIN 3350"
               },
               {
-                "matcher": "OrRequirement",
-                "requirements": [
-                  {
-                    "matcher": "CourseRequirement",
-                    "course": "ENTP 3301"
-                  },
-                  {
-                    "matcher": "CourseRequirement",
-                    "course": "ENTP 4311"
-                  },
-                  {
-                    "matcher": "CourseRequirement",
-                    "course": "ENTP 4340"
-                  },
-                  {
-                    "matcher": "CourseRequirement",
-                    "course": "IMS 4310"
-                  }
-                ]
+                "matcher": "CourseRequirement",
+                "course": "FIN 3365"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 3380"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 4313"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 4315"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 4320"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 4321"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 4328"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 4333"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 4336"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 4338"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 4340"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 4345"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 4380"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 4390"
+              }
+            ]
+          },
+          {
+            "matcher": "HoursRequirement",
+            "required_hours": 12,
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "ECON 3312"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ECON 3332"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ECON 4301"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ECON 4310"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ECON 4342"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ECON 4345"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ECON 4360"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ECON 4382"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ECON 4385"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ECON 4396"
               }
             ]
           }
         ]
-      },
-      {
-        "matcher": "FreeElectiveRequirement",
-        "required_hours": 18,
-        "excluded_courses": []
       }
     ]
   }

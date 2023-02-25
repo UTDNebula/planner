@@ -1,8 +1,8 @@
 {
-  "abbreviation": "Business Administration (BS)",
+  "abbreviation": "Business Administration (BS) Energy Management Concentration",
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/business-administration",
   "minimum_credit_hours": 120,
-  "name": "Bachelor of Science in Business Administration",
+  "name": "Bachelor of Science in Business Administration Energy Management Concentration",
   "school": "Naveen Jindal School of Management",
   "subtype": "Major",
   "year": "2022-2023",
@@ -232,84 +232,165 @@
       },
       {
         "matcher": "AndRequirement",
-        "metadata": { "id": 39, "name": "Major Related Courses" },
+        "metadata": "Major Related Courses",
         "requirements": [
           {
-            "course": "ENTP 3301",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 40 }
+            "course": "ENGY 3301"
           },
           {
-            "matcher": "OrRequirement",
-            "metadata": { "id": 41 },
+            "matcher": "CourseRequirement",
+            "course": "ENGY 3302"
+          },
+          {
+            "matcher": "SelectRequirement",
+            "required_count": 2,
             "requirements": [
               {
-                "course": "BA 4V90",
-                "matcher": "CourseRequirement",
-                "metadata": { "id": 42 }
+                "matcher": "OrRequirement",
+                "requirements": [
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "ENGY 3340"
+                  },
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "BLAW 4301"
+                  }
+                ]
               },
               {
-                "course": "BA 4090",
+                "matcher": "OrRequirement",
+                "requirements": [
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "FIN 4313"
+                  },
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "ENGY 4313"
+                  }
+                ]
+              },
+              {
                 "matcher": "CourseRequirement",
-                "metadata": { "id": 43 }
+                "course": "MECO 4342"
               }
             ]
           },
+
           {
-            "matcher": "BAGuidedElectiveRequirement",
-            "metadata": { "id": 44 },
-            "prefix_groups": [
+            "matcher": "OrRequirement",
+            "requirements": [
               {
-                "matcher": "SomeRequirement",
-                "requirements": [
-                  { "matcher": "PrefixBucketRequirement", "prefix": "MKT" }
-                ]
+                "matcher": "CourseRequirement",
+                "course": "BA 4V90"
               },
               {
-                "matcher": "SomeRequirement",
-                "requirements": [
-                  { "matcher": "PrefixBucketRequirement", "prefix": "ACCT" },
-                  { "matcher": "PrefixBucketRequirement", "prefix": "ENGY" },
-                  { "matcher": "PrefixBucketRequirement", "prefix": "FIN" },
-                  { "matcher": "PrefixBucketRequirement", "prefix": "MECO" },
-                  { "matcher": "PrefixBucketRequirement", "prefix": "REAL" },
-                  { "matcher": "PrefixBucketRequirement", "prefix": "RMIS" }
-                ]
-              },
-              {
-                "matcher": "SomeRequirement",
-                "requirements": [
-                  { "matcher": "PrefixBucketRequirement", "prefix": "ITSS" }
-                ]
-              },
-              {
-                "matcher": "SomeRequirement",
-                "requirements": [
-                  { "matcher": "PrefixBucketRequirement", "prefix": "BA" },
-                  { "matcher": "PrefixBucketRequirement", "prefix": "BCOM" },
-                  { "matcher": "PrefixBucketRequirement", "prefix": "BPS" },
-                  { "matcher": "PrefixBucketRequirement", "prefix": "BLAW" },
-                  { "matcher": "PrefixBucketRequirement", "prefix": "HMGT" },
-                  { "matcher": "PrefixBucketRequirement", "prefix": "IMS" }
-                ]
-              },
-              {
-                "matcher": "SomeRequirement",
-                "requirements": [
-                  { "matcher": "PrefixBucketRequirement", "prefix": "OPRE" }
-                ]
+                "matcher": "CourseRequirement",
+                "course": "BA 4090"
               }
-            ],
-            "required_count": 3,
-            "required_hours": 15
+            ]
+          },
+
+          {
+            "matcher": "HoursRequirement",
+            "required_hours": 12,
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "BA 4V90"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "BA 4090"
+              },
+              {
+                "matcher": "OrRequirement",
+                "requirements": [
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "ENGY 3340"
+                  },
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "BLAW 4301"
+                  }
+                ]
+              },
+              {
+                "matcher": "OrRequirement",
+                "requirements": [
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "FIN 4313"
+                  },
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "ENGY 4313"
+                  }
+                ]
+              },
+
+              {
+                "matcher": "CourseRequirement",
+                "course": "MECO 4342"
+              },
+              {
+                "matcher": "OrRequirement",
+                "requirements": [
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "MECO 3330"
+                  },
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "ENGY 3330"
+                  }
+                ]
+              },
+              {
+                "matcher": "OrRequirement",
+                "requirements": [
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "MECO 4300"
+                  },
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "ENGY 4300"
+                  }
+                ]
+              },
+
+              {
+                "matcher": "CourseRequirement",
+                "course": "OPRE 4330"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 4340"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 4345"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "NATS 2333"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "GEOS 1303"
+              }
+            ]
           }
         ]
       },
       {
-        "excluded_courses": [],
         "matcher": "FreeElectiveRequirement",
-        "metadata": { "id": 45 },
-        "required_hours": 12
+        "required_hours": 6,
+        "excluded_courses": []
       }
     ]
   }
