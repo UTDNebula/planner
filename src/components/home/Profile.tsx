@@ -3,11 +3,7 @@ import Avatar from '@mui/material/Avatar';
 import { purple } from '@mui/material/colors';
 import { useEffect, useMemo, useState } from 'react';
 import { trpc } from '@/utils/trpc';
-import {
-  createSemesterCodeRange,
-  displaySemesterCode,
-  generateSemesters,
-} from '@/utils/utilFunctions';
+import { createSemesterCodeRange, displaySemesterCode } from '@/utils/utilFunctions';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Select, { SelectChangeEvent } from '@mui/material/Select';

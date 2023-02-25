@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { DegreeRequirement, GetDragIdByCourseAndReq } from '../types';
 
 export default function RequirementsCarousel({
   requirementsList,

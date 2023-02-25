@@ -1,8 +1,6 @@
 import { createProxySSGHelpers } from '@trpc/react-query/ssg';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next/types';
 import { getServerSession } from 'next-auth';
-import { useSession } from 'next-auth/react';
-import { useState } from 'react';
 import superjson from 'superjson';
 
 import Planner from '@/components/planner/Planner';
