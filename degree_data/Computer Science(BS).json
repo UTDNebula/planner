@@ -269,7 +269,7 @@
           "CS 3162"
         ],
         "matcher": "FreeElectiveRequirement",
-        "metadata": { "id": 38 },
+        "metadata": { "id": 38, "name": "Free Electives" },
         "required_hours": 10
       }
     ]
