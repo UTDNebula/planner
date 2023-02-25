@@ -21,7 +21,7 @@ import {
   Active,
   Over,
 } from '@dnd-kit/core';
-import React, { useMemo, useState, useRef, useEffect } from 'react';
+import React, { useMemo, useState, useRef } from 'react';
 
 import CourseSelectorContainer from './Sidebar/Sidebar';
 import { SidebarCourseItem } from './Sidebar/SidebarCourseItem';

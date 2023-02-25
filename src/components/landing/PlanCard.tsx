@@ -1,7 +1,5 @@
 import VerticalEllipsisIcon from '@/icons/VerticalEllipsisIcon';
 import { trpc } from '@/utils/trpc';
-import Tooltip from '@mui/material/Tooltip';
-import { utils } from 'mocha';
 import router from 'next/router';
 
 export type PlanCardProps = {
