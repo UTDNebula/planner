@@ -1,0 +1,256 @@
+{
+  "abbreviation": "Global Business and Human Resource Management (BS)",
+  "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/global-business-human-resource-management",
+  "minimum_credit_hours": 128,
+  "name": "Bachelor of Science in Global Business and Human Resource Management",
+  "school": "Naveen Jindal School of Management",
+  "subtype": "Major",
+  "year": "2022-2023",
+  "requirements": {
+    "core": "@import ./core.json",
+    "major": [
+      {
+        "matcher": "AndRequirement",
+        "metadata": { "name": "Global Business Major Preparatory Courses" },
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "ACCT 2301"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ACCT 2302"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "BLAW 2301"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MATH 1325"
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "OPRE 3360"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "STAT 3360"
+              }
+            ]
+          }
+        ]
+      },
+
+      {
+        "matcher": "AndRequirement",
+        "metadata": { "name": "Major Core Courses" },
+        "requirements": [
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "BCOM 1300"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "BCOM 3300"
+              }
+            ]
+          },
+
+          {
+            "matcher": "CourseRequirement",
+            "course": "BCOM 4300"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "IMS 3310"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "FIN 3320"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ITSS 3300"
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "OPRE 3310"
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "OBHR 3310"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "OBHR 3330"
+              }
+            ]
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MKT 3300"
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "MKT 4395"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "BPS 4395"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ENTP 4395"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "matcher": "AndRequirement",
+        "metadata": { "name": "Major Related Courses" },
+        "requirements": [
+          { "matcher": "CourseRequirement", "course": "IMS 4350" },
+          {
+            "matcher": "SelectRequirement",
+            "required_count": 3,
+            "requirements": [
+              {
+                "matcher": "OrRequirement",
+                "requirements": [
+                  { "matcher": "CourseRequirement", "course": "IMS 4320" },
+                  { "matcher": "CourseRequirement", "course": "MKT 4320" }
+                ]
+              },
+
+              { "matcher": "CourseRequirement", "course": "FIN 3380" },
+              { "matcher": "CourseRequirement", "course": "IMS 4330" },
+              { "matcher": "CourseRequirement", "course": "IMS 4373" }
+            ]
+          }
+        ]
+      },
+      {
+        "matcher": "SelectRequirement",
+        "metadata": {
+          "name": "International Political Economy (IPEC) Core Courses"
+        },
+        "required_count": 7,
+        "requirements": [
+          { "matcher": "CourseRequirement", "course": "ECON 3310" },
+          { "matcher": "CourseRequirement", "course": "ECON 3311" },
+          { "matcher": "CourseRequirement", "course": "ECON 4360" },
+          { "matcher": "CourseRequirement", "course": "ECON 4360" },
+          { "matcher": "CourseRequirement", "course": "IPEC 4301" },
+          { "matcher": "CourseRequirement", "course": "IPEC 4302" },
+          { "matcher": "CourseRequirement", "course": "PSCI 4329" },
+          { "matcher": "CourseRequirement", "course": "PSCI 4356" },
+          { "matcher": "CourseRequirement", "course": "PSCI 4360" }
+        ]
+      },
+      {
+        "matcher": "HoursRequirement",
+        "metadata": { "name": "Foreign Language Requirement" },
+        "required_hours": 12,
+        "requirements": []
+      },
+      {
+        "matcher": "AndRequirement",
+        "metadata": {
+          "name": "Upper-Division Major Related Electives",
+          "requirements": [
+            {
+              "matcher": "OrRequirement",
+              "requirements": [
+                {
+                  "matcher": "CourseRequirement",
+                  "course": "IMS 4V90"
+                },
+                {
+                  "matcher": "CourseRequirement",
+                  "course": "IMS 4090"
+                },
+                {
+                  "matcher": "CourseRequirement",
+                  "course": "BA 4090"
+                }
+              ]
+            },
+            {
+              "matcher": "OrRequirement",
+              "requirements": [
+                {
+                  "matcher": "CourseRequirement",
+                  "course": "IMS 4335"
+                },
+                {
+                  "matcher": "CourseRequirement",
+                  "course": "ENTP 4340"
+                },
+                {
+                  "matcher": "CourseRequirement",
+                  "course": "MKT 4360"
+                },
+                {
+                  "matcher": "CourseRequirement",
+                  "course": "BA 4095"
+                }
+              ]
+            },
+            {
+              "matcher": "HoursRequirement",
+              "required_hours": 11,
+              "requirements": [
+                {
+                  "matcher": "CourseRequirement",
+                  "course": "IMS 4V90"
+                },
+                {
+                  "matcher": "CourseRequirement",
+                  "course": "IMS 4090"
+                },
+                {
+                  "matcher": "CourseRequirement",
+                  "course": "BA 4090"
+                },
+                {
+                  "matcher": "CourseRequirement",
+                  "course": "IMS 4335"
+                },
+                {
+                  "matcher": "CourseRequirement",
+                  "course": "ENTP 4340"
+                },
+                {
+                  "matcher": "CourseRequirement",
+                  "course": "MKT 4360"
+                },
+                {
+                  "matcher": "CourseRequirement",
+                  "course": "BA 4095"
+                },
+                {
+                  "matcher": "PrefixBucketRequirement",
+                  "prefix": "IPEC"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
