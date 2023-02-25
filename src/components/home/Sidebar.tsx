@@ -7,11 +7,20 @@ import CreditsIcon from '@/icons/CreditsIcon';
 import HomeIcon from '@/icons/HomeIcon';
 import LogoutIcon from '@/icons/LogoutIcon';
 import ProfileIcon from '@/icons/ProfileIcon';
+import { useRouter } from 'next/router';
 
 export default function Sidebar({ isMobile }: { isMobile: boolean }): JSX.Element {
   const [open, setOpen] = useState(!isMobile);
-
-  useEffect(() => setOpen(!isMobile), [isMobile]);
+  const closedRoutes = ['/app/plans'];
+  const router = useRouter();
+  useEffect(
+    () =>
+      setOpen(
+        !isMobile &&
+          !closedRoutes.reduce((acc, cur) => acc && router.pathname.startsWith(cur), true),
+      ),
+    [isMobile, router.pathname],
+  );
 
   const sidebarItems = [
     {

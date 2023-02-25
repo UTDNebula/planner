@@ -3,26 +3,34 @@ import DownloadIcon from '@/icons/DownloadIcon';
 import EditIcon from '@/icons/EditIcon';
 import { FC } from 'react';
 import Button from '../Button';
-import Switch from '../Switch';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import { useSemestersContext } from './SemesterContext';
 import SortByDropdown from './SortByDropdown';
+import DegreePlanPDF from './DegreePlanPDF/DegreePlanPDF';
 
 export interface ToolbarProps {
   title: string;
   major: string;
-  showTransfer: boolean;
-  toggleShowTransfer: (show: boolean) => void;
+  studentName: string;
 }
 
-const Toolbar: FC<ToolbarProps> = ({ title, major, showTransfer, toggleShowTransfer }) => {
+const Toolbar: FC<ToolbarProps> = ({ title, major, studentName }) => {
+  const { semesters } = useSemestersContext();
   return (
     <section className="flex w-full flex-col justify-center gap-y-6">
       <article className="flex justify-between">
-        <h1 className="text-[36px] font-semibold text-primary-900">{title}</h1>
+        <h1 className="text-4xl font-semibold text-primary-900">{title}</h1>
         <div className="flex gap-3">
           <SortByDropdown />
           <Button size="large" icon={<AddFileIcon className="h-6 w-5" />} />
           <Button size="large" icon={<DownloadIcon />}>
-            <span className="whitespace-nowrap">Export Degree Plan</span>
+            <PDFDownloadLink
+              document={
+                <DegreePlanPDF studentName={studentName} planTitle={title} semesters={semesters} />
+              }
+            >
+              <span className="whitespace-nowrap">Export Degree Plan</span>
+            </PDFDownloadLink>
           </Button>
         </div>
       </article>
@@ -32,18 +40,6 @@ const Toolbar: FC<ToolbarProps> = ({ title, major, showTransfer, toggleShowTrans
           <span className="text-xl font-semibold text-primary-800">{major}</span>
           <EditIcon className="text-primary-800" />
         </button>
-
-        <form className="flex items-center gap-x-3">
-          <Switch
-            size="small"
-            id="transfer-toggle"
-            checked={showTransfer}
-            onCheckedChange={toggleShowTransfer}
-          />
-          <label htmlFor="transfer-toggle" className="text-base text-neutral-900">
-            Show Transfer Credits
-          </label>
-        </form>
       </article>
     </section>
   );

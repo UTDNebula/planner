@@ -179,7 +179,12 @@ export const userRouter = router({
                 courses.push(credit.courseCode);
               }
             });
-            return { ...sem, id: sem.id.toString(), courses: courses };
+            return {
+              ...sem,
+              courseColors: Array(courses.length).fill(''),
+              id: sem.id.toString(),
+              courses: courses,
+            };
           }),
         );
       }
@@ -287,13 +292,23 @@ export const userRouter = router({
               // Add credits to each semester
               const courses: string[] = [];
               if (idx % 3 === 2) {
-                return { ...sem, id: sem.id.toString(), courses: courses };
+                return {
+                  ...sem,
+                  courseColors: Array(courses.length).fill(''),
+                  id: sem.id.toString(),
+                  courses: courses,
+                };
               }
               templateData[i - startYear + counter].items.map((course) => {
                 courses.push(course.name);
               });
               counter++;
-              return { ...sem, id: sem.id.toString(), courses: courses };
+              return {
+                ...sem,
+                courseColors: Array(courses.length).fill(''),
+                id: sem.id.toString(),
+                courses: courses,
+              };
             }),
           );
         }

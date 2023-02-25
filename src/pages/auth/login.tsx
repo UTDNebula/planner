@@ -49,7 +49,14 @@ export default function AuthPage({
           <div className="m-2 bg-white md:rounded-md md:shadow-md">
             <div className="w-96 rounded bg-white p-6 shadow-none md:shadow-lg ">
               <div className="mb-4 flex items-center justify-center">
-                <Image src={logo} alt="Logo" width="120" height="120" className="rounded-full" />
+                <Image
+                  src={logo}
+                  alt="Logo"
+                  width="120"
+                  height="120"
+                  className="rounded-full"
+                  priority
+                />
               </div>
               <h1 className="mb-2 text-center text-3xl font-semibold leading-normal">Sign in</h1>
               <p className="text-sm leading-normal">
