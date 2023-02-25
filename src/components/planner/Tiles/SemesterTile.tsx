@@ -53,7 +53,7 @@ export const MemoizedSemesterTile = React.memo(
     return (
       <div
         ref={ref}
-        className={`flex h-fit select-none flex-col gap-y-4 overflow-hidden rounded-2xl border border-neutral-300 bg-white py-4 px-5`}
+        className={`flex h-fit select-none flex-col gap-y-4 rounded-2xl border border-neutral-300 bg-white py-4 px-5`}
       >
         <article className="w-full">
           <ChevronIcon
@@ -90,7 +90,7 @@ export const MemoizedSemesterTile = React.memo(
         </div>
 
         <article
-          className={`flex flex-col gap-y-4 overflow-hidden transition-all duration-700 ${
+          className={`flex flex-col gap-y-4 transition-all duration-700 ${
             open ? 'max-h-[999px]' : 'max-h-0'
           }`}
         >

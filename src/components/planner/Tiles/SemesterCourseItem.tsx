@@ -46,11 +46,11 @@ export const MemoizedSemesterCourseItem = React.memo(
         ref={ref}
         {...props}
         data-tip="Drag!"
-        className={`tooltip tooltip-left flex h-[40px] w-full cursor-grab items-center overflow-hidden rounded-md border border-neutral-200 bg-generic-white`}
+        className={` tooltip tooltip-left flex h-[40px] w-full cursor-grab flex-row items-center rounded-md border border-neutral-200 bg-generic-white py-4 px-2`}
       >
         <div className={`h-full w-2 ${tagColors[course.color]}`}></div>
-        <div className="py-4 px-2">
-          <div className="flex items-center gap-x-3">
+        <div className="flex items-center justify-center">
+          <div className="flex flex-row items-center gap-x-3">
             <SemesterCourseItemDropdown
               changeColor={(color) => onColorChange && onColorChange(color)}
               deleteCourse={() => onDeleteCourse && onDeleteCourse()}
@@ -70,24 +70,23 @@ export const MemoizedSemesterCourseItem = React.memo(
             />
             <span className="text-[16px] text-[#1C2A6D]">{course.code}</span>
           </div>
-
-          <div className="flex text-[12px] font-semibold">
-            {course.taken && (
-              <span className=" tooltip text-[#22C55E]" data-tip="Completed">
-                <CheckIcon fontSize="small" />
-              </span>
-            )}
-            {course.transfer && (
-              <span className="tooltip text-green-500" data-tip="Transfer">
-                T
-              </span>
-            )}
-            {!course.sync?.isSynced && (
-              <div className="tooltip" data-tip={`${correctSemester}`}>
-                <SyncProblemIcon fontSize="small" />
-              </div>
-            )}
-          </div>
+        </div>
+        <div className="ml-auto flex text-[12px] font-semibold">
+          {course.taken && (
+            <span className=" tooltip text-[#22C55E]" data-tip="Completed">
+              <CheckIcon fontSize="small" />
+            </span>
+          )}
+          {course.transfer && (
+            <span className="tooltip text-green-500" data-tip="Transfer">
+              T
+            </span>
+          )}
+          {!course.sync?.isSynced && (
+            <div className="tooltip" data-tip={`${correctSemester}`}>
+              <SyncProblemIcon fontSize="small" />
+            </div>
+          )}
         </div>
       </div>
     );
