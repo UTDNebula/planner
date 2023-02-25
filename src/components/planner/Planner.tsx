@@ -119,8 +119,8 @@ export default function Planner({ degreeRequirements }: PlannerProps): JSX.Eleme
     }
   };
 
-  const ref = useRef<HTMLDivElement>(null)
-  const [columnCount, setColumns] = useState(3)
+  const ref = useRef<HTMLDivElement>(null);
+  const [columnCount, setColumns] = useState(3);
   // TODO: Use resizeobserver to change column count based on screen size
 
   return (
@@ -156,20 +156,20 @@ export default function Planner({ degreeRequirements }: PlannerProps): JSX.Eleme
             ) : null)}
         </DragOverlay>
 
-        <section ref={ref} className="flex min-h-fit flex-col gap-y-6 p-4 pb-0 h-screen max-h-screen flex-grow">
+        <section
+          ref={ref}
+          className="flex h-screen max-h-screen min-h-fit flex-grow flex-col gap-y-6 p-4 pb-0"
+        >
           <Toolbar title="Plan Your Courses" major="Computer Science" studentName="Dev" />
 
           <article className=" overflow-x-hidden overflow-y-scroll">
             <div className="flex h-fit gap-5">
               {semesters
-                .reduce(
-                  (acc, curr, index) => {
-                    const columns = acc.slice()
-                    columns[index % columnCount].push(curr);
-                    return columns as Semester[][];
-                  },
-                  Array(columnCount).fill([]) as Semester[][],
-                )
+                .reduce((acc, curr, index) => {
+                  const columns = acc.slice();
+                  columns[index % columnCount].push(curr);
+                  return columns as Semester[][];
+                }, Array(columnCount).fill([]) as Semester[][])
                 .map((column, index) => (
                   <MasonryColumn
                     key={`column-${index}`}

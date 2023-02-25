@@ -56,7 +56,7 @@ function CourseSelectorContainer({
   }, [results, courses]);
 
   return (
-    <div className="h-screen min-w-[25%] w-[35%] resize-x overflow-scroll">
+    <div className="h-screen w-[35%] min-w-[25%] resize-x overflow-scroll">
       <div className="flex h-fit min-h-full w-full flex-col gap-y-8 bg-white p-4">
         <div className="flex flex-col gap-2">
           <h1 className="text-3xl font-medium">Plan Requirements</h1>

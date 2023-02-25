@@ -11,9 +11,16 @@ import { useRouter } from 'next/router';
 
 export default function Sidebar({ isMobile }: { isMobile: boolean }): JSX.Element {
   const [open, setOpen] = useState(!isMobile);
-  const closedRoutes = ["/app/plans"]
-  const router = useRouter()
-  useEffect(() => setOpen(!isMobile && !closedRoutes.reduce((acc, cur)=> acc && router.pathname.startsWith(cur), true)), [isMobile, router.pathname]);
+  const closedRoutes = ['/app/plans'];
+  const router = useRouter();
+  useEffect(
+    () =>
+      setOpen(
+        !isMobile &&
+          !closedRoutes.reduce((acc, cur) => acc && router.pathname.startsWith(cur), true),
+      ),
+    [isMobile, router.pathname],
+  );
 
   const sidebarItems = [
     {
