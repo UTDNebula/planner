@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
 import superjson from 'superjson';
 
 import { Credit } from '@/components/credits/types';
-import Welcome from '@/components/onboarding/welcome';
+import Welcome, { WelcomeTypes } from '@/components/onboarding/welcome';
 import { createContextInner } from '@/server/trpc/context';
 import { appRouter } from '@/server/trpc/router/_app';
 import { trpc } from '@/utils/trpc';
@@ -26,6 +26,8 @@ import dynamic from 'next/dynamic';
  */
 
 export interface OnboardingData {
+  firstName: string,
+  lastName: string,
   name: string;
   startSemester: SemesterCode;
   endSemester: SemesterCode;
@@ -41,6 +43,8 @@ const endSemesters = generateSemesters(12, new Date().getFullYear(), SemesterTyp
   .map((sem) => sem.code);
 
 const initialOnboardingData: OnboardingData = {
+  firstName: "",
+  lastName: "",
   name: '',
   startSemester: startSemesters[1], // TODO: Create util function for this in the future
   endSemester: endSemesters[6],
@@ -57,7 +61,7 @@ export default function OnboardingPage() {
     setOnboardingData({ ...onboardingData, ...updatedFields });
   };
 
-  const { name, startSemester, endSemester, credits } = onboardingData;
+  const { firstName, lastName, name, startSemester, endSemester, credits } = onboardingData;
 
   const utils = trpc.useContext();
 
@@ -68,7 +72,7 @@ export default function OnboardingPage() {
   });
 
   const [page, setPage] = useState(0);
-  const [validate, setValidate] = useState([true, false, true]);
+  const [validate, setValidate] = useState([true, true, true]);
 
   const [validNextPage, setValidNextPage] = useState(false);
 
@@ -103,20 +107,23 @@ export default function OnboardingPage() {
   };
 
   const jsxElem = [
-    <Welcome key={0} />,
+    <Welcome 
+      key={0} 
+      handleChange={handleOnboardingDataUpdate as (updatedFields: Partial<WelcomeTypes>) => void}
+      data = {{firstName, lastName, startSemester, endSemester}}
+      semesterOptions = {{startSemesters, endSemesters}}
+      handleValidate={validateForm}
+      />,
     <PageOne
       key={1}
-      handleChange={handleOnboardingDataUpdate as (updatedFields: Partial<PageOneTypes>) => void}
-      data={{ name, startSemester, endSemester }}
-      semesterOptions={{ startSemesters, endSemesters }}
-      handleValidate={validateForm}
+      data={{firstName}}
     ></PageOne>,
     <PageTwo
       key={2}
       handleChange={
         handleOnboardingDataUpdate as React.Dispatch<React.SetStateAction<PageTwoTypes>>
       }
-      data={{ credits }}
+      data={{ credits, firstName }}
       startSemester={startSemester}
     ></PageTwo>,
   ];
@@ -138,22 +145,23 @@ export default function OnboardingPage() {
   // TODO: Find better way to structure this glorified form.
   return (
     <>
-      <div className="flex min-h-screen items-center justify-center bg-blue-400">
-        <div className="flex h-screen w-full items-center justify-center rounded bg-white p-5 shadow-2xl transition-all sm:my-16 sm:h-auto sm:w-3/4 sm:py-16 sm:px-32">
-          <div className="flex flex-col items-center justify-center">
+      <div className="flex flex-col min-h-screen items-center justify-center bg-[#F9FAFB]">
+        <div className="flex text-[#111827] font-extrabold text-3xl">planner.</div>
+        <div className="flex h-screen border-2 border-yellow-900 items-center justify-center bg-[#FFFFFF] p-5 shadow-2xl transition-all sm:my-4 sm:h-auto  sm:py-10 sm:px-32">
+          <div className="flex flex-col items-center justify-center ">
             {jsxElem[page]}
             <div className="justify-start">
               <button
                 onClick={decrementPage}
                 disabled={page == 0}
-                className="mr-10 rounded font-bold text-blue-500 hover:text-yellow-500 disabled:opacity-50"
+                className="mr-10 rounded font-bold text-[#4B4EFC] disabled:opacity-50"
               >
                 BACK
               </button>
               <button
                 onClick={incrementPage}
                 disabled={!validNextPage}
-                className="rounded font-bold text-blue-500 hover:text-yellow-500 disabled:opacity-50"
+                className="rounded font-bold text-[#4B4EFC] disabled:opacity-50"
               >
                 NEXT
               </button>

@@ -1,119 +1,49 @@
-import { TextField } from '@mui/material';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import { SelectChangeEvent } from '@mui/material/Select';
-import { SemesterCode } from '@prisma/client';
-import React from 'react';
+import React, { useMemo, useState } from 'react';
+import Button from '@/components/Button';
+import AddIcon from '@mui/icons-material/Add';
+import { UploadTranscriptDialog } from '../home/Credits';
+import BuddyIcon from '@/icons/BuddyIcon';
 
-import DropdownSelect from '@/components/credits/DropdownSelect';
-import { displaySemesterCode } from '@/utils/utilFunctions';
-
-// TODO: Populate w/ real values
 // Array of values to choose from for form
 
 export type PageOneTypes = {
-  name: string;
-  startSemester: SemesterCode;
-  endSemester: SemesterCode;
+  firstName: string;
 };
 
-export type Page1Data = {
-  handleChange: (updatedFields: Partial<PageOneTypes>) => void;
+export type Page1data = {
   data: PageOneTypes;
-  semesterOptions: { startSemesters: SemesterCode[]; endSemesters: SemesterCode[] };
-  handleValidate: (value: boolean) => void;
 };
 
-export default function PageOne({
-  handleChange,
-  data,
-  handleValidate,
-  semesterOptions,
-}: Page1Data): JSX.Element {
-  const { name, startSemester, endSemester }: PageOneTypes = data;
-  const { startSemesters, endSemesters } = semesterOptions;
-
-  // Handles all form data except DegreePicker
-  const setName = (event: SelectChangeEvent<string>) => {
-    handleChange({ name: event.target.value });
-  };
-
-  const setStartSemester = (sem: SemesterCode) => {
-    handleChange({ startSemester: sem });
-  };
-
-  const setEndSemester = (sem: SemesterCode) => {
-    handleChange({ endSemester: sem });
-  };
-
-  const checkValidate = () => {
-    const isValid = name && startSemester && endSemester ? true : false;
-    handleValidate(isValid);
-  };
-
-  React.useEffect(() => {
-    checkValidate();
-  }, [data]);
-
-  React.useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+export default function PageOne({ data }: Page1data): JSX.Element {
+  const { firstName } = data;
+  const [openTranscriptDialog, setOpenTranscriptDialog] = useState(false);
 
   return (
-    <div className="w-full animate-intro">
-      <h2 className="mb-10 text-left text-4xl font-bold text-gray-800">
-        <div>Personal </div>
-        <div> Information</div>
-      </h2>
-      <div className="mb-12 gap-x-32 lg:mb-0 lg:grid lg:grid-cols-2">
-        <div>
-          <div className="mb-10 flex flex-col">
-            <TextField
-              name="name"
-              id="outlined-basic"
-              className="w-72"
-              label="Name"
-              variant="outlined"
-              value={name}
-              onChange={
-                setName as
-                  | React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
-                  | undefined
-              }
-            />
-          </div>
-
-          <div className="mb-10">
-            <FormControl variant="outlined" className="w-72">
-              <InputLabel id="demo-simple-select-autowidth-label">Start Date</InputLabel>
-
-              <DropdownSelect
-                id="semester"
-                value={startSemester}
-                values={startSemesters}
-                getValue={(semester) => semester}
-                getDisplayedValue={(semester) => displaySemesterCode(semester)}
-                onChange={(sem) => {
-                  setStartSemester(sem);
-                }}
-              />
-            </FormControl>
-          </div>
-          <div className="mb-10">
-            <FormControl variant="outlined" className="w-72">
-              <InputLabel id="demo-simple-select-autowidth-label">Graduation Date</InputLabel>
-              <DropdownSelect
-                id="semester"
-                value={endSemester}
-                values={endSemesters}
-                getValue={(semester) => semester}
-                getDisplayedValue={(semester) => displaySemesterCode(semester)}
-                onChange={(sem) => setEndSemester(sem)}
-              />
-            </FormControl>
-          </div>
-        </div>
+    <div className="animate-intro">
+      <div className='-mb-5'></div>
+      <BuddyIcon className='flex items-center justify-center w-full'></BuddyIcon>
+      <div className='pt-5'/>
+      <div className='flex items-center justify-center'>
+        <h2 className="text-4xl text-gray-800 tracking-tight font-extrabold inline"> Hello&nbsp;</h2>
+        <h2 className="text-4xl font-extrabold text-[#4B4EFC] tracking-tight inline">{firstName}</h2>
       </div>
+      <figcaption className="font-small">
+        <div className="mb-1 text-[#737373] text-sm flex items-center justify-center py-2 content-center">Please upload your transcript or degree plan</div>
+      </figcaption>
+      <div className="flex w-[350px] flex-col gap-4 justify-center items-center">
+        <UploadTranscriptDialog
+          open={openTranscriptDialog}
+          onClose={() => setOpenTranscriptDialog(false)}
+        />
+        <Button
+          onClick={() => setOpenTranscriptDialog(true)}
+          icon={<AddIcon />}
+          className="w-[200px]"
+        >
+          Upload Transcript
+        </Button>
+      </div>
+      <div className='pb-5'></div>
     </div>
   );
 }
