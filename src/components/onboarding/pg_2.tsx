@@ -1,22 +1,16 @@
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
-import { FormControl, InputLabel, Switch } from '@mui/material';
-import { SemesterCode, SemesterType } from '@prisma/client';
+import { FormControl, Switch } from '@mui/material';
+import { SemesterCode } from '@prisma/client';
 import React, { useMemo, useState } from 'react';
 import AutoCompleteSearchBar from '@/components/onboarding/AutoCompleteSearchBarOnboarding';
 import Button from '@/components/Button';
 import DataGrid from '@/components/credits/DataGrid';
-import AddIcon from '@mui/icons-material/Add';
 import DropdownSelect from '@/components/onboarding/DropdownSelectOnboarding';
 import { Credit } from '@/components/credits/types';
 import useSearch from '@/components/search/search';
-import {
-  createSemesterCodeRange,
-  displaySemesterCode,
-  generateSemesters,
-} from '@/utils/utilFunctions';
+import { createSemesterCodeRange, displaySemesterCode } from '@/utils/utilFunctions';
 import { trpc } from '@/utils/trpc';
 import { getStartingPlanSemester } from '@/utils/plannerUtils';
-import { UploadTranscriptDialog } from '../home/Credits';
 import BuddyIcon from '@/icons/BuddyIcon';
 
 // Array of values to choose from for form
@@ -87,18 +81,15 @@ export default function PageTwo({ handleChange, data, startSemester }: Page2data
           <h2 className="inline text-4xl font-extrabold tracking-tight text-[#4B4EFC]">
             {firstName}
           </h2>
-          
         </div>
         <figcaption className="font-small">
-            <div className="mb-1 flex content-center items-center justify-center py-2 text-sm text-[#737373]">
-              Add additional credits
-            </div>
-          </figcaption>
+          <div className="mb-1 flex content-center items-center justify-center py-2 text-sm text-[#737373]">
+            Add additional credits
+          </div>
+        </figcaption>
       </div>
       <div className="flex w-fit flex-row justify-between">
         <div className="flex w-fit flex-col">
-         
-
           <div className="flex w-[350px] flex-col gap-4">
             <div className="-mb-2 pt-5 text-sm font-medium">Course Code</div>
             <AutoCompleteSearchBar
@@ -138,54 +129,54 @@ export default function PageTwo({ handleChange, data, startSemester }: Page2data
           </div>
         </div>
         <div className="max-h-[400px] min-w-fit px-2 py-4">
-        <DataGrid
-          columns={[
-            {
-              title: 'Course Number',
-              key: 'courseCode',
-              valueGetter: (credit) => credit.courseCode,
-            },
-            {
-              title: 'Transfer',
-              valueGetter: (credit) => (credit.transfer ? 'Yes' : 'No'),
-            },
-            {
-              title: 'Semester',
-              valueGetter: (credit) =>
-                credit.semesterCode
-                  ? `${displaySemesterCode(credit.semesterCode)}`
-                  : 'Transferred in',
-            },
-          ]}
-          childrenProps={{
-            headerProps: {
-              style: {
-                padding: '20px 0',
+          <DataGrid
+            columns={[
+              {
+                title: 'Course Number',
+                key: 'courseCode',
+                valueGetter: (credit) => credit.courseCode,
               },
-            },
-            gridProps: {
-              style: {},
-            },
-            rowProps: {
-              style: {
-                borderTop: '1px solid #DEDFE1',
-                padding: '20px 0',
+              {
+                title: 'Transfer',
+                valueGetter: (credit) => (credit.transfer ? 'Yes' : 'No'),
               },
-              injectedComponent: {
-                Element: () => (
-                  <DeleteIcon className="absolute right-5 top-1/2 -translate-y-1/2 cursor-pointer text-red-500" />
-                ),
-                onClick: (_, row) => {
-                  return handleRemoveCredit(row);
+              {
+                title: 'Semester',
+                valueGetter: (credit) =>
+                  credit.semesterCode
+                    ? `${displaySemesterCode(credit.semesterCode)}`
+                    : 'Transferred in',
+              },
+            ]}
+            childrenProps={{
+              headerProps: {
+                style: {
+                  padding: '20px 0',
                 },
               },
-            },
-          }}
-          rows={[...credits].reverse()}
-          RowCellComponent={({ children }) => <span className="text-black">{children}</span>}
-          TitleComponent={({ children }) => <h4 className="text-black">{children}</h4>}
-          LoadingComponent={() => <h2 className="text-black">Loading...</h2>}
-        />
+              gridProps: {
+                style: {},
+              },
+              rowProps: {
+                style: {
+                  borderTop: '1px solid #DEDFE1',
+                  padding: '20px 0',
+                },
+                injectedComponent: {
+                  Element: () => (
+                    <DeleteIcon className="absolute right-5 top-1/2 -translate-y-1/2 cursor-pointer text-red-500" />
+                  ),
+                  onClick: (_, row) => {
+                    return handleRemoveCredit(row);
+                  },
+                },
+              },
+            }}
+            rows={[...credits].reverse()}
+            RowCellComponent={({ children }) => <span className="text-black">{children}</span>}
+            TitleComponent={({ children }) => <h4 className="text-black">{children}</h4>}
+            LoadingComponent={() => <h2 className="text-black">Loading...</h2>}
+          />
         </div>
       </div>
     </div>

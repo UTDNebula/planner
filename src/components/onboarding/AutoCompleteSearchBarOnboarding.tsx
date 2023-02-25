@@ -49,7 +49,7 @@ const SearchBar: FC<SearchBarProps & React.ComponentPropsWithoutRef<'button'>> =
 
   return (
     <div
-      className="relative flex items-center gap-5 overflow-hidden rounded-[10px] border-[2px] h-9"
+      className="relative flex h-9 items-center gap-5 overflow-hidden rounded-[10px] border-[2px]"
       {...props}
     >
       <div ref={containerRef} className="absolute -bottom-3 left-0 h-full w-full"></div>
@@ -69,7 +69,7 @@ const SearchBar: FC<SearchBarProps & React.ComponentPropsWithoutRef<'button'>> =
               variant="standard"
               className="px-4"
               inputProps={{
-                style: {fontSize: 14},
+                style: { fontSize: 14 },
                 ...params.inputProps,
               }}
               placeholder={placeholder}
@@ -83,7 +83,7 @@ const SearchBar: FC<SearchBarProps & React.ComponentPropsWithoutRef<'button'>> =
         }}
       />
       <div className="flex h-full min-w-[55px] items-center justify-center bg-white">
-        <IconButton className="p-2 bg-white text-black" aria-label="search" size="large">
+        <IconButton className="bg-white p-2 text-black" aria-label="search" size="large">
           <SearchIcon />
         </IconButton>
       </div>

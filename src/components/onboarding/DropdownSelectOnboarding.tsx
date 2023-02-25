@@ -34,7 +34,7 @@ const DropdownSelect = <T extends { [key: string]: unknown }>({
         value={value}
         label=""
         onChange={(e) => onChange(e.target.value as T)}
-        className="w-full h-9 text-sm rounded-[10px] border-[2px] border-[#EDEFF7 shadow-none"
+        className="border-[#EDEFF7 h-9 w-full rounded-[10px] border-[2px] text-sm shadow-none"
         open={Boolean(anchorEl)}
         onClose={() => setAnchorEl(null)}
         sx={{

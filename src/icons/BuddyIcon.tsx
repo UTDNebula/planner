@@ -11,7 +11,7 @@ const BuddyIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
       stroke="currentColor"
       {...props}
     >
-        <rect width="48" height="48" rx="24" fill="#EEF2FF" stroke='transparent'></rect>
+      <rect width="48" height="48" rx="24" fill="#EEF2FF" stroke="transparent"></rect>
       <path
         strokeLinecap="round"
         strokeLinejoin="round"

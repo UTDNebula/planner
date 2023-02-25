@@ -1,10 +1,8 @@
 import { SemesterCode, SemesterType } from '@prisma/client';
 import { ObjectID } from 'bson';
 
-import { DraggableCourse, Semester } from '@/components/planner/types';
-import { Course } from '@/components/planner/types';
+import { Semester } from '@/components/planner/types';
 import { isEarlierSemester } from './plannerUtils';
-import { start } from 'repl';
 
 /**
  * Creates 3 new semesters based on given year in SemesterCode

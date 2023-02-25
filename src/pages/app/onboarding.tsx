@@ -14,7 +14,7 @@ import { appRouter } from '@/server/trpc/router/_app';
 import { trpc } from '@/utils/trpc';
 import { generateSemesters } from '@/utils/utilFunctions';
 
-import PageOne, { PageOneTypes } from '../../components/onboarding/pg_1';
+import PageOne from '../../components/onboarding/pg_1';
 import { PageTwoTypes } from '../../components/onboarding/pg_2';
 import { authOptions } from '../api/auth/[...nextauth]';
 import dynamic from 'next/dynamic';
@@ -26,8 +26,8 @@ import dynamic from 'next/dynamic';
  */
 
 export interface OnboardingData {
-  firstName: string,
-  lastName: string,
+  firstName: string;
+  lastName: string;
   name: string;
   startSemester: SemesterCode;
   endSemester: SemesterCode;
@@ -43,8 +43,8 @@ const endSemesters = generateSemesters(12, new Date().getFullYear(), SemesterTyp
   .map((sem) => sem.code);
 
 const initialOnboardingData: OnboardingData = {
-  firstName: "",
-  lastName: "",
+  firstName: '',
+  lastName: '',
   name: '',
   startSemester: startSemesters[1], // TODO: Create util function for this in the future
   endSemester: endSemesters[6],
@@ -107,17 +107,14 @@ export default function OnboardingPage() {
   };
 
   const jsxElem = [
-    <Welcome 
-      key={0} 
+    <Welcome
+      key={0}
       handleChange={handleOnboardingDataUpdate as (updatedFields: Partial<WelcomeTypes>) => void}
-      data = {{firstName, lastName, startSemester, endSemester}}
-      semesterOptions = {{startSemesters, endSemesters}}
+      data={{ firstName, lastName, startSemester, endSemester }}
+      semesterOptions={{ startSemesters, endSemesters }}
       handleValidate={validateForm}
-      />,
-    <PageOne
-      key={1}
-      data={{firstName}}
-    ></PageOne>,
+    />,
+    <PageOne key={1} data={{ firstName }}></PageOne>,
     <PageTwo
       key={2}
       handleChange={
@@ -145,9 +142,9 @@ export default function OnboardingPage() {
   // TODO: Find better way to structure this glorified form.
   return (
     <>
-      <div className="flex flex-col min-h-screen items-center justify-center bg-[#F9FAFB]">
-        <div className="flex text-[#111827] font-extrabold text-3xl">planner.</div>
-        <div className="flex h-screen border-2 border-yellow-900 items-center justify-center bg-[#FFFFFF] p-5 shadow-2xl transition-all sm:my-4 sm:h-auto  sm:py-10 sm:px-32">
+      <div className="flex min-h-screen flex-col items-center justify-center bg-[#F9FAFB]">
+        <div className="flex text-3xl font-extrabold text-[#111827]">planner.</div>
+        <div className="flex h-screen items-center justify-center border-2 border-yellow-900 bg-[#FFFFFF] p-5 shadow-2xl transition-all sm:my-4 sm:h-auto  sm:py-10 sm:px-32">
           <div className="flex flex-col items-center justify-center ">
             {jsxElem[page]}
             <div className="justify-start">

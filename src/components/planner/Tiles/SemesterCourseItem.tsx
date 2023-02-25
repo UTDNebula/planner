@@ -1,5 +1,5 @@
 import { UniqueIdentifier, useDraggable } from '@dnd-kit/core';
-import React, { ComponentPropsWithoutRef, FC, forwardRef, useState } from 'react';
+import React, { ComponentPropsWithoutRef, FC, forwardRef } from 'react';
 
 import { DragDataFromSemesterTile, DraggableCourse, Semester } from '../types';
 import SyncProblemIcon from '@mui/icons-material/SyncProblem';
@@ -7,7 +7,6 @@ import { displaySemesterCode } from '@/utils/utilFunctions';
 import CheckIcon from '@mui/icons-material/Check';
 import Checkbox from '@/components/Checkbox';
 import SemesterCourseItemDropdown from './SemesterCourseItemDropdown';
-import { useSemestersContext } from '../SemesterContext';
 
 export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'> {
   course: DraggableCourse;

@@ -1,14 +1,10 @@
 import logo from '@public/Nebula_Planner_Logo.png';
-import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
+import { InferGetServerSidePropsType } from 'next';
 import Image from 'next/image';
-import Link from 'next/link';
-import { getServerSession } from 'next-auth/next';
-import { getCsrfToken, getProviders, signIn, useSession } from 'next-auth/react';
+import { getProviders, signIn, useSession } from 'next-auth/react';
 import React from 'react';
 
-import { authOptions } from '../api/auth/[...nextauth]';
 import { useRouter } from 'next/router';
-import { trpc } from '@/utils/trpc';
 
 // import AuthCard from '../../components/auth/AuthCard';
 // import LoginCard from '@components/auth/Login'

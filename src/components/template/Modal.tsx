@@ -1,5 +1,4 @@
 import CloseIcon from '@mui/icons-material/Close';
-import { useRouter } from 'next/router';
 import { useState } from 'react';
 import ChoosePlanType from './ChoosePlanType';
 import CustomPlan from './CustomPlan';

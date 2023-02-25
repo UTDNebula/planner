@@ -7,7 +7,7 @@
     "prisma:generate": "prisma generate --schema prisma/platform.prisma && prisma generate --schema prisma/schema.prisma",
     "build": "npm run prisma:generate && prisma db push && prisma db seed && next build",
     "start": "next start",
-    "lint": "NODE_ENV=test eslint --fix .",
+    "lint": "eslint --fix .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "analyze": "cross-env ANALYZE=true npm run build",

@@ -1,4 +1,4 @@
-import SearchBar, { SearchBarTwo } from '@components/credits/SearchBar';
+import { SearchBarTwo } from '@components/credits/SearchBar';
 import React from 'react';
 
 import RequirementsContainer from '@/components/planner/Sidebar/RequirementsContainer';
