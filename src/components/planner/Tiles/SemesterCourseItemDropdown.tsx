@@ -22,7 +22,7 @@ const SemesterCourseItemDropdown: FC<SemesterTileDropdownProps> = ({
   deleteCourse,
   changeColor,
 }) => {
-  const id = new ObjectID().toString()
+  const id = new ObjectID().toString();
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
@@ -62,9 +62,15 @@ const SemesterCourseItemDropdown: FC<SemesterTileDropdownProps> = ({
                 alignOffset={0}
               >
                 {Object.entries(tagColors).map(([color, classes]) => (
-                  <DropdownMenu.Item className={itemClasses} key={`${id}-tag-${color}`} onClick={() => changeColor(color as keyof typeof tagColors)}>
+                  <DropdownMenu.Item
+                    className={itemClasses}
+                    key={`${id}-tag-${color}`}
+                    onClick={() => changeColor(color as keyof typeof tagColors)}
+                  >
                     <div className={`h-5 w-5 rounded-sm border ${classes}`}></div>
-                    <span>{(color.substring(0, 1).toUpperCase() + color.substring(1)) || "None"}</span>
+                    <span>
+                      {color.substring(0, 1).toUpperCase() + color.substring(1) || 'None'}
+                    </span>
                   </DropdownMenu.Item>
                 ))}
               </DropdownMenu.SubContent>

@@ -179,13 +179,14 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
               const oldSem = state.find(
                 (s) => action.originSemesterId.toString() === s.id.toString(),
               );
+              if (!oldSem) return semester;
               return {
                 ...semester,
                 courses: [...semester.courses, action.course],
                 courseColors: [
                   ...semester.courseColors,
-                  oldSem?.courseColors[
-                    oldSem?.courses.findIndex((c) => c.code === action.course.code)
+                  oldSem.courseColors[
+                    oldSem.courses.findIndex((c) => c.code === action.course.code)
                   ],
                 ],
               };

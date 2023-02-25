@@ -49,7 +49,7 @@ export const MemoizedSemesterCourseItem = React.memo(
         className={`tooltip tooltip-left flex h-[40px] w-full cursor-grab items-center overflow-hidden rounded-md border border-neutral-200 bg-generic-white`}
       >
         <div className={`h-full w-2 ${tagColors[course.color]}`}></div>
-        <div className="py-4 px-5">
+        <div className="py-4 px-2">
           <div className="flex items-center gap-x-3">
             <SemesterCourseItemDropdown
               changeColor={(color) => onColorChange && onColorChange(color)}

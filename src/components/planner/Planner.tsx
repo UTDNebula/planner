@@ -21,7 +21,7 @@ import {
   Active,
   Over,
 } from '@dnd-kit/core';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useRef, useEffect } from 'react';
 
 import CourseSelectorContainer from './Sidebar/Sidebar';
 import { SidebarCourseItem } from './Sidebar/SidebarCourseItem';
@@ -119,6 +119,10 @@ export default function Planner({ degreeRequirements }: PlannerProps): JSX.Eleme
     }
   };
 
+  const ref = useRef<HTMLDivElement>(null)
+  const [columnCount, setColumns] = useState(3)
+  // TODO: Use resizeobserver to change column count based on screen size
+
   return (
     <DndContext
       // Enabling autoScroll causes odd behavior when dragging outside of a scrollable container (eg. Sidebar)
@@ -152,23 +156,19 @@ export default function Planner({ degreeRequirements }: PlannerProps): JSX.Eleme
             ) : null)}
         </DragOverlay>
 
-        <section className="flex min-h-fit flex-grow flex-col gap-y-6 p-4">
-          <Toolbar
-            title="Plan Your Courses"
-            major="Computer Science"
-            showTransfer={showTransfer}
-            toggleShowTransfer={() => setShowTransfer(!showTransfer)}
-          />
+        <section ref={ref} className="flex min-h-fit flex-col gap-y-6 p-4 pb-0 h-screen max-h-screen flex-grow">
+          <Toolbar title="Plan Your Courses" major="Computer Science" studentName="Dev" />
 
-          <article className="h-screen max-h-screen flex-grow overflow-x-hidden overflow-y-scroll border-2">
-            <div className="space-around space-between grid h-fit grid-cols-3 gap-5">
+          <article className=" overflow-x-hidden overflow-y-scroll">
+            <div className="flex h-fit gap-5">
               {semesters
                 .reduce(
                   (acc, curr, index) => {
-                    acc[index % 3].push(curr);
-                    return acc;
+                    const columns = acc.slice()
+                    columns[index % columnCount].push(curr);
+                    return columns as Semester[][];
                   },
-                  [[], [], []] as Semester[][],
+                  Array(columnCount).fill([]) as Semester[][],
                 )
                 .map((column, index) => (
                   <MasonryColumn
@@ -177,10 +177,10 @@ export default function Planner({ degreeRequirements }: PlannerProps): JSX.Eleme
                     showTransfer={showTransfer}
                   />
                 ))}
-              <div className="col-span-full flex h-10 items-center justify-center gap-8">
-                <button onClick={handleRemoveYear}>- Remove Year</button>
-                <button onClick={handleAddYear}>+ Add Year</button>
-              </div>
+            </div>
+            <div className="col-span-full flex h-10 items-center justify-center gap-8">
+              <button onClick={handleRemoveYear}>- Remove Year</button>
+              <button onClick={handleAddYear}>+ Add Year</button>
             </div>
           </article>
         </section>
@@ -195,7 +195,7 @@ const MasonryColumn = (props: { column: Semester[]; showTransfer: boolean }) => 
   const creditsQuery = trpc.credits.getCredits.useQuery(undefined, { staleTime: 10000000000 });
   const credits = creditsQuery.data;
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex w-full flex-col gap-5">
       {column.map((semester) => {
         // Get map of credits (faster to query later down the line)
         const creditsMap: {

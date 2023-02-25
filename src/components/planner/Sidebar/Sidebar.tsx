@@ -1,4 +1,4 @@
-import SearchBar, { SearchBarTwo } from '@components/credits/SearchBar';
+import { SearchBarTwo } from '@components/credits/SearchBar';
 import React from 'react';
 
 import RequirementsContainer from '@/components/planner/Sidebar/RequirementsContainer';
@@ -56,23 +56,27 @@ function CourseSelectorContainer({
   }, [results, courses]);
 
   return (
-    <div className="flex h-full w-[500px] flex-col gap-y-8 overflow-hidden bg-white p-4">
-      <h1 className="text-3xl">Plan Requirements</h1>
-      <SearchBarTwo updateQuery={updateQuery} placeholder="Search courses" />
-      <div>Drag courses onto your plan!</div>
+    <div className="h-screen min-w-[25%] w-[35%] resize-x overflow-scroll">
+      <div className="flex h-fit min-h-full w-full flex-col gap-y-8 bg-white p-4">
+        <div className="flex flex-col gap-2">
+          <h1 className="text-3xl font-medium">Plan Requirements</h1>
+          <h6 className="text-xl font-medium text-gray-400">Drag courses onto your plan</h6>
+        </div>
+        <SearchBarTwo updateQuery={updateQuery} placeholder="Search courses" />
 
-      <div className="bg-white p-4">
-        <DraggableCourseList courses={courseResults} getDragId={getSearchedDragId} />
+        <div className="bg-white p-4">
+          <DraggableCourseList courses={courseResults} getDragId={getSearchedDragId} />
+        </div>
+
+        {degreeRequirements.requirements.map((req, idx) => (
+          <RequirementsContainer
+            key={idx}
+            degreeRequirement={req}
+            courses={courses}
+            getCourseItemDragId={getRequirementDragId}
+          />
+        ))}
       </div>
-
-      {degreeRequirements.requirements.map((req, idx) => (
-        <RequirementsContainer
-          key={idx}
-          degreeRequirement={req}
-          courses={courses}
-          getCourseItemDragId={getRequirementDragId}
-        />
-      ))}
     </div>
   );
 }

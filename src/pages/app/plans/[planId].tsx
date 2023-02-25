@@ -34,7 +34,7 @@ export default function PlanDetailPage(
           <Planner degreeRequirements={validation} />
         </SemestersContextProvider>
       )}
-      <button onClick={handlePlanDelete}>Delete</button>
+      {/* <button onClick={handlePlanDelete}>Delete</button> */}
     </div>
   );
 }
