@@ -3,15 +3,19 @@ import DownloadIcon from '@/icons/DownloadIcon';
 import EditIcon from '@/icons/EditIcon';
 import { FC } from 'react';
 import Button from '../Button';
-import Switch from '../Switch';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import { useSemestersContext } from './SemesterContext';
 import SortByDropdown from './SortByDropdown';
+import DegreePlanPDF from './DegreePlanPDF/DegreePlanPDF';
 
 export interface ToolbarProps {
   title: string;
   major: string;
+  studentName: string;
 }
 
-const Toolbar: FC<ToolbarProps> = ({ title, major }) => {
+const Toolbar: FC<ToolbarProps> = ({ title, major, studentName }) => {
+  const { semesters } = useSemestersContext();
   return (
     <section className="flex w-full flex-col justify-center gap-y-6">
       <article className="flex justify-between">
@@ -20,7 +24,13 @@ const Toolbar: FC<ToolbarProps> = ({ title, major }) => {
           <SortByDropdown />
           <Button size="large" icon={<AddFileIcon className="h-6 w-5" />} />
           <Button size="large" icon={<DownloadIcon />}>
-            <span className="whitespace-nowrap">Export Degree Plan</span>
+            <PDFDownloadLink
+              document={
+                <DegreePlanPDF studentName={studentName} planTitle={title} semesters={semesters} />
+              }
+            >
+              <span className="whitespace-nowrap">Export Degree Plan</span>
+            </PDFDownloadLink>
           </Button>
         </div>
       </article>
