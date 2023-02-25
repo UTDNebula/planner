@@ -24,7 +24,7 @@ export const createNewYear = (semesterCode: SemesterCode): Semester[] => {
       },
       id: new ObjectID(),
       courses: [],
-      courseColors: []
+      courseColors: [],
     },
     {
       code: {
@@ -33,7 +33,7 @@ export const createNewYear = (semesterCode: SemesterCode): Semester[] => {
       },
       id: new ObjectID(),
       courses: [],
-      courseColors: []
+      courseColors: [],
     },
     {
       code: {
@@ -42,7 +42,7 @@ export const createNewYear = (semesterCode: SemesterCode): Semester[] => {
       },
       id: new ObjectID(),
       courses: [],
-      courseColors: []
+      courseColors: [],
     },
   ];
 };
@@ -102,7 +102,7 @@ export function generateSemesters(
       title: `${displaySemesterCode({ semester, year })}`,
       code: code,
       courses: [],
-      courseColors: []
+      courseColors: [],
     };
     result.push(newSemester);
     if (semester === SemesterType.f) {

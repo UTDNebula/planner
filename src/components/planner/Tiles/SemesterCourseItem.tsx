@@ -1,5 +1,5 @@
 import { UniqueIdentifier, useDraggable } from '@dnd-kit/core';
-import React, { ComponentPropsWithoutRef, FC, forwardRef, useState } from 'react';
+import React, { ComponentPropsWithoutRef, FC, forwardRef } from 'react';
 
 import { DragDataFromSemesterTile, DraggableCourse, Semester } from '../types';
 import SyncProblemIcon from '@mui/icons-material/SyncProblem';
@@ -7,7 +7,7 @@ import { displaySemesterCode } from '@/utils/utilFunctions';
 import CheckIcon from '@mui/icons-material/Check';
 import Checkbox from '@/components/Checkbox';
 import SemesterCourseItemDropdown from './SemesterCourseItemDropdown';
-import { useSemestersContext } from '../SemesterContext';
+import { tagColors } from '../utils';
 
 export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'> {
   course: DraggableCourse;
@@ -16,13 +16,24 @@ export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'>
   onSelectCourse?: () => void;
   onDeselectCourse?: () => void;
   onDeleteCourse?: () => void;
+  onColorChange?: (color: keyof typeof tagColors) => void;
 }
 
+// TODO(json) return to this
 /** UI implementation of a semester course */
 /* eslint-disable react/prop-types */
 export const MemoizedSemesterCourseItem = React.memo(
   forwardRef<HTMLDivElement, SemesterCourseItemProps>(function SemesterCourseItem(
-    { course, isTransfer, onSelectCourse, onDeselectCourse, isSelected, onDeleteCourse, ...props },
+    {
+      course,
+      isTransfer,
+      onSelectCourse,
+      onDeselectCourse,
+      isSelected,
+      onDeleteCourse,
+      onColorChange,
+      ...props
+    },
     ref,
   ) {
     // Create text output for sync icon
@@ -35,42 +46,48 @@ export const MemoizedSemesterCourseItem = React.memo(
         ref={ref}
         {...props}
         data-tip="Drag!"
-        className={`tooltip tooltip-left flex h-[40px] w-full cursor-grab items-center justify-between overflow-hidden rounded-md border border-neutral-200 bg-generic-white py-4 px-5`}
+        className={`tooltip tooltip-left flex h-[40px] w-full cursor-grab items-center overflow-hidden rounded-md border border-neutral-200 bg-generic-white`}
       >
-        <div className="flex items-center gap-x-3">
-          <SemesterCourseItemDropdown deleteCourse={() => onDeleteCourse && onDeleteCourse()} />
-          <Checkbox
-            style={{ width: '20px', height: '20px' }}
-            checked={isSelected}
-            onCheckedChange={(checked) => {
-              if (checked && onSelectCourse) {
-                onSelectCourse();
-              }
+        <div className={`h-full w-2 ${tagColors[course.color]}`}></div>
+        <div className="py-4 px-5">
+          <div className="flex items-center gap-x-3">
+            <SemesterCourseItemDropdown
+              changeColor={(color) => onColorChange && onColorChange(color)}
+              deleteCourse={() => onDeleteCourse && onDeleteCourse()}
+            />
+            <Checkbox
+              style={{ width: '20px', height: '20px' }}
+              checked={isSelected}
+              onCheckedChange={(checked) => {
+                if (checked && onSelectCourse) {
+                  onSelectCourse();
+                }
 
-              if (!checked && onDeselectCourse) {
-                onDeselectCourse();
-              }
-            }}
-          />
-          <span className="text-[16px] text-[#1C2A6D]">{course.code}</span>
-        </div>
+                if (!checked && onDeselectCourse) {
+                  onDeselectCourse();
+                }
+              }}
+            />
+            <span className="text-[16px] text-[#1C2A6D]">{course.code}</span>
+          </div>
 
-        <div className="flex text-[12px] font-semibold">
-          {course.taken && (
-            <span className=" tooltip text-[#22C55E]" data-tip="Completed">
-              <CheckIcon fontSize="small" />
-            </span>
-          )}
-          {course.transfer && (
-            <span className="tooltip text-green-500" data-tip="Transfer">
-              T
-            </span>
-          )}
-          {!course.sync?.isSynced && (
-            <div className="tooltip" data-tip={`${correctSemester}`}>
-              <SyncProblemIcon fontSize="small" />
-            </div>
-          )}
+          <div className="flex text-[12px] font-semibold">
+            {course.taken && (
+              <span className=" tooltip text-[#22C55E]" data-tip="Completed">
+                <CheckIcon fontSize="small" />
+              </span>
+            )}
+            {course.transfer && (
+              <span className="tooltip text-green-500" data-tip="Transfer">
+                T
+              </span>
+            )}
+            {!course.sync?.isSynced && (
+              <div className="tooltip" data-tip={`${correctSemester}`}>
+                <SyncProblemIcon fontSize="small" />
+              </div>
+            )}
+          </div>
         </div>
       </div>
     );
@@ -87,6 +104,7 @@ export interface DraggableSemesterCourseItemProps {
   onSelectCourse: () => void;
   onDeselectCourse: () => void;
   onDeleteCourse: () => void;
+  onColorChange: (color: keyof typeof tagColors) => void;
 }
 
 /** Compositional wrapper around SemesterCourseItem */
@@ -98,6 +116,7 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
   onDeselectCourse,
   onDeleteCourse,
   isSelected,
+  onColorChange,
 }) => {
   const { setNodeRef, attributes, listeners, isDragging } = useDraggable({
     id: dragId,
@@ -117,6 +136,7 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
       onDeselectCourse={onDeselectCourse}
       onDeleteCourse={onDeleteCourse}
       isSelected={isSelected}
+      onColorChange={onColorChange}
     />
   );
 };
