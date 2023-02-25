@@ -25,12 +25,46 @@
             "course": "BLAW 2301"
           },
           {
-            "matcher": "CourseRequirement",
-            "course": "MATH 1325"
+            "matcher": "OrRequirement",
+            "metadata": { "id": 1 },
+            "requirements": [
+              {
+                "course": "MATH 1325",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 2 }
+              },
+              {
+                "course": "MATH 2413",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 3 }
+              },
+              {
+                "course": "MATH 2417",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 4 }
+              }
+            ]
           },
           {
-            "matcher": "CourseRequirement",
-            "course": "MATH 1326"
+            "matcher": "OrRequirement",
+            "metadata": { "id": 5 },
+            "requirements": [
+              {
+                "course": "MATH 1326",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 6 }
+              },
+              {
+                "course": "MATH 2414",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 9 }
+              },
+              {
+                "course": "MATH 2419",
+                "matcher": "CourseRequirement",
+                "metadata": { "id": 10 }
+              }
+            ]
           },
           {
             "matcher": "OrRequirement",
