@@ -55,9 +55,10 @@ export const MemoizedSemesterTile = React.memo(
     return (
       <div
         ref={ref}
-        className={`flex h-fit select-none flex-col gap-y-4 rounded-2xl border border-neutral-300 bg-white py-4 px-5`}
+        className={`flex h-fit select-none flex-col gap-y-2 rounded-2xl border border-neutral-300 bg-white overflow-hidden`}
       >
-        <span className={`h-1 w-full ${tagColors[semester.color]}`}></span>
+        <span className={`h-2 w-full ${tagColors[semester.color]}`}></span>
+        <div className='py-4 px-5 flex flex-col gap-y-4'>
         <article className="w-full">
           <ChevronIcon
             className={`${
@@ -95,7 +96,7 @@ export const MemoizedSemesterTile = React.memo(
 
         <article
           className={`flex flex-col gap-y-4 transition-all duration-700 ${
-            open ? 'max-h-[999px]' : 'max-h-0'
+            open ? 'max-h-[999px] opacity-100' : 'max-h-0 opacity-0'
           }`}
         >
           {semester.courses.map((course) => (
@@ -114,6 +115,7 @@ export const MemoizedSemesterTile = React.memo(
             />
           ))}
         </article>
+        </div>
       </div>
     );
   }),

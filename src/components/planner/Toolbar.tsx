@@ -20,13 +20,15 @@ const Toolbar: FC<ToolbarProps> = ({ title, major, studentName }) => {
   return (
     <section className="flex w-full flex-col justify-center gap-y-6">
       <article className="flex justify-between">
-        <div className='flex gap-3 items-center text-primary-900'>
-        <button type="button">
-          <Link href="/app/home"><ArrowBackIcon fontSize="large"/></Link>
-        </button>
-        <h1 className="text-4xl font-semibold">{title}</h1>
+        <div className="flex items-center gap-3 text-primary-900">
+          <button type="button">
+            <Link href="/app/home">
+              <ArrowBackIcon fontSize="large" />
+            </Link>
+          </button>
+          <h1 className="text-4xl font-semibold">{title}</h1>
         </div>
-        <div className="flex gap-3 items-center">
+        <div className="flex items-center gap-3">
           <SortByDropdown />
           <Button size="large" icon={<AddFileIcon className="h-6 w-5" />} />
           <Button size="large" icon={<DownloadIcon />}>
