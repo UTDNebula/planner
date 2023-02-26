@@ -176,8 +176,7 @@ def test_validate() -> Response:
             rawReqs["core"], rawReqs["majors"], rawReqs["minors"], []
         )
         rawBypasses = j["bypasses"]
-
-        bypasses = BypassInput(rawBypasses["core"], {"Computer Science(BS)": [0]})
+        bypasses = BypassInput([], {})
         # bypasses = [SingleAssignment.from_json(b) for b in j["bypasses"]]
         solver = DegreeRequirementsSolver(courses, requirements, bypasses)
         solver.solve()
