@@ -7,7 +7,8 @@ import { PDFDownloadLink } from '@react-pdf/renderer';
 import { useSemestersContext } from './SemesterContext';
 import SortByDropdown from './SortByDropdown';
 import DegreePlanPDF from './DegreePlanPDF/DegreePlanPDF';
-
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import Link from 'next/link';
 export interface ToolbarProps {
   title: string;
   major: string;
@@ -19,7 +20,12 @@ const Toolbar: FC<ToolbarProps> = ({ title, major, studentName }) => {
   return (
     <section className="flex w-full flex-col justify-center gap-y-6">
       <article className="flex justify-between">
-        <h1 className="text-4xl font-semibold text-primary-900">{title}</h1>
+        <div className='flex gap-3 items-center text-primary-900'>
+        <button type="button">
+          <Link href="/app/home"><ArrowBackIcon fontSize="large"/></Link>
+        </button>
+        <h1 className="text-4xl font-semibold">{title}</h1>
+        </div>
         <div className="flex gap-3 items-center">
           <SortByDropdown />
           <Button size="large" icon={<AddFileIcon className="h-6 w-5" />} />
