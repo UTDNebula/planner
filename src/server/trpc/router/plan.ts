@@ -1,8 +1,8 @@
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
-import { DegreeRequirementGroup, Semester } from '@/components/planner/types';
-import { addCreditsToPlan, formatDegreeValidationRequest } from '@/utils/plannerUtils';
+import { Semester } from '@/components/planner/types';
+import { formatDegreeValidationRequest } from '@/utils/plannerUtils';
 import { createNewYear } from '@/utils/utilFunctions';
 
 import { protectedProcedure, router } from '../trpc';
@@ -154,58 +154,30 @@ console.log({ key, value });
         return { plan: planData, validation: [] };
       }
 
-      const body = formatDegreeValidationRequest(hehe, degreeRequirements?.major);
+      const body = formatDegreeValidationRequest(hehe, {
+        core: true,
+        majors: [degreeRequirements.major], // TODO: Standardize names
+        minors: [],
+      });
 
-      const validationData = await fetch(`${process.env.VALIDATOR}`, {
+      const validationData = await fetch(`${process.env.VALIDATOR}/test-validate`, {
         method: 'POST',
         body: JSON.stringify(body),
         headers: {
           'content-type': 'application/json',
         },
       }).then(async (res) => {
-        const rawData = await res.json();
-
         // Throw error if bad
         if (res.status !== 200) {
-          return [];
+          return { can_graduate: false, requirements: [] };
         }
-        // Transform data
-        const core: DegreeRequirementGroup = { name: 'Core Requirements', requirements: [] };
-        const major: DegreeRequirementGroup = { name: 'Major Requirements', requirements: [] };
-        const electives: DegreeRequirementGroup = {
-          name: 'Free Elective Requirements',
-          requirements: [],
-        };
-        const university: DegreeRequirementGroup = {
-          name: 'University Requirements',
-          requirements: [],
-        };
-
-        Object.keys(rawData).forEach((req: string) => {
-          if (req.includes('Free Electives')) {
-            electives.requirements.push({ name: req, ...rawData[req] });
-          } else if (req.includes('Core - ')) {
-            const description = `Select ${rawData[req].hours} credit hours from a list of courses`;
-            core.requirements.push({ name: req, ...rawData[req], description });
-          } else if ('Minimum Cumulative Hours Upper Level Hour Requirement'.includes(req)) {
-            const description = `Select ${rawData[req].hours} credit hours from a list of courses`;
-            university.requirements.push({ name: req, ...rawData[req], description });
-          } else {
-            // Dynamically add description based on case
-            // TODO: Should return this info from API kekw
-
-            const description = req.includes('Electives')
-              ? `Select ${rawData[req].hours} credit hours from a list of courses`
-              : 'Select all courses';
-
-            major.requirements.push({ name: req, ...rawData[req], description });
-          }
-        });
-        return [core, major, electives, university];
+        const rawData = await res.json();
+        return rawData;
       });
 
       return { plan: planData, validation: validationData, prereqValidation: preReqHash };
     } catch (error) {
+      console.log('ERROR');
       console.log(error);
     }
   }),
@@ -342,6 +314,9 @@ console.log({ key, value });
           },
           data: {
             courses: [...semester!.courses, courseName],
+            courseColors: {
+              push: '',
+            },
           },
         });
         return true;
@@ -362,21 +337,50 @@ console.log({ key, value });
           select: {
             id: true,
             courses: true,
+            courseColors: true,
           },
         });
-        // Update courses
-        await ctx.prisma.semester.update({
-          where: {
-            id: semesterId,
-          },
-          data: {
-            courses: semester!.courses.filter((cName) => cName != courseName),
-          },
-        });
+        const index = semester?.courses.findIndex((course) => courseName == course);
+        if (index) {
+          const newColors = [...(semester?.courseColors || [])];
+          newColors.splice(index, 1);
+          // Update courses
+          await ctx.prisma.semester.update({
+            where: {
+              id: semesterId,
+            },
+            data: {
+              courses: semester!.courses.filter((cName) => cName != courseName),
+              courseColors: newColors,
+            },
+          });
+        }
         return true;
       } catch (error) {
         console.error(error);
       }
+    }),
+  deleteAllCoursesFromSemester: protectedProcedure
+    .input(z.object({ semesterId: z.string() }))
+    .mutation(async ({ ctx, input: { semesterId } }) => {
+      await ctx.prisma.semester
+        .update({
+          where: { id: semesterId },
+          data: {
+            courses: [],
+            courseColors: [],
+          },
+        })
+        .catch((err) => {
+          if (err instanceof Prisma.PrismaClientKnownRequestError) {
+            if (err.code === 'P2025') {
+              throw new TRPCError({
+                code: 'NOT_FOUND',
+                message: 'Semester does not exist',
+              });
+            }
+          }
+        });
     }),
   moveCourseFromSemester: protectedProcedure
     .input(
@@ -399,9 +403,13 @@ console.log({ key, value });
           select: {
             id: true,
             courses: true,
+            courseColors: true,
           },
         });
 
+        const index = oldSemester?.courses.findIndex((course) => courseName == course);
+        const newColors = [...(oldSemester?.courseColors || [])];
+        if (index) newColors.splice(index, 1);
         // Update courses
         await ctx.prisma.semester.update({
           where: {
@@ -409,6 +417,7 @@ console.log({ key, value });
           },
           data: {
             courses: oldSemester!.courses.filter((cName) => cName != courseName),
+            courseColors: newColors,
           },
         });
 
@@ -427,7 +436,12 @@ console.log({ key, value });
             id: newSemesterId,
           },
           data: {
-            courses: [...semester!.courses, courseName],
+            courses: {
+              push: courseName,
+            },
+            courseColors: {
+              push: '',
+            },
           },
         });
 
@@ -459,7 +473,7 @@ console.log({ key, value });
     )
     .query(async ({ ctx, input }) => {
       try {
-        return await fetch('http://0.0.0.0:5001/validate-degree-plan', {
+        return await fetch('http://0.0.0.0:5001/test-validate', {
           method: 'POST',
           body: JSON.stringify(input),
           headers: {
@@ -467,34 +481,45 @@ console.log({ key, value });
           },
         }).then(async (res) => {
           const rawData = await res.json();
-          // Transform data
-          const core: DegreeRequirementGroup = { name: 'Core Requirements', requirements: [] };
-          const major: DegreeRequirementGroup = { name: 'Major Requirements', requirements: [] };
-          const electives: DegreeRequirementGroup = {
-            name: 'Free Elective Requirements',
-            requirements: [],
-          };
-          const university: DegreeRequirementGroup = {
-            name: 'University Requirements',
-            requirements: [],
-          };
 
-          Object.keys(rawData).forEach((req: string) => {
-            if (req.includes('Free Electives')) {
-              electives.requirements.push({ name: req, ...rawData[req] });
-            } else if (req.includes('Core - ')) {
-              core.requirements.push({ name: req, ...rawData[req] });
-            } else if ('Minimum Cumulative Hours Upper Level Hour Requirement'.includes(req)) {
-              university.requirements.push({ name: req, ...rawData[req] });
-            } else {
-              major.requirements.push({ name: req, ...rawData[req] });
-            }
-          });
-          return [core, major, electives, university];
+          return rawData;
+          // Transform data
         });
       } catch (error) {
         console.log(error);
       }
+    }),
+
+  changeCourseColor: protectedProcedure
+    .input(
+      z.object({
+        planId: z.string(),
+        semesterId: z.string(),
+        courseName: z.string(),
+        color: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const semester = await ctx.prisma.semester.findUnique({
+        where: {
+          id: input.semesterId,
+        },
+      });
+      console.log({ course: semester?.courses, name: input.courseName });
+      const index = semester?.courses.findIndex((course) => input.courseName == course);
+      if (index) {
+        const newColors = [...(semester?.courseColors || [])];
+        newColors[index] = input.color;
+        await ctx.prisma.semester.update({
+          where: {
+            id: input.semesterId,
+          },
+          data: {
+            courseColors: newColors,
+          },
+        });
+      }
+      return true;
     }),
 });
 

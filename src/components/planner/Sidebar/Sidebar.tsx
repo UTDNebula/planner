@@ -1,20 +1,21 @@
-import SearchBar from '@components/credits/SearchBar';
+import { SearchBarTwo } from '@components/credits/SearchBar';
 import React from 'react';
 
 import RequirementsContainer from '@/components/planner/Sidebar/RequirementsContainer';
 import useSearch from '@/components/search/search';
 
-import { DegreeRequirementGroup, DraggableCourse, GetDragIdByCourse } from '../types';
+import { DraggableCourse, GetDragIdByCourse } from '../types';
 import DraggableCourseList from './DraggableCourseList';
 import { ObjectID } from 'bson';
 
 export interface CourseSelectorContainerProps {
-  degreeRequirements: DegreeRequirementGroup[];
+  degreeRequirements: DegreeRequirements;
   courses: string[];
   getSearchedDragId: GetDragIdByCourse;
   getRequirementDragId: GetDragIdByCourse;
 }
 import { trpc } from '@/utils/trpc';
+import { DegreeRequirements } from './types';
 
 function CourseSelectorContainer({
   degreeRequirements,
@@ -44,13 +45,6 @@ function CourseSelectorContainer({
     constraints: [0, 5],
   });
 
-  // Include tag rendering information here (yes for tag & which tag)
-  // TODO: Obviously have a better way of computing all courses user has taken
-  // Idea is allCourses will be available as context or props or smthn
-
-  // TODO: Prolly have a context for this
-  // Get all courses user has taken
-
   const courseResults = React.useMemo(() => {
     return results.map((result) => {
       return {
@@ -62,22 +56,27 @@ function CourseSelectorContainer({
   }, [results, courses]);
 
   return (
-    <div className="flex h-full w-[344px] flex-col gap-y-8 overflow-hidden">
-      <SearchBar updateQuery={updateQuery} placeholder="Search courses" />
+    <div className="h-screen w-[35%] min-w-[25%] resize-x overflow-y-scroll">
+      <div className="flex h-fit min-h-full w-full flex-col gap-y-8 bg-white p-4">
+        <div className="flex flex-col gap-2">
+          <h1 className="text-3xl font-medium">Plan Requirements</h1>
+          <h6 className="text-xl font-medium text-gray-400">Drag courses onto your plan</h6>
+        </div>
+        <SearchBarTwo updateQuery={updateQuery} placeholder="Search courses" />
 
-      {results.length > 0 && (
         <div className="bg-white p-4">
           <DraggableCourseList courses={courseResults} getDragId={getSearchedDragId} />
         </div>
-      )}
-      {degreeRequirements.map((req, idx) => (
-        <RequirementsContainer
-          key={idx}
-          degreeRequirement={req}
-          courses={courses}
-          getCourseItemDragId={getRequirementDragId}
-        />
-      ))}
+
+        {degreeRequirements.requirements.map((req, idx) => (
+          <RequirementsContainer
+            key={idx}
+            degreeRequirement={req}
+            courses={courses}
+            getCourseItemDragId={getRequirementDragId}
+          />
+        ))}
+      </div>
     </div>
   );
 }

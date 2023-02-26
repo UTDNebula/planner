@@ -1,25 +1,41 @@
 import { UniqueIdentifier, useDraggable } from '@dnd-kit/core';
-import CloseIcon from '@mui/icons-material/Close';
-import { ComponentPropsWithoutRef, FC, forwardRef } from 'react';
-
-import { getStartingPlanSemester, isEarlierSemester } from '@/utils/plannerUtils';
+import React, { ComponentPropsWithoutRef, FC, forwardRef } from 'react';
 
 import { DragDataFromSemesterTile, DraggableCourse, Semester } from '../types';
 import SyncProblemIcon from '@mui/icons-material/SyncProblem';
 import { displaySemesterCode } from '@/utils/utilFunctions';
 import CheckIcon from '@mui/icons-material/Check';
-import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
+import Checkbox from '@/components/Checkbox';
+import SemesterCourseItemDropdown from './SemesterCourseItemDropdown';
+import { tagColors } from '../utils';
 
 export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'> {
   course: DraggableCourse;
-  isValid?: boolean;
+  isSelected?: boolean;
   isTransfer?: boolean;
-  onRemove?: (course: DraggableCourse) => void;
+  onSelectCourse?: () => void;
+  onDeselectCourse?: () => void;
+  onDeleteCourse?: () => void;
+  onColorChange?: (color: keyof typeof tagColors) => void;
 }
 
+// TODO(json) return to this
 /** UI implementation of a semester course */
-export const SemesterCourseItem = forwardRef<HTMLDivElement, SemesterCourseItemProps>(
-  function SemesterCourseItem({ course, isValid, isTransfer, onRemove, ...props }, ref) {
+/* eslint-disable react/prop-types */
+export const MemoizedSemesterCourseItem = React.memo(
+  forwardRef<HTMLDivElement, SemesterCourseItemProps>(function SemesterCourseItem(
+    {
+      course,
+      isTransfer,
+      onSelectCourse,
+      onDeselectCourse,
+      isSelected,
+      onDeleteCourse,
+      onColorChange,
+      ...props
+    },
+    ref,
+  ) {
     // Create text output for sync icon
     const correctSemester = course.sync?.correctSemester
       ? `Course already taken in ${displaySemesterCode(course.sync?.correctSemester)}`
@@ -29,17 +45,33 @@ export const SemesterCourseItem = forwardRef<HTMLDivElement, SemesterCourseItemP
       <div
         ref={ref}
         {...props}
-        data-tip="delete here"
-        className={`tooltip tooltip-left flex h-[40px] w-full flex-row items-center justify-between rounded-md py-[1px] px-[8px] shadow-md  ${
-          isValid ? 'border-[1px] border-red-500' : ''
-        }`}
+        data-tip="Drag!"
+        className={` tooltip tooltip-left flex h-[40px] w-full cursor-grab flex-row items-center rounded-md border border-neutral-200 bg-generic-white py-4 px-2`}
       >
-        <span className="text-[16px] text-[#1C2A6D]">
-          <DragIndicatorIcon fontSize="inherit" className="mr-3 text-[16px] text-[#D4D4D4]" />
-          {course.code}
-        </span>
+        <div className={`h-full w-2 ${tagColors[course.color]}`}></div>
+        <div className="flex items-center justify-center">
+          <div className="flex flex-row items-center gap-x-3">
+            <SemesterCourseItemDropdown
+              changeColor={(color) => onColorChange && onColorChange(color)}
+              deleteCourse={() => onDeleteCourse && onDeleteCourse()}
+            />
+            <Checkbox
+              style={{ width: '20px', height: '20px' }}
+              checked={isSelected}
+              onCheckedChange={(checked) => {
+                if (checked && onSelectCourse) {
+                  onSelectCourse();
+                }
 
-        <div className="flex  text-[12px] font-semibold">
+                if (!checked && onDeselectCourse) {
+                  onDeselectCourse();
+                }
+              }}
+            />
+            <span className="text-[16px] text-[#1C2A6D]">{course.code}</span>
+          </div>
+        </div>
+        <div className="ml-auto flex text-[12px] font-semibold">
           {course.taken && (
             <span className=" tooltip text-[#22C55E]" data-tip="Completed">
               <CheckIcon fontSize="small" />
@@ -56,25 +88,22 @@ export const SemesterCourseItem = forwardRef<HTMLDivElement, SemesterCourseItemP
             </div>
           )}
         </div>
-        {/* <div
-          onClick={(e) => {
-            e.stopPropagation();
-            onRemove && onRemove(course);
-          }}
-        >
-          <CloseIcon className="self-end" fontSize="small" />
-        </div> */}
       </div>
     );
-  },
+  }),
 );
+
+export const SemesterCourseItem = MemoizedSemesterCourseItem;
 
 export interface DraggableSemesterCourseItemProps {
   dragId: UniqueIdentifier;
+  isSelected: boolean;
   semester: Semester;
   course: DraggableCourse;
-  isValid: boolean;
-  onRemove: (course: DraggableCourse) => void;
+  onSelectCourse: () => void;
+  onDeselectCourse: () => void;
+  onDeleteCourse: () => void;
+  onColorChange: (color: keyof typeof tagColors) => void;
 }
 
 /** Compositional wrapper around SemesterCourseItem */
@@ -82,7 +111,11 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
   dragId,
   semester,
   course,
-  onRemove,
+  onSelectCourse,
+  onDeselectCourse,
+  onDeleteCourse,
+  isSelected,
+  onColorChange,
 }) => {
   const { setNodeRef, attributes, listeners, isDragging } = useDraggable({
     id: dragId,
@@ -98,9 +131,13 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
       {...attributes}
       {...listeners}
       course={course}
-      onRemove={onRemove}
+      onSelectCourse={onSelectCourse}
+      onDeselectCourse={onDeselectCourse}
+      onDeleteCourse={onDeleteCourse}
+      isSelected={isSelected}
+      onColorChange={onColorChange}
     />
   );
 };
 
-export default DraggableSemesterCourseItem;
+export default React.memo(DraggableSemesterCourseItem);

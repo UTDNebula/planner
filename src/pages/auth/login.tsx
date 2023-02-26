@@ -1,12 +1,10 @@
 import logo from '@public/Nebula_Planner_Logo.png';
-import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
+import { InferGetServerSidePropsType } from 'next';
 import Image from 'next/image';
-import Link from 'next/link';
-import { unstable_getServerSession } from 'next-auth/next';
-import { getCsrfToken, getProviders, signIn } from 'next-auth/react';
+import { getProviders, signIn, useSession } from 'next-auth/react';
 import React from 'react';
 
-import { authOptions } from '../api/auth/[...nextauth]';
+import { useRouter } from 'next/router';
 
 // import AuthCard from '../../components/auth/AuthCard';
 // import LoginCard from '@components/auth/Login'
@@ -16,9 +14,19 @@ import { authOptions } from '../api/auth/[...nextauth]';
  */
 export default function AuthPage({
   providers,
-  csrfToken,
-}: InferGetServerSidePropsType<typeof getServerSideProps>): JSX.Element {
+}: InferGetServerSidePropsType<typeof getStaticProps>): JSX.Element {
   const [email, setEmail] = React.useState('');
+  const [showSignIn, setShowSignIn] = React.useState(true);
+
+  // Lets just handle auth redirect on client side
+  const router = useRouter();
+  const { status } = useSession();
+
+  React.useEffect(() => {
+    if (router && status === 'authenticated') {
+      router.push('/app');
+    }
+  }, []);
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -37,7 +45,14 @@ export default function AuthPage({
           <div className="m-2 bg-white md:rounded-md md:shadow-md">
             <div className="w-96 rounded bg-white p-6 shadow-none md:shadow-lg ">
               <div className="mb-4 flex items-center justify-center">
-                <Image src={logo} alt="Logo" width="120" height="120" className="rounded-full" />
+                <Image
+                  src={logo}
+                  alt="Logo"
+                  width="120"
+                  height="120"
+                  className="rounded-full"
+                  priority
+                />
               </div>
               <h1 className="mb-2 text-center text-3xl font-semibold leading-normal">Sign in</h1>
               <p className="text-sm leading-normal">
@@ -73,7 +88,11 @@ export default function AuthPage({
                   Object.values(providers).map((provider, idx) => (
                     <button
                       key={idx}
-                      onClick={() => signIn(provider.id)}
+                      onClick={() =>
+                        signIn(provider.id, {
+                          callbackUrl: '/app',
+                        })
+                      }
                       className="block w-full appearance-none items-center justify-center rounded-lg border border-gray-500 bg-gray-100 py-3 px-3 leading-tight text-gray-700 shadow hover:bg-gray-200 hover:text-gray-700 focus:outline-none"
                     >
                       <h4 className="text-center text-lg text-blue-700">
@@ -83,12 +102,13 @@ export default function AuthPage({
                   ))}
                 <div className="flex place-content-center">
                   <h4 className="text-lg">
-                    New to Nebula?
-                    <Link legacyBehavior href="/auth/signup">
-                      <a className="ml-2 text-lg font-semibold text-blue-700 hover:rounded-lg hover:bg-blue-200">
-                        Sign Up
-                      </a>
-                    </Link>
+                    {showSignIn ? 'New to Nebula?' : 'Existing User?'}
+                    <button
+                      onClick={() => setShowSignIn(!showSignIn)}
+                      className="ml-2 text-lg font-semibold text-blue-700 hover:rounded-lg hover:bg-blue-200"
+                    >
+                      {showSignIn ? 'Sign Up' : 'Sign In'}
+                    </button>
                   </h4>
                 </div>
               </section>
@@ -99,15 +119,7 @@ export default function AuthPage({
     </>
   );
 }
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  // TODO: rethink this to prevent checking for session twice on redirect
-  const session = await unstable_getServerSession(context.req, context.res, authOptions);
-  if (session) {
-    return {
-      redirect: { destination: '/app' },
-    };
-  }
-  const csrfToken = await getCsrfToken(context);
+export async function getStaticProps() {
   const providers = await getProviders();
 
   if (providers && providers['email']) {
@@ -116,6 +128,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     delete providers['email'];
   }
   return {
-    props: { providers, csrfToken },
+    props: { providers },
   };
 }

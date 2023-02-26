@@ -6,3 +6,8 @@ build
 coverage
 # Don't lint github
 .github
+# Never lint generated prisma types
+prisma/generated
+# Don't run on cypress & storybook for now
+cypress
+storybook

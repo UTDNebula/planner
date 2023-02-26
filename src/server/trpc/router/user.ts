@@ -1,9 +1,9 @@
-import { Bypass, Prisma, Semester, SemesterCode, SemesterType } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import { ObjectID } from 'bson';
 import { z } from 'zod';
 
-import { createNewYear, createSemesterCodeRange } from '@/utils/utilFunctions';
+import { createNewYear } from '@/utils/utilFunctions';
 
 import { protectedProcedure, router } from '../trpc';
 
@@ -30,7 +30,13 @@ export const userRouter = router({
     return userInfo;
   }),
   updateUserProfile: protectedProcedure
-    .input(z.object({ name: z.string().min(1) }))
+    .input(
+      z.object({
+        name: z.string().min(1),
+        startSemester: z.object({ semester: z.enum(['f', 's', 'u']), year: z.number() }),
+        endSemester: z.object({ semester: z.enum(['f', 's', 'u']), year: z.number() }),
+      }),
+    )
     .mutation(async ({ ctx, input }) => {
       const userId = ctx.session.user.id;
       const user = await ctx.prisma.user.update({
@@ -41,6 +47,8 @@ export const userRouter = router({
           profile: {
             update: {
               name: input.name,
+              startSemester: input.startSemester,
+              endSemester: input.endSemester,
             },
           },
         },
@@ -110,13 +118,13 @@ export const userRouter = router({
       const userId = ctx.session.user.id;
       const planId = new ObjectID().toString();
 
-      const { name } = input;
+      const { name, major } = input;
 
       // Create degree requirements
       const degreeRequirements: Prisma.DegreeRequirementsUncheckedCreateNestedOneWithoutPlanInput =
         {
           create: {
-            major: 'Computer Science(BS)', // Hardcode for now
+            major, // Hardcode for now
           },
         };
 
@@ -171,7 +179,12 @@ export const userRouter = router({
                 courses.push(credit.courseCode);
               }
             });
-            return { ...sem, id: sem.id.toString(), courses: courses };
+            return {
+              ...sem,
+              courseColors: Array(courses.length).fill(''),
+              id: sem.id.toString(),
+              courses: courses,
+            };
           }),
         );
       }
@@ -279,13 +292,23 @@ export const userRouter = router({
               // Add credits to each semester
               const courses: string[] = [];
               if (idx % 3 === 2) {
-                return { ...sem, id: sem.id.toString(), courses: courses };
+                return {
+                  ...sem,
+                  courseColors: Array(courses.length).fill(''),
+                  id: sem.id.toString(),
+                  courses: courses,
+                };
               }
               templateData[i - startYear + counter].items.map((course) => {
                 courses.push(course.name);
               });
               counter++;
-              return { ...sem, id: sem.id.toString(), courses: courses };
+              return {
+                ...sem,
+                courseColors: Array(courses.length).fill(''),
+                id: sem.id.toString(),
+                courses: courses,
+              };
             }),
           );
         }

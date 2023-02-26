@@ -2,19 +2,15 @@ import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import { SemesterCode, SemesterType } from '@prisma/client';
+import { SemesterCode } from '@prisma/client';
 import { FC, useMemo, useState } from 'react';
 
 import { trpc } from '@/utils/trpc';
-import {
-  createSemesterCodeRange,
-  displaySemesterCode,
-  generateSemesters,
-} from '@/utils/utilFunctions';
+import { createSemesterCodeRange, displaySemesterCode } from '@/utils/utilFunctions';
 
 import useSearch from '../search/search';
 import AutoCompleteSearchBar from './AutoCompleteSearchBar';
-import Button from './Button';
+import Button from '../Button';
 import DropdownSelect from './DropdownSelect';
 import { getStartingPlanSemester } from '@/utils/plannerUtils';
 import InfoIcon from '@mui/icons-material/Info';
