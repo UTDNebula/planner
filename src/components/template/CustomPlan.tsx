@@ -1,5 +1,5 @@
 import { TextField } from '@mui/material';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import majorsList from '@data/majors.json';
 import { RouterInputs, trpc } from '@/utils/trpc';
 import Button from '../Button';
@@ -11,6 +11,7 @@ import { SemesterType, SemesterCode } from '@prisma/client';
 import { Credit } from '../credits/types';
 import { CircularProgress } from '@mui/material';
 import { UnwrapArray } from '@/types/util-types';
+import AddFileIcon from '@/icons/AddFileIcon';
 const majors = majorsList as string[];
 
 type TakenCourse = UnwrapArray<RouterInputs['user']['createUserPlan']['takenCourses']>;
@@ -20,6 +21,8 @@ export default function CustomPlan({ setPage }: { setPage: Dispatch<SetStateActi
   const [major, setMajor] = useState(majors[0]);
   const [transferCredits, setTransferCredits] = useState<string[]>([]);
   const [takenCourses, setTakenCourses] = useState<TakenCourse[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [file, setFile] = useState<File | undefined>();
 
   const router = useRouter();
   const utils = trpc.useContext();
@@ -30,14 +33,18 @@ export default function CustomPlan({ setPage }: { setPage: Dispatch<SetStateActi
     },
   });
 
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
   const handleSubmit = async () => {
-    const planId = await createUserPlan.mutateAsync({ name, major, transferCredits, takenCourses });
+    const planId = await createUserPlan.mutateAsync({
+      name,
+      major,
+      transferCredits,
+      takenCourses,
+    });
     router.push(`/app/plans/${planId}`);
   };
-
-  const [loading, setLoading] = useState(false);
-  const [file, setFile] = useState<File | null>(null);
-  const [error, setError] = useState<string | null>(null);
 
   const parseTranscript = async (file: File) => {
     const pdf = await import('pdfjs-dist');
@@ -160,37 +167,40 @@ export default function CustomPlan({ setPage }: { setPage: Dispatch<SetStateActi
           page.
         </p>
         {!loading ? (
-          <form
-            className={'contents'}
-            onSubmit={async (e) => {
-              try {
-                setError(null);
-                e.preventDefault();
-                if (loading) return;
-                if (!file) {
-                  setError('Must upload file');
-                  return;
-                }
-                setLoading(true);
-                await parseTranscript(file);
-              } catch (e) {
-                setError('An error occurred');
-              } finally {
-                setLoading(false);
-              }
-            }}
-          >
+          <>
+            {!file ? (
+              <Button
+                type="button"
+                size="large"
+                icon={<AddFileIcon className="h-5 w-5" />}
+                onClick={() => fileInputRef.current && fileInputRef.current.click()}
+              >
+                <span className="whitespace-nowrap">Upload Transcript</span>
+              </Button>
+            ) : (
+              <span className="font-semibold">Uploaded: {file.name}</span>
+            )}
             <input
+              ref={fileInputRef}
               type="file"
-              name={'file'}
+              name="file"
+              id="transcript-input"
               accept="application/pdf"
-              onChange={(e) => {
-                setFile(e.target.files ? e.target.files[0] : null);
-                setError(null);
+              className="hidden"
+              onChange={async (e) => {
+                if (e.target.files && e.target.files[0]) {
+                  const file = e.target.files[0];
+                  setFile(file);
+                  setError(null);
+                  setLoading(true);
+                  await parseTranscript(file).catch(() =>
+                    setError('An error occured loading transcript'),
+                  );
+                  setLoading(false);
+                }
               }}
             />
-            <Button type="submit">Upload</Button>
-          </form>
+          </>
         ) : (
           <CircularProgress />
         )}
