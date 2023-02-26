@@ -28,8 +28,6 @@ export interface DraggableCourse extends Course {
   validation?: { isValid: boolean; override: boolean };
   status?: 'complete' | 'incomplete'; // TODO: Clean this up later once prereq is done
   taken?: boolean;
-  transfer?: boolean;
-  sync?: { isSynced: boolean; correctSemester: SemesterCode | undefined };
   hours?: number;
   color: keyof typeof tagColors;
 }

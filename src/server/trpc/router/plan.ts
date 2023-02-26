@@ -39,6 +39,7 @@ export const planRouter = router({
           name: true,
           id: true,
           semesters: true,
+          transferCredits: true,
         },
       });
 
