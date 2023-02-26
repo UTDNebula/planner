@@ -16,7 +16,6 @@ export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'>
   onColorChange?: (color: keyof typeof tagColors) => void;
 }
 
-// TODO(json) return to this
 /** UI implementation of a semester course */
 /* eslint-disable react/prop-types */
 export const MemoizedSemesterCourseItem = React.memo(
@@ -39,7 +38,7 @@ export const MemoizedSemesterCourseItem = React.memo(
         ref={ref}
         {...props}
         data-tip="Drag!"
-        className={` tooltip tooltip-left flex h-min w-full cursor-grab flex-row items-center rounded-md border border-neutral-200 bg-generic-white overflow-hidden`}
+        className={` tooltip tooltip-left flex h-min w-full cursor-grab flex-row items-center overflow-hidden rounded-md border border-neutral-200 bg-generic-white`}
         onClick={() => setDropdownOpen((prev) => !prev)}
       >
         <div className={`h-full w-2 ${tagColors[course.color]}`}></div>
@@ -60,21 +59,21 @@ export const MemoizedSemesterCourseItem = React.memo(
                     onSelectCourse();
                   }
 
-                if (!checked && onDeselectCourse) {
-                  onDeselectCourse();
-                }
-              }}
-            />
-            <span className="text-[16px] text-[#1C2A6D]">{course.code}</span>
+                  if (!checked && onDeselectCourse) {
+                    onDeselectCourse();
+                  }
+                }}
+              />
+              <span className="text-[16px] text-[#1C2A6D]">{course.code}</span>
+            </div>
           </div>
-        </div>
-        <div className="ml-auto flex text-[12px] font-semibold">
-          {course.taken && (
-            <span className=" tooltip text-[#22C55E]" data-tip="Completed">
-              <CheckIcon fontSize="small" />
-            </span>
-          )}
-
+          <div className="ml-auto flex text-[12px] font-semibold">
+            {course.taken && (
+              <span className=" tooltip text-[#22C55E]" data-tip="Completed">
+                <CheckIcon fontSize="small" />
+              </span>
+            )}
+          </div>
         </div>
       </div>
     );
