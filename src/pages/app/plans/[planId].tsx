@@ -54,7 +54,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext<{ pl
 
   const planId = context.params?.planId as string;
 
-  await ssg.courses.publicGetSanitizedCourses.prefetch();
+  // await ssg.courses.publicGetSanitizedCourses.prefetch();
   await ssg.plan.getPlanById.prefetch(planId);
   return {
     props: {
