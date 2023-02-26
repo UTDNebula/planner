@@ -9,8 +9,6 @@ export type Plan = NonNullable<RouterOutputs['plan']['getPlanById']>['plan'];
 
 export type DegreeValidation = NonNullable<RouterOutputs['plan']['getPlanById']>['validation'];
 
-export type Credit = UnwrapArray<NonNullable<RouterOutputs['credits']['getCredits']>>;
-
 // Temporary semester type
 // TODO: Remove
 export interface Semester {

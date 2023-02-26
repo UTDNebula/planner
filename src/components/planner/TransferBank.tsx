@@ -1,12 +1,11 @@
 import ChevronIcon from '@/icons/ChevronIcon';
 import { FC, useState } from 'react';
-import { Credit } from './types';
 
 interface TransferBankProps {
-  credits: Credit[];
+  transferCredits: string[];
 }
 
-const TransferBank: FC<TransferBankProps> = ({ credits }) => {
+const TransferBank: FC<TransferBankProps> = ({ transferCredits }) => {
   const [open, setOpen] = useState(true);
 
   return (
@@ -26,12 +25,12 @@ const TransferBank: FC<TransferBankProps> = ({ credits }) => {
           open ? 'max-h-[999px]' : 'max-h-0'
         }`}
       >
-        {credits.map((credit, i) => (
+        {transferCredits.map((credit) => (
           <li
-            key={credit.id + i}
+            key={`transfer-{credit}`}
             className="flex h-[40px] w-[250px] items-center rounded-md border border-neutral-200 px-5"
           >
-            {credit.courseCode}
+            {credit}
           </li>
         ))}
       </ol>

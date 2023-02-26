@@ -29,7 +29,6 @@ import { SemesterCourseItem } from './Tiles/SemesterCourseItem';
 import DroppableSemesterTile from './Tiles/SemesterTile';
 import type {
   ActiveDragData,
-  Credit,
   DragEventDestinationData,
   DragEventOriginData,
   DraggableCourse,
@@ -47,11 +46,14 @@ import TransferBank from './TransferBank';
 /** PlannerTool Props */
 export interface PlannerProps {
   degreeRequirements: DegreeRequirements;
-  credits: Credit[];
+  transferCredits: string[];
 }
 
 /** Controlled wrapper around course list and semester tiles */
-export default function Planner({ degreeRequirements, credits }: PlannerProps): JSX.Element {
+export default function Planner({
+  degreeRequirements,
+  transferCredits,
+}: PlannerProps): JSX.Element {
   const {
     semesters,
     handleAddCourseToSemester,
@@ -159,13 +161,10 @@ export default function Planner({ degreeRequirements, credits }: PlannerProps): 
             ) : null)}
         </DragOverlay>
 
-        <section
-          ref={ref}
-          className="flex h-screen max-h-screen min-h-fit flex-grow flex-col gap-y-6 p-4 pb-0"
-        >
+        <section ref={ref} className="flex min-h-fit flex-grow flex-col gap-y-6 p-4 pb-0">
           <Toolbar title="Plan Your Courses" major="Computer Science" studentName="Dev" />
 
-          <TransferBank credits={credits} />
+          <TransferBank transferCredits={transferCredits} />
 
           <article className=" overflow-x-hidden overflow-y-scroll">
             <div className="flex h-fit gap-5">

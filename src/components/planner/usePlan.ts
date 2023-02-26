@@ -1,6 +1,6 @@
 import { trpc } from '@/utils/trpc';
 import { useRouter } from 'next/router';
-import { Credit, DegreeValidation, Plan } from './types';
+import { DegreeValidation, Plan } from './types';
 
 export interface usePlanProps {
   planId: string;
@@ -8,18 +8,14 @@ export interface usePlanProps {
 
 export interface usePlanReturn {
   plan?: Plan;
-  credits?: Credit[];
   validation?: DegreeValidation;
   isPlanLoading: boolean;
-  isCreditsLoading: boolean;
   handlePlanDelete: () => Promise<boolean>;
 }
 
 const usePlan = ({ planId }: usePlanProps): usePlanReturn => {
   const utils = trpc.useContext();
   const router = useRouter();
-
-  const creditsQuery = trpc.credits.getCredits.useQuery(undefined, { staleTime: 10000000000 });
 
   const planQuery = trpc.plan.getPlanById.useQuery(planId);
 
@@ -42,9 +38,7 @@ const usePlan = ({ planId }: usePlanProps): usePlanReturn => {
   return {
     plan: planQuery.data?.plan,
     validation: planQuery.data?.validation,
-    credits: creditsQuery.data,
     isPlanLoading: planQuery.isLoading,
-    isCreditsLoading: creditsQuery.isLoading,
     handlePlanDelete,
   };
 };

@@ -17,20 +17,20 @@ export default function PlanDetailPage(
   props: InferGetServerSidePropsType<typeof getServerSideProps>,
 ): JSX.Element {
   const { planId } = props;
-  const { plan, validation, credits, isPlanLoading, isCreditsLoading, handlePlanDelete } = usePlan({
+  const { plan, validation, isPlanLoading, handlePlanDelete } = usePlan({
     planId,
   });
 
   // Indicate UI loading
-  if (isPlanLoading || isCreditsLoading) {
+  if (isPlanLoading) {
     return <div>Loading</div>;
   }
 
   return (
     <div className="flex h-screen max-h-screen w-screen flex-col overflow-hidden overflow-y-scroll">
-      {plan && validation && credits && (
+      {plan && validation && (
         <SemestersContextProvider planId={planId} plan={plan}>
-          <Planner degreeRequirements={validation} credits={credits} />
+          <Planner degreeRequirements={validation} transferCredits={plan.transferCredits} />
         </SemestersContextProvider>
       )}
       {/* <button onClick={handlePlanDelete}>Delete</button> */}
