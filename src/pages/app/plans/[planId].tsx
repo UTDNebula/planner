@@ -23,7 +23,6 @@ export default function PlanDetailPage(
   const courseMapQuery = trpc.courses.publicGetSanitizedCourses.useQuery();
   const { data: courseData, isLoading: courseLoading } = courseMapQuery;
 
-
   const { plan, validation, isLoading, handlePlanDelete } = usePlan({ planId });
 
   console.log(courseData);

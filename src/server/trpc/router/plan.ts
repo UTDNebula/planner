@@ -123,9 +123,9 @@ export const planRouter = router({
 
       await prereqValidation(planData);
 
-preReqHash.forEach((value, key) => {
-console.log({ key, value });
-})
+      preReqHash.forEach((value, key) => {
+        console.log({ key, value });
+      });
       const { semesters } = planData;
       // FIX THIS LATER IDC RN
       const temporaryFunctionPlzDeleteThis = async () => {
