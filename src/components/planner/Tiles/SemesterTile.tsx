@@ -5,7 +5,6 @@ import { displaySemesterCode } from '@/utils/utilFunctions';
 
 import { DragDataToSemesterTile, GetDragIdByCourseAndSemester, Semester } from '../types';
 import DraggableSemesterCourseItem from './SemesterCourseItem';
-import { SemesterErrors } from '../Planner';
 import ChevronIcon from '@/icons/ChevronIcon';
 import SemesterTileDropdown from './SemesterTileDropdown';
 import { useSemestersContext } from '../SemesterContext';
@@ -13,7 +12,6 @@ import { useSemestersContext } from '../SemesterContext';
 export interface SemesterTileProps {
   semester: Semester;
   getDragId: GetDragIdByCourseAndSemester;
-  semesterErrors: SemesterErrors;
 }
 
 /**
@@ -22,7 +20,7 @@ export interface SemesterTileProps {
 /* eslint-disable react/prop-types */
 export const MemoizedSemesterTile = React.memo(
   forwardRef<HTMLDivElement, SemesterTileProps>(function SemesterTile(
-    { semester, getDragId, semesterErrors },
+    { semester, getDragId },
     ref,
   ) {
     const [open, setOpen] = useState(true);
@@ -35,19 +33,6 @@ export const MemoizedSemesterTile = React.memo(
       courseIsSelected,
       handleColorChange,
     } = useSemestersContext();
-
-    const { sync, prerequisites } = semesterErrors;
-    const { extra, missing } = sync;
-
-    const numProblems = extra.length + missing.length + prerequisites.length;
-
-    const generateErrorMsg = () => {
-      const extraMsg = extra.length > 0 ? `Extra courses: ${extra.toString()}. ` : '';
-      const missingMsg = missing.length > 0 ? `Missing courses: ${missing.toString()}. ` : '';
-      const prerequisiteMsg = undefined; // TODO: Implement later
-
-      return `Errors found in semester: ${extraMsg}${missingMsg}`;
-    };
 
     // QUESTION: isValid color?
     return (
@@ -70,27 +55,16 @@ export const MemoizedSemesterTile = React.memo(
               {displaySemesterCode(semester.code)}
             </h3>
           </div>
-          <>
-            {numProblems > 0 && (
-              <div
-                className="opacity-0.5 tooltip tooltip-top h-fit rounded-full text-[14px] font-medium "
-                data-tip={`${generateErrorMsg()}`}
-              >
-                <div className="badge border-none bg-red-50 text-red-500">{numProblems} errors</div>
-              </div>
-            )}
-
-            <SemesterTileDropdown
-              deleteAllCourses={() => handleDeleteAllCoursesFromSemester(semester)}
-              selectAllCourses={() =>
-                handleSelectCourses(semester.courses.map((course) => course.id.toString()))
-              }
-            />
-          </>
+          <SemesterTileDropdown
+            deleteAllCourses={() => handleDeleteAllCoursesFromSemester(semester)}
+            selectAllCourses={() =>
+              handleSelectCourses(semester.courses.map((course) => course.id.toString()))
+            }
+          />
         </div>
 
         <article
-          className={`flex flex-col gap-y-4 transition-all duration-700 ${
+          className={`flex flex-col gap-y-4 overflow-hidden transition-all duration-700 ${
             open ? 'max-h-[999px]' : 'max-h-0'
           }`}
         >
@@ -121,7 +95,6 @@ export interface DroppableSemesterTileProps {
   dropId: UniqueIdentifier;
   semester: Semester;
   getSemesterCourseDragId: GetDragIdByCourseAndSemester;
-  semesterErrors: SemesterErrors;
 }
 
 /**
