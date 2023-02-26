@@ -1,3 +1,4 @@
+import { UnwrapArray } from '@/types/util-types';
 import { RouterOutputs } from '@/utils/trpc';
 import { UniqueIdentifier } from '@dnd-kit/core';
 import { SemesterCode } from '@prisma/client';
@@ -7,6 +8,8 @@ import { tagColors } from './utils';
 export type Plan = NonNullable<RouterOutputs['plan']['getPlanById']>['plan'];
 
 export type DegreeValidation = NonNullable<RouterOutputs['plan']['getPlanById']>['validation'];
+
+export type Credit = UnwrapArray<NonNullable<RouterOutputs['credits']['getCredits']>>;
 
 // Temporary semester type
 // TODO: Remove
@@ -27,8 +30,6 @@ export interface DraggableCourse extends Course {
   validation?: { isValid: boolean; override: boolean };
   status?: 'complete' | 'incomplete'; // TODO: Clean this up later once prereq is done
   taken?: boolean;
-  transfer?: boolean;
-  sync?: { isSynced: boolean; correctSemester: SemesterCode | undefined };
   hours?: number;
   color: keyof typeof tagColors;
 }

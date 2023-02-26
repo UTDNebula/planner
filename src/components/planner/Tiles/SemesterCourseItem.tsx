@@ -2,8 +2,6 @@ import { UniqueIdentifier, useDraggable } from '@dnd-kit/core';
 import React, { ComponentPropsWithoutRef, FC, forwardRef } from 'react';
 
 import { DragDataFromSemesterTile, DraggableCourse, Semester } from '../types';
-import SyncProblemIcon from '@mui/icons-material/SyncProblem';
-import { displaySemesterCode } from '@/utils/utilFunctions';
 import CheckIcon from '@mui/icons-material/Check';
 import Checkbox from '@/components/Checkbox';
 import SemesterCourseItemDropdown from './SemesterCourseItemDropdown';
@@ -12,7 +10,6 @@ import { tagColors } from '../utils';
 export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'> {
   course: DraggableCourse;
   isSelected?: boolean;
-  isTransfer?: boolean;
   onSelectCourse?: () => void;
   onDeselectCourse?: () => void;
   onDeleteCourse?: () => void;
@@ -26,7 +23,6 @@ export const MemoizedSemesterCourseItem = React.memo(
   forwardRef<HTMLDivElement, SemesterCourseItemProps>(function SemesterCourseItem(
     {
       course,
-      isTransfer,
       onSelectCourse,
       onDeselectCourse,
       isSelected,
@@ -36,11 +32,6 @@ export const MemoizedSemesterCourseItem = React.memo(
     },
     ref,
   ) {
-    // Create text output for sync icon
-    const correctSemester = course.sync?.correctSemester
-      ? `Course already taken in ${displaySemesterCode(course.sync?.correctSemester)}`
-      : `No record of this course in Course History`;
-
     return (
       <div
         ref={ref}
@@ -76,16 +67,6 @@ export const MemoizedSemesterCourseItem = React.memo(
             <span className=" tooltip text-[#22C55E]" data-tip="Completed">
               <CheckIcon fontSize="small" />
             </span>
-          )}
-          {course.transfer && (
-            <span className="tooltip text-green-500" data-tip="Transfer">
-              T
-            </span>
-          )}
-          {!course.sync?.isSynced && (
-            <div className="tooltip" data-tip={`${correctSemester}`}>
-              <SyncProblemIcon fontSize="small" />
-            </div>
           )}
         </div>
       </div>
