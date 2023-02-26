@@ -1,4 +1,3 @@
-import { UnwrapArray } from '@/types/util-types';
 import { RouterOutputs } from '@/utils/trpc';
 import { UniqueIdentifier } from '@dnd-kit/core';
 import { SemesterCode } from '@prisma/client';

@@ -21,7 +21,7 @@ import {
   Active,
   Over,
 } from '@dnd-kit/core';
-import React, { useMemo, useState, useRef } from 'react';
+import React, { useMemo, useState, useRef, FC } from 'react';
 
 import CourseSelectorContainer from './Sidebar/Sidebar';
 import { SidebarCourseItem } from './Sidebar/SidebarCourseItem';
@@ -31,11 +31,8 @@ import type {
   ActiveDragData,
   DragEventDestinationData,
   DragEventOriginData,
-  DraggableCourse,
   Semester,
 } from './types';
-import { isSemCodeEqual } from '@/utils/utilFunctions';
-import { SemesterCode } from '@prisma/client';
 import { DegreeRequirements } from './Sidebar/types';
 
 import Toolbar from './Toolbar';
@@ -65,9 +62,6 @@ export default function Planner({
     handleSelectCourses,
     handleDeleteAllSelectedCourses,
   } = useSemestersContext();
-
-  // toggle transfered courses state
-  const [showTransfer, setShowTransfer] = useState(true);
 
   // Course that is currently being dragged
   const [activeCourse, setActiveCourse] = useState<ActiveDragData | null>(null);
@@ -177,11 +171,7 @@ export default function Planner({
                   [[], [], []] as Semester[][],
                 )
                 .map((column, index) => (
-                  <MasonryColumn
-                    key={`column-${index}`}
-                    column={column}
-                    showTransfer={showTransfer}
-                  />
+                  <MasonryColumn key={`column-${index}`} column={column} />
                 ))}
             </div>
             <div className="col-span-full flex h-10 items-center justify-center gap-8">
@@ -195,19 +185,10 @@ export default function Planner({
   );
 }
 
-const MasonryColumn = (props: { column: Semester[]; showTransfer: boolean }) => {
-  const { column, showTransfer } = props;
-  // Get credits to check if semester invalid
-  const creditsQuery = trpc.credits.getCredits.useQuery(undefined, { staleTime: 10000000000 });
-  const credits = creditsQuery.data;
+const MasonryColumn: FC<{ column: Semester[] }> = ({ column }) => {
   return (
     <div className="flex w-full flex-col gap-5">
       {column.map((semester) => {
-        // Get map of credits (faster to query later down the line)
-        // const creditsMap: {
-        //   [key: string]: { semesterCode: SemesterCode; transfer: boolean };
-        // } = credits?.reduce((prev, curr) => ({ ...prev, [curr.courseCode]: curr }), {}) ?? [];
-
         return (
           <DroppableSemesterTile
             key={semester.id.toString()}
