@@ -1,5 +1,5 @@
 import { UniqueIdentifier, useDraggable } from '@dnd-kit/core';
-import React, { ComponentPropsWithoutRef, FC, forwardRef } from 'react';
+import React, { ComponentPropsWithoutRef, FC, forwardRef, useState } from 'react';
 
 import { DragDataFromSemesterTile, DraggableCourse, Semester } from '../types';
 import SyncProblemIcon from '@mui/icons-material/SyncProblem';
@@ -40,18 +40,21 @@ export const MemoizedSemesterCourseItem = React.memo(
     const correctSemester = course.sync?.correctSemester
       ? `Course already taken in ${displaySemesterCode(course.sync?.correctSemester)}`
       : `No record of this course in Course History`;
-
+    const [dropdownOpen, setDropdownOpen] = useState(false)
     return (
       <div
         ref={ref}
         {...props}
         data-tip="Drag!"
         className={` tooltip tooltip-left flex h-[40px] w-full cursor-grab flex-row items-center rounded-md border border-neutral-200 bg-generic-white py-4 px-2`}
+        onClick={() => setDropdownOpen((prev)=>!prev)}
       >
         <div className={`h-full w-2 ${tagColors[course.color]}`}></div>
         <div className="flex items-center justify-center">
           <div className="flex flex-row items-center gap-x-3">
             <SemesterCourseItemDropdown
+              open={dropdownOpen}
+              onOpenChange={(open)=>setDropdownOpen(open)}
               changeColor={(color) => onColorChange && onColorChange(color)}
               deleteCourse={() => onDeleteCourse && onDeleteCourse()}
             />
