@@ -9,6 +9,7 @@ import { SemesterErrors } from '../Planner';
 import ChevronIcon from '@/icons/ChevronIcon';
 import SemesterTileDropdown from './SemesterTileDropdown';
 import { useSemestersContext } from '../SemesterContext';
+import { tagColors } from '../utils';
 
 export interface SemesterTileProps {
   semester: Semester;
@@ -33,6 +34,7 @@ export const MemoizedSemesterTile = React.memo(
       handleDeleteAllCoursesFromSemester,
       handleRemoveCourseFromSemester,
       courseIsSelected,
+      handleSemesterColorChange,
       handleColorChange,
     } = useSemestersContext();
 
@@ -55,6 +57,7 @@ export const MemoizedSemesterTile = React.memo(
         ref={ref}
         className={`flex h-fit select-none flex-col gap-y-4 rounded-2xl border border-neutral-300 bg-white py-4 px-5`}
       >
+        <span className={`h-1 w-full ${tagColors[semester.color]}`}></span>
         <article className="w-full">
           <ChevronIcon
             className={`${
@@ -81,6 +84,7 @@ export const MemoizedSemesterTile = React.memo(
             )}
 
             <SemesterTileDropdown
+              changeColor={(color) => handleSemesterColorChange(color, semester.id.toString())}
               deleteAllCourses={() => handleDeleteAllCoursesFromSemester(semester)}
               selectAllCourses={() =>
                 handleSelectCourses(semester.courses.map((course) => course.id.toString()))

@@ -16,15 +16,15 @@ const contentClasses = 'w-64 rounded-md border border-neutral-300 bg-generic-whi
 export interface SemesterTileDropdownProps {
   deleteCourse: () => void;
   changeColor: (color: keyof typeof tagColors) => void;
-  open: boolean
-  onOpenChange: (open: boolean) => void
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }
 
 const SemesterCourseItemDropdown: FC<SemesterTileDropdownProps> = ({
   deleteCourse,
   changeColor,
   open,
-  onOpenChange
+  onOpenChange,
 }) => {
   const id = new ObjectID().toString();
   return (
