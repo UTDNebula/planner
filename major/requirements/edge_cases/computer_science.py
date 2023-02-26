@@ -35,12 +35,15 @@ class MajorGuidedElectiveRequirement(AbstractRequirement):
         required_count: int,
         starts_with: str,
         also_fulfills: list[AbstractRequirement],
+        metadata: dict[str, Any] = {},
     ) -> None:
         self.required_count = required_count
         self.starts_with = starts_with
         self.also_fulfills = also_fulfills
         self.fulfilled_count = 0
         self.valid_courses: dict[str, int] = {}
+        self.metadata = metadata
+        self.override_filled = False
 
     def attempt_fulfill(self, course: str) -> bool:
         if self.is_fulfilled():
@@ -67,7 +70,18 @@ class MajorGuidedElectiveRequirement(AbstractRequirement):
         )
 
     def is_fulfilled(self) -> bool:
-        return self.__true_fulfilled_total() >= self.required_count
+        return (
+            self.override_filled or self.__true_fulfilled_total() >= self.required_count
+        )
+
+    def override_fill(self, index: int) -> bool:
+        if self.metadata["id"] == index:
+            self.override_filled = True
+            return True
+        for requirement in self.also_fulfills:
+            if requirement.override_fill(index):
+                return True
+        return False
 
     class JSONReq(TypedDict):
         matcher: str
@@ -76,6 +90,7 @@ class MajorGuidedElectiveRequirement(AbstractRequirement):
         required_count: int
         starts_with: str
         also_fulfills: list[MajorGuidedElectiveRequirement.JSONReq]
+        metadata: dict[str, Any]
 
     @classmethod
     def from_json(cls, json: JSON) -> MajorGuidedElectiveRequirement:
@@ -101,7 +116,9 @@ class MajorGuidedElectiveRequirement(AbstractRequirement):
                 map.REQUIREMENTS_MAP[requirement["matcher"]].from_json(requirement)
             )
 
-        return cls(json["required_count"], json["starts_with"], also_fulfills)
+        return cls(
+            json["required_count"], json["starts_with"], also_fulfills, json["metadata"]
+        )
 
     def to_json(self) -> Json[Any]:
         return json.dumps(

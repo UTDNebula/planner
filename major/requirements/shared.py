@@ -15,8 +15,11 @@ class CourseRequirement(AbstractRequirement):
     CS 1200 fills -> CS 1200 requirement
     """
 
-    def __init__(self, course: str, filled: bool = False) -> None:
+    def __init__(
+        self, course: str, filled: bool = False, metadata: dict[str, Any] = {}
+    ) -> None:
         self.course = course
+        self.metadata = metadata
         self.filled = filled
 
     def attempt_fulfill(self, course: str) -> bool:
@@ -33,20 +36,33 @@ class CourseRequirement(AbstractRequirement):
     def is_fulfilled(self) -> bool:
         return self.filled
 
+    def override_fill(self, index: int) -> bool:
+        if self.metadata["id"] == index:
+            self.filled = True
+            return True
+        return False
+
     class JSON(TypedDict):
         course: str
+        metadata: dict[str, Any]
 
     @classmethod
     def from_json(cls, json: JSON) -> CourseRequirement:
-        return cls(json["course"])
+        return cls(json["course"], False, json["metadata"])
 
     def to_json(self) -> Json[Any]:
         return json.dumps(
-            {"matcher": "Course", "course": self.course, "filled": self.filled}
+            {
+                "matcher": "Course",
+                "metadata": self.metadata,
+                "course": self.course,
+                "filled": self.filled,
+            }
         )
 
     def __str__(self) -> str:
-        return f"{self.course} - {self.is_fulfilled()}"
+        return f"""{self.course} - {self.is_fulfilled()}
+                metadata: {self.metadata}"""
 
 
 class AndRequirement(AbstractRequirement):
@@ -55,10 +71,11 @@ class AndRequirement(AbstractRequirement):
     """
 
     def __init__(
-        self, requirements: list[AbstractRequirement], metadata: dict[str, str] = {}
+        self, requirements: list[AbstractRequirement], metadata: dict[str, Any] = {}
     ) -> None:
         self.requirements = requirements
         self.metadata = metadata
+        self.override_filled = False
 
     def attempt_fulfill(self, course: str) -> bool:
         if self.is_fulfilled():
@@ -71,17 +88,28 @@ class AndRequirement(AbstractRequirement):
         return False
 
     def is_fulfilled(self) -> bool:
-        return all(requirement.is_fulfilled() for requirement in self.requirements)
+        return self.override_filled or all(
+            requirement.is_fulfilled() for requirement in self.requirements
+        )
 
     def get_num_fulfilled_requirements(self) -> int:
         return sum([1 for req in self.requirements if req.is_fulfilled()])
+
+    def override_fill(self, index: int) -> bool:
+        if self.metadata["id"] == index:
+            self.override_filled = True
+            return True
+        for requirement in self.requirements:
+            if requirement.override_fill(index):
+                return True
+        return False
 
     class Req(TypedDict):
         matcher: str
 
     class JSON(TypedDict):
         requirements: list[AndRequirement.Req]
-        metadata: dict[str, str]
+        metadata: dict[str, Any]
 
     @classmethod
     def from_json(cls, json: JSON) -> AndRequirement:
@@ -95,10 +123,7 @@ class AndRequirement(AbstractRequirement):
             )
             requirements.append(requirement)
 
-        # Check if there's any metadata
-        metadata = json["metadata"] if "metadata" in json else {}
-
-        return cls(requirements, metadata)
+        return cls(requirements, json["metadata"])
 
     def to_json(self) -> Json[Any]:
         return json.dumps(
@@ -123,8 +148,12 @@ class OrRequirement(AbstractRequirement):
     CS 1200 fills -> HIST 1301 or CS 1200 requirement
     """
 
-    def __init__(self, requirements: list[AbstractRequirement]) -> None:
+    def __init__(
+        self, requirements: list[AbstractRequirement], metadata: dict[str, Any] = {}
+    ) -> None:
         self.requirements = requirements
+        self.metadata = metadata
+        self.override_filled = False  # use this as override fill
 
     def attempt_fulfill(self, course: str) -> bool:
         if self.is_fulfilled():
@@ -137,13 +166,25 @@ class OrRequirement(AbstractRequirement):
         return False
 
     def is_fulfilled(self) -> bool:
-        return any(requirement.is_fulfilled() for requirement in self.requirements)
+        return self.override_filled or any(
+            requirement.is_fulfilled() for requirement in self.requirements
+        )
+
+    def override_fill(self, index: int) -> bool:
+        if self.metadata["id"] == index:
+            self.override_filled = True
+            return True
+        for requirement in self.requirements:
+            if requirement.override_fill(index):
+                return True
+        return False
 
     class Req(TypedDict):
         matcher: str
 
     class JSON(TypedDict):
         requirements: list[OrRequirement.Req]
+        metadata: dict[str, Any]
 
     @classmethod
     def from_json(cls, json: JSON) -> OrRequirement:
@@ -156,12 +197,16 @@ class OrRequirement(AbstractRequirement):
             )
             requirements.append(requirement)
 
-        return cls(requirements)
+        metadata = {}
+        if "metadata" in json:
+            metadata = json["metadata"]
+        return cls(requirements, metadata)
 
     def to_json(self) -> Json[Any]:
         return json.dumps(
             {
                 "matcher": "Or",
+                "metadata": self.metadata,
                 "filled": self.is_fulfilled(),
                 "requirements": [
                     json.loads(req.to_json()) for req in self.requirements
@@ -185,11 +230,16 @@ class SelectRequirement(AbstractRequirement):
     """
 
     def __init__(
-        self, required__count: int, requirements: list[AbstractRequirement]
+        self,
+        required__count: int,
+        requirements: list[AbstractRequirement],
+        metadata: dict[str, Any] = {},
     ) -> None:
         self.required_count = required__count
         self.fulfilled_count = 0
         self.requirements = requirements
+        self.metadata = metadata
+        self.override_filled = False
 
     def attempt_fulfill(self, course: str) -> bool:
         if self.is_fulfilled():
@@ -208,7 +258,16 @@ class SelectRequirement(AbstractRequirement):
         for requirement in self.requirements:
             if requirement.is_fulfilled():
                 curr += 1
-        return curr >= self.required_count
+        return self.override_filled or curr >= self.required_count
+
+    def override_fill(self, index: int) -> bool:
+        if self.metadata["id"] == index:
+            self.override_filled = True
+            return True
+        for requirement in self.requirements:
+            if requirement.override_fill(index):
+                return True
+        return False
 
     class Req(TypedDict):
         matcher: str
@@ -234,6 +293,7 @@ class SelectRequirement(AbstractRequirement):
         return json.dumps(
             {
                 "matcher": "Select",
+                "metadata": self.metadata,
                 "fulfilled_count": self.fulfilled_count,
                 "required_count": self.required_count,
                 "filled": self.is_fulfilled(),
@@ -245,6 +305,7 @@ class SelectRequirement(AbstractRequirement):
 
     def __str__(self) -> str:
         s = f"""{SelectRequirement.__name__} - {self.is_fulfilled()}
+        metadata: {self.metadata}
         status: {self.fulfilled_count}/{self.required_count} requirements
         requirements: {self.requirements}
         """
@@ -268,16 +329,15 @@ class HoursRequirement(AbstractRequirement):
         required_hours: int,
         requirements: list[AbstractRequirement],
         valid_courses: dict[str, int] = {},
-        metadata: dict[str, str] = {},
+        metadata: dict[str, Any] = {},
     ) -> None:
         self.required_hours = required_hours
         self.requirements = requirements
         self.valid_courses: dict[
             str, int
         ] = valid_courses  # Stores map of course & # hours fulfilled (i.e. {"CS 1200": 2}). This is done due to course splitting (1 course can be used to satisfy multiple requirements)
-        self.metadata: dict[str, str] = metadata
-        # Compute fulfilled hours from metadata field
-        self.fulfilled_hours = sum(valid_courses.values())
+        self.metadata: dict[str, Any] = metadata
+        self.override_filled = False
 
     def attempt_fulfill(self, course: str) -> bool:
         if self.is_fulfilled():
@@ -286,13 +346,24 @@ class HoursRequirement(AbstractRequirement):
         for requirement in self.requirements:
             if requirement.attempt_fulfill(course):
                 course_hrs = utils.get_hours_from_course(course)
-                self.fulfilled_hours += course_hrs
                 self.valid_courses[course] = course_hrs
 
         return False
 
+    def get_fulfilled_hours(self) -> int:
+        return sum(self.valid_courses.values())
+
     def is_fulfilled(self) -> bool:
-        return self.fulfilled_hours >= self.required_hours
+        return self.override_filled or self.get_fulfilled_hours() >= self.required_hours
+
+    def override_fill(self, index: int) -> bool:
+        if self.metadata["id"] == index:
+            self.override_filled = True
+            return True
+        for requirement in self.requirements:
+            if requirement.override_fill(index):
+                return True
+        return False
 
     class Req(TypedDict):
         matcher: str
@@ -300,7 +371,7 @@ class HoursRequirement(AbstractRequirement):
     class JSON(TypedDict):
         required_hours: int
         requirements: list[HoursRequirement.Req]
-        metadata: dict[str, str]
+        metadata: dict[str, Any]
 
     @classmethod
     def from_json(cls, json: JSON) -> HoursRequirement:
@@ -338,7 +409,7 @@ class HoursRequirement(AbstractRequirement):
             {
                 "matcher": "Hours",
                 "metadata": self.metadata,
-                "fulfilled_hours": self.fulfilled_hours,
+                "fulfilled_hours": self.get_fulfilled_hours(),
                 "required_hours": self.required_hours,
                 "filled": self.is_fulfilled(),
                 "requirements": [
@@ -350,7 +421,7 @@ class HoursRequirement(AbstractRequirement):
 
     def __str__(self) -> str:
         s = f"""{HoursRequirement.__name__} - {self.is_fulfilled()}
-        status: {self.fulfilled_hours}/{self.required_hours} hours
+        status: {self.get_fulfilled_hours()}/{self.required_hours} hours
         valid_courses: {self.valid_courses}
         requirements: {self.requirements}
         """
@@ -371,11 +442,18 @@ class FreeElectiveRequirement(AbstractRequirement):
         Courses that cannot fulfill this requirement
     """
 
-    def __init__(self, required_hours: int, excluded_courses: list[str]) -> None:
+    def __init__(
+        self,
+        required_hours: int,
+        excluded_courses: list[str],
+        metadata: dict[str, int] = {},
+    ) -> None:
         self.required_hours = required_hours
         self.excluded_courses = set(excluded_courses)
         self.fulfilled_hours = 0
         self.valid_courses: dict[str, int] = {}
+        self.metadata = metadata
+        self.override_filled = False
 
     def attempt_fulfill(self, course: str) -> bool:
         if self.is_fulfilled():
@@ -390,11 +468,18 @@ class FreeElectiveRequirement(AbstractRequirement):
         return False
 
     def is_fulfilled(self) -> bool:
-        return self.fulfilled_hours >= self.required_hours
+        return self.override_filled or self.fulfilled_hours >= self.required_hours
+
+    def override_fill(self, index: int) -> bool:
+        if self.metadata["id"] == index:
+            self.override_filled = True
+            return True
+        return False
 
     class JSON(TypedDict):
         excluded_courses: list[str]
         required_hours: int
+        metadata: dict[str, Any]
 
     @classmethod
     def from_json(cls, json: JSON) -> FreeElectiveRequirement:
@@ -407,13 +492,13 @@ class FreeElectiveRequirement(AbstractRequirement):
             ]
         """
 
-        return cls(json["required_hours"], json["excluded_courses"])
+        return cls(json["required_hours"], json["excluded_courses"], json["metadata"])
 
     def to_json(self) -> Json[Any]:
         return json.dumps(
             {
                 "matcher": "FreeElectives",
-                "metadata": {"name": "Free Electives"},
+                "metadata": self.metadata,
                 "fulfilled_hours": self.fulfilled_hours,
                 "required_hours": self.required_hours,
                 "filled": self.is_fulfilled(),
@@ -425,6 +510,7 @@ class FreeElectiveRequirement(AbstractRequirement):
     def __str__(self) -> str:
         s = f"""{FreeElectiveRequirement.__name__} - {self.is_fulfilled()}
         status: {self.fulfilled_hours}/{self.required_hours} hours
+        metadata: {self.metadata}
         excluded_courses: {", ".join(self.excluded_courses)}
         valid_courses: {self.valid_courses} 
         """
@@ -438,6 +524,8 @@ class PrefixBucketRequirement(AbstractRequirement):
 
     NOTE: This requirement is generally used with HoursRequirement, as it allows
     an infinite number of courses to satisfy it
+
+    NOTE: No metadata here
 
     Parameters
     __________
@@ -453,7 +541,6 @@ class PrefixBucketRequirement(AbstractRequirement):
     # NOTE: This allows courses to satisfy the requirement even after it's filled,
     # as it doesn't check for whether or not the requirement has been filled
     def attempt_fulfill(self, course: str) -> bool:
-
         if course.startswith(self.prefix):
             self.filled = True
             self.valid_courses[course] = utils.get_hours_from_course(course)
@@ -463,6 +550,9 @@ class PrefixBucketRequirement(AbstractRequirement):
 
     def is_fulfilled(self) -> bool:
         return self.filled
+
+    def override_fill(self, index: int) -> bool:
+        return False
 
     class JSON(TypedDict):
         prefix: str

@@ -8,7 +8,7 @@ from flask import Flask, Response, request, make_response
 from flask_cors import CORS
 
 from core import GraduationRequirementsSolver, Course, SingleAssignment
-from degree_solver import DegreeRequirementsInput, DegreeRequirementsSolver
+from degree_solver import BypassInput, DegreeRequirementsInput, DegreeRequirementsSolver
 from major.solver import MajorRequirementsSolver
 
 
@@ -170,17 +170,18 @@ def test_validate() -> Response:
         if not j:
             raise APIError("bad request", 400)
 
-        courses = j["courses"]
+        courses: list[str] = j["courses"]
         rawReqs = j["requirements"]
         requirements = DegreeRequirementsInput(
             rawReqs["core"], rawReqs["majors"], rawReqs["minors"], []
         )
+        rawBypasses = j["bypasses"]
 
+        bypasses = BypassInput(rawBypasses["core"], {"Computer Science(BS)": [0]})
         # bypasses = [SingleAssignment.from_json(b) for b in j["bypasses"]]
-        solver = DegreeRequirementsSolver(courses, requirements, [])
+        solver = DegreeRequirementsSolver(courses, requirements, bypasses)
         solver.solve()
 
-        # TODO: breaking change, wrap in json with message component
         return make_response(solver.to_json(), 200)
 
     except APIError as e:

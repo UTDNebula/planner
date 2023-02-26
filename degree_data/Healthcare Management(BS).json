@@ -11,171 +11,225 @@
     "major": [
       {
         "matcher": "CourseRequirement",
-        "course": "ACCT 2301"
+        "course": "ACCT 2301",
+        "metadata": { "id": 0 }
       },
       {
         "matcher": "CourseRequirement",
-        "course": "ACCT 2302"
+        "course": "ACCT 2302",
+        "metadata": { "id": 1 }
       },
       {
         "matcher": "CourseRequirement",
-        "course": "BLAW 2301"
+        "course": "BLAW 2301",
+        "metadata": { "id": 2 }
       },
       {
-        "matcher": "CourseRequirement",
-        "course": "MATH 1325"
+        "matcher": "OrRequirement",
+        "requirements": [
+          {
+            "course": "MATH 1325",
+            "matcher": "CourseRequirement",
+            "metadata": { "id": 4 }
+          },
+          {
+            "course": "MATH 2413",
+            "matcher": "CourseRequirement",
+            "metadata": { "id": 5 }
+          },
+          {
+            "course": "MATH 2417",
+            "matcher": "CourseRequirement",
+            "metadata": { "id": 6 }
+          }
+        ],
+        "metadata": { "id": 3 }
       },
       {
         "matcher": "OrRequirement",
         "requirements": [
           {
             "matcher": "CourseRequirement",
-            "course": "OPRE 3360"
+            "course": "OPRE 3360",
+            "metadata": { "id": 8 }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "STAT 3360"
+            "course": "STAT 3360",
+            "metadata": { "id": 9 }
           }
-        ]
+        ],
+        "metadata": { "id": 7 }
       },
-
       {
         "matcher": "SelectRequirement",
         "required_count": 2,
         "requirements": [
           {
             "matcher": "CourseRequirement",
-            "course": "BA 1310"
+            "course": "BA 1310",
+            "metadata": { "id": 11 }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "BA 1320"
+            "course": "BA 1320",
+            "metadata": { "id": 12 }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "ECON 2301"
+            "course": "ECON 2301",
+            "metadata": { "id": 13 }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "ECON 2302"
+            "course": "ECON 2302",
+            "metadata": { "id": 14 }
           }
-        ]
+        ],
+        "metadata": { "id": 10 }
       },
       {
         "matcher": "OrRequirement",
         "requirements": [
           {
             "matcher": "CourseRequirement",
-            "course": "BCOM 3300"
+            "course": "BCOM 3300",
+            "metadata": { "id": 16 }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "BCOM 1300"
+            "course": "BCOM 1300",
+            "metadata": { "id": 17 }
           }
-        ]
-      },
-
-      {
-        "matcher": "CourseRequirement",
-        "course": "BCOM 4300"
+        ],
+        "metadata": { "id": 15 }
       },
       {
         "matcher": "CourseRequirement",
-        "course": "FIN 3320"
+        "course": "BCOM 4300",
+        "metadata": { "id": 18 }
       },
       {
         "matcher": "CourseRequirement",
-        "course": "IMS 3310"
+        "course": "FIN 3320",
+        "metadata": { "id": 19 }
       },
       {
         "matcher": "CourseRequirement",
-        "course": "ITSS 3300"
+        "course": "IMS 3310",
+        "metadata": { "id": 20 }
       },
       {
         "matcher": "CourseRequirement",
-        "course": "MKT 3300"
+        "course": "ITSS 3300",
+        "metadata": { "id": 21 }
       },
       {
         "matcher": "CourseRequirement",
-        "course": "OBHR 3330"
+        "course": "MKT 3300",
+        "metadata": { "id": 22 }
       },
       {
         "matcher": "CourseRequirement",
-        "course": "OBHR 3310"
+        "course": "OBHR 3330",
+        "metadata": { "id": 23 }
       },
       {
         "matcher": "CourseRequirement",
-        "course": "OPRE 3310"
+        "course": "OBHR 3310",
+        "metadata": { "id": 24 }
       },
       {
         "matcher": "CourseRequirement",
-        "course": "BLAW 3301"
+        "course": "OPRE 3310",
+        "metadata": { "id": 25 }
       },
       {
         "matcher": "CourseRequirement",
-        "course": "OBHR 3310"
+        "course": "BLAW 3301",
+        "metadata": { "id": 26 }
       },
       {
         "matcher": "CourseRequirement",
-        "course": "OBHR 4331"
+        "course": "OBHR 3310",
+        "metadata": { "id": 27 }
       },
       {
         "matcher": "CourseRequirement",
-        "course": "OBHR 4333"
+        "course": "OBHR 4331",
+        "metadata": { "id": 28 }
       },
       {
         "matcher": "CourseRequirement",
-        "course": "OBHR 4334"
+        "course": "OBHR 4333",
+        "metadata": { "id": 29 }
       },
       {
         "matcher": "CourseRequirement",
-        "course": "OBHR 4335"
+        "course": "OBHR 4334",
+        "metadata": { "id": 30 }
       },
       {
         "matcher": "CourseRequirement",
-        "course": "OBHR 4354"
+        "course": "OBHR 4335",
+        "metadata": { "id": 31 }
       },
       {
         "matcher": "CourseRequirement",
-        "course": "OBHR 4395"
+        "course": "OBHR 4354",
+        "metadata": { "id": 32 }
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "OBHR 4395",
+        "metadata": { "id": 33 }
       },
       {
         "matcher": "OrRequirement",
         "requirements": [
           {
             "matcher": "CourseRequirement",
-            "course": "OBHR 4V90"
+            "course": "OBHR 4V90",
+            "metadata": { "id": 35 }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "OBHR 4090"
+            "course": "OBHR 4090",
+            "metadata": { "id": 36 }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "BA 4090"
+            "course": "BA 4090",
+            "metadata": { "id": 37 }
           }
-        ]
+        ],
+        "metadata": { "id": 34 }
       },
       {
         "matcher": "OrRequirement",
         "requirements": [
           {
             "matcher": "CourseRequirement",
-            "course": "IMS 4335"
+            "course": "IMS 4335",
+            "metadata": { "id": 39 }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "ENTP 4340"
+            "course": "ENTP 4340",
+            "metadata": { "id": 40 }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "MKT 4360"
+            "course": "MKT 4360",
+            "metadata": { "id": 41 }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "BA 4095"
+            "course": "BA 4095",
+            "metadata": { "id": 42 }
           }
-        ]
+        ],
+        "metadata": { "id": 38 }
       },
       {
         "matcher": "HoursRequirement",
@@ -183,51 +237,62 @@
         "requirements": [
           {
             "matcher": "CourseRequirement",
-            "course": "IMS 4330"
+            "course": "IMS 4330",
+            "metadata": { "id": 44 }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "OBHR 4300"
+            "course": "OBHR 4300",
+            "metadata": { "id": 45 }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "OBHR 4310"
+            "course": "OBHR 4310",
+            "metadata": { "id": 46 }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "OBHR 4336"
+            "course": "OBHR 4336",
+            "metadata": { "id": 47 }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "OBHR 4337"
+            "course": "OBHR 4337",
+            "metadata": { "id": 48 }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "OBHR 4338"
+            "course": "OBHR 4338",
+            "metadata": { "id": 49 }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "OBHR 4350"
+            "course": "OBHR 4350",
+            "metadata": { "id": 50 }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "OBHR 4352"
+            "course": "OBHR 4352",
+            "metadata": { "id": 51 }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "OBHR 4356"
+            "course": "OBHR 4356",
+            "metadata": { "id": 52 }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "OBHR 4361"
+            "course": "OBHR 4361",
+            "metadata": { "id": 53 }
           }
-        ]
+        ],
+        "metadata": { "id": 43 }
       },
-
       {
         "matcher": "FreeElectiveRequirement",
         "required_hours": 9,
-        "excluded_courses": []
+        "excluded_courses": [],
+        "metadata": { "id": 54 }
       }
     ]
   }

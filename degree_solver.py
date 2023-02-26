@@ -24,12 +24,23 @@ class Bypass:
     or to allow something that doesn't normally happen. One common example
     of this is replacing CS 1136 with hours from a different CS course.
 
-    Each bypass is a triple containing a course, a requirement, and a number of hours to assign.
+    Each bypass contains a course, total # of hours, and a mapping of requirements to hours.
+
+    TODO: THIS IS CURRENTLY NOT BEING USED
+
     """
 
     name: str
-    requirement: str
+    requirements: dict[
+        str, int
+    ]  # Each requirement is denoted by its id & takes in a certain # of hours
     hours: int
+
+
+@dataclass
+class BypassInput:
+    core: list[str]  # Contains name of each core requirement
+    major: dict[str, list[int]]  # Contains index of each major requirement
 
 
 class DegreeRequirementType(Enum):
@@ -44,7 +55,6 @@ class RequirementOutput:
     requirement_name: str
     is_fulfilled: bool
     valid_courses: list[str]
-    bypasses: list[Bypass]
 
 
 @dataclass
@@ -113,13 +123,13 @@ class DegreeRequirementsSolver:
         self,
         courses: list[str],
         requirements: DegreeRequirementsInput,
-        bypasses: list[Bypass],
+        bypasses: BypassInput,
     ) -> None:
         self.courses = set(courses)
         self.degree_requirements = self.load_requirements(requirements)
         self.validate_core = requirements.core
-        self.bypasses = bypasses
         self.solved_core = AssignmentStore()
+        self.bypasses = bypasses
 
     def load_core(self) -> GraduationRequirementsSolver:
         core_solver = GraduationRequirementsSolver()
@@ -152,7 +162,7 @@ class DegreeRequirementsSolver:
         return degree_requirements
 
     def solve(self) -> DegreeRequirementsSolver:
-        # Run for major
+        # Run for core
         if self.validate_core:
             core_solver = self.load_core()
             self.solved_core = core_solver.solve(
@@ -166,10 +176,19 @@ class DegreeRequirementsSolver:
                     if fulfilled:
                         break
 
+            # Handle requirements bypasses for major
+            if not degree_req.name in self.bypasses.major:
+                continue
+            major_bypasses = self.bypasses.major[degree_req.name]
+            # Iterate through all of the requirements
+            # Mark it as fulfilled if it's in the list
+            for requirement in degree_req.requirements:
+                for bypass_idx in major_bypasses:
+                    requirement.override_fill(bypass_idx)
+
         return self
 
     def can_graduate(self) -> bool:
-
         # TODO: Maybe change logic in future
         # Run core on demand if needed
 
@@ -219,7 +238,6 @@ class DegreeRequirementsSolver:
 def format_core_reqs(reqs: dict[str, dict[str, Any]]) -> list[AbstractRequirement]:
     core_reqs = []
     for req_name, req_info in reqs.items():
-
         # Create set for all valid courses
         valid_courses = req_info["valid_courses"]
 
@@ -231,7 +249,7 @@ def format_core_reqs(reqs: dict[str, dict[str, Any]]) -> list[AbstractRequiremen
                 for course in req_info["courses"]
             ],
             valid_courses,
-            {"name": req_name},
+            {"name": req_name, "id": req_name},
         )
 
         core_reqs.append(core_req)

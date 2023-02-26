@@ -23,9 +23,14 @@ class AbstractRequirement(ABC):
     def is_fulfilled(self) -> bool:
         pass
 
+    @abstractmethod
+    def override_fill(self, index: int) -> bool:
+        pass
+
     @dataclass
     class JSON(ABC):
         matcher: str
+        metadata: dict[str, Any]
 
     @classmethod
     @abstractmethod
