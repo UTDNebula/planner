@@ -116,13 +116,16 @@ export const planRouter = router({
             }
             const flag = checkForPreRecursive(preReqsForCourse as any as CollectionOptions);
             preReqHash.set(course, flag);
-            console.log({ course, flag });
+            // console.log({ course, flag });
           }
         }
       };
 
       await prereqValidation(planData);
 
+preReqHash.forEach((value, key) => {
+console.log({ key, value });
+})
       const { semesters } = planData;
       // FIX THIS LATER IDC RN
       const temporaryFunctionPlzDeleteThis = async () => {
@@ -153,7 +156,7 @@ export const planRouter = router({
 
       const body = formatDegreeValidationRequest(hehe, degreeRequirements?.major);
 
-      const validationData = await fetch(`${process.env.VALIDATOR}/validate-degree-plan`, {
+      const validationData = await fetch(`${process.env.VALIDATOR}`, {
         method: 'POST',
         body: JSON.stringify(body),
         headers: {
