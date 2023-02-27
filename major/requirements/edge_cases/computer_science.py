@@ -124,7 +124,7 @@ class MajorGuidedElectiveRequirement(AbstractRequirement):
         return json.dumps(
             {
                 "matcher": "CS Guided Electives",
-                "metadata": {"name": "CS Guided Electives"},
+                "metadata": self.metadata,
                 "starts_with": self.starts_with,
                 "also_fulfills": [
                     json.loads(req.to_json()) for req in self.also_fulfills

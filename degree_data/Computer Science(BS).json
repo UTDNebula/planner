@@ -234,7 +234,10 @@
           }
         ],
         "matcher": "CSGuidedElectiveRequirement",
-        "metadata": { "id": "Computer Science(BS)-37" },
+        "metadata": {
+          "id": "Computer Science(BS)-37",
+          "name": "CS Guided Electives"
+        },
         "required_count": 3,
         "starts_with": "CS 43"
       },
