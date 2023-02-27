@@ -60,6 +60,7 @@ export default function Planner({
     handleDeselectAllCourses,
     handleSelectCourses,
     handleDeleteAllSelectedCourses,
+    title,
   } = useSemestersContext();
 
   // Course that is currently being dragged
@@ -155,7 +156,7 @@ export default function Planner({
         </DragOverlay>
 
         <section ref={ref} className="flex max-h-screen flex-grow flex-col gap-y-6 p-4 pb-0">
-          <Toolbar title="Plan Your Courses" major="Computer Science" studentName="Dev" />
+          <Toolbar title={title} major="Computer Science" studentName="Dev" />
 
           <TransferBank transferCredits={transferCredits} />
 
