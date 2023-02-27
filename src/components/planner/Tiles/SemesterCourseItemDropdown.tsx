@@ -62,7 +62,7 @@ const SemesterCourseItemDropdown: FC<SemesterTileDropdownProps> = ({
 
             <DropdownMenu.Portal>
               <DropdownMenu.SubContent
-              data-no-dnd="true"
+                data-no-dnd="true"
                 className={contentClasses + ' animate-[slideLeftAndFade_0.3s]'}
                 sideOffset={-10}
                 alignOffset={0}
