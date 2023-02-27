@@ -74,7 +74,7 @@ class MajorGuidedElectiveRequirement(AbstractRequirement):
             self.override_filled or self.__true_fulfilled_total() >= self.required_count
         )
 
-    def override_fill(self, index: int) -> bool:
+    def override_fill(self, index: str) -> bool:
         if self.metadata["id"] == index:
             self.override_filled = True
             return True

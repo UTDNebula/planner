@@ -57,7 +57,9 @@ GRADUATEABLE_COURSES = [
 
 
 solver = DegreeRequirementsSolver(
-    GRADUATEABLE_COURSES, input, BypassInput([], {"Computer Science(BS)": [0]})
+    GRADUATEABLE_COURSES,
+    input,
+    BypassInput([], {"Computer Science(BS)": ["Computer Science(BS)-0"]}),
 )
 
 

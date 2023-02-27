@@ -40,7 +40,7 @@ class Bypass:
 @dataclass
 class BypassInput:
     core: list[str]  # Contains name of each core requirement
-    major: dict[str, list[int]]  # Contains index of each major requirement
+    major: dict[str, list[str]]  # Contains index of each major requirement
 
 
 class DegreeRequirementType(Enum):
