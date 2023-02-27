@@ -31,6 +31,7 @@ export interface SemestersContextState {
     courseName: string,
     semesterId: string,
   ) => void;
+  handleSemesterColorChange: (color: keyof typeof tagColors, semesterId: string) => void;
 }
 
 export const SemestersContext = createContext<SemestersContextState | null>(null);
@@ -82,6 +83,11 @@ export type SemestersReducerAction =
   | {
       type: 'changeCourseColor';
       courseCode: string;
+      color: keyof typeof tagColors;
+      semesterId: string;
+    }
+  | {
+      type: 'changeSemesterColor';
       color: keyof typeof tagColors;
       semesterId: string;
     };
@@ -231,6 +237,11 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
               courseColors,
             };
           });
+        case 'changeSemesterColor':
+          return state.map((semester) => {
+            if (semester.id.toString() !== action.semesterId) return semester;
+            return { ...semester, color: action.color };
+          });
         default:
           return state;
       }
@@ -262,6 +273,8 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
   const deleteAllCourses = trpc.plan.deleteAllCoursesFromSemester.useMutation();
 
   const colorChange = trpc.plan.changeCourseColor.useMutation();
+
+  const semesterColorChange = trpc.plan.changeSemesterColor.useMutation();
 
   const handleDeleteAllCoursesFromSemester = (semester: Semester) => {
     handleDeselectCourses(semester.courses.map((course) => course.id.toString()));
@@ -448,6 +461,13 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
     });
   };
 
+  const handleSemesterColorChange = (color: keyof typeof tagColors, semesterId: string) => {
+    dispatchSemesters({ type: 'changeSemesterColor', semesterId, color });
+    addTask({
+      args: { color, semesterId },
+      func: ({ color, semesterId }) => semesterColorChange.mutateAsync({ color, semesterId }),
+    });
+  };
   return (
     <SemestersContext.Provider
       value={{
@@ -465,6 +485,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
         handleRemoveYear,
         handleDeleteAllCoursesFromSemester,
         handleColorChange,
+        handleSemesterColorChange,
       }}
     >
       {children}
@@ -477,6 +498,7 @@ const parsePlanSemestersFromPlan = (plan: Plan): Semester[] => {
     code: sem.code,
     id: new ObjectID(sem.id),
     courseColors: sem.courseColors,
+    color: Object.keys(tagColors).includes(sem.color) ? (sem.color as keyof typeof tagColors) : '',
     courses: sem.courses.map((course: string, index) => ({
       id: new ObjectID(),
       code: course,

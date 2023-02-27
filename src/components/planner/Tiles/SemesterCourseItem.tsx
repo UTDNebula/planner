@@ -1,5 +1,5 @@
 import { UniqueIdentifier, useDraggable } from '@dnd-kit/core';
-import React, { ComponentPropsWithoutRef, FC, forwardRef } from 'react';
+import React, { ComponentPropsWithoutRef, FC, forwardRef, useState } from 'react';
 
 import { DragDataFromSemesterTile, DraggableCourse, Semester } from '../types';
 import CheckIcon from '@mui/icons-material/Check';
@@ -16,7 +16,6 @@ export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'>
   onColorChange?: (color: keyof typeof tagColors) => void;
 }
 
-// TODO(json) return to this
 /** UI implementation of a semester course */
 /* eslint-disable react/prop-types */
 export const MemoizedSemesterCourseItem = React.memo(
@@ -32,42 +31,49 @@ export const MemoizedSemesterCourseItem = React.memo(
     },
     ref,
   ) {
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+
     return (
       <div
         ref={ref}
         {...props}
         data-tip="Drag!"
-        className={` tooltip tooltip-left flex h-[40px] w-full cursor-grab flex-row items-center rounded-md border border-neutral-200 bg-generic-white py-4 px-2`}
+        className={` tooltip tooltip-left flex h-min w-full cursor-grab flex-row items-center overflow-hidden rounded-md border border-neutral-200 bg-generic-white`}
+        onClick={() => setDropdownOpen((prev) => !prev)}
       >
         <div className={`h-full w-2 ${tagColors[course.color]}`}></div>
-        <div className="flex items-center justify-center">
-          <div className="flex flex-row items-center gap-x-3">
-            <SemesterCourseItemDropdown
-              changeColor={(color) => onColorChange && onColorChange(color)}
-              deleteCourse={() => onDeleteCourse && onDeleteCourse()}
-            />
-            <Checkbox
-              style={{ width: '20px', height: '20px' }}
-              checked={isSelected}
-              onCheckedChange={(checked) => {
-                if (checked && onSelectCourse) {
-                  onSelectCourse();
-                }
+        <div className="p-2">
+          <div className="flex items-center justify-center">
+            <div className="flex flex-row items-center gap-x-3">
+              <SemesterCourseItemDropdown
+                open={dropdownOpen}
+                onOpenChange={(open) => setDropdownOpen(open)}
+                changeColor={(color) => onColorChange && onColorChange(color)}
+                deleteCourse={() => onDeleteCourse && onDeleteCourse()}
+              />
+              <Checkbox
+                style={{ width: '20px', height: '20px' }}
+                checked={isSelected}
+                onCheckedChange={(checked) => {
+                  if (checked && onSelectCourse) {
+                    onSelectCourse();
+                  }
 
-                if (!checked && onDeselectCourse) {
-                  onDeselectCourse();
-                }
-              }}
-            />
-            <span className="text-[16px] text-[#1C2A6D]">{course.code}</span>
+                  if (!checked && onDeselectCourse) {
+                    onDeselectCourse();
+                  }
+                }}
+              />
+              <span className="text-[16px] text-[#1C2A6D]">{course.code}</span>
+            </div>
           </div>
-        </div>
-        <div className="ml-auto flex text-[12px] font-semibold">
-          {course.taken && (
-            <span className=" tooltip text-[#22C55E]" data-tip="Completed">
-              <CheckIcon fontSize="small" />
-            </span>
-          )}
+          <div className="ml-auto flex text-[12px] font-semibold">
+            {course.taken && (
+              <span className=" tooltip text-[#22C55E]" data-tip="Completed">
+                <CheckIcon fontSize="small" />
+              </span>
+            )}
+          </div>
         </div>
       </div>
     );

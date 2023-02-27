@@ -16,15 +16,19 @@ const contentClasses = 'w-64 rounded-md border border-neutral-300 bg-generic-whi
 export interface SemesterTileDropdownProps {
   deleteCourse: () => void;
   changeColor: (color: keyof typeof tagColors) => void;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }
 
 const SemesterCourseItemDropdown: FC<SemesterTileDropdownProps> = ({
   deleteCourse,
   changeColor,
+  open,
+  onOpenChange,
 }) => {
   const id = new ObjectID().toString();
   return (
-    <DropdownMenu.Root>
+    <DropdownMenu.Root open={open} onOpenChange={onOpenChange}>
       <DropdownMenu.Trigger asChild>
         <button className="cursor-pointer rounded-md py-[2px] transition-all duration-300 hover:bg-neutral-100">
           <DragIndicatorIcon fontSize="inherit" className="text-[16px] text-neutral-300" />
@@ -50,7 +54,7 @@ const SemesterCourseItemDropdown: FC<SemesterTileDropdownProps> = ({
             <DropdownMenu.SubTrigger className={itemClasses + ' justify-between border-none'}>
               <div className="flex items-center gap-x-3">
                 <ColorSwatchIcon />
-                <span>Move to</span>
+                <span>Change color</span>
               </div>
               <ChevronIcon className="h-3 w-3" />
             </DropdownMenu.SubTrigger>

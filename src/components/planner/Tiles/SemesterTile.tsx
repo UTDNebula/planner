@@ -8,6 +8,7 @@ import DraggableSemesterCourseItem from './SemesterCourseItem';
 import ChevronIcon from '@/icons/ChevronIcon';
 import SemesterTileDropdown from './SemesterTileDropdown';
 import { useSemestersContext } from '../SemesterContext';
+import { tagColors } from '../utils';
 
 export interface SemesterTileProps {
   semester: Semester;
@@ -31,6 +32,7 @@ export const MemoizedSemesterTile = React.memo(
       handleDeleteAllCoursesFromSemester,
       handleRemoveCourseFromSemester,
       courseIsSelected,
+      handleSemesterColorChange,
       handleColorChange,
     } = useSemestersContext();
 
@@ -38,52 +40,56 @@ export const MemoizedSemesterTile = React.memo(
     return (
       <div
         ref={ref}
-        className={`flex h-fit select-none flex-col gap-y-4 rounded-2xl border border-neutral-300 bg-white py-4 px-5`}
+        className={`flex h-fit select-none flex-col gap-y-2 overflow-hidden rounded-2xl border border-neutral-300 bg-white`}
       >
-        <article className="w-full">
-          <ChevronIcon
-            className={`${
-              open ? '-rotate-90' : 'rotate-90'
-            } ml-auto h-3 w-3 transform cursor-pointer text-neutral-500 transition-all duration-500`}
-            fontSize="inherit"
-            onClick={() => setOpen(!open)}
-          />
-        </article>
-        <div className="flex flex-row items-center justify-between">
-          <div className="flex h-10 flex-row items-center justify-center">
-            <h3 className={`text-2xl font-semibold text-primary-900`}>
-              {displaySemesterCode(semester.code)}
-            </h3>
-          </div>
-          <SemesterTileDropdown
-            deleteAllCourses={() => handleDeleteAllCoursesFromSemester(semester)}
-            selectAllCourses={() =>
-              handleSelectCourses(semester.courses.map((course) => course.id.toString()))
-            }
-          />
-        </div>
-
-        <article
-          className={`flex flex-col gap-y-4 overflow-hidden transition-all duration-700 ${
-            open ? 'max-h-[999px]' : 'max-h-0'
-          }`}
-        >
-          {semester.courses.map((course) => (
-            <DraggableSemesterCourseItem
-              isSelected={courseIsSelected(course.id.toString())}
-              onSelectCourse={() => handleSelectCourses([course.id.toString()])}
-              onDeselectCourse={() => handleDeselectCourses([course.id.toString()])}
-              onDeleteCourse={() => handleRemoveCourseFromSemester(semester, course)}
-              onColorChange={(color) =>
-                handleColorChange(color, course.code, semester.id.toString())
-              }
-              key={course.id.toString()}
-              dragId={getDragId(course, semester)}
-              course={course}
-              semester={semester}
+        <span className={`h-2 w-full ${tagColors[semester.color]}`}></span>
+        <div className="flex flex-col gap-y-4 py-4 px-5">
+          <article className="w-full">
+            <ChevronIcon
+              className={`${
+                open ? '-rotate-90' : 'rotate-90'
+              } ml-auto h-3 w-3 transform cursor-pointer text-neutral-500 transition-all duration-500`}
+              fontSize="inherit"
+              onClick={() => setOpen(!open)}
             />
-          ))}
-        </article>
+          </article>
+          <div className="flex flex-row items-center justify-between">
+            <div className="flex h-10 flex-row items-center justify-center">
+              <h3 className={`text-2xl font-semibold text-primary-900`}>
+                {displaySemesterCode(semester.code)}
+              </h3>
+            </div>
+            <SemesterTileDropdown
+              changeColor={(color) => handleSemesterColorChange(color, semester.id.toString())}
+              deleteAllCourses={() => handleDeleteAllCoursesFromSemester(semester)}
+              selectAllCourses={() =>
+                handleSelectCourses(semester.courses.map((course) => course.id.toString()))
+              }
+            />
+          </div>
+
+          <article
+            className={`flex flex-col gap-y-4 overflow-hidden transition-all duration-700 ${
+              open ? 'max-h-[999px]' : 'max-h-0'
+            }`}
+          >
+            {semester.courses.map((course) => (
+              <DraggableSemesterCourseItem
+                isSelected={courseIsSelected(course.id.toString())}
+                onSelectCourse={() => handleSelectCourses([course.id.toString()])}
+                onDeselectCourse={() => handleDeselectCourses([course.id.toString()])}
+                onDeleteCourse={() => handleRemoveCourseFromSemester(semester, course)}
+                onColorChange={(color) =>
+                  handleColorChange(color, course.code, semester.id.toString())
+                }
+                key={course.id.toString()}
+                dragId={getDragId(course, semester)}
+                course={course}
+                semester={semester}
+              />
+            ))}
+          </article>
+        </div>
       </div>
     );
   }),

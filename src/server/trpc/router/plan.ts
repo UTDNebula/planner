@@ -413,7 +413,24 @@ export const planRouter = router({
         console.log(error);
       }
     }),
-
+  changeSemesterColor: protectedProcedure
+    .input(
+      z.object({
+        semesterId: z.string(),
+        color: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      await ctx.prisma.semester.update({
+        where: {
+          id: input.semesterId,
+        },
+        data: {
+          color: input.color,
+        },
+      });
+      return true;
+    }),
   changeCourseColor: protectedProcedure
     .input(
       z.object({
