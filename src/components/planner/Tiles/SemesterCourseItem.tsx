@@ -41,8 +41,8 @@ export const MemoizedSemesterCourseItem = React.memo(
         className={` tooltip tooltip-left flex h-min w-full cursor-grab flex-row items-center overflow-hidden rounded-md border border-neutral-200 bg-generic-white`}
         onClick={() => setDropdownOpen((prev) => !prev)}
       >
-        <div className={`h-full w-2 ${tagColors[course.color]}`}></div>
-        <div className="p-2">
+        <div className={`h-full w-2 transition-all ${tagColors[course.color]}`}></div>
+        <div className="p-1">
           <div className="flex items-center justify-center">
             <div className="flex flex-row items-center gap-x-3">
               <SemesterCourseItemDropdown
@@ -65,10 +65,10 @@ export const MemoizedSemesterCourseItem = React.memo(
                   }
                 }}
               />
-              <span className="text-[16px] text-[#1C2A6D]">{course.code}</span>
+              <span className="text-sm text-[#1C2A6D]">{course.code}</span>
             </div>
           </div>
-          <div className="ml-auto flex text-[12px] font-semibold">
+          <div className="ml-auto flex text-xs font-semibold">
             {course.taken && (
               <span className=" tooltip text-[#22C55E]" data-tip="Completed">
                 <CheckIcon fontSize="small" />

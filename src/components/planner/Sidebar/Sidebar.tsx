@@ -56,11 +56,11 @@ function CourseSelectorContainer({
   }, [results, courses]);
 
   return (
-    <div className="h-screen w-[35%] min-w-[25%] resize-x overflow-x-hidden overflow-y-scroll">
-      <div className="flex h-fit min-h-full w-full flex-col gap-y-8 bg-white p-4">
-        <div className="flex flex-col gap-2">
-          <h1 className="text-3xl font-medium">Plan Requirements</h1>
-          <h6 className="text-xl font-medium text-gray-400">Drag courses onto your plan</h6>
+    <div className="h-screen w-[30%] min-w-[25%] resize-x overflow-x-hidden overflow-y-scroll">
+      <div className="flex h-fit min-h-full w-full flex-col gap-y-4 bg-white p-4">
+        <div className="flex flex-col">
+          <h1 className="text-2xl font-medium tracking-tight">Plan Requirements</h1>
+          <h6 className="text-sm tracking-tight text-gray-400">Drag courses onto your plan</h6>
         </div>
         <SearchBarTwo updateQuery={updateQuery} placeholder="Search courses" />
 
