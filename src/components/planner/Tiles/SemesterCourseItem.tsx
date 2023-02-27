@@ -128,7 +128,10 @@ export const MemoizedSemesterCourseItem = React.memo(
           id="mouse-over-popover"
           sx={{
             pointerEvents: 'none',
-            width: "500rem"
+            width: "full",
+            whiteSpace: 'normal',
+            height: "full"
+            
           }}
           open={open}
           anchorEl={anchorEl}
