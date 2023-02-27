@@ -1,7 +1,7 @@
 import CloseIcon from '@mui/icons-material/Close';
+import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import ChoosePlanType from './ChoosePlanType';
-import CustomPlan from './CustomPlan';
 import TemplateView from './TemplateView';
 
 interface TemplateModalProps {
@@ -9,6 +9,8 @@ interface TemplateModalProps {
 }
 export default function TemplateModal({ setOpenTemplateModal }: TemplateModalProps) {
   const [page, setPage] = useState(0);
+
+  const CustomPlan = dynamic(() => import('@/components/template/CustomPlan'), { ssr: false });
   const modalScreens = [
     <ChoosePlanType key={0} setPage={setPage} />,
     <CustomPlan key={1} setPage={setPage} />,

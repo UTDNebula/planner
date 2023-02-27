@@ -6,7 +6,7 @@ export type DegreeRequirements = {
  * A DegreeRequirement is a specific requirement
  * i.e. Core Curriculum, Computer Science, Psychology
  */
-export type DegreeRequirement = {
+export type DegreeRequirement = Requirement & {
   name: string;
   type: string;
   requirements: RequirementGroupTypes[];

@@ -3,7 +3,7 @@ import { TRPCError } from '@trpc/server';
 import { ObjectID } from 'bson';
 import { z } from 'zod';
 
-import { createNewYear } from '@/utils/utilFunctions';
+import { createNewYear, isSemCodeEqual } from '@/utils/utilFunctions';
 
 import { protectedProcedure, router } from '../trpc';
 
@@ -109,22 +109,35 @@ export const userRouter = router({
     }),
   /**
    * Create a new user plan
-   *  - takes in plan name, major,
-   *  - in future, add start & end semesters, and whether or not to sync credits
+   *  - takes in plan name, major, transfer credits, and courses already taken
    */
   createUserPlan: protectedProcedure
-    .input(z.object({ name: z.string(), major: z.string() }))
+    .input(
+      z.object({
+        name: z.string(),
+        major: z.string(),
+        takenCourses: z.array(
+          z.object({
+            courseCode: z.string(),
+            semesterCode: z.object({ semester: z.enum(['f', 's', 'u']), year: z.number() }),
+          }),
+        ),
+        transferCredits: z.array(z.string()),
+      }),
+    )
     .mutation(async ({ ctx, input }) => {
       const userId = ctx.session.user.id;
       const planId = new ObjectID().toString();
 
-      const { name, major } = input;
+      const { name, major, takenCourses, transferCredits } = input;
+      const bypasses: string[] = [];
 
       // Create degree requirements
       const degreeRequirements: Prisma.DegreeRequirementsUncheckedCreateNestedOneWithoutPlanInput =
         {
           create: {
             major, // Hardcode for now
+            bypasses,
           },
         };
 
@@ -132,17 +145,6 @@ export const userRouter = router({
         where: { id: userId },
         select: {
           profile: true,
-        },
-      });
-
-      // Fetch credits; will add to semesters later
-      const creditsData = await ctx.prisma.credit.findMany({
-        where: {
-          userId: ctx.session.user.id,
-        },
-        select: {
-          courseCode: true,
-          semesterCode: true,
         },
       });
 
@@ -171,14 +173,13 @@ export const userRouter = router({
           ...createNewYear({ semester: 'f', year: i }).map((sem) => {
             // Add credits to each semester
             const courses: string[] = [];
-            creditsData.map((credit) => {
-              if (
-                credit.semesterCode.semester === sem.code.semester &&
-                credit.semesterCode.year === sem.code.year
-              ) {
-                courses.push(credit.courseCode);
+
+            for (const course of takenCourses) {
+              if (isSemCodeEqual(course.semesterCode, sem.code)) {
+                courses.push(course.courseCode);
               }
-            });
+            }
+
             return {
               ...sem,
               courseColors: Array(courses.length).fill(''),
@@ -198,6 +199,7 @@ export const userRouter = router({
         name: name,
         semesters: semesters,
         requirements: degreeRequirements,
+        transferCredits,
       };
 
       const plans: Prisma.PlanUpdateManyWithoutUserNestedInput = {
@@ -317,11 +319,14 @@ export const userRouter = router({
           create: semesterData, // Prepopulate with semester
         };
 
+        const bypasses: string[] = [];
+
         // Create degree requirements
         const degreeRequirements: Prisma.DegreeRequirementsUncheckedCreateNestedOneWithoutPlanInput =
           {
             create: {
               major,
+              bypasses,
             },
           };
 

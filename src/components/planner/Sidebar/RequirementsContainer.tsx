@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Accordion from './Accordion';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -15,6 +15,7 @@ import {
 import { GetDragIdByCourseAndReq } from '../types';
 import { RecursiveRequirement } from './RecursiveRequirement';
 import { DragIndicator } from '@mui/icons-material';
+import { useSemestersContext } from '../SemesterContext';
 
 function RequirementContainerHeader({
   name,
@@ -57,6 +58,7 @@ const getRequirementGroup = (
   name: string;
   status: string;
   description: string;
+  req: RequirementGroupTypes;
   getData: () => Promise<RequirementTypes[]>;
   filterFunction: (elm: RequirementTypes, query: string) => boolean;
 } => {
@@ -70,11 +72,17 @@ const getRequirementGroup = (
       case 'Course':
         return elm.course.toLowerCase().includes(query);
       case 'Or':
-        return elm.metadata ? elm.metadata.name.toLowerCase().includes(query) : true;
+        return elm.metadata && elm.metadata.name
+          ? elm.metadata.name.toLowerCase().includes(query)
+          : true;
       case 'And':
-        return elm.metadata ? elm.metadata.name.toLowerCase().includes(query) : true;
+        return elm.metadata && elm.metadata.name
+          ? elm.metadata.name.toLowerCase().includes(query)
+          : true;
       case 'Select':
-        return elm.metadata ? elm.metadata.name.toLowerCase().includes(query) : true;
+        return elm.metadata && elm.metadata.name
+          ? elm.metadata.name.toLowerCase().includes(query)
+          : true;
       default:
         return true;
     }
@@ -86,6 +94,7 @@ const getRequirementGroup = (
         name: degreeRequirement.metadata.name,
         status: `${degreeRequirement.num_fulfilled_requirements} / ${degreeRequirement.num_requirements} requirements`,
         description: degreeRequirement.metadata.description ?? '',
+        req: degreeRequirement,
         getData: () => Promise.resolve(degreeRequirement.requirements),
         filterFunction: filterFunc,
       };
@@ -94,15 +103,17 @@ const getRequirementGroup = (
         name: degreeRequirement.metadata.name,
         status: `${degreeRequirement.fulfilled_hours} / ${degreeRequirement.required_hours} hours`,
         description: degreeRequirement.metadata.description ?? '',
+        req: degreeRequirement,
         getData: () => Promise.resolve(degreeRequirement.requirements),
         filterFunction: filterFunc,
       };
     case 'FreeElectives':
       // Some function to get courses
       return {
-        name: degreeRequirement.metadata.name,
+        name: 'Free Electives',
         status: `${degreeRequirement.fulfilled_hours} / ${degreeRequirement.required_hours} hours`,
         description: degreeRequirement.metadata.description ?? '',
+        req: degreeRequirement,
         getData: async () =>
           q.data
             ? q.data.map((c) => ({
@@ -116,9 +127,10 @@ const getRequirementGroup = (
       };
     case 'CS Guided Electives':
       return {
-        name: degreeRequirement.metadata.name,
+        name: degreeRequirement.metadata.name ?? 'CS Guided Electives',
         status: `${degreeRequirement.fulfilled_count} / ${degreeRequirement.required_count} courses`,
         description: degreeRequirement.metadata.description ?? '',
+        req: degreeRequirement,
         getData: async () =>
           q.data
             ? (q.data
@@ -135,6 +147,7 @@ const getRequirementGroup = (
       return {
         name: '',
         status: 'NOT SUPPORTED',
+        req: degreeRequirement,
         description: '',
         getData: () => Promise.resolve([] as RequirementTypes[]),
         filterFunction: (_, __) => true,
@@ -145,16 +158,11 @@ const getRequirementGroup = (
 
 export const ProgressComponent = ({ value, max }: { value: number; max: number }) => {
   return (
-    <div className="relative flex w-fit flex-col items-center justify-center">
-      <span className="w-fit text-[10px]">
+    <div className="flex w-24 flex-col items-center justify-center">
+      <span className="w-max text-[10px]">
         {value}/{max} done
       </span>
-      <progress
-        id="file"
-        value={value}
-        max={max}
-        className="h-2 w-24 appearance-none rounded-full"
-      />
+      <progress value={value} max={max} className="h-2 w-full appearance-none rounded-full" />
     </div>
   );
 };
@@ -200,6 +208,8 @@ export default function RequirementsContainer({
     setCarousel(!carousel);
   }
 
+  const { bypasses } = useSemestersContext();
+
   return (
     <RequirementsCarousel
       overflow={overflow}
@@ -208,8 +218,8 @@ export default function RequirementsContainer({
       requirementsList={
         <Accordion
           header={
-            <div className="flex w-full flex-row items-center justify-between">
-              <div className="my-4 whitespace-nowrap text-2xl font-semibold">
+            <div className="flex w-full flex-row items-center justify-between gap-2">
+              <div className="my-1 whitespace-nowrap text-xl font-semibold tracking-tight">
                 {degreeRequirement.name}
               </div>
 
@@ -222,28 +232,42 @@ export default function RequirementsContainer({
         >
           <>
             {degreeRequirement.requirements.map((elm, idx) => {
+              const { name } = getRequirementGroup(elm);
               const { value, max } = displayRequirementProgress(elm);
+
+              const id = elm.metadata.id.toString();
+
+              const hasBypass = bypasses.includes(id);
+
+              const rightValue = hasBypass ? max : value;
+
               return (
                 <div
-                  className="flex items-center gap-x-4 rounded-md border border-neutral-300 px-5 py-4"
+                  className="flex w-full items-center justify-between gap-x-1 rounded-md border border-neutral-300 px-5 py-2"
                   key={idx}
                 >
-                  <DragIndicator fontSize="inherit" className="mr-3 text-[16px] text-[#D4D4D4]" />
-                  <div className="max-w-[50%] overflow-hidden text-ellipsis whitespace-nowrap text-sm">
-                    {elm.metadata ? elm.metadata.name : 'hi'}
-                  </div>
-                  <div className="flex flex-row items-center px-[5px] text-[11px]">
-                    <ProgressComponent value={value} max={max} />
+                  <div className="flex max-w-[65%] items-center gap-x-1">
+                    {/* <DragIndicator fontSize="inherit" className="mr-3 text-[16px] text-[#D4D4D4]" /> */}
+
+                    <div className="overflow-hidden text-ellipsis whitespace-nowrap text-sm">
+                      {name}
+                    </div>
                   </div>
 
-                  <button
-                    onClick={() => {
-                      toggleCarousel();
-                      setRequirementIdx(idx);
-                    }}
-                  >
-                    <ChevronRightIcon />
-                  </button>
+                  <div className="flex">
+                    <div className="flex flex-row items-center px-[5px] text-[11px]">
+                      <ProgressComponent value={rightValue} max={max} />
+                    </div>
+
+                    <button
+                      onClick={() => {
+                        toggleCarousel();
+                        setRequirementIdx(idx);
+                      }}
+                    >
+                      <ChevronRightIcon />
+                    </button>
+                  </div>
                 </div>
               );
             })}
@@ -280,7 +304,7 @@ function RequirementContainer({
 
   const { results, updateQuery } = useSearch({
     getData: getData,
-    initialQuery: 'C',
+    initialQuery: '',
     filterFn: filterFunction,
   });
 
@@ -288,11 +312,23 @@ function RequirementContainer({
     updateQuery('');
   }, [degreeRequirement]);
 
+  const { planId, bypasses, handleAddBypass, handleRemoveBypass } = useSemestersContext();
+
+  const hasBypass = bypasses.includes(degreeRequirement.metadata.id.toString());
+
+  const handleUpdateBypass = () => {
+    hasBypass
+      ? handleRemoveBypass({ planId, requirement: degreeRequirement.metadata.id.toString() })
+      : handleAddBypass({ planId, requirement: degreeRequirement.metadata.id.toString() });
+  };
+
+  // Handles logic for adding bypass to requirement
   return (
     <>
       <RequirementContainerHeader name={name} status={status} setCarousel={setCarousel} />
       <div className="text-[14px]">{description}</div>
-      <div className=" flex h-[300px] flex-col gap-y-2 overflow-x-hidden overflow-y-scroll">
+
+      <div className=" flex h-full flex-col gap-y-2 overflow-x-hidden overflow-y-scroll">
         <RequirementSearchBar updateQuery={updateQuery} />
         {results.map((req, idx) => {
           return (
@@ -307,6 +343,9 @@ function RequirementContainer({
           );
         })}
       </div>
+      <button onClick={handleUpdateBypass}>
+        {hasBypass ? 'Mark as Incomplete' : 'Mark as Completed'}
+      </button>
     </>
   );
 }

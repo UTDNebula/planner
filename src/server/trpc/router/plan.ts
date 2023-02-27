@@ -6,6 +6,7 @@ import { createNewYear } from '@/utils/utilFunctions';
 
 import { protectedProcedure, router } from '../trpc';
 import { Prisma } from '@prisma/client';
+import { ObjectID } from 'bson';
 
 export const planRouter = router({
   getUserPlans: protectedProcedure.query(async ({ ctx }) => {
@@ -38,6 +39,7 @@ export const planRouter = router({
           name: true,
           id: true,
           semesters: true,
+          transferCredits: true,
         },
       });
 
@@ -48,7 +50,7 @@ export const planRouter = router({
         });
       }
       return { plan: planData };
-    } catch (error) {
+   } catch (error) {
       console.log('ERROR');
       console.log(error);
     }
@@ -361,7 +363,24 @@ export const planRouter = router({
         console.log(error);
       }
     }),
-
+  changeSemesterColor: protectedProcedure
+    .input(
+      z.object({
+        semesterId: z.string(),
+        color: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      await ctx.prisma.semester.update({
+        where: {
+          id: input.semesterId,
+        },
+        data: {
+          color: input.color,
+        },
+      });
+      return true;
+    }),
   changeCourseColor: protectedProcedure
     .input(
       z.object({
@@ -393,4 +412,83 @@ export const planRouter = router({
       }
       return true;
     }),
+  addBypass: protectedProcedure
+    .input(z.object({ planId: z.string(), requirement: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      try {
+        const { planId, requirement } = input;
+
+        const degreeRequirements = await ctx.prisma.degreeRequirements.findUnique({
+          where: {
+            planId,
+          },
+          select: {
+            bypasses: true,
+            id: true,
+          },
+        });
+
+        if (!degreeRequirements) {
+          throw 'No degree requirements';
+        }
+
+        const bypasses = [...degreeRequirements.bypasses, requirement];
+
+        const updatedDegreeRequirements = await ctx.prisma.degreeRequirements.update({
+          where: {
+            id: degreeRequirements.id,
+          },
+          data: {
+            bypasses,
+          },
+        });
+
+        return true;
+      } catch (e) {
+        console.error(e);
+      }
+    }),
+
+  removeBypass: protectedProcedure
+    .input(z.object({ planId: z.string(), requirement: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      try {
+        const { planId, requirement } = input;
+
+        const degreeRequirements = await ctx.prisma.degreeRequirements.findUnique({
+          where: {
+            planId,
+          },
+          select: {
+            bypasses: true,
+            id: true,
+          },
+        });
+
+        if (!degreeRequirements) {
+          throw 'No degree requirements';
+        }
+
+        // Create NewBypass if it doesn't exist
+        if (degreeRequirements.bypasses === null) {
+          throw 'No bypass';
+        }
+
+        // If we know the bypass model exists, we can update it directly
+        const newBypass = await ctx.prisma.degreeRequirements.update({
+          where: {
+            id: degreeRequirements.id, // Null-assertion bc type narrowing is being dumb here
+          },
+          data: {
+            bypasses: [...degreeRequirements.bypasses.filter((id) => id !== requirement)].sort(),
+          },
+        });
+
+        return newBypass.id;
+      } catch {}
+    }),
+  getBypasses: protectedProcedure.input(z.object({})).query(async ({ ctx, input }) => {
+    try {
+    } catch {}
+  }),
 });

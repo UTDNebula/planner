@@ -14,7 +14,6 @@ import { appRouter } from '@/server/trpc/router/_app';
 import { trpc } from '@/utils/trpc';
 import { generateSemesters } from '@/utils/utilFunctions';
 
-import PageOne from '../../components/onboarding/pg_1';
 import { PageTwoTypes } from '../../components/onboarding/pg_2';
 import { authOptions } from '../api/auth/[...nextauth]';
 import dynamic from 'next/dynamic';
@@ -52,7 +51,8 @@ const initialOnboardingData: OnboardingData = {
 };
 
 export default function OnboardingPage() {
-  // dynamically importing pg_2 bc library too phat
+  // dynamically importing pg_1 & 2 bc library too phat
+  const PageOne = dynamic(() => import('@/components/onboarding/pg_1'), { ssr: false });
   const PageTwo = dynamic(() => import('@/components/onboarding/pg_2'), { ssr: false });
 
   const [onboardingData, setOnboardingData] = useState<OnboardingData>(initialOnboardingData);

@@ -13,29 +13,26 @@ import { SemestersContextProvider } from '@/components/planner/SemesterContext';
 
 /**
  * A page that displays the details of a specific student academic plan.
- * TODO: Make context if we prop drill 3+ prop values
  */
 export default function PlanDetailPage(
   props: InferGetServerSidePropsType<typeof getServerSideProps>,
 ): JSX.Element {
   const { planId } = props;
   const planQuery = trpc.plan.getPlanById.useQuery(planId);
-  // const courseMapQuery = trpc.courses.publicGetSanitizedCourses.useQuery();
-  // const { data: courseData, isLoading: courseLoading } = courseMapQuery;
 
-  const { plan, validation, prereqData, isLoading, handlePlanDelete } = usePlan({ planId });
+  const { plan, validation, prereqData, bypasses, isPlanLoading, handlePlanDelete } = usePlan({ planId });
 
   // console.log(courseData);
   // Indicate UI loading
-  if (isLoading) {
+  if (isPlanLoading) {
     return <div>Loading</div>;
   }
 
   return (
-    <div className="flex h-screen max-h-screen w-screen flex-col overflow-hidden overflow-y-scroll">
-      {plan && validation && prereqData && (
-        <SemestersContextProvider planId={planId} plan={plan}>
-          <Planner degreeRequirements={validation} prereqData={prereqData} />
+    <div className="flex h-screen max-h-screen w-screen flex-col overflow-hidden">
+      {plan && validation && (
+        <SemestersContextProvider planId={planId} plan={plan} bypasses={bypasses ?? []}>
+          <Planner degreeRequirements={validation} transferCredits={plan.transferCredits} prereqData={prereqData} />
         </SemestersContextProvider>
       )}
       {/* <button onClick={handlePlanDelete}>Delete</button> */}
