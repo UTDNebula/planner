@@ -130,11 +130,7 @@ export const userRouter = router({
       const planId = new ObjectID().toString();
 
       const { name, major, takenCourses, transferCredits } = input;
-      const bypasses: Prisma.NewBypassCreateNestedOneWithoutDegreeRequirementsInput = {
-        create: {
-          requirements: [],
-        },
-      };
+      const bypasses: string[] = [];
 
       // Create degree requirements
       const degreeRequirements: Prisma.DegreeRequirementsUncheckedCreateNestedOneWithoutPlanInput =
@@ -323,11 +319,7 @@ export const userRouter = router({
           create: semesterData, // Prepopulate with semester
         };
 
-        const bypasses: Prisma.NewBypassCreateNestedOneWithoutDegreeRequirementsInput = {
-          create: {
-            requirements: [],
-          },
-        };
+        const bypasses: string[] = [];
 
         // Create degree requirements
         const degreeRequirements: Prisma.DegreeRequirementsUncheckedCreateNestedOneWithoutPlanInput =
