@@ -267,9 +267,17 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
 
   useEffect(() => console.log('stateChange', { semesters }), [semesters]);
 
-  const addCourse = trpc.plan.addCourseToSemester.useMutation();
+  const addCourse = trpc.plan.addCourseToSemester.useMutation({
+    async onSuccess() {
+      await utils.plan.getPlanById.invalidate();
+    },
+  });
 
-  const removeCourse = trpc.plan.removeCourseFromSemester.useMutation();
+  const removeCourse = trpc.plan.removeCourseFromSemester.useMutation({
+    async onSuccess() {
+      await utils.plan.getPlanById.invalidate();
+    },
+  });
 
   const moveCourse = trpc.plan.moveCourseFromSemester.useMutation();
 
@@ -277,7 +285,11 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
 
   const deleteYear = trpc.plan.deleteYear.useMutation();
 
-  const deleteAllCourses = trpc.plan.deleteAllCoursesFromSemester.useMutation();
+  const deleteAllCourses = trpc.plan.deleteAllCoursesFromSemester.useMutation({
+    async onSuccess() {
+      await utils.plan.getPlanById.invalidate();
+    },
+  });
 
   const colorChange = trpc.plan.changeCourseColor.useMutation();
 
@@ -481,12 +493,12 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
   // TODO: Refactor this code smell; context should prolly include degree requirements too? or just make a separate context for it
   const addBypass = trpc.plan.addBypass.useMutation({
     async onSuccess() {
-      await utils.credits.getCredits.invalidate();
+      await utils.plan.getPlanById.invalidate();
     },
   });
   const removeBypass = trpc.plan.removeBypass.useMutation({
     async onSuccess() {
-      await utils.credits.getCredits.invalidate();
+      await utils.plan.getPlanById.invalidate();
     },
   });
 
