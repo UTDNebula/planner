@@ -72,11 +72,17 @@ const getRequirementGroup = (
       case 'Course':
         return elm.course.toLowerCase().includes(query);
       case 'Or':
-        return elm.metadata ? elm.metadata.name.toLowerCase().includes(query) : true;
+        return elm.metadata && elm.metadata.name
+          ? elm.metadata.name.toLowerCase().includes(query)
+          : true;
       case 'And':
-        return elm.metadata ? elm.metadata.name.toLowerCase().includes(query) : true;
+        return elm.metadata && elm.metadata.name
+          ? elm.metadata.name.toLowerCase().includes(query)
+          : true;
       case 'Select':
-        return elm.metadata ? elm.metadata.name.toLowerCase().includes(query) : true;
+        return elm.metadata && elm.metadata.name
+          ? elm.metadata.name.toLowerCase().includes(query)
+          : true;
       default:
         return true;
     }
@@ -104,7 +110,7 @@ const getRequirementGroup = (
     case 'FreeElectives':
       // Some function to get courses
       return {
-        name: degreeRequirement.metadata.name,
+        name: 'Free Electives',
         status: `${degreeRequirement.fulfilled_hours} / ${degreeRequirement.required_hours} hours`,
         description: degreeRequirement.metadata.description ?? '',
         req: degreeRequirement,
@@ -118,11 +124,10 @@ const getRequirementGroup = (
               }))
             : [],
         filterFunction: filterFunc,
-        req: degreeRequirement,
       };
     case 'CS Guided Electives':
       return {
-        name: degreeRequirement.metadata.name,
+        name: degreeRequirement.metadata.name ?? 'CS Guided Electives',
         status: `${degreeRequirement.fulfilled_count} / ${degreeRequirement.required_count} courses`,
         description: degreeRequirement.metadata.description ?? '',
         req: degreeRequirement,
@@ -136,7 +141,6 @@ const getRequirementGroup = (
                 .filter((c) => c.course.includes('CS 43')) as CourseRequirement[])
             : [],
         filterFunction: filterFunc,
-        req: degreeRequirement,
       };
 
     default: {
@@ -228,16 +232,15 @@ export default function RequirementsContainer({
         >
           <>
             {degreeRequirement.requirements.map((elm, idx) => {
+              const { name } = getRequirementGroup(elm);
               const { value, max } = displayRequirementProgress(elm);
 
-              console.log(elm);
-              const hasBypass = bypasses.includes(
-                elm.metadata && elm.metadata.id ? elm.metadata.id.toString() : '@',
-              );
+              const id = elm.metadata.id.toString();
 
-              console.log(max);
-              console.log('TEST');
+              const hasBypass = bypasses.includes(id);
+
               const rightValue = hasBypass ? max : value;
+
               return (
                 <div
                   className="flex w-full items-center justify-between gap-x-1 rounded-md border border-neutral-300 px-5 py-2"
@@ -247,7 +250,7 @@ export default function RequirementsContainer({
                     {/* <DragIndicator fontSize="inherit" className="mr-3 text-[16px] text-[#D4D4D4]" /> */}
 
                     <div className="overflow-hidden text-ellipsis whitespace-nowrap text-sm">
-                      {elm.metadata ? elm.metadata.name : 'hi'}
+                      {name}
                     </div>
                   </div>
 
