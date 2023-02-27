@@ -11,26 +11,32 @@
     "major": [
       {
         "matcher": "AndRequirement",
-        "metadata": { "name": "Major Preparatory Courses", "id": 0 },
+        "metadata": {
+          "name": "Major Preparatory Courses",
+          "id": "Finance (BS)-0"
+        },
         "requirements": [
           {
             "matcher": "AndRequirement",
-            "metadata": { "name": "Major Preparatory Courses", "id": 1 },
+            "metadata": {
+              "name": "Major Preparatory Courses",
+              "id": "Finance (BS)-1"
+            },
             "requirements": [
               {
                 "matcher": "CourseRequirement",
                 "course": "ACCT 2301",
-                "metadata": { "id": 2 }
+                "metadata": { "id": "Finance (BS)-2" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ACCT 2302",
-                "metadata": { "id": 3 }
+                "metadata": { "id": "Finance (BS)-3" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BLAW 2301",
-                "metadata": { "id": 4 }
+                "metadata": { "id": "Finance (BS)-4" }
               },
               {
                 "matcher": "OrRequirement",
@@ -38,20 +44,20 @@
                   {
                     "matcher": "CourseRequirement",
                     "course": "MATH 1325",
-                    "metadata": { "id": 6 }
+                    "metadata": { "id": "Finance (BS)-6" }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "MATH 2413",
-                    "metadata": { "id": 7 }
+                    "metadata": { "id": "Finance (BS)-7" }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "MATH 2417",
-                    "metadata": { "id": 8 }
+                    "metadata": { "id": "Finance (BS)-8" }
                   }
                 ],
-                "metadata": { "id": 5 }
+                "metadata": { "id": "Finance (BS)-5" }
               },
               {
                 "matcher": "OrRequirement",
@@ -59,25 +65,25 @@
                   {
                     "matcher": "CourseRequirement",
                     "course": "MATH 1326",
-                    "metadata": { "id": 10 }
+                    "metadata": { "id": "Finance (BS)-10" }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "OPRE 3340",
-                    "metadata": { "id": 11 }
+                    "metadata": { "id": "Finance (BS)-11" }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "MATH 2414",
-                    "metadata": { "id": 12 }
+                    "metadata": { "id": "Finance (BS)-12" }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "MATH 2419",
-                    "metadata": { "id": 13 }
+                    "metadata": { "id": "Finance (BS)-13" }
                   }
                 ],
-                "metadata": { "id": 9 }
+                "metadata": { "id": "Finance (BS)-9" }
               },
               {
                 "matcher": "OrRequirement",
@@ -85,15 +91,15 @@
                   {
                     "matcher": "CourseRequirement",
                     "course": "MATH 2333",
-                    "metadata": { "id": 15 }
+                    "metadata": { "id": "Finance (BS)-15" }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "OPRE 3333",
-                    "metadata": { "id": 16 }
+                    "metadata": { "id": "Finance (BS)-16" }
                   }
                 ],
-                "metadata": { "id": 14 }
+                "metadata": { "id": "Finance (BS)-14" }
               },
               {
                 "matcher": "OrRequirement",
@@ -101,20 +107,20 @@
                   {
                     "matcher": "CourseRequirement",
                     "course": "OPRE 3360",
-                    "metadata": { "id": 18 }
+                    "metadata": { "id": "Finance (BS)-18" }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "STAT 3360",
-                    "metadata": { "id": 19 }
+                    "metadata": { "id": "Finance (BS)-19" }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "STAT 4351",
-                    "metadata": { "id": 20 }
+                    "metadata": { "id": "Finance (BS)-20" }
                   }
                 ],
-                "metadata": { "id": 17 }
+                "metadata": { "id": "Finance (BS)-17" }
               },
               {
                 "matcher": "SelectRequirement",
@@ -123,25 +129,25 @@
                   {
                     "matcher": "CourseRequirement",
                     "course": "BA 1310",
-                    "metadata": { "id": 22 }
+                    "metadata": { "id": "Finance (BS)-22" }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "BA 1320",
-                    "metadata": { "id": 23 }
+                    "metadata": { "id": "Finance (BS)-23" }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "ECON 2301",
-                    "metadata": { "id": 24 }
+                    "metadata": { "id": "Finance (BS)-24" }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "ECON 2302",
-                    "metadata": { "id": 25 }
+                    "metadata": { "id": "Finance (BS)-25" }
                   }
                 ],
-                "metadata": { "id": 21 }
+                "metadata": { "id": "Finance (BS)-21" }
               }
             ]
           }
@@ -149,7 +155,7 @@
       },
       {
         "matcher": "AndRequirement",
-        "metadata": { "name": "Major Core Courses", "id": 26 },
+        "metadata": { "name": "Major Core Courses", "id": "Finance (BS)-26" },
         "requirements": [
           {
             "matcher": "OrRequirement",
@@ -157,40 +163,40 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "BCOM 1300",
-                "metadata": { "id": 28 }
+                "metadata": { "id": "Finance (BS)-28" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BCOM 3300",
-                "metadata": { "id": 29 }
+                "metadata": { "id": "Finance (BS)-29" }
               }
             ],
-            "metadata": { "id": 27 }
+            "metadata": { "id": "Finance (BS)-27" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BCOM 4300",
-            "metadata": { "id": 30 }
+            "metadata": { "id": "Finance (BS)-30" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "IMS 3310",
-            "metadata": { "id": 31 }
+            "metadata": { "id": "Finance (BS)-31" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "FIN 3320",
-            "metadata": { "id": 32 }
+            "metadata": { "id": "Finance (BS)-32" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ITSS 3300",
-            "metadata": { "id": 33 }
+            "metadata": { "id": "Finance (BS)-33" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "OPRE 3310",
-            "metadata": { "id": 34 }
+            "metadata": { "id": "Finance (BS)-34" }
           },
           {
             "matcher": "OrRequirement",
@@ -198,46 +204,49 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "OBHR 3330",
-                "metadata": { "id": 36 }
+                "metadata": { "id": "Finance (BS)-36" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "OBHR 3310",
-                "metadata": { "id": 37 }
+                "metadata": { "id": "Finance (BS)-37" }
               }
             ],
-            "metadata": { "id": 35 }
+            "metadata": { "id": "Finance (BS)-35" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MKT 3300",
-            "metadata": { "id": 38 }
+            "metadata": { "id": "Finance (BS)-38" }
           }
         ]
       },
       {
         "matcher": "AndRequirement",
-        "metadata": { "name": "Major Related Courses", "id": 39 },
+        "metadata": {
+          "name": "Major Related Courses",
+          "id": "Finance (BS)-39"
+        },
         "requirements": [
           {
             "matcher": "CourseRequirement",
             "course": "FIN 3390",
-            "metadata": { "id": 40 }
+            "metadata": { "id": "Finance (BS)-40" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "FIN 4300",
-            "metadata": { "id": 41 }
+            "metadata": { "id": "Finance (BS)-41" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "FIN 4310",
-            "metadata": { "id": 42 }
+            "metadata": { "id": "Finance (BS)-42" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "FIN 4395",
-            "metadata": { "id": 43 }
+            "metadata": { "id": "Finance (BS)-43" }
           },
           {
             "matcher": "OrRequirement",
@@ -245,36 +254,36 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4328",
-                "metadata": { "id": 45 }
+                "metadata": { "id": "Finance (BS)-45" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4333",
-                "metadata": { "id": 46 }
+                "metadata": { "id": "Finance (BS)-46" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4380",
-                "metadata": { "id": 47 }
+                "metadata": { "id": "Finance (BS)-47" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BPS 4395",
-                "metadata": { "id": 48 }
+                "metadata": { "id": "Finance (BS)-48" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ENTP 4395",
-                "metadata": { "id": 49 }
+                "metadata": { "id": "Finance (BS)-49" }
               }
             ],
-            "metadata": { "id": 44 }
+            "metadata": { "id": "Finance (BS)-44" }
           }
         ]
       },
       {
         "matcher": "AndRequirement",
-        "metadata": { "name": "Guided Electives", "id": 50 },
+        "metadata": { "name": "Guided Electives", "id": "Finance (BS)-50" },
         "requirements": [
           {
             "matcher": "OrRequirement",
@@ -282,20 +291,20 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4V80",
-                "metadata": { "id": 52 }
+                "metadata": { "id": "Finance (BS)-52" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4080",
-                "metadata": { "id": 53 }
+                "metadata": { "id": "Finance (BS)-53" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BA 4090",
-                "metadata": { "id": 54 }
+                "metadata": { "id": "Finance (BS)-54" }
               }
             ],
-            "metadata": { "id": 51 }
+            "metadata": { "id": "Finance (BS)-51" }
           },
           {
             "matcher": "OrRequirement",
@@ -303,25 +312,25 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 4335",
-                "metadata": { "id": 56 }
+                "metadata": { "id": "Finance (BS)-56" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ENTP 4340",
-                "metadata": { "id": 57 }
+                "metadata": { "id": "Finance (BS)-57" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 4360",
-                "metadata": { "id": 58 }
+                "metadata": { "id": "Finance (BS)-58" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BA 4095",
-                "metadata": { "id": 59 }
+                "metadata": { "id": "Finance (BS)-59" }
               }
             ],
-            "metadata": { "id": 55 }
+            "metadata": { "id": "Finance (BS)-55" }
           },
           {
             "matcher": "HoursRequirement",
@@ -330,245 +339,245 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4V80",
-                "metadata": { "id": 61 }
+                "metadata": { "id": "Finance (BS)-61" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4080",
-                "metadata": { "id": 62 }
+                "metadata": { "id": "Finance (BS)-62" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BA 4090",
-                "metadata": { "id": 63 }
+                "metadata": { "id": "Finance (BS)-63" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 4335",
-                "metadata": { "id": 64 }
+                "metadata": { "id": "Finance (BS)-64" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ENTP 4340",
-                "metadata": { "id": 65 }
+                "metadata": { "id": "Finance (BS)-65" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 4360",
-                "metadata": { "id": 66 }
+                "metadata": { "id": "Finance (BS)-66" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BA 4095",
-                "metadata": { "id": 67 }
+                "metadata": { "id": "Finance (BS)-67" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 3305",
-                "metadata": { "id": 68 }
+                "metadata": { "id": "Finance (BS)-68" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 3330",
-                "metadata": { "id": 69 }
+                "metadata": { "id": "Finance (BS)-69" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 3340",
-                "metadata": { "id": 70 }
+                "metadata": { "id": "Finance (BS)-70" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 3350",
-                "metadata": { "id": 71 }
+                "metadata": { "id": "Finance (BS)-71" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 3360",
-                "metadata": { "id": 72 }
+                "metadata": { "id": "Finance (BS)-72" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 3365",
-                "metadata": { "id": 73 }
+                "metadata": { "id": "Finance (BS)-73" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 3370",
-                "metadata": { "id": 74 }
+                "metadata": { "id": "Finance (BS)-74" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 3380",
-                "metadata": { "id": 75 }
+                "metadata": { "id": "Finance (BS)-75" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 3395",
-                "metadata": { "id": 76 }
+                "metadata": { "id": "Finance (BS)-76" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4303",
-                "metadata": { "id": 77 }
+                "metadata": { "id": "Finance (BS)-77" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4305",
-                "metadata": { "id": 78 }
+                "metadata": { "id": "Finance (BS)-78" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4307",
-                "metadata": { "id": 79 }
+                "metadata": { "id": "Finance (BS)-79" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4313",
-                "metadata": { "id": 80 }
+                "metadata": { "id": "Finance (BS)-80" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4315",
-                "metadata": { "id": 81 }
+                "metadata": { "id": "Finance (BS)-81" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4320",
-                "metadata": { "id": 82 }
+                "metadata": { "id": "Finance (BS)-82" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4321",
-                "metadata": { "id": 83 }
+                "metadata": { "id": "Finance (BS)-83" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4328",
-                "metadata": { "id": 84 }
+                "metadata": { "id": "Finance (BS)-84" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4330",
-                "metadata": { "id": 85 }
+                "metadata": { "id": "Finance (BS)-85" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4333",
-                "metadata": { "id": 86 }
+                "metadata": { "id": "Finance (BS)-86" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4335",
-                "metadata": { "id": 87 }
+                "metadata": { "id": "Finance (BS)-87" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4336",
-                "metadata": { "id": 88 }
+                "metadata": { "id": "Finance (BS)-88" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4337",
-                "metadata": { "id": 89 }
+                "metadata": { "id": "Finance (BS)-89" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4338",
-                "metadata": { "id": 90 }
+                "metadata": { "id": "Finance (BS)-90" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4340",
-                "metadata": { "id": 91 }
+                "metadata": { "id": "Finance (BS)-91" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4345",
-                "metadata": { "id": 92 }
+                "metadata": { "id": "Finance (BS)-92" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4380",
-                "metadata": { "id": 93 }
+                "metadata": { "id": "Finance (BS)-93" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4390",
-                "metadata": { "id": 94 }
+                "metadata": { "id": "Finance (BS)-94" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4399",
-                "metadata": { "id": 95 }
+                "metadata": { "id": "Finance (BS)-95" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4V90",
-                "metadata": { "id": 96 }
+                "metadata": { "id": "Finance (BS)-96" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4V99",
-                "metadata": { "id": 97 }
+                "metadata": { "id": "Finance (BS)-97" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MECO 3360",
-                "metadata": { "id": 98 }
+                "metadata": { "id": "Finance (BS)-98" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MECO 3361",
-                "metadata": { "id": 99 }
+                "metadata": { "id": "Finance (BS)-99" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MECO 4352",
-                "metadata": { "id": 100 }
+                "metadata": { "id": "Finance (BS)-100" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "RMIS 3375",
-                "metadata": { "id": 101 }
+                "metadata": { "id": "Finance (BS)-101" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "RMIS 4331",
-                "metadata": { "id": 102 }
+                "metadata": { "id": "Finance (BS)-102" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "RMIS 4332",
-                "metadata": { "id": 103 }
+                "metadata": { "id": "Finance (BS)-103" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "RMIS 4333",
-                "metadata": { "id": 104 }
+                "metadata": { "id": "Finance (BS)-104" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "RMIS 4334",
-                "metadata": { "id": 105 }
+                "metadata": { "id": "Finance (BS)-105" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "RMIS 4336",
-                "metadata": { "id": 106 }
+                "metadata": { "id": "Finance (BS)-106" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "RMIS 4338",
-                "metadata": { "id": 107 }
+                "metadata": { "id": "Finance (BS)-107" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ENTP 4V00",
-                "metadata": { "id": 108 }
+                "metadata": { "id": "Finance (BS)-108" }
               }
             ],
-            "metadata": { "id": 60 }
+            "metadata": { "id": "Finance (BS)-60" }
           }
         ]
       },
@@ -576,7 +585,7 @@
         "matcher": "FreeElectiveRequirement",
         "required_hours": 6,
         "excluded_courses": [],
-        "metadata": { "id": 109 }
+        "metadata": { "id": "Finance (BS)-109" }
       }
     ]
   }

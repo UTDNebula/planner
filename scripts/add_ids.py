@@ -19,7 +19,7 @@ def add_ids(requirement_data) -> None:
             requirement["metadata"] = {}
 
         # Add id
-        requirement["metadata"]["id"] = counter[0]
+        requirement["metadata"]["id"] = f"{major_name[0]}-{counter[0]}"
         counter[0] += 1
 
         # Add ids to other requirements
@@ -51,6 +51,11 @@ def add_ids(requirement_data) -> None:
 
 
 # Get the list of all files and directories
+# dir_list = [
+#     "Global Business and International Political Economy(BS).json",
+#     "Business Administration Real Estate Management Concentration(BS).json",
+# ]
+# Get the list of all files and directories
 path = "degree_data"
 dir_list = os.listdir(path)
 
@@ -61,15 +66,12 @@ for dir in dir_list:
         requirements_data = data["requirements"]["major"]
 
         counter = [0]
+        major_name = [data["abbreviation"]]
         for re in requirements_data:
             add_ids(re)
 
         data["requirements"]["major"] = requirements_data
         # print(json.dumps(data, sort_keys=True))
-
-        # Get the list of all files and directories
-        path = "degree_data"
-        dir_list = os.listdir(path)
 
         # Write to file
         f = open(f"degree_data/{dir}", "w")

@@ -11,81 +11,84 @@
     "major": [
       {
         "matcher": "AndRequirement",
-        "metadata": { "id": 0, "name": "Major Preparatory Courses" },
+        "metadata": {
+          "id": "Computer Science (BS)-0",
+          "name": "Major Preparatory Courses"
+        },
         "requirements": [
           {
             "course": "ECS 1100",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 1 }
+            "metadata": { "id": "Computer Science (BS)-1" }
           },
           {
             "course": "CS 1200",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 2 }
+            "metadata": { "id": "Computer Science (BS)-2" }
           },
           {
             "course": "CS 1136",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 3 }
+            "metadata": { "id": "Computer Science (BS)-3" }
           },
           {
             "course": "CS 1336",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 4 }
+            "metadata": { "id": "Computer Science (BS)-4" }
           },
           {
             "course": "CS 1337",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 5 }
+            "metadata": { "id": "Computer Science (BS)-5" }
           },
           {
             "course": "CS 2305",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 6 }
+            "metadata": { "id": "Computer Science (BS)-6" }
           },
           {
             "course": "CS 2336",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 7 }
+            "metadata": { "id": "Computer Science (BS)-7" }
           },
           {
             "course": "CS 2340",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 8 }
+            "metadata": { "id": "Computer Science (BS)-8" }
           },
           {
             "matcher": "OrRequirement",
-            "metadata": { "id": 9 },
+            "metadata": { "id": "Computer Science (BS)-9" },
             "requirements": [
               {
                 "matcher": "AndRequirement",
-                "metadata": { "id": 10 },
+                "metadata": { "id": "Computer Science (BS)-10" },
                 "requirements": [
                   {
                     "course": "MATH 2413",
                     "matcher": "CourseRequirement",
-                    "metadata": { "id": 11 }
+                    "metadata": { "id": "Computer Science (BS)-11" }
                   },
                   {
                     "course": "MATH 2414",
                     "matcher": "CourseRequirement",
-                    "metadata": { "id": 12 }
+                    "metadata": { "id": "Computer Science (BS)-12" }
                   }
                 ]
               },
               {
                 "matcher": "AndRequirement",
-                "metadata": { "id": 13 },
+                "metadata": { "id": "Computer Science (BS)-13" },
                 "requirements": [
                   {
                     "course": "MATH 2417",
                     "matcher": "CourseRequirement",
-                    "metadata": { "id": 14 }
+                    "metadata": { "id": "Computer Science (BS)-14" }
                   },
                   {
                     "course": "MATH 2419",
                     "matcher": "CourseRequirement",
-                    "metadata": { "id": 15 }
+                    "metadata": { "id": "Computer Science (BS)-15" }
                   }
                 ]
               }
@@ -94,108 +97,111 @@
           {
             "course": "MATH 2418",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 16 }
+            "metadata": { "id": "Computer Science (BS)-16" }
           },
           {
             "course": "PHYS 2125",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 17 }
+            "metadata": { "id": "Computer Science (BS)-17" }
           },
           {
             "course": "PHYS 2126",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 18 }
+            "metadata": { "id": "Computer Science (BS)-18" }
           },
           {
             "course": "PHYS 2325",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 19 }
+            "metadata": { "id": "Computer Science (BS)-19" }
           },
           {
             "course": "PHYS 2326",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 20 }
+            "metadata": { "id": "Computer Science (BS)-20" }
           }
         ]
       },
       {
         "matcher": "AndRequirement",
-        "metadata": { "id": 21, "name": "Major Core Courses" },
+        "metadata": {
+          "id": "Computer Science (BS)-21",
+          "name": "Major Core Courses"
+        },
         "requirements": [
           {
             "course": "CS 3162",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 22 }
+            "metadata": { "id": "Computer Science (BS)-22" }
           },
           {
             "course": "CS 3305",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 23 }
+            "metadata": { "id": "Computer Science (BS)-23" }
           },
           {
             "course": "CS 3341",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 24 }
+            "metadata": { "id": "Computer Science (BS)-24" }
           },
           {
             "course": "CS 3345",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 25 }
+            "metadata": { "id": "Computer Science (BS)-25" }
           },
           {
             "course": "CS 3354",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 26 }
+            "metadata": { "id": "Computer Science (BS)-26" }
           },
           {
             "course": "CS 3377",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 27 }
+            "metadata": { "id": "Computer Science (BS)-27" }
           },
           {
             "course": "ECS 3390",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 28 }
+            "metadata": { "id": "Computer Science (BS)-28" }
           },
           {
             "course": "CS 4141",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 29 }
+            "metadata": { "id": "Computer Science (BS)-29" }
           },
           {
             "course": "CS 4337",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 30 }
+            "metadata": { "id": "Computer Science (BS)-30" }
           },
           {
             "course": "CS 4341",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 31 }
+            "metadata": { "id": "Computer Science (BS)-31" }
           },
           {
             "course": "CS 4347",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 32 }
+            "metadata": { "id": "Computer Science (BS)-32" }
           },
           {
             "course": "CS 4348",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 33 }
+            "metadata": { "id": "Computer Science (BS)-33" }
           },
           {
             "course": "CS 4349",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 34 }
+            "metadata": { "id": "Computer Science (BS)-34" }
           },
           {
             "course": "CS 4384",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 35 }
+            "metadata": { "id": "Computer Science (BS)-35" }
           },
           {
             "course": "CS 4485",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 36 }
+            "metadata": { "id": "Computer Science (BS)-36" }
           }
         ]
       },
@@ -228,7 +234,7 @@
           }
         ],
         "matcher": "CSGuidedElectiveRequirement",
-        "metadata": { "id": 37 },
+        "metadata": { "id": "Computer Science (BS)-37" },
         "required_count": 3,
         "starts_with": "CS 43"
       },
@@ -269,7 +275,10 @@
           "CS 3162"
         ],
         "matcher": "FreeElectiveRequirement",
-        "metadata": { "id": 38, "name": "Free Electives" },
+        "metadata": {
+          "id": "Computer Science (BS)-38",
+          "name": "Free Electives"
+        },
         "required_hours": 10
       }
     ]
