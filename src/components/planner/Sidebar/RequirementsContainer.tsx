@@ -15,6 +15,7 @@ import {
 import { GetDragIdByCourseAndReq } from '../types';
 import { RecursiveRequirement } from './RecursiveRequirement';
 import { DragIndicator } from '@mui/icons-material';
+import { useSemestersContext } from '../SemesterContext';
 
 function RequirementContainerHeader({
   name,
@@ -289,10 +290,22 @@ function RequirementContainer({
     updateQuery('');
   }, [degreeRequirement]);
 
+  const { planId, bypasses, handleAddBypass, handleRemoveBypass } = useSemestersContext();
+
+  const hasBypass = degreeRequirement.metadata.id in bypasses;
+
+  const handleUpdateBypass = () => {
+    hasBypass
+      ? handleRemoveBypass({ planId, requirement: degreeRequirement.metadata.id.toString() })
+      : handleAddBypass({ planId, requirement: degreeRequirement.metadata.id.toString() });
+  };
+
+  // Handles logic for adding bypass to requirement
   return (
     <>
       <RequirementContainerHeader name={name} status={status} setCarousel={setCarousel} />
       <div className="text-[14px]">{description}</div>
+      <button onClick={handleUpdateBypass}>{hasBypass ? 'Remove Bypass' : 'Add Bypass'}</button>
       <div className=" flex h-full flex-col gap-y-2 overflow-x-hidden overflow-y-scroll">
         <RequirementSearchBar updateQuery={updateQuery} />
         {results.map((req, idx) => {

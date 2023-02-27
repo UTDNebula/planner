@@ -53,6 +53,14 @@ export const planRouter = router({
 
       const { semesters } = planData;
       // FIX THIS LATER IDC RN
+
+      // Get degree requirements
+      const degreeRequirements = await ctx.prisma.degreeRequirements.findFirst({
+        where: {
+          planId: planData.id,
+        },
+      });
+
       const temporaryFunctionPlzDeleteThis = async () => {
         return semesters.map((sem) => {
           const courses = sem.courses.filter((course) => {
@@ -68,15 +76,8 @@ export const planRouter = router({
 
       const hehe = await temporaryFunctionPlzDeleteThis();
 
-      // Get degree requirements
-      const degreeRequirements = await ctx.prisma.degreeRequirements.findFirst({
-        where: {
-          planId: planData.id,
-        },
-      });
-
       if (!degreeRequirements?.major || degreeRequirements.major === 'undecided') {
-        return { plan: planData, validation: [] };
+        return { plan: planData, validation: [], bypasses: [] };
       }
 
       const body = formatDegreeValidationRequest(hehe, {
@@ -100,7 +101,17 @@ export const planRouter = router({
         return rawData;
       });
 
-      return { plan: planData, validation: validationData };
+      // Get bypasses
+      const bypasses = await ctx.prisma.newBypass.findUnique({
+        where: {
+          degreeRequirementsId: degreeRequirements.id,
+        },
+        select: {
+          requirements: true,
+        },
+      });
+
+      return { plan: planData, validation: validationData, bypasses: bypasses?.requirements ?? [] };
     } catch (error) {
       console.log('ERROR');
       console.log(error);
@@ -464,7 +475,7 @@ export const planRouter = router({
       return true;
     }),
   addBypass: protectedProcedure
-    .input(z.object({ planId: z.string(), requirement: z.number() }))
+    .input(z.object({ planId: z.string(), requirement: z.string() }))
     .mutation(async ({ ctx, input }) => {
       try {
         const { planId, requirement } = input;
@@ -489,7 +500,7 @@ export const planRouter = router({
           const bypasses: Prisma.NewBypassCreateNestedOneWithoutDegreeRequirementsInput = {
             create: {
               id: bypassesId,
-              requirements: [requirement.toString()],
+              requirements: [requirement],
             },
           };
 
@@ -527,7 +538,7 @@ export const planRouter = router({
     }),
 
   removeBypass: protectedProcedure
-    .input(z.object({ planId: z.string(), requirement: z.number() }))
+    .input(z.object({ planId: z.string(), requirement: z.string() }))
     .mutation(async ({ ctx, input }) => {
       try {
         const { planId, requirement } = input;
@@ -558,9 +569,7 @@ export const planRouter = router({
           },
           data: {
             requirements: [
-              ...degreeRequirements.bypasses!.requirements.filter(
-                (id) => id !== requirement.toString(),
-              ),
+              ...degreeRequirements.bypasses!.requirements.filter((id) => id !== requirement),
             ].sort(),
           },
         });
@@ -570,4 +579,8 @@ export const planRouter = router({
         return true;
       } catch {}
     }),
+  getBypasses: protectedProcedure.input(z.object({})).query(async ({ ctx, input }) => {
+    try {
+    } catch {}
+  }),
 });
