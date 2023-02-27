@@ -42,42 +42,40 @@ model Profile {
 }
 
 model Plan {
-  id           String              @id @default(auto()) @map("_id") @db.ObjectId
-  name         String
-  createdAt    DateTime            @default(now()) @map("created_at")
-  updatedAt    DateTime            @default(now()) @map("updated_at")
-  semesters    Semester[]
+  id              String              @id @default(auto()) @map("_id") @db.ObjectId
+  name            String
+  createdAt       DateTime            @default(now()) @map("created_at")
+  updatedAt       DateTime            @default(now()) @map("updated_at")
+  semesters       Semester[]
   transferCredits String[]
-  User         User?               @relation(fields: [userId], references: [id])
-  userId       String?             @db.ObjectId
-  requirements DegreeRequirements?
+  User            User?               @relation(fields: [userId], references: [id])
+  userId          String?             @db.ObjectId
+  requirements    DegreeRequirements?
 }
 
 model DegreeRequirements {
   id       String   @id @default(auto()) @map("_id") @db.ObjectId
   major    String // Change to String[] in future once modular requirements implemented; empty plan creates "undecided"
-  bypasses Bypass[]
+  bypasses String[]
   plan     Plan?    @relation(fields: [planId], references: [id], onDelete: Cascade)
   planId   String   @unique @db.ObjectId
 }
 
 model Bypass {
-  id                   String             @id @default(auto()) @map("_id") @db.ObjectId
-  courseCode           String
-  requirement          String
-  hours                Int
-  degreeRequirements   DegreeRequirements @relation(fields: [degreeRequirementsId], references: [id])
-  degreeRequirementsId String             @db.ObjectId
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  courseCode  String
+  requirement String
+  hours       Int
 }
 
 model Semester {
-  id      String       @id @default(auto()) @map("_id") @db.ObjectId
-  code    SemesterCode
-  courses String[] // Store course catalog codes
-  plan    Plan?        @relation(fields: [planId], references: [id], onDelete: Cascade)
-  planId  String?      @db.ObjectId
+  id           String       @id @default(auto()) @map("_id") @db.ObjectId
+  code         SemesterCode
+  courses      String[] // Store course catalog codes
+  plan         Plan?        @relation(fields: [planId], references: [id], onDelete: Cascade)
+  planId       String?      @db.ObjectId
   courseColors String[]
-  color String @default("")
+  color        String       @default("")
 }
 
 type SemesterCode {

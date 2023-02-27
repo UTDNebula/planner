@@ -9,8 +9,10 @@ import { useTaskQueue } from '@/utils/useTaskQueue';
 import { tagColors } from './utils';
 
 export interface SemestersContextState {
+  planId: string;
   semesters: Semester[];
   selectedCourseCount: number;
+  bypasses: string[];
   courseIsSelected: (courseId: string) => boolean;
   handleSelectCourses: (courseId: string[]) => void;
   handleDeselectCourses: (courseId: string[]) => void;
@@ -32,6 +34,8 @@ export interface SemestersContextState {
     semesterId: string,
   ) => void;
   handleSemesterColorChange: (color: keyof typeof tagColors, semesterId: string) => void;
+  handleAddBypass: ({ planId, requirement }: { planId: string; requirement: string }) => void;
+  handleRemoveBypass: ({ planId, requirement }: { planId: string; requirement: string }) => void;
   title: string;
 }
 
@@ -50,6 +54,7 @@ export const useSemestersContext = (): SemestersContextState => {
 export interface SemestersContextProviderProps {
   planId: string;
   plan: Plan;
+  bypasses: string[];
 }
 
 export interface useSemestersProps {
@@ -96,6 +101,7 @@ export type SemestersReducerAction =
 export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
   planId,
   plan,
+  bypasses,
   children,
 }) => {
   const { addTask } = useTaskQueue({ shouldProcess: true });
@@ -261,9 +267,17 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
 
   useEffect(() => console.log('stateChange', { semesters }), [semesters]);
 
-  const addCourse = trpc.plan.addCourseToSemester.useMutation();
+  const addCourse = trpc.plan.addCourseToSemester.useMutation({
+    async onSuccess() {
+      await utils.plan.getPlanById.invalidate();
+    },
+  });
 
-  const removeCourse = trpc.plan.removeCourseFromSemester.useMutation();
+  const removeCourse = trpc.plan.removeCourseFromSemester.useMutation({
+    async onSuccess() {
+      await utils.plan.getPlanById.invalidate();
+    },
+  });
 
   const moveCourse = trpc.plan.moveCourseFromSemester.useMutation();
 
@@ -271,7 +285,11 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
 
   const deleteYear = trpc.plan.deleteYear.useMutation();
 
-  const deleteAllCourses = trpc.plan.deleteAllCoursesFromSemester.useMutation();
+  const deleteAllCourses = trpc.plan.deleteAllCoursesFromSemester.useMutation({
+    async onSuccess() {
+      await utils.plan.getPlanById.invalidate();
+    },
+  });
 
   const colorChange = trpc.plan.changeCourseColor.useMutation();
 
@@ -469,11 +487,36 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
       func: ({ color, semesterId }) => semesterColorChange.mutateAsync({ color, semesterId }),
     });
   };
+
+  const utils = trpc.useContext();
+  // Add bypass for now;
+  // TODO: Refactor this code smell; context should prolly include degree requirements too? or just make a separate context for it
+  const addBypass = trpc.plan.addBypass.useMutation({
+    async onSuccess() {
+      await utils.plan.getPlanById.invalidate();
+    },
+  });
+  const removeBypass = trpc.plan.removeBypass.useMutation({
+    async onSuccess() {
+      await utils.plan.getPlanById.invalidate();
+    },
+  });
+
+  const handleAddBypass = ({ planId, requirement }: { planId: string; requirement: string }) => {
+    addBypass.mutateAsync({ planId, requirement });
+  };
+
+  const handleRemoveBypass = ({ planId, requirement }: { planId: string; requirement: string }) => {
+    removeBypass.mutateAsync({ planId, requirement });
+  };
+
   return (
     <SemestersContext.Provider
       value={{
+        planId: plan.id,
         title: plan.name,
         semesters: sortedSemesters,
+        bypasses: bypasses,
         selectedCourseCount: selectedCourseIds.size,
         courseIsSelected,
         handleSelectCourses,
@@ -488,6 +531,8 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
         handleDeleteAllCoursesFromSemester,
         handleColorChange,
         handleSemesterColorChange,
+        handleAddBypass,
+        handleRemoveBypass,
       }}
     >
       {children}

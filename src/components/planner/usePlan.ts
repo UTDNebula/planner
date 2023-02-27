@@ -9,6 +9,7 @@ export interface usePlanProps {
 export interface usePlanReturn {
   plan?: Plan;
   validation?: DegreeValidation;
+  bypasses?: string[];
   isPlanLoading: boolean;
   handlePlanDelete: () => Promise<boolean>;
 }
@@ -38,6 +39,7 @@ const usePlan = ({ planId }: usePlanProps): usePlanReturn => {
   return {
     plan: planQuery.data?.plan,
     validation: planQuery.data?.validation,
+    bypasses: planQuery.data?.bypasses,
     isPlanLoading: planQuery.isLoading,
     handlePlanDelete,
   };
