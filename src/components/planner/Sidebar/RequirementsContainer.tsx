@@ -327,7 +327,9 @@ function RequirementContainer({
     <>
       <RequirementContainerHeader name={name} status={status} setCarousel={setCarousel} />
       <div className="text-[14px]">{description}</div>
-      <button onClick={handleUpdateBypass}>{hasBypass ? 'Remove Bypass' : 'Add Bypass'}</button>
+      <button onClick={handleUpdateBypass}>
+        {hasBypass ? 'Mark as Incomplete' : 'Mark as Completed'}
+      </button>
       <div className=" flex h-full flex-col gap-y-2 overflow-x-hidden overflow-y-scroll">
         <RequirementSearchBar updateQuery={updateQuery} />
         {results.map((req, idx) => {
