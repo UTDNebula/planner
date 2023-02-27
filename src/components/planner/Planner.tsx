@@ -154,12 +154,12 @@ export default function Planner({
             ) : null)}
         </DragOverlay>
 
-        <section ref={ref} className="flex min-h-fit flex-grow flex-col gap-y-6 p-4 pb-0">
+        <section ref={ref} className="flex max-h-screen flex-grow flex-col gap-y-6 p-4 pb-0">
           <Toolbar title="Plan Your Courses" major="Computer Science" studentName="Dev" />
 
           <TransferBank transferCredits={transferCredits} />
 
-          <article className=" overflow-x-hidden overflow-y-scroll">
+          <article className="h-full overflow-x-hidden overflow-y-scroll">
             <div className="flex h-fit gap-5">
               {semesters
                 .reduce(
