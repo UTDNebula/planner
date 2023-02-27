@@ -22,9 +22,8 @@ const nextConfig = withBundleAnalyzer({
         source: '/',
         destination: '/index.html',
       },
-    ]
+    ];
   },
 });
 
 module.exports = nextConfig;
-
