@@ -32,6 +32,7 @@ export interface SemestersContextState {
     semesterId: string,
   ) => void;
   handleSemesterColorChange: (color: keyof typeof tagColors, semesterId: string) => void;
+  title: string;
 }
 
 export const SemestersContext = createContext<SemestersContextState | null>(null);
@@ -471,6 +472,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
   return (
     <SemestersContext.Provider
       value={{
+        title: plan.name,
         semesters: sortedSemesters,
         selectedCourseCount: selectedCourseIds.size,
         courseIsSelected,

@@ -145,16 +145,11 @@ const getRequirementGroup = (
 
 export const ProgressComponent = ({ value, max }: { value: number; max: number }) => {
   return (
-    <div className="relative flex w-fit flex-col items-center justify-center">
-      <span className="w-fit text-[10px]">
+    <div className="flex w-24 flex-col items-center justify-center">
+      <span className="w-max text-[10px]">
         {value}/{max} done
       </span>
-      <progress
-        id="file"
-        value={value}
-        max={max}
-        className="h-2 w-24 appearance-none rounded-full"
-      />
+      <progress value={value} max={max} className="h-2 w-full appearance-none rounded-full" />
     </div>
   );
 };
@@ -208,8 +203,8 @@ export default function RequirementsContainer({
       requirementsList={
         <Accordion
           header={
-            <div className="flex w-full flex-row items-center justify-between">
-              <div className="my-4 whitespace-nowrap text-2xl font-semibold">
+            <div className="flex w-full flex-row items-center justify-between gap-2">
+              <div className="my-1 whitespace-nowrap text-xl font-semibold tracking-tight">
                 {degreeRequirement.name}
               </div>
 
@@ -225,25 +220,31 @@ export default function RequirementsContainer({
               const { value, max } = displayRequirementProgress(elm);
               return (
                 <div
-                  className="flex items-center gap-x-4 rounded-md border border-neutral-300 px-5 py-4"
+                  className="flex w-full items-center justify-between gap-x-1 rounded-md border border-neutral-300 px-5 py-2"
                   key={idx}
                 >
-                  <DragIndicator fontSize="inherit" className="mr-3 text-[16px] text-[#D4D4D4]" />
-                  <div className="max-w-[50%] overflow-hidden text-ellipsis whitespace-nowrap text-sm">
-                    {elm.metadata ? elm.metadata.name : 'hi'}
-                  </div>
-                  <div className="flex flex-row items-center px-[5px] text-[11px]">
-                    <ProgressComponent value={value} max={max} />
+                  <div className="flex max-w-[65%] items-center gap-x-1">
+                    {/* <DragIndicator fontSize="inherit" className="mr-3 text-[16px] text-[#D4D4D4]" /> */}
+
+                    <div className="overflow-hidden text-ellipsis whitespace-nowrap text-sm">
+                      {elm.metadata ? elm.metadata.name : 'hi'}
+                    </div>
                   </div>
 
-                  <button
-                    onClick={() => {
-                      toggleCarousel();
-                      setRequirementIdx(idx);
-                    }}
-                  >
-                    <ChevronRightIcon />
-                  </button>
+                  <div className="flex">
+                    <div className="flex flex-row items-center px-[5px] text-[11px]">
+                      <ProgressComponent value={value} max={max} />
+                    </div>
+
+                    <button
+                      onClick={() => {
+                        toggleCarousel();
+                        setRequirementIdx(idx);
+                      }}
+                    >
+                      <ChevronRightIcon />
+                    </button>
+                  </div>
                 </div>
               );
             })}
@@ -292,7 +293,7 @@ function RequirementContainer({
     <>
       <RequirementContainerHeader name={name} status={status} setCarousel={setCarousel} />
       <div className="text-[14px]">{description}</div>
-      <div className=" flex h-[300px] flex-col gap-y-2 overflow-x-hidden overflow-y-scroll">
+      <div className=" flex h-full flex-col gap-y-2 overflow-x-hidden overflow-y-scroll">
         <RequirementSearchBar updateQuery={updateQuery} />
         {results.map((req, idx) => {
           return (

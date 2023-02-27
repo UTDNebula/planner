@@ -112,7 +112,7 @@ const NebulaApp: AppType<{ session: Session | null }> = ({
               ) : (
                 <Component {...pageProps} />
               )}
-              <ToastContainer />
+              <ToastContainer bodyClassName="text-sm text-primary-900 font-sans" />
             </main>
           </ThemeProvider>
         </StyledEngineProvider>
