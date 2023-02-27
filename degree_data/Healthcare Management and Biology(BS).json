@@ -1,5 +1,5 @@
 {
-  "abbreviation": "Healthcare Management and Biology (BS)",
+  "abbreviation": "Healthcare Management and Biology(BS)",
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/healthcare-management-biology",
   "minimum_credit_hours": 148,
   "name": "Bachelor of Science in Healthcare Management and Biology",
@@ -11,22 +11,25 @@
     "major": [
       {
         "matcher": "AndRequirement",
-        "metadata": { "name": "Business Major Preparatory Courses", "id": 0 },
+        "metadata": {
+          "name": "Business Major Preparatory Courses",
+          "id": "Healthcare Management and Biology(BS)-0"
+        },
         "requirements": [
           {
             "matcher": "CourseRequirement",
             "course": "ACCT 2301",
-            "metadata": { "id": 1 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-1" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ACCT 2302",
-            "metadata": { "id": 2 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-2" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BLAW 2301",
-            "metadata": { "id": 3 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-3" }
           },
           {
             "matcher": "OrRequirement",
@@ -34,20 +37,20 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "OPRE 3360",
-                "metadata": { "id": 5 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-5" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "STAT 2332",
-                "metadata": { "id": 6 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-6" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "STAT 3360",
-                "metadata": { "id": 7 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-7" }
               }
             ],
-            "metadata": { "id": 4 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-4" }
           },
           {
             "matcher": "SelectRequirement",
@@ -56,31 +59,34 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "BA 1310",
-                "metadata": { "id": 9 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-9" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BA 1320",
-                "metadata": { "id": 10 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-10" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ECON 2301",
-                "metadata": { "id": 11 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-11" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ECON 2302",
-                "metadata": { "id": 12 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-12" }
               }
             ],
-            "metadata": { "id": 8 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-8" }
           }
         ]
       },
       {
         "matcher": "AndRequirement",
-        "metadata": { "name": "Business Core Courses", "id": 13 },
+        "metadata": {
+          "name": "Business Core Courses",
+          "id": "Healthcare Management and Biology(BS)-13"
+        },
         "requirements": [
           {
             "matcher": "OrRequirement",
@@ -88,35 +94,35 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "BCOM 1300",
-                "metadata": { "id": 15 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-15" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BCOM 3300",
-                "metadata": { "id": 16 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-16" }
               }
             ],
-            "metadata": { "id": 14 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-14" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BCOM 4300",
-            "metadata": { "id": 17 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-17" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "FIN 3320",
-            "metadata": { "id": 18 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-18" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "IMS 3310",
-            "metadata": { "id": 19 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-19" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ITSS 3300",
-            "metadata": { "id": 20 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-20" }
           },
           {
             "matcher": "OrRequirement",
@@ -124,31 +130,34 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "OBHR 3330",
-                "metadata": { "id": 22 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-22" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "OBHR 3310",
-                "metadata": { "id": 23 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-23" }
               }
             ],
-            "metadata": { "id": 21 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-21" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "OPRE 3310",
-            "metadata": { "id": 24 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-24" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MKT 3300",
-            "metadata": { "id": 25 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-25" }
           }
         ]
       },
       {
         "matcher": "AndRequirement",
-        "metadata": { "name": "Biology Major Preparatory Courses", "id": 26 },
+        "metadata": {
+          "name": "Biology Major Preparatory Courses",
+          "id": "Healthcare Management and Biology(BS)-26"
+        },
         "requirements": [
           {
             "matcher": "OrRequirement",
@@ -156,15 +165,15 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "CHEM 1111",
-                "metadata": { "id": 28 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-28" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "CHEM 1115",
-                "metadata": { "id": 29 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-29" }
               }
             ],
-            "metadata": { "id": 27 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-27" }
           },
           {
             "matcher": "OrRequirement",
@@ -172,15 +181,15 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "CHEM 1112",
-                "metadata": { "id": 31 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-31" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "CHEM 1116",
-                "metadata": { "id": 32 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-32" }
               }
             ],
-            "metadata": { "id": 30 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-30" }
           },
           {
             "matcher": "OrRequirement",
@@ -188,15 +197,15 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "CHEM 1311",
-                "metadata": { "id": 34 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-34" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "CHEM 1315",
-                "metadata": { "id": 35 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-35" }
               }
             ],
-            "metadata": { "id": 33 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-33" }
           },
           {
             "matcher": "OrRequirement",
@@ -204,15 +213,15 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "CHEM 1312",
-                "metadata": { "id": 37 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-37" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "CHEM 1316",
-                "metadata": { "id": 38 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-38" }
               }
             ],
-            "metadata": { "id": 36 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-36" }
           },
           {
             "matcher": "OrRequirement",
@@ -220,15 +229,15 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "CHEM 2323",
-                "metadata": { "id": 40 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-40" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "CHEM 2327",
-                "metadata": { "id": 41 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-41" }
               }
             ],
-            "metadata": { "id": 39 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-39" }
           },
           {
             "matcher": "OrRequirement",
@@ -236,15 +245,15 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "CHEM 2325",
-                "metadata": { "id": 43 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-43" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "CHEM 2328",
-                "metadata": { "id": 44 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-44" }
               }
             ],
-            "metadata": { "id": 42 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-42" }
           },
           {
             "matcher": "OrRequirement",
@@ -252,25 +261,25 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "CHEM 2233",
-                "metadata": { "id": 46 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-46" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "CHEM 2237",
-                "metadata": { "id": 47 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-47" }
               }
             ],
-            "metadata": { "id": 45 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-45" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MATH 2413",
-            "metadata": { "id": 48 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-48" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MATH 2414",
-            "metadata": { "id": 49 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-49" }
           },
           {
             "matcher": "OrRequirement",
@@ -281,20 +290,24 @@
                   {
                     "matcher": "CourseRequirement",
                     "course": "PHYS 2325",
-                    "metadata": { "id": 52 }
+                    "metadata": {
+                      "id": "Healthcare Management and Biology(BS)-52"
+                    }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "PHYS 2125",
-                    "metadata": { "id": 53 }
+                    "metadata": {
+                      "id": "Healthcare Management and Biology(BS)-53"
+                    }
                   }
                 ],
-                "metadata": { "id": 51 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-51" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "PHYS 2421",
-                "metadata": { "id": 54 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-54" }
               },
               {
                 "matcher": "AndRequirement",
@@ -302,18 +315,22 @@
                   {
                     "matcher": "CourseRequirement",
                     "course": "PHYS 1301",
-                    "metadata": { "id": 56 }
+                    "metadata": {
+                      "id": "Healthcare Management and Biology(BS)-56"
+                    }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "PHYS 2125",
-                    "metadata": { "id": 57 }
+                    "metadata": {
+                      "id": "Healthcare Management and Biology(BS)-57"
+                    }
                   }
                 ],
-                "metadata": { "id": 55 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-55" }
               }
             ],
-            "metadata": { "id": 50 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-50" }
           },
           {
             "matcher": "OrRequirement",
@@ -321,91 +338,94 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "PHYS 2326",
-                "metadata": { "id": 59 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-59" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "PHYS 2422",
-                "metadata": { "id": 60 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-60" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "PHYS 1302",
-                "metadata": { "id": 61 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-61" }
               }
             ],
-            "metadata": { "id": 58 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-58" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "PHYS 2126",
-            "metadata": { "id": 62 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-62" }
           }
         ]
       },
       {
         "matcher": "AndRequirement",
-        "metadata": { "name": "Biology Core Courses", "id": 63 },
+        "metadata": {
+          "name": "Biology Core Courses",
+          "id": "Healthcare Management and Biology(BS)-63"
+        },
         "requirements": [
           {
             "matcher": "CourseRequirement",
             "course": "BIOL 2111",
-            "metadata": { "id": 64 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-64" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BIOL 2112",
-            "metadata": { "id": 65 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-65" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BIOL 2281",
-            "metadata": { "id": 66 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-66" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BIOL 2311",
-            "metadata": { "id": 67 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-67" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BIOL 2312",
-            "metadata": { "id": 68 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-68" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BIOL 3101",
-            "metadata": { "id": 69 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-69" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BIOL 3102",
-            "metadata": { "id": 70 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-70" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BIOL 3161",
-            "metadata": { "id": 71 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-71" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BIOL 3162",
-            "metadata": { "id": 72 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-72" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BIOL 3301",
-            "metadata": { "id": 73 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-73" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BIOL 3302",
-            "metadata": { "id": 74 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-74" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BIOL 3361",
-            "metadata": { "id": 75 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-75" }
           },
           {
             "matcher": "OrRequirement",
@@ -413,26 +433,29 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "BIOL 3362",
-                "metadata": { "id": 77 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-77" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BIOL 3335",
-                "metadata": { "id": 78 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-78" }
               }
             ],
-            "metadata": { "id": 76 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-76" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BIOL 3380",
-            "metadata": { "id": 79 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-79" }
           }
         ]
       },
       {
         "matcher": "AndRequirement",
-        "metadata": { "name": "Guided Electives", "id": 80 },
+        "metadata": {
+          "name": "Guided Electives",
+          "id": "Healthcare Management and Biology(BS)-80"
+        },
         "requirements": [
           {
             "matcher": "OrRequirement",
@@ -440,15 +463,15 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "HMGT 4090",
-                "metadata": { "id": 82 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-82" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BA 4090",
-                "metadata": { "id": 83 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-83" }
               }
             ],
-            "metadata": { "id": 81 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-81" }
           },
           {
             "matcher": "HoursRequirement",
@@ -457,17 +480,17 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "HMGT 3301",
-                "metadata": { "id": 85 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-85" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "HMGT 3310",
-                "metadata": { "id": 86 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-86" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "HMGT 3311",
-                "metadata": { "id": 87 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-87" }
               },
               {
                 "matcher": "OrRequirement",
@@ -475,20 +498,24 @@
                   {
                     "matcher": "CourseRequirement",
                     "course": "HMGT 3320",
-                    "metadata": { "id": 89 }
+                    "metadata": {
+                      "id": "Healthcare Management and Biology(BS)-89"
+                    }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "ECON 3330",
-                    "metadata": { "id": 90 }
+                    "metadata": {
+                      "id": "Healthcare Management and Biology(BS)-90"
+                    }
                   }
                 ],
-                "metadata": { "id": 88 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-88" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "HMGT 4321",
-                "metadata": { "id": 91 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-91" }
               },
               {
                 "matcher": "OrRequirement",
@@ -496,23 +523,29 @@
                   {
                     "matcher": "CourseRequirement",
                     "course": "HMGT 4395",
-                    "metadata": { "id": 93 }
+                    "metadata": {
+                      "id": "Healthcare Management and Biology(BS)-93"
+                    }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "BPS 4395",
-                    "metadata": { "id": 94 }
+                    "metadata": {
+                      "id": "Healthcare Management and Biology(BS)-94"
+                    }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "ENTP 4395",
-                    "metadata": { "id": 95 }
+                    "metadata": {
+                      "id": "Healthcare Management and Biology(BS)-95"
+                    }
                   }
                 ],
-                "metadata": { "id": 92 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-92" }
               }
             ],
-            "metadata": { "id": 84 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-84" }
           },
           {
             "matcher": "OrRequirement",
@@ -520,25 +553,27 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "BIOL 4380",
-                "metadata": { "id": 97 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-97" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BIOL 3V96",
-                "metadata": { "id": 98 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-98" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BIOL 4391",
-                "metadata": { "id": 99 }
+                "metadata": { "id": "Healthcare Management and Biology(BS)-99" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BIOL 4399",
-                "metadata": { "id": 100 }
+                "metadata": {
+                  "id": "Healthcare Management and Biology(BS)-100"
+                }
               }
             ],
-            "metadata": { "id": 96 }
+            "metadata": { "id": "Healthcare Management and Biology(BS)-96" }
           }
         ]
       }

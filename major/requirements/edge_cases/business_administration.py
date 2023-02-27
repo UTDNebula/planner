@@ -100,7 +100,7 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
             and self.fulfilled_hours >= self.required_hours
         )
 
-    def override_fill(self, index: int) -> bool:
+    def override_fill(self, index: str) -> bool:
         if self.metadata["id"] == index:
             self.override_filled = True
             return True

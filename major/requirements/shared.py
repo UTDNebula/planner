@@ -36,7 +36,7 @@ class CourseRequirement(AbstractRequirement):
     def is_fulfilled(self) -> bool:
         return self.filled
 
-    def override_fill(self, index: int) -> bool:
+    def override_fill(self, index: str) -> bool:
         if self.metadata["id"] == index:
             self.filled = True
             return True
@@ -95,7 +95,7 @@ class AndRequirement(AbstractRequirement):
     def get_num_fulfilled_requirements(self) -> int:
         return sum([1 for req in self.requirements if req.is_fulfilled()])
 
-    def override_fill(self, index: int) -> bool:
+    def override_fill(self, index: str) -> bool:
         if self.metadata["id"] == index:
             self.override_filled = True
             return True
@@ -170,7 +170,7 @@ class OrRequirement(AbstractRequirement):
             requirement.is_fulfilled() for requirement in self.requirements
         )
 
-    def override_fill(self, index: int) -> bool:
+    def override_fill(self, index: str) -> bool:
         if self.metadata["id"] == index:
             self.override_filled = True
             return True
@@ -260,7 +260,7 @@ class SelectRequirement(AbstractRequirement):
                 curr += 1
         return self.override_filled or curr >= self.required_count
 
-    def override_fill(self, index: int) -> bool:
+    def override_fill(self, index: str) -> bool:
         if self.metadata["id"] == index:
             self.override_filled = True
             return True
@@ -356,7 +356,7 @@ class HoursRequirement(AbstractRequirement):
     def is_fulfilled(self) -> bool:
         return self.override_filled or self.get_fulfilled_hours() >= self.required_hours
 
-    def override_fill(self, index: int) -> bool:
+    def override_fill(self, index: str) -> bool:
         if self.metadata["id"] == index:
             self.override_filled = True
             return True
@@ -446,7 +446,7 @@ class FreeElectiveRequirement(AbstractRequirement):
         self,
         required_hours: int,
         excluded_courses: list[str],
-        metadata: dict[str, int] = {},
+        metadata: dict[str, str] = {},
     ) -> None:
         self.required_hours = required_hours
         self.excluded_courses = set(excluded_courses)
@@ -470,7 +470,7 @@ class FreeElectiveRequirement(AbstractRequirement):
     def is_fulfilled(self) -> bool:
         return self.override_filled or self.fulfilled_hours >= self.required_hours
 
-    def override_fill(self, index: int) -> bool:
+    def override_fill(self, index: str) -> bool:
         if self.metadata["id"] == index:
             self.override_filled = True
             return True
@@ -551,7 +551,7 @@ class PrefixBucketRequirement(AbstractRequirement):
     def is_fulfilled(self) -> bool:
         return self.filled
 
-    def override_fill(self, index: int) -> bool:
+    def override_fill(self, index: str) -> bool:
         return False
 
     class JSON(TypedDict):

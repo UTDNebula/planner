@@ -1,5 +1,5 @@
 {
-  "abbreviation": "Healthcare Management (BS)",
+  "abbreviation": "Healthcare Management(BS)",
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/healthcare-management",
   "minimum_credit_hours": 120,
   "name": "Bachelor of Science in Healthcare Management",
@@ -12,17 +12,17 @@
       {
         "matcher": "CourseRequirement",
         "course": "ACCT 2301",
-        "metadata": { "id": 0 }
+        "metadata": { "id": "Healthcare Management(BS)-0" }
       },
       {
         "matcher": "CourseRequirement",
         "course": "ACCT 2302",
-        "metadata": { "id": 1 }
+        "metadata": { "id": "Healthcare Management(BS)-1" }
       },
       {
         "matcher": "CourseRequirement",
         "course": "BLAW 2301",
-        "metadata": { "id": 2 }
+        "metadata": { "id": "Healthcare Management(BS)-2" }
       },
       {
         "matcher": "OrRequirement",
@@ -30,20 +30,20 @@
           {
             "course": "MATH 1325",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 4 }
+            "metadata": { "id": "Healthcare Management(BS)-4" }
           },
           {
             "course": "MATH 2413",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 5 }
+            "metadata": { "id": "Healthcare Management(BS)-5" }
           },
           {
             "course": "MATH 2417",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 6 }
+            "metadata": { "id": "Healthcare Management(BS)-6" }
           }
         ],
-        "metadata": { "id": 3 }
+        "metadata": { "id": "Healthcare Management(BS)-3" }
       },
       {
         "matcher": "OrRequirement",
@@ -51,15 +51,15 @@
           {
             "matcher": "CourseRequirement",
             "course": "OPRE 3360",
-            "metadata": { "id": 8 }
+            "metadata": { "id": "Healthcare Management(BS)-8" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "STAT 3360",
-            "metadata": { "id": 9 }
+            "metadata": { "id": "Healthcare Management(BS)-9" }
           }
         ],
-        "metadata": { "id": 7 }
+        "metadata": { "id": "Healthcare Management(BS)-7" }
       },
       {
         "matcher": "SelectRequirement",
@@ -68,25 +68,25 @@
           {
             "matcher": "CourseRequirement",
             "course": "BA 1310",
-            "metadata": { "id": 11 }
+            "metadata": { "id": "Healthcare Management(BS)-11" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BA 1320",
-            "metadata": { "id": 12 }
+            "metadata": { "id": "Healthcare Management(BS)-12" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ECON 2301",
-            "metadata": { "id": 13 }
+            "metadata": { "id": "Healthcare Management(BS)-13" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ECON 2302",
-            "metadata": { "id": 14 }
+            "metadata": { "id": "Healthcare Management(BS)-14" }
           }
         ],
-        "metadata": { "id": 10 }
+        "metadata": { "id": "Healthcare Management(BS)-10" }
       },
       {
         "matcher": "OrRequirement",
@@ -94,95 +94,95 @@
           {
             "matcher": "CourseRequirement",
             "course": "BCOM 3300",
-            "metadata": { "id": 16 }
+            "metadata": { "id": "Healthcare Management(BS)-16" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BCOM 1300",
-            "metadata": { "id": 17 }
+            "metadata": { "id": "Healthcare Management(BS)-17" }
           }
         ],
-        "metadata": { "id": 15 }
+        "metadata": { "id": "Healthcare Management(BS)-15" }
       },
       {
         "matcher": "CourseRequirement",
         "course": "BCOM 4300",
-        "metadata": { "id": 18 }
+        "metadata": { "id": "Healthcare Management(BS)-18" }
       },
       {
         "matcher": "CourseRequirement",
         "course": "FIN 3320",
-        "metadata": { "id": 19 }
+        "metadata": { "id": "Healthcare Management(BS)-19" }
       },
       {
         "matcher": "CourseRequirement",
         "course": "IMS 3310",
-        "metadata": { "id": 20 }
+        "metadata": { "id": "Healthcare Management(BS)-20" }
       },
       {
         "matcher": "CourseRequirement",
         "course": "ITSS 3300",
-        "metadata": { "id": 21 }
+        "metadata": { "id": "Healthcare Management(BS)-21" }
       },
       {
         "matcher": "CourseRequirement",
         "course": "MKT 3300",
-        "metadata": { "id": 22 }
+        "metadata": { "id": "Healthcare Management(BS)-22" }
       },
       {
         "matcher": "CourseRequirement",
         "course": "OBHR 3330",
-        "metadata": { "id": 23 }
+        "metadata": { "id": "Healthcare Management(BS)-23" }
       },
       {
         "matcher": "CourseRequirement",
         "course": "OBHR 3310",
-        "metadata": { "id": 24 }
+        "metadata": { "id": "Healthcare Management(BS)-24" }
       },
       {
         "matcher": "CourseRequirement",
         "course": "OPRE 3310",
-        "metadata": { "id": 25 }
+        "metadata": { "id": "Healthcare Management(BS)-25" }
       },
       {
         "matcher": "CourseRequirement",
         "course": "BLAW 3301",
-        "metadata": { "id": 26 }
+        "metadata": { "id": "Healthcare Management(BS)-26" }
       },
       {
         "matcher": "CourseRequirement",
         "course": "OBHR 3310",
-        "metadata": { "id": 27 }
+        "metadata": { "id": "Healthcare Management(BS)-27" }
       },
       {
         "matcher": "CourseRequirement",
         "course": "OBHR 4331",
-        "metadata": { "id": 28 }
+        "metadata": { "id": "Healthcare Management(BS)-28" }
       },
       {
         "matcher": "CourseRequirement",
         "course": "OBHR 4333",
-        "metadata": { "id": 29 }
+        "metadata": { "id": "Healthcare Management(BS)-29" }
       },
       {
         "matcher": "CourseRequirement",
         "course": "OBHR 4334",
-        "metadata": { "id": 30 }
+        "metadata": { "id": "Healthcare Management(BS)-30" }
       },
       {
         "matcher": "CourseRequirement",
         "course": "OBHR 4335",
-        "metadata": { "id": 31 }
+        "metadata": { "id": "Healthcare Management(BS)-31" }
       },
       {
         "matcher": "CourseRequirement",
         "course": "OBHR 4354",
-        "metadata": { "id": 32 }
+        "metadata": { "id": "Healthcare Management(BS)-32" }
       },
       {
         "matcher": "CourseRequirement",
         "course": "OBHR 4395",
-        "metadata": { "id": 33 }
+        "metadata": { "id": "Healthcare Management(BS)-33" }
       },
       {
         "matcher": "OrRequirement",
@@ -190,20 +190,20 @@
           {
             "matcher": "CourseRequirement",
             "course": "OBHR 4V90",
-            "metadata": { "id": 35 }
+            "metadata": { "id": "Healthcare Management(BS)-35" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "OBHR 4090",
-            "metadata": { "id": 36 }
+            "metadata": { "id": "Healthcare Management(BS)-36" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BA 4090",
-            "metadata": { "id": 37 }
+            "metadata": { "id": "Healthcare Management(BS)-37" }
           }
         ],
-        "metadata": { "id": 34 }
+        "metadata": { "id": "Healthcare Management(BS)-34" }
       },
       {
         "matcher": "OrRequirement",
@@ -211,25 +211,25 @@
           {
             "matcher": "CourseRequirement",
             "course": "IMS 4335",
-            "metadata": { "id": 39 }
+            "metadata": { "id": "Healthcare Management(BS)-39" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ENTP 4340",
-            "metadata": { "id": 40 }
+            "metadata": { "id": "Healthcare Management(BS)-40" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MKT 4360",
-            "metadata": { "id": 41 }
+            "metadata": { "id": "Healthcare Management(BS)-41" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BA 4095",
-            "metadata": { "id": 42 }
+            "metadata": { "id": "Healthcare Management(BS)-42" }
           }
         ],
-        "metadata": { "id": 38 }
+        "metadata": { "id": "Healthcare Management(BS)-38" }
       },
       {
         "matcher": "HoursRequirement",
@@ -238,61 +238,61 @@
           {
             "matcher": "CourseRequirement",
             "course": "IMS 4330",
-            "metadata": { "id": 44 }
+            "metadata": { "id": "Healthcare Management(BS)-44" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "OBHR 4300",
-            "metadata": { "id": 45 }
+            "metadata": { "id": "Healthcare Management(BS)-45" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "OBHR 4310",
-            "metadata": { "id": 46 }
+            "metadata": { "id": "Healthcare Management(BS)-46" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "OBHR 4336",
-            "metadata": { "id": 47 }
+            "metadata": { "id": "Healthcare Management(BS)-47" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "OBHR 4337",
-            "metadata": { "id": 48 }
+            "metadata": { "id": "Healthcare Management(BS)-48" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "OBHR 4338",
-            "metadata": { "id": 49 }
+            "metadata": { "id": "Healthcare Management(BS)-49" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "OBHR 4350",
-            "metadata": { "id": 50 }
+            "metadata": { "id": "Healthcare Management(BS)-50" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "OBHR 4352",
-            "metadata": { "id": 51 }
+            "metadata": { "id": "Healthcare Management(BS)-51" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "OBHR 4356",
-            "metadata": { "id": 52 }
+            "metadata": { "id": "Healthcare Management(BS)-52" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "OBHR 4361",
-            "metadata": { "id": 53 }
+            "metadata": { "id": "Healthcare Management(BS)-53" }
           }
         ],
-        "metadata": { "id": 43 }
+        "metadata": { "id": "Healthcare Management(BS)-43" }
       },
       {
         "matcher": "FreeElectiveRequirement",
         "required_hours": 9,
         "excluded_courses": [],
-        "metadata": { "id": 54 }
+        "metadata": { "id": "Healthcare Management(BS)-54" }
       }
     ]
   }

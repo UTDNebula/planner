@@ -74,7 +74,7 @@ class MajorGuidedElectiveRequirement(AbstractRequirement):
             self.override_filled or self.__true_fulfilled_total() >= self.required_count
         )
 
-    def override_fill(self, index: int) -> bool:
+    def override_fill(self, index: str) -> bool:
         if self.metadata["id"] == index:
             self.override_filled = True
             return True
@@ -124,7 +124,7 @@ class MajorGuidedElectiveRequirement(AbstractRequirement):
         return json.dumps(
             {
                 "matcher": "CS Guided Electives",
-                "metadata": {"name": "CS Guided Electives"},
+                "metadata": self.metadata,
                 "starts_with": self.starts_with,
                 "also_fulfills": [
                     json.loads(req.to_json()) for req in self.also_fulfills

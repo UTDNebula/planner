@@ -24,7 +24,7 @@ class AbstractRequirement(ABC):
         pass
 
     @abstractmethod
-    def override_fill(self, index: int) -> bool:
+    def override_fill(self, index: str) -> bool:
         pass
 
     @dataclass

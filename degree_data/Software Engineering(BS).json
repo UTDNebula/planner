@@ -1,5 +1,5 @@
 {
-  "abbreviation": "Software Engineering (BS)",
+  "abbreviation": "Software Engineering(BS)",
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ecs/software-engineering",
   "minimum_credit_hours": 123,
   "name": "Bachelor of Science in Software Engineering",
@@ -10,76 +10,79 @@
     "major": [
       {
         "matcher": "AndRequirement",
-        "metadata": { "id": 0, "name": "Major Preparatory Courses" },
+        "metadata": {
+          "id": "Software Engineering(BS)-0",
+          "name": "Major Preparatory Courses"
+        },
         "requirements": [
           {
             "course": "ECS 1100",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 1 }
+            "metadata": { "id": "Software Engineering(BS)-1" }
           },
           {
             "course": "CS 1200",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 2 }
+            "metadata": { "id": "Software Engineering(BS)-2" }
           },
           {
             "course": "CS 1136",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 3 }
+            "metadata": { "id": "Software Engineering(BS)-3" }
           },
           {
             "course": "CS 1336",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 4 }
+            "metadata": { "id": "Software Engineering(BS)-4" }
           },
           {
             "course": "CS 1337",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 5 }
+            "metadata": { "id": "Software Engineering(BS)-5" }
           },
           {
             "course": "CS 2305",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 6 }
+            "metadata": { "id": "Software Engineering(BS)-6" }
           },
           {
             "course": "CS 2336",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 7 }
+            "metadata": { "id": "Software Engineering(BS)-7" }
           },
           {
             "matcher": "OrRequirement",
-            "metadata": { "id": 8 },
+            "metadata": { "id": "Software Engineering(BS)-8" },
             "requirements": [
               {
                 "matcher": "AndRequirement",
-                "metadata": { "id": 9 },
+                "metadata": { "id": "Software Engineering(BS)-9" },
                 "requirements": [
                   {
                     "course": "MATH 2413",
                     "matcher": "CourseRequirement",
-                    "metadata": { "id": 10 }
+                    "metadata": { "id": "Software Engineering(BS)-10" }
                   },
                   {
                     "course": "MATH 2414",
                     "matcher": "CourseRequirement",
-                    "metadata": { "id": 11 }
+                    "metadata": { "id": "Software Engineering(BS)-11" }
                   }
                 ]
               },
               {
                 "matcher": "AndRequirement",
-                "metadata": { "id": 12 },
+                "metadata": { "id": "Software Engineering(BS)-12" },
                 "requirements": [
                   {
                     "course": "MATH 2417",
                     "matcher": "CourseRequirement",
-                    "metadata": { "id": 13 }
+                    "metadata": { "id": "Software Engineering(BS)-13" }
                   },
                   {
                     "course": "MATH 2419",
                     "matcher": "CourseRequirement",
-                    "metadata": { "id": 14 }
+                    "metadata": { "id": "Software Engineering(BS)-14" }
                   }
                 ]
               }
@@ -88,102 +91,102 @@
           {
             "course": "MATH 2418",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 15 }
+            "metadata": { "id": "Software Engineering(BS)-15" }
           },
           {
             "course": "PHYS 2125",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 16 }
+            "metadata": { "id": "Software Engineering(BS)-16" }
           },
           {
             "course": "PHYS 2126",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 17 }
+            "metadata": { "id": "Software Engineering(BS)-17" }
           },
           {
             "course": "PHYS 2325",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 18 }
+            "metadata": { "id": "Software Engineering(BS)-18" }
           },
           {
             "course": "PHYS 2326",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 19 }
+            "metadata": { "id": "Software Engineering(BS)-19" }
           },
           {
             "course": "SE 2340",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 20 }
+            "metadata": { "id": "Software Engineering(BS)-20" }
           },
           {
             "matcher": "HoursRequirement",
-            "metadata": { "id": 21 },
+            "metadata": { "id": "Software Engineering(BS)-21" },
             "required_hours": 3,
             "requirements": [
               {
                 "course": "MATH 2415",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": 22 }
+                "metadata": { "id": "Software Engineering(BS)-22" }
               },
               {
                 "course": "MATH 2420",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": 23 }
+                "metadata": { "id": "Software Engineering(BS)-23" }
               },
               {
                 "course": "MATH 2451",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": 24 }
+                "metadata": { "id": "Software Engineering(BS)-24" }
               },
               {
                 "course": "MATH 3310",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": 25 }
+                "metadata": { "id": "Software Engineering(BS)-25" }
               },
               {
                 "course": "MATH 3311",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": 26 }
+                "metadata": { "id": "Software Engineering(BS)-26" }
               },
               {
                 "course": "MATH 3321",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": 27 }
+                "metadata": { "id": "Software Engineering(BS)-27" }
               },
               {
                 "course": "MATH 3323",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": 28 }
+                "metadata": { "id": "Software Engineering(BS)-28" }
               },
               {
                 "course": "MATH 3351",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": 29 }
+                "metadata": { "id": "Software Engineering(BS)-29" }
               },
               {
                 "course": "MATH 3397",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": 30 }
+                "metadata": { "id": "Software Engineering(BS)-30" }
               },
               {
                 "course": "MATH 4332",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": 31 }
+                "metadata": { "id": "Software Engineering(BS)-31" }
               },
               {
                 "course": "MATH 4334",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": 32 }
+                "metadata": { "id": "Software Engineering(BS)-32" }
               },
               {
                 "course": "MATH 4381",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": 33 }
+                "metadata": { "id": "Software Engineering(BS)-33" }
               },
               {
                 "course": "STAT 3355",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": 34 }
+                "metadata": { "id": "Software Engineering(BS)-34" }
               }
             ]
           }
@@ -191,228 +194,234 @@
       },
       {
         "matcher": "AndRequirement",
-        "metadata": { "id": 35, "name": "Major Core Courses" },
+        "metadata": {
+          "id": "Software Engineering(BS)-35",
+          "name": "Major Core Courses"
+        },
         "requirements": [
           {
             "course": "SE 3162",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 36 }
+            "metadata": { "id": "Software Engineering(BS)-36" }
           },
           {
             "course": "SE 3306",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 37 }
+            "metadata": { "id": "Software Engineering(BS)-37" }
           },
           {
             "course": "SE 3341",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 38 }
+            "metadata": { "id": "Software Engineering(BS)-38" }
           },
           {
             "course": "SE 3345",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 39 }
+            "metadata": { "id": "Software Engineering(BS)-39" }
           },
           {
             "course": "SE 3354",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 40 }
+            "metadata": { "id": "Software Engineering(BS)-40" }
           },
           {
             "course": "SE 3377",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 41 }
+            "metadata": { "id": "Software Engineering(BS)-41" }
           },
           {
             "course": "ECS 3390",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 42 }
+            "metadata": { "id": "Software Engineering(BS)-42" }
           },
           {
             "course": "SE 4347",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 43 }
+            "metadata": { "id": "Software Engineering(BS)-43" }
           },
           {
             "course": "SE 4348",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 44 }
+            "metadata": { "id": "Software Engineering(BS)-44" }
           },
           {
             "course": "SE 4351",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 45 }
+            "metadata": { "id": "Software Engineering(BS)-45" }
           },
           {
             "course": "SE 4352",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 46 }
+            "metadata": { "id": "Software Engineering(BS)-46" }
           },
           {
             "course": "SE 4367",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 47 }
+            "metadata": { "id": "Software Engineering(BS)-47" }
           },
           {
             "course": "SE 4381",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 48 }
+            "metadata": { "id": "Software Engineering(BS)-48" }
           },
           {
             "course": "SE 4485",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 49 }
+            "metadata": { "id": "Software Engineering(BS)-49" }
           }
         ]
       },
       {
         "matcher": "HoursRequirement",
-        "metadata": { "id": 50, "name": "Major Guided Electives" },
+        "metadata": {
+          "id": "Software Engineering(BS)-50",
+          "name": "Major Guided Electives"
+        },
         "required_hours": 12,
         "requirements": [
           {
             "course": "CS 4141",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 51 }
+            "metadata": { "id": "Software Engineering(BS)-51" }
           },
           {
             "course": "CS 4314",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 52 }
+            "metadata": { "id": "Software Engineering(BS)-52" }
           },
           {
             "course": "CS 4315",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 53 }
+            "metadata": { "id": "Software Engineering(BS)-53" }
           },
           {
             "course": "CS 4334",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 54 }
+            "metadata": { "id": "Software Engineering(BS)-54" }
           },
           {
             "course": "CS 4337",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 55 }
+            "metadata": { "id": "Software Engineering(BS)-55" }
           },
           {
             "course": "CS 4341",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 56 }
+            "metadata": { "id": "Software Engineering(BS)-56" }
           },
           {
             "course": "CS 4349",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 57 }
+            "metadata": { "id": "Software Engineering(BS)-57" }
           },
           {
             "course": "CS 4352",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 58 }
+            "metadata": { "id": "Software Engineering(BS)-58" }
           },
           {
             "course": "CS 4353",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 59 }
+            "metadata": { "id": "Software Engineering(BS)-59" }
           },
           {
             "course": "CS 4361",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 60 }
+            "metadata": { "id": "Software Engineering(BS)-60" }
           },
           {
             "course": "CS 4365",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 61 }
+            "metadata": { "id": "Software Engineering(BS)-61" }
           },
           {
             "course": "CS 4375",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 62 }
+            "metadata": { "id": "Software Engineering(BS)-62" }
           },
           {
             "course": "CS 4384",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 63 }
+            "metadata": { "id": "Software Engineering(BS)-63" }
           },
           {
             "course": "CS 4386",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 64 }
+            "metadata": { "id": "Software Engineering(BS)-64" }
           },
           {
             "course": "CS 4389",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 65 }
+            "metadata": { "id": "Software Engineering(BS)-65" }
           },
           {
             "course": "CS 4390",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 66 }
+            "metadata": { "id": "Software Engineering(BS)-66" }
           },
           {
             "course": "CS 4391",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 67 }
+            "metadata": { "id": "Software Engineering(BS)-67" }
           },
           {
             "course": "CS 4392",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 68 }
+            "metadata": { "id": "Software Engineering(BS)-68" }
           },
           {
             "course": "CS 4393",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 69 }
+            "metadata": { "id": "Software Engineering(BS)-69" }
           },
           {
             "course": "CS 4394",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 70 }
+            "metadata": { "id": "Software Engineering(BS)-70" }
           },
           {
             "course": "CS 4395",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 71 }
+            "metadata": { "id": "Software Engineering(BS)-71" }
           },
           {
             "course": "CS 4396",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 72 }
+            "metadata": { "id": "Software Engineering(BS)-72" }
           },
           {
             "course": "CS 4397",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 73 }
+            "metadata": { "id": "Software Engineering(BS)-73" }
           },
           {
             "course": "CS 4398",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 74 }
+            "metadata": { "id": "Software Engineering(BS)-74" }
           },
           {
             "course": "CS 4485",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 75 }
+            "metadata": { "id": "Software Engineering(BS)-75" }
           },
           {
             "course": "EE 4325",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 76 }
+            "metadata": { "id": "Software Engineering(BS)-76" }
           },
           {
             "course": "SE 4376",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 77 }
+            "metadata": { "id": "Software Engineering(BS)-77" }
           },
           {
             "course": "SE 4399",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 78 }
+            "metadata": { "id": "Software Engineering(BS)-78" }
           },
           {
             "matcher": "PrefixBucketRequirement",
-            "metadata": { "id": 79 },
+            "metadata": { "id": "Software Engineering(BS)-79" },
             "prefix": "SE 43"
           }
         ]
@@ -420,7 +429,7 @@
       {
         "excluded_courses": [],
         "matcher": "FreeElectiveRequirement",
-        "metadata": { "id": 80 },
+        "metadata": { "id": "Software Engineering(BS)-80" },
         "required_hours": 4
       }
     ]
