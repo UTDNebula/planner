@@ -13,7 +13,6 @@
 import {
   DndContext,
   DragOverlay,
-  MouseSensor,
   pointerWithin,
   useSensor,
   useSensors,
@@ -38,6 +37,7 @@ import Toolbar from './Toolbar';
 import { useSemestersContext } from './SemesterContext';
 import SelectedCoursesToast from './SelectedCoursesToast';
 import TransferBank from './TransferBank';
+import PlannerMouseSensor from './PlannerMouseSensor';
 
 /** PlannerTool Props */
 export interface PlannerProps {
@@ -68,7 +68,7 @@ export default function Planner({
   // Delay necessary so events inside draggables propagate
   // valid sensors: https://github.com/clauderic/dnd-kit/discussions/82#discussioncomment-347608
   const sensors = useSensors(
-    useSensor(MouseSensor, {
+    useSensor(PlannerMouseSensor, {
       activationConstraint: {
         distance: 1,
       },
