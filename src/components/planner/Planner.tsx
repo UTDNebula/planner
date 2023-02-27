@@ -19,7 +19,7 @@ import {
   Active,
   Over,
 } from '@dnd-kit/core';
-import React, { useMemo, useState, useRef, FC } from 'react';
+import React, { useMemo, useState, useRef, FC, useEffect } from 'react';
 
 import CourseSelectorContainer from './Sidebar/Sidebar';
 import { SidebarCourseItem } from './Sidebar/SidebarCourseItem';
@@ -38,6 +38,7 @@ import { useSemestersContext } from './SemesterContext';
 import SelectedCoursesToast from './SelectedCoursesToast';
 import TransferBank from './TransferBank';
 import PlannerMouseSensor from './PlannerMouseSensor';
+import { trpc } from '@/utils/trpc';
 
 /** PlannerTool Props */
 export interface PlannerProps {
@@ -60,7 +61,18 @@ export default function Planner({
     handleDeselectAllCourses,
     handleSelectCourses,
     handleDeleteAllSelectedCourses,
+    title,
   } = useSemestersContext();
+
+  const utils = trpc.useContext();
+
+  // Hacky
+  const updatePlan = async () => {
+    await utils.user.getUser.invalidate();
+  };
+  useEffect(() => {
+    updatePlan();
+  }, [semesters]);
 
   // Course that is currently being dragged
   const [activeCourse, setActiveCourse] = useState<ActiveDragData | null>(null);
@@ -148,12 +160,12 @@ export default function Planner({
             ) : null)}
         </DragOverlay>
 
-        <section ref={ref} className="flex min-h-fit flex-grow flex-col gap-y-6 p-4 pb-0">
-          <Toolbar title="Plan Your Courses" major="Computer Science" studentName="Dev" />
+        <section ref={ref} className="flex max-h-screen flex-grow flex-col gap-y-6 p-4 pb-0">
+          <Toolbar title={title} major="Computer Science" studentName="Dev" />
 
           {transferCredits.length > 0 && <TransferBank transferCredits={transferCredits} />}
 
-          <article className=" overflow-x-hidden overflow-y-scroll">
+          <article className="h-full overflow-x-hidden overflow-y-scroll">
             <div className="flex h-fit gap-5">
               {semesters
                 .reduce(

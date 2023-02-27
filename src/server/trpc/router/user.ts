@@ -130,12 +130,14 @@ export const userRouter = router({
       const planId = new ObjectID().toString();
 
       const { name, major, takenCourses, transferCredits } = input;
+      const bypasses: string[] = [];
 
       // Create degree requirements
       const degreeRequirements: Prisma.DegreeRequirementsUncheckedCreateNestedOneWithoutPlanInput =
         {
           create: {
             major, // Hardcode for now
+            bypasses,
           },
         };
 
@@ -317,11 +319,14 @@ export const userRouter = router({
           create: semesterData, // Prepopulate with semester
         };
 
+        const bypasses: string[] = [];
+
         // Create degree requirements
         const degreeRequirements: Prisma.DegreeRequirementsUncheckedCreateNestedOneWithoutPlanInput =
           {
             create: {
               major,
+              bypasses,
             },
           };
 
