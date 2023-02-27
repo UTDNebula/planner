@@ -4,6 +4,7 @@ import { planRouter } from './plan';
 import { templateRouter } from './template';
 import { userRouter } from './user';
 import { coursesRouter } from './courses';
+import { validatorRouter } from './validator';
 
 export const appRouter = router({
   user: userRouter,
@@ -11,6 +12,7 @@ export const appRouter = router({
   template: templateRouter,
   credits: creditsRouter,
   courses: coursesRouter,
+validator: validatorRouter,
 });
 
 // export type definition of API

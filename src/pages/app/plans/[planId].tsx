@@ -20,12 +20,12 @@ export default function PlanDetailPage(
 ): JSX.Element {
   const { planId } = props;
   const planQuery = trpc.plan.getPlanById.useQuery(planId);
-  const courseMapQuery = trpc.courses.publicGetSanitizedCourses.useQuery();
-  const { data: courseData, isLoading: courseLoading } = courseMapQuery;
+  // const courseMapQuery = trpc.courses.publicGetSanitizedCourses.useQuery();
+  // const { data: courseData, isLoading: courseLoading } = courseMapQuery;
 
-  const { plan, validation, isLoading, handlePlanDelete } = usePlan({ planId });
+  const { plan, validation, prereqData, isLoading, handlePlanDelete } = usePlan({ planId });
 
-  console.log(courseData);
+  // console.log(courseData);
   // Indicate UI loading
   if (isLoading) {
     return <div>Loading</div>;
@@ -33,9 +33,9 @@ export default function PlanDetailPage(
 
   return (
     <div className="flex h-screen max-h-screen w-screen flex-col overflow-hidden overflow-y-scroll">
-      {plan && validation && (
+      {plan && validation && prereqData && (
         <SemestersContextProvider planId={planId} plan={plan}>
-          <Planner degreeRequirements={validation} />
+          <Planner degreeRequirements={validation} prereqData={prereqData} />
         </SemestersContextProvider>
       )}
       {/* <button onClick={handlePlanDelete}>Delete</button> */}
@@ -55,6 +55,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext<{ pl
 
   // await ssg.courses.publicGetSanitizedCourses.prefetch();
   await ssg.plan.getPlanById.prefetch(planId);
+await ssg.validator.validatePlan.prefetch(planId);
   return {
     props: {
       trpcState: ssg.dehydrate(),

@@ -45,10 +45,11 @@ import SelectedCoursesToast from './SelectedCoursesToast';
 /** PlannerTool Props */
 export interface PlannerProps {
   degreeRequirements: DegreeRequirements;
+  prereqData: Map<string, boolean>;
 }
 
 /** Controlled wrapper around course list and semester tiles */
-export default function Planner({ degreeRequirements }: PlannerProps): JSX.Element {
+export default function Planner({ degreeRequirements, prereqData }: PlannerProps): JSX.Element {
   const {
     semesters,
     handleAddCourseToSemester,
@@ -177,6 +178,7 @@ export default function Planner({ degreeRequirements }: PlannerProps): JSX.Eleme
                     key={`column-${index}`}
                     column={column}
                     showTransfer={showTransfer}
+                  prereqData={prereqData}
                   />
                 ))}
             </div>
@@ -191,8 +193,8 @@ export default function Planner({ degreeRequirements }: PlannerProps): JSX.Eleme
   );
 }
 
-const MasonryColumn = (props: { column: Semester[]; showTransfer: boolean }) => {
-  const { column, showTransfer } = props;
+const MasonryColumn = (props: { column: Semester[]; showTransfer: boolean; prereqData: Map<string, boolean> }) => {
+  const { column, showTransfer, prereqData } = props;
   // Get credits to check if semester invalid
   const creditsQuery = trpc.credits.getCredits.useQuery(undefined, { staleTime: 10000000000 });
   const credits = creditsQuery.data;
