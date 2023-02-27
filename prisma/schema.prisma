@@ -54,11 +54,11 @@ model Plan {
 }
 
 model DegreeRequirements {
-  id       String     @id @default(auto()) @map("_id") @db.ObjectId
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
   major    String // Change to String[] in future once modular requirements implemented; empty plan creates "undecided"
-  bypasses NewBypass?
-  plan     Plan?      @relation(fields: [planId], references: [id], onDelete: Cascade)
-  planId   String     @unique @db.ObjectId
+  bypasses String[]
+  plan     Plan?    @relation(fields: [planId], references: [id], onDelete: Cascade)
+  planId   String   @unique @db.ObjectId
 }
 
 model Bypass {
@@ -66,13 +66,6 @@ model Bypass {
   courseCode  String
   requirement String
   hours       Int
-}
-
-model NewBypass {
-  id                   String              @id @default(auto()) @map("_id") @db.ObjectId
-  requirements         String[]
-  degreeRequirements   DegreeRequirements? @relation(fields: [degreeRequirementsId], references: [id])
-  degreeRequirementsId String?             @unique @db.ObjectId
 }
 
 model Semester {

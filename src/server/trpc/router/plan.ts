@@ -62,14 +62,7 @@ export const planRouter = router({
       });
 
       // Get bypasses
-      const bypasses = await ctx.prisma.newBypass.findUnique({
-        where: {
-          degreeRequirementsId: degreeRequirements?.id,
-        },
-        select: {
-          requirements: true,
-        },
-      });
+      const bypasses = degreeRequirements?.bypasses ?? [];
 
       const temporaryFunctionPlzDeleteThis = async () => {
         return semesters.map((sem) => {
@@ -97,7 +90,7 @@ export const planRouter = router({
           majors: [degreeRequirements.major], // TODO: Standardize names
           minors: [],
         },
-        bypasses?.requirements ?? [],
+        bypasses,
       );
 
       const validationData = await fetch(`${process.env.VALIDATOR}/test-validate`, {
@@ -115,7 +108,7 @@ export const planRouter = router({
         return rawData;
       });
 
-      return { plan: planData, validation: validationData, bypasses: bypasses?.requirements ?? [] };
+      return { plan: planData, validation: validationData, bypasses };
     } catch (error) {
       console.log('ERROR');
       console.log(error);
@@ -498,42 +491,16 @@ export const planRouter = router({
           throw 'No degree requirements';
         }
 
-        // Create NewBypass if it doesn't exist
-        if (degreeRequirements.bypasses === null) {
-          const bypassesId = new ObjectID().toString();
-          const bypasses: Prisma.NewBypassCreateNestedOneWithoutDegreeRequirementsInput = {
-            create: {
-              id: bypassesId,
-              requirements: [requirement],
-            },
-          };
+        const bypasses = [...degreeRequirements.bypasses, requirement];
 
-          const updatedDegreeRequirements = await ctx.prisma.degreeRequirements.update({
-            where: {
-              id: degreeRequirements.id,
-            },
-            data: {
-              bypasses,
-            },
-          });
-
-          return bypassesId;
-        }
-
-        // If we know the bypass model exists, we can update it directly
-        const newBypass = await ctx.prisma.newBypass.update({
+        const updatedDegreeRequirements = await ctx.prisma.degreeRequirements.update({
           where: {
-            id: degreeRequirements.bypasses!.id, // Null-assertion bc type narrowing is being dumb here
+            id: degreeRequirements.id,
           },
           data: {
-            requirements: [
-              ...degreeRequirements.bypasses!.requirements,
-              requirement.toString(),
-            ].sort(),
+            bypasses,
           },
         });
-
-        return newBypass.id;
 
         return true;
       } catch (e) {
@@ -567,20 +534,16 @@ export const planRouter = router({
         }
 
         // If we know the bypass model exists, we can update it directly
-        const newBypass = await ctx.prisma.newBypass.update({
+        const newBypass = await ctx.prisma.degreeRequirements.update({
           where: {
-            id: degreeRequirements.bypasses!.id, // Null-assertion bc type narrowing is being dumb here
+            id: degreeRequirements.id, // Null-assertion bc type narrowing is being dumb here
           },
           data: {
-            requirements: [
-              ...degreeRequirements.bypasses!.requirements.filter((id) => id !== requirement),
-            ].sort(),
+            bypasses: [...degreeRequirements.bypasses.filter((id) => id !== requirement)].sort(),
           },
         });
 
         return newBypass.id;
-
-        return true;
       } catch {}
     }),
   getBypasses: protectedProcedure.input(z.object({})).query(async ({ ctx, input }) => {
