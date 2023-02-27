@@ -1,5 +1,5 @@
 {
-  "abbreviation": "Business Administration (BS) Business Economics Concentration",
+  "abbreviation": "Business Administration(BS) Business Economics Concentration",
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/business-administration",
   "minimum_credit_hours": 120,
   "name": "Bachelor of Science in Business Administration Business Economics Concentration",
@@ -12,7 +12,7 @@
       {
         "matcher": "AndRequirement",
         "metadata": {
-          "id": "Business Administration (BS) Business Economics Concentration-0",
+          "id": "Business Administration(BS) Business Economics Concentration-0",
           "name": "Major Preparatory Courses"
         },
         "requirements": [
@@ -20,21 +20,21 @@
             "course": "ACCT 2301",
             "matcher": "CourseRequirement",
             "metadata": {
-              "id": "Business Administration (BS) Business Economics Concentration-1"
+              "id": "Business Administration(BS) Business Economics Concentration-1"
             }
           },
           {
             "course": "ACCT 2302",
             "matcher": "CourseRequirement",
             "metadata": {
-              "id": "Business Administration (BS) Business Economics Concentration-2"
+              "id": "Business Administration(BS) Business Economics Concentration-2"
             }
           },
           {
             "course": "BLAW 2301",
             "matcher": "CourseRequirement",
             "metadata": {
-              "id": "Business Administration (BS) Business Economics Concentration-3"
+              "id": "Business Administration(BS) Business Economics Concentration-3"
             }
           },
           {
@@ -44,46 +44,46 @@
                 "course": "MATH 1325",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Business Economics Concentration-5"
+                  "id": "Business Administration(BS) Business Economics Concentration-5"
                 }
               },
               {
                 "course": "MATH 2413",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Business Economics Concentration-6"
+                  "id": "Business Administration(BS) Business Economics Concentration-6"
                 }
               },
               {
                 "course": "MATH 2417",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Business Economics Concentration-7"
+                  "id": "Business Administration(BS) Business Economics Concentration-7"
                 }
               }
             ],
             "metadata": {
-              "id": "Business Administration (BS) Business Economics Concentration-4"
+              "id": "Business Administration(BS) Business Economics Concentration-4"
             }
           },
           {
             "matcher": "OrRequirement",
             "metadata": {
-              "id": "Business Administration (BS) Business Economics Concentration-8"
+              "id": "Business Administration(BS) Business Economics Concentration-8"
             },
             "requirements": [
               {
                 "course": "OPRE 3360",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Business Economics Concentration-9"
+                  "id": "Business Administration(BS) Business Economics Concentration-9"
                 }
               },
               {
                 "course": "STAT 3360",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Business Economics Concentration-10"
+                  "id": "Business Administration(BS) Business Economics Concentration-10"
                 }
               }
             ]
@@ -91,7 +91,7 @@
           {
             "matcher": "SelectRequirement",
             "metadata": {
-              "id": "Business Administration (BS) Business Economics Concentration-11"
+              "id": "Business Administration(BS) Business Economics Concentration-11"
             },
             "required_count": 2,
             "requirements": [
@@ -99,28 +99,28 @@
                 "course": "BA 1310",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Business Economics Concentration-12"
+                  "id": "Business Administration(BS) Business Economics Concentration-12"
                 }
               },
               {
                 "course": "BA 1320",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Business Economics Concentration-13"
+                  "id": "Business Administration(BS) Business Economics Concentration-13"
                 }
               },
               {
                 "course": "ECON 2301",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Business Economics Concentration-14"
+                  "id": "Business Administration(BS) Business Economics Concentration-14"
                 }
               },
               {
                 "course": "ECON 2302",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Business Economics Concentration-15"
+                  "id": "Business Administration(BS) Business Economics Concentration-15"
                 }
               }
             ]
@@ -130,28 +130,28 @@
       {
         "matcher": "AndRequirement",
         "metadata": {
-          "id": "Business Administration (BS) Business Economics Concentration-16",
+          "id": "Business Administration(BS) Business Economics Concentration-16",
           "name": "Major Core Courses"
         },
         "requirements": [
           {
             "matcher": "OrRequirement",
             "metadata": {
-              "id": "Business Administration (BS) Business Economics Concentration-17"
+              "id": "Business Administration(BS) Business Economics Concentration-17"
             },
             "requirements": [
               {
                 "course": "BCOM 1300",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Business Economics Concentration-18"
+                  "id": "Business Administration(BS) Business Economics Concentration-18"
                 }
               },
               {
                 "course": "BCOM 3300",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Business Economics Concentration-19"
+                  "id": "Business Administration(BS) Business Economics Concentration-19"
                 }
               }
             ]
@@ -160,69 +160,69 @@
             "course": "BCOM 4300",
             "matcher": "CourseRequirement",
             "metadata": {
-              "id": "Business Administration (BS) Business Economics Concentration-20"
+              "id": "Business Administration(BS) Business Economics Concentration-20"
             }
           },
           {
             "course": "BA 3300",
             "matcher": "CourseRequirement",
             "metadata": {
-              "id": "Business Administration (BS) Business Economics Concentration-21"
+              "id": "Business Administration(BS) Business Economics Concentration-21"
             }
           },
           {
             "course": "IMS 3310",
             "matcher": "CourseRequirement",
             "metadata": {
-              "id": "Business Administration (BS) Business Economics Concentration-22"
+              "id": "Business Administration(BS) Business Economics Concentration-22"
             }
           },
           {
             "course": "FIN 3320",
             "matcher": "CourseRequirement",
             "metadata": {
-              "id": "Business Administration (BS) Business Economics Concentration-23"
+              "id": "Business Administration(BS) Business Economics Concentration-23"
             }
           },
           {
             "course": "ITSS 3300",
             "matcher": "CourseRequirement",
             "metadata": {
-              "id": "Business Administration (BS) Business Economics Concentration-24"
+              "id": "Business Administration(BS) Business Economics Concentration-24"
             }
           },
           {
             "course": "OPRE 3310",
             "matcher": "CourseRequirement",
             "metadata": {
-              "id": "Business Administration (BS) Business Economics Concentration-25"
+              "id": "Business Administration(BS) Business Economics Concentration-25"
             }
           },
           {
             "course": "OPRE 3330",
             "matcher": "CourseRequirement",
             "metadata": {
-              "id": "Business Administration (BS) Business Economics Concentration-26"
+              "id": "Business Administration(BS) Business Economics Concentration-26"
             }
           },
           {
             "matcher": "OrRequirement",
             "metadata": {
-              "id": "Business Administration (BS) Business Economics Concentration-27"
+              "id": "Business Administration(BS) Business Economics Concentration-27"
             },
             "requirements": [
               {
                 "course": "OBHR 3310",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Business Economics Concentration-28"
+                  "id": "Business Administration(BS) Business Economics Concentration-28"
                 }
               },
               {
                 "course": "OBHR 3330",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Business Economics Concentration-29"
+                  "id": "Business Administration(BS) Business Economics Concentration-29"
                 }
               }
             ]
@@ -231,27 +231,27 @@
             "course": "MKT 3300",
             "matcher": "CourseRequirement",
             "metadata": {
-              "id": "Business Administration (BS) Business Economics Concentration-30"
+              "id": "Business Administration(BS) Business Economics Concentration-30"
             }
           },
           {
             "matcher": "OrRequirement",
             "metadata": {
-              "id": "Business Administration (BS) Business Economics Concentration-31"
+              "id": "Business Administration(BS) Business Economics Concentration-31"
             },
             "requirements": [
               {
                 "course": "BPS 4305",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Business Economics Concentration-32"
+                  "id": "Business Administration(BS) Business Economics Concentration-32"
                 }
               },
               {
                 "course": "ENTP 3320",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Business Economics Concentration-33"
+                  "id": "Business Administration(BS) Business Economics Concentration-33"
                 }
               }
             ]
@@ -259,21 +259,21 @@
           {
             "matcher": "OrRequirement",
             "metadata": {
-              "id": "Business Administration (BS) Business Economics Concentration-34"
+              "id": "Business Administration(BS) Business Economics Concentration-34"
             },
             "requirements": [
               {
                 "course": "BPS 4395",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Business Economics Concentration-35"
+                  "id": "Business Administration(BS) Business Economics Concentration-35"
                 }
               },
               {
                 "course": "ENTP 4395",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Business Economics Concentration-36"
+                  "id": "Business Administration(BS) Business Economics Concentration-36"
                 }
               }
             ]
@@ -281,35 +281,35 @@
           {
             "matcher": "OrRequirement",
             "metadata": {
-              "id": "Business Administration (BS) Business Economics Concentration-37"
+              "id": "Business Administration(BS) Business Economics Concentration-37"
             },
             "requirements": [
               {
                 "course": "IMS 4335",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Business Economics Concentration-38"
+                  "id": "Business Administration(BS) Business Economics Concentration-38"
                 }
               },
               {
                 "course": "ENTP 4340",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Business Economics Concentration-39"
+                  "id": "Business Administration(BS) Business Economics Concentration-39"
                 }
               },
               {
                 "course": "MKT 4360",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Business Economics Concentration-40"
+                  "id": "Business Administration(BS) Business Economics Concentration-40"
                 }
               },
               {
                 "course": "BA 4095",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Business Economics Concentration-41"
+                  "id": "Business Administration(BS) Business Economics Concentration-41"
                 }
               }
             ]
@@ -320,35 +320,35 @@
         "matcher": "AndRequirement",
         "metadata": {
           "name": "Major Related Courses",
-          "id": "Business Administration (BS) Business Economics Concentration-42"
+          "id": "Business Administration(BS) Business Economics Concentration-42"
         },
         "requirements": [
           {
             "matcher": "CourseRequirement",
             "course": "FIN 3350",
             "metadata": {
-              "id": "Business Administration (BS) Business Economics Concentration-43"
+              "id": "Business Administration(BS) Business Economics Concentration-43"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECO 4303",
             "metadata": {
-              "id": "Business Administration (BS) Business Economics Concentration-44"
+              "id": "Business Administration(BS) Business Economics Concentration-44"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECO 4351",
             "metadata": {
-              "id": "Business Administration (BS) Business Economics Concentration-45"
+              "id": "Business Administration(BS) Business Economics Concentration-45"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECHO 4352",
             "metadata": {
-              "id": "Business Administration (BS) Business Economics Concentration-46"
+              "id": "Business Administration(BS) Business Economics Concentration-46"
             }
           },
           {
@@ -358,19 +358,19 @@
                 "matcher": "CourseRequirement",
                 "course": "BA 4V90",
                 "metadata": {
-                  "id": "Business Administration (BS) Business Economics Concentration-48"
+                  "id": "Business Administration(BS) Business Economics Concentration-48"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BA 4090",
                 "metadata": {
-                  "id": "Business Administration (BS) Business Economics Concentration-49"
+                  "id": "Business Administration(BS) Business Economics Concentration-49"
                 }
               }
             ],
             "metadata": {
-              "id": "Business Administration (BS) Business Economics Concentration-47"
+              "id": "Business Administration(BS) Business Economics Concentration-47"
             }
           },
           {
@@ -381,75 +381,75 @@
                 "matcher": "CourseRequirement",
                 "course": "BA 4V90",
                 "metadata": {
-                  "id": "Business Administration (BS) Business Economics Concentration-51"
+                  "id": "Business Administration(BS) Business Economics Concentration-51"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BA 4090",
                 "metadata": {
-                  "id": "Business Administration (BS) Business Economics Concentration-52"
+                  "id": "Business Administration(BS) Business Economics Concentration-52"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 3390",
                 "metadata": {
-                  "id": "Business Administration (BS) Business Economics Concentration-53"
+                  "id": "Business Administration(BS) Business Economics Concentration-53"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MECO 4342",
                 "metadata": {
-                  "id": "Business Administration (BS) Business Economics Concentration-54"
+                  "id": "Business Administration(BS) Business Economics Concentration-54"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "RMIS 3370",
                 "metadata": {
-                  "id": "Business Administration (BS) Business Economics Concentration-55"
+                  "id": "Business Administration(BS) Business Economics Concentration-55"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 3370",
                 "metadata": {
-                  "id": "Business Administration (BS) Business Economics Concentration-56"
+                  "id": "Business Administration(BS) Business Economics Concentration-56"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "REAL 3305",
                 "metadata": {
-                  "id": "Business Administration (BS) Business Economics Concentration-57"
+                  "id": "Business Administration(BS) Business Economics Concentration-57"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 3305",
                 "metadata": {
-                  "id": "Business Administration (BS) Business Economics Concentration-58"
+                  "id": "Business Administration(BS) Business Economics Concentration-58"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 3340",
                 "metadata": {
-                  "id": "Business Administration (BS) Business Economics Concentration-59"
+                  "id": "Business Administration(BS) Business Economics Concentration-59"
                 }
               },
               {
                 "matcher": "PrefixBucketRequirement",
                 "prefix": "MECO",
                 "metadata": {
-                  "id": "Business Administration (BS) Business Economics Concentration-60"
+                  "id": "Business Administration(BS) Business Economics Concentration-60"
                 }
               }
             ],
             "metadata": {
-              "id": "Business Administration (BS) Business Economics Concentration-50"
+              "id": "Business Administration(BS) Business Economics Concentration-50"
             }
           }
         ]
@@ -459,7 +459,7 @@
         "required_hours": 6,
         "excluded_courses": [],
         "metadata": {
-          "id": "Business Administration (BS) Business Economics Concentration-61"
+          "id": "Business Administration(BS) Business Economics Concentration-61"
         }
       }
     ]

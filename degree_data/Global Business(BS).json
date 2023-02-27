@@ -1,5 +1,5 @@
 {
-  "abbreviation": "Global Business (BS)",
+  "abbreviation": "Global Business(BS)",
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/global-business",
   "minimum_credit_hours": 120,
   "name": "Bachelor of Science in Global Business",
@@ -13,23 +13,23 @@
         "matcher": "AndRequirement",
         "metadata": {
           "name": "Major Preparatory Courses",
-          "id": "Global Business (BS)-0"
+          "id": "Global Business(BS)-0"
         },
         "requirements": [
           {
             "matcher": "CourseRequirement",
             "course": "ACCT 2301",
-            "metadata": { "id": "Global Business (BS)-1" }
+            "metadata": { "id": "Global Business(BS)-1" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ACCT 2302",
-            "metadata": { "id": "Global Business (BS)-2" }
+            "metadata": { "id": "Global Business(BS)-2" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BLAW 2301",
-            "metadata": { "id": "Global Business (BS)-3" }
+            "metadata": { "id": "Global Business(BS)-3" }
           },
           {
             "matcher": "OrRequirement",
@@ -37,20 +37,20 @@
               {
                 "course": "MATH 1325",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": "Global Business (BS)-5" }
+                "metadata": { "id": "Global Business(BS)-5" }
               },
               {
                 "course": "MATH 2413",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": "Global Business (BS)-6" }
+                "metadata": { "id": "Global Business(BS)-6" }
               },
               {
                 "course": "MATH 2417",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": "Global Business (BS)-7" }
+                "metadata": { "id": "Global Business(BS)-7" }
               }
             ],
-            "metadata": { "id": "Global Business (BS)-4" }
+            "metadata": { "id": "Global Business(BS)-4" }
           },
           {
             "matcher": "OrRequirement",
@@ -58,15 +58,15 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "OPRE 3360",
-                "metadata": { "id": "Global Business (BS)-9" }
+                "metadata": { "id": "Global Business(BS)-9" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "STAT 3360",
-                "metadata": { "id": "Global Business (BS)-10" }
+                "metadata": { "id": "Global Business(BS)-10" }
               }
             ],
-            "metadata": { "id": "Global Business (BS)-8" }
+            "metadata": { "id": "Global Business(BS)-8" }
           },
           {
             "matcher": "SelectRequirement",
@@ -75,25 +75,25 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "BA 1310",
-                "metadata": { "id": "Global Business (BS)-12" }
+                "metadata": { "id": "Global Business(BS)-12" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BA 1320",
-                "metadata": { "id": "Global Business (BS)-13" }
+                "metadata": { "id": "Global Business(BS)-13" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ECON 2301",
-                "metadata": { "id": "Global Business (BS)-14" }
+                "metadata": { "id": "Global Business(BS)-14" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ECON 2302",
-                "metadata": { "id": "Global Business (BS)-15" }
+                "metadata": { "id": "Global Business(BS)-15" }
               }
             ],
-            "metadata": { "id": "Global Business (BS)-11" }
+            "metadata": { "id": "Global Business(BS)-11" }
           }
         ]
       },
@@ -101,7 +101,7 @@
         "matcher": "AndRequirement",
         "metadata": {
           "name": "Major Core Courses",
-          "id": "Global Business (BS)-16"
+          "id": "Global Business(BS)-16"
         },
         "requirements": [
           {
@@ -110,40 +110,40 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "BCOM 1300",
-                "metadata": { "id": "Global Business (BS)-18" }
+                "metadata": { "id": "Global Business(BS)-18" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BCOM 3300",
-                "metadata": { "id": "Global Business (BS)-19" }
+                "metadata": { "id": "Global Business(BS)-19" }
               }
             ],
-            "metadata": { "id": "Global Business (BS)-17" }
+            "metadata": { "id": "Global Business(BS)-17" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BCOM 4300",
-            "metadata": { "id": "Global Business (BS)-20" }
+            "metadata": { "id": "Global Business(BS)-20" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "IMS 3310",
-            "metadata": { "id": "Global Business (BS)-21" }
+            "metadata": { "id": "Global Business(BS)-21" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "FIN 3320",
-            "metadata": { "id": "Global Business (BS)-22" }
+            "metadata": { "id": "Global Business(BS)-22" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ITSS 3300",
-            "metadata": { "id": "Global Business (BS)-23" }
+            "metadata": { "id": "Global Business(BS)-23" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "OPRE 3310",
-            "metadata": { "id": "Global Business (BS)-24" }
+            "metadata": { "id": "Global Business(BS)-24" }
           },
           {
             "matcher": "OrRequirement",
@@ -151,20 +151,20 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "OBHR 3310",
-                "metadata": { "id": "Global Business (BS)-26" }
+                "metadata": { "id": "Global Business(BS)-26" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "OBHR 3330",
-                "metadata": { "id": "Global Business (BS)-27" }
+                "metadata": { "id": "Global Business(BS)-27" }
               }
             ],
-            "metadata": { "id": "Global Business (BS)-25" }
+            "metadata": { "id": "Global Business(BS)-25" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MKT 3300",
-            "metadata": { "id": "Global Business (BS)-28" }
+            "metadata": { "id": "Global Business(BS)-28" }
           },
           {
             "matcher": "OrRequirement",
@@ -172,20 +172,20 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 4395",
-                "metadata": { "id": "Global Business (BS)-30" }
+                "metadata": { "id": "Global Business(BS)-30" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BPS 4395",
-                "metadata": { "id": "Global Business (BS)-31" }
+                "metadata": { "id": "Global Business(BS)-31" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ENTP 4395",
-                "metadata": { "id": "Global Business (BS)-32" }
+                "metadata": { "id": "Global Business(BS)-32" }
               }
             ],
-            "metadata": { "id": "Global Business (BS)-29" }
+            "metadata": { "id": "Global Business(BS)-29" }
           }
         ]
       },
@@ -193,7 +193,7 @@
         "matcher": "AndRequirement",
         "metadata": {
           "name": "Major Related Courses",
-          "id": "Global Business (BS)-33"
+          "id": "Global Business(BS)-33"
         },
         "requirements": [
           {
@@ -202,40 +202,40 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 4320",
-                "metadata": { "id": "Global Business (BS)-35" }
+                "metadata": { "id": "Global Business(BS)-35" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 4320",
-                "metadata": { "id": "Global Business (BS)-36" }
+                "metadata": { "id": "Global Business(BS)-36" }
               }
             ],
-            "metadata": { "id": "Global Business (BS)-34" }
+            "metadata": { "id": "Global Business(BS)-34" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "FIN 3380",
-            "metadata": { "id": "Global Business (BS)-37" }
+            "metadata": { "id": "Global Business(BS)-37" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "IMS 4330",
-            "metadata": { "id": "Global Business (BS)-38" }
+            "metadata": { "id": "Global Business(BS)-38" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "IMS 4350",
-            "metadata": { "id": "Global Business (BS)-39" }
+            "metadata": { "id": "Global Business(BS)-39" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "IMS 4373",
-            "metadata": { "id": "Global Business (BS)-40" }
+            "metadata": { "id": "Global Business(BS)-40" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BLAW 4301",
-            "metadata": { "id": "Global Business (BS)-41" }
+            "metadata": { "id": "Global Business(BS)-41" }
           },
           {
             "matcher": "OrRequirement",
@@ -243,20 +243,20 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 4310",
-                "metadata": { "id": "Global Business (BS)-43" }
+                "metadata": { "id": "Global Business(BS)-43" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 4340",
-                "metadata": { "id": "Global Business (BS)-44" }
+                "metadata": { "id": "Global Business(BS)-44" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 4v94",
-                "metadata": { "id": "Global Business (BS)-45" }
+                "metadata": { "id": "Global Business(BS)-45" }
               }
             ],
-            "metadata": { "id": "Global Business (BS)-42" }
+            "metadata": { "id": "Global Business(BS)-42" }
           }
         ]
       },
@@ -264,7 +264,7 @@
         "matcher": "AndRequirement",
         "metadata": {
           "name": "Elective Requirements",
-          "id": "Global Business (BS)-46"
+          "id": "Global Business(BS)-46"
         },
         "requirements": [
           {
@@ -273,20 +273,20 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 4V90",
-                "metadata": { "id": "Global Business (BS)-48" }
+                "metadata": { "id": "Global Business(BS)-48" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 4090",
-                "metadata": { "id": "Global Business (BS)-49" }
+                "metadata": { "id": "Global Business(BS)-49" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BA 4090",
-                "metadata": { "id": "Global Business (BS)-50" }
+                "metadata": { "id": "Global Business(BS)-50" }
               }
             ],
-            "metadata": { "id": "Global Business (BS)-47" }
+            "metadata": { "id": "Global Business(BS)-47" }
           },
           {
             "matcher": "OrRequirement",
@@ -294,25 +294,25 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 4335",
-                "metadata": { "id": "Global Business (BS)-52" }
+                "metadata": { "id": "Global Business(BS)-52" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ENTP 4340",
-                "metadata": { "id": "Global Business (BS)-53" }
+                "metadata": { "id": "Global Business(BS)-53" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 4360",
-                "metadata": { "id": "Global Business (BS)-54" }
+                "metadata": { "id": "Global Business(BS)-54" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BA 4095",
-                "metadata": { "id": "Global Business (BS)-55" }
+                "metadata": { "id": "Global Business(BS)-55" }
               }
             ],
-            "metadata": { "id": "Global Business (BS)-51" }
+            "metadata": { "id": "Global Business(BS)-51" }
           },
           {
             "matcher": "OrRequirement",
@@ -323,25 +323,25 @@
                   {
                     "matcher": "CourseRequirement",
                     "course": "FIN 3350",
-                    "metadata": { "id": "Global Business (BS)-58" }
+                    "metadata": { "id": "Global Business(BS)-58" }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "MECO 4303",
-                    "metadata": { "id": "Global Business (BS)-59" }
+                    "metadata": { "id": "Global Business(BS)-59" }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "MECO 4351",
-                    "metadata": { "id": "Global Business (BS)-60" }
+                    "metadata": { "id": "Global Business(BS)-60" }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "MECHO 4352",
-                    "metadata": { "id": "Global Business (BS)-61" }
+                    "metadata": { "id": "Global Business(BS)-61" }
                   }
                 ],
-                "metadata": { "id": "Global Business (BS)-57" }
+                "metadata": { "id": "Global Business(BS)-57" }
               },
               {
                 "matcher": "AndRequirement",
@@ -349,12 +349,12 @@
                   {
                     "matcher": "CourseRequirement",
                     "course": "ENGY 3301",
-                    "metadata": { "id": "Global Business (BS)-63" }
+                    "metadata": { "id": "Global Business(BS)-63" }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "ENGY 3302",
-                    "metadata": { "id": "Global Business (BS)-64" }
+                    "metadata": { "id": "Global Business(BS)-64" }
                   },
                   {
                     "matcher": "SelectRequirement",
@@ -366,15 +366,15 @@
                           {
                             "matcher": "CourseRequirement",
                             "course": "ENGY 3340",
-                            "metadata": { "id": "Global Business (BS)-67" }
+                            "metadata": { "id": "Global Business(BS)-67" }
                           },
                           {
                             "matcher": "CourseRequirement",
                             "course": "BLAW 4301",
-                            "metadata": { "id": "Global Business (BS)-68" }
+                            "metadata": { "id": "Global Business(BS)-68" }
                           }
                         ],
-                        "metadata": { "id": "Global Business (BS)-66" }
+                        "metadata": { "id": "Global Business(BS)-66" }
                       },
                       {
                         "matcher": "OrRequirement",
@@ -382,26 +382,26 @@
                           {
                             "matcher": "CourseRequirement",
                             "course": "FIN 4313",
-                            "metadata": { "id": "Global Business (BS)-70" }
+                            "metadata": { "id": "Global Business(BS)-70" }
                           },
                           {
                             "matcher": "CourseRequirement",
                             "course": "ENGY 4313",
-                            "metadata": { "id": "Global Business (BS)-71" }
+                            "metadata": { "id": "Global Business(BS)-71" }
                           }
                         ],
-                        "metadata": { "id": "Global Business (BS)-69" }
+                        "metadata": { "id": "Global Business(BS)-69" }
                       },
                       {
                         "matcher": "CourseRequirement",
                         "course": "MECO 4342",
-                        "metadata": { "id": "Global Business (BS)-72" }
+                        "metadata": { "id": "Global Business(BS)-72" }
                       }
                     ],
-                    "metadata": { "id": "Global Business (BS)-65" }
+                    "metadata": { "id": "Global Business(BS)-65" }
                   }
                 ],
-                "metadata": { "id": "Global Business (BS)-62" }
+                "metadata": { "id": "Global Business(BS)-62" }
               },
               {
                 "matcher": "AndRequirement",
@@ -409,7 +409,7 @@
                   {
                     "matcher": "CourseRequirement",
                     "course": "ENTP 3301",
-                    "metadata": { "id": "Global Business (BS)-74" }
+                    "metadata": { "id": "Global Business(BS)-74" }
                   },
                   {
                     "matcher": "HoursRequirement",
@@ -421,20 +421,20 @@
                           {
                             "matcher": "CourseRequirement",
                             "course": "ENTP 3360",
-                            "metadata": { "id": "Global Business (BS)-77" }
+                            "metadata": { "id": "Global Business(BS)-77" }
                           },
                           {
                             "matcher": "CourseRequirement",
                             "course": "FIN 3360",
-                            "metadata": { "id": "Global Business (BS)-78" }
+                            "metadata": { "id": "Global Business(BS)-78" }
                           }
                         ],
-                        "metadata": { "id": "Global Business (BS)-76" }
+                        "metadata": { "id": "Global Business(BS)-76" }
                       },
                       {
                         "matcher": "CourseRequirement",
                         "course": "ENTP 4311",
-                        "metadata": { "id": "Global Business (BS)-79" }
+                        "metadata": { "id": "Global Business(BS)-79" }
                       },
                       {
                         "matcher": "OrRequirement",
@@ -442,21 +442,21 @@
                           {
                             "matcher": "CourseRequirement",
                             "course": "ENTP 4320",
-                            "metadata": { "id": "Global Business (BS)-81" }
+                            "metadata": { "id": "Global Business(BS)-81" }
                           },
                           {
                             "matcher": "CourseRequirement",
                             "course": "ENTP 4350",
-                            "metadata": { "id": "Global Business (BS)-82" }
+                            "metadata": { "id": "Global Business(BS)-82" }
                           }
                         ],
-                        "metadata": { "id": "Global Business (BS)-80" }
+                        "metadata": { "id": "Global Business(BS)-80" }
                       }
                     ],
-                    "metadata": { "id": "Global Business (BS)-75" }
+                    "metadata": { "id": "Global Business(BS)-75" }
                   }
                 ],
-                "metadata": { "id": "Global Business (BS)-73" }
+                "metadata": { "id": "Global Business(BS)-73" }
               },
               {
                 "matcher": "AndRequirement",
@@ -467,15 +467,15 @@
                       {
                         "matcher": "CourseRequirement",
                         "course": "RMIS 3370",
-                        "metadata": { "id": "Global Business (BS)-85" }
+                        "metadata": { "id": "Global Business(BS)-85" }
                       },
                       {
                         "matcher": "CourseRequirement",
                         "course": "FIN 3370",
-                        "metadata": { "id": "Global Business (BS)-86" }
+                        "metadata": { "id": "Global Business(BS)-86" }
                       }
                     ],
-                    "metadata": { "id": "Global Business (BS)-84" }
+                    "metadata": { "id": "Global Business(BS)-84" }
                   },
                   {
                     "matcher": "OrRequirement",
@@ -483,15 +483,15 @@
                       {
                         "matcher": "CourseRequirement",
                         "course": "RMIS 4331",
-                        "metadata": { "id": "Global Business (BS)-88" }
+                        "metadata": { "id": "Global Business(BS)-88" }
                       },
                       {
                         "matcher": "CourseRequirement",
                         "course": "FIN 4331",
-                        "metadata": { "id": "Global Business (BS)-89" }
+                        "metadata": { "id": "Global Business(BS)-89" }
                       }
                     ],
-                    "metadata": { "id": "Global Business (BS)-87" }
+                    "metadata": { "id": "Global Business(BS)-87" }
                   },
                   {
                     "matcher": "OrRequirement",
@@ -499,15 +499,15 @@
                       {
                         "matcher": "CourseRequirement",
                         "course": "RMIS 4332",
-                        "metadata": { "id": "Global Business (BS)-91" }
+                        "metadata": { "id": "Global Business(BS)-91" }
                       },
                       {
                         "matcher": "CourseRequirement",
                         "course": "FIN 4332",
-                        "metadata": { "id": "Global Business (BS)-92" }
+                        "metadata": { "id": "Global Business(BS)-92" }
                       }
                     ],
-                    "metadata": { "id": "Global Business (BS)-90" }
+                    "metadata": { "id": "Global Business(BS)-90" }
                   },
                   {
                     "matcher": "OrRequirement",
@@ -515,15 +515,15 @@
                       {
                         "matcher": "CourseRequirement",
                         "course": "RMIS 4333",
-                        "metadata": { "id": "Global Business (BS)-94" }
+                        "metadata": { "id": "Global Business(BS)-94" }
                       },
                       {
                         "matcher": "CourseRequirement",
                         "course": "FIN 4333",
-                        "metadata": { "id": "Global Business (BS)-95" }
+                        "metadata": { "id": "Global Business(BS)-95" }
                       }
                     ],
-                    "metadata": { "id": "Global Business (BS)-93" }
+                    "metadata": { "id": "Global Business(BS)-93" }
                   },
                   {
                     "matcher": "OrRequirement",
@@ -531,18 +531,18 @@
                       {
                         "matcher": "CourseRequirement",
                         "course": "RMIS 4334",
-                        "metadata": { "id": "Global Business (BS)-97" }
+                        "metadata": { "id": "Global Business(BS)-97" }
                       },
                       {
                         "matcher": "CourseRequirement",
                         "course": "FIN 4334",
-                        "metadata": { "id": "Global Business (BS)-98" }
+                        "metadata": { "id": "Global Business(BS)-98" }
                       }
                     ],
-                    "metadata": { "id": "Global Business (BS)-96" }
+                    "metadata": { "id": "Global Business(BS)-96" }
                   }
                 ],
-                "metadata": { "id": "Global Business (BS)-83" }
+                "metadata": { "id": "Global Business(BS)-83" }
               },
               {
                 "matcher": "AndRequirement",
@@ -553,15 +553,15 @@
                       {
                         "matcher": "CourseRequirement",
                         "course": "REAL 3305",
-                        "metadata": { "id": "Global Business (BS)-101" }
+                        "metadata": { "id": "Global Business(BS)-101" }
                       },
                       {
                         "matcher": "CourseRequirement",
                         "course": "FIN 3305",
-                        "metadata": { "id": "Global Business (BS)-102" }
+                        "metadata": { "id": "Global Business(BS)-102" }
                       }
                     ],
-                    "metadata": { "id": "Global Business (BS)-100" }
+                    "metadata": { "id": "Global Business(BS)-100" }
                   },
                   {
                     "matcher": "OrRequirement",
@@ -569,15 +569,15 @@
                       {
                         "matcher": "CourseRequirement",
                         "course": "REAL 3365",
-                        "metadata": { "id": "Global Business (BS)-104" }
+                        "metadata": { "id": "Global Business(BS)-104" }
                       },
                       {
                         "matcher": "CourseRequirement",
                         "course": "FIN 3365",
-                        "metadata": { "id": "Global Business (BS)-105" }
+                        "metadata": { "id": "Global Business(BS)-105" }
                       }
                     ],
-                    "metadata": { "id": "Global Business (BS)-103" }
+                    "metadata": { "id": "Global Business(BS)-103" }
                   },
                   {
                     "matcher": "OrRequirement",
@@ -585,15 +585,15 @@
                       {
                         "matcher": "CourseRequirement",
                         "course": "REAL 4321",
-                        "metadata": { "id": "Global Business (BS)-107" }
+                        "metadata": { "id": "Global Business(BS)-107" }
                       },
                       {
                         "matcher": "CourseRequirement",
                         "course": "FIN 4321",
-                        "metadata": { "id": "Global Business (BS)-108" }
+                        "metadata": { "id": "Global Business(BS)-108" }
                       }
                     ],
-                    "metadata": { "id": "Global Business (BS)-106" }
+                    "metadata": { "id": "Global Business(BS)-106" }
                   },
                   {
                     "matcher": "OrRequirement",
@@ -601,21 +601,21 @@
                       {
                         "matcher": "CourseRequirement",
                         "course": "REAL 4328",
-                        "metadata": { "id": "Global Business (BS)-110" }
+                        "metadata": { "id": "Global Business(BS)-110" }
                       },
                       {
                         "matcher": "CourseRequirement",
                         "course": "FIN 4328",
-                        "metadata": { "id": "Global Business (BS)-111" }
+                        "metadata": { "id": "Global Business(BS)-111" }
                       }
                     ],
-                    "metadata": { "id": "Global Business (BS)-109" }
+                    "metadata": { "id": "Global Business(BS)-109" }
                   }
                 ],
-                "metadata": { "id": "Global Business (BS)-99" }
+                "metadata": { "id": "Global Business(BS)-99" }
               }
             ],
-            "metadata": { "id": "Global Business (BS)-56" }
+            "metadata": { "id": "Global Business(BS)-56" }
           },
           {
             "matcher": "AndRequirement",
@@ -623,7 +623,7 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 3330",
-                "metadata": { "id": "Global Business (BS)-113" }
+                "metadata": { "id": "Global Business(BS)-113" }
               },
               {
                 "matcher": "OrRequirement",
@@ -631,15 +631,15 @@
                   {
                     "matcher": "CourseRequirement",
                     "course": "MKT 3331",
-                    "metadata": { "id": "Global Business (BS)-115" }
+                    "metadata": { "id": "Global Business(BS)-115" }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "MKT 4332",
-                    "metadata": { "id": "Global Business (BS)-116" }
+                    "metadata": { "id": "Global Business(BS)-116" }
                   }
                 ],
-                "metadata": { "id": "Global Business (BS)-114" }
+                "metadata": { "id": "Global Business(BS)-114" }
               },
               {
                 "matcher": "OrRequirement",
@@ -647,23 +647,23 @@
                   {
                     "matcher": "CourseRequirement",
                     "course": "MKT 4331",
-                    "metadata": { "id": "Global Business (BS)-118" }
+                    "metadata": { "id": "Global Business(BS)-118" }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "ENTP 4331",
-                    "metadata": { "id": "Global Business (BS)-119" }
+                    "metadata": { "id": "Global Business(BS)-119" }
                   }
                 ],
-                "metadata": { "id": "Global Business (BS)-117" }
+                "metadata": { "id": "Global Business(BS)-117" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "OBHR 4352",
-                "metadata": { "id": "Global Business (BS)-120" }
+                "metadata": { "id": "Global Business(BS)-120" }
               }
             ],
-            "metadata": { "id": "Global Business (BS)-112" }
+            "metadata": { "id": "Global Business(BS)-112" }
           },
           {
             "matcher": "HoursRequirement",
@@ -672,190 +672,190 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 4V90",
-                "metadata": { "id": "Global Business (BS)-122" }
+                "metadata": { "id": "Global Business(BS)-122" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 4090",
-                "metadata": { "id": "Global Business (BS)-123" }
+                "metadata": { "id": "Global Business(BS)-123" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BA 4090",
-                "metadata": { "id": "Global Business (BS)-124" }
+                "metadata": { "id": "Global Business(BS)-124" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 4335",
-                "metadata": { "id": "Global Business (BS)-125" }
+                "metadata": { "id": "Global Business(BS)-125" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ENTP 4340",
-                "metadata": { "id": "Global Business (BS)-126" }
+                "metadata": { "id": "Global Business(BS)-126" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 4360",
-                "metadata": { "id": "Global Business (BS)-127" }
+                "metadata": { "id": "Global Business(BS)-127" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BA 4095",
-                "metadata": { "id": "Global Business (BS)-128" }
+                "metadata": { "id": "Global Business(BS)-128" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ENTP 3301",
-                "metadata": { "id": "Global Business (BS)-129" }
+                "metadata": { "id": "Global Business(BS)-129" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ENTP 3360",
-                "metadata": { "id": "Global Business (BS)-130" }
+                "metadata": { "id": "Global Business(BS)-130" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 3360",
-                "metadata": { "id": "Global Business (BS)-131" }
+                "metadata": { "id": "Global Business(BS)-131" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ENTP 4311",
-                "metadata": { "id": "Global Business (BS)-132" }
+                "metadata": { "id": "Global Business(BS)-132" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ENTP 4320",
-                "metadata": { "id": "Global Business (BS)-133" }
+                "metadata": { "id": "Global Business(BS)-133" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ENTP 4350",
-                "metadata": { "id": "Global Business (BS)-134" }
+                "metadata": { "id": "Global Business(BS)-134" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "RMIS 3370",
-                "metadata": { "id": "Global Business (BS)-135" }
+                "metadata": { "id": "Global Business(BS)-135" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 3370",
-                "metadata": { "id": "Global Business (BS)-136" }
+                "metadata": { "id": "Global Business(BS)-136" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "RMIS 4331",
-                "metadata": { "id": "Global Business (BS)-137" }
+                "metadata": { "id": "Global Business(BS)-137" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4331",
-                "metadata": { "id": "Global Business (BS)-138" }
+                "metadata": { "id": "Global Business(BS)-138" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "RMIS 4332",
-                "metadata": { "id": "Global Business (BS)-139" }
+                "metadata": { "id": "Global Business(BS)-139" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4332",
-                "metadata": { "id": "Global Business (BS)-140" }
+                "metadata": { "id": "Global Business(BS)-140" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "RMIS 4333",
-                "metadata": { "id": "Global Business (BS)-141" }
+                "metadata": { "id": "Global Business(BS)-141" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4333",
-                "metadata": { "id": "Global Business (BS)-142" }
+                "metadata": { "id": "Global Business(BS)-142" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "RMIS 4334",
-                "metadata": { "id": "Global Business (BS)-143" }
+                "metadata": { "id": "Global Business(BS)-143" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4334",
-                "metadata": { "id": "Global Business (BS)-144" }
+                "metadata": { "id": "Global Business(BS)-144" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "REAL 3305",
-                "metadata": { "id": "Global Business (BS)-145" }
+                "metadata": { "id": "Global Business(BS)-145" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 3305",
-                "metadata": { "id": "Global Business (BS)-146" }
+                "metadata": { "id": "Global Business(BS)-146" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "REAL 3365",
-                "metadata": { "id": "Global Business (BS)-147" }
+                "metadata": { "id": "Global Business(BS)-147" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 3365",
-                "metadata": { "id": "Global Business (BS)-148" }
+                "metadata": { "id": "Global Business(BS)-148" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "REAL 4321",
-                "metadata": { "id": "Global Business (BS)-149" }
+                "metadata": { "id": "Global Business(BS)-149" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4321",
-                "metadata": { "id": "Global Business (BS)-150" }
+                "metadata": { "id": "Global Business(BS)-150" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "REAL 4328",
-                "metadata": { "id": "Global Business (BS)-151" }
+                "metadata": { "id": "Global Business(BS)-151" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4328",
-                "metadata": { "id": "Global Business (BS)-152" }
+                "metadata": { "id": "Global Business(BS)-152" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 3330",
-                "metadata": { "id": "Global Business (BS)-153" }
+                "metadata": { "id": "Global Business(BS)-153" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 3331",
-                "metadata": { "id": "Global Business (BS)-154" }
+                "metadata": { "id": "Global Business(BS)-154" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 4332",
-                "metadata": { "id": "Global Business (BS)-155" }
+                "metadata": { "id": "Global Business(BS)-155" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 4331",
-                "metadata": { "id": "Global Business (BS)-156" }
+                "metadata": { "id": "Global Business(BS)-156" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ENTP 4331",
-                "metadata": { "id": "Global Business (BS)-157" }
+                "metadata": { "id": "Global Business(BS)-157" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "OBHR 4352",
-                "metadata": { "id": "Global Business (BS)-158" }
+                "metadata": { "id": "Global Business(BS)-158" }
               }
             ],
-            "metadata": { "id": "Global Business (BS)-121" }
+            "metadata": { "id": "Global Business(BS)-121" }
           }
         ]
       }

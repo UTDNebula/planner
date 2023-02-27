@@ -1,5 +1,5 @@
 {
-  "abbreviation": "Global Business and Supply Chain Management (BS)",
+  "abbreviation": "Global Business and Supply Chain Management(BS)",
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/global-business-supply-chain-management",
   "minimum_credit_hours": 128,
   "name": "Bachelor of Science in Global Business and Supply Chain Management",
@@ -13,7 +13,7 @@
         "matcher": "AndRequirement",
         "metadata": {
           "name": "Major Preparatory Courses",
-          "id": "Global Business and Supply Chain Management (BS)-0"
+          "id": "Global Business and Supply Chain Management(BS)-0"
         },
         "requirements": []
       },
@@ -21,48 +21,48 @@
         "matcher": "CourseRequirement",
         "course": "ACCT 2301",
         "metadata": {
-          "id": "Global Business and Supply Chain Management (BS)-1"
+          "id": "Global Business and Supply Chain Management(BS)-1"
         }
       },
       {
         "matcher": "CourseRequirement",
         "course": "ACCT 2302",
         "metadata": {
-          "id": "Global Business and Supply Chain Management (BS)-2"
+          "id": "Global Business and Supply Chain Management(BS)-2"
         }
       },
       {
         "matcher": "CourseRequirement",
         "course": "BLAW 2301",
         "metadata": {
-          "id": "Global Business and Supply Chain Management (BS)-3"
+          "id": "Global Business and Supply Chain Management(BS)-3"
         }
       },
       {
         "matcher": "OrRequirement",
         "metadata": {
-          "id": "Global Business and Supply Chain Management (BS)-4"
+          "id": "Global Business and Supply Chain Management(BS)-4"
         },
         "requirements": [
           {
             "course": "MATH 1325",
             "matcher": "CourseRequirement",
             "metadata": {
-              "id": "Global Business and Supply Chain Management (BS)-5"
+              "id": "Global Business and Supply Chain Management(BS)-5"
             }
           },
           {
             "course": "MATH 2413",
             "matcher": "CourseRequirement",
             "metadata": {
-              "id": "Global Business and Supply Chain Management (BS)-6"
+              "id": "Global Business and Supply Chain Management(BS)-6"
             }
           },
           {
             "course": "MATH 2417",
             "matcher": "CourseRequirement",
             "metadata": {
-              "id": "Global Business and Supply Chain Management (BS)-7"
+              "id": "Global Business and Supply Chain Management(BS)-7"
             }
           }
         ]
@@ -70,35 +70,35 @@
       {
         "matcher": "OrRequirement",
         "metadata": {
-          "id": "Global Business and Supply Chain Management (BS)-8"
+          "id": "Global Business and Supply Chain Management(BS)-8"
         },
         "requirements": [
           {
             "course": "MATH 1326",
             "matcher": "CourseRequirement",
             "metadata": {
-              "id": "Global Business and Supply Chain Management (BS)-9"
+              "id": "Global Business and Supply Chain Management(BS)-9"
             }
           },
           {
             "course": "OPRE 3340",
             "matcher": "CourseRequirement",
             "metadata": {
-              "id": "Global Business and Supply Chain Management (BS)-10"
+              "id": "Global Business and Supply Chain Management(BS)-10"
             }
           },
           {
             "course": "MATH 2414",
             "matcher": "CourseRequirement",
             "metadata": {
-              "id": "Global Business and Supply Chain Management (BS)-11"
+              "id": "Global Business and Supply Chain Management(BS)-11"
             }
           },
           {
             "course": "MATH 2419",
             "matcher": "CourseRequirement",
             "metadata": {
-              "id": "Global Business and Supply Chain Management (BS)-12"
+              "id": "Global Business and Supply Chain Management(BS)-12"
             }
           }
         ]
@@ -110,19 +110,19 @@
             "matcher": "CourseRequirement",
             "course": "OPRE 3333",
             "metadata": {
-              "id": "Global Business and Supply Chain Management (BS)-14"
+              "id": "Global Business and Supply Chain Management(BS)-14"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MATH 2333",
             "metadata": {
-              "id": "Global Business and Supply Chain Management (BS)-15"
+              "id": "Global Business and Supply Chain Management(BS)-15"
             }
           }
         ],
         "metadata": {
-          "id": "Global Business and Supply Chain Management (BS)-13"
+          "id": "Global Business and Supply Chain Management(BS)-13"
         }
       },
       {
@@ -132,19 +132,19 @@
             "matcher": "CourseRequirement",
             "course": "OPRE 3360",
             "metadata": {
-              "id": "Global Business and Supply Chain Management (BS)-17"
+              "id": "Global Business and Supply Chain Management(BS)-17"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "STAT 3360",
             "metadata": {
-              "id": "Global Business and Supply Chain Management (BS)-18"
+              "id": "Global Business and Supply Chain Management(BS)-18"
             }
           }
         ],
         "metadata": {
-          "id": "Global Business and Supply Chain Management (BS)-16"
+          "id": "Global Business and Supply Chain Management(BS)-16"
         }
       },
       {
@@ -155,40 +155,40 @@
             "matcher": "CourseRequirement",
             "course": "BA 1310",
             "metadata": {
-              "id": "Global Business and Supply Chain Management (BS)-20"
+              "id": "Global Business and Supply Chain Management(BS)-20"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BA 1320",
             "metadata": {
-              "id": "Global Business and Supply Chain Management (BS)-21"
+              "id": "Global Business and Supply Chain Management(BS)-21"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ECON 2301",
             "metadata": {
-              "id": "Global Business and Supply Chain Management (BS)-22"
+              "id": "Global Business and Supply Chain Management(BS)-22"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ECON 2302",
             "metadata": {
-              "id": "Global Business and Supply Chain Management (BS)-23"
+              "id": "Global Business and Supply Chain Management(BS)-23"
             }
           }
         ],
         "metadata": {
-          "id": "Global Business and Supply Chain Management (BS)-19"
+          "id": "Global Business and Supply Chain Management(BS)-19"
         }
       },
       {
         "matcher": "AndRequirement",
         "metadata": {
           "name": "Major Core Courses",
-          "id": "Global Business and Supply Chain Management (BS)-24"
+          "id": "Global Business and Supply Chain Management(BS)-24"
         },
         "requirements": [
           {
@@ -198,54 +198,54 @@
                 "matcher": "CourseRequirement",
                 "course": "BCOM 1300",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-26"
+                  "id": "Global Business and Supply Chain Management(BS)-26"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BCOM 3300",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-27"
+                  "id": "Global Business and Supply Chain Management(BS)-27"
                 }
               }
             ],
             "metadata": {
-              "id": "Global Business and Supply Chain Management (BS)-25"
+              "id": "Global Business and Supply Chain Management(BS)-25"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BCOM 4300",
             "metadata": {
-              "id": "Global Business and Supply Chain Management (BS)-28"
+              "id": "Global Business and Supply Chain Management(BS)-28"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "IMS 3310",
             "metadata": {
-              "id": "Global Business and Supply Chain Management (BS)-29"
+              "id": "Global Business and Supply Chain Management(BS)-29"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "FIN 3320",
             "metadata": {
-              "id": "Global Business and Supply Chain Management (BS)-30"
+              "id": "Global Business and Supply Chain Management(BS)-30"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ITSS 3300",
             "metadata": {
-              "id": "Global Business and Supply Chain Management (BS)-31"
+              "id": "Global Business and Supply Chain Management(BS)-31"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "OPRE 3310",
             "metadata": {
-              "id": "Global Business and Supply Chain Management (BS)-32"
+              "id": "Global Business and Supply Chain Management(BS)-32"
             }
           },
           {
@@ -255,26 +255,26 @@
                 "matcher": "CourseRequirement",
                 "course": "OBHR 3310",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-34"
+                  "id": "Global Business and Supply Chain Management(BS)-34"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "OBHR 3330",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-35"
+                  "id": "Global Business and Supply Chain Management(BS)-35"
                 }
               }
             ],
             "metadata": {
-              "id": "Global Business and Supply Chain Management (BS)-33"
+              "id": "Global Business and Supply Chain Management(BS)-33"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MKT 3300",
             "metadata": {
-              "id": "Global Business and Supply Chain Management (BS)-36"
+              "id": "Global Business and Supply Chain Management(BS)-36"
             }
           }
         ]
@@ -283,7 +283,7 @@
         "matcher": "AndRequirement",
         "metadata": {
           "name": "Major Related Courses",
-          "id": "Global Business and Supply Chain Management (BS)-37"
+          "id": "Global Business and Supply Chain Management(BS)-37"
         },
         "requirements": [
           {
@@ -293,89 +293,89 @@
                 "matcher": "CourseRequirement",
                 "course": "IMS 4320",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-39"
+                  "id": "Global Business and Supply Chain Management(BS)-39"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 4320",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-40"
+                  "id": "Global Business and Supply Chain Management(BS)-40"
                 }
               }
             ],
             "metadata": {
-              "id": "Global Business and Supply Chain Management (BS)-38"
+              "id": "Global Business and Supply Chain Management(BS)-38"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "FIN 3380",
             "metadata": {
-              "id": "Global Business and Supply Chain Management (BS)-41"
+              "id": "Global Business and Supply Chain Management(BS)-41"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "IMS 4330",
             "metadata": {
-              "id": "Global Business and Supply Chain Management (BS)-42"
+              "id": "Global Business and Supply Chain Management(BS)-42"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "IMS 4350",
             "metadata": {
-              "id": "Global Business and Supply Chain Management (BS)-43"
+              "id": "Global Business and Supply Chain Management(BS)-43"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "IMS 4373",
             "metadata": {
-              "id": "Global Business and Supply Chain Management (BS)-44"
+              "id": "Global Business and Supply Chain Management(BS)-44"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BLAW 4301",
             "metadata": {
-              "id": "Global Business and Supply Chain Management (BS)-45"
+              "id": "Global Business and Supply Chain Management(BS)-45"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "OPRE 3320",
             "metadata": {
-              "id": "Global Business and Supply Chain Management (BS)-46"
+              "id": "Global Business and Supply Chain Management(BS)-46"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "OPRE 3330",
             "metadata": {
-              "id": "Global Business and Supply Chain Management (BS)-47"
+              "id": "Global Business and Supply Chain Management(BS)-47"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "OPRE 4310",
             "metadata": {
-              "id": "Global Business and Supply Chain Management (BS)-48"
+              "id": "Global Business and Supply Chain Management(BS)-48"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "OPRE 4330",
             "metadata": {
-              "id": "Global Business and Supply Chain Management (BS)-49"
+              "id": "Global Business and Supply Chain Management(BS)-49"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "OPRE 4340",
             "metadata": {
-              "id": "Global Business and Supply Chain Management (BS)-50"
+              "id": "Global Business and Supply Chain Management(BS)-50"
             }
           },
           {
@@ -385,33 +385,33 @@
                 "matcher": "CourseRequirement",
                 "course": "OPRE 4395",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-52"
+                  "id": "Global Business and Supply Chain Management(BS)-52"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 4395",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-53"
+                  "id": "Global Business and Supply Chain Management(BS)-53"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BPS 4395",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-54"
+                  "id": "Global Business and Supply Chain Management(BS)-54"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ENTP 4395",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-55"
+                  "id": "Global Business and Supply Chain Management(BS)-55"
                 }
               }
             ],
             "metadata": {
-              "id": "Global Business and Supply Chain Management (BS)-51"
+              "id": "Global Business and Supply Chain Management(BS)-51"
             }
           },
           {
@@ -421,26 +421,26 @@
                 "matcher": "CourseRequirement",
                 "course": "IMS 4310",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-57"
+                  "id": "Global Business and Supply Chain Management(BS)-57"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 4340",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-58"
+                  "id": "Global Business and Supply Chain Management(BS)-58"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 4V94",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-59"
+                  "id": "Global Business and Supply Chain Management(BS)-59"
                 }
               }
             ],
             "metadata": {
-              "id": "Global Business and Supply Chain Management (BS)-56"
+              "id": "Global Business and Supply Chain Management(BS)-56"
             }
           }
         ]
@@ -449,7 +449,7 @@
         "matcher": "AndRequirement",
         "metadata": {
           "name": "Elective Requirements",
-          "id": "Global Business and Supply Chain Management (BS)-60"
+          "id": "Global Business and Supply Chain Management(BS)-60"
         },
         "requirements": [
           {
@@ -459,26 +459,26 @@
                 "matcher": "CourseRequirement",
                 "course": "IMS 4V90",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-62"
+                  "id": "Global Business and Supply Chain Management(BS)-62"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 4090",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-63"
+                  "id": "Global Business and Supply Chain Management(BS)-63"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BA 4090",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-64"
+                  "id": "Global Business and Supply Chain Management(BS)-64"
                 }
               }
             ],
             "metadata": {
-              "id": "Global Business and Supply Chain Management (BS)-61"
+              "id": "Global Business and Supply Chain Management(BS)-61"
             }
           },
           {
@@ -488,33 +488,33 @@
                 "matcher": "CourseRequirement",
                 "course": "IMS 4335",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-66"
+                  "id": "Global Business and Supply Chain Management(BS)-66"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ENTP 4340",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-67"
+                  "id": "Global Business and Supply Chain Management(BS)-67"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 4360",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-68"
+                  "id": "Global Business and Supply Chain Management(BS)-68"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BA 4095",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-69"
+                  "id": "Global Business and Supply Chain Management(BS)-69"
                 }
               }
             ],
             "metadata": {
-              "id": "Global Business and Supply Chain Management (BS)-65"
+              "id": "Global Business and Supply Chain Management(BS)-65"
             }
           },
           {
@@ -525,243 +525,243 @@
                 "matcher": "CourseRequirement",
                 "course": "IMS 4V90",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-71"
+                  "id": "Global Business and Supply Chain Management(BS)-71"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 4090",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-72"
+                  "id": "Global Business and Supply Chain Management(BS)-72"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BA 4090",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-73"
+                  "id": "Global Business and Supply Chain Management(BS)-73"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 4335",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-74"
+                  "id": "Global Business and Supply Chain Management(BS)-74"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ENTP 4340",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-75"
+                  "id": "Global Business and Supply Chain Management(BS)-75"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 4360",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-76"
+                  "id": "Global Business and Supply Chain Management(BS)-76"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BA 4095",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-77"
+                  "id": "Global Business and Supply Chain Management(BS)-77"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "OPRE 3311",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-78"
+                  "id": "Global Business and Supply Chain Management(BS)-78"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "OPRE 3312",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-79"
+                  "id": "Global Business and Supply Chain Management(BS)-79"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "OPRE 4320",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-80"
+                  "id": "Global Business and Supply Chain Management(BS)-80"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "OPRE 4337",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-81"
+                  "id": "Global Business and Supply Chain Management(BS)-81"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "OPRE 4345",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-82"
+                  "id": "Global Business and Supply Chain Management(BS)-82"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "OPRE 4350",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-83"
+                  "id": "Global Business and Supply Chain Management(BS)-83"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "OPRE 4353",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-84"
+                  "id": "Global Business and Supply Chain Management(BS)-84"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "OPRE 4362",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-85"
+                  "id": "Global Business and Supply Chain Management(BS)-85"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 4310",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-86"
+                  "id": "Global Business and Supply Chain Management(BS)-86"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ENTP 4311",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-87"
+                  "id": "Global Business and Supply Chain Management(BS)-87"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 3350",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-88"
+                  "id": "Global Business and Supply Chain Management(BS)-88"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "OBHR 4310",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-89"
+                  "id": "Global Business and Supply Chain Management(BS)-89"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "OBHR 4352",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-90"
+                  "id": "Global Business and Supply Chain Management(BS)-90"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "GEOG 3370",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-91"
+                  "id": "Global Business and Supply Chain Management(BS)-91"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ECON 4360",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-92"
+                  "id": "Global Business and Supply Chain Management(BS)-92"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 3091",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-93"
+                  "id": "Global Business and Supply Chain Management(BS)-93"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 3092",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-94"
+                  "id": "Global Business and Supply Chain Management(BS)-94"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 3093",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-95"
+                  "id": "Global Business and Supply Chain Management(BS)-95"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 3094",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-96"
+                  "id": "Global Business and Supply Chain Management(BS)-96"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 3095",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-97"
+                  "id": "Global Business and Supply Chain Management(BS)-97"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 3096",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-98"
+                  "id": "Global Business and Supply Chain Management(BS)-98"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 3V91",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-99"
+                  "id": "Global Business and Supply Chain Management(BS)-99"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 3V92",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-100"
+                  "id": "Global Business and Supply Chain Management(BS)-100"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 3V93",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-101"
+                  "id": "Global Business and Supply Chain Management(BS)-101"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 3V94",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-102"
+                  "id": "Global Business and Supply Chain Management(BS)-102"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 3V95",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-103"
+                  "id": "Global Business and Supply Chain Management(BS)-103"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 3V96",
                 "metadata": {
-                  "id": "Global Business and Supply Chain Management (BS)-104"
+                  "id": "Global Business and Supply Chain Management(BS)-104"
                 }
               }
             ],
             "metadata": {
-              "id": "Global Business and Supply Chain Management (BS)-70"
+              "id": "Global Business and Supply Chain Management(BS)-70"
             }
           }
         ]

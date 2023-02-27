@@ -1,5 +1,5 @@
 {
-  "abbreviation": "Information Technology and Systems (BS)",
+  "abbreviation": "Information Technology and Systems(BS)",
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/information-technology-systems",
   "minimum_credit_hours": 120,
   "name": "Bachelor of Science in Information Technology and Systems",
@@ -13,23 +13,23 @@
         "matcher": "AndRequirement",
         "metadata": {
           "name": "Major Preparatory Courses",
-          "id": "Information Technology and Systems (BS)-0"
+          "id": "Information Technology and Systems(BS)-0"
         },
         "requirements": [
           {
             "matcher": "CourseRequirement",
             "course": "ACCT 2301",
-            "metadata": { "id": "Information Technology and Systems (BS)-1" }
+            "metadata": { "id": "Information Technology and Systems(BS)-1" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ACCT 2302",
-            "metadata": { "id": "Information Technology and Systems (BS)-2" }
+            "metadata": { "id": "Information Technology and Systems(BS)-2" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BLAW 2301",
-            "metadata": { "id": "Information Technology and Systems (BS)-3" }
+            "metadata": { "id": "Information Technology and Systems(BS)-3" }
           },
           {
             "matcher": "OrRequirement",
@@ -37,26 +37,20 @@
               {
                 "course": "MATH 1325",
                 "matcher": "CourseRequirement",
-                "metadata": {
-                  "id": "Information Technology and Systems (BS)-5"
-                }
+                "metadata": { "id": "Information Technology and Systems(BS)-5" }
               },
               {
                 "course": "MATH 2413",
                 "matcher": "CourseRequirement",
-                "metadata": {
-                  "id": "Information Technology and Systems (BS)-6"
-                }
+                "metadata": { "id": "Information Technology and Systems(BS)-6" }
               },
               {
                 "course": "MATH 2417",
                 "matcher": "CourseRequirement",
-                "metadata": {
-                  "id": "Information Technology and Systems (BS)-7"
-                }
+                "metadata": { "id": "Information Technology and Systems(BS)-7" }
               }
             ],
-            "metadata": { "id": "Information Technology and Systems (BS)-4" }
+            "metadata": { "id": "Information Technology and Systems(BS)-4" }
           },
           {
             "matcher": "OrRequirement",
@@ -64,19 +58,17 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "MATH 1326",
-                "metadata": {
-                  "id": "Information Technology and Systems (BS)-9"
-                }
+                "metadata": { "id": "Information Technology and Systems(BS)-9" }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "OPRE 3340",
                 "metadata": {
-                  "id": "Information Technology and Systems (BS)-10"
+                  "id": "Information Technology and Systems(BS)-10"
                 }
               }
             ],
-            "metadata": { "id": "Information Technology and Systems (BS)-8" }
+            "metadata": { "id": "Information Technology and Systems(BS)-8" }
           },
           {
             "matcher": "OrRequirement",
@@ -85,18 +77,18 @@
                 "matcher": "CourseRequirement",
                 "course": "OPRE 3333",
                 "metadata": {
-                  "id": "Information Technology and Systems (BS)-12"
+                  "id": "Information Technology and Systems(BS)-12"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MATH 2333",
                 "metadata": {
-                  "id": "Information Technology and Systems (BS)-13"
+                  "id": "Information Technology and Systems(BS)-13"
                 }
               }
             ],
-            "metadata": { "id": "Information Technology and Systems (BS)-11" }
+            "metadata": { "id": "Information Technology and Systems(BS)-11" }
           },
           {
             "matcher": "OrRequirement",
@@ -105,23 +97,23 @@
                 "matcher": "CourseRequirement",
                 "course": "OPRE 3360",
                 "metadata": {
-                  "id": "Information Technology and Systems (BS)-15"
+                  "id": "Information Technology and Systems(BS)-15"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "STAT 3360",
                 "metadata": {
-                  "id": "Information Technology and Systems (BS)-16"
+                  "id": "Information Technology and Systems(BS)-16"
                 }
               }
             ],
-            "metadata": { "id": "Information Technology and Systems (BS)-14" }
+            "metadata": { "id": "Information Technology and Systems(BS)-14" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ITSS 3311",
-            "metadata": { "id": "Information Technology and Systems (BS)-17" }
+            "metadata": { "id": "Information Technology and Systems(BS)-17" }
           },
           {
             "matcher": "OrRequirement",
@@ -130,18 +122,18 @@
                 "matcher": "CourseRequirement",
                 "course": "ITSS 3312",
                 "metadata": {
-                  "id": "Information Technology and Systems (BS)-19"
+                  "id": "Information Technology and Systems(BS)-19"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ITSS 4381",
                 "metadata": {
-                  "id": "Information Technology and Systems (BS)-20"
+                  "id": "Information Technology and Systems(BS)-20"
                 }
               }
             ],
-            "metadata": { "id": "Information Technology and Systems (BS)-18" }
+            "metadata": { "id": "Information Technology and Systems(BS)-18" }
           },
           {
             "matcher": "SelectRequirement",
@@ -151,32 +143,32 @@
                 "matcher": "CourseRequirement",
                 "course": "BA 1310",
                 "metadata": {
-                  "id": "Information Technology and Systems (BS)-22"
+                  "id": "Information Technology and Systems(BS)-22"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BA 1320",
                 "metadata": {
-                  "id": "Information Technology and Systems (BS)-23"
+                  "id": "Information Technology and Systems(BS)-23"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ECON 2301",
                 "metadata": {
-                  "id": "Information Technology and Systems (BS)-24"
+                  "id": "Information Technology and Systems(BS)-24"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ECON 2302",
                 "metadata": {
-                  "id": "Information Technology and Systems (BS)-25"
+                  "id": "Information Technology and Systems(BS)-25"
                 }
               }
             ],
-            "metadata": { "id": "Information Technology and Systems (BS)-21" }
+            "metadata": { "id": "Information Technology and Systems(BS)-21" }
           }
         ]
       },
@@ -184,7 +176,7 @@
         "matcher": "AndRequirement",
         "metadata": {
           "name": "Major Core Courses",
-          "id": "Information Technology and Systems (BS)-26"
+          "id": "Information Technology and Systems(BS)-26"
         },
         "requirements": [
           {
@@ -194,43 +186,43 @@
                 "matcher": "CourseRequirement",
                 "course": "BCOM 1300",
                 "metadata": {
-                  "id": "Information Technology and Systems (BS)-28"
+                  "id": "Information Technology and Systems(BS)-28"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BCOM 3300",
                 "metadata": {
-                  "id": "Information Technology and Systems (BS)-29"
+                  "id": "Information Technology and Systems(BS)-29"
                 }
               }
             ],
-            "metadata": { "id": "Information Technology and Systems (BS)-27" }
+            "metadata": { "id": "Information Technology and Systems(BS)-27" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BCOM 4300",
-            "metadata": { "id": "Information Technology and Systems (BS)-30" }
+            "metadata": { "id": "Information Technology and Systems(BS)-30" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "IMS 3310",
-            "metadata": { "id": "Information Technology and Systems (BS)-31" }
+            "metadata": { "id": "Information Technology and Systems(BS)-31" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "FIN 3320",
-            "metadata": { "id": "Information Technology and Systems (BS)-32" }
+            "metadata": { "id": "Information Technology and Systems(BS)-32" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ITSS 3300",
-            "metadata": { "id": "Information Technology and Systems (BS)-33" }
+            "metadata": { "id": "Information Technology and Systems(BS)-33" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "OPRE 3310",
-            "metadata": { "id": "Information Technology and Systems (BS)-34" }
+            "metadata": { "id": "Information Technology and Systems(BS)-34" }
           },
           {
             "matcher": "OrRequirement",
@@ -239,28 +231,28 @@
                 "matcher": "CourseRequirement",
                 "course": "OBHR 3310",
                 "metadata": {
-                  "id": "Information Technology and Systems (BS)-36"
+                  "id": "Information Technology and Systems(BS)-36"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "OBHR 3330",
                 "metadata": {
-                  "id": "Information Technology and Systems (BS)-37"
+                  "id": "Information Technology and Systems(BS)-37"
                 }
               }
             ],
-            "metadata": { "id": "Information Technology and Systems (BS)-35" }
+            "metadata": { "id": "Information Technology and Systems(BS)-35" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MKT 3300",
-            "metadata": { "id": "Information Technology and Systems (BS)-38" }
+            "metadata": { "id": "Information Technology and Systems(BS)-38" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BA 4095",
-            "metadata": { "id": "Information Technology and Systems (BS)-39" }
+            "metadata": { "id": "Information Technology and Systems(BS)-39" }
           }
         ]
       },
@@ -268,33 +260,33 @@
         "matcher": "AndRequirement",
         "metadata": {
           "name": "Major Related Courses",
-          "id": "Information Technology and Systems (BS)-40"
+          "id": "Information Technology and Systems(BS)-40"
         },
         "requirements": [
           {
             "matcher": "CourseRequirement",
             "course": "ITSS 4300",
-            "metadata": { "id": "Information Technology and Systems (BS)-41" }
+            "metadata": { "id": "Information Technology and Systems(BS)-41" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ITSS 4330",
-            "metadata": { "id": "Information Technology and Systems (BS)-42" }
+            "metadata": { "id": "Information Technology and Systems(BS)-42" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ITSS 4360",
-            "metadata": { "id": "Information Technology and Systems (BS)-43" }
+            "metadata": { "id": "Information Technology and Systems(BS)-43" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ITSS 4351",
-            "metadata": { "id": "Information Technology and Systems (BS)-44" }
+            "metadata": { "id": "Information Technology and Systems(BS)-44" }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ITSS 4370",
-            "metadata": { "id": "Information Technology and Systems (BS)-45" }
+            "metadata": { "id": "Information Technology and Systems(BS)-45" }
           },
           {
             "matcher": "OrRequirement",
@@ -303,18 +295,18 @@
                 "matcher": "CourseRequirement",
                 "course": "ITSS 4395",
                 "metadata": {
-                  "id": "Information Technology and Systems (BS)-47"
+                  "id": "Information Technology and Systems(BS)-47"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BPS 4395",
                 "metadata": {
-                  "id": "Information Technology and Systems (BS)-48"
+                  "id": "Information Technology and Systems(BS)-48"
                 }
               }
             ],
-            "metadata": { "id": "Information Technology and Systems (BS)-46" }
+            "metadata": { "id": "Information Technology and Systems(BS)-46" }
           },
           {
             "matcher": "OrRequirement",
@@ -323,18 +315,18 @@
                 "matcher": "CourseRequirement",
                 "course": "ITSS 4090",
                 "metadata": {
-                  "id": "Information Technology and Systems (BS)-50"
+                  "id": "Information Technology and Systems(BS)-50"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BA 4090",
                 "metadata": {
-                  "id": "Information Technology and Systems (BS)-51"
+                  "id": "Information Technology and Systems(BS)-51"
                 }
               }
             ],
-            "metadata": { "id": "Information Technology and Systems (BS)-49" }
+            "metadata": { "id": "Information Technology and Systems(BS)-49" }
           }
         ]
       },
@@ -342,7 +334,7 @@
         "matcher": "AndRequirement",
         "metadata": {
           "name": "Guided Electives",
-          "id": "Information Technology and Systems (BS)-52"
+          "id": "Information Technology and Systems(BS)-52"
         },
         "requirements": [
           {
@@ -356,33 +348,33 @@
                     "matcher": "CourseRequirement",
                     "course": "ITSS 4352",
                     "metadata": {
-                      "id": "Information Technology and Systems (BS)-55"
+                      "id": "Information Technology and Systems(BS)-55"
                     }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "ITSS 4353",
                     "metadata": {
-                      "id": "Information Technology and Systems (BS)-56"
+                      "id": "Information Technology and Systems(BS)-56"
                     }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "ITSS 4354",
                     "metadata": {
-                      "id": "Information Technology and Systems (BS)-57"
+                      "id": "Information Technology and Systems(BS)-57"
                     }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "ITSS 4355",
                     "metadata": {
-                      "id": "Information Technology and Systems (BS)-58"
+                      "id": "Information Technology and Systems(BS)-58"
                     }
                   }
                 ],
                 "metadata": {
-                  "id": "Information Technology and Systems (BS)-54"
+                  "id": "Information Technology and Systems(BS)-54"
                 }
               },
               {
@@ -393,21 +385,21 @@
                     "matcher": "CourseRequirement",
                     "course": "ITSS 4340",
                     "metadata": {
-                      "id": "Information Technology and Systems (BS)-60"
+                      "id": "Information Technology and Systems(BS)-60"
                     }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "ITSS 4343",
                     "metadata": {
-                      "id": "Information Technology and Systems (BS)-61"
+                      "id": "Information Technology and Systems(BS)-61"
                     }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "ITSS 4344",
                     "metadata": {
-                      "id": "Information Technology and Systems (BS)-62"
+                      "id": "Information Technology and Systems(BS)-62"
                     }
                   },
                   {
@@ -417,24 +409,24 @@
                         "matcher": "CourseRequirement",
                         "course": "ACCT 4342",
                         "metadata": {
-                          "id": "Information Technology and Systems (BS)-64"
+                          "id": "Information Technology and Systems(BS)-64"
                         }
                       },
                       {
                         "matcher": "CourseRequirement",
                         "course": "ACCT 3322",
                         "metadata": {
-                          "id": "Information Technology and Systems (BS)-65"
+                          "id": "Information Technology and Systems(BS)-65"
                         }
                       }
                     ],
                     "metadata": {
-                      "id": "Information Technology and Systems (BS)-63"
+                      "id": "Information Technology and Systems(BS)-63"
                     }
                   }
                 ],
                 "metadata": {
-                  "id": "Information Technology and Systems (BS)-59"
+                  "id": "Information Technology and Systems(BS)-59"
                 }
               },
               {
@@ -445,14 +437,14 @@
                     "matcher": "CourseRequirement",
                     "course": "ITSS 4340",
                     "metadata": {
-                      "id": "Information Technology and Systems (BS)-67"
+                      "id": "Information Technology and Systems(BS)-67"
                     }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "MKT 3330",
                     "metadata": {
-                      "id": "Information Technology and Systems (BS)-68"
+                      "id": "Information Technology and Systems(BS)-68"
                     }
                   },
                   {
@@ -462,31 +454,31 @@
                         "matcher": "CourseRequirement",
                         "course": "MKT 4331",
                         "metadata": {
-                          "id": "Information Technology and Systems (BS)-70"
+                          "id": "Information Technology and Systems(BS)-70"
                         }
                       },
                       {
                         "matcher": "CourseRequirement",
                         "course": "MKT 4332",
                         "metadata": {
-                          "id": "Information Technology and Systems (BS)-71"
+                          "id": "Information Technology and Systems(BS)-71"
                         }
                       }
                     ],
                     "metadata": {
-                      "id": "Information Technology and Systems (BS)-69"
+                      "id": "Information Technology and Systems(BS)-69"
                     }
                   },
                   {
                     "matcher": "PrefixBucketRequirement",
                     "prefix": "ITSS",
                     "metadata": {
-                      "id": "Information Technology and Systems (BS)-72"
+                      "id": "Information Technology and Systems(BS)-72"
                     }
                   }
                 ],
                 "metadata": {
-                  "id": "Information Technology and Systems (BS)-66"
+                  "id": "Information Technology and Systems(BS)-66"
                 }
               },
               {
@@ -497,26 +489,26 @@
                     "matcher": "CourseRequirement",
                     "course": "ENTP 3301",
                     "metadata": {
-                      "id": "Information Technology and Systems (BS)-74"
+                      "id": "Information Technology and Systems(BS)-74"
                     }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "ENTP 3320",
                     "metadata": {
-                      "id": "Information Technology and Systems (BS)-75"
+                      "id": "Information Technology and Systems(BS)-75"
                     }
                   },
                   {
                     "matcher": "PrefixBucketRequirement",
                     "prefix": "ITSS",
                     "metadata": {
-                      "id": "Information Technology and Systems (BS)-76"
+                      "id": "Information Technology and Systems(BS)-76"
                     }
                   }
                 ],
                 "metadata": {
-                  "id": "Information Technology and Systems (BS)-73"
+                  "id": "Information Technology and Systems(BS)-73"
                 }
               },
               {
@@ -527,33 +519,33 @@
                     "matcher": "CourseRequirement",
                     "course": "ITSS 4356",
                     "metadata": {
-                      "id": "Information Technology and Systems (BS)-78"
+                      "id": "Information Technology and Systems(BS)-78"
                     }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "ITSS 4361",
                     "metadata": {
-                      "id": "Information Technology and Systems (BS)-79"
+                      "id": "Information Technology and Systems(BS)-79"
                     }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "ITSS 4362",
                     "metadata": {
-                      "id": "Information Technology and Systems (BS)-80"
+                      "id": "Information Technology and Systems(BS)-80"
                     }
                   },
                   {
                     "matcher": "PrefixBucketRequirement",
                     "prefix": "ITSS",
                     "metadata": {
-                      "id": "Information Technology and Systems (BS)-81"
+                      "id": "Information Technology and Systems(BS)-81"
                     }
                   }
                 ],
                 "metadata": {
-                  "id": "Information Technology and Systems (BS)-77"
+                  "id": "Information Technology and Systems(BS)-77"
                 }
               },
               {
@@ -564,16 +556,16 @@
                     "matcher": "PrefixBucketRequirement",
                     "prefix": "ITSS",
                     "metadata": {
-                      "id": "Information Technology and Systems (BS)-83"
+                      "id": "Information Technology and Systems(BS)-83"
                     }
                   }
                 ],
                 "metadata": {
-                  "id": "Information Technology and Systems (BS)-82"
+                  "id": "Information Technology and Systems(BS)-82"
                 }
               }
             ],
-            "metadata": { "id": "Information Technology and Systems (BS)-53" }
+            "metadata": { "id": "Information Technology and Systems(BS)-53" }
           }
         ]
       },
@@ -581,7 +573,7 @@
         "matcher": "FreeElectiveRequirement",
         "required_hours": 0,
         "excluded_courses": [],
-        "metadata": { "id": "Information Technology and Systems (BS)-84" }
+        "metadata": { "id": "Information Technology and Systems(BS)-84" }
       }
     ]
   }

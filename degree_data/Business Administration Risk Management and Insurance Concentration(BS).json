@@ -1,5 +1,5 @@
 {
-  "abbreviation": "Business Administration (BS) Risk Management and Insurance Concentration",
+  "abbreviation": "Business Administration(BS) Risk Management and Insurance Concentration",
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/business-administration",
   "minimum_credit_hours": 120,
   "name": "Bachelor of Science in Business Administration Risk Management and Insurance Concentration",
@@ -12,7 +12,7 @@
       {
         "matcher": "AndRequirement",
         "metadata": {
-          "id": "Business Administration (BS) Risk Management and Insurance Concentration-0",
+          "id": "Business Administration(BS) Risk Management and Insurance Concentration-0",
           "name": "Major Preparatory Courses"
         },
         "requirements": [
@@ -20,21 +20,21 @@
             "course": "ACCT 2301",
             "matcher": "CourseRequirement",
             "metadata": {
-              "id": "Business Administration (BS) Risk Management and Insurance Concentration-1"
+              "id": "Business Administration(BS) Risk Management and Insurance Concentration-1"
             }
           },
           {
             "course": "ACCT 2302",
             "matcher": "CourseRequirement",
             "metadata": {
-              "id": "Business Administration (BS) Risk Management and Insurance Concentration-2"
+              "id": "Business Administration(BS) Risk Management and Insurance Concentration-2"
             }
           },
           {
             "course": "BLAW 2301",
             "matcher": "CourseRequirement",
             "metadata": {
-              "id": "Business Administration (BS) Risk Management and Insurance Concentration-3"
+              "id": "Business Administration(BS) Risk Management and Insurance Concentration-3"
             }
           },
           {
@@ -44,46 +44,46 @@
                 "course": "MATH 1325",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-5"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-5"
                 }
               },
               {
                 "course": "MATH 2413",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-6"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-6"
                 }
               },
               {
                 "course": "MATH 2417",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-7"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-7"
                 }
               }
             ],
             "metadata": {
-              "id": "Business Administration (BS) Risk Management and Insurance Concentration-4"
+              "id": "Business Administration(BS) Risk Management and Insurance Concentration-4"
             }
           },
           {
             "matcher": "OrRequirement",
             "metadata": {
-              "id": "Business Administration (BS) Risk Management and Insurance Concentration-8"
+              "id": "Business Administration(BS) Risk Management and Insurance Concentration-8"
             },
             "requirements": [
               {
                 "course": "OPRE 3360",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-9"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-9"
                 }
               },
               {
                 "course": "STAT 3360",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-10"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-10"
                 }
               }
             ]
@@ -91,7 +91,7 @@
           {
             "matcher": "SelectRequirement",
             "metadata": {
-              "id": "Business Administration (BS) Risk Management and Insurance Concentration-11"
+              "id": "Business Administration(BS) Risk Management and Insurance Concentration-11"
             },
             "required_count": 2,
             "requirements": [
@@ -99,28 +99,28 @@
                 "course": "BA 1310",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-12"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-12"
                 }
               },
               {
                 "course": "BA 1320",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-13"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-13"
                 }
               },
               {
                 "course": "ECON 2301",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-14"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-14"
                 }
               },
               {
                 "course": "ECON 2302",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-15"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-15"
                 }
               }
             ]
@@ -130,28 +130,28 @@
       {
         "matcher": "AndRequirement",
         "metadata": {
-          "id": "Business Administration (BS) Risk Management and Insurance Concentration-16",
+          "id": "Business Administration(BS) Risk Management and Insurance Concentration-16",
           "name": "Major Core Courses"
         },
         "requirements": [
           {
             "matcher": "OrRequirement",
             "metadata": {
-              "id": "Business Administration (BS) Risk Management and Insurance Concentration-17"
+              "id": "Business Administration(BS) Risk Management and Insurance Concentration-17"
             },
             "requirements": [
               {
                 "course": "BCOM 1300",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-18"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-18"
                 }
               },
               {
                 "course": "BCOM 3300",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-19"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-19"
                 }
               }
             ]
@@ -160,69 +160,69 @@
             "course": "BCOM 4300",
             "matcher": "CourseRequirement",
             "metadata": {
-              "id": "Business Administration (BS) Risk Management and Insurance Concentration-20"
+              "id": "Business Administration(BS) Risk Management and Insurance Concentration-20"
             }
           },
           {
             "course": "BA 3300",
             "matcher": "CourseRequirement",
             "metadata": {
-              "id": "Business Administration (BS) Risk Management and Insurance Concentration-21"
+              "id": "Business Administration(BS) Risk Management and Insurance Concentration-21"
             }
           },
           {
             "course": "IMS 3310",
             "matcher": "CourseRequirement",
             "metadata": {
-              "id": "Business Administration (BS) Risk Management and Insurance Concentration-22"
+              "id": "Business Administration(BS) Risk Management and Insurance Concentration-22"
             }
           },
           {
             "course": "FIN 3320",
             "matcher": "CourseRequirement",
             "metadata": {
-              "id": "Business Administration (BS) Risk Management and Insurance Concentration-23"
+              "id": "Business Administration(BS) Risk Management and Insurance Concentration-23"
             }
           },
           {
             "course": "ITSS 3300",
             "matcher": "CourseRequirement",
             "metadata": {
-              "id": "Business Administration (BS) Risk Management and Insurance Concentration-24"
+              "id": "Business Administration(BS) Risk Management and Insurance Concentration-24"
             }
           },
           {
             "course": "OPRE 3310",
             "matcher": "CourseRequirement",
             "metadata": {
-              "id": "Business Administration (BS) Risk Management and Insurance Concentration-25"
+              "id": "Business Administration(BS) Risk Management and Insurance Concentration-25"
             }
           },
           {
             "course": "OPRE 3330",
             "matcher": "CourseRequirement",
             "metadata": {
-              "id": "Business Administration (BS) Risk Management and Insurance Concentration-26"
+              "id": "Business Administration(BS) Risk Management and Insurance Concentration-26"
             }
           },
           {
             "matcher": "OrRequirement",
             "metadata": {
-              "id": "Business Administration (BS) Risk Management and Insurance Concentration-27"
+              "id": "Business Administration(BS) Risk Management and Insurance Concentration-27"
             },
             "requirements": [
               {
                 "course": "OBHR 3310",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-28"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-28"
                 }
               },
               {
                 "course": "OBHR 3330",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-29"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-29"
                 }
               }
             ]
@@ -231,27 +231,27 @@
             "course": "MKT 3300",
             "matcher": "CourseRequirement",
             "metadata": {
-              "id": "Business Administration (BS) Risk Management and Insurance Concentration-30"
+              "id": "Business Administration(BS) Risk Management and Insurance Concentration-30"
             }
           },
           {
             "matcher": "OrRequirement",
             "metadata": {
-              "id": "Business Administration (BS) Risk Management and Insurance Concentration-31"
+              "id": "Business Administration(BS) Risk Management and Insurance Concentration-31"
             },
             "requirements": [
               {
                 "course": "BPS 4305",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-32"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-32"
                 }
               },
               {
                 "course": "ENTP 3320",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-33"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-33"
                 }
               }
             ]
@@ -259,21 +259,21 @@
           {
             "matcher": "OrRequirement",
             "metadata": {
-              "id": "Business Administration (BS) Risk Management and Insurance Concentration-34"
+              "id": "Business Administration(BS) Risk Management and Insurance Concentration-34"
             },
             "requirements": [
               {
                 "course": "BPS 4395",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-35"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-35"
                 }
               },
               {
                 "course": "ENTP 4395",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-36"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-36"
                 }
               }
             ]
@@ -281,35 +281,35 @@
           {
             "matcher": "OrRequirement",
             "metadata": {
-              "id": "Business Administration (BS) Risk Management and Insurance Concentration-37"
+              "id": "Business Administration(BS) Risk Management and Insurance Concentration-37"
             },
             "requirements": [
               {
                 "course": "IMS 4335",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-38"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-38"
                 }
               },
               {
                 "course": "ENTP 4340",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-39"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-39"
                 }
               },
               {
                 "course": "MKT 4360",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-40"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-40"
                 }
               },
               {
                 "course": "BA 4095",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-41"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-41"
                 }
               }
             ]
@@ -320,7 +320,7 @@
         "matcher": "AndRequirement",
         "metadata": {
           "name": "Major Related Courses",
-          "id": "Business Administration (BS) Risk Management and Insurance Concentration-42"
+          "id": "Business Administration(BS) Risk Management and Insurance Concentration-42"
         },
         "requirements": [
           {
@@ -330,19 +330,19 @@
                 "matcher": "CourseRequirement",
                 "course": "RMIS 3370",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-44"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-44"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 3370",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-45"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-45"
                 }
               }
             ],
             "metadata": {
-              "id": "Business Administration (BS) Risk Management and Insurance Concentration-43"
+              "id": "Business Administration(BS) Risk Management and Insurance Concentration-43"
             }
           },
           {
@@ -352,19 +352,19 @@
                 "matcher": "CourseRequirement",
                 "course": "RMIS 4331",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-47"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-47"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4331",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-48"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-48"
                 }
               }
             ],
             "metadata": {
-              "id": "Business Administration (BS) Risk Management and Insurance Concentration-46"
+              "id": "Business Administration(BS) Risk Management and Insurance Concentration-46"
             }
           },
           {
@@ -374,19 +374,19 @@
                 "matcher": "CourseRequirement",
                 "course": "RMIS 4332",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-50"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-50"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4332",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-51"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-51"
                 }
               }
             ],
             "metadata": {
-              "id": "Business Administration (BS) Risk Management and Insurance Concentration-49"
+              "id": "Business Administration(BS) Risk Management and Insurance Concentration-49"
             }
           },
           {
@@ -396,19 +396,19 @@
                 "matcher": "CourseRequirement",
                 "course": "RMIS 4333",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-53"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-53"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4333",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-54"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-54"
                 }
               }
             ],
             "metadata": {
-              "id": "Business Administration (BS) Risk Management and Insurance Concentration-52"
+              "id": "Business Administration(BS) Risk Management and Insurance Concentration-52"
             }
           },
           {
@@ -418,19 +418,19 @@
                 "matcher": "CourseRequirement",
                 "course": "RMIS 4334",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-56"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-56"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4334",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-57"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-57"
                 }
               }
             ],
             "metadata": {
-              "id": "Business Administration (BS) Risk Management and Insurance Concentration-55"
+              "id": "Business Administration(BS) Risk Management and Insurance Concentration-55"
             }
           },
           {
@@ -440,40 +440,40 @@
                 "matcher": "CourseRequirement",
                 "course": "FIN 4V80",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-59"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-59"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4080",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-60"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-60"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 4V90",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-61"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-61"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 4090",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-62"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-62"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BA 4090",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-63"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-63"
                 }
               }
             ],
             "metadata": {
-              "id": "Business Administration (BS) Risk Management and Insurance Concentration-58"
+              "id": "Business Administration(BS) Risk Management and Insurance Concentration-58"
             }
           },
           {
@@ -484,35 +484,35 @@
                 "matcher": "CourseRequirement",
                 "course": "FIN 4V90",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-65"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-65"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4080",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-66"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-66"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 4V90",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-67"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-67"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 4090",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-68"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-68"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BA 4090",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-69"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-69"
                 }
               },
               {
@@ -522,19 +522,19 @@
                     "matcher": "CourseRequirement",
                     "course": "RMIS 4336",
                     "metadata": {
-                      "id": "Business Administration (BS) Risk Management and Insurance Concentration-71"
+                      "id": "Business Administration(BS) Risk Management and Insurance Concentration-71"
                     }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "FIN 4336",
                     "metadata": {
-                      "id": "Business Administration (BS) Risk Management and Insurance Concentration-72"
+                      "id": "Business Administration(BS) Risk Management and Insurance Concentration-72"
                     }
                   }
                 ],
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-70"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-70"
                 }
               },
               {
@@ -544,19 +544,19 @@
                     "matcher": "CourseRequirement",
                     "course": "RMIS 4338",
                     "metadata": {
-                      "id": "Business Administration (BS) Risk Management and Insurance Concentration-74"
+                      "id": "Business Administration(BS) Risk Management and Insurance Concentration-74"
                     }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "FIN 4338",
                     "metadata": {
-                      "id": "Business Administration (BS) Risk Management and Insurance Concentration-75"
+                      "id": "Business Administration(BS) Risk Management and Insurance Concentration-75"
                     }
                   }
                 ],
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-73"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-73"
                 }
               },
               {
@@ -566,31 +566,31 @@
                     "matcher": "CourseRequirement",
                     "course": "FIN 3305",
                     "metadata": {
-                      "id": "Business Administration (BS) Risk Management and Insurance Concentration-77"
+                      "id": "Business Administration(BS) Risk Management and Insurance Concentration-77"
                     }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "REAL 3305",
                     "metadata": {
-                      "id": "Business Administration (BS) Risk Management and Insurance Concentration-78"
+                      "id": "Business Administration(BS) Risk Management and Insurance Concentration-78"
                     }
                   }
                 ],
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-76"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-76"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 3330",
                 "metadata": {
-                  "id": "Business Administration (BS) Risk Management and Insurance Concentration-79"
+                  "id": "Business Administration(BS) Risk Management and Insurance Concentration-79"
                 }
               }
             ],
             "metadata": {
-              "id": "Business Administration (BS) Risk Management and Insurance Concentration-64"
+              "id": "Business Administration(BS) Risk Management and Insurance Concentration-64"
             }
           }
         ]
@@ -600,7 +600,7 @@
         "required_hours": 3,
         "excluded_courses": [],
         "metadata": {
-          "id": "Business Administration (BS) Risk Management and Insurance Concentration-80"
+          "id": "Business Administration(BS) Risk Management and Insurance Concentration-80"
         }
       }
     ]
