@@ -13,12 +13,15 @@ const contentClasses = 'w-64 rounded-md border border-neutral-300 bg-generic-whi
 const SortByDropdown: FC = () => {
   return (
     <DropdownMenu.Root>
-      <DropdownMenu.Trigger asChild>
-        <button aria-label="Sort by options">
-          <Button size="large" color="secondary" icon={<SwitchVerticalIcon />}>
-            <span className="whitespace-nowrap">Sort By</span>
-          </Button>
-        </button>
+      <DropdownMenu.Trigger>
+        <Button
+          aria-label="Sort by options"
+          size="medium"
+          color="tertiary"
+          icon={<SwitchVerticalIcon />}
+        >
+          <span className="whitespace-nowrap">Sort By</span>
+        </Button>
       </DropdownMenu.Trigger>
 
       <DropdownMenu.Portal>
