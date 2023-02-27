@@ -495,7 +495,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
   };
 
   const handleRemoveBypass = ({ planId, requirement }: { planId: string; requirement: string }) => {
-    addBypass.mutateAsync({ planId, requirement });
+    removeBypass.mutateAsync({ planId, requirement });
   };
 
   return (

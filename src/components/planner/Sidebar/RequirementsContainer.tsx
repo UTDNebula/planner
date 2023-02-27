@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Accordion from './Accordion';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -58,6 +58,7 @@ const getRequirementGroup = (
   name: string;
   status: string;
   description: string;
+  req: RequirementGroupTypes;
   getData: () => Promise<RequirementTypes[]>;
   filterFunction: (elm: RequirementTypes, query: string) => boolean;
 } => {
@@ -87,6 +88,7 @@ const getRequirementGroup = (
         name: degreeRequirement.metadata.name,
         status: `${degreeRequirement.num_fulfilled_requirements} / ${degreeRequirement.num_requirements} requirements`,
         description: degreeRequirement.metadata.description ?? '',
+        req: degreeRequirement,
         getData: () => Promise.resolve(degreeRequirement.requirements),
         filterFunction: filterFunc,
       };
@@ -95,6 +97,7 @@ const getRequirementGroup = (
         name: degreeRequirement.metadata.name,
         status: `${degreeRequirement.fulfilled_hours} / ${degreeRequirement.required_hours} hours`,
         description: degreeRequirement.metadata.description ?? '',
+        req: degreeRequirement,
         getData: () => Promise.resolve(degreeRequirement.requirements),
         filterFunction: filterFunc,
       };
@@ -104,6 +107,7 @@ const getRequirementGroup = (
         name: degreeRequirement.metadata.name,
         status: `${degreeRequirement.fulfilled_hours} / ${degreeRequirement.required_hours} hours`,
         description: degreeRequirement.metadata.description ?? '',
+        req: degreeRequirement,
         getData: async () =>
           q.data
             ? q.data.map((c) => ({
@@ -114,12 +118,14 @@ const getRequirementGroup = (
               }))
             : [],
         filterFunction: filterFunc,
+        req: degreeRequirement,
       };
     case 'CS Guided Electives':
       return {
         name: degreeRequirement.metadata.name,
         status: `${degreeRequirement.fulfilled_count} / ${degreeRequirement.required_count} courses`,
         description: degreeRequirement.metadata.description ?? '',
+        req: degreeRequirement,
         getData: async () =>
           q.data
             ? (q.data
@@ -130,12 +136,14 @@ const getRequirementGroup = (
                 .filter((c) => c.course.includes('CS 43')) as CourseRequirement[])
             : [],
         filterFunction: filterFunc,
+        req: degreeRequirement,
       };
 
     default: {
       return {
         name: '',
         status: 'NOT SUPPORTED',
+        req: degreeRequirement,
         description: '',
         getData: () => Promise.resolve([] as RequirementTypes[]),
         filterFunction: (_, __) => true,
@@ -196,6 +204,8 @@ export default function RequirementsContainer({
     setCarousel(!carousel);
   }
 
+  const { bypasses } = useSemestersContext();
+
   return (
     <RequirementsCarousel
       overflow={overflow}
@@ -219,6 +229,15 @@ export default function RequirementsContainer({
           <>
             {degreeRequirement.requirements.map((elm, idx) => {
               const { value, max } = displayRequirementProgress(elm);
+
+              console.log(elm);
+              const hasBypass = bypasses.includes(
+                elm.metadata && elm.metadata.id ? elm.metadata.id.toString() : '@',
+              );
+
+              console.log(max);
+              console.log('TEST');
+              const rightValue = hasBypass ? max : value;
               return (
                 <div
                   className="flex w-full items-center justify-between gap-x-1 rounded-md border border-neutral-300 px-5 py-2"
@@ -234,7 +253,7 @@ export default function RequirementsContainer({
 
                   <div className="flex">
                     <div className="flex flex-row items-center px-[5px] text-[11px]">
-                      <ProgressComponent value={value} max={max} />
+                      <ProgressComponent value={rightValue} max={max} />
                     </div>
 
                     <button
@@ -282,7 +301,7 @@ function RequirementContainer({
 
   const { results, updateQuery } = useSearch({
     getData: getData,
-    initialQuery: 'C',
+    initialQuery: '',
     filterFn: filterFunction,
   });
 
@@ -292,7 +311,7 @@ function RequirementContainer({
 
   const { planId, bypasses, handleAddBypass, handleRemoveBypass } = useSemestersContext();
 
-  const hasBypass = degreeRequirement.metadata.id in bypasses;
+  const hasBypass = bypasses.includes(degreeRequirement.metadata.id.toString());
 
   const handleUpdateBypass = () => {
     hasBypass

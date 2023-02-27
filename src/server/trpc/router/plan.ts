@@ -61,6 +61,16 @@ export const planRouter = router({
         },
       });
 
+      // Get bypasses
+      const bypasses = await ctx.prisma.newBypass.findUnique({
+        where: {
+          degreeRequirementsId: degreeRequirements?.id,
+        },
+        select: {
+          requirements: true,
+        },
+      });
+
       const temporaryFunctionPlzDeleteThis = async () => {
         return semesters.map((sem) => {
           const courses = sem.courses.filter((course) => {
@@ -80,11 +90,15 @@ export const planRouter = router({
         return { plan: planData, validation: [], bypasses: [] };
       }
 
-      const body = formatDegreeValidationRequest(hehe, {
-        core: true,
-        majors: [degreeRequirements.major], // TODO: Standardize names
-        minors: [],
-      });
+      const body = formatDegreeValidationRequest(
+        hehe,
+        {
+          core: true,
+          majors: [degreeRequirements.major], // TODO: Standardize names
+          minors: [],
+        },
+        bypasses?.requirements ?? [],
+      );
 
       const validationData = await fetch(`${process.env.VALIDATOR}/test-validate`, {
         method: 'POST',
@@ -99,16 +113,6 @@ export const planRouter = router({
         }
         const rawData = await res.json();
         return rawData;
-      });
-
-      // Get bypasses
-      const bypasses = await ctx.prisma.newBypass.findUnique({
-        where: {
-          degreeRequirementsId: degreeRequirements.id,
-        },
-        select: {
-          requirements: true,
-        },
       });
 
       return { plan: planData, validation: validationData, bypasses: bypasses?.requirements ?? [] };

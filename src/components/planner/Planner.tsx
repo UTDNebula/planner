@@ -19,7 +19,7 @@ import {
   Active,
   Over,
 } from '@dnd-kit/core';
-import React, { useMemo, useState, useRef, FC } from 'react';
+import React, { useMemo, useState, useRef, FC, useEffect } from 'react';
 
 import CourseSelectorContainer from './Sidebar/Sidebar';
 import { SidebarCourseItem } from './Sidebar/SidebarCourseItem';
@@ -38,6 +38,7 @@ import { useSemestersContext } from './SemesterContext';
 import SelectedCoursesToast from './SelectedCoursesToast';
 import TransferBank from './TransferBank';
 import PlannerMouseSensor from './PlannerMouseSensor';
+import { trpc } from '@/utils/trpc';
 
 /** PlannerTool Props */
 export interface PlannerProps {
@@ -62,6 +63,16 @@ export default function Planner({
     handleDeleteAllSelectedCourses,
     title,
   } = useSemestersContext();
+
+  const utils = trpc.useContext();
+
+  // Hacky
+  const updatePlan = async () => {
+    await utils.user.getUser.invalidate();
+  };
+  useEffect(() => {
+    updatePlan();
+  }, [semesters]);
 
   // Course that is currently being dragged
   const [activeCourse, setActiveCourse] = useState<ActiveDragData | null>(null);
