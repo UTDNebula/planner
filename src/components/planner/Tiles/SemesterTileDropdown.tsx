@@ -5,6 +5,8 @@ import ArchiveIcon from '@/icons/ArchiveIcon';
 import ClipboardListIcon from '@/icons/ClipboardListIcon';
 import ColorSwatchIcon from '@/icons/ColorSwatchIcon';
 import ChevronIcon from '@/icons/ChevronIcon';
+import { tagColors } from '../utils';
+import { ObjectID } from 'bson';
 
 const itemClasses =
   'flex items-center gap-x-3 border-b border-neutral-300 px-3 py-2 hover:bg-neutral-200 cursor-pointer';
@@ -14,12 +16,15 @@ const contentClasses = 'w-64 rounded-md border border-neutral-300 bg-generic-whi
 export interface SemesterTileDropdownProps {
   deleteAllCourses: () => void;
   selectAllCourses: () => void;
+  changeColor: (color: keyof typeof tagColors) => void;
 }
 
 const SemesterTileDropdown: FC<SemesterTileDropdownProps> = ({
   deleteAllCourses,
   selectAllCourses,
+  changeColor,
 }) => {
+  const id = new ObjectID().toString();
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
@@ -58,18 +63,18 @@ const SemesterTileDropdown: FC<SemesterTileDropdownProps> = ({
                 sideOffset={-10}
                 alignOffset={0}
               >
-                <DropdownMenu.Item className={itemClasses}>
-                  <div className="h-5 w-5 rounded-sm bg-red-400"></div>
-                  <span>Red</span>
-                </DropdownMenu.Item>
-                <DropdownMenu.Item className={itemClasses}>
-                  <div className="h-5 w-5 rounded-sm bg-yellow-400"></div>
-                  <span>Yellow</span>
-                </DropdownMenu.Item>
-                <DropdownMenu.Item className={itemClasses}>
-                  <div className="h-5 w-5 rounded-sm bg-green-400"></div>
-                  <span>Green</span>
-                </DropdownMenu.Item>
+                {Object.entries(tagColors).map(([color, classes]) => (
+                  <DropdownMenu.Item
+                    className={itemClasses}
+                    key={`${id}-tag-${color}`}
+                    onClick={() => changeColor(color as keyof typeof tagColors)}
+                  >
+                    <div className={`h-5 w-5 rounded-sm border ${classes}`}></div>
+                    <span>
+                      {color.substring(0, 1).toUpperCase() + color.substring(1) || 'None'}
+                    </span>
+                  </DropdownMenu.Item>
+                ))}
               </DropdownMenu.SubContent>
             </DropdownMenu.Portal>
           </DropdownMenu.Sub>

@@ -77,6 +77,7 @@ model Semester {
   plan    Plan?        @relation(fields: [planId], references: [id], onDelete: Cascade)
   planId  String?      @db.ObjectId
   courseColors String[]
+  color String @default("")
 }
 
 type SemesterCode {

@@ -10,7 +10,6 @@
  * Be very careful when adding @dnd-kit presets (eg. @dnd-kit/sortable) or new data sources
  * Adding DndContext hooks (eg. useDraggable) without considering 'data' property will cause unexpected behaviors
  */
-import { trpc } from '@/utils/trpc';
 import {
   DndContext,
   DragOverlay,
