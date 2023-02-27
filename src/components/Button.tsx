@@ -3,6 +3,7 @@ import React, { FC } from 'react';
 const colorClasses = {
   primary: 'bg-primary hover:bg-primary-600 text-generic-white',
   secondary: 'bg-generic-white hover:bg-neutral-50 border border-neutral-300',
+  tertiary: 'bg-[#E0E7FF] text-[#312E81]',
 };
 
 const sizeClasses = {
