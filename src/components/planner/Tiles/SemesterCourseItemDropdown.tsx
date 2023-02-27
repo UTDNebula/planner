@@ -29,7 +29,7 @@ const SemesterCourseItemDropdown: FC<SemesterTileDropdownProps> = ({
   const id = new ObjectID().toString();
   return (
     <DropdownMenu.Root open={open} onOpenChange={onOpenChange}>
-      <DropdownMenu.Trigger asChild>
+      <DropdownMenu.Trigger data-no-dnd="true" asChild>
         <button className="cursor-pointer rounded-md py-[2px] transition-all duration-300 hover:bg-neutral-100">
           <DragIndicatorIcon fontSize="inherit" className="text-[16px] text-neutral-300" />
         </button>
@@ -37,6 +37,7 @@ const SemesterCourseItemDropdown: FC<SemesterTileDropdownProps> = ({
 
       <DropdownMenu.Portal>
         <DropdownMenu.Content
+          data-no-dnd="true"
           className={contentClasses + ' animate-[slideUpAndFade_0.3s]'}
           sideOffset={10}
           align="start"
@@ -61,6 +62,7 @@ const SemesterCourseItemDropdown: FC<SemesterTileDropdownProps> = ({
 
             <DropdownMenu.Portal>
               <DropdownMenu.SubContent
+                data-no-dnd="true"
                 className={contentClasses + ' animate-[slideLeftAndFade_0.3s]'}
                 sideOffset={-10}
                 alignOffset={0}

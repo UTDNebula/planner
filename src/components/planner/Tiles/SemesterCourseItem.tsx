@@ -54,6 +54,7 @@ export const MemoizedSemesterCourseItem = React.memo(
               <Checkbox
                 style={{ width: '20px', height: '20px' }}
                 checked={isSelected}
+                onClick={(e) => e.stopPropagation()}
                 onCheckedChange={(checked) => {
                   if (checked && onSelectCourse) {
                     onSelectCourse();
