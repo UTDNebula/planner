@@ -30,7 +30,12 @@ const Toolbar: FC<ToolbarProps> = ({ title, major, studentName }) => {
         </div>
         <div className="flex items-center gap-3">
           <SortByDropdown />
-          <Button size="large" icon={<AddFileIcon className="h-6 w-5" />} />
+          <Button
+            size="large"
+            data-tip="Import Plan"
+            className="tooltip tooltip-bottom"
+            icon={<AddFileIcon className="h-6 w-5" />}
+          />
           <Button size="large" icon={<DownloadIcon />}>
             <PDFDownloadLink
               document={

@@ -138,13 +138,7 @@ export default function Planner({
         deselectAllCourses={handleDeselectAllCourses}
         selectAllCourses={() => handleSelectCourses(courseIds)}
       />
-      <div className="flex flex-row">
-        <CourseSelectorContainer
-          courses={courseCodes}
-          degreeRequirements={degreeRequirements}
-          getSearchedDragId={(course) => `course-list-searched-${course.id}`}
-          getRequirementDragId={(course) => `course-list-requirement-${course.id}`}
-        />
+      <div className="flex h-screen flex-row">
         <DragOverlay dropAnimation={null}>
           {activeCourse &&
             (activeCourse.from === 'semester-tile' ? (
@@ -157,7 +151,7 @@ export default function Planner({
         <section ref={ref} className="flex min-h-fit flex-grow flex-col gap-y-6 p-4 pb-0">
           <Toolbar title="Plan Your Courses" major="Computer Science" studentName="Dev" />
 
-          <TransferBank transferCredits={transferCredits} />
+          {transferCredits.length > 0 && <TransferBank transferCredits={transferCredits} />}
 
           <article className=" overflow-x-hidden overflow-y-scroll">
             <div className="flex h-fit gap-5">
@@ -179,6 +173,12 @@ export default function Planner({
             </div>
           </article>
         </section>
+        <CourseSelectorContainer
+          courses={courseCodes}
+          degreeRequirements={degreeRequirements}
+          getSearchedDragId={(course) => `course-list-searched-${course.id}`}
+          getRequirementDragId={(course) => `course-list-requirement-${course.id}`}
+        />
       </div>
     </DndContext>
   );
