@@ -1,6 +1,6 @@
 import AddIcon from '@mui/icons-material/Add';
 import { trpc } from '@utils/trpc';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Button from '../Button';
 
 import PlanCard from '../landing/PlanCard';

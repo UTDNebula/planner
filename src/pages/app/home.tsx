@@ -2,7 +2,6 @@ import { createContextInner } from '@server/trpc/context';
 import { createProxySSGHelpers } from '@trpc/react-query/ssg';
 import { GetServerSidePropsContext } from 'next';
 import { getServerSession } from 'next-auth';
-import * as React from 'react';
 import superjson from 'superjson';
 
 import { appRouter } from '@/server/trpc/router/_app';
