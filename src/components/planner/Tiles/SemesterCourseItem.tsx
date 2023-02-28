@@ -7,7 +7,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import Checkbox from '@/components/Checkbox';
 import SemesterCourseItemDropdown from './SemesterCourseItemDropdown';
 import { tagColors } from '../utils';
-import PrerequisitesHoverCard from '../PrerequisitesHoverCard';
+import CourseInfoHoverCard from '../CourseInfoHoverCard';
 import useGetCourseInfo from '../useGetCourseInfo';
 
 export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'> {
@@ -61,7 +61,7 @@ export const MemoizedSemesterCourseItem = React.memo(
           }
         }}
       >
-        <PrerequisitesHoverCard
+        <CourseInfoHoverCard
           prereqs={prereqs}
           open={hoverOpen}
           onOpenChange={(open) => !dropdownOpen && setHoverOpen(open)}
@@ -116,7 +116,7 @@ export const MemoizedSemesterCourseItem = React.memo(
               </div>
             </div>
           </div>
-        </PrerequisitesHoverCard>
+        </CourseInfoHoverCard>
       </div>
     );
   }),

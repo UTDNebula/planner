@@ -7,7 +7,7 @@ import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import CheckIcon from '@mui/icons-material/Check';
 import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
 import React, { ComponentPropsWithoutRef, forwardRef, useState, useRef, useEffect } from 'react';
-import PrerequisitesHoverCard from '../PrerequisitesHoverCard';
+import CourseInfoHoverCard from '../CourseInfoHoverCard';
 import useGetCourseInfo from '../useGetCourseInfo';
 
 interface SidebarCourseItemProps extends ComponentPropsWithoutRef<'div'> {
@@ -48,7 +48,7 @@ export const SidebarCourseItem = React.memo(
           clearTimeout(hoverTimer.current);
         }}
       >
-        <PrerequisitesHoverCard
+        <CourseInfoHoverCard
           prereqs={prereqs}
           open={hoverOpen && !isDragging}
           onOpenChange={(open) => setHoverOpen(open)}
@@ -64,7 +64,7 @@ export const SidebarCourseItem = React.memo(
             )}
             {course.status === 'complete' && <CheckIcon fontSize="small" />}
           </div>
-        </PrerequisitesHoverCard>
+        </CourseInfoHoverCard>
       </div>
     );
   }),

@@ -8,7 +8,7 @@ interface PrerequisitesHoverCardProps {
   side?: 'top' | 'left' | 'bottom' | 'right';
 }
 
-export const PrerequisitesHoverCard: FC<PrerequisitesHoverCardProps> = ({
+export const CourseInfoHoverCard: FC<PrerequisitesHoverCardProps> = ({
   prereqs,
   open,
   onOpenChange,
@@ -41,4 +41,4 @@ export const PrerequisitesHoverCard: FC<PrerequisitesHoverCardProps> = ({
   </HoverCard.Root>
 );
 
-export default PrerequisitesHoverCard;
+export default CourseInfoHoverCard;
