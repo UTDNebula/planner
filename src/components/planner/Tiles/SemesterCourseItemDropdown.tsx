@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import ClipboardListIcon from '@/icons/ClipboardListIcon';
 import ColorSwatchIcon from '@/icons/ColorSwatchIcon';
 import ChevronIcon from '@/icons/ChevronIcon';
@@ -25,14 +24,13 @@ const SemesterCourseItemDropdown: FC<SemesterTileDropdownProps> = ({
   changeColor,
   open,
   onOpenChange,
+  children,
 }) => {
   const id = new ObjectID().toString();
   return (
     <DropdownMenu.Root open={open} onOpenChange={onOpenChange}>
       <DropdownMenu.Trigger data-no-dnd="true" asChild>
-        <button className="cursor-pointer rounded-md py-[2px] transition-all duration-300 hover:bg-neutral-100">
-          <DragIndicatorIcon fontSize="inherit" className="text-[16px] text-neutral-300" />
-        </button>
+        {children}
       </DropdownMenu.Trigger>
 
       <DropdownMenu.Portal>
