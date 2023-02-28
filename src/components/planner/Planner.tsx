@@ -166,7 +166,7 @@ export default function Planner({
         >
           <Toolbar title={title} major="Computer Science" studentName="Dev" />
 
-          <article className="flex h-full flex-col gap-y-5 overflow-x-hidden">
+          <article className="flex h-full flex-col gap-y-5  overflow-x-hidden">
             {transferCredits.length > 0 && <TransferBank transferCredits={transferCredits} />}
             <div className="flex h-fit gap-5">
               {semesters

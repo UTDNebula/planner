@@ -25,8 +25,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   };
 }
 export default function MiniDrawer() {
-  const isDesktop = useMedia('(min-width: 900px)');
-
   return <Home />;
 }
 
