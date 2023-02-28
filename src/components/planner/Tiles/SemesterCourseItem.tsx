@@ -119,11 +119,6 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
   const { planId } = useSemestersContext();
   const prereqData = trpc.validator.prereqValidator.useQuery(planId);
   const isValid = prereqData.data?.prereqValidation.get(course.code);
-
-  // prereqData.data?.prereqValidation.forEach((value, key) => {
-  //   console.log({ key, value });
-  // });
-  console.log(isValid + course.code);
   return (
     <SemesterCourseItem
       ref={setNodeRef}
