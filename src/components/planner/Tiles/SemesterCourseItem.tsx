@@ -6,6 +6,8 @@ import CheckIcon from '@mui/icons-material/Check';
 import Checkbox from '@/components/Checkbox';
 import SemesterCourseItemDropdown from './SemesterCourseItemDropdown';
 import { tagColors } from '../utils';
+import { Popover, Typography } from '@mui/material';
+import { trpc } from '@/utils/trpc';
 
 export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'> {
   course: DraggableCourse;
@@ -31,8 +33,66 @@ export const MemoizedSemesterCourseItem = React.memo(
     },
     ref,
   ) {
+    const [finalPrereqs, setFinalprereqs] = useState<string[]>();
+    let prereqs: string[] = [];
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
+    const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
+
+    const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
+      setAnchorEl(event.currentTarget);
+      data?.find(function (cNum) {
+        if (cNum.subject_prefix + ' ' + cNum.course_number === course.code) {
+          (cNum.prerequisites as Record<string, any>).options.map((elem: any) => {
+            if (elem.type !== 'course' && elem.type !== 'other') {
+              elem.options.map((elem2: any) => {
+                if (elem2.type !== 'course' && elem2.type !== 'other') {
+                  elem2.options.map((elem3: any) => {
+                    data?.map((elem4) => {
+                      if (elem4.id === elem3.class_reference) {
+                        prereqs.push(elem4.subject_prefix + ' ' + elem4.course_number);
+                      }
+                    });
+                  });
+                } else if (elem2.type === 'other') {
+                  prereqs.push(elem2.description);
+                } else {
+                  data?.map((elem4) => {
+                    if (elem4.id === elem2.class_reference) {
+                      prereqs.push(elem4.subject_prefix + ' ' + elem4.course_number);
+                    }
+                  });
+                }
+              });
+            } else if (elem.type === 'other') {
+              prereqs.push(elem.description);
+            } else {
+              data?.map((elem4) => {
+                if (elem4.id === elem.class_reference) {
+                  prereqs.push(elem4.subject_prefix + ' ' + elem4.course_number);
+                }
+              });
+            }
+          });
+          return course.code;
+        }
+      });
+
+      setFinalprereqs(prereqs.map((val) => val));
+    };
+
+    const handlePopoverClose = () => {
+      setAnchorEl(null);
+      prereqs = [];
+    };
+
+    const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
+      refetchOnWindowFocus: false,
+    });
+
+    const { data } = q;
+
+    const open = Boolean(anchorEl);
     return (
       <div
         ref={ref}
@@ -40,7 +100,39 @@ export const MemoizedSemesterCourseItem = React.memo(
         data-tip="Drag!"
         className={` tooltip tooltip-left flex h-min w-full cursor-grab flex-row items-center overflow-hidden rounded-md border border-neutral-200 bg-generic-white`}
         onClick={() => setDropdownOpen((prev) => !prev)}
+        onMouseOver={handlePopoverOpen}
+        onMouseLeave={handlePopoverClose}
       >
+        {anchorEl && (
+          <div>
+            <Popover
+              id="mouse-over-popover"
+              sx={{
+                pointerEvents: 'none',
+              }}
+              open={open}
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+            >
+              {finalPrereqs == null || data == null ? (
+                'Loading...'
+              ) : finalPrereqs.length === 0 ? (
+                <Typography sx={{ p: 5, maxWidth: '400px' }}>Prerequisites: None</Typography>
+              ) : (
+                <Typography sx={{ p: 5, maxWidth: '400px' }}>
+                  Prerequisites: {finalPrereqs.map((elem, idx) => elem).join(', ')}
+                </Typography>
+              )}
+            </Popover>
+          </div>
+        )}
         <div className={`h-full w-2 transition-all ${tagColors[course.color]}`}></div>
         <div className="p-1">
           <div className="flex items-center justify-center">
