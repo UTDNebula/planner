@@ -29,7 +29,7 @@ export default function PlanCard({ id, name, major }: PlanCardProps) {
                 e.stopPropagation();
               }}
             >
-              <div className=" flex h-12 w-12 items-center justify-center rounded-full hover:bg-slate-100">
+              <div className=" flex h-12 w-12 items-center justify-center rounded-full hover:bg-slate-700">
                 <label tabIndex={0}>
                   <VerticalEllipsisIcon className="" />
                 </label>
