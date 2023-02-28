@@ -16,9 +16,19 @@ export default function PlanCard({ id, name, major }: PlanCardProps) {
     router.push(`/app/plans/${id}`);
   };
 
+  const utils = trpc.useContext();
+  const deletePlan = trpc.plan.deletePlanById.useMutation({
+    async onSuccess() {
+      await utils.plan.invalidate();
+      setDeleting(false);
+    },
+  });
+
+  const [deleting, setDeleting] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+
   return (
     <>
-      {<PlanCardModal id={id} />}
       <div className="relative w-full rounded-2xl border-b-[12px] border-[#A3A3A3] border-b-primary bg-white text-[#1C2A6D] transition-all hover:scale-110 hover:border-b-[0px] hover:bg-primary hover:text-white">
         <button
           onClick={handlePlanClick}
@@ -34,28 +44,23 @@ export default function PlanCard({ id, name, major }: PlanCardProps) {
                 e.stopPropagation();
               }}
             >
-              <div className=" flex h-12 w-12 items-center justify-center rounded-full hover:bg-slate-700">
-                <label tabIndex={0}>
-                  <VerticalEllipsisIcon className="" />
-                </label>
-
-                <ul
-                  tabIndex={0}
-                  className="dropdown-content menu rounded-box w-36 bg-base-100 p-2 shadow"
+              <PlanCardDropdown deletePlan={() => setOpenDeleteModal(true)}>
+                <button
+                  aria-label="Customise options"
+                  className="h-10 w-10 self-stretch rounded-full hover:bg-neutral-200 hover:text-black"
                 >
-                  <li>
-                    <a
-                      href="#my-modal-2"
-                      className=""
-                      onClick={(e) => {
-                        e.stopPropagation();
-                      }}
-                    >
-                      Delete Plan
-                    </a>
-                  </li>
-                </ul>
-              </div>
+                  <DotsHorizontalIcon className="m-auto rotate-90" />
+                </button>
+              </PlanCardDropdown>
+              <DeleteModal
+                open={openDeleteModal}
+                onOpenChange={(open) => setOpenDeleteModal(open)}
+                deletePlan={() => {
+                  setDeleting(true);
+                  deletePlan.mutateAsync(id);
+                }}
+                deleteLoading={deleting}
+              />
             </button>
           </div>
           <div className="flex flex-grow items-center text-xl font-semibold">{name}</div>
@@ -64,44 +69,3 @@ export default function PlanCard({ id, name, major }: PlanCardProps) {
     </>
   );
 }
-
-const PlanCardModal = ({ id }: { id: string }) => {
-  const utils = trpc.useContext();
-  const deletePlan = trpc.plan.deletePlanById.useMutation({
-    async onSuccess() {
-      await utils.plan.invalidate();
-      setDeleting(false);
-    },
-  });
-
-  const [deleting, setDeleting] = useState(false);
-  const [openDeleteModal, setOpenDeleteModal] = useState(false);
-
-  console.log({ openDeleteModal });
-  return (
-    <button
-      onClick={handlePlanClick}
-      className="flex h-[150px] w-full max-w-[300px] flex-col rounded-2xl bg-white py-6 px-8 text-left shadow-2xl transition-all hover:scale-110"
-    >
-      <div className="flex w-full flex-row items-center justify-between">
-        <h4 className="overflow-hidden text-ellipsis whitespace-nowrap">{name}</h4>
-        <PlanCardDropdown deletePlan={() => setOpenDeleteModal(true)}>
-          <button aria-label="Customise options" className="self-stretch">
-            <DotsHorizontalIcon className="m-auto rotate-90" />
-          </button>
-        </PlanCardDropdown>
-        <DeleteModal
-          open={openDeleteModal}
-          onOpenChange={(open) => setOpenDeleteModal(open)}
-          deletePlan={() => {
-            setDeleting(true);
-            deletePlan.mutateAsync(id);
-          }}
-          deleteLoading={deleting}
-        />
-      </div>
-
-      <p>{major}</p>
-    </button>
-  );
-};
