@@ -17,7 +17,7 @@ export default function PlanDetailPage(
   props: InferGetServerSidePropsType<typeof getServerSideProps>,
 ): JSX.Element {
   const { planId } = props;
-  const { plan, validation, isPlanLoading, handlePlanDelete } = usePlan({
+  const { plan, validation, bypasses, isPlanLoading, handlePlanDelete } = usePlan({
     planId,
   });
 
@@ -29,7 +29,7 @@ export default function PlanDetailPage(
   return (
     <div className="flex h-screen max-h-screen w-screen flex-col overflow-hidden">
       {plan && validation && (
-        <SemestersContextProvider planId={planId} plan={plan}>
+        <SemestersContextProvider planId={planId} plan={plan} bypasses={bypasses ?? []}>
           <Planner degreeRequirements={validation} transferCredits={plan.transferCredits} />
         </SemestersContextProvider>
       )}

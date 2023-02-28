@@ -88,6 +88,11 @@ export const MemoizedSemesterTile = React.memo(
                 semester={semester}
               />
             ))}
+            {semester.courses.length === 0 && (
+              <div className="flex h-20 w-full items-center justify-center border-2 border-dotted opacity-80">
+                Drag courses here
+              </div>
+            )}
           </article>
         </div>
       </div>

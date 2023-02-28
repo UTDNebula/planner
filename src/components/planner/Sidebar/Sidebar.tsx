@@ -29,19 +29,12 @@ function CourseSelectorContainer({
     refetchOnWindowFocus: false,
   });
 
-  const defaultQuery = 'CS';
-
   const { data, isLoading } = q;
-
-  // Hacky
-  React.useEffect(() => {
-    updateQuery(defaultQuery);
-  }, [isLoading]);
 
   const { results, updateQuery } = useSearch({
     getData: async () =>
       data ? data.map((c) => ({ code: `${c.subject_prefix} ${c.course_number}` })) : [],
-    initialQuery: defaultQuery,
+    initialQuery: '@',
     filterFn: (elm, query) => elm['code'].toLowerCase().includes(query.toLowerCase()),
     constraints: [0, 5],
   });
@@ -77,9 +70,10 @@ function CourseSelectorContainer({
             <SearchBarTwo updateQuery={updateQuery} placeholder="Search courses" />
 
             <div className="bg-white p-4">
-              <DraggableCourseList courses={courseResults} getDragId={getSearchedDragId} />
+              {results.length > 0 && (
+                <DraggableCourseList courses={courseResults} getDragId={getSearchedDragId} />
+              )}
             </div>
-
             {degreeRequirements.requirements.map((req, idx) => (
               <RequirementsContainer
                 key={idx}
@@ -91,7 +85,7 @@ function CourseSelectorContainer({
           </div>
         </div>
       ) : (
-        <div className="flex h-screen w-[50px]  flex-col  items-center border border-neutral-300 bg-white py-8">
+        <div className="flex h-screen w-[50px] flex-col items-center border border-neutral-300 bg-white py-8">
           <ChevronIcon
             onClick={() => setOpen(!open)}
             className={`h-4 w-4 cursor-pointer ${!open ? 'rotate-180' : ''}`}

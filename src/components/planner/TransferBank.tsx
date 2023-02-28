@@ -28,7 +28,7 @@ const TransferBank: FC<TransferBankProps> = ({ transferCredits }) => {
         {transferCredits.map((credit) => (
           <li
             key={`transfer-{credit}`}
-            className="flex h-[40px] w-[250px] items-center rounded-md border border-neutral-200 px-5"
+            className="flex h-[40px] flex-row flex-wrap items-center rounded-md border border-neutral-200 px-5"
           >
             {credit}
           </li>

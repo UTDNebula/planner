@@ -7,6 +7,7 @@ import { createNewYear } from '@/utils/utilFunctions';
 
 import { protectedProcedure, router } from '../trpc';
 import { Prisma } from '@prisma/client';
+import { ObjectID } from 'bson';
 
 export const planRouter = router({
   getUserPlans: protectedProcedure.query(async ({ ctx }) => {
@@ -52,6 +53,17 @@ export const planRouter = router({
 
       const { semesters } = planData;
       // FIX THIS LATER IDC RN
+
+      // Get degree requirements
+      const degreeRequirements = await ctx.prisma.degreeRequirements.findFirst({
+        where: {
+          planId: planData.id,
+        },
+      });
+
+      // Get bypasses
+      const bypasses = degreeRequirements?.bypasses ?? [];
+
       const temporaryFunctionPlzDeleteThis = async () => {
         return semesters.map((sem) => {
           const courses = sem.courses.filter((course) => {
@@ -67,22 +79,19 @@ export const planRouter = router({
 
       const hehe = await temporaryFunctionPlzDeleteThis();
 
-      // Get degree requirements
-      const degreeRequirements = await ctx.prisma.degreeRequirements.findFirst({
-        where: {
-          planId: planData.id,
-        },
-      });
-
       if (!degreeRequirements?.major || degreeRequirements.major === 'undecided') {
-        return { plan: planData, validation: [] };
+        return { plan: planData, validation: [], bypasses: [] };
       }
 
-      const body = formatDegreeValidationRequest(hehe, {
-        core: true,
-        majors: [degreeRequirements.major], // TODO: Standardize names
-        minors: [],
-      });
+      const body = formatDegreeValidationRequest(
+        hehe,
+        {
+          core: true,
+          majors: [degreeRequirements.major], // TODO: Standardize names
+          minors: [],
+        },
+        bypasses,
+      );
 
       const validationData = await fetch(`${process.env.VALIDATOR}/test-validate`, {
         method: 'POST',
@@ -99,7 +108,7 @@ export const planRouter = router({
         return rawData;
       });
 
-      return { plan: planData, validation: validationData };
+      return { plan: planData, validation: validationData, bypasses };
     } catch (error) {
       console.log('ERROR');
       console.log(error);
@@ -462,4 +471,83 @@ export const planRouter = router({
       }
       return true;
     }),
+  addBypass: protectedProcedure
+    .input(z.object({ planId: z.string(), requirement: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      try {
+        const { planId, requirement } = input;
+
+        const degreeRequirements = await ctx.prisma.degreeRequirements.findUnique({
+          where: {
+            planId,
+          },
+          select: {
+            bypasses: true,
+            id: true,
+          },
+        });
+
+        if (!degreeRequirements) {
+          throw 'No degree requirements';
+        }
+
+        const bypasses = [...degreeRequirements.bypasses, requirement];
+
+        const updatedDegreeRequirements = await ctx.prisma.degreeRequirements.update({
+          where: {
+            id: degreeRequirements.id,
+          },
+          data: {
+            bypasses,
+          },
+        });
+
+        return true;
+      } catch (e) {
+        console.error(e);
+      }
+    }),
+
+  removeBypass: protectedProcedure
+    .input(z.object({ planId: z.string(), requirement: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      try {
+        const { planId, requirement } = input;
+
+        const degreeRequirements = await ctx.prisma.degreeRequirements.findUnique({
+          where: {
+            planId,
+          },
+          select: {
+            bypasses: true,
+            id: true,
+          },
+        });
+
+        if (!degreeRequirements) {
+          throw 'No degree requirements';
+        }
+
+        // Create NewBypass if it doesn't exist
+        if (degreeRequirements.bypasses === null) {
+          throw 'No bypass';
+        }
+
+        // If we know the bypass model exists, we can update it directly
+        const newBypass = await ctx.prisma.degreeRequirements.update({
+          where: {
+            id: degreeRequirements.id, // Null-assertion bc type narrowing is being dumb here
+          },
+          data: {
+            bypasses: [...degreeRequirements.bypasses.filter((id) => id !== requirement)].sort(),
+          },
+        });
+
+        return newBypass.id;
+      } catch {}
+    }),
+  getBypasses: protectedProcedure.input(z.object({})).query(async ({ ctx, input }) => {
+    try {
+    } catch {}
+  }),
 });
