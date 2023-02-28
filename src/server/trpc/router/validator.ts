@@ -57,14 +57,14 @@ export const validatorRouter = router({
       /* Recursive function to check for prereqs.
        *  TODO: Move to a client side function. Possibly a hook.
        */
-        for (let i = 0; i < planData?.semesters.length; i++) {
-          if (!planData?.semesters[i] || !planData?.semesters[i].courses) continue;
-          for (let j = 0; j < planData?.semesters[i].courses.length; j++) {
-            const course = planData?.semesters[i].courses[j];
-            preReqHash.set(course, [false, i]);
-            // console.log({ course, flag });
-          }
+      for (let i = 0; i < planData?.semesters.length; i++) {
+        if (!planData?.semesters[i] || !planData?.semesters[i].courses) continue;
+        for (let j = 0; j < planData?.semesters[i].courses.length; j++) {
+          const course = planData?.semesters[i].courses[j];
+          preReqHash.set(course, [false, i]);
+          // console.log({ course, flag });
         }
+      }
       const checkForPreRecursive = (requirements: CollectionOptions, semester: number): boolean => {
         if (requirements.options.length === 0) {
           return true;
@@ -76,8 +76,10 @@ export const validatorRouter = router({
             if (course) {
               const preReq = courseMapWithCodeKey.get(course as string);
               if (preReq) {
-                if ((preReqHash.get(course as string)?.[1] < semester)) {
-                  console.log(preReqHash.get(course as string)?.[1])
+                const data = preReqHash.get(course as string);
+                if (!data) continue;
+                if (data[1] < semester) {
+                  console.log(preReqHash.get(course as string)?.[1]);
                   flag++;
                 }
               }
