@@ -47,6 +47,7 @@ export default function DraggableSidebarCourseItem({
 
   const [finalPrereqs, setFinalprereqs] = useState<string[]>();
   let prereqs: string[] = [];
+  const [title, setTitle] = useState<string>('');
 
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
@@ -54,6 +55,7 @@ export default function DraggableSidebarCourseItem({
     setAnchorEl(event.currentTarget);
     data?.find(function (cNum) {
       if (cNum.subject_prefix + ' ' + cNum.course_number === course.code) {
+        setTitle(cNum.title);
         (cNum.prerequisites as Record<string, any>).options.map((elem: any) => {
           if (elem.type !== 'course' && elem.type !== 'other') {
             elem.options.map((elem2: any) => {
@@ -135,15 +137,22 @@ export default function DraggableSidebarCourseItem({
               horizontal: 'right',
             }}
           >
-            {finalPrereqs == null || data == null ? (
-              'Loading...'
-            ) : finalPrereqs.length === 0 ? (
-              <Typography sx={{ p: 5, maxWidth: '400px' }}>Prerequisites: None</Typography>
-            ) : (
-              <Typography sx={{ p: 5, maxWidth: '400px' }}>
-                Prerequisites: {finalPrereqs.map((elem, idx) => elem).join(', ')}
+            <div className="p-4">
+              <Typography sx={{ px: 5, pt: 1, maxWidth: '400px', fontSize: '18px' }}>
+                {title}
               </Typography>
-            )}
+              {finalPrereqs == null || data == null ? (
+                'Loading...'
+              ) : finalPrereqs.length === 0 ? (
+                <Typography sx={{ px: 5, maxWidth: '400px', fontSize: '12px' }}>
+                  Prerequisites: None
+                </Typography>
+              ) : (
+                <Typography sx={{ px: 5, maxWidth: '400px', fontSize: '12px' }}>
+                  Prerequisites: {finalPrereqs.map((elem, idx) => elem).join(', ')}
+                </Typography>
+              )}
+            </div>
           </Popover>
         </div>
       )}
