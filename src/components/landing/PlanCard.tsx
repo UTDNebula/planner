@@ -13,41 +13,15 @@ export default function PlanCard({ id, name, major }: PlanCardProps) {
     router.push(`/app/plans/${id}`);
   };
 
-  const utils = trpc.useContext();
-  const deletePlan = trpc.plan.deletePlanById.useMutation({
-    async onSuccess() {
-      await utils.plan.invalidate();
-    },
-  });
-
   return (
     <>
-      <div className="modal" id="my-modal-2">
-        <div className="modal-box">
-          <h3 className="text-lg font-bold">Delete Plan</h3>
-          <p className="py-4">Are you sure you would like to delete this plan?</p>
-          <div className="modal-action">
-            <a
-              href="#"
-              className="alert-error btn"
-              onClick={() => {
-                deletePlan.mutateAsync(id);
-              }}
-            >
-              Yes
-            </a>
-            <a href="#" className="btn">
-              No
-            </a>
-          </div>
-        </div>
-      </div>
+      {<PlanCardModal id={id} />}
       <button
         onClick={handlePlanClick}
-        className="flex h-[150px] w-full max-w-[300px] flex-col rounded-2xl bg-white py-6 px-8 text-left shadow-2xl transition-all hover:scale-110"
+        className="flex h-[180px] w-full flex-col rounded-2xl bg-white py-6 px-8 text-left shadow-2xl transition-all hover:scale-110"
       >
         <div className="flex w-full flex-row items-center justify-between">
-          <h4 className="overflow-hidden text-ellipsis whitespace-nowrap">{name}</h4>
+          <h4 className="overflow-hidden text-ellipsis whitespace-nowrap text-[#A3A3A3]">{name}</h4>
           <button
             className="dropdown h-fit w-fit"
             onClick={(e) => {
@@ -79,8 +53,40 @@ export default function PlanCard({ id, name, major }: PlanCardProps) {
           </button>
         </div>
 
-        <p>{major}</p>
+        <div className="flex flex-grow items-center text-xl font-semibold">{major}</div>
       </button>
     </>
   );
 }
+
+const PlanCardModal = ({ id }: { id: string }) => {
+  const utils = trpc.useContext();
+  const deletePlan = trpc.plan.deletePlanById.useMutation({
+    async onSuccess() {
+      await utils.plan.invalidate();
+    },
+  });
+
+  return (
+    <div className="modal" id="my-modal-2">
+      <div className="modal-box">
+        <h3 className="text-lg font-bold">Delete Plan</h3>
+        <p className="py-4">Are you sure you would like to delete this plan?</p>
+        <div className="modal-action">
+          <a
+            href="#"
+            className="alert-error btn"
+            onClick={() => {
+              deletePlan.mutateAsync(id);
+            }}
+          >
+            Yes
+          </a>
+          <a href="#" className="btn">
+            No
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+};

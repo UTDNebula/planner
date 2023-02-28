@@ -1,7 +1,7 @@
-import AddIcon from '@mui/icons-material/Add';
+import ChevronIcon from '@/icons/ChevronIcon';
+import PlusIcon from '@/icons/PlusIcon';
 import { trpc } from '@utils/trpc';
 import { useState } from 'react';
-import Button from '../Button';
 
 import PlanCard from '../landing/PlanCard';
 import TemplateModal from '../template/Modal';
@@ -19,17 +19,19 @@ export default function PlansPage(): JSX.Element {
 
   return (
     <>
-      <section className="flex h-full w-full flex-col gap-12 overflow-auto p-20">
-        <h1 className="col-span-full">Home</h1>
-        <Button
-          color="primary"
-          size="large"
-          onClick={() => setOpenTemplateModal(true)}
-          icon={<AddIcon fontSize="inherit" />}
-        >
-          New
-        </Button>
-        <div className="flex w-fit flex-wrap gap-8">
+      <section className="flex max-h-screen flex-grow flex-col gap-4 overflow-y-scroll p-16">
+        <article className="flex flex-col">
+          <div className="flex flex-row items-center justify-between">
+            <div className="text-4xl">Course Dashboard</div>
+            <button className="flex h-12 flex-row items-center gap-4 rounded-md bg-primary p-6 text-white ">
+              <PlusIcon />
+              <div className="">Add New Plan</div>
+              <ChevronIcon className="rotate-90" />
+            </button>
+          </div>
+          <div className="ml-1 text-lg text-[#737373]">Welcome Temoc!</div>
+        </article>
+        <article className=" grid h-fit w-fit grid-cols-3 gap-12">
           {data.plans.map((plan) => (
             <PlanCard
               key={plan.id}
@@ -38,9 +40,8 @@ export default function PlansPage(): JSX.Element {
               major={plan.requirements?.major ?? 'undecided'}
             />
           ))}
-        </div>
+        </article>
       </section>
-
       {openTemplateModal && <TemplateModal setOpenTemplateModal={setOpenTemplateModal} />}
     </>
   );
