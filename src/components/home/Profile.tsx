@@ -3,12 +3,12 @@ import Avatar from '@mui/material/Avatar';
 import { purple } from '@mui/material/colors';
 import { useEffect, useMemo, useState } from 'react';
 import { trpc } from '@/utils/trpc';
-import { createSemesterCodeRange, displaySemesterCode } from '@/utils/utilFunctions';
+import { displaySemesterCode } from '@/utils/utilFunctions';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { getStartingPlanSemester } from '@/utils/plannerUtils';
+import Button from '../Button';
 
 type ProfilePageProps = {
   isDesktop: boolean;
@@ -22,16 +22,7 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
 
   const { data, isLoading } = userQuery;
 
-  const user = trpc.user.getUser.useQuery();
-  const semesters = useMemo(
-    () =>
-      createSemesterCodeRange(
-        user.data?.profile?.startSemester ?? { semester: 'f', year: 2022 },
-        getStartingPlanSemester(),
-        true,
-      ),
-    [],
-  );
+  const [updateLoading, setUpdateLoading] = useState(false);
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -70,10 +61,12 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
   const updateProfile = trpc.user.updateUserProfile.useMutation({
     async onSuccess() {
       await utils.user.getUser.invalidate();
+      setUpdateLoading(false);
     },
   });
 
   const handleSubmit = () => {
+    setUpdateLoading(true);
     type semesterChars = 'f' | 'u' | 's';
     let firstSemester!: semesterChars;
 
@@ -270,34 +263,24 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
                 </FormControl>
               </article>
             </article>
-            <button
-              onClick={handleSubmit}
-              className="col-span-full flex h-12 w-40 items-center justify-center self-center rounded-2xl bg-[#3E61ED] p-4 text-white"
-            >
+            <Button onClick={handleSubmit} isLoading={updateLoading}>
               Update Profile
-            </button>
+            </Button>
           </article>
         </section>
         <section className="flex w-full flex-col rounded-2xl bg-white px-8 py-4">
           <h1>Reset Password</h1>
           <div className="text-sm ">Click this button to reset your password</div>
-          <button
-            onClick={handleResetPassword}
-            className="mt-5 flex h-8 w-20 items-center justify-center rounded-xl bg-[#3E61ED] p-4 text-white"
-          >
+          <Button className="mt-5" onClick={handleResetPassword}>
             Reset
-          </button>
+          </Button>
         </section>
         <section className="mb-8 flex w-full flex-col rounded-2xl bg-white px-8 py-4">
           <h1>Delete My Account</h1>
           <div className="text-sm ">Deleting your account will remove all user data</div>
-          <button
-            disabled={true} // temporary measure for beta
-            onClick={() => console.log('Hi')}
-            className="mt-5 flex h-8 w-20 items-center justify-center rounded-xl bg-[#FF0041] p-4 text-white disabled:opacity-40"
-          >
+          <Button disabled className="mt-5">
             Delete
-          </button>
+          </Button>
         </section>
       </div>
     </main>

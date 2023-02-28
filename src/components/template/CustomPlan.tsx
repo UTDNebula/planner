@@ -166,44 +166,36 @@ export default function CustomPlan({ setPage }: { setPage: Dispatch<SetStateActi
           Upload a PDF of your UT Dallas transcript and we&apos;ll add your earned credits to the
           page.
         </p>
-        {!loading ? (
-          <>
-            {!file ? (
-              <Button
-                type="button"
-                size="large"
-                icon={<AddFileIcon className="h-5 w-5" />}
-                onClick={() => fileInputRef.current && fileInputRef.current.click()}
-              >
-                <span className="whitespace-nowrap">Upload Transcript</span>
-              </Button>
-            ) : (
-              <span className="font-semibold">Uploaded: {file.name}</span>
-            )}
-            <input
-              ref={fileInputRef}
-              type="file"
-              name="file"
-              id="transcript-input"
-              accept="application/pdf"
-              className="hidden"
-              onChange={async (e) => {
-                if (e.target.files && e.target.files[0]) {
-                  const file = e.target.files[0];
-                  setFile(file);
-                  setError(null);
-                  setLoading(true);
-                  await parseTranscript(file).catch(() =>
-                    setError('An error occured loading transcript'),
-                  );
-                  setLoading(false);
-                }
-              }}
-            />
-          </>
-        ) : (
-          <CircularProgress />
-        )}
+        <Button
+          type="button"
+          size="large"
+          icon={<AddFileIcon className="h-5 w-5" />}
+          onClick={() => fileInputRef.current && fileInputRef.current.click()}
+          isLoading={loading}
+        >
+          <span className="whitespace-nowrap">Upload Transcript</span>
+        </Button>
+        {file && <span className="font-semibold">Uploaded: {file.name}</span>}
+        <input
+          ref={fileInputRef}
+          type="file"
+          name="file"
+          id="transcript-input"
+          accept="application/pdf"
+          className="hidden"
+          onChange={async (e) => {
+            if (e.target.files && e.target.files[0]) {
+              const file = e.target.files[0];
+              setFile(file);
+              setError(null);
+              setLoading(true);
+              await parseTranscript(file).catch(() =>
+                setError('An error occured loading transcript'),
+              );
+              setLoading(false);
+            }
+          }}
+        />
         {error && ErrorMessage(error)}
       </div>
       <Button onClick={handleSubmit}>Create Plan</Button>
