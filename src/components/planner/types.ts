@@ -7,7 +7,7 @@ import { tagColors } from './utils';
 export type Plan = NonNullable<RouterOutputs['plan']['getPlanById']>['plan'];
 
 export type DegreeValidation = NonNullable<
-  RouterOutputs['validator']['validatePlan']
+  RouterOutputs['validator']['degreeValidator']
 >['validation'];
 
 // Temporary semester type

@@ -53,11 +53,19 @@ export const validatorRouter = router({
        *  key: course id
        *  value: boolean to represent validity
        */
-      const preReqHash = new Map<string, boolean>();
+      const preReqHash = new Map<string, [boolean, number]>();
       /* Recursive function to check for prereqs.
        *  TODO: Move to a client side function. Possibly a hook.
        */
-      const checkForPreRecursive = (requirements: CollectionOptions): boolean => {
+        for (let i = 0; i < planData?.semesters.length; i++) {
+          if (!planData?.semesters[i] || !planData?.semesters[i].courses) continue;
+          for (let j = 0; j < planData?.semesters[i].courses.length; j++) {
+            const course = planData?.semesters[i].courses[j];
+            preReqHash.set(course, [false, i]);
+            // console.log({ course, flag });
+          }
+        }
+      const checkForPreRecursive = (requirements: CollectionOptions, semester: number): boolean => {
         if (requirements.options.length === 0) {
           return true;
         }
@@ -66,15 +74,16 @@ export const validatorRouter = router({
           if (option.type === 'course') {
             const course = courseMapWithIdKey.get(option.class_reference);
             if (course) {
-              const preReq = courseMapWithCodeKey.get(course as any as string);
+              const preReq = courseMapWithCodeKey.get(course as string);
               if (preReq) {
-                if (preReqHash.has(course as any as string)) {
+                if ((preReqHash.get(course as string)?.[1] < semester)) {
+                  console.log(preReqHash.get(course as string)?.[1])
                   flag++;
                 }
               }
             }
           } else if (option.type === 'collection') {
-            if (checkForPreRecursive(option)) {
+            if (checkForPreRecursive(option, semester)) {
               flag++;
             }
           }
@@ -93,8 +102,8 @@ export const validatorRouter = router({
             if (!preReqsForCourse) {
               continue;
             }
-            const flag = checkForPreRecursive(preReqsForCourse as any as CollectionOptions);
-            preReqHash.set(course, flag);
+            const flag = checkForPreRecursive(preReqsForCourse as any as CollectionOptions, i);
+            preReqHash.set(course, [flag, i]);
             // console.log({ course, flag });
           }
         }
