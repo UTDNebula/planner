@@ -44,7 +44,7 @@ import { trpc } from '@/utils/trpc';
 export interface PlannerProps {
   degreeRequirements: DegreeRequirements;
   prereqData?: Map<string, boolean>;
-  transferCredits: Array<string>
+  transferCredits: Array<string>;
 }
 
 /** Controlled wrapper around course list and semester tiles */

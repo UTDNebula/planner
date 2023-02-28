@@ -7,7 +7,7 @@ import { protectedProcedure, router } from '../trpc';
 import { Prisma } from '@prisma/client';
 
 export const validatorRouter = router({
-  validatePlan: protectedProcedure.input(z.string().min(1)).query(async ({ ctx, input }) => {
+  prereqValidator: protectedProcedure.input(z.string().min(1)).query(async ({ ctx, input }) => {
     try {
       // Fetch current plan
       const planData = await ctx.prisma.plan.findUnique({
@@ -105,8 +105,47 @@ export const validatorRouter = router({
       preReqHash.forEach((value, key) => {
         console.log({ key, value });
       });
+      return { prereqValidation: preReqHash };
+    } catch (error) {
+      console.log('ERROR');
+      console.log(error);
+    }
+  }),
+  degreeValidator: protectedProcedure.input(z.string().min(1)).query(async ({ ctx, input }) => {
+    try {
+      // Fetch current plan
+      const planData = await ctx.prisma.plan.findUnique({
+        where: {
+          id: input,
+        },
+        select: {
+          name: true,
+          id: true,
+          semesters: true,
+          transferCredits: true,
+        },
+      });
+
+      if (!planData) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Plan not found',
+        });
+      }
+
       const { semesters } = planData;
       // FIX THIS LATER IDC RN
+
+      // Get degree requirements
+      const degreeRequirements = await ctx.prisma.degreeRequirements.findFirst({
+        where: {
+          planId: planData.id,
+        },
+      });
+
+      // Get bypasses
+      const bypasses = degreeRequirements?.bypasses ?? [];
+
       const temporaryFunctionPlzDeleteThis = async () => {
         return semesters.map((sem) => {
           const courses = sem.courses.filter((course) => {
@@ -122,22 +161,19 @@ export const validatorRouter = router({
 
       const hehe = await temporaryFunctionPlzDeleteThis();
 
-      // Get degree requirements
-      const degreeRequirements = await ctx.prisma.degreeRequirements.findFirst({
-        where: {
-          planId: planData.id,
-        },
-      });
-
       if (!degreeRequirements?.major || degreeRequirements.major === 'undecided') {
-        return {  validation: [] };
+        return { plan: planData, validation: [], bypasses: [] };
       }
 
-      const body = formatDegreeValidationRequest(hehe, {
-        core: true,
-        majors: [degreeRequirements.major], // TODO: Standardize names
-        minors: [],
-      });
+      const body = formatDegreeValidationRequest(
+        hehe,
+        {
+          core: true,
+          majors: [degreeRequirements.major], // TODO: Standardize names
+          minors: [],
+        },
+        bypasses,
+      );
 
       const validationData = await fetch(`${process.env.VALIDATOR}/test-validate`, {
         method: 'POST',
@@ -154,13 +190,13 @@ export const validatorRouter = router({
         return rawData;
       });
 
-      return { validation: validationData, prereqValidation: preReqHash };
+      return { plan: planData, validation: validationData, bypasses };
     } catch (error) {
       console.log('ERROR');
       console.log(error);
     }
-  })})
-
+  }),
+});
 
 type CourseOptions = {
   class_reference: string;

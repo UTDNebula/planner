@@ -18,11 +18,9 @@ export default function PlanDetailPage(
   props: InferGetServerSidePropsType<typeof getServerSideProps>,
 ): JSX.Element {
   const { planId } = props;
-  const planQuery = trpc.plan.getPlanById.useQuery(planId);
 
-  const { plan, validation, prereqData, bypasses, isPlanLoading, handlePlanDelete } = usePlan({ planId });
+  const { plan, validation, bypasses, isPlanLoading, handlePlanDelete } = usePlan({ planId });
 
-  // console.log(courseData);
   // Indicate UI loading
   if (isPlanLoading) {
     return <div>Loading</div>;
@@ -30,9 +28,9 @@ export default function PlanDetailPage(
 
   return (
     <div className="flex h-screen max-h-screen w-screen flex-col overflow-hidden">
-      {plan && validation && (
+      {plan && (
         <SemestersContextProvider planId={planId} plan={plan} bypasses={bypasses ?? []}>
-          <Planner degreeRequirements={validation} transferCredits={plan.transferCredits} prereqData={prereqData} />
+          <Planner degreeRequirements={validation} transferCredits={plan.transferCredits} />
         </SemestersContextProvider>
       )}
       {/* <button onClick={handlePlanDelete}>Delete</button> */}
@@ -51,8 +49,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext<{ pl
   const planId = context.params?.planId as string;
 
   // await ssg.courses.publicGetSanitizedCourses.prefetch();
+  await ssg.validator.prereqValidator.prefetch(planId);
+  await ssg.validator.degreeValidator.prefetch(planId);
   await ssg.plan.getPlanById.prefetch(planId);
-await ssg.validator.validatePlan.prefetch(planId);
   return {
     props: {
       trpcState: ssg.dehydrate(),

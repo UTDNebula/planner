@@ -50,7 +50,7 @@ export const planRouter = router({
         });
       }
       return { plan: planData };
-   } catch (error) {
+    } catch (error) {
       console.log('ERROR');
       console.log(error);
     }

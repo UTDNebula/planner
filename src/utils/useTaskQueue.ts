@@ -6,7 +6,7 @@ export function useTaskQueue(params: { shouldProcess: boolean }): {
   isProcessing: boolean;
   addTask: <T>(task: Task<T>) => void;
 } {
-const utils = trpc.useContext();
+  const utils = trpc.useContext();
   const [queue, setQueue] = React.useState<{
     isProcessing: boolean;
     tasks: Array<Task<unknown>>;
@@ -16,7 +16,8 @@ const utils = trpc.useContext();
     if (!params.shouldProcess) return;
     if (queue.tasks.length === 0) {
       // TODO: Handle async behaviour
-      utils.validator.validatePlan.invalidate();
+      utils.validator.degreeValidator.invalidate();
+      utils.validator.prereqValidator.invalidate();
       return;
     }
     if (queue.isProcessing) return;
@@ -30,7 +31,7 @@ const utils = trpc.useContext();
       tasks: prev.tasks.slice(1),
     }));
 
-    Promise.resolve(func(args)).finally(() => { 
+    Promise.resolve(func(args)).finally(() => {
       setQueue((prev) => ({
         isProcessing: false,
         tasks: prev.tasks,

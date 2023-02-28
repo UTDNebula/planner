@@ -12,7 +12,7 @@ export const appRouter = router({
   template: templateRouter,
   credits: creditsRouter,
   courses: coursesRouter,
-validator: validatorRouter,
+  validator: validatorRouter,
 });
 
 // export type definition of API
