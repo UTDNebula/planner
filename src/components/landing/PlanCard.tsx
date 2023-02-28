@@ -22,7 +22,9 @@ export default function PlanCard({ id, name, major }: PlanCardProps) {
           className="flex h-[180px] w-full flex-col py-6 px-8 text-left"
         >
           <div className="flex w-full flex-row items-center justify-between">
-            <h4 className="overflow-hidden text-ellipsis whitespace-nowrap">{name}</h4>
+            <h4 className="overflow-hidden text-ellipsis whitespace-nowrap text-[15px] font-normal ">
+              {major}
+            </h4>
             <button
               className="dropdown h-fit w-fit"
               onClick={(e) => {
@@ -53,7 +55,7 @@ export default function PlanCard({ id, name, major }: PlanCardProps) {
               </div>
             </button>
           </div>
-          <div className="flex flex-grow items-center text-xl font-semibold">{major}</div>
+          <div className="flex flex-grow items-center text-xl font-semibold">{name}</div>
         </button>
       </div>
     </>
