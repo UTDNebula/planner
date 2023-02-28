@@ -17,7 +17,6 @@ import { RecursiveRequirement } from './RecursiveRequirement';
 import { DragIndicator } from '@mui/icons-material';
 import { useSemestersContext } from '../SemesterContext';
 
-
 function RequirementContainerHeader({
   name,
   status,
