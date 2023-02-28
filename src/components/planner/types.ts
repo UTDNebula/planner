@@ -2,6 +2,7 @@ import { RouterOutputs } from '@/utils/trpc';
 import { UniqueIdentifier } from '@dnd-kit/core';
 import { SemesterCode } from '@prisma/client';
 import { ObjectID } from 'bson';
+import { tagColors } from './utils';
 
 export type Plan = NonNullable<RouterOutputs['plan']['getPlanById']>['plan'];
 
@@ -13,6 +14,8 @@ export interface Semester {
   id: ObjectID;
   code: SemesterCode;
   courses: DraggableCourse[];
+  courseColors: string[];
+  color: keyof typeof tagColors;
 }
 
 export interface Course {
@@ -25,9 +28,8 @@ export interface DraggableCourse extends Course {
   validation?: { isValid: boolean; override: boolean };
   status?: 'complete' | 'incomplete'; // TODO: Clean this up later once prereq is done
   taken?: boolean;
-  transfer?: boolean;
-  sync?: { isSynced: boolean; correctSemester: SemesterCode | undefined };
   hours?: number;
+  color: keyof typeof tagColors;
 }
 
 export interface DegreeRequirementGroup {

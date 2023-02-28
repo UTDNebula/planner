@@ -1,9 +1,7 @@
 import { trpc } from '@/utils/trpc';
-import { data } from 'cypress/types/jquery';
 import router from 'next/router';
 import { Dispatch, SetStateAction, useState } from 'react';
 import DataGrid from '../credits/DataGrid';
-import CloseIcon from '@mui/icons-material/Close';
 import SearchBar from '../credits/SearchBar';
 import Button from '../Button';
 

@@ -8,6 +8,7 @@ export const coursesRouter = router({
         subject_prefix: true,
         id: true,
         prerequisites: true,
+        title: true,
       },
     });
   }),

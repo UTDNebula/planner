@@ -7,6 +7,7 @@ import { createNewYear } from '@/utils/utilFunctions';
 
 import { protectedProcedure, router } from '../trpc';
 import { Prisma } from '@prisma/client';
+import { ObjectID } from 'bson';
 
 export const planRouter = router({
   getUserPlans: protectedProcedure.query(async ({ ctx }) => {
@@ -39,6 +40,7 @@ export const planRouter = router({
           name: true,
           id: true,
           semesters: true,
+          transferCredits: true,
         },
       });
 
@@ -51,6 +53,17 @@ export const planRouter = router({
 
       const { semesters } = planData;
       // FIX THIS LATER IDC RN
+
+      // Get degree requirements
+      const degreeRequirements = await ctx.prisma.degreeRequirements.findFirst({
+        where: {
+          planId: planData.id,
+        },
+      });
+
+      // Get bypasses
+      const bypasses = degreeRequirements?.bypasses ?? [];
+
       const temporaryFunctionPlzDeleteThis = async () => {
         return semesters.map((sem) => {
           const courses = sem.courses.filter((course) => {
@@ -66,22 +79,19 @@ export const planRouter = router({
 
       const hehe = await temporaryFunctionPlzDeleteThis();
 
-      // Get degree requirements
-      const degreeRequirements = await ctx.prisma.degreeRequirements.findFirst({
-        where: {
-          planId: planData.id,
-        },
-      });
-
       if (!degreeRequirements?.major || degreeRequirements.major === 'undecided') {
-        return { plan: planData, validation: [] };
+        return { plan: planData, validation: [], bypasses: [] };
       }
 
-      const body = formatDegreeValidationRequest(hehe, {
-        core: true,
-        majors: [degreeRequirements.major], // TODO: Standardize names
-        minors: [],
-      });
+      const body = formatDegreeValidationRequest(
+        hehe,
+        {
+          core: true,
+          majors: [degreeRequirements.major], // TODO: Standardize names
+          minors: [],
+        },
+        bypasses,
+      );
 
       const validationData = await fetch(`${process.env.VALIDATOR}/test-validate`, {
         method: 'POST',
@@ -98,7 +108,7 @@ export const planRouter = router({
         return rawData;
       });
 
-      return { plan: planData, validation: validationData };
+      return { plan: planData, validation: validationData, bypasses };
     } catch (error) {
       console.log('ERROR');
       console.log(error);
@@ -237,6 +247,9 @@ export const planRouter = router({
           },
           data: {
             courses: [...semester!.courses, courseName],
+            courseColors: {
+              push: '',
+            },
           },
         });
         return true;
@@ -257,17 +270,24 @@ export const planRouter = router({
           select: {
             id: true,
             courses: true,
+            courseColors: true,
           },
         });
-        // Update courses
-        await ctx.prisma.semester.update({
-          where: {
-            id: semesterId,
-          },
-          data: {
-            courses: semester!.courses.filter((cName) => cName != courseName),
-          },
-        });
+        const index = semester?.courses.findIndex((course) => courseName == course);
+        if (index) {
+          const newColors = [...(semester?.courseColors || [])];
+          newColors.splice(index, 1);
+          // Update courses
+          await ctx.prisma.semester.update({
+            where: {
+              id: semesterId,
+            },
+            data: {
+              courses: semester!.courses.filter((cName) => cName != courseName),
+              courseColors: newColors,
+            },
+          });
+        }
         return true;
       } catch (error) {
         console.error(error);
@@ -281,6 +301,7 @@ export const planRouter = router({
           where: { id: semesterId },
           data: {
             courses: [],
+            courseColors: [],
           },
         })
         .catch((err) => {
@@ -315,9 +336,13 @@ export const planRouter = router({
           select: {
             id: true,
             courses: true,
+            courseColors: true,
           },
         });
 
+        const index = oldSemester?.courses.findIndex((course) => courseName == course);
+        const newColors = [...(oldSemester?.courseColors || [])];
+        if (index) newColors.splice(index, 1);
         // Update courses
         await ctx.prisma.semester.update({
           where: {
@@ -325,6 +350,7 @@ export const planRouter = router({
           },
           data: {
             courses: oldSemester!.courses.filter((cName) => cName != courseName),
+            courseColors: newColors,
           },
         });
 
@@ -343,7 +369,12 @@ export const planRouter = router({
             id: newSemesterId,
           },
           data: {
-            courses: [...semester!.courses, courseName],
+            courses: {
+              push: courseName,
+            },
+            courseColors: {
+              push: '',
+            },
           },
         });
 
@@ -391,4 +422,132 @@ export const planRouter = router({
         console.log(error);
       }
     }),
+  changeSemesterColor: protectedProcedure
+    .input(
+      z.object({
+        semesterId: z.string(),
+        color: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      await ctx.prisma.semester.update({
+        where: {
+          id: input.semesterId,
+        },
+        data: {
+          color: input.color,
+        },
+      });
+      return true;
+    }),
+  changeCourseColor: protectedProcedure
+    .input(
+      z.object({
+        planId: z.string(),
+        semesterId: z.string(),
+        courseName: z.string(),
+        color: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const semester = await ctx.prisma.semester.findUnique({
+        where: {
+          id: input.semesterId,
+        },
+      });
+      console.log({ course: semester?.courses, name: input.courseName });
+      const index = semester?.courses.findIndex((course) => input.courseName == course);
+      if (index) {
+        const newColors = [...(semester?.courseColors || [])];
+        newColors[index] = input.color;
+        await ctx.prisma.semester.update({
+          where: {
+            id: input.semesterId,
+          },
+          data: {
+            courseColors: newColors,
+          },
+        });
+      }
+      return true;
+    }),
+  addBypass: protectedProcedure
+    .input(z.object({ planId: z.string(), requirement: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      try {
+        const { planId, requirement } = input;
+
+        const degreeRequirements = await ctx.prisma.degreeRequirements.findUnique({
+          where: {
+            planId,
+          },
+          select: {
+            bypasses: true,
+            id: true,
+          },
+        });
+
+        if (!degreeRequirements) {
+          throw 'No degree requirements';
+        }
+
+        const bypasses = [...degreeRequirements.bypasses, requirement];
+
+        const updatedDegreeRequirements = await ctx.prisma.degreeRequirements.update({
+          where: {
+            id: degreeRequirements.id,
+          },
+          data: {
+            bypasses,
+          },
+        });
+
+        return true;
+      } catch (e) {
+        console.error(e);
+      }
+    }),
+
+  removeBypass: protectedProcedure
+    .input(z.object({ planId: z.string(), requirement: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      try {
+        const { planId, requirement } = input;
+
+        const degreeRequirements = await ctx.prisma.degreeRequirements.findUnique({
+          where: {
+            planId,
+          },
+          select: {
+            bypasses: true,
+            id: true,
+          },
+        });
+
+        if (!degreeRequirements) {
+          throw 'No degree requirements';
+        }
+
+        // Create NewBypass if it doesn't exist
+        if (degreeRequirements.bypasses === null) {
+          throw 'No bypass';
+        }
+
+        // If we know the bypass model exists, we can update it directly
+        const newBypass = await ctx.prisma.degreeRequirements.update({
+          where: {
+            id: degreeRequirements.id, // Null-assertion bc type narrowing is being dumb here
+          },
+          data: {
+            bypasses: [...degreeRequirements.bypasses.filter((id) => id !== requirement)].sort(),
+          },
+        });
+
+        return newBypass.id;
+      } catch {}
+    }),
+  getBypasses: protectedProcedure.input(z.object({})).query(async ({ ctx, input }) => {
+    try {
+    } catch {}
+  }),
 });

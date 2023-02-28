@@ -9,16 +9,17 @@ export interface usePlanProps {
 export interface usePlanReturn {
   plan?: Plan;
   validation?: DegreeValidation;
-  isLoading: boolean;
+  bypasses?: string[];
+  isPlanLoading: boolean;
   handlePlanDelete: () => Promise<boolean>;
 }
 
 const usePlan = ({ planId }: usePlanProps): usePlanReturn => {
   const utils = trpc.useContext();
   const router = useRouter();
-  const { data, isLoading } = trpc.plan.getPlanById.useQuery(planId);
 
-  // useMutation primitives
+  const planQuery = trpc.plan.getPlanById.useQuery(planId);
+
   const deletePlan = trpc.plan.deletePlanById.useMutation({
     async onSuccess() {
       await utils.user.getUser.invalidate();
@@ -36,9 +37,10 @@ const usePlan = ({ planId }: usePlanProps): usePlanReturn => {
   };
 
   return {
-    plan: data?.plan,
-    validation: data?.validation,
-    isLoading,
+    plan: planQuery.data?.plan,
+    validation: planQuery.data?.validation,
+    bypasses: planQuery.data?.bypasses,
+    isPlanLoading: planQuery.isLoading,
     handlePlanDelete,
   };
 };

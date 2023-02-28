@@ -1,14 +1,10 @@
 import logo from '@public/Nebula_Planner_Logo.png';
-import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
+import { InferGetServerSidePropsType } from 'next';
 import Image from 'next/image';
-import Link from 'next/link';
-import { getServerSession } from 'next-auth/next';
-import { getCsrfToken, getProviders, signIn, useSession } from 'next-auth/react';
+import { getProviders, signIn, useSession } from 'next-auth/react';
 import React from 'react';
 
-import { authOptions } from '../api/auth/[...nextauth]';
 import { useRouter } from 'next/router';
-import { trpc } from '@/utils/trpc';
 
 // import AuthCard from '../../components/auth/AuthCard';
 // import LoginCard from '@components/auth/Login'
@@ -49,7 +45,14 @@ export default function AuthPage({
           <div className="m-2 bg-white md:rounded-md md:shadow-md">
             <div className="w-96 rounded bg-white p-6 shadow-none md:shadow-lg ">
               <div className="mb-4 flex items-center justify-center">
-                <Image src={logo} alt="Logo" width="120" height="120" className="rounded-full" />
+                <Image
+                  src={logo}
+                  alt="Logo"
+                  width="120"
+                  height="120"
+                  className="rounded-full"
+                  priority
+                />
               </div>
               <h1 className="mb-2 text-center text-3xl font-semibold leading-normal">Sign in</h1>
               <p className="text-sm leading-normal">

@@ -145,6 +145,7 @@ function CourseRequirementComponent({
   return (
     <DraggableSidebarCourseItem
       course={{
+        color: '',
         id: id,
         code: req.course,
         taken: courses.includes(req.course),

@@ -40,3 +40,12 @@ export const customCourseSort = <T extends { code: string }>(courses: T[]): T[] 
     return 1;
   });
 };
+
+export const tagColors = {
+  red: 'bg-red-400',
+  yellow: 'bg-yellow-400',
+  green: 'bg-green-400',
+  blue: 'bg-blue-400',
+  gray: 'bg-gray-400',
+  '': 'bg-inherit',
+} as const;

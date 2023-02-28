@@ -38,7 +38,7 @@ const SelectedCoursesToast: FC<SelectedCoursesToastProps> = ({
           />
 
           <span className="text-lg font-semibold text-neutral-900">
-            {selectedCount} Courses Selected
+            {selectedCount} {selectedCount === 1 ? 'Course' : 'Courses'} Selected
           </span>
 
           <Button
