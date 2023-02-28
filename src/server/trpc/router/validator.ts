@@ -220,10 +220,10 @@ export const validatorRouter = router({
       await coOrPrereqValidation(planData);
 
       coOrPreqHash.forEach((value, key) => {
-        preReqHash.set(key, [
-          value[0] && coreqHash.get(key)?.[0] && coOrPreqHash.get(key)?.[0],
-          value[1],
-        ]);
+        const preReq = preReqHash.get(key);
+        const coReq = coreqHash.get(key);
+        if (!coReq || !preReq) return;
+        preReqHash.set(key, [value[0] && coReq[0] && preReq[0], value[1]]);
         console.log({ key, value });
       });
       return { prereqValidation: preReqHash };
