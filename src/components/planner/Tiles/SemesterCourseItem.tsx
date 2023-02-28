@@ -12,6 +12,7 @@ import { trpc } from '@/utils/trpc';
 export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'> {
   course: DraggableCourse;
   isSelected?: boolean;
+  isDragging?: boolean;
   onSelectCourse?: () => void;
   onDeselectCourse?: () => void;
   onDeleteCourse?: () => void;
@@ -27,6 +28,7 @@ export const MemoizedSemesterCourseItem = React.memo(
       onSelectCourse,
       onDeselectCourse,
       isSelected,
+      isDragging,
       onDeleteCourse,
       onColorChange,
       ...props
@@ -39,10 +41,13 @@ export const MemoizedSemesterCourseItem = React.memo(
 
     const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
 
+    const [title, setTitle] = useState<string>('');
+
     const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
       setAnchorEl(event.currentTarget);
       data?.find(function (cNum) {
         if (cNum.subject_prefix + ' ' + cNum.course_number === course.code) {
+          setTitle(cNum.title);
           (cNum.prerequisites as Record<string, any>).options.map((elem: any) => {
             if (elem.type !== 'course' && elem.type !== 'other') {
               elem.options.map((elem2: any) => {
@@ -93,6 +98,9 @@ export const MemoizedSemesterCourseItem = React.memo(
     const { data } = q;
 
     const open = Boolean(anchorEl);
+
+    console.log(title);
+    console.log('HM');
     return (
       <div
         ref={ref}
@@ -103,7 +111,7 @@ export const MemoizedSemesterCourseItem = React.memo(
         onMouseOver={handlePopoverOpen}
         onMouseLeave={handlePopoverClose}
       >
-        {anchorEl && (
+        {anchorEl && !isDragging && (
           <div>
             <Popover
               id="mouse-over-popover"
@@ -123,12 +131,17 @@ export const MemoizedSemesterCourseItem = React.memo(
             >
               {finalPrereqs == null || data == null ? (
                 'Loading...'
-              ) : finalPrereqs.length === 0 ? (
-                <Typography sx={{ p: 5, maxWidth: '400px' }}>Prerequisites: None</Typography>
               ) : (
-                <Typography sx={{ p: 5, maxWidth: '400px' }}>
-                  Prerequisites: {finalPrereqs.map((elem, idx) => elem).join(', ')}
-                </Typography>
+                <div className="p-4">
+                  <Typography sx={{ px: 5, pt: 1, maxWidth: '400px', fontSize: '18px' }}>
+                    {title}
+                  </Typography>
+                  <Typography sx={{ px: 5, pb: 1, maxWidth: '400px', fontSize: '12px' }}>
+                    {finalPrereqs.length > 0
+                      ? `Prerequisites: ${finalPrereqs.map((elem, idx) => elem).join(', ')}`
+                      : 'Prerequisites: None'}
+                  </Typography>
+                </div>
               )}
             </Popover>
           </div>
@@ -178,6 +191,7 @@ export const SemesterCourseItem = MemoizedSemesterCourseItem;
 export interface DraggableSemesterCourseItemProps {
   dragId: UniqueIdentifier;
   isSelected: boolean;
+  isDragging: boolean;
   semester: Semester;
   course: DraggableCourse;
   onSelectCourse: () => void;

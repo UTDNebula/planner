@@ -40,7 +40,7 @@ export default function DraggableSidebarCourseItem({
   dragId: UniqueIdentifier;
   course: DraggableCourse;
 }) {
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
     id: dragId,
     data: { from: 'course-list', course } as DragDataFromCourseList,
   });
@@ -116,7 +116,7 @@ export default function DraggableSidebarCourseItem({
       onMouseOver={handlePopoverOpen}
       onMouseLeave={handlePopoverClose}
     >
-      {anchorEl && (
+      {anchorEl && !isDragging && (
         <div>
           <Popover
             id="mouse-over-popover"
@@ -141,17 +141,11 @@ export default function DraggableSidebarCourseItem({
               <Typography sx={{ px: 5, pt: 1, maxWidth: '400px', fontSize: '18px' }}>
                 {title}
               </Typography>
-              {finalPrereqs == null || data == null ? (
-                'Loading...'
-              ) : finalPrereqs.length === 0 ? (
-                <Typography sx={{ px: 5, maxWidth: '400px', fontSize: '12px' }}>
-                  Prerequisites: None
-                </Typography>
-              ) : (
-                <Typography sx={{ px: 5, maxWidth: '400px', fontSize: '12px' }}>
-                  Prerequisites: {finalPrereqs.map((elem, idx) => elem).join(', ')}
-                </Typography>
-              )}
+              <Typography sx={{ px: 5, pb: 1, maxWidth: '400px', fontSize: '12px' }}>
+                {finalPrereqs && finalPrereqs.length > 0
+                  ? `Prerequisites: ${finalPrereqs.map((elem, idx) => elem).join(', ')}`
+                  : 'Prerequisites: None'}
+              </Typography>
             </div>
           </Popover>
         </div>
