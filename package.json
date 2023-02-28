@@ -12,7 +12,8 @@
     "format:check": "prettier --check .",
     "analyze": "cross-env ANALYZE=true npm run build",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "dev:gitpod": "NEXTAUTH_URL=$(gp url 3000)/ npm run dev"
   },
   "prisma": {
     "seed": "ts-node --transpile-only --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
