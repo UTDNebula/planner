@@ -5,6 +5,7 @@ import { useState } from 'react';
 
 import PlanCard from '../landing/PlanCard';
 import TemplateModal from '../template/Modal';
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 
 /**
  * A list of the user's plans
@@ -23,11 +24,31 @@ export default function PlansPage(): JSX.Element {
         <article className="flex flex-col">
           <div className="flex flex-row items-center justify-between">
             <div className="text-4xl">Course Dashboard</div>
-            <button className="flex h-12 flex-row items-center gap-4 rounded-md bg-primary p-6 text-white ">
-              <PlusIcon />
-              <div className="">Add New Plan</div>
-              <ChevronIcon className="rotate-90" />
-            </button>
+            <DropdownMenu.Root>
+              <DropdownMenu.Trigger asChild>
+                <button className="flex h-12 w-52 flex-row items-center gap-4 rounded-md bg-primary p-6 text-white transition-all hover:scale-105">
+                  <PlusIcon />
+                  <div className="">Add New Plan</div>
+                  <ChevronIcon className="rotate-90" />
+                </button>
+              </DropdownMenu.Trigger>
+
+              <DropdownMenu.Portal>
+                <DropdownMenu.Content className="DropdownMenuContent w-52 border-2 bg-white">
+                  <DropdownMenu.Item className="DropdownMenuItem flex h-12 items-center justify-center hover:bg-primary hover:text-white">
+                    <button className="h-full w-full" onClick={() => setOpenTemplateModal(true)}>
+                      Add Custom Plan
+                    </button>
+                  </DropdownMenu.Item>
+                  <DropdownMenu.Separator className="DropdownMenuSeparator h-0.5 w-52 bg-black opacity-10" />
+                  <DropdownMenu.Item className="DropdownMenuItem flex h-12 items-center justify-center hover:bg-primary hover:text-white">
+                    <button className="h-full w-full" onClick={() => setOpenTemplateModal(true)}>
+                      Add Template Plan
+                    </button>
+                  </DropdownMenu.Item>
+                </DropdownMenu.Content>
+              </DropdownMenu.Portal>
+            </DropdownMenu.Root>
           </div>
           <div className="ml-1 text-lg text-[#737373]">Welcome Temoc!</div>
         </article>
@@ -41,6 +62,7 @@ export default function PlansPage(): JSX.Element {
             />
           ))}
         </article>
+        <article></article>
       </section>
       {openTemplateModal && <TemplateModal setOpenTemplateModal={setOpenTemplateModal} />}
     </>
