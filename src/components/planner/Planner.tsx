@@ -52,7 +52,7 @@ export default function Planner({
   transferCredits,
 }: PlannerProps): JSX.Element {
   const {
-    semesters,
+    filteredSemesters,
     handleAddCourseToSemester,
     handleAddYear,
     handleMoveCourseFromSemesterToSemester,
@@ -72,7 +72,7 @@ export default function Planner({
   };
   useEffect(() => {
     updatePlan();
-  }, [semesters]);
+  }, [filteredSemesters]);
 
   // Course that is currently being dragged
   const [activeCourse, setActiveCourse] = useState<ActiveDragData | null>(null);
@@ -88,13 +88,13 @@ export default function Planner({
   );
 
   const courseCodes = useMemo(
-    () => semesters.flatMap((sem) => sem.courses).map((course) => course.code),
-    [semesters],
+    () => filteredSemesters.flatMap((sem) => sem.courses).map((course) => course.code),
+    [filteredSemesters],
   );
 
   const courseIds = useMemo(
-    () => semesters.flatMap((sem) => sem.courses).map((course) => course.id.toString()),
-    [semesters],
+    () => filteredSemesters.flatMap((sem) => sem.courses).map((course) => course.id.toString()),
+    [filteredSemesters],
   );
 
   const handleOnDragStart = ({ active }: { active: Active }) => {
@@ -169,7 +169,7 @@ export default function Planner({
           <article className="flex h-full flex-col gap-y-5  overflow-x-hidden">
             {transferCredits.length > 0 && <TransferBank transferCredits={transferCredits} />}
             <div className="flex h-fit gap-5">
-              {semesters
+              {filteredSemesters
                 .reduce(
                   (acc, curr, index) => {
                     acc[index % 3].push(curr);

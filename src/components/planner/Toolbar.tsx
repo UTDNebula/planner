@@ -9,6 +9,7 @@ import SortByDropdown from './SortByDropdown';
 import DegreePlanPDF from './DegreePlanPDF/DegreePlanPDF';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Link from 'next/link';
+
 export interface ToolbarProps {
   title: string;
   major: string;
@@ -16,7 +17,7 @@ export interface ToolbarProps {
 }
 
 const Toolbar: FC<ToolbarProps> = ({ title, major, studentName }) => {
-  const { semesters } = useSemestersContext();
+  const { allSemesters: semesters } = useSemestersContext();
   return (
     <section className="flex w-full flex-col justify-center gap-y-5">
       <article className="flex justify-between">

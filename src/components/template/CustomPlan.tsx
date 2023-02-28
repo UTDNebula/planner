@@ -9,7 +9,6 @@ import ErrorMessage from '../common/ErrorMessage';
 import courseCode from '@/data/courseCode.json';
 import { SemesterType, SemesterCode } from '@prisma/client';
 import { Credit } from '../credits/types';
-import { CircularProgress } from '@mui/material';
 import { UnwrapArray } from '@/types/util-types';
 import AddFileIcon from '@/icons/AddFileIcon';
 const majors = majorsList as string[];

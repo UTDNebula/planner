@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import Accordion from './Accordion';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -117,11 +117,11 @@ const getRequirementGroup = (
         getData: async () =>
           q.data
             ? q.data.map((c) => ({
-              course: `${c.subject_prefix} ${c.course_number}`,
-              matcher: 'Course',
-              filled: false,
-              metadata: {},
-            }))
+                course: `${c.subject_prefix} ${c.course_number}`,
+                matcher: 'Course',
+                filled: false,
+                metadata: {},
+              }))
             : [],
         filterFunction: filterFunc,
       };
@@ -134,11 +134,11 @@ const getRequirementGroup = (
         getData: async () =>
           q.data
             ? (q.data
-              .map((c) => ({
-                course: `${c.subject_prefix} ${c.course_number}`,
-                matcher: 'Course',
-              }))
-              .filter((c) => c.course.includes('CS 43')) as CourseRequirement[])
+                .map((c) => ({
+                  course: `${c.subject_prefix} ${c.course_number}`,
+                  matcher: 'Course',
+                }))
+                .filter((c) => c.course.includes('CS 43')) as CourseRequirement[])
             : [],
         filterFunction: filterFunc,
       };
@@ -247,7 +247,8 @@ export default function RequirementsContainer({
                   onClick={() => {
                     toggleCarousel();
                     setRequirementIdx(idx);
-                  }}>
+                  }}
+                >
                   <div
                     className="flex items-center gap-x-4 rounded-md border border-neutral-300 px-5 py-4"
                     key={idx}
