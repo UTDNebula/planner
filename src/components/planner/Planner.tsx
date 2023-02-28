@@ -160,12 +160,14 @@ export default function Planner({
             ) : null)}
         </DragOverlay>
 
-        <section ref={ref} className="flex max-h-screen flex-grow flex-col gap-y-6 p-4 pb-0">
+        <section
+          ref={ref}
+          className="flex max-h-screen flex-grow flex-col gap-y-6 overflow-y-scroll p-4 pb-0"
+        >
           <Toolbar title={title} major="Computer Science" studentName="Dev" />
 
-          {transferCredits.length > 0 && <TransferBank transferCredits={transferCredits} />}
-
-          <article className="h-full overflow-x-hidden overflow-y-scroll">
+          <article className="flex h-full flex-col gap-y-5 overflow-x-hidden">
+            {transferCredits.length > 0 && <TransferBank transferCredits={transferCredits} />}
             <div className="flex h-fit gap-5">
               {semesters
                 .reduce(
