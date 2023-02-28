@@ -9,6 +9,6 @@ tasks:
     command: npm run dev:gitpod
 ports:
   - port: 3000
-    onOpen: "open-browser"
-    description: "Next.js dev server"
-    visibility: "public"
+    onOpen: 'open-browser'
+    description: 'Next.js dev server'
+    visibility: 'public'
