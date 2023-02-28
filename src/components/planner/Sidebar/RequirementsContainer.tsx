@@ -14,7 +14,6 @@ import {
 } from './types';
 import { GetDragIdByCourseAndReq } from '../types';
 import { RecursiveRequirement } from './RecursiveRequirement';
-import { DragIndicator } from '@mui/icons-material';
 
 function RequirementContainerHeader({
   name,

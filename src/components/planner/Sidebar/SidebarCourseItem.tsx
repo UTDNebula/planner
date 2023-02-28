@@ -46,70 +46,64 @@ export default function DraggableSidebarCourseItem({
   });
 
   const [finalPrereqs, setFinalprereqs] = useState<string[]>();
-  var prereqs: string[] = [];
+  let prereqs: string[] = [];
 
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
-    const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
-      setAnchorEl(event.currentTarget);
-      (data?.find(function(cNum) {
-        if (cNum.subject_prefix + " " + cNum.course_number === course.code) {
-          (cNum.prerequisites as Record<string, any>).options.map((elem: any) => {
-            if (elem.type !== "course" && elem.type !== "other") {
-              elem.options.map((elem2: any) => {
-                if (elem2.type !== "course" && elem2.type !== "other") {
-                  elem2.options.map((elem3: any) => {
-                    data?.map((elem4) => {
-                      if (elem4.id === elem3.class_reference) {
-                        prereqs.push(elem4.subject_prefix+ " " + elem4.course_number)
-                      }
-                    })
-                  })
-                } else if (elem2.type === "other") {
-                    prereqs.push(elem2.description)
-                } else {
+  const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+    data?.find(function (cNum) {
+      if (cNum.subject_prefix + ' ' + cNum.course_number === course.code) {
+        (cNum.prerequisites as Record<string, any>).options.map((elem: any) => {
+          if (elem.type !== 'course' && elem.type !== 'other') {
+            elem.options.map((elem2: any) => {
+              if (elem2.type !== 'course' && elem2.type !== 'other') {
+                elem2.options.map((elem3: any) => {
                   data?.map((elem4) => {
-                    if (elem4.id === elem2.class_reference) {
-                      prereqs.push(elem4.subject_prefix+ " " + elem4.course_number)
+                    if (elem4.id === elem3.class_reference) {
+                      prereqs.push(elem4.subject_prefix + ' ' + elem4.course_number);
                     }
-                    
-                  })
-                }
-              })
-            } else if (elem.type === "other") {
-                prereqs.push(elem.description)
-            } else {
-              data?.map((elem4) => {
-                if (elem4.id === elem.class_reference) {
-                  prereqs.push(elem4.subject_prefix+ " " + elem4.course_number)
-                }
-                
-              })
-            }
-            })
-          return course.code
-        }
-      }))
-
-      setFinalprereqs(
-        prereqs.map((val) => val),
-      );
-    };
-
-    const handlePopoverClose = () => {
-      setAnchorEl(null);
-      prereqs = [];
-    };
-
-    const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
-      refetchOnWindowFocus: false,
+                  });
+                });
+              } else if (elem2.type === 'other') {
+                prereqs.push(elem2.description);
+              } else {
+                data?.map((elem4) => {
+                  if (elem4.id === elem2.class_reference) {
+                    prereqs.push(elem4.subject_prefix + ' ' + elem4.course_number);
+                  }
+                });
+              }
+            });
+          } else if (elem.type === 'other') {
+            prereqs.push(elem.description);
+          } else {
+            data?.map((elem4) => {
+              if (elem4.id === elem.class_reference) {
+                prereqs.push(elem4.subject_prefix + ' ' + elem4.course_number);
+              }
+            });
+          }
+        });
+        return course.code;
+      }
     });
-    
-    const {data} = q;
 
-    const open = Boolean(anchorEl);
+    setFinalprereqs(prereqs.map((val) => val));
+  };
 
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+    prereqs = [];
+  };
 
+  const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
+    refetchOnWindowFocus: false,
+  });
+
+  const { data } = q;
+
+  const open = Boolean(anchorEl);
 
   return (
     <div
@@ -120,44 +114,39 @@ export default function DraggableSidebarCourseItem({
       onMouseOver={handlePopoverOpen}
       onMouseLeave={handlePopoverClose}
     >
-      {anchorEl && <div>
-        <Popover
-          id="mouse-over-popover"
-          sx={{
-            pointerEvents: 'none',
-            width: "full",
-            whiteSpace: 'normal',
-            height: "full"
-            
-          }}
-          open={open}
-          anchorEl={anchorEl}
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'left',
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          
-        >
-          {
-            finalPrereqs == null || data == null ? "Loading..." : (
-              finalPrereqs.length === 0 ? (
-                <Typography sx={{ p: 5, maxWidth: "400px" }}>
-                  Prerequisites: None
-                </Typography>
-              ) :
-              <Typography sx={{ p: 5, maxWidth: "400px"  }}>
-                Prerequisites: {
-                  finalPrereqs.map((elem, idx) => elem).join(", ")
-                }
+      {anchorEl && (
+        <div>
+          <Popover
+            id="mouse-over-popover"
+            sx={{
+              pointerEvents: 'none',
+              width: 'full',
+              whiteSpace: 'normal',
+              height: 'full',
+            }}
+            open={open}
+            anchorEl={anchorEl}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'left',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+          >
+            {finalPrereqs == null || data == null ? (
+              'Loading...'
+            ) : finalPrereqs.length === 0 ? (
+              <Typography sx={{ p: 5, maxWidth: '400px' }}>Prerequisites: None</Typography>
+            ) : (
+              <Typography sx={{ p: 5, maxWidth: '400px' }}>
+                Prerequisites: {finalPrereqs.map((elem, idx) => elem).join(', ')}
               </Typography>
-            )
-          }
-        </Popover>
-      </div>}
+            )}
+          </Popover>
+        </div>
+      )}
       <SidebarCourseItem course={course} />
     </div>
   );
