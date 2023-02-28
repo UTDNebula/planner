@@ -224,27 +224,25 @@ export default function RequirementsContainer({
             {degreeRequirement.requirements.map((elm, idx) => {
               const { value, max } = displayRequirementProgress(elm);
               return (
-                <div
-                  className="flex items-center gap-x-4 rounded-md border border-neutral-300 px-5 py-4"
-                  key={idx}
-                >
+                <button
+                  onClick={() => {
+                    toggleCarousel();
+                    setRequirementIdx(idx);
+                }}>
+                  <div
+                    className="flex items-center gap-x-4 rounded-md border border-neutral-300 px-5 py-4"
+                    key={idx}
+                  >  
                   <DragIndicator fontSize="inherit" className="mr-3 text-[16px] text-[#D4D4D4]" />
                   <div className="max-w-[50%] overflow-hidden text-ellipsis whitespace-nowrap text-sm">
                     {elm.metadata ? elm.metadata.name : 'hi'}
                   </div>
-                  <div className="flex flex-row items-center px-[5px] text-[11px]">
+                    <div className="flex flex-row items-center px-[5px] text-[11px]">
                     <ProgressComponent value={value} max={max} />
                   </div>
-
-                  <button
-                    onClick={() => {
-                      toggleCarousel();
-                      setRequirementIdx(idx);
-                    }}
-                  >
-                    <ChevronRightIcon />
-                  </button>
+                  <ChevronRightIcon />
                 </div>
+                </button>
               );
             })}
           </>
