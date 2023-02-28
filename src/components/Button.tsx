@@ -39,7 +39,7 @@ const Button: FC<ButtonProps> = ({
       {Children.count(children) > 0 && (
         <span className={isLoading ? 'opacity-0' : ''}>{children}</span>
       )}
-      {isLoading && <Spinner className="absolute" />}
+      {isLoading && <Spinner className="absolute" size={size} />}
     </button>
   );
 };

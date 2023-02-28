@@ -1,9 +1,19 @@
 import { FC, SVGProps } from 'react';
 
-const Spinner: FC<SVGProps<SVGSVGElement>> = ({ className = '', ...props }) => (
+const sizeClasses = {
+  small: 'h-2 w-2',
+  medium: 'h-4 w-4',
+  large: 'h-6 w-6',
+};
+
+interface SpinnerProps extends SVGProps<SVGSVGElement> {
+  size?: keyof typeof sizeClasses;
+}
+
+const Spinner: FC<SpinnerProps> = ({ className = '', size = 'medium', ...props }) => (
   <svg
     aria-hidden="true"
-    className={`h-4 w-4 animate-spin fill-primary ${className}`}
+    className={`${sizeClasses[size]} animate-spin fill-primary ${className}`}
     viewBox="0 0 100 101"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
