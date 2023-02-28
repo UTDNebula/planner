@@ -33,6 +33,7 @@ export const validatorRouter = router({
           subject_prefix: true,
           id: true,
           prerequisites: true,
+          corequisites: true,
         },
       });
 
@@ -40,11 +41,11 @@ export const validatorRouter = router({
        *  TODO: Fix this later somehow
        */
       const courseMapWithIdKey = new Map<string, Prisma.JsonValue>();
-      const courseMapWithCodeKey = new Map<string, Prisma.JsonValue>();
+      const courseMapWithCodeKey = new Map<string, {prereqs: Prisma.JsonValue, coreqs: Prisma.JsonValue}>();
       for (const course of coursesFromApi) {
         courseMapWithCodeKey.set(
           `${course.subject_prefix} ${course.course_number}`,
-          course.prerequisites,
+          {prereqs: course.prerequisites, coreqs: course.corequisites}
         );
         courseMapWithIdKey.set(course.id, `${course.subject_prefix} ${course.course_number}`);
       }
@@ -62,7 +63,6 @@ export const validatorRouter = router({
         for (let j = 0; j < planData?.semesters[i].courses.length; j++) {
           const course = planData?.semesters[i].courses[j];
           preReqHash.set(course, [false, i]);
-          // console.log({ course, flag });
         }
       }
       const checkForPreRecursive = (requirements: CollectionOptions, semester: number): boolean => {
@@ -79,7 +79,6 @@ export const validatorRouter = router({
                 const data = preReqHash.get(course as string);
                 if (!data) continue;
                 if (data[1] < semester) {
-                  console.log(preReqHash.get(course as string)?.[1]);
                   flag++;
                 }
               }
@@ -95,7 +94,52 @@ export const validatorRouter = router({
         }
         return false;
       };
+      const checkForCoRecursive = (requirements: CollectionOptions, semester: number): boolean => {
+        if (requirements.options.length === 0) {
+          return true;
+        }
+        let flag = 0;
+        for (const option of requirements.options) {
+          if (option.type === 'course') {
+            const course = courseMapWithIdKey.get(option.class_reference);
+            if (course) {
+              const preReq = courseMapWithCodeKey.get(course as string);
+              if (preReq) {
+                const data = preReqHash.get(course as string);
+                if (!data) continue;
+                if (data[1] === semester) {
+                  flag++;
+                }
+              }
+            }
+          } else if (option.type === 'collection') {
+            if (checkForCoRecursive(option, semester)) {
+              flag++;
+            }
+          }
+        }
+        if (flag >= requirements.required) {
+          return true;
+        }
+        return false;
+      };
       const prereqValidation = async (planData: any) => {
+        for (let i = 0; i < planData?.semesters.length; i++) {
+          if (!planData?.semesters[i] || !planData?.semesters[i].courses) continue;
+          console.log(planData.semesters[i])
+          for (let j = 0; j < planData?.semesters[i].courses.length; j++) {
+            const course = planData?.semesters[i].courses[j];
+            const preReqsForCourse = courseMapWithCodeKey.get(course);
+            if (!preReqsForCourse) {
+              continue;
+            }
+            const flag = checkForPreRecursive(preReqsForCourse.prereqs as CollectionOptions, i);
+            preReqHash.set(course, [flag, i]);
+          }
+        }
+      };
+
+      const coreqValidation = async (planData: any) => {
         for (let i = 0; i < planData?.semesters.length; i++) {
           if (!planData?.semesters[i] || !planData?.semesters[i].courses) continue;
           for (let j = 0; j < planData?.semesters[i].courses.length; j++) {
@@ -104,14 +148,13 @@ export const validatorRouter = router({
             if (!preReqsForCourse) {
               continue;
             }
-            const flag = checkForPreRecursive(preReqsForCourse as any as CollectionOptions, i);
+            const flag = checkForCoRecursive(preReqsForCourse.coreqs as CollectionOptions, i);
             preReqHash.set(course, [flag, i]);
-            // console.log({ course, flag });
           }
         }
       };
-
       await prereqValidation(planData);
+      await coreqValidation(planData);
 
       preReqHash.forEach((value, key) => {
         console.log({ key, value });

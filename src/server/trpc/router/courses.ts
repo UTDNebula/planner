@@ -20,6 +20,7 @@ export const coursesRouter = router({
         subject_prefix: true,
         id: true,
         prerequisites: true,
+        corequisites: true,
       },
     });
 
@@ -29,7 +30,7 @@ export const coursesRouter = router({
     for (const course of courses) {
       courseMapWithCodeKey.set(
         `${course.subject_prefix} ${course.course_number}`,
-        course.prerequisites,
+        {prereq: course.prerequisites, coreq: course.corequisites},
       );
       courseMapWithIdKey.set(course.id, `${course.subject_prefix} ${course.course_number}`);
     }

@@ -15,9 +15,6 @@ export function useTaskQueue(params: { shouldProcess: boolean }): {
   React.useEffect(() => {
     if (!params.shouldProcess) return;
     if (queue.tasks.length === 0) {
-      // TODO: Handle async behaviour
-      utils.validator.degreeValidator.invalidate();
-      utils.validator.prereqValidator.invalidate();
       return;
     }
     if (queue.isProcessing) return;

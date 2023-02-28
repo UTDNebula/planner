@@ -269,17 +269,23 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
 
   const addCourse = trpc.plan.addCourseToSemester.useMutation({
     async onSuccess() {
-      await utils.plan.getPlanById.invalidate();
+     await utils.validator.degreeValidator.invalidate();
+      await utils.validator.prereqValidator.invalidate();
     },
   });
 
   const removeCourse = trpc.plan.removeCourseFromSemester.useMutation({
     async onSuccess() {
-      await utils.plan.getPlanById.invalidate();
+     await utils.validator.degreeValidator.invalidate();
+      await utils.validator.prereqValidator.invalidate();
     },
   });
 
-  const moveCourse = trpc.plan.moveCourseFromSemester.useMutation();
+  const moveCourse = trpc.plan.moveCourseFromSemester.useMutation({
+async onSuccess() {
+      await utils.validator.prereqValidator.invalidate();
+    }
+  });
 
   const createYear = trpc.plan.addYear.useMutation();
 
@@ -509,7 +515,8 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
   });
   const removeBypass = trpc.plan.removeBypass.useMutation({
     async onSuccess() {
-      await utils.plan.getPlanById.invalidate();
+     await utils.validator.degreeValidator.invalidate();
+      await utils.validator.prereqValidator.invalidate();
     },
   });
 
