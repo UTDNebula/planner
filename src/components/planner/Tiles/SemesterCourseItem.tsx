@@ -8,8 +8,6 @@ import SemesterCourseItemDropdown from './SemesterCourseItemDropdown';
 import { tagColors } from '../utils';
 import { Popover, Typography } from '@mui/material';
 import { trpc } from '@/utils/trpc';
-import useSearch from '@/components/search/search';
-import { ObjectID } from 'bson';
 
 export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'> {
   course: DraggableCourse;
@@ -35,7 +33,6 @@ export const MemoizedSemesterCourseItem = React.memo(
     },
     ref,
   ) {
-    const defaultQuery = 'CS';
     const [finalPrereqs, setFinalprereqs] = useState<string[]>();
     var prereqs: string[] = [];
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -83,7 +80,6 @@ export const MemoizedSemesterCourseItem = React.memo(
         }
       }))
 
-      console.log(prereqs)
       setFinalprereqs(
         prereqs.map((val) => val),
       );
@@ -98,19 +94,7 @@ export const MemoizedSemesterCourseItem = React.memo(
       refetchOnWindowFocus: false,
     });
     
-    const {data, isLoading} = q;
-
-    React.useEffect(() => {
-      updateQuery(defaultQuery);
-    }, [isLoading]);
-
-    const { results, updateQuery } = useSearch({
-      getData: async () =>
-        data ? data.map((c) => ({ code: `${c.subject_prefix} ${c.course_number}` })) : [],
-      initialQuery: defaultQuery,
-      filterFn: (elm, query) => elm['code'].toLowerCase().includes(query.toLowerCase()),
-      constraints: [0, 5],
-    });
+    const {data} = q;
 
     const open = Boolean(anchorEl);
     return (
@@ -128,9 +112,6 @@ export const MemoizedSemesterCourseItem = React.memo(
           id="mouse-over-popover"
           sx={{
             pointerEvents: 'none',
-            width: "full",
-            whiteSpace: 'normal',
-            height: "full"
             
           }}
           open={open}
@@ -143,17 +124,16 @@ export const MemoizedSemesterCourseItem = React.memo(
             vertical: 'top',
             horizontal: 'left',
           }}
-          onClose={handlePopoverClose}
           
         >
           {
             finalPrereqs == null || data == null ? "Loading..." : (
               finalPrereqs.length === 0 ? (
-                <Typography sx={{ p: 5}}>
+                <Typography sx={{p: 5, maxWidth: "400px"}}>
                   Prerequisites: None
                 </Typography>
               ) :
-              <Typography sx={{ p: 5,  }}>
+              <Typography sx={{ p: 5, maxWidth: "400px" }}>
                 Prerequisites: {
                   finalPrereqs.map((elem, idx) => elem).join(", ")
                 }

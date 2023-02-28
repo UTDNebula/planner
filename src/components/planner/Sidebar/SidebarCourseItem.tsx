@@ -6,6 +6,10 @@ import { DragDataFromCourseList, DraggableCourse } from '../types';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import CheckIcon from '@mui/icons-material/Check';
 import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
+import { useState } from 'react';
+import { trpc } from '@/utils/trpc';
+import { Popover, Typography } from '@mui/material';
+
 /** UI Implementation of sidebar course */
 export function SidebarCourseItem({ course }: { course: DraggableCourse }): JSX.Element {
   // Course would be marked incomplete ONLY if requirement needed course
@@ -41,13 +45,119 @@ export default function DraggableSidebarCourseItem({
     data: { from: 'course-list', course } as DragDataFromCourseList,
   });
 
+  const [finalPrereqs, setFinalprereqs] = useState<string[]>();
+  var prereqs: string[] = [];
+
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+
+    const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
+      setAnchorEl(event.currentTarget);
+      (data?.find(function(cNum) {
+        if (cNum.subject_prefix + " " + cNum.course_number === course.code) {
+          (cNum.prerequisites as Record<string, any>).options.map((elem: any) => {
+            if (elem.type !== "course" && elem.type !== "other") {
+              elem.options.map((elem2: any) => {
+                if (elem2.type !== "course" && elem2.type !== "other") {
+                  elem2.options.map((elem3: any) => {
+                    data?.map((elem4) => {
+                      if (elem4.id === elem3.class_reference) {
+                        prereqs.push(elem4.subject_prefix+ " " + elem4.course_number)
+                      }
+                    })
+                  })
+                } else if (elem2.type === "other") {
+                    prereqs.push(elem2.description)
+                } else {
+                  data?.map((elem4) => {
+                    if (elem4.id === elem2.class_reference) {
+                      prereqs.push(elem4.subject_prefix+ " " + elem4.course_number)
+                    }
+                    
+                  })
+                }
+              })
+            } else if (elem.type === "other") {
+                prereqs.push(elem.description)
+            } else {
+              data?.map((elem4) => {
+                if (elem4.id === elem.class_reference) {
+                  prereqs.push(elem4.subject_prefix+ " " + elem4.course_number)
+                }
+                
+              })
+            }
+            })
+          return course.code
+        }
+      }))
+
+      setFinalprereqs(
+        prereqs.map((val) => val),
+      );
+    };
+
+    const handlePopoverClose = () => {
+      setAnchorEl(null);
+      prereqs = [];
+    };
+
+    const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
+      refetchOnWindowFocus: false,
+    });
+    
+    const {data} = q;
+
+    const open = Boolean(anchorEl);
+
+
+
   return (
     <div
       ref={setNodeRef}
       style={{ transform: CSS.Translate.toString(transform) }}
       {...listeners}
       {...attributes}
+      onMouseOver={handlePopoverOpen}
+      onMouseLeave={handlePopoverClose}
     >
+      {anchorEl && <div>
+        <Popover
+          id="mouse-over-popover"
+          sx={{
+            pointerEvents: 'none',
+            width: "full",
+            whiteSpace: 'normal',
+            height: "full"
+            
+          }}
+          open={open}
+          anchorEl={anchorEl}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'left',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          
+        >
+          {
+            finalPrereqs == null || data == null ? "Loading..." : (
+              finalPrereqs.length === 0 ? (
+                <Typography sx={{ p: 5, maxWidth: "400px" }}>
+                  Prerequisites: None
+                </Typography>
+              ) :
+              <Typography sx={{ p: 5, maxWidth: "400px"  }}>
+                Prerequisites: {
+                  finalPrereqs.map((elem, idx) => elem).join(", ")
+                }
+              </Typography>
+            )
+          }
+        </Popover>
+      </div>}
       <SidebarCourseItem course={course} />
     </div>
   );
