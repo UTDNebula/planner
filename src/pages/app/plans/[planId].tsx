@@ -9,6 +9,7 @@ import { createContextInner } from '@/server/trpc/context';
 import { appRouter } from '@/server/trpc/router/_app';
 import usePlan from '@/components/planner/usePlan';
 import { SemestersContextProvider } from '@/components/planner/SemesterContext';
+import { Steps } from 'intro.js-react';
 
 /**
  * A page that displays the details of a specific student academic plan.
@@ -26,10 +27,22 @@ export default function PlanDetailPage(
     return <div>Loading</div>;
   }
 
+  const steps = [
+    {
+      element: '.hello',
+      intro: 'Hello step',
+    },
+    {
+      element: '.world',
+      intro: 'World step',
+    },
+  ];
+
   return (
     <div className="flex h-screen max-h-screen w-screen flex-col overflow-hidden">
       {plan && validation && (
         <SemestersContextProvider planId={planId} plan={plan} bypasses={bypasses ?? []}>
+          {/* <Steps enabled={true} steps={steps} initialStep={0} onExit={() => console.log('HI')} /> */}
           <Planner degreeRequirements={validation} transferCredits={plan.transferCredits} />
         </SemestersContextProvider>
       )}
