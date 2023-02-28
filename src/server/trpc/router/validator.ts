@@ -41,12 +41,15 @@ export const validatorRouter = router({
        *  TODO: Fix this later somehow
        */
       const courseMapWithIdKey = new Map<string, Prisma.JsonValue>();
-      const courseMapWithCodeKey = new Map<string, {prereqs: Prisma.JsonValue, coreqs: Prisma.JsonValue}>();
+      const courseMapWithCodeKey = new Map<
+        string,
+        { prereqs: Prisma.JsonValue; coreqs: Prisma.JsonValue }
+      >();
       for (const course of coursesFromApi) {
-        courseMapWithCodeKey.set(
-          `${course.subject_prefix} ${course.course_number}`,
-          {prereqs: course.prerequisites, coreqs: course.corequisites}
-        );
+        courseMapWithCodeKey.set(`${course.subject_prefix} ${course.course_number}`, {
+          prereqs: course.prerequisites,
+          coreqs: course.corequisites,
+        });
         courseMapWithIdKey.set(course.id, `${course.subject_prefix} ${course.course_number}`);
       }
 
@@ -126,7 +129,7 @@ export const validatorRouter = router({
       const prereqValidation = async (planData: any) => {
         for (let i = 0; i < planData?.semesters.length; i++) {
           if (!planData?.semesters[i] || !planData?.semesters[i].courses) continue;
-          console.log(planData.semesters[i])
+          console.log(planData.semesters[i]);
           for (let j = 0; j < planData?.semesters[i].courses.length; j++) {
             const course = planData?.semesters[i].courses[j];
             const preReqsForCourse = courseMapWithCodeKey.get(course);

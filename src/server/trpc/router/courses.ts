@@ -28,10 +28,10 @@ export const coursesRouter = router({
     const courseMapWithCodeKey = new Map<string, Prisma.JsonValue>();
 
     for (const course of courses) {
-      courseMapWithCodeKey.set(
-        `${course.subject_prefix} ${course.course_number}`,
-        {prereq: course.prerequisites, coreq: course.corequisites},
-      );
+      courseMapWithCodeKey.set(`${course.subject_prefix} ${course.course_number}`, {
+        prereq: course.prerequisites,
+        coreq: course.corequisites,
+      });
       courseMapWithIdKey.set(course.id, `${course.subject_prefix} ${course.course_number}`);
     }
     // print the map
