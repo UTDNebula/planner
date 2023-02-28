@@ -31,7 +31,7 @@ export const SidebarCourseItem = React.memo(
       if (isDragging) clearTimeout(hoverTimer.current);
     }, [isDragging]);
 
-    const { prereqs } = useGetCourseInfo(course.code);
+    const { prereqs, title } = useGetCourseInfo(course.code);
 
     return (
       <div
@@ -53,6 +53,7 @@ export const SidebarCourseItem = React.memo(
           open={hoverOpen && !isDragging}
           onOpenChange={(open) => setHoverOpen(open)}
           side="left"
+          title={title || ''}
         >
           <div>
             <span className="text-sm text-[#1C2A6D]">

@@ -3,24 +3,31 @@ import { useMemo } from 'react';
 
 // TODO: Change implementation
 // Highly inefficient
-const useGetCourseInfo = (courseCode: string): { prereqs: string[] } => {
+const useGetCourseInfo = (courseCode: string): { prereqs: string[]; title?: string } => {
   const { data } = trpc.courses.publicGetAllCourses.useQuery(undefined, {
     refetchOnWindowFocus: false,
   });
-  const prereqs = useMemo(() => (data ? getPrereqs(data, courseCode) : []), [data]);
+  const { prereqs, title } = useMemo(
+    () => (data ? getPrereqs(data, courseCode) : { prereqs: [] }),
+    [data],
+  );
 
-  return { prereqs };
+  return { prereqs, title };
 };
 
 export default useGetCourseInfo;
 
 type CourseData = RouterOutputs['courses']['publicGetAllCourses'];
 
-const getPrereqs = (courseData: CourseData, courseCode: string): string[] => {
+const getPrereqs = (
+  courseData: CourseData,
+  courseCode: string,
+): { prereqs: string[]; title?: string } => {
   const prereqs: string[] = [];
+  let title;
   courseData?.find(function (cNum) {
     if (cNum.subject_prefix + ' ' + cNum.course_number === courseCode) {
-      //   setTitle(cNum.title);
+      title = cNum.title;
       (cNum.prerequisites as Record<string, any>).options.map((elem: any) => {
         if (elem.type !== 'course' && elem.type !== 'other') {
           elem.options.map((elem2: any) => {
@@ -56,5 +63,5 @@ const getPrereqs = (courseData: CourseData, courseCode: string): string[] => {
     }
   });
 
-  return prereqs;
+  return { prereqs, title };
 };

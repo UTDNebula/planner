@@ -42,7 +42,7 @@ export const MemoizedSemesterCourseItem = React.memo(
 
     const hoverTimer = useRef<ReturnType<typeof setTimeout>>();
 
-    const { prereqs } = useGetCourseInfo(course.code);
+    const { prereqs, title } = useGetCourseInfo(course.code);
 
     return (
       <div
@@ -65,6 +65,7 @@ export const MemoizedSemesterCourseItem = React.memo(
           prereqs={prereqs}
           open={hoverOpen}
           onOpenChange={(open) => !dropdownOpen && setHoverOpen(open)}
+          title={title || ''}
         >
           <div>
             <div className={`h-full w-2 transition-all ${tagColors[course.color]}`}></div>
