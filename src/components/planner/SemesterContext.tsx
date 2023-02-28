@@ -1,16 +1,18 @@
 import { trpc } from '@/utils/trpc';
 import { toast } from 'react-toastify';
-import { createNewYear } from '@/utils/utilFunctions';
+import { createNewYear, isSemCodeEqual } from '@/utils/utilFunctions';
 import { ObjectID } from 'bson';
 import { createContext, FC, useContext, useEffect, useMemo, useReducer, useState } from 'react';
 import { Plan, Semester, DraggableCourse } from './types';
 import { customCourseSort } from './utils';
 import { useTaskQueue } from '@/utils/useTaskQueue';
 import { tagColors } from './utils';
+import { SemesterCode } from '@prisma/client';
 
 export interface SemestersContextState {
   planId: string;
-  semesters: Semester[];
+  filteredSemesters: Semester[];
+  allSemesters: Semester[];
   selectedCourseCount: number;
   bypasses: string[];
   courseIsSelected: (courseId: string) => boolean;
@@ -37,7 +39,16 @@ export interface SemestersContextState {
   handleAddBypass: ({ planId, requirement }: { planId: string; requirement: string }) => void;
   handleRemoveBypass: ({ planId, requirement }: { planId: string; requirement: string }) => void;
   title: string;
+  toggleColorFilter: (color: keyof typeof tagColors) => void;
+  toggleYearFilter: (year: number) => void;
+  toggleSemesterFilter: (semester: SemesterCode) => void;
+  filters: Filter[];
 }
+
+type Filter =
+  | { type: 'year'; year: number }
+  | { type: 'color'; color: keyof typeof tagColors }
+  | { type: 'semester'; code: SemesterCode };
 
 export const SemestersContext = createContext<SemestersContextState | null>(null);
 
@@ -510,12 +521,73 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
     removeBypass.mutateAsync({ planId, requirement });
   };
 
+  const [filters, setFilters] = useState<Filter[]>([]);
+  const toggleColorFilter = (color: keyof typeof tagColors) => {
+    const hasFilter = filters.some((filter) => filter.type === 'color' && filter.color === color);
+    if (!hasFilter) setFilters([...filters, { type: 'color', color }]);
+    else setFilters(filters.filter((filter) => filter.type === 'color' && filter.color !== color));
+  };
+
+  const toggleYearFilter = (year: number) => {
+    const hasFilter = filters.some((filter) => filter.type === 'year' && filter.year === year);
+    if (!hasFilter) setFilters([...filters, { type: 'year', year }]);
+    else setFilters(filters.filter((filter) => !(filter.type === 'year' && filter.year === year)));
+  };
+
+  const toggleSemesterFilter = (semesterCode: SemesterCode) => {
+    const hasFilter = filters.some(
+      (filter) => filter.type === 'semester' && isSemCodeEqual(filter.code, semesterCode),
+    );
+    if (!hasFilter) setFilters([...filters, { type: 'semester', code: semesterCode }]);
+    else
+      setFilters(
+        filters.filter(
+          (filter) => !(filter.type === 'semester' && isSemCodeEqual(filter.code, semesterCode)),
+        ),
+      );
+  };
+
+  const filteredSemesters = useMemo(() => {
+    let filtered = sortedSemesters;
+    for (const filter of filters) {
+      switch (filter.type) {
+        case 'year':
+          const yearFilters = filters.filter((filter) => filter.type === 'year') as {
+            type: 'year';
+            year: number;
+          }[];
+          filtered = filtered.filter((semester) =>
+            yearFilters.some((filter) => filter.year === semester.code.year),
+          );
+
+          break;
+        case 'color':
+          filtered = filtered.map((semester) => ({
+            ...semester,
+            courses: semester.courses.filter((course) => course.color !== filter.color),
+          }));
+          break;
+        case 'semester':
+          const semesterFilters = filters.filter((filter) => filter.type === 'semester') as {
+            type: 'semester';
+            code: SemesterCode;
+          }[];
+
+          filtered = filtered.filter((semester) =>
+            semesterFilters.some((filter) => isSemCodeEqual(semester.code, filter.code)),
+          );
+      }
+    }
+    return filtered;
+  }, [sortedSemesters, filters]);
+
   return (
     <SemestersContext.Provider
       value={{
         planId: plan.id,
         title: plan.name,
-        semesters: sortedSemesters,
+        allSemesters: semesters,
+        filteredSemesters,
         bypasses: bypasses,
         selectedCourseCount: selectedCourseIds.size,
         courseIsSelected,
@@ -533,6 +605,10 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
         handleSemesterColorChange,
         handleAddBypass,
         handleRemoveBypass,
+        toggleColorFilter,
+        toggleYearFilter,
+        toggleSemesterFilter,
+        filters,
       }}
     >
       {children}
