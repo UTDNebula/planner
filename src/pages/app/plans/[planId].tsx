@@ -8,6 +8,7 @@ import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { createContextInner } from '@/server/trpc/context';
 import { appRouter } from '@/server/trpc/router/_app';
 import usePlan from '@/components/planner/usePlan';
+import { trpc } from '@/utils/trpc';
 import { SemestersContextProvider } from '@/components/planner/SemesterContext';
 
 /**
@@ -17,9 +18,8 @@ export default function PlanDetailPage(
   props: InferGetServerSidePropsType<typeof getServerSideProps>,
 ): JSX.Element {
   const { planId } = props;
-  const { plan, validation, bypasses, isPlanLoading, handlePlanDelete } = usePlan({
-    planId,
-  });
+
+  const { plan, validation, bypasses, isPlanLoading, handlePlanDelete } = usePlan({ planId });
 
   // Indicate UI loading
   if (isPlanLoading) {
@@ -28,7 +28,7 @@ export default function PlanDetailPage(
 
   return (
     <div className="flex h-screen max-h-screen w-screen flex-col overflow-hidden">
-      {plan && validation && (
+      {plan && (
         <SemestersContextProvider planId={planId} plan={plan} bypasses={bypasses ?? []}>
           <Planner degreeRequirements={validation} transferCredits={plan.transferCredits} />
         </SemestersContextProvider>
@@ -48,6 +48,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext<{ pl
 
   const planId = context.params?.planId as string;
 
+  // await ssg.courses.publicGetSanitizedCourses.prefetch();
+  await ssg.validator.prereqValidator.prefetch(planId);
+  await ssg.validator.degreeValidator.prefetch(planId);
   await ssg.plan.getPlanById.prefetch(planId);
   return {
     props: {

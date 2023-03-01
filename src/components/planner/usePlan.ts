@@ -9,6 +9,7 @@ export interface usePlanProps {
 export interface usePlanReturn {
   plan?: Plan;
   validation?: DegreeValidation;
+  prereqData?: Map<string, boolean>;
   bypasses?: string[];
   isPlanLoading: boolean;
   handlePlanDelete: () => Promise<boolean>;
@@ -17,6 +18,8 @@ export interface usePlanReturn {
 const usePlan = ({ planId }: usePlanProps): usePlanReturn => {
   const utils = trpc.useContext();
   const router = useRouter();
+  const { data: degreeValidationData, isLoading: validationLoading } =
+    trpc.validator.degreeValidator.useQuery(planId);
 
   const planQuery = trpc.plan.getPlanById.useQuery(planId);
 
@@ -38,9 +41,9 @@ const usePlan = ({ planId }: usePlanProps): usePlanReturn => {
 
   return {
     plan: planQuery.data?.plan,
-    validation: planQuery.data?.validation,
-    bypasses: planQuery.data?.bypasses,
-    isPlanLoading: planQuery.isLoading,
+    validation: degreeValidationData?.validation,
+    bypasses: degreeValidationData?.bypasses,
+    isPlanLoading: planQuery.isLoading || validationLoading,
     handlePlanDelete,
   };
 };

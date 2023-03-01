@@ -43,13 +43,17 @@ import { trpc } from '@/utils/trpc';
 /** PlannerTool Props */
 export interface PlannerProps {
   degreeRequirements: DegreeRequirements;
-  transferCredits: string[];
+  prereqData?: Map<string, boolean>;
+  transferCredits: Array<string>;
 }
+
+/** Controlled wrapper around course list and semester tiles */
 
 /** Controlled wrapper around course list and semester tiles */
 export default function Planner({
   degreeRequirements,
   transferCredits,
+  prereqData,
 }: PlannerProps): JSX.Element {
   const {
     filteredSemesters,
