@@ -186,8 +186,12 @@ export default function Planner({
                 ))}
             </div>
             <div className="col-span-full flex h-10 items-center justify-center gap-8">
-              <button onClick={handleRemoveYear}>- Remove Year</button>
-              <button onClick={handleAddYear}>+ Add Year</button>
+              <button className="hello" onClick={handleRemoveYear}>
+                - Remove Year
+              </button>
+              <button className="world" onClick={handleAddYear}>
+                + Add Year
+              </button>
             </div>
           </article>
         </section>
