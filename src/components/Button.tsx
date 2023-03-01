@@ -33,7 +33,7 @@ const Button: FC<ButtonProps> = ({
   return (
     <button
       {...props}
-      className={`${colorClasses[color]} ${sizeClasses[size]} flex h-fit w-fit items-center justify-center rounded-md font-medium transition duration-200 ease-in-out ${className} disabled:opacity-50`}
+      className={`relative ${colorClasses[color]} ${sizeClasses[size]} flex h-fit w-fit items-center justify-center rounded-md font-medium transition duration-200 ease-in-out ${className} disabled:opacity-50`}
     >
       {icon && <span className={isLoading ? 'opacity-0' : ''}>{icon}</span>}
       {Children.count(children) > 0 && (
