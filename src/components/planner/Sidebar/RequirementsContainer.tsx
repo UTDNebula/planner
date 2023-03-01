@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import Accordion from './Accordion';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -217,6 +217,7 @@ export default function RequirementsContainer({
       carousel={carousel}
       requirementsList={
         <Accordion
+          startOpen={true}
           header={
             <div className="flex w-full flex-row items-center justify-between gap-2">
               <div className="my-1 whitespace-nowrap text-xl font-semibold tracking-tight">
@@ -242,33 +243,26 @@ export default function RequirementsContainer({
               const rightValue = hasBypass ? max : value;
 
               return (
-                <div
-                  className="flex w-full items-center justify-between gap-x-1 rounded-md border border-neutral-300 px-5 py-2"
-                  key={idx}
+                <button
+                  onClick={() => {
+                    toggleCarousel();
+                    setRequirementIdx(idx);
+                  }}
                 >
-                  <div className="flex max-w-[65%] items-center gap-x-1">
-                    {/* <DragIndicator fontSize="inherit" className="mr-3 text-[16px] text-[#D4D4D4]" /> */}
-
-                    <div className="overflow-hidden text-ellipsis whitespace-nowrap text-sm">
-                      {name}
+                  <div
+                    className="flex items-center gap-x-4 rounded-md border border-neutral-300 px-5 py-4"
+                    key={idx}
+                  >
+                    <DragIndicator fontSize="inherit" className="mr-3 text-[16px] text-[#D4D4D4]" />
+                    <div className="max-w-[50%] overflow-hidden text-ellipsis whitespace-nowrap text-sm">
+                      {elm.metadata ? elm.metadata.name : 'hi'}
                     </div>
-                  </div>
-
-                  <div className="flex">
                     <div className="flex flex-row items-center px-[5px] text-[11px]">
-                      <ProgressComponent value={rightValue} max={max} />
+                      <ProgressComponent value={value} max={max} />
                     </div>
-
-                    <button
-                      onClick={() => {
-                        toggleCarousel();
-                        setRequirementIdx(idx);
-                      }}
-                    >
-                      <ChevronRightIcon />
-                    </button>
+                    <ChevronRightIcon />
                   </div>
-                </div>
+                </button>
               );
             })}
           </>
