@@ -174,15 +174,6 @@ export const planRouter = router({
       // Get semester you're adding the course to
       try {
         const { semesterId, courseName } = input;
-        // This works bc semesters are stored in its own table
-        // Once integrated w/ Nebula API, use Promise.all() to call concurrently
-        const semester = await ctx.prisma.semester.findUnique({
-          where: { id: semesterId },
-          select: {
-            id: true,
-            courses: true,
-          },
-        });
 
         // Update courses
         await ctx.prisma.semester.update({
