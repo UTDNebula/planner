@@ -17,7 +17,11 @@ export const validatorRouter = router({
         select: {
           name: true,
           id: true,
-          semesters: true,
+          semesters: {
+            include: {
+              courses: true,
+            },
+          },
         },
       });
 
@@ -73,9 +77,9 @@ export const validatorRouter = router({
         if (!planData?.semesters[i] || !planData?.semesters[i].courses) continue;
         for (let j = 0; j < planData?.semesters[i].courses.length; j++) {
           const course = planData?.semesters[i].courses[j];
-          coreqHash.set(course, [true, i]);
-          preReqHash.set(course, [true, i]);
-          coOrPreqHash.set(course, [true, i]);
+          coreqHash.set(course.code, [true, i]);
+          preReqHash.set(course.code, [true, i]);
+          coOrPreqHash.set(course.code, [true, i]);
         }
       }
       const checkForPreRecursive = (requirements: CollectionOptions, semester: number): boolean => {
@@ -242,7 +246,11 @@ export const validatorRouter = router({
         select: {
           name: true,
           id: true,
-          semesters: true,
+          semesters: {
+            include: {
+              courses: true,
+            },
+          },
           transferCredits: true,
         },
       });
@@ -269,13 +277,15 @@ export const validatorRouter = router({
 
       const temporaryFunctionPlzDeleteThis = async () => {
         return semesters.map((sem) => {
-          const courses = sem.courses.filter((course) => {
-            const [possiblePrefix, possibleCode] = course.split(' ');
-            if (Number.isNaN(Number(possibleCode)) || !Number.isNaN(Number(possiblePrefix))) {
-              return false;
-            }
-            return true;
-          });
+          const courses = sem.courses
+            .reduce((acc, curr) => [...acc, curr.code], [] as string[])
+            .filter((c) => {
+              const [possiblePrefix, possibleCode] = c.split(' ');
+              if (Number.isNaN(Number(possibleCode)) || !Number.isNaN(Number(possiblePrefix))) {
+                return false;
+              }
+              return true;
+            });
           return { ...sem, courses };
         });
       };
