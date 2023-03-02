@@ -2,7 +2,6 @@ import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
 import { Semester } from '@/components/planner/types';
-import { formatDegreeValidationRequest } from '@/utils/plannerUtils';
 import { createNewYear } from '@/utils/utilFunctions';
 
 import { protectedProcedure, router } from '../trpc';
@@ -53,84 +52,7 @@ export const planRouter = router({
           message: 'Plan not found',
         });
       }
-
-      const { semesters } = planData;
-      // const semesters = await ctx.prisma.semester.findMany({
-      //   where: {
-      //     planId: {
-      //       equals: planData.id,
-      //     },
-      //   },
-      //   include: {
-      //     courses: true,
-      //   },
-      // });
-
-      // if (!semesters) {
-      //   throw new TRPCError({
-      //     code: 'NOT_FOUND',
-      //     message: 'Plan not found',
-      //   });
-      // }
-      // FIX THIS LATER IDC RN
-
-      // Get degree requirements
-      const degreeRequirements = await ctx.prisma.degreeRequirements.findFirst({
-        where: {
-          planId: planData.id,
-        },
-      });
-
-      // Get bypasses
-      const bypasses = degreeRequirements?.bypasses ?? [];
-
-      const temporaryFunctionPlzDeleteThis = async () => {
-        return semesters.map((sem) => {
-          const courses = sem.courses
-            .reduce((acc, curr) => [...acc, curr.code], [] as string[])
-            .filter((c) => {
-              const [possiblePrefix, possibleCode] = c.split(' ');
-              if (Number.isNaN(Number(possibleCode)) || !Number.isNaN(Number(possiblePrefix))) {
-                return false;
-              }
-              return true;
-            });
-          return { ...sem, courses };
-        });
-      };
-
-      const hehe = await temporaryFunctionPlzDeleteThis();
-
-      if (!degreeRequirements?.major || degreeRequirements.major === 'undecided') {
-        return { plan: planData, validation: [], bypasses: [] };
-      }
-
-      const body = formatDegreeValidationRequest(
-        hehe,
-        {
-          core: true,
-          majors: [degreeRequirements.major], // TODO: Standardize names
-          minors: [],
-        },
-        bypasses,
-      );
-
-      const validationData = await fetch(`${process.env.VALIDATOR}/test-validate`, {
-        method: 'POST',
-        body: JSON.stringify(body),
-        headers: {
-          'content-type': 'application/json',
-        },
-      }).then(async (res) => {
-        // Throw error if bad
-        if (res.status !== 200) {
-          return { can_graduate: false, requirements: [] };
-        }
-        const rawData = await res.json();
-        return rawData;
-      });
-
-      return { plan: planData, validation: validationData, bypasses };
+      return { plan: planData };
     } catch (error) {
       console.log('ERROR');
       console.log(error);

@@ -48,6 +48,8 @@
     "eslint-plugin-unused-imports": "^2.0.0",
     "framer-motion": "^6.2.3",
     "intersection-observer": "^0.12.2",
+    "intro.js": "^6.0.0",
+    "intro.js-react": "^0.7.1",
     "next": "^13.1.6",
     "next-auth": "^4.19.2",
     "nodemailer": "^6.8.0",

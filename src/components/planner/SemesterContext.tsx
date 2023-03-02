@@ -251,17 +251,23 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
 
   const addCourse = trpc.plan.addCourseToSemester.useMutation({
     async onSuccess() {
-      await utils.plan.getPlanById.invalidate();
+      await utils.validator.degreeValidator.invalidate();
+      await utils.validator.prereqValidator.invalidate();
     },
   });
 
   const removeCourse = trpc.plan.removeCourseFromSemester.useMutation({
     async onSuccess() {
-      await utils.plan.getPlanById.invalidate();
+      await utils.validator.degreeValidator.invalidate();
+      await utils.validator.prereqValidator.invalidate();
     },
   });
 
-  const moveCourse = trpc.plan.moveCourseFromSemester.useMutation();
+  const moveCourse = trpc.plan.moveCourseFromSemester.useMutation({
+    async onSuccess() {
+      await utils.validator.prereqValidator.invalidate();
+    },
+  });
 
   const createYear = trpc.plan.addYear.useMutation();
 
@@ -310,6 +316,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
           },
           {
             autoClose: 1000,
+            position: 'bottom-right',
           },
         ),
       args: { semesterIds: semesterIds.map((id) => id.toString()) },
@@ -331,6 +338,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
             },
             {
               autoClose: 1000,
+              position: 'bottom-right',
             },
           )
           .catch((err) => console.error(err)),
@@ -363,6 +371,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
             },
             {
               autoClose: 1000,
+              position: 'bottom-right',
             },
           )
           .catch((err) => console.error(err)),
@@ -378,6 +387,9 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
     if (isDuplicate) {
       toast.warn(
         `You're already taking ${newCourse.code} in ${targetSemester.code.year}${targetSemester.code.semester}`,
+        {
+          position: 'bottom-right',
+        },
       );
       return;
     }
@@ -397,6 +409,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
             error: 'Error in adding ' + courseName,
           },
           {
+            position: 'bottom-right',
             autoClose: 1000,
           },
         ),
@@ -415,6 +428,9 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
     if (isDuplicate) {
       toast.warn(
         `You're already taking ${courseToMove.code} in ${originSemester.code.year}${destinationSemester.code.semester}`,
+        {
+          position: 'bottom-right',
+        },
       );
       return;
     }
@@ -442,6 +458,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
             },
             {
               autoClose: 1000,
+              position: 'bottom-right',
             },
           )
           .catch((err) => console.error(err)),
@@ -480,7 +497,8 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
   });
   const removeBypass = trpc.plan.removeBypass.useMutation({
     async onSuccess() {
-      await utils.plan.getPlanById.invalidate();
+      await utils.validator.degreeValidator.invalidate();
+      await utils.validator.prereqValidator.invalidate();
     },
   });
 

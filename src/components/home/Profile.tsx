@@ -9,6 +9,7 @@ import InputLabel from '@mui/material/InputLabel';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '../Button';
+import { toast } from 'react-toastify';
 
 type ProfilePageProps = {
   isDesktop: boolean;
@@ -93,12 +94,21 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
         secondSemester = 'u';
         break;
     }
-    updateProfile.mutateAsync({
-      name: name,
-      startSemester: { semester: firstSemester, year: Number(firstYear) },
-      endSemester: { semester: secondSemester, year: Number(secondYear) },
-    });
-    return true;
+    toast.promise(
+      updateProfile.mutateAsync({
+        name: name,
+        startSemester: { semester: firstSemester, year: Number(firstYear) },
+        endSemester: { semester: secondSemester, year: Number(secondYear) },
+      }),
+      {
+        pending: 'Updating profile...',
+        success: 'Profile updated!',
+        error: 'Error creating profile',
+      },
+      {
+        autoClose: 1000,
+      },
+    );
   };
 
   const handleFirstSemesterChange = (event: SelectChangeEvent) => {
