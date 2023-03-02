@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { formatDegreeValidationRequest } from '@/utils/plannerUtils';
 
 import { protectedProcedure, router } from '../trpc';
-import { Course, Plan, Prisma, Semester } from '@prisma/client';
+import { Course, Prisma, Semester } from '@prisma/client';
 
 type PlanData = {
   id: string;

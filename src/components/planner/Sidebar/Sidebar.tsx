@@ -88,15 +88,11 @@ function CourseSelectorContainer({
 
             <Dialog.Root open={displayResults} onOpenChange={(v) => setDisplay(v)}>
               <Dialog.Portal className="z-[999]" container={ref?.current}>
-                <Dialog.Content
-                  className="z-[999]"
-                  onOpenAutoFocus={(e) => e.preventDefault()}
-                >
+                <Dialog.Content className="z-[999]" onOpenAutoFocus={(e) => e.preventDefault()}>
                   <div className="w-full bg-white p-4">
                     <DraggableCourseList courses={courseResults} getDragId={getSearchedDragId} />
                   </div>
                 </Dialog.Content>
-
               </Dialog.Portal>
             </Dialog.Root>
             {degreeRequirements.requirements.map((req, idx) => (
