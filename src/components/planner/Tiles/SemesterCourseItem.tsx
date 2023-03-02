@@ -61,6 +61,7 @@ export const MemoizedSemesterCourseItem = React.memo(
           }
         }}
       >
+        <div className={`h-full w-2 transition-all ${tagColors[course.color]}`}></div>
         <CourseInfoHoverCard
           prereqs={prereqs}
           open={hoverOpen}
@@ -68,7 +69,6 @@ export const MemoizedSemesterCourseItem = React.memo(
           title={title || ''}
         >
           <div>
-            <div className={`h-full w-2 transition-all ${tagColors[course.color]}`}></div>
             <div className="p-1">
               <div className="flex items-center justify-center">
                 <div className="flex flex-row items-center gap-x-3">
