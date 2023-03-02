@@ -10,6 +10,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '../Button';
 import { toast } from 'react-toastify';
+import FormHelperText from '@mui/material/FormHelperText';
 
 type ProfilePageProps = {
   isDesktop: boolean;
@@ -32,10 +33,15 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
   const [secondSem, setSecondSem] = useState('');
   const [secondYear, setSecondYear] = useState('');
 
+  const [boxOneHandler, setBoxOneHandler] = useState('');
+  const [boxTwoHandler, setBoxTwoHandler] = useState('');
+  const [boxTwoHandlerText, setBoxTwoHandlerText] = useState('');
+
   useEffect(() => {
     if (!isLoading) {
       setName(data?.profile?.name ?? '');
       setEmail(data?.email ?? '');
+
       setFirstSem(
         displaySemesterCode(data?.profile?.startSemester ?? { semester: 'f', year: 404 }).split(
           ' ',
@@ -67,6 +73,10 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
   });
 
   const handleSubmit = () => {
+    if (boxTwoHandler == 'red') {
+      return false;
+    }
+
     setUpdateLoading(true);
     type semesterChars = 'f' | 'u' | 's';
     let firstSemester!: semesterChars;
@@ -109,23 +119,50 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
         autoClose: 1000,
       },
     );
+    setBoxOneHandler('lightgreen');
+    setBoxTwoHandler('lightgreen');
+    setBoxTwoHandlerText('');
+  };
+
+  const checkSemesterValidity = (
+    firSem: string,
+    firYear: string,
+    secSem: string,
+    secYear: string,
+  ) => {
+    if (
+      (parseInt(firYear) == parseInt(secYear) &&
+        ((firSem == 'Summer' && secSem == 'Spring') || (firSem == 'Fall' && secSem != 'Fall'))) ||
+      parseInt(firYear) > parseInt(secYear)
+    ) {
+      setBoxTwoHandler('red');
+      setBoxTwoHandlerText('End semester is before start semester');
+    } else {
+      setBoxTwoHandler('primary');
+      setBoxTwoHandlerText('');
+    }
+    setBoxOneHandler('primary');
   };
 
   const handleFirstSemesterChange = (event: SelectChangeEvent) => {
+    checkSemesterValidity(event.target.value, firstYear, secondSem, secondYear);
     setFirstSem(event.target.value);
     return true;
   };
 
   const handleFirstSemesterChangeYear = (event: SelectChangeEvent) => {
+    checkSemesterValidity(firstSem, event.target.value, secondSem, secondYear);
     setFirstYear(event.target.value);
     return true;
   };
   const handleSecondSemesterChange = (event: SelectChangeEvent) => {
+    checkSemesterValidity(firstSem, firstYear, event.target.value, secondYear);
     setSecondSem(event.target.value);
     return true;
   };
 
   const handleSecondSemesterChangeYear = (event: SelectChangeEvent) => {
+    checkSemesterValidity(firstSem, firstYear, secondSem, event.target.value);
     setSecondYear(event.target.value);
     return true;
   };
@@ -144,6 +181,7 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
   if (isLoading) {
     return <div>Loading...</div>;
   }
+
   return (
     <main className="flex h-full w-full flex-col overflow-y-auto">
       <div className="mt-4 flex flex-col items-center gap-y-4 self-center">
@@ -199,6 +237,16 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
                     onChange={handleFirstSemesterChange}
                     autoWidth
                     label="Age"
+                    sx={{
+                      '&.MuiOutlinedInput-root': {
+                        '& fieldset': {
+                          borderColor: boxOneHandler,
+                        },
+                        '&.Mui-focused fieldset': {
+                          borderColor: boxOneHandler,
+                        },
+                      },
+                    }}
                   >
                     <MenuItem value="Fall">Fall</MenuItem>
                     <MenuItem value="Summer">Summer</MenuItem>
@@ -212,6 +260,16 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
                     id="demo-simple-select-autowidth"
                     value={firstYear}
                     onChange={handleFirstSemesterChangeYear}
+                    sx={{
+                      '&.MuiOutlinedInput-root': {
+                        '& fieldset': {
+                          borderColor: boxOneHandler,
+                        },
+                        '&.Mui-focused fieldset': {
+                          borderColor: boxOneHandler,
+                        },
+                      },
+                    }}
                     autoWidth
                     label="Age"
                   >
@@ -240,6 +298,16 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
                     id="demo-simple-select-autowidth"
                     value={secondSem}
                     onChange={handleSecondSemesterChange}
+                    sx={{
+                      '&.MuiOutlinedInput-root': {
+                        '& fieldset': {
+                          borderColor: boxTwoHandler,
+                        },
+                        '&.Mui-focused fieldset': {
+                          borderColor: boxTwoHandler,
+                        },
+                      },
+                    }}
                     autoWidth
                     label="Age"
                   >
@@ -255,6 +323,16 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
                     id="demo-simple-select-autowidth"
                     value={secondYear}
                     onChange={handleSecondSemesterChangeYear}
+                    sx={{
+                      '&.MuiOutlinedInput-root': {
+                        '& fieldset': {
+                          borderColor: boxTwoHandler,
+                        },
+                        '&.Mui-focused fieldset': {
+                          borderColor: boxTwoHandler,
+                        },
+                      },
+                    }}
                     autoWidth
                     label="Age"
                   >
@@ -272,6 +350,7 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
                   </Select>
                 </FormControl>
               </article>
+              <FormHelperText sx={{ color: 'red' }}> {boxTwoHandlerText} </FormHelperText>
             </article>
             <Button onClick={handleSubmit} isLoading={updateLoading}>
               Update Profile
