@@ -357,13 +357,6 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
             </Button>
           </article>
         </section>
-        <section className="flex w-full flex-col rounded-2xl bg-white px-8 py-4">
-          <h1>Reset Password</h1>
-          <div className="text-sm ">Click this button to reset your password</div>
-          <Button className="mt-5" onClick={handleResetPassword}>
-            Reset
-          </Button>
-        </section>
         <section className="mb-8 flex w-full flex-col rounded-2xl bg-white px-8 py-4">
           <h1>Delete My Account</h1>
           <div className="text-sm ">Deleting your account will remove all user data</div>

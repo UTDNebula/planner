@@ -62,24 +62,10 @@ export const userRouter = router({
         name: z.string().min(1),
         startSemester: z.object({ semester: z.enum(['f', 's', 'u']), year: z.number() }),
         endSemester: z.object({ semester: z.enum(['f', 's', 'u']), year: z.number() }),
-        credits: z.array(
-          z.object({
-            courseCode: z.string(),
-            semesterCode: z.object({ semester: z.enum(['f', 's', 'u']), year: z.number() }),
-            transfer: z.boolean(),
-          }),
-        ),
       }),
     )
     .mutation(async ({ ctx, input }) => {
       const userId = ctx.session.user.id;
-      if (input.credits.length > 0) {
-        await ctx.prisma.credit.createMany({
-          data: input.credits.map((credit) => {
-            return { ...credit, userId: userId };
-          }),
-        });
-      }
 
       const user = await ctx.prisma.user.update({
         where: {

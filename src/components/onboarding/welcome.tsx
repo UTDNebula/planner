@@ -5,8 +5,7 @@ import { SemesterCode } from '@prisma/client';
 import { FormControl, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 
 export type WelcomeTypes = {
-  firstName: string;
-  lastName: string;
+  name: string;
   startSemester: SemesterCode;
   endSemester: SemesterCode;
 };
@@ -24,14 +23,10 @@ export default function Welcome({
   handleValidate,
   semesterOptions,
 }: WelcomeData): JSX.Element {
-  const { firstName, lastName, startSemester, endSemester }: WelcomeTypes = data;
+  const { name, startSemester, endSemester }: WelcomeTypes = data;
 
-  const setFirstName = (event: SelectChangeEvent<string>) => {
-    handleChange({ firstName: event.target.value });
-  };
-
-  const setLastName = (event: SelectChangeEvent<string>) => {
-    handleChange({ lastName: event.target.value });
+  const setName = (event: SelectChangeEvent<string>) => {
+    handleChange({ name: event.target.value });
   };
 
   const setStartSemester = (sem: SemesterCode) => {
@@ -85,7 +80,7 @@ export default function Welcome({
   };
 
   const checkValidate = () => {
-    const isValid = firstName && lastName && startSemester && endSemester ? true : false;
+    const isValid = name && startSemester && endSemester ? true : false;
     handleValidate(isValid);
   };
 
@@ -110,33 +105,16 @@ export default function Welcome({
           Please fill out the forms below
         </div>
       </figcaption>
-      <div className="pb-1 text-sm font-medium">First Name</div>
+      <div className="pb-1 text-sm font-medium">Name</div>
       <div className="relative">
         <input
-          value={firstName}
+          value={name}
           onChange={
-            setFirstName as
-              | React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
-              | undefined
+            setName as React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> | undefined
           }
           type="text"
           placeholder="First Name"
           className="input-bordered input inline h-9 w-full pl-10 text-sm"
-        />
-        <PersonIcon className="absolute left-4 bottom-2.5 inline"></PersonIcon>
-      </div>
-      <div className="pt-5 pb-1 text-sm font-medium">Last Name</div>
-      <div className="relative">
-        <input
-          value={lastName}
-          onChange={
-            setLastName as
-              | React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
-              | undefined
-          }
-          type="text"
-          placeholder="Last Name"
-          className="input-bordered input h-9 w-full pl-10 text-sm"
         />
         <PersonIcon className="absolute left-4 bottom-2.5 inline"></PersonIcon>
       </div>

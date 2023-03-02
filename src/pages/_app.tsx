@@ -74,8 +74,6 @@ const NebulaApp: AppType<{ session: Session | null }> = ({
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
 
-  // alert(router.pathname);
-
   return (
     <SessionProvider session={session}>
       <ReactQueryDevtools initialIsOpen={false} />
