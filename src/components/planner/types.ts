@@ -16,7 +16,6 @@ export interface Semester {
   id: ObjectID;
   code: SemesterCode;
   courses: DraggableCourse[];
-  courseColors: string[];
   color: keyof typeof tagColors;
 }
 

@@ -68,14 +68,22 @@ model Bypass {
   hours       Int
 }
 
+model Course {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  code       String
+  color      String
+  semester   Semester? @relation(fields: [semesterId], references: [id], onDelete: Cascade)
+  semesterId String?   @db.ObjectId
+  @@unique([semesterId, code])
+}
+
 model Semester {
-  id           String       @id @default(auto()) @map("_id") @db.ObjectId
-  code         SemesterCode
-  courses      String[] // Store course catalog codes
-  plan         Plan?        @relation(fields: [planId], references: [id], onDelete: Cascade)
-  planId       String?      @db.ObjectId
-  courseColors String[]
-  color        String       @default("")
+  id      String       @id @default(auto()) @map("_id") @db.ObjectId
+  code    SemesterCode
+  courses Course[] 
+  plan    Plan?        @relation(fields: [planId], references: [id], onDelete: Cascade)
+  planId  String?      @db.ObjectId
+  color   String       @default("")
 }
 
 type SemesterCode {

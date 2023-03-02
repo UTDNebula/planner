@@ -4,8 +4,13 @@ import { z } from 'zod';
 import { formatDegreeValidationRequest } from '@/utils/plannerUtils';
 
 import { protectedProcedure, router } from '../trpc';
-import { Prisma } from '@prisma/client';
+import { Course, Plan, Prisma, Semester } from '@prisma/client';
 
+type PlanData = {
+  id: string;
+  name: string;
+  semesters: (Semester & { courses: Course[] })[];
+};
 export const validatorRouter = router({
   prereqValidator: protectedProcedure.input(z.string().min(1)).query(async ({ ctx, input }) => {
     try {
@@ -17,7 +22,11 @@ export const validatorRouter = router({
         select: {
           name: true,
           id: true,
-          semesters: true,
+          semesters: {
+            include: {
+              courses: true,
+            },
+          },
         },
       });
 
@@ -73,9 +82,9 @@ export const validatorRouter = router({
         if (!planData?.semesters[i] || !planData?.semesters[i].courses) continue;
         for (let j = 0; j < planData?.semesters[i].courses.length; j++) {
           const course = planData?.semesters[i].courses[j];
-          coreqHash.set(course, [true, i]);
-          preReqHash.set(course, [true, i]);
-          coOrPreqHash.set(course, [true, i]);
+          coreqHash.set(course.code, [true, i]);
+          preReqHash.set(course.code, [true, i]);
+          coOrPreqHash.set(course.code, [true, i]);
         }
       }
       const checkForPreRecursive = (requirements: CollectionOptions, semester: number): boolean => {
@@ -168,42 +177,46 @@ export const validatorRouter = router({
         }
         return false;
       };
-      const prereqValidation = async (planData: any) => {
+      const prereqValidation = async (planData: PlanData) => {
         for (let i = 0; i < planData?.semesters.length; i++) {
           if (!planData?.semesters[i] || !planData?.semesters[i].courses) continue;
-          console.log(planData.semesters[i]);
+          console.log('MADE?');
+          console.log(planData?.semesters[i].courses.length);
           for (let j = 0; j < planData?.semesters[i].courses.length; j++) {
             const course = planData?.semesters[i].courses[j];
-            const preReqsForCourse = courseMapWithCodeKey.get(course);
+            const preReqsForCourse = courseMapWithCodeKey.get(course.code);
+            console.log(course);
+            console.log(preReqsForCourse);
             if (!preReqsForCourse) {
               continue;
             }
+
             const flag = checkForPreRecursive(preReqsForCourse.prereqs as CollectionOptions, i);
-            preReqHash.set(course, [flag, i]);
+            preReqHash.set(course.code, [flag, i]);
           }
         }
       };
 
-      const coreqValidation = async (planData: any) => {
+      const coreqValidation = async (planData: PlanData) => {
         for (let i = 0; i < planData?.semesters.length; i++) {
           if (!planData?.semesters[i] || !planData?.semesters[i].courses) continue;
           for (let j = 0; j < planData?.semesters[i].courses.length; j++) {
             const course = planData?.semesters[i].courses[j];
-            const preReqsForCourse = courseMapWithCodeKey.get(course);
+            const preReqsForCourse = courseMapWithCodeKey.get(course.code);
             if (!preReqsForCourse) {
               continue;
             }
             const flag = checkForCoRecursive(preReqsForCourse.coreqs as CollectionOptions, i);
-            coreqHash.set(course, [flag, i]);
+            coreqHash.set(course.code, [flag, i]);
           }
         }
       };
-      const coOrPrereqValidation = async (planData: any) => {
+      const coOrPrereqValidation = async (planData: PlanData) => {
         for (let i = 0; i < planData?.semesters.length; i++) {
           if (!planData?.semesters[i] || !planData?.semesters[i].courses) continue;
           for (let j = 0; j < planData?.semesters[i].courses.length; j++) {
             const course = planData?.semesters[i].courses[j];
-            const preReqsForCourse = courseMapWithCodeKey.get(course);
+            const preReqsForCourse = courseMapWithCodeKey.get(course.code);
             if (!preReqsForCourse) {
               continue;
             }
@@ -211,7 +224,7 @@ export const validatorRouter = router({
               preReqsForCourse.co_or_pre_requisites as CollectionOptions,
               i,
             );
-            coOrPreqHash.set(course, [flag, i]);
+            coOrPreqHash.set(course.code, [flag, i]);
           }
         }
       };
@@ -223,8 +236,9 @@ export const validatorRouter = router({
         const preReq = preReqHash.get(key);
         const coReq = coreqHash.get(key);
         if (!coReq || !preReq) return;
+        // console.log('RAN');
         preReqHash.set(key, [value[0] && coReq[0] && preReq[0], value[1]]);
-        console.log({ key, value });
+        // console.log({ key, value });
       });
       return { prereqValidation: preReqHash };
     } catch (error) {
@@ -242,7 +256,11 @@ export const validatorRouter = router({
         select: {
           name: true,
           id: true,
-          semesters: true,
+          semesters: {
+            include: {
+              courses: true,
+            },
+          },
           transferCredits: true,
         },
       });
@@ -269,13 +287,15 @@ export const validatorRouter = router({
 
       const temporaryFunctionPlzDeleteThis = async () => {
         return semesters.map((sem) => {
-          const courses = sem.courses.filter((course) => {
-            const [possiblePrefix, possibleCode] = course.split(' ');
-            if (Number.isNaN(Number(possibleCode)) || !Number.isNaN(Number(possiblePrefix))) {
-              return false;
-            }
-            return true;
-          });
+          const courses = sem.courses
+            .reduce((acc, curr) => [...acc, curr.code], [] as string[])
+            .filter((c) => {
+              const [possiblePrefix, possibleCode] = c.split(' ');
+              if (Number.isNaN(Number(possibleCode)) || !Number.isNaN(Number(possiblePrefix))) {
+                return false;
+              }
+              return true;
+            });
           return { ...sem, courses };
         });
       };
