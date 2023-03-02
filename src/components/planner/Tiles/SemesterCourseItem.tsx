@@ -7,12 +7,15 @@ import CheckIcon from '@mui/icons-material/Check';
 import Checkbox from '@/components/Checkbox';
 import SemesterCourseItemDropdown from './SemesterCourseItemDropdown';
 import { tagColors } from '../utils';
+import { useSemestersContext } from '../SemesterContext';
+import { trpc } from '@/utils/trpc';
 import CourseInfoHoverCard from '../CourseInfoHoverCard';
 import useGetCourseInfo from '../useGetCourseInfo';
 
 export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'> {
   course: DraggableCourse;
   isSelected?: boolean;
+  isValid?: boolean;
   isDragging?: boolean;
   onSelectCourse?: () => void;
   onDeselectCourse?: () => void;
@@ -32,6 +35,7 @@ export const MemoizedSemesterCourseItem = React.memo(
       isSelected,
       onDeleteCourse,
       onColorChange,
+      isValid,
       ...props
     },
     ref,
@@ -49,7 +53,10 @@ export const MemoizedSemesterCourseItem = React.memo(
         ref={ref}
         {...props}
         data-tip="Drag!"
-        className={` tooltip tooltip-left flex h-min w-full cursor-grab flex-row items-center overflow-hidden rounded-md border border-neutral-200 bg-generic-white`}
+        className={`${
+          isValid ? 'border-black' : 'border-red-700'
+        } tooltip tooltip-left flex h-min w-full cursor-grab flex-row items-center overflow-hidden rounded-md border bg-generic-white`}
+        // onClick={() => setDropdownOpen((prev) => !prev)}
         onClick={() => setDropdownOpen(true)}
         onMouseEnter={() => {
           hoverTimer.current = setTimeout(() => openHover(), 500);
@@ -152,6 +159,9 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
     data: { from: 'semester-tile', semester, course } as DragDataFromSemesterTile,
   });
 
+  const { planId } = useSemestersContext();
+  const prereqData = trpc.validator.prereqValidator.useQuery(planId);
+  const isValid = prereqData.data?.prereqValidation.get(course.code)?.[0];
   return (
     <SemesterCourseItem
       ref={setNodeRef}
@@ -167,6 +177,7 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
       onDeleteCourse={onDeleteCourse}
       isSelected={isSelected}
       onColorChange={onColorChange}
+      isValid={isValid || false}
     />
   );
 };

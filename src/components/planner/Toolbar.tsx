@@ -49,7 +49,7 @@ const Toolbar: FC<ToolbarProps> = ({ title, major, studentName }) => {
         </div>
       </article>
 
-      <article className="flex justify-between">
+      <article className="flex justify-between pl-7">
         <button className="flex items-center gap-x-3 rounded-2xl bg-primary-100 py-2 px-3 tracking-tight">
           <span className="text-lg font-semibold text-primary-800">{major}</span>
           <EditIcon className="text-primary-800" />

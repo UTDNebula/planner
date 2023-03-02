@@ -1,10 +1,12 @@
 import React from 'react';
+import { trpc } from './trpc';
 
 export function useTaskQueue(params: { shouldProcess: boolean }): {
   tasks: ReadonlyArray<Task<unknown>>;
   isProcessing: boolean;
   addTask: <T>(task: Task<T>) => void;
 } {
+  const utils = trpc.useContext();
   const [queue, setQueue] = React.useState<{
     isProcessing: boolean;
     tasks: Array<Task<unknown>>;
@@ -12,7 +14,9 @@ export function useTaskQueue(params: { shouldProcess: boolean }): {
 
   React.useEffect(() => {
     if (!params.shouldProcess) return;
-    if (queue.tasks.length === 0) return;
+    if (queue.tasks.length === 0) {
+      return;
+    }
     if (queue.isProcessing) return;
 
     console.log(queue);

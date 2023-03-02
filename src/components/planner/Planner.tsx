@@ -43,13 +43,17 @@ import { trpc } from '@/utils/trpc';
 /** PlannerTool Props */
 export interface PlannerProps {
   degreeRequirements: DegreeRequirements;
-  transferCredits: string[];
+  prereqData?: Map<string, boolean>;
+  transferCredits: Array<string>;
 }
+
+/** Controlled wrapper around course list and semester tiles */
 
 /** Controlled wrapper around course list and semester tiles */
 export default function Planner({
   degreeRequirements,
   transferCredits,
+  prereqData,
 }: PlannerProps): JSX.Element {
   const {
     filteredSemesters,
@@ -182,8 +186,12 @@ export default function Planner({
                 ))}
             </div>
             <div className="col-span-full flex h-10 items-center justify-center gap-8">
-              <button onClick={handleRemoveYear}>- Remove Year</button>
-              <button onClick={handleAddYear}>+ Add Year</button>
+              <button className="hello" onClick={handleRemoveYear}>
+                - Remove Year
+              </button>
+              <button className="world" onClick={handleAddYear}>
+                + Add Year
+              </button>
             </div>
           </article>
         </section>

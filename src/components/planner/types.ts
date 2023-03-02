@@ -6,7 +6,9 @@ import { tagColors } from './utils';
 
 export type Plan = NonNullable<RouterOutputs['plan']['getPlanById']>['plan'];
 
-export type DegreeValidation = NonNullable<RouterOutputs['plan']['getPlanById']>['validation'];
+export type DegreeValidation = NonNullable<
+  RouterOutputs['validator']['degreeValidator']
+>['validation'];
 
 // Temporary semester type
 // TODO: Remove
@@ -29,6 +31,7 @@ export interface DraggableCourse extends Course {
   status?: 'complete' | 'incomplete'; // TODO: Clean this up later once prereq is done
   taken?: boolean;
   hours?: number;
+  prereqs?: string[];
   color: keyof typeof tagColors;
 }
 
