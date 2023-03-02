@@ -221,6 +221,7 @@ export const planRouter = router({
             },
           },
         });
+        return true;
       } catch (error) {
         console.error(error);
       }
