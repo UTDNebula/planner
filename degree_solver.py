@@ -94,6 +94,7 @@ class DegreeRequirement:
     name: str
     type: DegreeRequirementType
     requirements: list[AbstractRequirement]
+    min_hours: int
 
     def get_num_fulfilled_requirements(self) -> int:
         return sum([1 for req in self.requirements if req.is_fulfilled()])
@@ -103,6 +104,7 @@ class DegreeRequirement:
             {
                 "name": self.name,
                 "type": self.type.value,
+                "min_hours": self.min_hours,
                 "num_fulfilled_requirements": self.get_num_fulfilled_requirements(),
                 "num_requirements": len(self.requirements),
                 "requirements": [
@@ -144,11 +146,13 @@ class DegreeRequirementsSolver:
 
         # Logic for adding majors
         for input_req in degree_requirements_input.majors:
-            major_req = DegreeRequirement(input_req, DegreeRequirementType.major, [])
-
             # Get major data from json
             data = json.loads(open(f"degree_data/{input_req}.json", "r").read())
             requirements_data = data["requirements"]["major"]
+
+            major_req = DegreeRequirement(
+                input_req, DegreeRequirementType.major, [], data["minimum_credit_hours"]
+            )
 
             # Add requirements
             for req_data in requirements_data:
@@ -215,7 +219,10 @@ class DegreeRequirementsSolver:
         degree_reqs.append(
             json.loads(
                 DegreeRequirement(
-                    "Core Curriculum", DegreeRequirementType.core, core_reqs
+                    "Core Curriculum",
+                    DegreeRequirementType.core,
+                    core_reqs,
+                    42,  # Core Curriculum takes 42 credit hours
                 ).to_json()
             )
         )
