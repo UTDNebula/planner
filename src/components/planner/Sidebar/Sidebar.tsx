@@ -1,5 +1,6 @@
+import * as Dialog from '@radix-ui/react-dialog';
 import { SearchBarTwo } from '@components/credits/SearchBar';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 import RequirementsContainer from '@/components/planner/Sidebar/RequirementsContainer';
 import useSearch from '@/components/search/search';
@@ -35,7 +36,8 @@ function CourseSelectorContainer({
     getData: async () =>
       data ? data.map((c) => ({ code: `${c.subject_prefix} ${c.course_number}` })) : [],
     initialQuery: '@',
-    filterFn: (elm, query) => elm['code'].toLowerCase().includes(query.toLowerCase()),
+    filterFn: (elm, query) =>
+      query.length > 0 ? elm['code'].toLowerCase().includes(query.toLowerCase()) : false,
     constraints: [0, 5],
   });
 
@@ -51,6 +53,8 @@ function CourseSelectorContainer({
 
   const [open, setOpen] = useState(true);
 
+  const [displayResults, setDisplay] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
   return (
     <>
       {open ? (
@@ -67,13 +71,34 @@ function CourseSelectorContainer({
               </div>
               <h6 className="text-sm tracking-tight text-gray-400">Drag courses onto your plan</h6>
             </div>
-            <SearchBarTwo updateQuery={updateQuery} placeholder="Search courses" />
-
-            <div className="bg-white p-4">
-              {results.length > 0 && (
-                <DraggableCourseList courses={courseResults} getDragId={getSearchedDragId} />
-              )}
+            <SearchBarTwo
+              onClick={() => setDisplay(true)}
+              updateQuery={(q) => {
+                updateQuery(q);
+                setDisplay(true);
+              }}
+              placeholder="Search courses"
+            />
+            <div className="relative">
+              <div
+                ref={ref}
+                className="absolute z-[999] w-full overflow-clip rounded-lg bg-white drop-shadow-2xl"
+              ></div>
             </div>
+
+            <Dialog.Root open={displayResults} onOpenChange={(v) => setDisplay(v)}>
+              <Dialog.Portal className="z-[999]" container={ref?.current}>
+                <Dialog.Content
+                  className="z-[999]"
+                  onOpenAutoFocus={(e) => e.preventDefault()}
+                >
+                  <div className="w-full bg-white p-4">
+                    <DraggableCourseList courses={courseResults} getDragId={getSearchedDragId} />
+                  </div>
+                </Dialog.Content>
+
+              </Dialog.Portal>
+            </Dialog.Root>
             {degreeRequirements.requirements.map((req, idx) => (
               <RequirementsContainer
                 key={idx}
