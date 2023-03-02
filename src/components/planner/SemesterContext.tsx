@@ -174,22 +174,15 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
               ? {
                   ...semester,
                   courses: [...semester.courses, action.newCourse],
-                  courseColors: [...semester.courseColors, ''],
                 }
               : semester,
           );
 
         case 'removeCourseFromSemester':
           return state.map((semester) => {
-            const courseColors = semester.courseColors.slice();
-            courseColors.splice(
-              semester.courses.findIndex((course) => course.id.toString() === action.courseId),
-              1,
-            );
             return semester.id.toString() === action.semesterId
               ? {
                   ...semester,
-                  courseColors,
                   courses: semester.courses.filter(
                     (course) => course.id.toString() !== action.courseId,
                   ),
@@ -207,26 +200,12 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
               return {
                 ...semester,
                 courses: [...semester.courses, action.course],
-                courseColors: [
-                  ...semester.courseColors,
-                  oldSem.courseColors[
-                    oldSem.courses.findIndex((c) => c.code === action.course.code)
-                  ],
-                ],
               };
             }
 
             if (semester.id.toString() === action.originSemesterId) {
-              const courseColors = semester.courseColors.slice();
-              courseColors.splice(
-                semester.courses.findIndex(
-                  (course) => course.id.toString() === action.course.id.toString(),
-                ),
-                1,
-              );
               return {
                 ...semester,
-                courseColors,
                 courses: semester.courses.filter(
                   (course) => course.id.toString() !== action.course.id.toString(),
                 ),
@@ -238,22 +217,14 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
 
         case 'deleteAllCoursesFromSemester':
           return state.map((semester) =>
-            semester.id.toString() === action.semesterId
-              ? { ...semester, courses: [], courseColors: [] }
-              : semester,
+            semester.id.toString() === action.semesterId ? { ...semester, courses: [] } : semester,
           );
         case 'changeCourseColor':
           return state.map((semester) => {
             if (semester.id.toString() !== action.semesterId) return semester;
-            const courseColors = semester.courseColors.slice();
             const idx = semester.courses.findIndex((course) => course.code === action.courseCode);
-            console.log({ idx }, action.courseCode, semester.courses, semester.courseColors);
-            courseColors[idx] = action.color;
             semester.courses[idx].color = action.color;
-            return {
-              ...semester,
-              courseColors,
-            };
+            return semester;
           });
         case 'changeSemesterColor':
           return state.map((semester) => {
@@ -620,14 +591,11 @@ const parsePlanSemestersFromPlan = (plan: Plan): Semester[] => {
   return plan.semesters.map((sem) => ({
     code: sem.code,
     id: new ObjectID(sem.id),
-    courseColors: sem.courseColors,
     color: Object.keys(tagColors).includes(sem.color) ? (sem.color as keyof typeof tagColors) : '',
-    courses: sem.courses.map((course: string, index) => ({
-      id: new ObjectID(),
-      code: course,
-      color: Object.keys(tagColors).includes(sem.courseColors[index])
-        ? (sem.courseColors[index] as keyof typeof tagColors)
-        : '',
+    courses: sem.courses.map((course) => ({
+      id: new ObjectID(course.id),
+      color: course.color as keyof typeof tagColors,
+      code: course.code,
     })),
   }));
 };

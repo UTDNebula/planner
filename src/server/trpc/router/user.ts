@@ -182,9 +182,8 @@ export const userRouter = router({
 
             return {
               ...sem,
-              courseColors: Array(courses.length).fill(''),
               id: sem.id.toString(),
-              courses: courses,
+              courses: { create: courses.map((course) => ({ code: course, color: '' })) },
             };
           }),
         );
@@ -296,20 +295,26 @@ export const userRouter = router({
               if (idx % 3 === 2) {
                 return {
                   ...sem,
-                  courseColors: Array(courses.length).fill(''),
                   id: sem.id.toString(),
-                  courses: courses,
+                  courses: { create: courses.map((course) => ({ code: course, color: '' })) },
                 };
               }
               templateData[i - startYear + counter].items.map((course) => {
-                courses.push(course.name);
+                const countOfCoursesWithSameCode = courses.reduce(
+                  (count, curr) => count + (course.name == curr ? 1 : 0),
+                  0,
+                );
+                if (countOfCoursesWithSameCode > 0) {
+                  courses.push(`${course.name} ${countOfCoursesWithSameCode}`);
+                } else {
+                  courses.push(course.name);
+                }
               });
               counter++;
               return {
                 ...sem,
-                courseColors: Array(courses.length).fill(''),
                 id: sem.id.toString(),
-                courses: courses,
+                courses: { create: courses.map((course) => ({ code: course, color: '' })) },
               };
             }),
           );

@@ -38,7 +38,11 @@ export const planRouter = router({
         select: {
           name: true,
           id: true,
-          semesters: true,
+          semesters: {
+            include: {
+              courses: true,
+            },
+          },
           transferCredits: true,
         },
       });
@@ -51,6 +55,23 @@ export const planRouter = router({
       }
 
       const { semesters } = planData;
+      // const semesters = await ctx.prisma.semester.findMany({
+      //   where: {
+      //     planId: {
+      //       equals: planData.id,
+      //     },
+      //   },
+      //   include: {
+      //     courses: true,
+      //   },
+      // });
+
+      // if (!semesters) {
+      //   throw new TRPCError({
+      //     code: 'NOT_FOUND',
+      //     message: 'Plan not found',
+      //   });
+      // }
       // FIX THIS LATER IDC RN
 
       // Get degree requirements
@@ -65,13 +86,15 @@ export const planRouter = router({
 
       const temporaryFunctionPlzDeleteThis = async () => {
         return semesters.map((sem) => {
-          const courses = sem.courses.filter((course) => {
-            const [possiblePrefix, possibleCode] = course.split(' ');
-            if (Number.isNaN(Number(possibleCode)) || !Number.isNaN(Number(possiblePrefix))) {
-              return false;
-            }
-            return true;
-          });
+          const courses = sem.courses
+            .reduce((acc, curr) => [...acc, curr.code], [] as string[])
+            .filter((c) => {
+              const [possiblePrefix, possibleCode] = c.split(' ');
+              if (Number.isNaN(Number(possibleCode)) || !Number.isNaN(Number(possiblePrefix))) {
+                return false;
+              }
+              return true;
+            });
           return { ...sem, courses };
         });
       };
@@ -210,7 +233,7 @@ export const planRouter = router({
                 data: newYear.map((semester, idx) => {
                   return {
                     ...semester,
-                    courses: semester.courses.map((course) => course.code),
+                    courses: undefined,
                     id: semesterIds[idx].toString(),
                   };
                 }),
@@ -245,9 +268,13 @@ export const planRouter = router({
             id: semesterId,
           },
           data: {
-            courses: [...semester!.courses, courseName],
-            courseColors: {
-              push: '',
+            courses: {
+              create: [
+                {
+                  code: courseName,
+                  color: '',
+                },
+              ],
             },
           },
         });
@@ -264,30 +291,14 @@ export const planRouter = router({
 
         // This works bc semesters are stored in its own table
         // Once integrated w/ Nebula API, use Promise.all() to call concurrently
-        const semester = await ctx.prisma.semester.findUnique({
-          where: { id: semesterId },
-          select: {
-            id: true,
-            courses: true,
-            courseColors: true,
+        await ctx.prisma.course.delete({
+          where: {
+            semesterId_code: {
+              semesterId,
+              code: courseName,
+            },
           },
         });
-        const index = semester?.courses.findIndex((course) => courseName == course);
-        if (index) {
-          const newColors = [...(semester?.courseColors || [])];
-          newColors.splice(index, 1);
-          // Update courses
-          await ctx.prisma.semester.update({
-            where: {
-              id: semesterId,
-            },
-            data: {
-              courses: semester!.courses.filter((cName) => cName != courseName),
-              courseColors: newColors,
-            },
-          });
-        }
-        return true;
       } catch (error) {
         console.error(error);
       }
@@ -295,13 +306,9 @@ export const planRouter = router({
   deleteAllCoursesFromSemester: protectedProcedure
     .input(z.object({ semesterId: z.string() }))
     .mutation(async ({ ctx, input: { semesterId } }) => {
-      await ctx.prisma.semester
-        .update({
-          where: { id: semesterId },
-          data: {
-            courses: [],
-            courseColors: [],
-          },
+      await ctx.prisma.course
+        .deleteMany({
+          where: { semesterId },
         })
         .catch((err) => {
           if (err instanceof Prisma.PrismaClientKnownRequestError) {
@@ -327,56 +334,17 @@ export const planRouter = router({
       try {
         const { oldSemesterId, newSemesterId, courseName } = input;
 
-        // This works bc semesters are stored in its own table
-
-        // Once integrated w/ Nebula API, use Promise.all() to call concurrently
-        const oldSemester = await ctx.prisma.semester.findUnique({
-          where: { id: oldSemesterId },
-          select: {
-            id: true,
-            courses: true,
-            courseColors: true,
-          },
-        });
-
-        const index = oldSemester?.courses.findIndex((course) => courseName == course);
-        const newColors = [...(oldSemester?.courseColors || [])];
-        if (index) newColors.splice(index, 1);
-        // Update courses
-        await ctx.prisma.semester.update({
+        await ctx.prisma.course.update({
           where: {
-            id: oldSemesterId,
-          },
-          data: {
-            courses: oldSemester!.courses.filter((cName) => cName != courseName),
-            courseColors: newColors,
-          },
-        });
-
-        // This works bc semesters are stored in its own table
-        // Once integrated w/ Nebula API, use Promise.all() to call concurrently
-        const semester = await ctx.prisma.semester.findUnique({
-          where: { id: newSemesterId },
-          select: {
-            id: true,
-            courses: true,
-          },
-        });
-        // Update courses
-        await ctx.prisma.semester.update({
-          where: {
-            id: newSemesterId,
-          },
-          data: {
-            courses: {
-              push: courseName,
-            },
-            courseColors: {
-              push: '',
+            semesterId_code: {
+              semesterId: oldSemesterId,
+              code: courseName,
             },
           },
+          data: {
+            semesterId: newSemesterId,
+          },
         });
-
         return true;
       } catch (error) {
         console.error(error);
@@ -449,25 +417,17 @@ export const planRouter = router({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const semester = await ctx.prisma.semester.findUnique({
+      await ctx.prisma.course.update({
         where: {
-          id: input.semesterId,
+          semesterId_code: {
+            semesterId: input.semesterId,
+            code: input.courseName,
+          },
+        },
+        data: {
+          color: input.color,
         },
       });
-      console.log({ course: semester?.courses, name: input.courseName });
-      const index = semester?.courses.findIndex((course) => input.courseName == course);
-      if (index) {
-        const newColors = [...(semester?.courseColors || [])];
-        newColors[index] = input.color;
-        await ctx.prisma.semester.update({
-          where: {
-            id: input.semesterId,
-          },
-          data: {
-            courseColors: newColors,
-          },
-        });
-      }
       return true;
     }),
   addBypass: protectedProcedure
