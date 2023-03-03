@@ -12,7 +12,7 @@ import { trpc } from '@/utils/trpc';
 import CourseInfoHoverCard from '../CourseInfoHoverCard';
 import useGetCourseInfo from '../useGetCourseInfo';
 import WarningIcon from '@/icons/WarningIcon';
-import PrereqHoverCard from '../PrereqHoverCard';
+import PrereqWarnHoverCard from '../PrereqWarnHoverCard';
 
 export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'> {
   course: DraggableCourse;
@@ -118,7 +118,7 @@ export const MemoizedSemesterCourseItem = React.memo(
             <span className="text-sm text-[#1C2A6D]">{course.code}</span>
             <div className="ml-auto mr-2 flex text-xs font-semibold">
               {!isValid && (
-                <PrereqHoverCard
+                <PrereqWarnHoverCard
                   prereqs={prereqs}
                   open={hoverIconOpen}
                   onOpenChange={(hoverOpen) => !dropdownOpen && setHoverIconOpen(hoverOpen)}
@@ -134,7 +134,7 @@ export const MemoizedSemesterCourseItem = React.memo(
                   >
                     <WarningIcon />
                   </span>
-                </PrereqHoverCard>
+                </PrereqWarnHoverCard>
               )}
             </div>
           </div>

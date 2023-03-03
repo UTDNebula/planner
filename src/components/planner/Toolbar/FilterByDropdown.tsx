@@ -2,10 +2,10 @@ import { FC, useMemo } from 'react';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import ColorSwatchIcon from '@/icons/ColorSwatchIcon';
 import ChevronIcon from '@/icons/ChevronIcon';
-import { tagColors } from './utils';
-import { useSemestersContext } from './SemesterContext';
+import { tagColors } from '../utils';
+import { useSemestersContext } from '../SemesterContext';
 import { SemesterType } from '@prisma/client';
-import Checkbox from '../Checkbox';
+import Checkbox from '../../Checkbox';
 
 const itemClasses =
   'flex items-center gap-x-3 border-b border-neutral-300 px-3 py-2 hover:bg-neutral-200 cursor-pointer';

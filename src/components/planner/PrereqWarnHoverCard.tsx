@@ -1,14 +1,14 @@
 import { FC } from 'react';
 import * as HoverCard from '@radix-ui/react-hover-card';
 
-interface PrereqHoverCardProps {
+interface PrereqWarnHoverCardProps {
   prereqs: string[];
   open: boolean;
   onOpenChange: (open: boolean) => void;
   side?: 'top' | 'left' | 'bottom' | 'right';
 }
 
-export const PrereqHoverCard: FC<PrereqHoverCardProps> = ({
+export const PrereqWarnHoverCard: FC<PrereqWarnHoverCardProps> = ({
   prereqs,
   open,
   onOpenChange,
@@ -41,4 +41,4 @@ export const PrereqHoverCard: FC<PrereqHoverCardProps> = ({
   </HoverCard.Root>
 );
 
-export default PrereqHoverCard;
+export default PrereqWarnHoverCard;
