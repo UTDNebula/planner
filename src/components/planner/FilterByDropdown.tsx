@@ -1,7 +1,5 @@
 import { FC, useMemo } from 'react';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import Button from '../Button';
-import SwitchVerticalIcon from '@/icons/SwitchVerticalIcon';
 import ColorSwatchIcon from '@/icons/ColorSwatchIcon';
 import ChevronIcon from '@/icons/ChevronIcon';
 import { tagColors } from './utils';
@@ -14,7 +12,7 @@ const itemClasses =
 
 const contentClasses = 'w-64 rounded-md border border-neutral-300 bg-generic-white z-[9999]';
 
-const SortByDropdown: FC = () => {
+const FilterByDropdown: FC = ({ children }) => {
   const { toggleColorFilter, toggleSemesterFilter, toggleYearFilter, allSemesters, filters } =
     useSemestersContext();
 
@@ -31,16 +29,7 @@ const SortByDropdown: FC = () => {
 
   return (
     <DropdownMenu.Root>
-      <DropdownMenu.Trigger>
-        <Button
-          aria-label="Filter by options"
-          size="medium"
-          color="tertiary"
-          icon={<SwitchVerticalIcon />}
-        >
-          <span className="whitespace-nowrap">Filter By</span>
-        </Button>
-      </DropdownMenu.Trigger>
+      <DropdownMenu.Trigger>{children}</DropdownMenu.Trigger>
 
       <DropdownMenu.Portal>
         <DropdownMenu.Content
@@ -180,4 +169,4 @@ const SortByDropdown: FC = () => {
   );
 };
 
-export default SortByDropdown;
+export default FilterByDropdown;
