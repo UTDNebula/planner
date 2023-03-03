@@ -6,8 +6,8 @@ import ColorSwatchIcon from '@/icons/ColorSwatchIcon';
 import ChevronIcon from '@/icons/ChevronIcon';
 import { tagColors } from './utils';
 import { useSemestersContext } from './SemesterContext';
-import DotFilledIcon from '@/icons/DotFilledIcon';
 import { SemesterType } from '@prisma/client';
+import Checkbox from '../Checkbox';
 
 const itemClasses =
   'flex items-center gap-x-3 border-b border-neutral-300 px-3 py-2 hover:bg-neutral-200 cursor-pointer';
@@ -65,22 +65,19 @@ const SortByDropdown: FC = () => {
                 alignOffset={0}
               >
                 {Object.entries(tagColors).map(([color, classes]) => (
-                  <DropdownMenu.CheckboxItem
-                    key={`${color}-${classes}`}
-                    className={itemClasses}
-                    checked={filters.some(
-                      (filter) => filter.type === 'color' && filter.color === color,
-                    )}
-                    onCheckedChange={() => toggleColorFilter(color as keyof typeof tagColors)}
-                  >
-                    <DropdownMenu.ItemIndicator>
-                      <DotFilledIcon />
-                    </DropdownMenu.ItemIndicator>
+                  <DropdownMenu.Item key={`${color}-${classes}`} className={itemClasses}>
+                    <Checkbox
+                      checked={filters.some(
+                        (filter) => filter.type === 'color' && filter.color === color,
+                      )}
+                      onClick={(e) => e.stopPropagation()}
+                      onCheckedChange={() => toggleColorFilter(color as keyof typeof tagColors)}
+                    />
                     <div className={`h-5 w-5 rounded-sm border ${classes}`}></div>
                     <span>
                       {color.substring(0, 1).toUpperCase() + color.substring(1) || 'None'}
                     </span>
-                  </DropdownMenu.CheckboxItem>
+                  </DropdownMenu.Item>
                 ))}
               </DropdownMenu.SubContent>
             </DropdownMenu.Portal>
@@ -103,19 +100,16 @@ const SortByDropdown: FC = () => {
                 alignOffset={0}
               >
                 {Array.from(allYears).map((year) => (
-                  <DropdownMenu.CheckboxItem
-                    key={year}
-                    className={itemClasses}
-                    checked={filters.some(
-                      (filter) => filter.type === 'year' && filter.year === year,
-                    )}
-                    onCheckedChange={() => toggleYearFilter(year)}
-                  >
-                    <DropdownMenu.ItemIndicator>
-                      <DotFilledIcon />
-                    </DropdownMenu.ItemIndicator>
+                  <DropdownMenu.Item key={year} className={itemClasses}>
+                    <Checkbox
+                      onClick={(e) => e.stopPropagation()}
+                      checked={filters.some(
+                        (filter) => filter.type === 'year' && filter.year === year,
+                      )}
+                      onCheckedChange={() => toggleYearFilter(year)}
+                    />
                     {year}
-                  </DropdownMenu.CheckboxItem>
+                  </DropdownMenu.Item>
                 ))}
               </DropdownMenu.SubContent>
             </DropdownMenu.Portal>
@@ -138,36 +132,17 @@ const SortByDropdown: FC = () => {
                 alignOffset={0}
               >
                 {Object.keys(semestersDisplayMap).map((semesterType) => (
-                  <DropdownMenu.CheckboxItem
-                    key={semesterType}
-                    className={itemClasses}
-                    checked={filters.some(
-                      (filter) => filter.type === 'semester' && semesterType === filter.semester,
-                    )}
-                    onCheckedChange={() => toggleSemesterFilter(semesterType as SemesterType)}
-                  >
-                    <DropdownMenu.ItemIndicator>
-                      <DotFilledIcon />
-                    </DropdownMenu.ItemIndicator>
+                  <DropdownMenu.Item key={semesterType} className={itemClasses}>
+                    <Checkbox
+                      onClick={(e) => e.stopPropagation()}
+                      checked={filters.some(
+                        (filter) => filter.type === 'semester' && semesterType === filter.semester,
+                      )}
+                      onCheckedChange={() => toggleSemesterFilter(semesterType as SemesterType)}
+                    />
                     {semestersDisplayMap[semesterType as SemesterType]}
-                  </DropdownMenu.CheckboxItem>
+                  </DropdownMenu.Item>
                 ))}
-                {/* {allSemesterCodes.map((semesterCode) => (
-                  <DropdownMenu.CheckboxItem
-                    key={displaySemesterCode(semesterCode)}
-                    className={itemClasses}
-                    checked={filters.some(
-                      (filter) =>
-                        filter.type === 'semester' && isSemCodeEqual(filter.code, semesterCode),
-                    )}
-                    onCheckedChange={() => toggleSemesterFilter(semesterCode)}
-                  >
-                    <DropdownMenu.ItemIndicator>
-                      <DotFilledIcon />
-                    </DropdownMenu.ItemIndicator>
-                    {displaySemesterCode(semesterCode)}
-                  </DropdownMenu.CheckboxItem>
-                ))} */}
               </DropdownMenu.SubContent>
             </DropdownMenu.Portal>
           </DropdownMenu.Sub>
