@@ -13,7 +13,9 @@ import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 export default function PlansPage(): JSX.Element {
   const [openTemplateModal, setOpenTemplateModal] = useState(false);
   const userPlanQuery = trpc.plan.getUserPlans.useQuery();
+  const userQuery = trpc.user.getUser.useQuery();
   const { data } = userPlanQuery;
+  const userData = userQuery.data;
   if (!data) {
     return <div>You have not created any plans yet</div>;
   }
@@ -50,7 +52,9 @@ export default function PlansPage(): JSX.Element {
               </DropdownMenu.Portal>
             </DropdownMenu.Root>
           </div>
-          <div className="ml-1 text-lg text-[#737373]">Welcome Temoc!</div>
+          <div className="ml-1 text-lg text-[#737373]">
+            Welcome {userData?.profile?.name ?? 'Temoc'}
+          </div>
         </article>
         <article className=" grid h-fit w-fit grid-cols-3 gap-12">
           {data.plans.map((plan) => (

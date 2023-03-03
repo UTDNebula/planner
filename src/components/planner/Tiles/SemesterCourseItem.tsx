@@ -11,6 +11,8 @@ import { useSemestersContext } from '../SemesterContext';
 import { trpc } from '@/utils/trpc';
 import CourseInfoHoverCard from '../CourseInfoHoverCard';
 import useGetCourseInfo from '../useGetCourseInfo';
+import WarningIcon from '@/icons/WarningIcon';
+import PrereqHoverCard from '../PrereqHoverCard';
 
 export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'> {
   course: DraggableCourse;
@@ -42,6 +44,7 @@ export const MemoizedSemesterCourseItem = React.memo(
   ) {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [hoverOpen, setHoverOpen] = useState(false);
+    const [hoverIconOpen, setHoverIconOpen] = useState(false);
     const openHover = () => !isDragging && !dropdownOpen && setHoverOpen(true);
 
     const hoverTimer = useRef<ReturnType<typeof setTimeout>>();
@@ -52,10 +55,9 @@ export const MemoizedSemesterCourseItem = React.memo(
       <div
         ref={ref}
         {...props}
-        data-tip="Drag!"
-        className={`${
-          isValid ? 'border-black' : 'border-red-700'
-        } tooltip tooltip-left flex h-min w-full cursor-grab flex-row items-center overflow-hidden rounded-md border bg-generic-white`}
+        className={`flex h-[50px] w-full cursor-grab flex-row items-center rounded-md  border border-[#D4D4D4] ${
+          isValid ? 'bg-generic-white' : 'bg-[#FFFBEB]'
+        }`}
         // onClick={() => setDropdownOpen((prev) => !prev)}
         onClick={() => setDropdownOpen(true)}
         onMouseEnter={() => {
@@ -68,60 +70,72 @@ export const MemoizedSemesterCourseItem = React.memo(
           }
         }}
       >
-        <div className={`h-full w-2 transition-all ${tagColors[course.color]}`}></div>
+        <div className="h-[50px] w-2">
+          {course.color && (
+            <div
+              className={`h-full w-full rounded-l-md transition-all ${tagColors[course.color]} `}
+            ></div>
+          )}
+        </div>
+
         <CourseInfoHoverCard
           prereqs={prereqs}
           open={hoverOpen}
           onOpenChange={(open) => !dropdownOpen && setHoverOpen(open)}
           title={title || ''}
         >
-          <div>
-            <div className="p-1">
-              <div className="flex items-center justify-center">
-                <div className="flex flex-row items-center gap-x-3">
-                  <SemesterCourseItemDropdown
-                    open={dropdownOpen}
-                    onOpenChange={(open) => {
-                      if (hoverOpen) {
-                        setHoverOpen(false);
-                      }
-                      setDropdownOpen(open);
+          <div className="flex w-full flex-row items-center gap-x-3">
+            <SemesterCourseItemDropdown
+              open={dropdownOpen}
+              onOpenChange={(open) => {
+                if (hoverOpen) {
+                  setHoverOpen(false);
+                }
+                setDropdownOpen(open);
+              }}
+              changeColor={(color) => onColorChange && onColorChange(color)}
+              deleteCourse={() => onDeleteCourse && onDeleteCourse()}
+            >
+              <button className="cursor-pointer rounded-md py-[2px] transition-all duration-300 hover:bg-neutral-100">
+                <DragIndicatorIcon fontSize="inherit" className="text-[16px] text-neutral-300" />
+              </button>
+            </SemesterCourseItemDropdown>
+
+            <Checkbox
+              style={{ width: '20px', height: '20px' }}
+              checked={isSelected}
+              onClick={(e) => e.stopPropagation()}
+              onCheckedChange={(checked) => {
+                if (checked && onSelectCourse) {
+                  onSelectCourse();
+                }
+
+                if (!checked && onDeselectCourse) {
+                  onDeselectCourse();
+                }
+              }}
+            />
+            <span className="text-sm text-[#1C2A6D]">{course.code}</span>
+            <div className="ml-auto mr-2 flex text-xs font-semibold">
+              {!isValid && (
+                <PrereqHoverCard
+                  prereqs={prereqs}
+                  open={hoverIconOpen}
+                  onOpenChange={(hoverOpen) => !dropdownOpen && setHoverIconOpen(hoverOpen)}
+                >
+                  <span
+                    className="text-[#22C55E]"
+                    onMouseEnter={() => {
+                      setHoverIconOpen(true);
                     }}
-                    changeColor={(color) => onColorChange && onColorChange(color)}
-                    deleteCourse={() => onDeleteCourse && onDeleteCourse()}
+                    onMouseLeave={() => {
+                      setHoverIconOpen(false);
+                    }}
                   >
-                    <button className="cursor-pointer rounded-md py-[2px] transition-all duration-300 hover:bg-neutral-100">
-                      <DragIndicatorIcon
-                        fontSize="inherit"
-                        className="text-[16px] text-neutral-300"
-                      />
-                    </button>
-                  </SemesterCourseItemDropdown>
-
-                  <Checkbox
-                    style={{ width: '20px', height: '20px' }}
-                    checked={isSelected}
-                    onClick={(e) => e.stopPropagation()}
-                    onCheckedChange={(checked) => {
-                      if (checked && onSelectCourse) {
-                        onSelectCourse();
-                      }
-
-                      if (!checked && onDeselectCourse) {
-                        onDeselectCourse();
-                      }
-                    }}
-                  />
-                  <span className="text-sm text-[#1C2A6D]">{course.code}</span>
-                </div>
-              </div>
-              <div className="ml-auto flex text-xs font-semibold">
-                {course.taken && (
-                  <span className=" tooltip text-[#22C55E]" data-tip="Completed">
-                    <CheckIcon fontSize="small" />
+                    <WarningIcon />
                   </span>
-                )}
-              </div>
+                </PrereqHoverCard>
+              )}
             </div>
           </div>
         </CourseInfoHoverCard>

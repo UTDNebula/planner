@@ -53,9 +53,9 @@ export interface PlannerProps {
 export default function Planner({
   degreeRequirements,
   transferCredits,
-  prereqData,
 }: PlannerProps): JSX.Element {
   const {
+    planId,
     filteredSemesters,
     handleAddCourseToSemester,
     handleAddYear,
@@ -69,6 +69,9 @@ export default function Planner({
   } = useSemestersContext();
 
   const utils = trpc.useContext();
+
+  const degreeRequirementsQuery = trpc.plan.getDegreeRequirements.useQuery({ planId });
+  const degreeRequirementsData = degreeRequirementsQuery.data;
 
   // Hacky
   const updatePlan = async () => {
@@ -168,7 +171,11 @@ export default function Planner({
           ref={ref}
           className="flex max-h-screen flex-grow flex-col gap-y-6 overflow-y-scroll p-4 pb-0"
         >
-          <Toolbar title={title} major="Computer Science" studentName="Dev" />
+          <Toolbar
+            title={title}
+            major={degreeRequirementsData?.major ?? 'undecided'}
+            studentName="Dev"
+          />
 
           <article className="flex h-full flex-col gap-y-5  overflow-x-hidden">
             {transferCredits.length > 0 && <TransferBank transferCredits={transferCredits} />}

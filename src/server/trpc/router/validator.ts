@@ -180,13 +180,9 @@ export const validatorRouter = router({
       const prereqValidation = async (planData: PlanData) => {
         for (let i = 0; i < planData?.semesters.length; i++) {
           if (!planData?.semesters[i] || !planData?.semesters[i].courses) continue;
-          console.log('MADE?');
-          console.log(planData?.semesters[i].courses.length);
           for (let j = 0; j < planData?.semesters[i].courses.length; j++) {
             const course = planData?.semesters[i].courses[j];
             const preReqsForCourse = courseMapWithCodeKey.get(course.code);
-            console.log(course);
-            console.log(preReqsForCourse);
             if (!preReqsForCourse) {
               continue;
             }
@@ -236,9 +232,7 @@ export const validatorRouter = router({
         const preReq = preReqHash.get(key);
         const coReq = coreqHash.get(key);
         if (!coReq || !preReq) return;
-        // console.log('RAN');
         preReqHash.set(key, [value[0] && coReq[0] && preReq[0], value[1]]);
-        // console.log({ key, value });
       });
       return { prereqValidation: preReqHash };
     } catch (error) {

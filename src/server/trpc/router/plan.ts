@@ -432,4 +432,27 @@ export const planRouter = router({
     try {
     } catch {}
   }),
+  getDegreeRequirements: protectedProcedure
+    .input(z.object({ planId: z.string() }))
+    .query(async ({ ctx, input }) => {
+      try {
+        const { planId } = input;
+
+        const degreeRequirements = await ctx.prisma.degreeRequirements.findUnique({
+          where: {
+            planId,
+          },
+          select: {
+            major: true,
+            id: true,
+          },
+        });
+
+        if (!degreeRequirements) {
+          throw 'No degree requirements';
+        }
+
+        return degreeRequirements;
+      } catch {}
+    }),
 });
