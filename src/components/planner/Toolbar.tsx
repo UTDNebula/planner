@@ -3,9 +3,10 @@ import DownloadIcon from '@/icons/DownloadIcon';
 import EditIcon from '@/icons/EditIcon';
 import { FC } from 'react';
 import Button from '../Button';
+import SwitchVerticalIcon from '@/icons/SwitchVerticalIcon';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { useSemestersContext } from './SemesterContext';
-import SortByDropdown from './SortByDropdown';
+import FilterByDropdown from './FilterByDropdown';
 import DegreePlanPDF from './DegreePlanPDF/DegreePlanPDF';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Link from 'next/link';
@@ -30,7 +31,16 @@ const Toolbar: FC<ToolbarProps> = ({ title, major, studentName }) => {
           <h1 className="text-3xl font-semibold tracking-tight">{title}</h1>
         </div>
         <div className="flex h-min items-center gap-3">
-          <SortByDropdown />
+          <FilterByDropdown>
+            <Button
+              aria-label="Filter by options"
+              size="medium"
+              color="tertiary"
+              icon={<SwitchVerticalIcon />}
+            >
+              <span className="whitespace-nowrap">Filter By</span>
+            </Button>
+          </FilterByDropdown>
           <Button
             size="medium"
             data-tip="Import Plan"
