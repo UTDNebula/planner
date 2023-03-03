@@ -33,12 +33,12 @@ const SortByDropdown: FC = () => {
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
         <Button
-          aria-label="Sort by options"
+          aria-label="Filter by options"
           size="medium"
           color="tertiary"
           icon={<SwitchVerticalIcon />}
         >
-          <span className="whitespace-nowrap">Sort By</span>
+          <span className="whitespace-nowrap">Filter By</span>
         </Button>
       </DropdownMenu.Trigger>
 
@@ -52,7 +52,7 @@ const SortByDropdown: FC = () => {
             <DropdownMenu.SubTrigger className={itemClasses + ' justify-between border-none'}>
               <div className="flex items-center gap-x-3">
                 <ColorSwatchIcon />
-                <span>Sort by color</span>
+                <span>Filter by color</span>
               </div>
               <ChevronIcon className="h-3 w-3" />
             </DropdownMenu.SubTrigger>
@@ -87,7 +87,7 @@ const SortByDropdown: FC = () => {
             <DropdownMenu.SubTrigger className={itemClasses + ' justify-between border-none'}>
               <div className="flex items-center gap-x-3">
                 <ColorSwatchIcon />
-                <span>Sort by year</span>
+                <span>Filter by year</span>
               </div>
               <ChevronIcon className="h-3 w-3" />
             </DropdownMenu.SubTrigger>
@@ -119,7 +119,7 @@ const SortByDropdown: FC = () => {
             <DropdownMenu.SubTrigger className={itemClasses + ' justify-between border-none'}>
               <div className="flex items-center gap-x-3">
                 <ColorSwatchIcon />
-                <span>Sort by semester</span>
+                <span>Filter by semester</span>
               </div>
               <ChevronIcon className="h-3 w-3" />
             </DropdownMenu.SubTrigger>
@@ -140,7 +140,7 @@ const SortByDropdown: FC = () => {
                       )}
                       onCheckedChange={() => toggleSemesterFilter(semesterType as SemesterType)}
                     />
-                    {semestersDisplayMap[semesterType as SemesterType]}
+                    {semestersDisplayMap[semesterType as SemesterType] + ' semester'}
                   </DropdownMenu.Item>
                 ))}
               </DropdownMenu.SubContent>
