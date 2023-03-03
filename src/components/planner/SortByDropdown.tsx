@@ -6,8 +6,8 @@ import ColorSwatchIcon from '@/icons/ColorSwatchIcon';
 import ChevronIcon from '@/icons/ChevronIcon';
 import { tagColors } from './utils';
 import { useSemestersContext } from './SemesterContext';
-import { displaySemesterCode, isSemCodeEqual } from '@/utils/utilFunctions';
 import DotFilledIcon from '@/icons/DotFilledIcon';
+import { SemesterType } from '@prisma/client';
 
 const itemClasses =
   'flex items-center gap-x-3 border-b border-neutral-300 px-3 py-2 hover:bg-neutral-200 cursor-pointer';
@@ -22,10 +22,12 @@ const SortByDropdown: FC = () => {
     () => new Set(allSemesters.map((semester) => semester.code.year)),
     [allSemesters],
   );
-  const allSemesterCodes = useMemo(
-    () => allSemesters.map((semester) => semester.code),
-    [allSemesters],
-  );
+
+  const semestersDisplayMap = {
+    [SemesterType.f]: 'Fall',
+    [SemesterType.s]: 'Spring',
+    [SemesterType.u]: 'Summer',
+  };
 
   return (
     <DropdownMenu.Root>
@@ -135,7 +137,22 @@ const SortByDropdown: FC = () => {
                 sideOffset={-10}
                 alignOffset={0}
               >
-                {allSemesterCodes.map((semesterCode) => (
+                {Object.keys(semestersDisplayMap).map((semesterType) => (
+                  <DropdownMenu.CheckboxItem
+                    key={semesterType}
+                    className={itemClasses}
+                    checked={filters.some(
+                      (filter) => filter.type === 'semester' && semesterType === filter.semester,
+                    )}
+                    onCheckedChange={() => toggleSemesterFilter(semesterType as SemesterType)}
+                  >
+                    <DropdownMenu.ItemIndicator>
+                      <DotFilledIcon />
+                    </DropdownMenu.ItemIndicator>
+                    {semestersDisplayMap[semesterType as SemesterType]}
+                  </DropdownMenu.CheckboxItem>
+                ))}
+                {/* {allSemesterCodes.map((semesterCode) => (
                   <DropdownMenu.CheckboxItem
                     key={displaySemesterCode(semesterCode)}
                     className={itemClasses}
@@ -150,7 +167,7 @@ const SortByDropdown: FC = () => {
                     </DropdownMenu.ItemIndicator>
                     {displaySemesterCode(semesterCode)}
                   </DropdownMenu.CheckboxItem>
-                ))}
+                ))} */}
               </DropdownMenu.SubContent>
             </DropdownMenu.Portal>
           </DropdownMenu.Sub>

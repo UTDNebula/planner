@@ -1,13 +1,13 @@
 import { trpc } from '@/utils/trpc';
 import { toast } from 'react-toastify';
-import { createNewYear, isSemCodeEqual } from '@/utils/utilFunctions';
+import { createNewYear } from '@/utils/utilFunctions';
 import { ObjectID } from 'bson';
 import { createContext, FC, useContext, useEffect, useMemo, useReducer, useState } from 'react';
 import { Plan, Semester, DraggableCourse } from './types';
 import { customCourseSort } from './utils';
 import { useTaskQueue } from '@/utils/useTaskQueue';
 import { tagColors } from './utils';
-import { SemesterCode } from '@prisma/client';
+import { SemesterType } from '@prisma/client';
 
 export interface SemestersContextState {
   planId: string;
@@ -41,14 +41,14 @@ export interface SemestersContextState {
   title: string;
   toggleColorFilter: (color: keyof typeof tagColors) => void;
   toggleYearFilter: (year: number) => void;
-  toggleSemesterFilter: (semester: SemesterCode) => void;
+  toggleSemesterFilter: (semester: SemesterType) => void;
   filters: Filter[];
 }
 
 type Filter =
   | { type: 'year'; year: number }
   | { type: 'color'; color: keyof typeof tagColors }
-  | { type: 'semester'; code: SemesterCode };
+  | { type: 'semester'; semester: SemesterType };
 
 export const SemestersContext = createContext<SemestersContextState | null>(null);
 
@@ -523,15 +523,15 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
     else setFilters(filters.filter((filter) => !(filter.type === 'year' && filter.year === year)));
   };
 
-  const toggleSemesterFilter = (semesterCode: SemesterCode) => {
+  const toggleSemesterFilter = (semesterCode: SemesterType) => {
     const hasFilter = filters.some(
-      (filter) => filter.type === 'semester' && isSemCodeEqual(filter.code, semesterCode),
+      (filter) => filter.type === 'semester' && filter.semester === semesterCode,
     );
-    if (!hasFilter) setFilters([...filters, { type: 'semester', code: semesterCode }]);
+    if (!hasFilter) setFilters([...filters, { type: 'semester', semester: semesterCode }]);
     else
       setFilters(
         filters.filter(
-          (filter) => !(filter.type === 'semester' && isSemCodeEqual(filter.code, semesterCode)),
+          (filter) => !(filter.type === 'semester' && filter.semester === semesterCode),
         ),
       );
   };
@@ -559,11 +559,11 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
         case 'semester':
           const semesterFilters = filters.filter((filter) => filter.type === 'semester') as {
             type: 'semester';
-            code: SemesterCode;
+            semester: SemesterType;
           }[];
 
           filtered = filtered.filter((semester) =>
-            semesterFilters.some((filter) => isSemCodeEqual(semester.code, filter.code)),
+            semesterFilters.some((filter) => filter.semester === semester.code.semester),
           );
       }
     }
