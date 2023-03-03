@@ -71,29 +71,38 @@ function CourseSelectorContainer({
               </div>
               <h6 className="text-sm tracking-tight text-gray-400">Drag courses onto your plan</h6>
             </div>
-            <SearchBarTwo
-              onClick={() => setDisplay(true)}
-              updateQuery={(q) => {
-                updateQuery(q);
-                setDisplay(true);
-              }}
-              placeholder="Search courses"
-            />
-            <div className="relative">
-              <div
-                ref={ref}
-                className="absolute z-[999] w-full overflow-clip rounded-lg bg-white drop-shadow-2xl"
-              ></div>
+            <div className="z-[999] drop-shadow-2xl">
+              <SearchBarTwo
+                onClick={() => setDisplay(true)}
+                updateQuery={(q) => {
+                  updateQuery(q);
+                  setDisplay(true);
+                }}
+                className={`${displayResults ? 'rounded-b-none border-b-transparent' : 'rounded-b-[10px] border-b-inherit'}`}
+                placeholder="Search courses"
+              />
+              <div className="relative">
+                <div
+                  ref={ref}
+                  className="absolute z-[99] w-full bg-white rounded-b-[10px] overflow-clip"
+                ></div>
+              </div>
             </div>
 
             <Dialog.Root open={displayResults} onOpenChange={(v) => setDisplay(v)} modal={false}>
-              {ref.current && <Dialog.Portal className="z-[999]" container={ref?.current}>
-                <Dialog.Content asChild className="z-[999]" onOpenAutoFocus={(e) => e.preventDefault()}>
-                  <div className="w-full bg-white p-4">
-                    <DraggableCourseList courses={courseResults} getDragId={getSearchedDragId} />
-                  </div>
-                </Dialog.Content>
-              </Dialog.Portal>}
+              {ref.current && (
+                <Dialog.Portal className="z-[99]" container={ref?.current}>
+                  <Dialog.Content
+                    asChild
+                    className="z-[999]"
+                    onOpenAutoFocus={(e) => e.preventDefault()}
+                  >
+                    <div className="w-full bg-white p-4 border-[2px] border-[#EDEFF7] drop-shadow-2xl">
+                      <DraggableCourseList courses={courseResults} getDragId={getSearchedDragId} />
+                    </div>
+                  </Dialog.Content>
+                </Dialog.Portal>
+              )}
             </Dialog.Root>
             {degreeRequirements.requirements.map((req, idx) => (
               <RequirementsContainer
