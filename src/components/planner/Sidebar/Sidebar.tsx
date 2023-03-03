@@ -78,13 +78,17 @@ function CourseSelectorContainer({
                   updateQuery(q);
                   setDisplay(true);
                 }}
-                className={`${displayResults ? 'rounded-b-none border-b-transparent' : 'rounded-b-[10px] border-b-inherit'}`}
+                className={`${
+                  displayResults
+                    ? 'rounded-b-none border-b-transparent'
+                    : 'rounded-b-[10px] border-b-inherit'
+                }`}
                 placeholder="Search courses"
               />
               <div className="relative">
                 <div
                   ref={ref}
-                  className="absolute z-[99] w-full bg-white rounded-b-[10px] overflow-clip"
+                  className="absolute z-[99] w-full overflow-clip rounded-b-[10px] bg-white"
                 ></div>
               </div>
             </div>
@@ -97,7 +101,7 @@ function CourseSelectorContainer({
                     className="z-[999]"
                     onOpenAutoFocus={(e) => e.preventDefault()}
                   >
-                    <div className="w-full bg-white p-4 border-[2px] border-[#EDEFF7] drop-shadow-2xl">
+                    <div className="w-full border-[2px] border-[#EDEFF7] bg-white p-4 drop-shadow-2xl">
                       <DraggableCourseList courses={courseResults} getDragId={getSearchedDragId} />
                     </div>
                   </Dialog.Content>

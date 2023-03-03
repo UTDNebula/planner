@@ -51,7 +51,7 @@ export const SearchBarTwo: React.FC<SearchBarProps> = ({ placeholder, updateQuer
 
   return (
     <div
-    {...props}
+      {...props}
       className={`top-0 z-20 flex h-10 flex-row items-center justify-between overflow-hidden rounded-[10px] border-[2px] border-[#EDEFF7] px-4 ${props.className}`}
     >
       <SearchCourseIcon />
