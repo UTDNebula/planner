@@ -553,7 +553,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
         case 'color':
           filtered = filtered.map((semester) => ({
             ...semester,
-            courses: semester.courses.filter((course) => course.color !== filter.color),
+            courses: semester.courses.filter((course) => course.color === filter.color),
           }));
           break;
         case 'semester':
