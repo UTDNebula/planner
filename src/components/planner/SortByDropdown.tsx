@@ -51,6 +51,7 @@ const SortByDropdown: FC = () => {
           <DropdownMenu.Sub>
             <DropdownMenu.SubTrigger className={itemClasses + ' justify-between border-none'}>
               <div className="flex items-center gap-x-3">
+                <Checkbox checked={filters.some((filter) => filter.type === 'color')} />
                 <ColorSwatchIcon />
                 <span>Filter by color</span>
               </div>
@@ -65,18 +66,26 @@ const SortByDropdown: FC = () => {
                 alignOffset={0}
               >
                 {Object.entries(tagColors).map(([color, classes]) => (
-                  <DropdownMenu.Item key={`${color}-${classes}`} className={itemClasses}>
-                    <Checkbox
-                      checked={filters.some(
-                        (filter) => filter.type === 'color' && filter.color === color,
-                      )}
-                      onClick={(e) => e.stopPropagation()}
-                      onCheckedChange={() => toggleColorFilter(color as keyof typeof tagColors)}
-                    />
-                    <div className={`h-5 w-5 rounded-sm border ${classes}`}></div>
-                    <span>
-                      {color.substring(0, 1).toUpperCase() + color.substring(1) || 'None'}
-                    </span>
+                  <DropdownMenu.Item key={`${color}-${classes}`}>
+                    <div
+                      className={itemClasses}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleColorFilter(color as keyof typeof tagColors);
+                      }}
+                    >
+                      <Checkbox
+                        checked={filters.some(
+                          (filter) => filter.type === 'color' && filter.color === color,
+                        )}
+                        onClick={(e) => e.stopPropagation()}
+                        onCheckedChange={() => toggleColorFilter(color as keyof typeof tagColors)}
+                      />
+                      <div className={`h-5 w-5 rounded-sm border ${classes}`}></div>
+                      <span>
+                        {color.substring(0, 1).toUpperCase() + color.substring(1) || 'None'}
+                      </span>
+                    </div>
                   </DropdownMenu.Item>
                 ))}
               </DropdownMenu.SubContent>
@@ -86,6 +95,7 @@ const SortByDropdown: FC = () => {
           <DropdownMenu.Sub>
             <DropdownMenu.SubTrigger className={itemClasses + ' justify-between border-none'}>
               <div className="flex items-center gap-x-3">
+                <Checkbox checked={filters.some((filter) => filter.type === 'year')} />
                 <ColorSwatchIcon />
                 <span>Filter by year</span>
               </div>
@@ -100,15 +110,23 @@ const SortByDropdown: FC = () => {
                 alignOffset={0}
               >
                 {Array.from(allYears).map((year) => (
-                  <DropdownMenu.Item key={year} className={itemClasses}>
-                    <Checkbox
-                      onClick={(e) => e.stopPropagation()}
-                      checked={filters.some(
-                        (filter) => filter.type === 'year' && filter.year === year,
-                      )}
-                      onCheckedChange={() => toggleYearFilter(year)}
-                    />
-                    {year}
+                  <DropdownMenu.Item key={year}>
+                    <div
+                      className={itemClasses}
+                      onClick={(e) => {
+                        toggleYearFilter(year);
+                        e.stopPropagation();
+                      }}
+                    >
+                      <Checkbox
+                        onClick={(e) => e.stopPropagation()}
+                        checked={filters.some(
+                          (filter) => filter.type === 'year' && filter.year === year,
+                        )}
+                        onCheckedChange={() => toggleYearFilter(year)}
+                      />
+                      {year}
+                    </div>
                   </DropdownMenu.Item>
                 ))}
               </DropdownMenu.SubContent>
@@ -118,6 +136,7 @@ const SortByDropdown: FC = () => {
           <DropdownMenu.Sub>
             <DropdownMenu.SubTrigger className={itemClasses + ' justify-between border-none'}>
               <div className="flex items-center gap-x-3">
+                <Checkbox checked={filters.some((filter) => filter.type === 'semester')} />
                 <ColorSwatchIcon />
                 <span>Filter by semester</span>
               </div>
@@ -132,15 +151,24 @@ const SortByDropdown: FC = () => {
                 alignOffset={0}
               >
                 {Object.keys(semestersDisplayMap).map((semesterType) => (
-                  <DropdownMenu.Item key={semesterType} className={itemClasses}>
-                    <Checkbox
-                      onClick={(e) => e.stopPropagation()}
-                      checked={filters.some(
-                        (filter) => filter.type === 'semester' && semesterType === filter.semester,
-                      )}
-                      onCheckedChange={() => toggleSemesterFilter(semesterType as SemesterType)}
-                    />
-                    {semestersDisplayMap[semesterType as SemesterType] + ' semester'}
+                  <DropdownMenu.Item key={semesterType}>
+                    <div
+                      className={itemClasses}
+                      onClick={(e) => {
+                        toggleSemesterFilter(semesterType as SemesterType);
+                        e.stopPropagation();
+                      }}
+                    >
+                      <Checkbox
+                        onClick={(e) => e.stopPropagation()}
+                        checked={filters.some(
+                          (filter) =>
+                            filter.type === 'semester' && semesterType === filter.semester,
+                        )}
+                        onCheckedChange={() => toggleSemesterFilter(semesterType as SemesterType)}
+                      />
+                      {semestersDisplayMap[semesterType as SemesterType] + ' semester'}
+                    </div>
                   </DropdownMenu.Item>
                 ))}
               </DropdownMenu.SubContent>
