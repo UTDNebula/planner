@@ -56,7 +56,7 @@ export const MemoizedSemesterCourseItem = React.memo(
         ref={ref}
         {...props}
         className={`flex h-[50px] w-full cursor-grab flex-row items-center rounded-md  border border-[#D4D4D4] ${
-          isValid ? 'bg-generic-white' : 'bg-[#FFFBEB]'
+          isValid || isValid === undefined ? 'bg-generic-white' : 'bg-[#FFFBEB]'
         }`}
         // onClick={() => setDropdownOpen((prev) => !prev)}
         onClick={() => setDropdownOpen(true)}
@@ -191,7 +191,7 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
       onDeleteCourse={onDeleteCourse}
       isSelected={isSelected}
       onColorChange={onColorChange}
-      isValid={isValid || false}
+      isValid={isValid || isValid === undefined} // Show as valid if isValid is undefined
     />
   );
 };
