@@ -17,12 +17,16 @@ export interface SemesterTileDropdownProps {
   deleteAllCourses: () => void;
   selectAllCourses: () => void;
   changeColor: (color: keyof typeof tagColors) => void;
+  locked: boolean
+  toggleLock: () => void
 }
 
 const SemesterTileDropdown: FC<SemesterTileDropdownProps> = ({
   deleteAllCourses,
   selectAllCourses,
   changeColor,
+  locked,
+  toggleLock
 }) => {
   const id = new ObjectID().toString();
   return (
@@ -42,6 +46,9 @@ const SemesterTileDropdown: FC<SemesterTileDropdownProps> = ({
           <DropdownMenu.Item className={itemClasses} onClick={deleteAllCourses}>
             <ArchiveIcon />
             <span>Clear courses</span>
+          </DropdownMenu.Item>
+          <DropdownMenu.Item className={itemClasses} onClick={toggleLock}>
+            <span>{locked ? "Unlock" : "Lock"} semester</span>
           </DropdownMenu.Item>
           <DropdownMenu.Item className={itemClasses} onClick={selectAllCourses}>
             <ClipboardListIcon />

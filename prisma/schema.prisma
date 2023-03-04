@@ -71,19 +71,22 @@ model Bypass {
 model Course {
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
   code       String
-  color      String
+  color      String    @default("")
   semester   Semester? @relation(fields: [semesterId], references: [id], onDelete: Cascade)
   semesterId String?   @db.ObjectId
+  locked     Boolean   @default(false)
+  
   @@unique([semesterId, code])
 }
 
 model Semester {
   id      String       @id @default(auto()) @map("_id") @db.ObjectId
   code    SemesterCode
-  courses Course[] 
+  courses Course[]
   plan    Plan?        @relation(fields: [planId], references: [id], onDelete: Cascade)
   planId  String?      @db.ObjectId
   color   String       @default("")
+  locked  Boolean      @default(false)
 }
 
 type SemesterCode {

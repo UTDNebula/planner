@@ -17,6 +17,8 @@ export interface SemesterTileDropdownProps {
   changeColor: (color: keyof typeof tagColors) => void;
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  toggleLock: () => void;
+  locked: boolean
 }
 
 const SemesterCourseItemDropdown: FC<SemesterTileDropdownProps> = ({
@@ -25,6 +27,8 @@ const SemesterCourseItemDropdown: FC<SemesterTileDropdownProps> = ({
   open,
   onOpenChange,
   children,
+  toggleLock,
+  locked,
 }) => {
   const id = new ObjectID().toString();
   return (
@@ -44,9 +48,10 @@ const SemesterCourseItemDropdown: FC<SemesterTileDropdownProps> = ({
             <DeleteIcon />
             <span>Delete</span>
           </DropdownMenu.Item>
-          <DropdownMenu.Item className={itemClasses}>
+          <DropdownMenu.Item className={itemClasses} onClick={toggleLock}>
+            {/* TODO: Change icon */}
             <ClipboardListIcon />
-            <span>Lock course</span>
+            <span>{locked ? "Unlock" : "Lock"} course</span>
           </DropdownMenu.Item>
 
           <DropdownMenu.Sub>
