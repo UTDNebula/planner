@@ -6,6 +6,8 @@ import { tagColors } from './utils';
 import { useSemestersContext } from './SemesterContext';
 import { SemesterType } from '@prisma/client';
 import Checkbox from '../Checkbox';
+import CalendarIcon from '@/icons/CalendarIcon';
+import ClockIcon from '@/icons/ClockIcon';
 
 const itemClasses =
   'flex items-center gap-x-3 border-b border-neutral-300 px-3 py-2 hover:bg-neutral-200 cursor-pointer';
@@ -85,7 +87,7 @@ const FilterByDropdown: FC = ({ children }) => {
             <DropdownMenu.SubTrigger className={itemClasses + ' justify-between border-none'}>
               <div className="flex items-center gap-x-3">
                 <Checkbox checked={filters.some((filter) => filter.type === 'year')} />
-                <ColorSwatchIcon />
+                <CalendarIcon />
                 <span>Filter by year</span>
               </div>
               <ChevronIcon className="h-3 w-3" />
@@ -126,7 +128,7 @@ const FilterByDropdown: FC = ({ children }) => {
             <DropdownMenu.SubTrigger className={itemClasses + ' justify-between border-none'}>
               <div className="flex items-center gap-x-3">
                 <Checkbox checked={filters.some((filter) => filter.type === 'semester')} />
-                <ColorSwatchIcon />
+                <ClockIcon />
                 <span>Filter by semester</span>
               </div>
               <ChevronIcon className="h-3 w-3" />
