@@ -1,11 +1,9 @@
-import logo from '@public/Nebula_Planner_Logo.png';
 import { InferGetServerSidePropsType } from 'next';
-import Image from 'next/image';
 import { getProviders, signIn, useSession } from 'next-auth/react';
 import React from 'react';
 
 import { useRouter } from 'next/router';
-import AuthProviderIcons from "@/icons/AuthProviderIcons";
+import AuthProviderIcons from '@/icons/AuthProviderIcons';
 
 // import AuthCard from '../../components/auth/AuthCard';
 // import LoginCard from '@components/auth/Login'
@@ -16,10 +14,7 @@ import AuthProviderIcons from "@/icons/AuthProviderIcons";
 export default function AuthPage({
   providers,
 }: InferGetServerSidePropsType<typeof getStaticProps>): JSX.Element {
-  const [email, setEmail] = React.useState('');
-  const [showSignIn, setShowSignIn] = React.useState(true);
-
-  // Lets just handle auth redirect on client side
+  // Let's just handle auth redirect on client side
   const router = useRouter();
   const { status } = useSession();
 
@@ -29,21 +24,10 @@ export default function AuthPage({
     }
   }, [router, status]);
 
-  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
-  };
-
-  const handleEmailSignIn = () => {
-    signIn('email', {
-      email,
-      callbackUrl: '/app',
-    });
-  };
-
-  const providerButtonProps: { [provider: string] : [classes: string] } = {
-    "discord": ["bg-[#5865f2]"],
-    "google": ["bg-[#EA4335]"],
-    "facebook": ["bg-[#1877F2]"]
+  const providerButtonProps: { [provider: string]: [classes: string] } = {
+    discord: ['bg-[#5865f2]'],
+    google: ['bg-[#EA4335]'],
+    facebook: ['bg-[#1877F2]'],
   };
 
   return (
@@ -52,7 +36,7 @@ export default function AuthPage({
         <h1 className="text-center text-3xl font-bold leading-normal">planner.</h1>
       </div>
       <section className="w-full max-w-xl px-4">
-        <div className="bg-white rounded-xl shadow">
+        <div className="rounded-xl bg-white shadow">
           <div className="w-full rounded-xl bg-white p-4 shadow-none md:shadow-lg ">
             <h2 className="mb-2 text-center text-xl font-bold leading-normal">Sign in</h2>
             <section className="mt-4 space-y-2">
@@ -65,12 +49,12 @@ export default function AuthPage({
                         callbackUrl: '/app',
                       })
                     }
-                    className={`border-gray-200 flex w-full appearance-none items-center justify-start rounded-md border ${providerButtonProps[provider.id]} px-4 py-2 space-x-2 leading-tight focus-visible:bg-gray-200 hover:bg-gray-200 focus-visible:outline-none text-gray-200 focus-visible:text-gray-700 hover:text-gray-700 h-10`}
+                    className={`flex w-full appearance-none items-center justify-start rounded-md border border-gray-200 ${
+                      providerButtonProps[provider.id]
+                    } h-10 space-x-2 px-4 py-2 leading-tight text-gray-200 hover:bg-gray-200 hover:text-gray-700 focus-visible:bg-gray-200 focus-visible:text-gray-700 focus-visible:outline-none`}
                   >
-                    { AuthProviderIcons[provider.id] }
-                    <h4 className="text-left text-sm">
-                      Continue with {provider.name}
-                    </h4>
+                    {AuthProviderIcons[provider.id]}
+                    <h4 className="text-left text-sm">Continue with {provider.name}</h4>
                   </button>
                 ))}
             </section>
