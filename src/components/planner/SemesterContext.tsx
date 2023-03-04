@@ -561,14 +561,18 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
           filtered = filtered.filter((semester) =>
             yearFilters.some((filter) => filter.year === semester.code.year),
           );
+          break;
 
-          break;
         case 'color':
-          filtered = filtered.map((semester) => ({
-            ...semester,
-            courses: semester.courses.filter((course) => course.color === filter.color),
-          }));
+          const colorFilters = filters.filter((filter) => filter.type === 'color') as {
+            type: 'color';
+            color: keyof typeof tagColors;
+          }[];
+          filtered = filtered.filter((semester) =>
+            colorFilters.some((filter) => filter.color === semester.color),
+          );
           break;
+
         case 'semester':
           const semesterFilters = filters.filter((filter) => filter.type === 'semester') as {
             type: 'semester';
