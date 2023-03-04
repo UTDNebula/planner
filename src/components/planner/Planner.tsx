@@ -33,7 +33,7 @@ import type {
 } from './types';
 import { DegreeRequirements } from './Sidebar/types';
 
-import Toolbar from './Toolbar';
+import Toolbar from './Toolbar/Toolbar';
 import { useSemestersContext } from './SemesterContext';
 import SelectedCoursesToast from './SelectedCoursesToast';
 import TransferBank from './TransferBank';
