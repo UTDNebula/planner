@@ -51,9 +51,9 @@ export default function AuthPage({
       <div>
         <h1 className="text-center text-3xl font-bold leading-normal">planner.</h1>
       </div>
-      <section>
+      <section className="w-full max-w-xl px-4">
         <div className="bg-white rounded-xl shadow">
-          <div className="w-96 rounded-xl bg-white p-4 shadow-none md:shadow-lg ">
+          <div className="w-full rounded-xl bg-white p-4 shadow-none md:shadow-lg ">
             <h2 className="mb-2 text-center text-xl font-bold leading-normal">Sign in</h2>
             <section className="mt-4 space-y-5">
               {providers &&
