@@ -65,7 +65,7 @@ export default function AuthPage({
                         callbackUrl: '/app',
                       })
                     }
-                    className={`border-gray-200 flex w-full appearance-none items-center justify-start rounded-md border border-gray-500 ${providerButtonProps[provider.id]} px-5 py-2.5 space-x-3 leading-tight focus-visible:bg-gray-200 hover:bg-gray-200 focus-visible:outline-none text-gray-200 focus-visible:text-gray-700 hover:text-gray-700 h-10`}
+                    className={`border-gray-200 flex w-full appearance-none items-center justify-start rounded-md border border-gray-500 ${providerButtonProps[provider.id]} px-4 py-2 space-x-2 leading-tight focus-visible:bg-gray-200 hover:bg-gray-200 focus-visible:outline-none text-gray-200 focus-visible:text-gray-700 hover:text-gray-700 h-10`}
                   >
                     { AuthProviderIcons[provider.id] }
                     <h4 className="text-left text-sm">
