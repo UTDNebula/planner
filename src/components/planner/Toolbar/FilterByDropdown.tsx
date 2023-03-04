@@ -10,7 +10,7 @@ import CalendarIcon from '@/icons/CalendarIcon';
 import ClockIcon from '@/icons/ClockIcon';
 
 const itemClasses =
-  'flex items-center gap-x-3 border-b border-neutral-300 px-3 py-2 hover:bg-neutral-200 cursor-pointer';
+  'flex items-center gap-x-3 border-b border-neutral-300 px-3 py-2 hover:bg-neutral-100 cursor-pointer group';
 
 const contentClasses = 'w-64 rounded-md border border-neutral-300 bg-generic-white z-[9999]';
 
@@ -53,7 +53,10 @@ const FilterByDropdown: FC = ({ children }) => {
               onClick={toggleOffAllColorFilters}
             >
               <div className="flex items-center gap-x-3">
-                <Checkbox checked={filters.some((filter) => filter.type === 'color')} />
+                <Checkbox
+                  className="group-hover:!bg-neutral-100"
+                  checked={filters.some((filter) => filter.type === 'color')}
+                />
                 <ColorSwatchIcon />
                 <span>Filter by color</span>
               </div>
@@ -77,6 +80,7 @@ const FilterByDropdown: FC = ({ children }) => {
                       }}
                     >
                       <Checkbox
+                        className="group-hover:!bg-neutral-100"
                         checked={filters.some(
                           (filter) => filter.type === 'color' && filter.color === color,
                         )}
@@ -100,7 +104,10 @@ const FilterByDropdown: FC = ({ children }) => {
               onClick={toggleOffAllYearFilters}
             >
               <div className="flex items-center gap-x-3">
-                <Checkbox checked={filters.some((filter) => filter.type === 'year')} />
+                <Checkbox
+                  className="group-hover:!bg-neutral-100"
+                  checked={filters.some((filter) => filter.type === 'year')}
+                />
                 <CalendarIcon />
                 <span>Filter by year</span>
               </div>
@@ -124,6 +131,7 @@ const FilterByDropdown: FC = ({ children }) => {
                       }}
                     >
                       <Checkbox
+                        className="group-hover:!bg-neutral-100"
                         onClick={(e) => e.stopPropagation()}
                         checked={filters.some(
                           (filter) => filter.type === 'year' && filter.year === year,
@@ -144,7 +152,10 @@ const FilterByDropdown: FC = ({ children }) => {
               onClick={toggleOffAllSemesterFilters}
             >
               <div className="flex items-center gap-x-3">
-                <Checkbox checked={filters.some((filter) => filter.type === 'semester')} />
+                <Checkbox
+                  className="group-hover:!bg-neutral-100"
+                  checked={filters.some((filter) => filter.type === 'semester')}
+                />
                 <ClockIcon />
                 <span>Filter by semester</span>
               </div>
@@ -168,6 +179,7 @@ const FilterByDropdown: FC = ({ children }) => {
                       }}
                     >
                       <Checkbox
+                        className="group-hover:!bg-neutral-100"
                         onClick={(e) => e.stopPropagation()}
                         checked={filters.some(
                           (filter) =>
