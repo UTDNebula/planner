@@ -8,7 +8,7 @@ interface PrereqHoverCardProps {
   side?: 'top' | 'left' | 'bottom' | 'right';
 }
 
-export const PrereqHoverCard: FC<PrereqHoverCardProps> = ({
+export const PrereqWarnHoverCard: FC<PrereqHoverCardProps> = ({
   prereqs,
   open,
   onOpenChange,
@@ -41,4 +41,4 @@ export const PrereqHoverCard: FC<PrereqHoverCardProps> = ({
   </HoverCard.Root>
 );
 
-export default PrereqHoverCard;
+export default PrereqWarnHoverCard;
