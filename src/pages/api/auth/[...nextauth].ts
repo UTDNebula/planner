@@ -7,8 +7,8 @@ import GoogleProvider from 'next-auth/providers/google';
 import FacebookProvider from 'next-auth/providers/facebook';
 import EmailProvider from 'next-auth/providers/email';
 
-import { env } from '../../../env/server.mjs';
-import { prisma } from '../../../server/db/client';
+import { env } from '@/env/server.mjs';
+import { prisma } from '@server/db/client';
 
 export const authOptions: NextAuthOptions = {
   // Include user.id on session
@@ -26,34 +26,37 @@ export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma as unknown as PrismaClient),
   providers: [
     GoogleProvider({
-      clientId: env.GOOGLE_CLIENT_ID,
-      clientSecret: env.GOOGLE_CLIENT_SECRET,
+      clientId: env.GOOGLE_CLIENT_ID || '',
+      clientSecret: env.GOOGLE_CLIENT_SECRET || '',
       profile(profile) {
         // profile type can be found here: https://next-auth.js.org/providers/discord
         return {
-          id: profile.id,
+          id: profile.sub,
+          name: profile.name,
           email: profile.email,
         };
       },
     }),
     DiscordProvider({
-      clientId: env.DISCORD_CLIENT_ID,
-      clientSecret: env.DISCORD_CLIENT_SECRET,
+      clientId: env.DISCORD_CLIENT_ID || '',
+      clientSecret: env.DISCORD_CLIENT_SECRET || '',
       profile(profile) {
         // profile type can be found here: https://next-auth.js.org/providers/discord
         return {
           id: profile.id,
+          name: profile.username,
           email: profile.email,
         };
       },
     }),
     FacebookProvider({
-      clientId: env.FACEBOOK_CLIENT_ID,
-      clientSecret: env.FACEBOOK_CLIENT_SECRET,
+      clientId: env.FACEBOOK_CLIENT_ID || '',
+      clientSecret: env.FACEBOOK_CLIENT_SECRET || '',
       profile(profile) {
         // profile type can be found here: https://next-auth.js.org/providers/discord
         return {
           id: profile.id,
+          name: profile.name,
           email: profile.email,
         };
       },
