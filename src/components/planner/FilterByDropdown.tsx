@@ -15,8 +15,16 @@ const itemClasses =
 const contentClasses = 'w-64 rounded-md border border-neutral-300 bg-generic-white z-[9999]';
 
 const FilterByDropdown: FC = ({ children }) => {
-  const { toggleColorFilter, toggleSemesterFilter, toggleYearFilter, allSemesters, filters } =
-    useSemestersContext();
+  const {
+    toggleColorFilter,
+    toggleSemesterFilter,
+    toggleYearFilter,
+    toggleOffAllColorFilters,
+    toggleOffAllSemesterFilters,
+    toggleOffAllYearFilters,
+    allSemesters,
+    filters,
+  } = useSemestersContext();
 
   const allYears = useMemo(
     () => new Set(allSemesters.map((semester) => semester.code.year)),
@@ -40,7 +48,10 @@ const FilterByDropdown: FC = ({ children }) => {
           align="start"
         >
           <DropdownMenu.Sub>
-            <DropdownMenu.SubTrigger className={itemClasses + ' justify-between border-none'}>
+            <DropdownMenu.SubTrigger
+              className={itemClasses + ' justify-between border-none'}
+              onClick={toggleOffAllColorFilters}
+            >
               <div className="flex items-center gap-x-3">
                 <Checkbox checked={filters.some((filter) => filter.type === 'color')} />
                 <ColorSwatchIcon />
@@ -84,7 +95,10 @@ const FilterByDropdown: FC = ({ children }) => {
           </DropdownMenu.Sub>
 
           <DropdownMenu.Sub>
-            <DropdownMenu.SubTrigger className={itemClasses + ' justify-between border-none'}>
+            <DropdownMenu.SubTrigger
+              className={itemClasses + ' justify-between border-none'}
+              onClick={toggleOffAllYearFilters}
+            >
               <div className="flex items-center gap-x-3">
                 <Checkbox checked={filters.some((filter) => filter.type === 'year')} />
                 <CalendarIcon />
@@ -125,7 +139,10 @@ const FilterByDropdown: FC = ({ children }) => {
           </DropdownMenu.Sub>
 
           <DropdownMenu.Sub>
-            <DropdownMenu.SubTrigger className={itemClasses + ' justify-between border-none'}>
+            <DropdownMenu.SubTrigger
+              className={itemClasses + ' justify-between border-none'}
+              onClick={toggleOffAllSemesterFilters}
+            >
               <div className="flex items-center gap-x-3">
                 <Checkbox checked={filters.some((filter) => filter.type === 'semester')} />
                 <ClockIcon />

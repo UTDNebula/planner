@@ -42,6 +42,9 @@ export interface SemestersContextState {
   toggleColorFilter: (color: keyof typeof tagColors) => void;
   toggleYearFilter: (year: number) => void;
   toggleSemesterFilter: (semester: SemesterType) => void;
+  toggleOffAllColorFilters: () => void;
+  toggleOffAllYearFilters: () => void;
+  toggleOffAllSemesterFilters: () => void;
   filters: Filter[];
 }
 
@@ -511,6 +514,16 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
   };
 
   const [filters, setFilters] = useState<Filter[]>([]);
+
+  const toggleOffAllColorFilters = () =>
+    setFilters(filters.filter((filter) => filter.type !== 'color'));
+
+  const toggleOffAllYearFilters = () =>
+    setFilters(filters.filter((filter) => filter.type !== 'year'));
+
+  const toggleOffAllSemesterFilters = () =>
+    setFilters(filters.filter((filter) => filter.type !== 'semester'));
+
   const toggleColorFilter = (color: keyof typeof tagColors) => {
     const hasFilter = filters.some((filter) => filter.type === 'color' && filter.color === color);
     if (!hasFilter) setFilters([...filters, { type: 'color', color }]);
@@ -597,6 +610,9 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
         toggleColorFilter,
         toggleYearFilter,
         toggleSemesterFilter,
+        toggleOffAllColorFilters,
+        toggleOffAllYearFilters,
+        toggleOffAllSemesterFilters,
         filters,
       }}
     >
