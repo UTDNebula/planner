@@ -14,6 +14,7 @@ module.exports = {
 
   plugins: ['simple-import-sort', 'unused-imports'],
   extends: [
+    'plugin:react-hooks/recommended',
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
     'prettier',
