@@ -121,27 +121,29 @@ const FilterByDropdown: FC = ({ children }) => {
                 sideOffset={-10}
                 alignOffset={0}
               >
-                {Array.from(allYears).map((year) => (
-                  <DropdownMenu.Item key={year}>
-                    <div
-                      className={itemClasses}
-                      onClick={(e) => {
-                        toggleYearFilter(year);
-                        e.stopPropagation();
-                      }}
-                    >
-                      <Checkbox
-                        className="group-hover:!bg-neutral-100"
-                        onClick={(e) => e.stopPropagation()}
-                        checked={filters.some(
-                          (filter) => filter.type === 'year' && filter.year === year,
-                        )}
-                        onCheckedChange={() => toggleYearFilter(year)}
-                      />
-                      {year}
-                    </div>
-                  </DropdownMenu.Item>
-                ))}
+                {Array.from(allYears)
+                  .sort()
+                  .map((year) => (
+                    <DropdownMenu.Item key={year}>
+                      <div
+                        className={itemClasses}
+                        onClick={(e) => {
+                          toggleYearFilter(year);
+                          e.stopPropagation();
+                        }}
+                      >
+                        <Checkbox
+                          className="group-hover:!bg-neutral-100"
+                          onClick={(e) => e.stopPropagation()}
+                          checked={filters.some(
+                            (filter) => filter.type === 'year' && filter.year === year,
+                          )}
+                          onCheckedChange={() => toggleYearFilter(year)}
+                        />
+                        {year}
+                      </div>
+                    </DropdownMenu.Item>
+                  ))}
               </DropdownMenu.SubContent>
             </DropdownMenu.Portal>
           </DropdownMenu.Sub>
