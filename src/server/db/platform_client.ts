@@ -1,4 +1,4 @@
-import { PrismaClient } from '../../../prisma/generated/platform/';
+import { PrismaClient } from '@prisma/client';
 
 import { env } from '../../env/server.mjs';
 declare global {
