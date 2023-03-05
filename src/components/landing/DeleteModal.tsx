@@ -21,8 +21,12 @@ const DeleteModal: FC<DeleteModalProps> = ({ deletePlan, deleteLoading, ...props
           {'Are you sure you want to delete? This action cannot be undone.'}
         </Dialog.Description>
         <div className="mt-4 flex gap-x-4">
+          <Dialog.Close asChild className="ml-auto">
+            <Button color="tertiary" onClick={(e) => e.stopPropagation()}>
+              Cancel
+            </Button>
+          </Dialog.Close>
           <Button
-            className="ml-auto"
             isLoading={deleteLoading}
             onClick={(e) => {
               e.stopPropagation();
@@ -31,11 +35,6 @@ const DeleteModal: FC<DeleteModalProps> = ({ deletePlan, deleteLoading, ...props
           >
             Delete
           </Button>
-          <Dialog.Close asChild>
-            <Button color="tertiary" onClick={(e) => e.stopPropagation()}>
-              Cancel
-            </Button>
-          </Dialog.Close>
         </div>
       </Dialog.Content>
     </Dialog.Portal>
