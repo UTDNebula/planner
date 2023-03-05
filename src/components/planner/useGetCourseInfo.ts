@@ -9,7 +9,7 @@ const useGetCourseInfo = (courseCode: string): { prereqs: string[]; title?: stri
   });
   const { prereqs, title } = useMemo(
     () => (data ? getPrereqs(data, courseCode) : { prereqs: [] }),
-    [data],
+    [data, courseCode],
   );
 
   return { prereqs, title };
@@ -29,7 +29,7 @@ const getPrereqs = (
     if (cNum.subject_prefix + ' ' + cNum.course_number === courseCode) {
       title = cNum.title;
       (cNum.prerequisites as Record<string, any>).options.map((elem: any) => {
-        if (elem.type !== 'course' && elem.type !== 'other') {
+        if (elem.type !== 'course' && elem.type !== 'other' && elem.options) {
           elem.options.map((elem2: any) => {
             if (elem2.type !== 'course' && elem2.type !== 'other') {
               elem2.options.map((elem3: any) => {
