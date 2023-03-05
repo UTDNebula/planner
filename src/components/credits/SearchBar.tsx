@@ -2,10 +2,12 @@ import SearchCourseIcon from '@/icons/SearchCourseIcon';
 import { Search as SearchIcon } from '@mui/icons-material';
 import { IconButton, InputBase } from '@mui/material';
 import React, { useState } from 'react';
+import { SearchType } from '../planner/Sidebar/Sidebar';
 
 interface SearchBarProps extends React.ComponentPropsWithoutRef<'div'> {
   updateQuery: (query: string) => void;
   placeholder: string;
+  searchType?: SearchType;
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({ placeholder, updateQuery, ...props }) => {
@@ -40,8 +42,17 @@ const SearchBar: React.FC<SearchBarProps> = ({ placeholder, updateQuery, ...prop
 
 export default React.memo(SearchBar);
 
-export const SearchBarTwo: React.FC<SearchBarProps> = ({ placeholder, updateQuery, ...props }) => {
+export const SearchBarTwo: React.FC<SearchBarProps> = ({
+  placeholder,
+  updateQuery,
+  searchType,
+  ...props
+}) => {
   const [query, setQuery] = useState<string>('');
+
+  React.useEffect(() => {
+    setQuery('');
+  }, [searchType]);
 
   const handleQueryUpdate = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();

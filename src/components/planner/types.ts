@@ -20,6 +20,7 @@ export interface Semester {
 
 export interface Course {
   code: string;
+  title?: string;
 }
 
 /* Represents a Course inside a Plan */

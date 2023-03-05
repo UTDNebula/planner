@@ -18,6 +18,11 @@ import { trpc } from '@/utils/trpc';
 import { DegreeRequirements } from './types';
 import ChevronIcon from '@/icons/ChevronIcon';
 
+export enum SearchType {
+  TITLE,
+  CODE,
+}
+
 function CourseSelectorContainer({
   degreeRequirements,
   courses,
@@ -30,12 +35,23 @@ function CourseSelectorContainer({
   });
 
   const { data, isLoading } = q;
+  const [searchType, setSearchType] = useState<SearchType>(SearchType.CODE);
+  const filterFn = React.useCallback(
+    (elm: { code: string; title: string }, query: string) => {
+      return (searchType === SearchType.CODE ? elm['code'] : elm['title'])
+        .toLowerCase()
+        .includes(query.toLowerCase());
+    },
+    [searchType],
+  );
 
   const { results, updateQuery } = useSearch({
     getData: async () =>
-      data ? data.map((c) => ({ code: `${c.subject_prefix} ${c.course_number}` })) : [],
+      data
+        ? data.map((c) => ({ code: `${c.subject_prefix} ${c.course_number}`, title: c.title }))
+        : [],
     initialQuery: '@',
-    filterFn: (elm, query) => elm['code'].toLowerCase().includes(query.toLowerCase()),
+    filterFn: (elm, query) => filterFn(elm, query),
     constraints: [0, 5],
   });
 
@@ -50,6 +66,14 @@ function CourseSelectorContainer({
   }, [results, courses]);
 
   const [open, setOpen] = useState(true);
+
+  const handleSearchTypeChange = () => {
+    if (searchType === SearchType.CODE) {
+      setSearchType(SearchType.TITLE);
+    } else {
+      setSearchType(SearchType.CODE);
+    }
+  };
 
   return (
     <>
@@ -66,8 +90,23 @@ function CourseSelectorContainer({
                 <h1 className="pl-2 text-2xl font-medium tracking-tight">Plan Requirements</h1>
               </div>
               <h6 className="text-sm tracking-tight text-gray-400">Drag courses onto your plan</h6>
+              <div className="form-control">
+                <label className="label cursor-pointer justify-center gap-3">
+                  <span className="label-text">Course Code</span>
+                  <input
+                    type="checkbox"
+                    className="toggle"
+                    onChange={() => handleSearchTypeChange()}
+                  />
+                  <span className="label-text">Course Title</span>
+                </label>
+              </div>
             </div>
-            <SearchBarTwo updateQuery={updateQuery} placeholder="Search courses" />
+            <SearchBarTwo
+              updateQuery={updateQuery}
+              placeholder="Search courses"
+              searchType={searchType}
+            />
 
             <div className="bg-white p-4">
               {results.length > 0 && (
