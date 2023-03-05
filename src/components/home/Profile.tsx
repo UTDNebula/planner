@@ -11,6 +11,8 @@ import MenuItem from '@mui/material/MenuItem';
 import Button from '../Button';
 import { toast } from 'react-toastify';
 import FormHelperText from '@mui/material/FormHelperText';
+import Router from 'next/router';
+import { signOut } from 'next-auth/react';
 
 type ProfilePageProps = {
   isDesktop: boolean;
@@ -21,6 +23,15 @@ type ProfilePageProps = {
 export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Element {
   const userQuery = trpc.user.getUser.useQuery();
   const utils = trpc.useContext();
+
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const deleteUser = trpc.user.deleteUser.useMutation({
+    onSettled: () => setDeleteLoading(false),
+    onSuccess: async () => {
+      utils.user.getUser.invalidate();
+      signOut();
+    },
+  });
 
   const { data, isLoading } = userQuery;
 
@@ -360,7 +371,14 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
         <section className="mb-8 flex w-full flex-col rounded-2xl bg-white px-8 py-4">
           <h1>Delete My Account</h1>
           <div className="text-sm ">Deleting your account will remove all user data</div>
-          <Button disabled className="mt-5">
+          <Button
+            isLoading={deleteLoading}
+            className="mt-5"
+            onClick={() => {
+              setDeleteLoading(true);
+              deleteUser.mutateAsync();
+            }}
+          >
             Delete
           </Button>
         </section>
