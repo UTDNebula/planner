@@ -214,79 +214,76 @@ export const userRouter = router({
    *  - Takes in id, major
    */
   duplicateUserPlan: protectedProcedure
-  .input(z.object({ id: z.string() , major: z.string()}))
-  .mutation(async ({ ctx, input }) => {
-    const userId = ctx.session.user.id;
-    const planId = new ObjectID().toString();
+    .input(z.object({ id: z.string(), major: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const userId = ctx.session.user.id;
+      const planId = new ObjectID().toString();
 
-    const { id, major } = input;
-    // fetch plan from database with id
-    const plan = await ctx.prisma.plan.findFirst({
-      where: {
-        id: id
-      },
-      include: {
-        semesters: true,
-        
-      }
-    });
-
-    // Create degree requirements
-    const degreeRequirements: Prisma.DegreeRequirementsUncheckedCreateNestedOneWithoutPlanInput =
-      {
-        create: {
-          major, // Hardcode for now
+      const { id, major } = input;
+      // fetch plan from database with id
+      const plan = await ctx.prisma.plan.findFirst({
+        where: {
+          id: id,
         },
+        include: {
+          semesters: true,
+        },
+      });
+
+      // Create degree requirements
+      const degreeRequirements: Prisma.DegreeRequirementsUncheckedCreateNestedOneWithoutPlanInput =
+        {
+          create: {
+            major, // Hardcode for now
+          },
+        };
+
+      // Create semesters based on existing plan
+      const semesterData: Prisma.SemesterCreateInput[] = [];
+
+      // Push existing semester data to new plan
+      for (let i = 0; i < plan!.semesters.length; i++) {
+        const semData = {
+          courses: plan!.semesters[i].courses,
+          code: plan!.semesters[i].code,
+          courseColors: plan!.semesters[i].courseColors,
+        };
+        semesterData.push(semData);
+      }
+
+      const semesters: Prisma.SemesterUncheckedCreateNestedManyWithoutPlanInput = {
+        create: semesterData, // Prepopulate with semester
       };
 
-    // Create semesters based on existing plan
-    const semesterData: Prisma.SemesterCreateInput[] = [];
+      const plansInput: Prisma.PlanUncheckedCreateWithoutUserInput = {
+        id: planId,
+        name: 'Copy-' + plan!.name,
+        semesters: semesters,
+        requirements: degreeRequirements,
+      };
 
-    // Push existing semester data to new plan
-    for (let i = 0; i < plan!.semesters.length; i++) {
-      const semData = {
-        courses: plan!.semesters[i].courses,
-        code: plan!.semesters[i].code,
-        courseColors: plan!.semesters[i].courseColors
-      }
-      semesterData.push(
-        semData
-      );
-    }
-
-    const semesters: Prisma.SemesterUncheckedCreateNestedManyWithoutPlanInput = {
-      create: semesterData, // Prepopulate with semester
-    };
-
-    const plansInput: Prisma.PlanUncheckedCreateWithoutUserInput = {
-      id: planId,
-      name: "Copy-" + plan!.name,
-      semesters: semesters,
-      requirements: degreeRequirements,
-    };
-
-    const plans: Prisma.PlanUpdateManyWithoutUserNestedInput = {
-      create: plansInput,
-    };
-    const updatedUser = await ctx.prisma.user.update({
-      where: { id: userId },
-      data: {
-        plans: plans,
-      },
-      select: {
-        plans: {
-          orderBy: {
-            createdAt: 'desc',
-          },
-          take: 1,
-          select: {
-            id: true,
+      const plans: Prisma.PlanUpdateManyWithoutUserNestedInput = {
+        create: plansInput,
+      };
+      const updatedUser = await ctx.prisma.user.update({
+        where: { id: userId },
+        data: {
+          plans: plans,
+        },
+        select: {
+          plans: {
+            orderBy: {
+              createdAt: 'desc',
+            },
+            take: 1,
+            select: {
+              id: true,
+            },
           },
         },
-      },
-    });
-    return updatedUser.plans[0].id;
-  }),
+      });
+      return updatedUser.plans[0].id;
+    }),
 
   /**
    * Creates user plan based on a pre-made template

@@ -24,7 +24,6 @@ export default function PlanCard({ id, name, major }: PlanCardProps) {
     },
   });
 
-
   const duplicatePlan = trpc.user.duplicateUserPlan.useMutation({
     async onSuccess() {
       await utils.plan.invalidate();
