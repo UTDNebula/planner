@@ -22,6 +22,12 @@ export default function PlanCard({ id, name, major }: PlanCardProps) {
     },
   });
 
+  const duplicatePlan = trpc.user.duplicateUserPlan.useMutation({
+    async onSuccess() {
+      await utils.plan.invalidate();
+    },
+  });
+
   return (
     <>
       <div className="modal" id="my-modal-2">
@@ -65,6 +71,16 @@ export default function PlanCard({ id, name, major }: PlanCardProps) {
                 tabIndex={0}
                 className="dropdown-content menu rounded-box w-36 bg-base-100 p-2 shadow"
               >
+                <li>
+                  <a
+                    onClick={(e) => {
+                      duplicatePlan.mutateAsync({ id, major });
+                      e.stopPropagation();
+                    }}
+                  >
+                    Duplicate Plan
+                  </a>
+                </li>
                 <li>
                   <a
                     href="#my-modal-2"
