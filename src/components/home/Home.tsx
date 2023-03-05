@@ -1,10 +1,11 @@
-import AddIcon from '@mui/icons-material/Add';
+import ChevronIcon from '@/icons/ChevronIcon';
+import PlusIcon from '@/icons/PlusIcon';
 import { trpc } from '@utils/trpc';
-import React, { useState } from 'react';
-import Button from '../Button';
+import { useState } from 'react';
 
 import PlanCard from '../landing/PlanCard';
 import TemplateModal from '../template/Modal';
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 
 /**
  * A list of the user's plans
@@ -12,24 +13,50 @@ import TemplateModal from '../template/Modal';
 export default function PlansPage(): JSX.Element {
   const [openTemplateModal, setOpenTemplateModal] = useState(false);
   const userPlanQuery = trpc.plan.getUserPlans.useQuery();
+  const userQuery = trpc.user.getUser.useQuery();
   const { data } = userPlanQuery;
+  const userData = userQuery.data;
   if (!data) {
     return <div>You have not created any plans yet</div>;
   }
 
   return (
     <>
-      <section className="flex h-full w-full flex-col gap-12 overflow-auto p-20">
-        <h1 className="col-span-full">Home</h1>
-        <Button
-          color="primary"
-          size="large"
-          onClick={() => setOpenTemplateModal(true)}
-          icon={<AddIcon fontSize="inherit" />}
-        >
-          New
-        </Button>
-        <div className="flex w-fit flex-wrap gap-8">
+      <section className="flex max-h-screen flex-grow flex-col gap-4 overflow-y-scroll p-16">
+        <article className="flex flex-col">
+          <div className="flex flex-row items-center justify-between">
+            <div className="text-4xl">Course Dashboard</div>
+            <DropdownMenu.Root>
+              <DropdownMenu.Trigger asChild>
+                <button className="flex h-12 w-52 flex-row items-center gap-4 rounded-md bg-primary p-6 text-white transition-all hover:scale-105">
+                  <PlusIcon />
+                  <div className="">Add New Plan</div>
+                  <ChevronIcon className="rotate-90" />
+                </button>
+              </DropdownMenu.Trigger>
+
+              <DropdownMenu.Portal>
+                <DropdownMenu.Content className="DropdownMenuContent w-52 border-2 bg-white">
+                  <DropdownMenu.Item className="DropdownMenuItem flex h-12 items-center justify-center hover:bg-primary hover:text-white">
+                    <button className="h-full w-full" onClick={() => setOpenTemplateModal(true)}>
+                      Add Custom Plan
+                    </button>
+                  </DropdownMenu.Item>
+                  <DropdownMenu.Separator className="DropdownMenuSeparator h-0.5 w-52 bg-black opacity-10" />
+                  <DropdownMenu.Item className="DropdownMenuItem flex h-12 items-center justify-center hover:bg-primary hover:text-white">
+                    <button className="h-full w-full" onClick={() => setOpenTemplateModal(true)}>
+                      Add Template Plan
+                    </button>
+                  </DropdownMenu.Item>
+                </DropdownMenu.Content>
+              </DropdownMenu.Portal>
+            </DropdownMenu.Root>
+          </div>
+          <div className="ml-1 text-lg text-[#737373]">
+            Welcome {userData?.profile?.name ?? 'Temoc'}
+          </div>
+        </article>
+        <article className=" grid h-fit w-fit grid-cols-3 gap-12">
           {data.plans.map((plan) => (
             <PlanCard
               key={plan.id}
@@ -38,9 +65,9 @@ export default function PlansPage(): JSX.Element {
               major={plan.requirements?.major ?? 'undecided'}
             />
           ))}
-        </div>
+        </article>
+        <article></article>
       </section>
-
       {openTemplateModal && <TemplateModal setOpenTemplateModal={setOpenTemplateModal} />}
     </>
   );

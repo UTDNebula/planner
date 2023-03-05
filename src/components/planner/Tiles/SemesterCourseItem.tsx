@@ -1,63 +1,110 @@
 import { UniqueIdentifier, useDraggable } from '@dnd-kit/core';
-import React, { ComponentPropsWithoutRef, FC, forwardRef } from 'react';
+import React, { ComponentPropsWithoutRef, FC, forwardRef, useRef, useState } from 'react';
 
+import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import { DragDataFromSemesterTile, DraggableCourse, Semester } from '../types';
-import SyncProblemIcon from '@mui/icons-material/SyncProblem';
-import { displaySemesterCode } from '@/utils/utilFunctions';
 import CheckIcon from '@mui/icons-material/Check';
 import Checkbox from '@/components/Checkbox';
 import SemesterCourseItemDropdown from './SemesterCourseItemDropdown';
 import { tagColors } from '../utils';
+import { useSemestersContext } from '../SemesterContext';
+import { trpc } from '@/utils/trpc';
+import CourseInfoHoverCard from '../CourseInfoHoverCard';
+import useGetCourseInfo from '../useGetCourseInfo';
+import WarningIcon from '@/icons/WarningIcon';
+import PrereqWarnHoverCard from '../PrereqWarnHoverCard';
 
 export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'> {
   course: DraggableCourse;
   isSelected?: boolean;
-  isTransfer?: boolean;
+  isValid?: boolean;
+  isDragging?: boolean;
   onSelectCourse?: () => void;
   onDeselectCourse?: () => void;
   onDeleteCourse?: () => void;
   onColorChange?: (color: keyof typeof tagColors) => void;
 }
 
-// TODO(json) return to this
 /** UI implementation of a semester course */
 /* eslint-disable react/prop-types */
 export const MemoizedSemesterCourseItem = React.memo(
   forwardRef<HTMLDivElement, SemesterCourseItemProps>(function SemesterCourseItem(
     {
       course,
-      isTransfer,
+      isDragging,
       onSelectCourse,
       onDeselectCourse,
       isSelected,
       onDeleteCourse,
       onColorChange,
+      isValid,
       ...props
     },
     ref,
   ) {
-    // Create text output for sync icon
-    const correctSemester = course.sync?.correctSemester
-      ? `Course already taken in ${displaySemesterCode(course.sync?.correctSemester)}`
-      : `No record of this course in Course History`;
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [hoverOpen, setHoverOpen] = useState(false);
+    const [hoverIconOpen, setHoverIconOpen] = useState(false);
+    const openHover = () => !isDragging && !dropdownOpen && setHoverOpen(true);
+
+    const hoverTimer = useRef<ReturnType<typeof setTimeout>>();
+
+    const { prereqs, title } = useGetCourseInfo(course.code);
 
     return (
       <div
         ref={ref}
         {...props}
-        data-tip="Drag!"
-        className={`tooltip tooltip-left flex h-[40px] w-full cursor-grab items-center overflow-hidden rounded-md border border-neutral-200 bg-generic-white`}
+        className={`flex h-[50px] w-full cursor-grab flex-row items-center rounded-md  border border-[#D4D4D4] ${
+          isValid || isValid === undefined ? 'bg-generic-white' : 'bg-[#FFFBEB]'
+        }`}
+        // onClick={() => setDropdownOpen((prev) => !prev)}
+        onClick={() => setDropdownOpen(true)}
+        onMouseEnter={() => {
+          hoverTimer.current = setTimeout(() => openHover(), 500);
+        }}
+        onMouseLeave={() => {
+          setHoverOpen(false);
+          if (hoverTimer.current) {
+            clearTimeout(hoverTimer.current);
+          }
+        }}
       >
-        <div className={`h-full w-2 ${tagColors[course.color]}`}></div>
-        <div className="py-4 px-2">
-          <div className="flex items-center gap-x-3">
+        <div className="h-[50px] w-2">
+          {course.color && (
+            <div
+              className={`h-full w-full rounded-l-md transition-all ${tagColors[course.color]} `}
+            ></div>
+          )}
+        </div>
+
+        <CourseInfoHoverCard
+          prereqs={prereqs}
+          open={hoverOpen}
+          onOpenChange={(open) => !dropdownOpen && setHoverOpen(open)}
+          title={title || ''}
+        >
+          <div className="flex w-full flex-row items-center gap-x-3">
             <SemesterCourseItemDropdown
+              open={dropdownOpen}
+              onOpenChange={(open) => {
+                if (hoverOpen) {
+                  setHoverOpen(false);
+                }
+                setDropdownOpen(open);
+              }}
               changeColor={(color) => onColorChange && onColorChange(color)}
               deleteCourse={() => onDeleteCourse && onDeleteCourse()}
-            />
+            >
+              <button className="cursor-pointer rounded-md py-[2px] transition-all duration-300 hover:bg-neutral-100">
+                <DragIndicatorIcon fontSize="inherit" className="text-[16px] text-neutral-300" />
+              </button>
+            </SemesterCourseItemDropdown>
+
             <Checkbox
               style={{ width: '20px', height: '20px' }}
               checked={isSelected}
+              onClick={(e) => e.stopPropagation()}
               onCheckedChange={(checked) => {
                 if (checked && onSelectCourse) {
                   onSelectCourse();
@@ -68,27 +115,30 @@ export const MemoizedSemesterCourseItem = React.memo(
                 }
               }}
             />
-            <span className="text-[16px] text-[#1C2A6D]">{course.code}</span>
+            <span className="text-sm text-[#1C2A6D]">{course.code}</span>
+            <div className="ml-auto mr-2 flex text-xs font-semibold">
+              {!isValid && (
+                <PrereqWarnHoverCard
+                  prereqs={prereqs}
+                  open={hoverIconOpen}
+                  onOpenChange={(hoverOpen) => !dropdownOpen && setHoverIconOpen(hoverOpen)}
+                >
+                  <span
+                    className="text-[#22C55E]"
+                    onMouseEnter={() => {
+                      setHoverIconOpen(true);
+                    }}
+                    onMouseLeave={() => {
+                      setHoverIconOpen(false);
+                    }}
+                  >
+                    <WarningIcon />
+                  </span>
+                </PrereqWarnHoverCard>
+              )}
+            </div>
           </div>
-
-          <div className="flex text-[12px] font-semibold">
-            {course.taken && (
-              <span className=" tooltip text-[#22C55E]" data-tip="Completed">
-                <CheckIcon fontSize="small" />
-              </span>
-            )}
-            {course.transfer && (
-              <span className="tooltip text-green-500" data-tip="Transfer">
-                T
-              </span>
-            )}
-            {!course.sync?.isSynced && (
-              <div className="tooltip" data-tip={`${correctSemester}`}>
-                <SyncProblemIcon fontSize="small" />
-              </div>
-            )}
-          </div>
-        </div>
+        </CourseInfoHoverCard>
       </div>
     );
   }),
@@ -123,6 +173,9 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
     data: { from: 'semester-tile', semester, course } as DragDataFromSemesterTile,
   });
 
+  const { planId } = useSemestersContext();
+  const prereqData = trpc.validator.prereqValidator.useQuery(planId);
+  const isValid = prereqData.data?.prereqValidation.get(course.code)?.[0];
   return (
     <SemesterCourseItem
       ref={setNodeRef}
@@ -131,12 +184,14 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
       }}
       {...attributes}
       {...listeners}
+      isDragging={isDragging}
       course={course}
       onSelectCourse={onSelectCourse}
       onDeselectCourse={onDeselectCourse}
       onDeleteCourse={onDeleteCourse}
       isSelected={isSelected}
       onColorChange={onColorChange}
+      isValid={isValid || isValid === undefined} // Show as valid if isValid is undefined
     />
   );
 };

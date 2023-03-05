@@ -1,10 +1,9 @@
 import { SemesterCode, SemesterType } from '@prisma/client';
 import { ObjectID } from 'bson';
 
-import { DraggableCourse, Semester } from '@/components/planner/types';
-import { Course } from '@/components/planner/types';
+import { Semester } from '@/components/planner/types';
 import { isEarlierSemester } from './plannerUtils';
-import { start } from 'repl';
+import { tagColors } from '@/components/planner/utils';
 
 /**
  * Creates 3 new semesters based on given year in SemesterCode
@@ -24,7 +23,7 @@ export const createNewYear = (semesterCode: SemesterCode): Semester[] => {
       },
       id: new ObjectID(),
       courses: [],
-      courseColors: [],
+      color: '',
     },
     {
       code: {
@@ -33,7 +32,7 @@ export const createNewYear = (semesterCode: SemesterCode): Semester[] => {
       },
       id: new ObjectID(),
       courses: [],
-      courseColors: [],
+      color: '',
     },
     {
       code: {
@@ -42,7 +41,7 @@ export const createNewYear = (semesterCode: SemesterCode): Semester[] => {
       },
       id: new ObjectID(),
       courses: [],
-      courseColors: [],
+      color: '',
     },
   ];
 };
@@ -102,7 +101,7 @@ export function generateSemesters(
       title: `${displaySemesterCode({ semester, year })}`,
       code: code,
       courses: [],
-      courseColors: [],
+      color: '' as keyof typeof tagColors,
     };
     result.push(newSemester);
     if (semester === SemesterType.f) {

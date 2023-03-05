@@ -62,7 +62,7 @@ export function RecursiveRequirement({
         return (
           <div className="flex flex-col">
             <Accordion
-              header={<div>Select ${req.required_count} of the following</div>}
+              header={<div>Select {req.required_count} of the following</div>}
               filled={req.filled}
             >
               <>
@@ -83,7 +83,7 @@ export function RecursiveRequirement({
           <div className="flex flex-col">
             <Accordion
               header={
-                <div>Select ${req.required_hours} credit hours from the following classes</div>
+                <div>Select {req.required_hours} credit hours from the following classes</div>
               }
               filled={req.filled}
             >
@@ -105,7 +105,7 @@ export function RecursiveRequirement({
           <div className="flex flex-col">
             <Accordion
               header={
-                <div>Select ${req.required_hours} credit hours from the following classes</div>
+                <div>Select {req.required_hours} credit hours from the following classes</div>
               }
               filled={req.filled}
             >

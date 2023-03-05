@@ -80,7 +80,7 @@ const SearchBar: FC<SearchBarProps & React.ComponentPropsWithoutRef<'button'>> =
           );
         }}
       />
-      <div className="flex h-full min-w-[55px] items-center justify-center bg-[#3E61ED]">
+      <div className="flex h-full min-w-[55px] items-center justify-center bg-[#4B4EFC]">
         <IconButton className="p-2 text-white" aria-label="search" size="large">
           <SearchIcon />
         </IconButton>

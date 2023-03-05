@@ -10,18 +10,16 @@
  * Be very careful when adding @dnd-kit presets (eg. @dnd-kit/sortable) or new data sources
  * Adding DndContext hooks (eg. useDraggable) without considering 'data' property will cause unexpected behaviors
  */
-import { trpc } from '@/utils/trpc';
 import {
   DndContext,
   DragOverlay,
-  MouseSensor,
   pointerWithin,
   useSensor,
   useSensors,
   Active,
   Over,
 } from '@dnd-kit/core';
-import React, { useMemo, useState, useRef, useEffect } from 'react';
+import React, { useMemo, useState, useRef, FC, useEffect } from 'react';
 
 import CourseSelectorContainer from './Sidebar/Sidebar';
 import { SidebarCourseItem } from './Sidebar/SidebarCourseItem';
@@ -31,26 +29,34 @@ import type {
   ActiveDragData,
   DragEventDestinationData,
   DragEventOriginData,
-  DraggableCourse,
   Semester,
 } from './types';
-import { isSemCodeEqual } from '@/utils/utilFunctions';
-import { SemesterCode } from '@prisma/client';
 import { DegreeRequirements } from './Sidebar/types';
 
-import Toolbar from './Toolbar';
+import Toolbar from './Toolbar/Toolbar';
 import { useSemestersContext } from './SemesterContext';
 import SelectedCoursesToast from './SelectedCoursesToast';
+import TransferBank from './TransferBank';
+import PlannerMouseSensor from './PlannerMouseSensor';
+import { trpc } from '@/utils/trpc';
 
 /** PlannerTool Props */
 export interface PlannerProps {
   degreeRequirements: DegreeRequirements;
+  prereqData?: Map<string, boolean>;
+  transferCredits: Array<string>;
 }
 
 /** Controlled wrapper around course list and semester tiles */
-export default function Planner({ degreeRequirements }: PlannerProps): JSX.Element {
+
+/** Controlled wrapper around course list and semester tiles */
+export default function Planner({
+  degreeRequirements,
+  transferCredits,
+}: PlannerProps): JSX.Element {
   const {
-    semesters,
+    planId,
+    filteredSemesters,
     handleAddCourseToSemester,
     handleAddYear,
     handleMoveCourseFromSemesterToSemester,
@@ -59,10 +65,21 @@ export default function Planner({ degreeRequirements }: PlannerProps): JSX.Eleme
     handleDeselectAllCourses,
     handleSelectCourses,
     handleDeleteAllSelectedCourses,
+    title,
   } = useSemestersContext();
 
-  // toggle transfered courses state
-  const [showTransfer, setShowTransfer] = useState(true);
+  const utils = trpc.useContext();
+
+  const degreeRequirementsQuery = trpc.plan.getDegreeRequirements.useQuery({ planId });
+  const degreeRequirementsData = degreeRequirementsQuery.data;
+
+  // Hacky
+  const updatePlan = async () => {
+    await utils.user.getUser.invalidate();
+  };
+  useEffect(() => {
+    updatePlan();
+  }, [filteredSemesters]);
 
   // Course that is currently being dragged
   const [activeCourse, setActiveCourse] = useState<ActiveDragData | null>(null);
@@ -70,7 +87,7 @@ export default function Planner({ degreeRequirements }: PlannerProps): JSX.Eleme
   // Delay necessary so events inside draggables propagate
   // valid sensors: https://github.com/clauderic/dnd-kit/discussions/82#discussioncomment-347608
   const sensors = useSensors(
-    useSensor(MouseSensor, {
+    useSensor(PlannerMouseSensor, {
       activationConstraint: {
         distance: 1,
       },
@@ -78,13 +95,13 @@ export default function Planner({ degreeRequirements }: PlannerProps): JSX.Eleme
   );
 
   const courseCodes = useMemo(
-    () => semesters.flatMap((sem) => sem.courses).map((course) => course.code),
-    [semesters],
+    () => filteredSemesters.flatMap((sem) => sem.courses).map((course) => course.code),
+    [filteredSemesters],
   );
 
   const courseIds = useMemo(
-    () => semesters.flatMap((sem) => sem.courses).map((course) => course.id.toString()),
-    [semesters],
+    () => filteredSemesters.flatMap((sem) => sem.courses).map((course) => course.id.toString()),
+    [filteredSemesters],
   );
 
   const handleOnDragStart = ({ active }: { active: Active }) => {
@@ -140,118 +157,66 @@ export default function Planner({ degreeRequirements }: PlannerProps): JSX.Eleme
         deselectAllCourses={handleDeselectAllCourses}
         selectAllCourses={() => handleSelectCourses(courseIds)}
       />
-      <div className="flex flex-row">
+      <div className="flex h-screen flex-row">
+        <DragOverlay dropAnimation={null}>
+          {activeCourse &&
+            (activeCourse.from === 'semester-tile' ? (
+              <SemesterCourseItem course={activeCourse.course} isDragging />
+            ) : activeCourse.from === 'course-list' ? (
+              <SidebarCourseItem course={activeCourse.course} isDragging />
+            ) : null)}
+        </DragOverlay>
+
+        <section
+          ref={ref}
+          className="flex max-h-screen flex-grow flex-col gap-y-6 overflow-y-scroll p-4 pb-0"
+        >
+          <Toolbar
+            title={title}
+            major={degreeRequirementsData?.major ?? 'undecided'}
+            studentName="Dev"
+          />
+
+          <article className="flex h-full flex-col gap-y-5  overflow-x-hidden">
+            {transferCredits.length > 0 && <TransferBank transferCredits={transferCredits} />}
+            <div className="flex h-fit gap-5">
+              {filteredSemesters
+                .reduce(
+                  (acc, curr, index) => {
+                    acc[index % 3].push(curr);
+                    return acc as Semester[][];
+                  },
+                  [[], [], []] as Semester[][],
+                )
+                .map((column, index) => (
+                  <MasonryColumn key={`column-${index}`} column={column} />
+                ))}
+            </div>
+            <div className="col-span-full flex h-10 items-center justify-center gap-8">
+              <button className="hello" onClick={handleRemoveYear}>
+                - Remove Year
+              </button>
+              <button className="world" onClick={handleAddYear}>
+                + Add Year
+              </button>
+            </div>
+          </article>
+        </section>
         <CourseSelectorContainer
           courses={courseCodes}
           degreeRequirements={degreeRequirements}
           getSearchedDragId={(course) => `course-list-searched-${course.id}`}
           getRequirementDragId={(course) => `course-list-requirement-${course.id}`}
         />
-        <DragOverlay dropAnimation={null}>
-          {activeCourse &&
-            (activeCourse.from === 'semester-tile' ? (
-              <SemesterCourseItem course={activeCourse.course} />
-            ) : activeCourse.from === 'course-list' ? (
-              <SidebarCourseItem course={activeCourse.course} />
-            ) : null)}
-        </DragOverlay>
-
-        <section
-          ref={ref}
-          className="flex h-screen max-h-screen min-h-fit flex-grow flex-col gap-y-6 p-4 pb-0"
-        >
-          <Toolbar title="Plan Your Courses" major="Computer Science" studentName="Dev" />
-
-          <article className=" overflow-x-hidden overflow-y-scroll">
-            <div className="flex h-fit gap-5">
-              {semesters
-                .reduce((acc, curr, index) => {
-                  acc[index % 3].push(curr);
-                  return acc as Semester[][];
-                }, [[],[],[]] as Semester[][])
-                .map((column, index) => (
-                  <MasonryColumn
-                    key={`column-${index}`}
-                    column={column}
-                    showTransfer={showTransfer}
-                  />
-                ))}
-            </div>
-            <div className="col-span-full flex h-10 items-center justify-center gap-8">
-              <button onClick={handleRemoveYear}>- Remove Year</button>
-              <button onClick={handleAddYear}>+ Add Year</button>
-            </div>
-          </article>
-        </section>
       </div>
     </DndContext>
   );
 }
 
-const MasonryColumn = (props: { column: Semester[]; showTransfer: boolean }) => {
-  const { column, showTransfer } = props;
-  // Get credits to check if semester invalid
-  const creditsQuery = trpc.credits.getCredits.useQuery(undefined, { staleTime: 10000000000 });
-  const credits = creditsQuery.data;
+const MasonryColumn: FC<{ column: Semester[] }> = ({ column }) => {
   return (
     <div className="flex w-full flex-col gap-5">
       {column.map((semester) => {
-        // Get map of credits (faster to query later down the line)
-        const creditsMap: {
-          [key: string]: { semesterCode: SemesterCode; transfer: boolean };
-        } = credits?.reduce((prev, curr) => ({ ...prev, [curr.courseCode]: curr }), {}) ?? [];
-
-        const semesterCredits: {
-          [key: string]: { semesterCode: SemesterCode; transfer: boolean };
-        } =
-          credits
-            ?.filter((credit) => isSemCodeEqual(credit.semesterCode, semester.code))
-            .reduce((prev, curr) => ({ ...prev, [curr.courseCode]: curr }), {}) ?? [];
-
-        const numSemesterCredits = Object.keys(semesterCredits).length;
-
-        const semesterErrors: SemesterErrors = {
-          isError: false,
-          prerequisites: [],
-          sync: { missing: [], extra: [] },
-        };
-
-        const coursesWithErrors: DraggableCourse[] = semester.courses.map((course) => {
-          let correctSemester: SemesterCode | undefined;
-
-          const isSynced =
-            (numSemesterCredits === 0 && !(course.code in creditsMap)) ||
-            (course.code in creditsMap &&
-              isSemCodeEqual(creditsMap[course.code].semesterCode, semester.code));
-          if (isSynced) {
-            delete semesterCredits[course.code];
-          } else {
-            semesterErrors.isError = true;
-            semesterErrors.sync.extra.push(course.code);
-
-            // Check course in credits
-            if (course.code in creditsMap) correctSemester = creditsMap[course.code].semesterCode;
-          }
-
-          // TODO: This is prolly where prereq validation should take place
-          return {
-            ...course,
-            transfer: course.code in creditsMap && creditsMap[course.code].transfer,
-            taken: course.code in creditsMap,
-            sync: { isSynced, correctSemester },
-          };
-        });
-
-        // Add missing courses
-        semesterErrors.sync.missing = Object.keys(semesterCredits);
-
-        const newSem = {
-          ...semester,
-          courses: showTransfer
-            ? coursesWithErrors
-            : coursesWithErrors.filter((course) => !course.transfer),
-        };
-
         return (
           <DroppableSemesterTile
             key={semester.id.toString()}
@@ -259,20 +224,10 @@ const MasonryColumn = (props: { column: Semester[]; showTransfer: boolean }) => 
             getSemesterCourseDragId={(course, semester) =>
               `semester-tile-course-${semester.id}-${course.id}`
             }
-            semester={newSem}
-            semesterErrors={semesterErrors}
+            semester={semester}
           />
         );
       })}
     </div>
   );
-};
-
-export type SemesterErrors = {
-  isError: boolean;
-  prerequisites: string[];
-  sync: {
-    missing: string[];
-    extra: string[];
-  };
 };

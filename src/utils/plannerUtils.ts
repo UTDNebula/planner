@@ -1,4 +1,4 @@
-import { SemesterCode, SemesterType } from '@prisma/client';
+import { SemesterCode } from '@prisma/client';
 
 import { createNewYear, displaySemesterCode } from './utilFunctions';
 
@@ -82,6 +82,7 @@ export function reorderList<T>(list: T[], startIndex: number, endIndex: number) 
 export function formatDegreeValidationRequest(
   semesters: { code: SemesterCode; id: string; courses: string[] }[],
   requirements = { core: true, majors: ['computer_science'], minors: [] },
+  bypasses: string[] = [],
 ) {
   const getDegreeName = (degree: string) => {
     const temp = degree.split(' ').join('_').split('(').join('_');
@@ -91,7 +92,7 @@ export function formatDegreeValidationRequest(
   return {
     courses: semesters.flatMap((s) => s.courses),
     requirements: requirements,
-    bypasses: [],
+    bypasses,
   };
 }
 

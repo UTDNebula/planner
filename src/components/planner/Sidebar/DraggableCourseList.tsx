@@ -13,9 +13,13 @@ function DraggableCourseList({ courses, getDragId }: DraggableCourseListProps) {
   // Add sorting logic here
   return (
     <div className="flex flex-col gap-y-4 bg-white text-[#757575]">
-      {courses.map((course, idx) => (
-        <DraggableSidebarCourseItem dragId={getDragId(course)} key={idx} course={course} />
-      ))}
+      {courses.length > 0 ? (
+        courses.map((course, idx) => (
+          <DraggableSidebarCourseItem dragId={getDragId(course)} key={idx} course={course} />
+        ))
+      ) : (
+        <p>No courses found.</p>
+      )}
     </div>
   );
 }

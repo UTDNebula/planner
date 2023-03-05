@@ -25,9 +25,9 @@ const SelectedCoursesToast: FC<SelectedCoursesToastProps> = ({
   <AnimatePresence>
     {show && (
       <motion.div
-        className="fixed top-11 left-1/2 -translate-x-1/2 transform"
-        initial={{ y: -120 }}
-        animate={{ y: 0 }}
+        className="fixed left-1/2 top-11 z-[999] -translate-x-1/2 transform"
+        initial={{ y: -120, x: '-50%' }}
+        animate={{ y: 0, x: '-50%' }}
         exit={{ y: -120 }}
       >
         <div className="flex items-center gap-x-4 overflow-hidden rounded-md border border-neutral-300 bg-generic-white px-5 py-4">
@@ -38,7 +38,7 @@ const SelectedCoursesToast: FC<SelectedCoursesToastProps> = ({
           />
 
           <span className="text-lg font-semibold text-neutral-900">
-            {selectedCount} Courses Selected
+            {selectedCount} {selectedCount === 1 ? 'Course' : 'Courses'} Selected
           </span>
 
           <Button

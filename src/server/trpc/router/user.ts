@@ -1,9 +1,9 @@
-import { Bypass, Prisma, Semester, SemesterCode, SemesterType } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import { ObjectID } from 'bson';
 import { z } from 'zod';
 
-import { createNewYear, createSemesterCodeRange } from '@/utils/utilFunctions';
+import { createNewYear, isSemCodeEqual } from '@/utils/utilFunctions';
 
 import { protectedProcedure, router } from '../trpc';
 
@@ -62,24 +62,10 @@ export const userRouter = router({
         name: z.string().min(1),
         startSemester: z.object({ semester: z.enum(['f', 's', 'u']), year: z.number() }),
         endSemester: z.object({ semester: z.enum(['f', 's', 'u']), year: z.number() }),
-        credits: z.array(
-          z.object({
-            courseCode: z.string(),
-            semesterCode: z.object({ semester: z.enum(['f', 's', 'u']), year: z.number() }),
-            transfer: z.boolean(),
-          }),
-        ),
       }),
     )
     .mutation(async ({ ctx, input }) => {
       const userId = ctx.session.user.id;
-      if (input.credits.length > 0) {
-        await ctx.prisma.credit.createMany({
-          data: input.credits.map((credit) => {
-            return { ...credit, userId: userId };
-          }),
-        });
-      }
 
       const user = await ctx.prisma.user.update({
         where: {
@@ -109,22 +95,35 @@ export const userRouter = router({
     }),
   /**
    * Create a new user plan
-   *  - takes in plan name, major,
-   *  - in future, add start & end semesters, and whether or not to sync credits
+   *  - takes in plan name, major, transfer credits, and courses already taken
    */
   createUserPlan: protectedProcedure
-    .input(z.object({ name: z.string(), major: z.string() }))
+    .input(
+      z.object({
+        name: z.string(),
+        major: z.string(),
+        takenCourses: z.array(
+          z.object({
+            courseCode: z.string(),
+            semesterCode: z.object({ semester: z.enum(['f', 's', 'u']), year: z.number() }),
+          }),
+        ),
+        transferCredits: z.array(z.string()),
+      }),
+    )
     .mutation(async ({ ctx, input }) => {
       const userId = ctx.session.user.id;
       const planId = new ObjectID().toString();
 
-      const { name, major } = input;
+      const { name, major, takenCourses, transferCredits } = input;
+      const bypasses: string[] = [];
 
       // Create degree requirements
       const degreeRequirements: Prisma.DegreeRequirementsUncheckedCreateNestedOneWithoutPlanInput =
         {
           create: {
             major, // Hardcode for now
+            bypasses,
           },
         };
 
@@ -132,17 +131,6 @@ export const userRouter = router({
         where: { id: userId },
         select: {
           profile: true,
-        },
-      });
-
-      // Fetch credits; will add to semesters later
-      const creditsData = await ctx.prisma.credit.findMany({
-        where: {
-          userId: ctx.session.user.id,
-        },
-        select: {
-          courseCode: true,
-          semesterCode: true,
         },
       });
 
@@ -171,19 +159,17 @@ export const userRouter = router({
           ...createNewYear({ semester: 'f', year: i }).map((sem) => {
             // Add credits to each semester
             const courses: string[] = [];
-            creditsData.map((credit) => {
-              if (
-                credit.semesterCode.semester === sem.code.semester &&
-                credit.semesterCode.year === sem.code.year
-              ) {
-                courses.push(credit.courseCode);
+
+            for (const course of takenCourses) {
+              if (isSemCodeEqual(course.semesterCode, sem.code)) {
+                courses.push(course.courseCode);
               }
-            });
+            }
+
             return {
               ...sem,
-              courseColors: Array(courses.length).fill(''),
               id: sem.id.toString(),
-              courses: courses,
+              courses: { create: courses.map((course) => ({ code: course, color: '' })) },
             };
           }),
         );
@@ -198,6 +184,7 @@ export const userRouter = router({
         name: name,
         semesters: semesters,
         requirements: degreeRequirements,
+        transferCredits,
       };
 
       const plans: Prisma.PlanUpdateManyWithoutUserNestedInput = {
@@ -373,20 +360,26 @@ export const userRouter = router({
               if (idx % 3 === 2) {
                 return {
                   ...sem,
-                  courseColors: Array(courses.length).fill(''),
                   id: sem.id.toString(),
-                  courses: courses,
+                  courses: { create: courses.map((course) => ({ code: course, color: '' })) },
                 };
               }
               templateData[i - startYear + counter].items.map((course) => {
-                courses.push(course.name);
+                const countOfCoursesWithSameCode = courses.reduce(
+                  (count, curr) => count + (course.name == curr ? 1 : 0),
+                  0,
+                );
+                if (countOfCoursesWithSameCode > 0) {
+                  courses.push(`${course.name} ${countOfCoursesWithSameCode}`);
+                } else {
+                  courses.push(course.name);
+                }
               });
               counter++;
               return {
                 ...sem,
-                courseColors: Array(courses.length).fill(''),
                 id: sem.id.toString(),
-                courses: courses,
+                courses: { create: courses.map((course) => ({ code: course, color: '' })) },
               };
             }),
           );
@@ -396,11 +389,14 @@ export const userRouter = router({
           create: semesterData, // Prepopulate with semester
         };
 
+        const bypasses: string[] = [];
+
         // Create degree requirements
         const degreeRequirements: Prisma.DegreeRequirementsUncheckedCreateNestedOneWithoutPlanInput =
           {
             create: {
               major,
+              bypasses,
             },
           };
 

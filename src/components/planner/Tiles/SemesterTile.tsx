@@ -5,15 +5,14 @@ import { displaySemesterCode } from '@/utils/utilFunctions';
 
 import { DragDataToSemesterTile, GetDragIdByCourseAndSemester, Semester } from '../types';
 import DraggableSemesterCourseItem from './SemesterCourseItem';
-import { SemesterErrors } from '../Planner';
 import ChevronIcon from '@/icons/ChevronIcon';
 import SemesterTileDropdown from './SemesterTileDropdown';
 import { useSemestersContext } from '../SemesterContext';
+import { tagColors } from '../utils';
 
 export interface SemesterTileProps {
   semester: Semester;
   getDragId: GetDragIdByCourseAndSemester;
-  semesterErrors: SemesterErrors;
 }
 
 /**
@@ -22,7 +21,7 @@ export interface SemesterTileProps {
 /* eslint-disable react/prop-types */
 export const MemoizedSemesterTile = React.memo(
   forwardRef<HTMLDivElement, SemesterTileProps>(function SemesterTile(
-    { semester, getDragId, semesterErrors },
+    { semester, getDragId },
     ref,
   ) {
     const [open, setOpen] = useState(true);
@@ -33,83 +32,69 @@ export const MemoizedSemesterTile = React.memo(
       handleDeleteAllCoursesFromSemester,
       handleRemoveCourseFromSemester,
       courseIsSelected,
+      handleSemesterColorChange,
       handleColorChange,
     } = useSemestersContext();
-
-    const { sync, prerequisites } = semesterErrors;
-    const { extra, missing } = sync;
-
-    const numProblems = extra.length + missing.length + prerequisites.length;
-
-    const generateErrorMsg = () => {
-      const extraMsg = extra.length > 0 ? `Extra courses: ${extra.toString()}. ` : '';
-      const missingMsg = missing.length > 0 ? `Missing courses: ${missing.toString()}. ` : '';
-      const prerequisiteMsg = undefined; // TODO: Implement later
-
-      return `Errors found in semester: ${extraMsg}${missingMsg}`;
-    };
 
     // QUESTION: isValid color?
     return (
       <div
         ref={ref}
-        className={`flex h-fit select-none flex-col gap-y-4 overflow-hidden rounded-2xl border border-neutral-300 bg-white py-4 px-5`}
+        className={`flex h-fit select-none flex-col gap-y-2 overflow-hidden rounded-2xl border border-neutral-300 bg-white`}
       >
-        <article className="w-full">
-          <ChevronIcon
-            className={`${
-              open ? '-rotate-90' : 'rotate-90'
-            } ml-auto h-3 w-3 transform cursor-pointer text-neutral-500 transition-all duration-500`}
-            fontSize="inherit"
-            onClick={() => setOpen(!open)}
-          />
-        </article>
-        <div className="flex flex-row items-center justify-between">
-          <div className="flex h-10 flex-row items-center justify-center">
-            <h3 className={`text-2xl font-semibold text-primary-900`}>
-              {displaySemesterCode(semester.code)}
-            </h3>
-          </div>
-          <>
-            {numProblems > 0 && (
-              <div
-                className="opacity-0.5 tooltip tooltip-top h-fit rounded-full text-[14px] font-medium "
-                data-tip={`${generateErrorMsg()}`}
-              >
-                <div className="badge border-none bg-red-50 text-red-500">{numProblems} errors</div>
-              </div>
-            )}
-
+        <span className={`h-2 w-full transition-all ${tagColors[semester.color]}`}></span>
+        <div className="flex flex-col gap-y-4 px-4 py-2">
+          <article className="w-full">
+            <ChevronIcon
+              className={`${
+                open ? '-rotate-90' : 'rotate-90'
+              } ml-auto h-3 w-3 transform cursor-pointer text-neutral-500 transition-all duration-500`}
+              fontSize="inherit"
+              onClick={() => setOpen(!open)}
+            />
+          </article>
+          <div className="flex flex-row items-center justify-between">
+            <div className="flex h-10 flex-row items-center justify-center">
+              <h3 className={`text-2xl font-semibold tracking-tight text-primary-900`}>
+                {displaySemesterCode(semester.code)}
+              </h3>
+            </div>
             <SemesterTileDropdown
+              changeColor={(color) => handleSemesterColorChange(color, semester.id.toString())}
               deleteAllCourses={() => handleDeleteAllCoursesFromSemester(semester)}
               selectAllCourses={() =>
                 handleSelectCourses(semester.courses.map((course) => course.id.toString()))
               }
             />
-          </>
-        </div>
+          </div>
 
-        <article
-          className={`flex flex-col gap-y-4 overflow-hidden transition-all duration-700 ${
-            open ? 'max-h-[999px]' : 'max-h-0'
-          }`}
-        >
-          {semester.courses.map((course) => (
-            <DraggableSemesterCourseItem
-              isSelected={courseIsSelected(course.id.toString())}
-              onSelectCourse={() => handleSelectCourses([course.id.toString()])}
-              onDeselectCourse={() => handleDeselectCourses([course.id.toString()])}
-              onDeleteCourse={() => handleRemoveCourseFromSemester(semester, course)}
-              onColorChange={(color) =>
-                handleColorChange(color, course.code, semester.id.toString())
-              }
-              key={course.id.toString()}
-              dragId={getDragId(course, semester)}
-              course={course}
-              semester={semester}
-            />
-          ))}
-        </article>
+          <article
+            className={`mb-5 flex flex-col gap-y-4 overflow-hidden transition-all duration-700 ${
+              open ? 'max-h-[999px]' : 'max-h-0'
+            }`}
+          >
+            {semester.courses.map((course) => (
+              <DraggableSemesterCourseItem
+                isSelected={courseIsSelected(course.id.toString())}
+                onSelectCourse={() => handleSelectCourses([course.id.toString()])}
+                onDeselectCourse={() => handleDeselectCourses([course.id.toString()])}
+                onDeleteCourse={() => handleRemoveCourseFromSemester(semester, course)}
+                onColorChange={(color) =>
+                  handleColorChange(color, course.code, semester.id.toString())
+                }
+                key={course.id.toString()}
+                dragId={getDragId(course, semester)}
+                course={course}
+                semester={semester}
+              />
+            ))}
+            {semester.courses.length === 0 && (
+              <div className="flex h-20 w-full items-center justify-center border-2 border-dotted opacity-80">
+                Drag courses here
+              </div>
+            )}
+          </article>
+        </div>
       </div>
     );
   }),
@@ -121,7 +106,6 @@ export interface DroppableSemesterTileProps {
   dropId: UniqueIdentifier;
   semester: Semester;
   getSemesterCourseDragId: GetDragIdByCourseAndSemester;
-  semesterErrors: SemesterErrors;
 }
 
 /**

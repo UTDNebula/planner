@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import '../styles/globals.css';
 import 'react-toastify/dist/ReactToastify.css';
+import 'intro.js/introjs.css';
 
 import { createTheme, StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
 import { AnimateSharedLayout } from 'framer-motion';
@@ -14,7 +15,7 @@ import { FC } from 'react';
 
 import Layout from '@/components/home/Layout';
 import NProgress from 'nprogress'; //nprogress module
-
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import 'nprogress/nprogress.css'; //styles of nprogress
 
 // Binding events
@@ -73,10 +74,9 @@ const NebulaApp: AppType<{ session: Session | null }> = ({
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
 
-  // alert(router.pathname);
-
   return (
     <SessionProvider session={session}>
+      <ReactQueryDevtools initialIsOpen={false} />
       <Head>
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -111,7 +111,7 @@ const NebulaApp: AppType<{ session: Session | null }> = ({
               ) : (
                 <Component {...pageProps} />
               )}
-              <ToastContainer />
+              <ToastContainer bodyClassName="text-sm text-primary-900 font-sans" />
             </main>
           </ThemeProvider>
         </StyledEngineProvider>
