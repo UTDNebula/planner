@@ -26,7 +26,9 @@ const PlanCardDropdown: FC<PlanCardDropdownProps> = ({ duplicatePlan, deletePlan
               duplicatePlan();
             }}
           >
-            <DuplicateIcon />
+            <div className=" h-full w-4">
+              <DuplicateIcon />
+            </div>
             <span>Duplicate</span>
           </DropdownMenu.Item>
           <DropdownMenu.Item
@@ -36,7 +38,9 @@ const PlanCardDropdown: FC<PlanCardDropdownProps> = ({ duplicatePlan, deletePlan
               deletePlan();
             }}
           >
-            <DeleteIcon />
+            <div className="h-full w-4">
+              <DeleteIcon />
+            </div>
             <span>Delete</span>
           </DropdownMenu.Item>
         </DropdownMenu.Content>
