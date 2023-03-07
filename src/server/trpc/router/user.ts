@@ -226,7 +226,11 @@ export const userRouter = router({
           id: id,
         },
         include: {
-          semesters: true,
+          semesters: {
+            include: {
+              courses: true,
+            },
+          },
         },
       });
 
@@ -243,10 +247,16 @@ export const userRouter = router({
 
       // Push existing semester data to new plan
       for (let i = 0; i < plan!.semesters.length; i++) {
+        const courses = {
+          create: plan!.semesters[i].courses.map((course) => {
+            return { code: course.code, color: course.color };
+          }),
+        };
+
         const semData = {
-          courses: plan!.semesters[i].courses,
+          courses,
           code: plan!.semesters[i].code,
-          courseColors: plan!.semesters[i].courseColors,
+          color: plan!.semesters[i].color,
         };
         semesterData.push(semData);
       }
