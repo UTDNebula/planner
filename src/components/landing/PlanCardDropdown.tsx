@@ -4,9 +4,10 @@ import DeleteIcon from '@/icons/DeleteIcon';
 
 export interface PlanCardDropdownProps {
   deletePlan: () => void;
+  duplicatePlan: () => void;
 }
 
-const PlanCardDropdown: FC<PlanCardDropdownProps> = ({ deletePlan, children }) => {
+const PlanCardDropdown: FC<PlanCardDropdownProps> = ({ duplicatePlan, deletePlan, children }) => {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>{children}</DropdownMenu.Trigger>
@@ -17,6 +18,15 @@ const PlanCardDropdown: FC<PlanCardDropdownProps> = ({ deletePlan, children }) =
           sideOffset={10}
           align="start"
         >
+          <DropdownMenu.Item
+            className="flex cursor-pointer items-center gap-x-3 border-b border-neutral-300 px-2 py-2 text-sm hover:bg-neutral-200"
+            onClick={(e) => {
+              e.stopPropagation();
+              duplicatePlan();
+            }}
+          >
+            <span>Duplicate Plan</span>
+          </DropdownMenu.Item>
           <DropdownMenu.Item
             className="flex cursor-pointer items-center gap-x-3 border-b border-neutral-300 px-2 py-2 text-sm hover:bg-neutral-200"
             onClick={(e) => {
