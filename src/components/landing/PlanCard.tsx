@@ -24,6 +24,12 @@ export default function PlanCard({ id, name, major }: PlanCardProps) {
     },
   });
 
+  const duplicatePlan = trpc.user.duplicateUserPlan.useMutation({
+    async onSuccess() {
+      await utils.plan.invalidate();
+    },
+  });
+
   const [deleting, setDeleting] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
@@ -44,7 +50,10 @@ export default function PlanCard({ id, name, major }: PlanCardProps) {
                 e.stopPropagation();
               }}
             >
-              <PlanCardDropdown deletePlan={() => setOpenDeleteModal(true)}>
+              <PlanCardDropdown
+                deletePlan={() => setOpenDeleteModal(true)}
+                duplicatePlan={() => duplicatePlan.mutateAsync({ id, major })}
+              >
                 <button
                   aria-label="Customise options"
                   className="h-10 w-10 self-stretch rounded-full hover:bg-neutral-200 hover:text-black"
