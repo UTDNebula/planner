@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import DeleteIcon from '@/icons/DeleteIcon';
+import DuplicateIcon from '@/icons/DuplicateIcon';
 
 export interface PlanCardDropdownProps {
   deletePlan: () => void;
@@ -25,7 +26,8 @@ const PlanCardDropdown: FC<PlanCardDropdownProps> = ({ duplicatePlan, deletePlan
               duplicatePlan();
             }}
           >
-            <span>Duplicate Plan</span>
+            <DuplicateIcon />
+            <span>Duplicate</span>
           </DropdownMenu.Item>
           <DropdownMenu.Item
             className="flex cursor-pointer items-center gap-x-3 border-b border-neutral-300 px-2 py-2 text-sm hover:bg-neutral-200"
