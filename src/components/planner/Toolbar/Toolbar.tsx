@@ -1,7 +1,7 @@
 import AddFileIcon from '@/icons/AddFileIcon';
 import DownloadIcon from '@/icons/DownloadIcon';
 import EditIcon from '@/icons/EditIcon';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import Button from '../../Button';
 import SwitchVerticalIcon from '@/icons/SwitchVerticalIcon';
 import { PDFDownloadLink } from '@react-pdf/renderer';
@@ -10,15 +10,24 @@ import FilterByDropdown from './FilterByDropdown';
 import DegreePlanPDF from '../DegreePlanPDF/DegreePlanPDF';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Link from 'next/link';
+import SettingsIcon from '@/icons/SettingsIcon';
+import SettingsDropdown from './SettingsDropdown';
+import EditSemestersModal from './EditSemestersModal';
+import DeletePlanModal from '@/shared-components/DeletePlanModal';
 
 export interface ToolbarProps {
   title: string;
   major: string;
   studentName: string;
+  deletePlan: () => void;
+  deleteLoading: boolean;
 }
 
-const Toolbar: FC<ToolbarProps> = ({ title, major, studentName }) => {
+const Toolbar: FC<ToolbarProps> = ({ title, major, studentName, deletePlan, deleteLoading }) => {
   const { allSemesters: semesters } = useSemestersContext();
+  const [editSemestersModalOpen, setEditSemestersModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+
   return (
     <section className="flex w-full flex-col justify-center gap-y-5">
       <article className="flex justify-between">
@@ -56,6 +65,27 @@ const Toolbar: FC<ToolbarProps> = ({ title, major, studentName }) => {
               <span className="whitespace-nowrap">Export Degree Plan</span>
             </PDFDownloadLink>
           </Button>
+
+          <EditSemestersModal
+            open={editSemestersModalOpen}
+            onOpenChange={setEditSemestersModalOpen}
+          />
+          <DeletePlanModal
+            open={deleteModalOpen}
+            onOpenChange={setDeleteModalOpen}
+            deletePlan={deletePlan}
+            deleteLoading={deleteLoading}
+          />
+
+          <SettingsDropdown
+            openEditSemesterModal={() => setEditSemestersModalOpen(true)}
+            openDeletePlanModal={() => setDeleteModalOpen(true)}
+          >
+            <SettingsIcon
+              fill="var(--color-primary-900)"
+              className="ml-8 mr-5 h-5 w-5 cursor-pointer"
+            />
+          </SettingsDropdown>
         </div>
       </article>
 
