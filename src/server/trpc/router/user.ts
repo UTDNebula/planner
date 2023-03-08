@@ -29,6 +29,11 @@ export const userRouter = router({
 
     return userInfo;
   }),
+  deleteUser: protectedProcedure.mutation(async ({ ctx }) => {
+    const userId = ctx.session.user.id;
+
+    await ctx.prisma.user.delete({ where: { id: userId } });
+  }),
   updateUserProfile: protectedProcedure
     .input(
       z.object({
@@ -209,6 +214,92 @@ export const userRouter = router({
       });
       return updatedUser.plans[0].id;
     }),
+  /**
+   * Duplicates a user plan based on an existing one
+   *  - Takes in id, major
+   */
+  duplicateUserPlan: protectedProcedure
+    .input(z.object({ id: z.string(), major: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const userId = ctx.session.user.id;
+      const planId = new ObjectID().toString();
+
+      const { id, major } = input;
+      // fetch plan from database with id
+      const plan = await ctx.prisma.plan.findFirst({
+        where: {
+          id: id,
+        },
+        include: {
+          semesters: {
+            include: {
+              courses: true,
+            },
+          },
+        },
+      });
+
+      // Create degree requirements
+      const degreeRequirements: Prisma.DegreeRequirementsUncheckedCreateNestedOneWithoutPlanInput =
+        {
+          create: {
+            major, // Hardcode for now
+          },
+        };
+
+      // Create semesters based on existing plan
+      const semesterData: Prisma.SemesterCreateInput[] = [];
+
+      // Push existing semester data to new plan
+      for (let i = 0; i < plan!.semesters.length; i++) {
+        const courses = {
+          create: plan!.semesters[i].courses.map((course) => {
+            return { code: course.code, color: course.color };
+          }),
+        };
+
+        const semData = {
+          courses,
+          code: plan!.semesters[i].code,
+          color: plan!.semesters[i].color,
+        };
+        semesterData.push(semData);
+      }
+
+      const semesters: Prisma.SemesterUncheckedCreateNestedManyWithoutPlanInput = {
+        create: semesterData, // Prepopulate with semester
+      };
+
+      const plansInput: Prisma.PlanUncheckedCreateWithoutUserInput = {
+        id: planId,
+        name: 'Copy-' + plan!.name,
+        semesters: semesters,
+        requirements: degreeRequirements,
+      };
+
+      const plans: Prisma.PlanUpdateManyWithoutUserNestedInput = {
+        create: plansInput,
+      };
+      const updatedUser = await ctx.prisma.user.update({
+        where: { id: userId },
+        data: {
+          plans: plans,
+        },
+        select: {
+          plans: {
+            orderBy: {
+              createdAt: 'desc',
+            },
+            take: 1,
+            select: {
+              id: true,
+            },
+          },
+        },
+      });
+      return updatedUser.plans[0].id;
+    }),
+
   /**
    * Creates user plan based on a pre-made template
    *  - ignores credits for now

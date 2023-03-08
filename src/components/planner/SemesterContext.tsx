@@ -42,6 +42,9 @@ export interface SemestersContextState {
   toggleColorFilter: (color: keyof typeof tagColors) => void;
   toggleYearFilter: (year: number) => void;
   toggleSemesterFilter: (semester: SemesterType) => void;
+  toggleOffAllColorFilters: () => void;
+  toggleOffAllYearFilters: () => void;
+  toggleOffAllSemesterFilters: () => void;
   filters: Filter[];
   handleCourseLock: (semesterId: string, locked: boolean, courseName: string) => void
   handleSemesterLock: (semesterId: string, locked: boolean) => void
@@ -568,6 +571,16 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
   };
 
   const [filters, setFilters] = useState<Filter[]>([]);
+
+  const toggleOffAllColorFilters = () =>
+    setFilters(filters.filter((filter) => filter.type !== 'color'));
+
+  const toggleOffAllYearFilters = () =>
+    setFilters(filters.filter((filter) => filter.type !== 'year'));
+
+  const toggleOffAllSemesterFilters = () =>
+    setFilters(filters.filter((filter) => filter.type !== 'semester'));
+
   const toggleColorFilter = (color: keyof typeof tagColors) => {
     const hasFilter = filters.some((filter) => filter.type === 'color' && filter.color === color);
     if (!hasFilter) setFilters([...filters, { type: 'color', color }]);
@@ -605,14 +618,18 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
           filtered = filtered.filter((semester) =>
             yearFilters.some((filter) => filter.year === semester.code.year),
           );
+          break;
 
-          break;
         case 'color':
-          filtered = filtered.map((semester) => ({
-            ...semester,
-            courses: semester.courses.filter((course) => course.color === filter.color),
-          }));
+          const colorFilters = filters.filter((filter) => filter.type === 'color') as {
+            type: 'color';
+            color: keyof typeof tagColors;
+          }[];
+          filtered = filtered.filter((semester) =>
+            colorFilters.some((filter) => filter.color === semester.color),
+          );
           break;
+
         case 'semester':
           const semesterFilters = filters.filter((filter) => filter.type === 'semester') as {
             type: 'semester';
@@ -654,6 +671,9 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
         toggleColorFilter,
         toggleYearFilter,
         toggleSemesterFilter,
+        toggleOffAllColorFilters,
+        toggleOffAllYearFilters,
+        toggleOffAllSemesterFilters,
         filters,
         handleCourseLock,
         handleSemesterLock

@@ -2,19 +2,29 @@ import { FC, useMemo } from 'react';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import ColorSwatchIcon from '@/icons/ColorSwatchIcon';
 import ChevronIcon from '@/icons/ChevronIcon';
-import { tagColors } from './utils';
-import { useSemestersContext } from './SemesterContext';
+import { tagColors } from '../utils';
+import { useSemestersContext } from '../SemesterContext';
 import { SemesterType } from '@prisma/client';
-import Checkbox from '../Checkbox';
+import Checkbox from '../../Checkbox';
+import CalendarIcon from '@/icons/CalendarIcon';
+import ClockIcon from '@/icons/ClockIcon';
 
 const itemClasses =
-  'flex items-center gap-x-3 border-b border-neutral-300 px-3 py-2 hover:bg-neutral-200 cursor-pointer';
+  'flex items-center gap-x-3 border-b border-neutral-300 px-3 py-2 hover:bg-neutral-100 cursor-pointer group';
 
 const contentClasses = 'w-64 rounded-md border border-neutral-300 bg-generic-white z-[9999]';
 
 const FilterByDropdown: FC = ({ children }) => {
-  const { toggleColorFilter, toggleSemesterFilter, toggleYearFilter, allSemesters, filters } =
-    useSemestersContext();
+  const {
+    toggleColorFilter,
+    toggleSemesterFilter,
+    toggleYearFilter,
+    toggleOffAllColorFilters,
+    toggleOffAllSemesterFilters,
+    toggleOffAllYearFilters,
+    allSemesters,
+    filters,
+  } = useSemestersContext();
 
   const allYears = useMemo(
     () => new Set(allSemesters.map((semester) => semester.code.year)),
@@ -38,9 +48,15 @@ const FilterByDropdown: FC = ({ children }) => {
           align="start"
         >
           <DropdownMenu.Sub>
-            <DropdownMenu.SubTrigger className={itemClasses + ' justify-between border-none'}>
+            <DropdownMenu.SubTrigger
+              className={itemClasses + ' justify-between border-none'}
+              onClick={toggleOffAllColorFilters}
+            >
               <div className="flex items-center gap-x-3">
-                <Checkbox checked={filters.some((filter) => filter.type === 'color')} />
+                <Checkbox
+                  className="group-hover:!bg-neutral-100"
+                  checked={filters.some((filter) => filter.type === 'color')}
+                />
                 <ColorSwatchIcon />
                 <span>Filter by color</span>
               </div>
@@ -64,6 +80,7 @@ const FilterByDropdown: FC = ({ children }) => {
                       }}
                     >
                       <Checkbox
+                        className="group-hover:!bg-neutral-100"
                         checked={filters.some(
                           (filter) => filter.type === 'color' && filter.color === color,
                         )}
@@ -82,10 +99,16 @@ const FilterByDropdown: FC = ({ children }) => {
           </DropdownMenu.Sub>
 
           <DropdownMenu.Sub>
-            <DropdownMenu.SubTrigger className={itemClasses + ' justify-between border-none'}>
+            <DropdownMenu.SubTrigger
+              className={itemClasses + ' justify-between border-none'}
+              onClick={toggleOffAllYearFilters}
+            >
               <div className="flex items-center gap-x-3">
-                <Checkbox checked={filters.some((filter) => filter.type === 'year')} />
-                <ColorSwatchIcon />
+                <Checkbox
+                  className="group-hover:!bg-neutral-100"
+                  checked={filters.some((filter) => filter.type === 'year')}
+                />
+                <CalendarIcon />
                 <span>Filter by year</span>
               </div>
               <ChevronIcon className="h-3 w-3" />
@@ -98,35 +121,44 @@ const FilterByDropdown: FC = ({ children }) => {
                 sideOffset={-10}
                 alignOffset={0}
               >
-                {Array.from(allYears).map((year) => (
-                  <DropdownMenu.Item key={year}>
-                    <div
-                      className={itemClasses}
-                      onClick={(e) => {
-                        toggleYearFilter(year);
-                        e.stopPropagation();
-                      }}
-                    >
-                      <Checkbox
-                        onClick={(e) => e.stopPropagation()}
-                        checked={filters.some(
-                          (filter) => filter.type === 'year' && filter.year === year,
-                        )}
-                        onCheckedChange={() => toggleYearFilter(year)}
-                      />
-                      {year}
-                    </div>
-                  </DropdownMenu.Item>
-                ))}
+                {Array.from(allYears)
+                  .sort()
+                  .map((year) => (
+                    <DropdownMenu.Item key={year}>
+                      <div
+                        className={itemClasses}
+                        onClick={(e) => {
+                          toggleYearFilter(year);
+                          e.stopPropagation();
+                        }}
+                      >
+                        <Checkbox
+                          className="group-hover:!bg-neutral-100"
+                          onClick={(e) => e.stopPropagation()}
+                          checked={filters.some(
+                            (filter) => filter.type === 'year' && filter.year === year,
+                          )}
+                          onCheckedChange={() => toggleYearFilter(year)}
+                        />
+                        {year}
+                      </div>
+                    </DropdownMenu.Item>
+                  ))}
               </DropdownMenu.SubContent>
             </DropdownMenu.Portal>
           </DropdownMenu.Sub>
 
           <DropdownMenu.Sub>
-            <DropdownMenu.SubTrigger className={itemClasses + ' justify-between border-none'}>
+            <DropdownMenu.SubTrigger
+              className={itemClasses + ' justify-between border-none'}
+              onClick={toggleOffAllSemesterFilters}
+            >
               <div className="flex items-center gap-x-3">
-                <Checkbox checked={filters.some((filter) => filter.type === 'semester')} />
-                <ColorSwatchIcon />
+                <Checkbox
+                  className="group-hover:!bg-neutral-100"
+                  checked={filters.some((filter) => filter.type === 'semester')}
+                />
+                <ClockIcon />
                 <span>Filter by semester</span>
               </div>
               <ChevronIcon className="h-3 w-3" />
@@ -149,6 +181,7 @@ const FilterByDropdown: FC = ({ children }) => {
                       }}
                     >
                       <Checkbox
+                        className="group-hover:!bg-neutral-100"
                         onClick={(e) => e.stopPropagation()}
                         checked={filters.some(
                           (filter) =>

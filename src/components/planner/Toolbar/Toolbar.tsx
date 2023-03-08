@@ -2,12 +2,12 @@ import AddFileIcon from '@/icons/AddFileIcon';
 import DownloadIcon from '@/icons/DownloadIcon';
 import EditIcon from '@/icons/EditIcon';
 import { FC } from 'react';
-import Button from '../Button';
+import Button from '../../Button';
 import SwitchVerticalIcon from '@/icons/SwitchVerticalIcon';
 import { PDFDownloadLink } from '@react-pdf/renderer';
-import { useSemestersContext } from './SemesterContext';
+import { useSemestersContext } from '../SemesterContext';
 import FilterByDropdown from './FilterByDropdown';
-import DegreePlanPDF from './DegreePlanPDF/DegreePlanPDF';
+import DegreePlanPDF from '../DegreePlanPDF/DegreePlanPDF';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Link from 'next/link';
 

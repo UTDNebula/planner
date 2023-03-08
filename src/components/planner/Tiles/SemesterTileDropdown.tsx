@@ -11,7 +11,7 @@ import { ObjectID } from 'bson';
 const itemClasses =
   'flex items-center gap-x-3 border-b border-neutral-300 px-2 py-2 hover:bg-neutral-200 cursor-pointer text-sm';
 
-const contentClasses = 'w-64 rounded-md border border-neutral-300 bg-generic-white';
+const contentClasses = 'w-64 rounded-md border border-neutral-300 bg-generic-white z-[9999]';
 
 export interface SemesterTileDropdownProps {
   deleteAllCourses: () => void;
