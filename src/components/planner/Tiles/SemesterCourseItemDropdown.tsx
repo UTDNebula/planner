@@ -12,13 +12,15 @@ const itemClasses =
 
 const contentClasses = 'w-64 rounded-md border border-neutral-300 bg-generic-white';
 
+const disabledClasses = 'text-black/25 cursor-default';
+
 export interface SemesterTileDropdownProps {
   deleteCourse: () => void;
   changeColor: (color: keyof typeof tagColors) => void;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   toggleLock: () => void;
-  locked: boolean
+  locked: boolean;
 }
 
 const SemesterCourseItemDropdown: FC<SemesterTileDropdownProps> = ({
@@ -44,18 +46,27 @@ const SemesterCourseItemDropdown: FC<SemesterTileDropdownProps> = ({
           sideOffset={10}
           align="start"
         >
-          <DropdownMenu.Item className={itemClasses} onClick={deleteCourse}>
+          <DropdownMenu.Item
+            className={!locked ? itemClasses : `${itemClasses} ${disabledClasses}`}
+            onClick={!locked ? deleteCourse : undefined}
+            disabled={locked}
+          >
             <DeleteIcon />
             <span>Delete</span>
           </DropdownMenu.Item>
           <DropdownMenu.Item className={itemClasses} onClick={toggleLock}>
             {/* TODO: Change icon */}
             <ClipboardListIcon />
-            <span>{locked ? "Unlock" : "Lock"} course</span>
+            <span>{locked ? 'Unlock' : 'Lock'} course</span>
           </DropdownMenu.Item>
 
           <DropdownMenu.Sub>
-            <DropdownMenu.SubTrigger className={itemClasses + ' justify-between border-none'}>
+            <DropdownMenu.SubTrigger
+              className={`${
+                !locked ? itemClasses : `${itemClasses} ${disabledClasses}`
+              } justify-between border-none`}
+              disabled={locked}
+            >
               <div className="flex items-center gap-x-3">
                 <ColorSwatchIcon />
                 <span>Change color</span>

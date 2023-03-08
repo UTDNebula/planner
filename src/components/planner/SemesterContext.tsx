@@ -46,8 +46,8 @@ export interface SemestersContextState {
   toggleOffAllYearFilters: () => void;
   toggleOffAllSemesterFilters: () => void;
   filters: Filter[];
-  handleCourseLock: (semesterId: string, locked: boolean, courseName: string) => void
-  handleSemesterLock: (semesterId: string, locked: boolean) => void
+  handleCourseLock: (semesterId: string, locked: boolean, courseName: string) => void;
+  handleSemesterLock: (semesterId: string, locked: boolean) => void;
 }
 
 type Filter =
@@ -295,7 +295,12 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
   };
 
   const handleCourseLock = (semesterId: string, locked: boolean, courseName: string) => {
-    handleDeselectCourses([semesters.find(s=>s.id.toString()===semesterId)?.courses.find(c=>c.code === courseName)?.id.toString()??""])
+    handleDeselectCourses([
+      semesters
+        .find((s) => s.id.toString() === semesterId)
+        ?.courses.find((c) => c.code === courseName)
+        ?.id.toString() ?? '',
+    ]);
     dispatchSemesters({
       type: 'changeCourseLock',
       locked,
@@ -676,7 +681,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
         toggleOffAllSemesterFilters,
         filters,
         handleCourseLock,
-        handleSemesterLock
+        handleSemesterLock,
       }}
     >
       {children}

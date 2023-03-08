@@ -35,7 +35,7 @@ export const MemoizedSemesterTile = React.memo(
       handleSemesterColorChange,
       handleColorChange,
       handleCourseLock,
-      handleSemesterLock
+      handleSemesterLock,
     } = useSemestersContext();
 
     // QUESTION: isValid color?
@@ -64,7 +64,7 @@ export const MemoizedSemesterTile = React.memo(
             </div>
             <SemesterTileDropdown
               locked={semester.locked}
-              toggleLock={()=>handleSemesterLock(semester.id.toString(), !semester.locked)}
+              toggleLock={() => handleSemesterLock(semester.id.toString(), !semester.locked)}
               changeColor={(color) => handleSemesterColorChange(color, semester.id.toString())}
               deleteAllCourses={() => handleDeleteAllCoursesFromSemester(semester)}
               selectAllCourses={() =>
@@ -80,7 +80,7 @@ export const MemoizedSemesterTile = React.memo(
           >
             {semester.courses.map((course) => (
               <DraggableSemesterCourseItem
-                onLockChange={(lock)=>handleCourseLock(semester.id.toString(),lock, course.code)}
+                onLockChange={(lock) => handleCourseLock(semester.id.toString(), lock, course.code)}
                 isSelected={courseIsSelected(course.id.toString())}
                 onSelectCourse={() => handleSelectCourses([course.id.toString()])}
                 onDeselectCourse={() => handleDeselectCourses([course.id.toString()])}

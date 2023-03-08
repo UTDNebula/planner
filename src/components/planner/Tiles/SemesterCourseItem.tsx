@@ -23,7 +23,7 @@ export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'>
   onDeselectCourse?: () => void;
   onDeleteCourse?: () => void;
   onColorChange?: (color: keyof typeof tagColors) => void;
-  onLockChange: (lock: boolean) => void
+  onLockChange?: (lock: boolean) => void;
 }
 
 /** UI implementation of a semester course */
@@ -96,7 +96,7 @@ export const MemoizedSemesterCourseItem = React.memo(
                 setDropdownOpen(open);
               }}
               locked={course.locked}
-              toggleLock={()=>onLockChange(!course.locked)}
+              toggleLock={() => onLockChange && onLockChange(!course.locked)}
               changeColor={(color) => onColorChange && onColorChange(color)}
               deleteCourse={() => onDeleteCourse && onDeleteCourse()}
             >
@@ -141,9 +141,7 @@ export const MemoizedSemesterCourseItem = React.memo(
                   </span>
                 </PrereqWarnHoverCard>
               )}
-              {course.locked && <span>
-                lockIcon
-                </span>}
+              {course.locked && <span>lockIcon</span>}
             </div>
           </div>
         </CourseInfoHoverCard>
@@ -163,7 +161,7 @@ export interface DraggableSemesterCourseItemProps {
   onDeselectCourse: () => void;
   onDeleteCourse: () => void;
   onColorChange: (color: keyof typeof tagColors) => void;
-  onLockChange: (lock: boolean) => void
+  onLockChange: (lock: boolean) => void;
 }
 
 /** Compositional wrapper around SemesterCourseItem */
@@ -176,11 +174,12 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
   onDeleteCourse,
   isSelected,
   onColorChange,
-  onLockChange
+  onLockChange,
 }) => {
   const { setNodeRef, attributes, listeners, isDragging } = useDraggable({
     id: dragId,
     data: { from: 'semester-tile', semester, course } as DragDataFromSemesterTile,
+    disabled: course.locked || semester.locked,
   });
 
   const { planId } = useSemestersContext();
@@ -188,8 +187,9 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
   const isValid = prereqData.data?.prereqValidation.get(course.code)?.[0];
   return (
     <SemesterCourseItem
-    onLockChange={onLockChange}
+      onLockChange={onLockChange}
       ref={setNodeRef}
+      
       style={{
         visibility: isDragging ? 'hidden' : 'unset',
       }}
