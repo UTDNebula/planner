@@ -1,7 +1,7 @@
-import Input from '@/components/Input';
 import * as Dialog from '@radix-ui/react-dialog';
 import { FC } from 'react';
 import Button from '../../Button';
+import SemestersSelect from './SemestersSelect';
 
 export interface EditSemestersModalProps extends Dialog.DialogProps {}
 
@@ -18,19 +18,20 @@ const EditSemestersModal: FC<EditSemestersModalProps> = ({ ...props }) => (
         <Dialog.Description className="mt-2 text-base text-neutral-400">
           {'WARNING: This will add/delete semesters. This action cannot be undone.'}
         </Dialog.Description>
+
         <div className="mt-4 flex flex-col gap-y-3">
           <div className="inline-grid grid-cols-[125px_auto] items-center gap-1">
             <label htmlFor="start-semester" className="whitespace-nowrap">
               Start semester
             </label>
-            <Input id="start-semester" value={2022} className="w-fit" />
+            <SemestersSelect id="start-semester" placeholder="2022" />
           </div>
-        </div>
-        <div className="mt-2 inline-grid grid-cols-[125px_auto] items-center gap-1">
-          <label htmlFor="end-semester" className="whitespace-nowrap">
-            End semester
-          </label>
-          <Input id="end-semester" value={2026} className="w-fit" />
+          <div className="mt-2 inline-grid grid-cols-[125px_auto] items-center gap-1">
+            <label htmlFor="end-semester" className="whitespace-nowrap">
+              End semester
+            </label>
+            <SemestersSelect id="end-semester" placeholder="2022" />
+          </div>
         </div>
         <div className="mt-4 ml-auto flex w-fit gap-x-4">
           <Dialog.Close asChild>
