@@ -1,0 +1,265 @@
+{
+  "abbreviation": "Electrical Engineering (BSEE)",
+  "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ecs/electrical-engineering",
+  "minimum_credit_hours": 128,
+  "name": "Bachelor of Science in Electrical Engineering",
+  "school": "Erik Jonsson School of Engineering and Computer Science",
+  "subtype": "Major",
+  "year": "2022-2023",
+  "requirements": {
+    "core": "@import ./core.json",
+    "major": [
+      [
+        {
+          "matcher": "AndRequirement",
+          "metadata": { "name": "Major Preparatory Courses" },
+          "requirements": [
+            [
+              {
+                "matcher": "CourseRequirement",
+                "course": "CHEM 1111"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "CHEM 1311"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "CS 1325"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ECS 1100"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MATH 2417"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MATH 2419"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MATH 2420"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MECH 1100"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MECH 1208"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MECH 2120"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ENGR 2300"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MECH 2310"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MECH 2320"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MECH 2330"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "PHYS 2125"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "PHYS 2126"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "PHYS 2325"
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "PHYS 2326"
+              }
+            ]
+          ]
+        },
+
+        {
+          "matcher": "AndRequirement",
+          "metadata": { "name": "Major Core Courses" },
+          "requirements": [
+            {
+              "matcher": "CourseRequirement",
+              "course": "ECS 3390"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "MECH 3105"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "MECH 3115"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "MECH 3120"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "MECH 3150"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "ENGR 3300"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "MECH 3305"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "MECH 3310"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "MECH 3315"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "MECH 3320"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "MECH 3340"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "ENGR 3341"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "MECH 3350"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "MECH 3351"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "MECH 4110"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "MECH 4310"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "MECH 4381"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "MECH 4382"
+            }
+          ]
+        },
+        {
+          "matcher": "HoursRequirement",
+          "required_hours": 12,
+          "metadata": { "name": "Perscribed Electives" },
+          "requirements": [
+            {
+              "matcher": "CourseRequirement",
+              "course": "MECH 2340"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "MECH 3360"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "MECH 3370"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "MECH 3380"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "MECH 3381"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "MECH 3V95"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "MECH 4301"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "MECH 4320"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "MECH 4330"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "MECH 4340"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "MECH 4342"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "MECH 4360"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "MECH 4365"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "MECH 4370"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "MECH 4380"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "MECH 4V95"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "ENTP 3301"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "MECH 4399"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "MECH 4V98"
+            }
+          ]
+        },
+
+        {
+          "matcher": "FreeElectiveRequirement",
+          "required_hours": 3,
+          "excluded_courses": [],
+          "metadata": {}
+        }
+      ]
+    ]
+  }
+}

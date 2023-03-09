@@ -1,0 +1,345 @@
+{
+  "abbreviation": "Electrical Engineering (BSEE)",
+  "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ecs/electrical-engineering",
+  "minimum_credit_hours": 128,
+  "name": "Bachelor of Science in Electrical Engineering",
+  "school": "Erik Jonsson School of Engineering and Computer Science",
+  "subtype": "Major",
+  "year": "2022-2023",
+  "requirements": {
+    "core": "@import ./core.json",
+    "major": [
+      [
+        {
+          "matcher": "AndRequirement",
+          "metadata": { "name": "Major Preparatory Courses" },
+          "requirements": [
+            {
+              "matcher": "CourseRequirement",
+              "course": "CHEM 1111"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "CHEM 1311"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "CS 1325"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 1100"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "ECS 1100"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 1202"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "ENGR 2300"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 2310"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "PHYS 2125"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "PHYS 2126"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "PHYS 2325"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "PHYS 2326"
+            },
+            {
+              "matcher": "OrRequirement",
+              "requirements": [
+                {
+                  "matcher": "AndRequirement",
+                  "requirements": [
+                    {
+                      "matcher": "CourseRequirement",
+                      "course": "MATH 2413"
+                    },
+                    {
+                      "matcher": "CourseRequirement",
+                      "course": "MATH 2414"
+                    },
+                    {
+                      "matcher": "CourseRequirement",
+                      "course": "MATH 2415"
+                    }
+                  ]
+                },
+                {
+                  "matcher": "AndRequirement",
+                  "requirements": [
+                    {
+                      "matcher": "CourseRequirement",
+                      "course": "MATH 2417"
+                    },
+                    {
+                      "matcher": "CourseRequirement",
+                      "course": "MATH 2419"
+                    }
+                  ]
+                }
+              ]
+            },
+
+            {
+              "matcher": "CourseRequirement",
+              "course": "MATH 2420"
+            }
+          ]
+        },
+
+        {
+          "matcher": "AndRequirement",
+          "metadata": { "name": "Major Core Courses" },
+          "requirements": [
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 3161"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "ECS 3390"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 3201"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 3202"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "ENGR 3300"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 3301"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 3302"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 3310"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 3311"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 3320"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "ENGR 3341"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 4301"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 4310"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 4370"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 4388"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 4389"
+            },
+
+            {
+              "matcher": "OrRequirement",
+              "requirements": [
+                {
+                  "matcher": "CourseRequirement",
+                  "course": "EE 4201"
+                },
+                {
+                  "matcher": "CourseRequirement",
+                  "course": "EE 4202"
+                },
+                {
+                  "matcher": "CourseRequirement",
+                  "course": "EE 4203"
+                },
+                {
+                  "matcher": "CourseRequirement",
+                  "course": "EE 4204"
+                },
+                {
+                  "matcher": "CourseRequirement",
+                  "course": "EE 4205"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "matcher": "HoursRequirement",
+          "required_hours": 12,
+          "metadata": { "name": "Major Guided Electives" },
+          "requirements": [
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 4V97"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 4V98"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 4399"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 4168"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 4325"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 4340"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 4368"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 4V95"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 4202"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 4304"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 4V95"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 4201"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 4330"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 4391"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 4371"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 4V95"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 4204"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 4362"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 4363"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 4V95"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 4205"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 3350"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 4331"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 4360"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 4361"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 4365"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 4367"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 4V95"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 4203"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 4399"
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "EE 4V98"
+            }
+          ]
+        },
+
+        {
+          "matcher": "FreeElectiveRequirement",
+          "required_hours": 9,
+          "excluded_courses": [],
+          "metadata": {}
+        }
+      ]
+    ]
+  }
+}
