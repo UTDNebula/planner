@@ -81,16 +81,12 @@ export function reorderList<T>(list: T[], startIndex: number, endIndex: number) 
 
 export function formatDegreeValidationRequest(
   semesters: { code: SemesterCode; id: string; courses: string[] }[],
+  transferCredits: string[],
   requirements = { core: true, majors: ['computer_science'], minors: [] },
   bypasses: string[] = [],
 ) {
-  const getDegreeName = (degree: string) => {
-    const temp = degree.split(' ').join('_').split('(').join('_');
-    return temp?.substring(0, temp.length - 1).toLowerCase();
-  };
-
   return {
-    courses: semesters.flatMap((s) => s.courses),
+    courses: [...semesters.flatMap((s) => s.courses), ...transferCredits],
     requirements: requirements,
     bypasses,
   };

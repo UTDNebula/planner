@@ -266,8 +266,7 @@ export const validatorRouter = router({
         });
       }
 
-      const { semesters } = planData;
-      // FIX THIS LATER IDC RN
+      const { semesters, transferCredits } = planData;
 
       // Get degree requirements
       const degreeRequirements = await ctx.prisma.degreeRequirements.findFirst({
@@ -279,7 +278,8 @@ export const validatorRouter = router({
       // Get bypasses
       const bypasses = degreeRequirements?.bypasses ?? [];
 
-      const temporaryFunctionPlzDeleteThis = async () => {
+      // Remove invalidCourses
+      const removeInvalidCoursesFromSemesters = () => {
         return semesters.map((sem) => {
           const courses = sem.courses
             .reduce((acc, curr) => [...acc, curr.code], [] as string[])
@@ -294,14 +294,15 @@ export const validatorRouter = router({
         });
       };
 
-      const hehe = await temporaryFunctionPlzDeleteThis();
+      const semestersWithCourses = removeInvalidCoursesFromSemesters();
 
       if (!degreeRequirements?.major || degreeRequirements.major === 'undecided') {
         return { plan: planData, validation: [], bypasses: [] };
       }
 
       const body = formatDegreeValidationRequest(
-        hehe,
+        semestersWithCourses,
+        transferCredits,
         {
           core: true,
           majors: [degreeRequirements.major], // TODO: Standardize names
