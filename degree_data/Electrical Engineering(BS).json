@@ -9,337 +9,414 @@
   "requirements": {
     "core": "@import ./core.json",
     "major": [
-      [
-        {
-          "matcher": "AndRequirement",
-          "metadata": { "name": "Major Preparatory Courses" },
-          "requirements": [
-            {
-              "matcher": "CourseRequirement",
-              "course": "CHEM 1111"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "CHEM 1311"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "CS 1325"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 1100"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "ECS 1100"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 1202"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "ENGR 2300"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 2310"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "PHYS 2125"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "PHYS 2126"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "PHYS 2325"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "PHYS 2326"
-            },
-            {
-              "matcher": "OrRequirement",
-              "requirements": [
-                {
-                  "matcher": "AndRequirement",
-                  "requirements": [
-                    {
-                      "matcher": "CourseRequirement",
-                      "course": "MATH 2413"
-                    },
-                    {
-                      "matcher": "CourseRequirement",
-                      "course": "MATH 2414"
-                    },
-                    {
-                      "matcher": "CourseRequirement",
-                      "course": "MATH 2415"
-                    }
-                  ]
-                },
-                {
-                  "matcher": "AndRequirement",
-                  "requirements": [
-                    {
-                      "matcher": "CourseRequirement",
-                      "course": "MATH 2417"
-                    },
-                    {
-                      "matcher": "CourseRequirement",
-                      "course": "MATH 2419"
-                    }
-                  ]
-                }
-              ]
-            },
-
-            {
-              "matcher": "CourseRequirement",
-              "course": "MATH 2420"
-            }
-          ]
+      {
+        "matcher": "AndRequirement",
+        "metadata": {
+          "name": "Major Preparatory Courses",
+          "id": "Electrical Engineering (BSEE)-0"
         },
-
-        {
-          "matcher": "AndRequirement",
-          "metadata": { "name": "Major Core Courses" },
-          "requirements": [
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 3161"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "ECS 3390"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 3201"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 3202"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "ENGR 3300"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 3301"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 3302"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 3310"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 3311"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 3320"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "ENGR 3341"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 4301"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 4310"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 4370"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 4388"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 4389"
-            },
-
-            {
-              "matcher": "OrRequirement",
-              "requirements": [
-                {
-                  "matcher": "CourseRequirement",
-                  "course": "EE 4201"
-                },
-                {
-                  "matcher": "CourseRequirement",
-                  "course": "EE 4202"
-                },
-                {
-                  "matcher": "CourseRequirement",
-                  "course": "EE 4203"
-                },
-                {
-                  "matcher": "CourseRequirement",
-                  "course": "EE 4204"
-                },
-                {
-                  "matcher": "CourseRequirement",
-                  "course": "EE 4205"
-                }
-              ]
-            }
-          ]
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "CHEM 1111",
+            "metadata": { "id": "Electrical Engineering (BSEE)-1" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CHEM 1311",
+            "metadata": { "id": "Electrical Engineering (BSEE)-2" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 1325",
+            "metadata": { "id": "Electrical Engineering (BSEE)-3" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 1100",
+            "metadata": { "id": "Electrical Engineering (BSEE)-4" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ECS 1100",
+            "metadata": { "id": "Electrical Engineering (BSEE)-5" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 1202",
+            "metadata": { "id": "Electrical Engineering (BSEE)-6" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ENGR 2300",
+            "metadata": { "id": "Electrical Engineering (BSEE)-7" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 2310",
+            "metadata": { "id": "Electrical Engineering (BSEE)-8" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "PHYS 2125",
+            "metadata": { "id": "Electrical Engineering (BSEE)-9" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "PHYS 2126",
+            "metadata": { "id": "Electrical Engineering (BSEE)-10" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "PHYS 2325",
+            "metadata": { "id": "Electrical Engineering (BSEE)-11" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "PHYS 2326",
+            "metadata": { "id": "Electrical Engineering (BSEE)-12" }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "AndRequirement",
+                "requirements": [
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "MATH 2413",
+                    "metadata": { "id": "Electrical Engineering (BSEE)-15" }
+                  },
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "MATH 2414",
+                    "metadata": { "id": "Electrical Engineering (BSEE)-16" }
+                  },
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "MATH 2415",
+                    "metadata": { "id": "Electrical Engineering (BSEE)-17" }
+                  }
+                ],
+                "metadata": { "id": "Electrical Engineering (BSEE)-14" }
+              },
+              {
+                "matcher": "AndRequirement",
+                "requirements": [
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "MATH 2417",
+                    "metadata": { "id": "Electrical Engineering (BSEE)-19" }
+                  },
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "MATH 2419",
+                    "metadata": { "id": "Electrical Engineering (BSEE)-20" }
+                  }
+                ],
+                "metadata": { "id": "Electrical Engineering (BSEE)-18" }
+              }
+            ],
+            "metadata": { "id": "Electrical Engineering (BSEE)-13" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MATH 2420",
+            "metadata": { "id": "Electrical Engineering (BSEE)-21" }
+          }
+        ]
+      },
+      {
+        "matcher": "AndRequirement",
+        "metadata": {
+          "name": "Major Core Courses",
+          "id": "Electrical Engineering (BSEE)-22"
         },
-        {
-          "matcher": "HoursRequirement",
-          "required_hours": 12,
-          "metadata": { "name": "Major Guided Electives" },
-          "requirements": [
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 4V97"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 4V98"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 4399"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 4168"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 4325"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 4340"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 4368"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 4V95"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 4202"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 4304"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 4V95"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 4201"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 4330"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 4391"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 4371"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 4V95"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 4204"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 4362"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 4363"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 4V95"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 4205"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 3350"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 4331"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 4360"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 4361"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 4365"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 4367"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 4V95"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 4203"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 4399"
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "EE 4V98"
-            }
-          ]
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 3161",
+            "metadata": { "id": "Electrical Engineering (BSEE)-23" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ECS 3390",
+            "metadata": { "id": "Electrical Engineering (BSEE)-24" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 3201",
+            "metadata": { "id": "Electrical Engineering (BSEE)-25" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 3202",
+            "metadata": { "id": "Electrical Engineering (BSEE)-26" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ENGR 3300",
+            "metadata": { "id": "Electrical Engineering (BSEE)-27" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 3301",
+            "metadata": { "id": "Electrical Engineering (BSEE)-28" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 3302",
+            "metadata": { "id": "Electrical Engineering (BSEE)-29" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 3310",
+            "metadata": { "id": "Electrical Engineering (BSEE)-30" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 3311",
+            "metadata": { "id": "Electrical Engineering (BSEE)-31" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 3320",
+            "metadata": { "id": "Electrical Engineering (BSEE)-32" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ENGR 3341",
+            "metadata": { "id": "Electrical Engineering (BSEE)-33" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 4301",
+            "metadata": { "id": "Electrical Engineering (BSEE)-34" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 4310",
+            "metadata": { "id": "Electrical Engineering (BSEE)-35" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 4370",
+            "metadata": { "id": "Electrical Engineering (BSEE)-36" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 4388",
+            "metadata": { "id": "Electrical Engineering (BSEE)-37" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 4389",
+            "metadata": { "id": "Electrical Engineering (BSEE)-38" }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "EE 4201",
+                "metadata": { "id": "Electrical Engineering (BSEE)-40" }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "EE 4202",
+                "metadata": { "id": "Electrical Engineering (BSEE)-41" }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "EE 4203",
+                "metadata": { "id": "Electrical Engineering (BSEE)-42" }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "EE 4204",
+                "metadata": { "id": "Electrical Engineering (BSEE)-43" }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "EE 4205",
+                "metadata": { "id": "Electrical Engineering (BSEE)-44" }
+              }
+            ],
+            "metadata": { "id": "Electrical Engineering (BSEE)-39" }
+          }
+        ]
+      },
+      {
+        "matcher": "HoursRequirement",
+        "required_hours": 12,
+        "metadata": {
+          "name": "Major Guided Electives",
+          "id": "Electrical Engineering (BSEE)-45"
         },
-
-        {
-          "matcher": "FreeElectiveRequirement",
-          "required_hours": 9,
-          "excluded_courses": [],
-          "metadata": {}
-        }
-      ]
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 4V97",
+            "metadata": { "id": "Electrical Engineering (BSEE)-46" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 4V98",
+            "metadata": { "id": "Electrical Engineering (BSEE)-47" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 4399",
+            "metadata": { "id": "Electrical Engineering (BSEE)-48" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 4168",
+            "metadata": { "id": "Electrical Engineering (BSEE)-49" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 4325",
+            "metadata": { "id": "Electrical Engineering (BSEE)-50" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 4340",
+            "metadata": { "id": "Electrical Engineering (BSEE)-51" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 4368",
+            "metadata": { "id": "Electrical Engineering (BSEE)-52" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 4V95",
+            "metadata": { "id": "Electrical Engineering (BSEE)-53" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 4202",
+            "metadata": { "id": "Electrical Engineering (BSEE)-54" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 4304",
+            "metadata": { "id": "Electrical Engineering (BSEE)-55" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 4V95",
+            "metadata": { "id": "Electrical Engineering (BSEE)-56" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 4201",
+            "metadata": { "id": "Electrical Engineering (BSEE)-57" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 4330",
+            "metadata": { "id": "Electrical Engineering (BSEE)-58" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 4391",
+            "metadata": { "id": "Electrical Engineering (BSEE)-59" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 4371",
+            "metadata": { "id": "Electrical Engineering (BSEE)-60" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 4V95",
+            "metadata": { "id": "Electrical Engineering (BSEE)-61" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 4204",
+            "metadata": { "id": "Electrical Engineering (BSEE)-62" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 4362",
+            "metadata": { "id": "Electrical Engineering (BSEE)-63" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 4363",
+            "metadata": { "id": "Electrical Engineering (BSEE)-64" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 4V95",
+            "metadata": { "id": "Electrical Engineering (BSEE)-65" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 4205",
+            "metadata": { "id": "Electrical Engineering (BSEE)-66" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 3350",
+            "metadata": { "id": "Electrical Engineering (BSEE)-67" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 4331",
+            "metadata": { "id": "Electrical Engineering (BSEE)-68" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 4360",
+            "metadata": { "id": "Electrical Engineering (BSEE)-69" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 4361",
+            "metadata": { "id": "Electrical Engineering (BSEE)-70" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 4365",
+            "metadata": { "id": "Electrical Engineering (BSEE)-71" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 4367",
+            "metadata": { "id": "Electrical Engineering (BSEE)-72" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 4V95",
+            "metadata": { "id": "Electrical Engineering (BSEE)-73" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 4203",
+            "metadata": { "id": "Electrical Engineering (BSEE)-74" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 4399",
+            "metadata": { "id": "Electrical Engineering (BSEE)-75" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "EE 4V98",
+            "metadata": { "id": "Electrical Engineering (BSEE)-76" }
+          }
+        ]
+      },
+      {
+        "matcher": "FreeElectiveRequirement",
+        "required_hours": 9,
+        "excluded_courses": [],
+        "metadata": { "id": "Electrical Engineering (BSEE)-77" }
+      }
     ]
   }
 }
