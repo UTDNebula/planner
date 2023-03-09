@@ -1,6 +1,6 @@
 import { SemesterCode } from '@prisma/client';
 
-import { createNewYear, displaySemesterCode } from './utilFunctions';
+import { createNewYear, displaySemesterCode, isSemCodeEqual } from './utilFunctions';
 
 export interface RecentSemester {
   year: number;
@@ -153,10 +153,7 @@ export function addCreditsToPlan(
  * Is semesterOne earlier than semesterTwo
  */
 export const isEarlierSemester = (semesterOne: SemesterCode, semesterTwo: SemesterCode) => {
-  if (
-    JSON.stringify({ semester: semesterOne.semester, year: semesterOne.year }) ===
-    JSON.stringify({ semester: semesterTwo.semester, year: semesterTwo.year })
-  ) {
+  if (isSemCodeEqual(semesterOne, semesterTwo)) {
     return false;
   } else if (semesterOne.year > semesterTwo.year) {
     return false;
