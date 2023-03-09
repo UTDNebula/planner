@@ -110,6 +110,10 @@ export type SemestersReducerAction =
       type: 'changeSemesterColor';
       color: keyof typeof tagColors;
       semesterId: string;
+    }
+  | {
+      type: 'reinitState';
+      semesters: Semester[];
     };
 
 export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
@@ -165,6 +169,9 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
   >(
     (state, action) => {
       switch (action.type) {
+        case 'reinitState':
+          return action.semesters;
+
         case 'addSemesters':
           return [...state, ...action.newSemesters];
 
@@ -240,6 +247,13 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
     },
     plan ? parsePlanSemestersFromPlan(plan) : [],
   );
+
+  useEffect(() => {
+    dispatchSemesters({
+      type: 'reinitState',
+      semesters: plan ? parsePlanSemestersFromPlan(plan) : [],
+    });
+  }, [plan]);
 
   const sortedSemesters = useMemo(
     () =>

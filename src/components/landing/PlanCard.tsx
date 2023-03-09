@@ -2,7 +2,7 @@ import DotsHorizontalIcon from '@/icons/DotsHorizontalIcon';
 import router from 'next/router';
 import { trpc } from '@/utils/trpc';
 import { useState } from 'react';
-import DeleteModal from './DeleteModal';
+import DeletePlanModal from '../../shared-components/DeletePlanModal';
 import PlanCardDropdown from './PlanCardDropdown';
 
 export type PlanCardProps = {
@@ -61,7 +61,7 @@ export default function PlanCard({ id, name, major }: PlanCardProps) {
                   <DotsHorizontalIcon className="m-auto rotate-90" />
                 </button>
               </PlanCardDropdown>
-              <DeleteModal
+              <DeletePlanModal
                 open={openDeleteModal}
                 onOpenChange={(open) => setOpenDeleteModal(open)}
                 deletePlan={() => {

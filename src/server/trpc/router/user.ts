@@ -190,6 +190,8 @@ export const userRouter = router({
         semesters: semesters,
         requirements: degreeRequirements,
         transferCredits,
+        startSemester,
+        endSemester,
       };
 
       const plans: Prisma.PlanUpdateManyWithoutUserNestedInput = {
@@ -275,6 +277,8 @@ export const userRouter = router({
         name: 'Copy-' + plan!.name,
         semesters: semesters,
         requirements: degreeRequirements,
+        endSemester: plan!.endSemester,
+        startSemester: plan!.startSemester,
       };
 
       const plans: Prisma.PlanUpdateManyWithoutUserNestedInput = {
@@ -353,6 +357,11 @@ export const userRouter = router({
           year: new Date().getMonth() > 7 ? new Date().getFullYear() : new Date().getFullYear() - 1,
         };
 
+        const endSemester = user?.profile?.endSemester ?? {
+          semester: 's',
+          year: startSemester.year + 4,
+        };
+
         // Since we display plans by year, we need to determine what the start & end year is via some annoying logic
         const startYear =
           startSemester?.semester === 'f' ? startSemester.year : startSemester.year - 1;
@@ -416,6 +425,8 @@ export const userRouter = router({
           name: major,
           semesters: semesters,
           requirements: degreeRequirements,
+          endSemester,
+          startSemester,
         };
         const plans: Prisma.PlanUpdateManyWithoutUserNestedInput = {
           create: plansInput,

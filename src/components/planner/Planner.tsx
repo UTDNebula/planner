@@ -39,6 +39,7 @@ import SelectedCoursesToast from './SelectedCoursesToast';
 import TransferBank from './TransferBank';
 import PlannerMouseSensor from './PlannerMouseSensor';
 import { trpc } from '@/utils/trpc';
+import Router from 'next/router';
 
 /** PlannerTool Props */
 export interface PlannerProps {
@@ -77,6 +78,16 @@ export default function Planner({
   const updatePlan = async () => {
     await utils.user.getUser.invalidate();
   };
+
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const deletePlan = trpc.plan.deletePlanById.useMutation({
+    onSuccess: () => {
+      setDeleteLoading(true);
+      utils.plan.invalidate().then(() => Router.push('/app'));
+    },
+    onSettled: () => setDeleteLoading(false),
+  });
+
   useEffect(() => {
     updatePlan();
   }, [filteredSemesters]);
@@ -172,12 +183,15 @@ export default function Planner({
           className="flex max-h-screen flex-grow flex-col gap-y-6 overflow-y-scroll p-4 pb-0"
         >
           <Toolbar
+            planId={planId}
             title={title}
             major={degreeRequirementsData?.major ?? 'undecided'}
             studentName="Dev"
+            deletePlan={() => deletePlan.mutateAsync(planId)}
+            deleteLoading={deleteLoading}
           />
 
-          <article className="flex h-full flex-col gap-y-5  overflow-x-hidden">
+          <article className="z-10 flex h-full flex-col  gap-y-5 overflow-x-hidden">
             {transferCredits.length > 0 && <TransferBank transferCredits={transferCredits} />}
             <div className="flex h-fit gap-5">
               {filteredSemesters
