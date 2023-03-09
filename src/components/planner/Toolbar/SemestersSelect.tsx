@@ -1,12 +1,12 @@
 import React, { FC } from 'react';
 import * as Select from '@radix-ui/react-select';
 import ChevronIcon from '@/icons/ChevronIcon';
+import { SemesterCode } from '@prisma/client';
+import { displaySemesterCode } from '@/utils/utilFunctions';
 
-const SemestersSelect: FC<Select.SelectProps & { id?: string; placeholder?: string }> = ({
-  id,
-  placeholder,
-  ...props
-}) => (
+const SemestersSelect: FC<
+  Select.SelectProps & { id?: string; placeholder?: string; semesterCodes: SemesterCode[] }
+> = ({ id, placeholder, semesterCodes, ...props }) => (
   <Select.Root {...props}>
     <Select.Trigger
       id={id}
@@ -22,16 +22,16 @@ const SemestersSelect: FC<Select.SelectProps & { id?: string; placeholder?: stri
     <Select.Portal className="z-[9999]">
       <Select.Content
         position="popper"
-        className="cursor-pointer select-none rounded-md border border-neutral-100 bg-generic-white shadow-sm"
+        className="cursor-pointer select-none overflow-hidden rounded-md border border-neutral-100 bg-generic-white shadow-sm"
         sideOffset={10}
       >
-        <Select.Viewport>
+        <Select.Viewport className="max-h-52 overflow-y-scroll">
           <Select.Group>
-            <SelectItem value="apple">Apple</SelectItem>
-            <SelectItem value="banana">Banana</SelectItem>
-            <SelectItem value="blueberry">Blueberry</SelectItem>
-            <SelectItem value="grapes">Grapes</SelectItem>
-            <SelectItem value="pineapple">Pineapple</SelectItem>
+            {semesterCodes.map((semesterCode, i) => (
+              <SelectItem key={i} value={JSON.stringify(semesterCode)}>
+                {displaySemesterCode(semesterCode)}
+              </SelectItem>
+            ))}
           </Select.Group>
         </Select.Viewport>
       </Select.Content>

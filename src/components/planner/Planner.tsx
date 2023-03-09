@@ -183,6 +183,7 @@ export default function Planner({
           className="flex max-h-screen flex-grow flex-col gap-y-6 overflow-y-scroll p-4 pb-0"
         >
           <Toolbar
+            planId={planId}
             title={title}
             major={degreeRequirementsData?.major ?? 'undecided'}
             studentName="Dev"

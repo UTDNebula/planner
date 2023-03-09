@@ -16,6 +16,7 @@ import EditSemestersModal from './EditSemestersModal';
 import DeletePlanModal from '@/shared-components/DeletePlanModal';
 
 export interface ToolbarProps {
+  planId: string;
   title: string;
   major: string;
   studentName: string;
@@ -23,7 +24,14 @@ export interface ToolbarProps {
   deleteLoading: boolean;
 }
 
-const Toolbar: FC<ToolbarProps> = ({ title, major, studentName, deletePlan, deleteLoading }) => {
+const Toolbar: FC<ToolbarProps> = ({
+  planId,
+  title,
+  major,
+  studentName,
+  deletePlan,
+  deleteLoading,
+}) => {
   const { allSemesters: semesters } = useSemestersContext();
   const [editSemestersModalOpen, setEditSemestersModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -67,6 +75,9 @@ const Toolbar: FC<ToolbarProps> = ({ title, major, studentName, deletePlan, dele
           </Button>
 
           <EditSemestersModal
+            planId={planId}
+            startSemester={semesters[0].code}
+            endSemester={semesters[semesters.length - 1].code}
             open={editSemestersModalOpen}
             onOpenChange={setEditSemestersModalOpen}
           />
