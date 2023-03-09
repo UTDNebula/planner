@@ -137,6 +137,7 @@ export const planRouter = router({
               newStartSemester as SemesterCode,
               firstSemesterCode,
               false,
+              true,
             ).map((semesterCode) => ({
               code: semesterCode,
               color: '',
@@ -154,6 +155,7 @@ export const planRouter = router({
             ...(createSemesterCodeRange(
               lastSemesterCode,
               newEndSemester as SemesterCode,
+              true,
               false,
             ).map((semesterCode) => ({
               code: semesterCode,

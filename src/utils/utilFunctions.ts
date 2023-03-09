@@ -130,8 +130,9 @@ export function createSemesterCodeRange(
   startSemester: SemesterCode,
   endSemester: SemesterCode,
   includeEnd: boolean,
+  includeStart = true,
 ) {
-  const semesterCodes = [startSemester];
+  const semesterCodes = includeStart ? [startSemester] : [];
   let currSemester = createNewSemesterCode(startSemester);
   while (isEarlierSemester(currSemester, endSemester)) {
     semesterCodes.push(currSemester);
