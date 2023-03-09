@@ -75,6 +75,7 @@ const Toolbar: FC<ToolbarProps> = ({
           </Button>
 
           <EditSemestersModal
+            closeModal={() => setEditSemestersModalOpen(false)}
             planId={planId}
             startSemester={semesters[0].code}
             endSemester={semesters[semesters.length - 1].code}

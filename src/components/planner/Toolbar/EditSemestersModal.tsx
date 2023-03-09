@@ -10,6 +10,7 @@ export interface EditSemestersModalProps extends Dialog.DialogProps {
   planId: string;
   startSemester: SemesterCode;
   endSemester: SemesterCode;
+  closeModal: () => void;
 }
 
 // Generates n-year worth of semesters before and after the given semester
@@ -32,14 +33,17 @@ const EditSemestersModal: FC<EditSemestersModalProps> = ({
   planId,
   startSemester,
   endSemester,
+  closeModal,
   ...props
 }) => {
   const utils = trpc.useContext();
+  const [isModifyLoading, setIsModifyLoading] = useState(false);
   const modifySemesters = trpc.plan.modifySemesters.useMutation({
     onSuccess: async () => {
-      console.log('RUNNNINGGGG');
       await utils.plan.getPlanById.invalidate();
+      closeModal();
     },
+    onSettled: async () => setIsModifyLoading(false),
   });
 
   const [newStartSemester, setNewStartSemester] = useState(startSemester);
@@ -47,8 +51,6 @@ const EditSemestersModal: FC<EditSemestersModalProps> = ({
 
   const startSemesterOptions: SemesterCode[] = genSurroundingSemesterCodes(startSemester, 3);
   const endSemesterOptions: SemesterCode[] = genSurroundingSemesterCodes(endSemester, 3);
-
-  console.log({ newStartSemester, newEndSemester });
 
   return (
     <Dialog.Root {...props}>
@@ -100,9 +102,10 @@ const EditSemestersModal: FC<EditSemestersModalProps> = ({
               </Button>
             </Dialog.Close>
             <Button
+              isLoading={isModifyLoading}
               onClick={(e) => {
                 e.stopPropagation();
-
+                setIsModifyLoading(true);
                 modifySemesters.mutateAsync({
                   planId,
                   newEndSemester,
