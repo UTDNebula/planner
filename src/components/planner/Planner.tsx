@@ -172,7 +172,7 @@ export default function Planner({
         <DragOverlay dropAnimation={null}>
           {activeCourse &&
             (activeCourse.from === 'semester-tile' ? (
-              <SemesterCourseItem course={activeCourse.course} isDragging />
+              <SemesterCourseItem course={activeCourse.course} isDragging isValid />
             ) : activeCourse.from === 'course-list' ? (
               <SidebarCourseItem course={activeCourse.course} isDragging />
             ) : null)}
@@ -191,7 +191,7 @@ export default function Planner({
             deleteLoading={deleteLoading}
           />
 
-          <article className="z-10 flex h-full flex-col  gap-y-5 overflow-x-hidden">
+          <article className="flex h-full  flex-col gap-y-5 overflow-x-hidden">
             {transferCredits.length > 0 && <TransferBank transferCredits={transferCredits} />}
             <div className="flex h-fit gap-5">
               {filteredSemesters
@@ -205,14 +205,6 @@ export default function Planner({
                 .map((column, index) => (
                   <MasonryColumn key={`column-${index}`} column={column} />
                 ))}
-            </div>
-            <div className="col-span-full flex h-10 items-center justify-center gap-8">
-              <button className="hello" onClick={handleRemoveYear}>
-                - Remove Year
-              </button>
-              <button className="world" onClick={handleAddYear}>
-                + Add Year
-              </button>
             </div>
           </article>
         </section>

@@ -48,31 +48,31 @@ const Toolbar: FC<ToolbarProps> = ({
           <h1 className="text-3xl font-semibold tracking-tight">{title}</h1>
         </div>
         <div className="flex h-min items-center gap-3">
-          <FilterByDropdown>
-            <Button
-              aria-label="Filter by options"
-              size="medium"
-              color="tertiary"
-              icon={<SwitchVerticalIcon />}
-            >
-              <span className="whitespace-nowrap">Filter By</span>
-            </Button>
-          </FilterByDropdown>
-          <Button
-            size="medium"
-            data-tip="Import Plan"
-            className="tooltip tooltip-bottom"
-            icon={<AddFileIcon className="h-5 w-5" />}
-          />
           <Button size="medium" icon={<DownloadIcon />}>
             <PDFDownloadLink
               document={
                 <DegreePlanPDF studentName={studentName} planTitle={title} semesters={semesters} />
               }
             >
-              <span className="whitespace-nowrap">Export Degree Plan</span>
+              <span className="whitespace-nowrap" id="hello">
+                Export Degree Plan
+              </span>
             </PDFDownloadLink>
           </Button>
+
+          <FilterByDropdown>
+            <Button
+              aria-label="Filter by options"
+              size="medium"
+              color="border"
+              className="hover:bg-primary-100 hover:text-primary-900"
+              icon={<SwitchVerticalIcon />}
+            >
+              <span className="whitespace-nowrap" id="world">
+                Sort By
+              </span>
+            </Button>
+          </FilterByDropdown>
 
           <EditSemestersModal
             closeModal={() => setEditSemestersModalOpen(false)}
