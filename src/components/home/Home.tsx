@@ -25,7 +25,7 @@ export default function PlansPage(): JSX.Element {
       <section className="flex max-h-screen flex-grow flex-col gap-4 overflow-y-scroll p-16">
         <article className="flex flex-col">
           <div className="flex flex-row items-center justify-between">
-            <div className="text-4xl">Course Dashboard</div>
+            <div className="text-4xl font-semibold">Course Dashboard</div>
             <DropdownMenu.Root>
               <DropdownMenu.Trigger asChild>
                 <button className="flex h-12 w-52 flex-row items-center gap-4 rounded-md bg-primary p-6 text-white transition-all hover:scale-105">
@@ -52,7 +52,7 @@ export default function PlansPage(): JSX.Element {
               </DropdownMenu.Portal>
             </DropdownMenu.Root>
           </div>
-          <div className="ml-1 text-lg text-[#737373]">
+          <div className="ml-1 text-lg font-semibold text-[#737373]">
             Welcome {userData?.profile?.name ?? 'Temoc'}
           </div>
         </article>
