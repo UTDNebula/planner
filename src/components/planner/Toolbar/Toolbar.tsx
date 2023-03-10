@@ -54,7 +54,9 @@ const Toolbar: FC<ToolbarProps> = ({
                 <DegreePlanPDF studentName={studentName} planTitle={title} semesters={semesters} />
               }
             >
-              <span className="whitespace-nowrap">Export Degree Plan</span>
+              <span className="whitespace-nowrap" id="hello">
+                Export Degree Plan
+              </span>
             </PDFDownloadLink>
           </Button>
 
@@ -66,7 +68,9 @@ const Toolbar: FC<ToolbarProps> = ({
               className="hover:bg-primary-100 hover:text-primary-900"
               icon={<SwitchVerticalIcon />}
             >
-              <span className="whitespace-nowrap">Sort By</span>
+              <span className="whitespace-nowrap" id="world">
+                Sort By
+              </span>
             </Button>
           </FilterByDropdown>
 

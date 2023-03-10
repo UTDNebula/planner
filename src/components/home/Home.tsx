@@ -6,6 +6,7 @@ import { useState } from 'react';
 import PlanCard from '../landing/PlanCard';
 import TemplateModal from '../template/Modal';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import { Steps } from 'intro.js-react';
 
 /**
  * A list of the user's plans
@@ -20,8 +21,20 @@ export default function PlansPage(): JSX.Element {
     return <div>You have not created any plans yet</div>;
   }
 
+  const steps = [
+    {
+      element: '#hello',
+      intro: 'Hello step',
+    },
+    {
+      element: '#world',
+      intro: 'World step',
+    },
+  ];
+
   return (
     <>
+      <Steps enabled={true} steps={steps} initialStep={0} onExit={() => console.log('HI')} />
       <section className="flex max-h-screen flex-grow flex-col gap-4 overflow-y-scroll p-16">
         <article className="flex flex-col">
           <div className="flex flex-row items-center justify-between">
