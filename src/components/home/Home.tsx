@@ -23,25 +23,60 @@ export default function PlansPage(): JSX.Element {
 
   const steps = [
     {
-      element: '#hello',
-      intro: 'Hello step',
+      intro: (
+        <div className="">
+          Hello and welcome to Nebula Labs! <br /> <br /> To help make your user experience as
+          seamless as possible, we have created a tutorial that will guide you through the process
+          of using our platform.
+        </div>
+      ),
     },
     {
-      element: '#world',
-      intro: 'World step',
+      element: '#tutorial-1',
+      intro: (
+        <div className="">
+          This is the heart of our platform, where you can create and access your degree plan. Take
+          a moment to explore the layout and navigation to familiarize yourself with this section.
+        </div>
+      ),
+    },
+    {
+      element: '#tutorial-2',
+      intro: (
+        <div className="">
+          To create a new degree plan, click on &quot;Add New Plan.&quot; You have the option to
+          import your existing transcript under &quot;Custom Plan&quot; or use our template under
+          &quot;Template Plan.&quot;
+        </div>
+      ),
+    },
+    {
+      element: '#tutorial-3',
+      intro: (
+        <div className="">
+          The sidebar provides access to your profile, tech support, and feedback form. If you
+          encounter any issues or have questions, our support team is available to assist you 24/7.
+        </div>
+      ),
     },
   ];
 
   return (
     <>
       <Steps enabled={true} steps={steps} initialStep={0} onExit={() => console.log('HI')} />
-      <section className="flex max-h-screen flex-grow flex-col gap-4 overflow-y-scroll p-16">
+      <section
+        id="tutorial-1"
+        className="flex max-h-screen flex-grow flex-col gap-4 overflow-y-scroll p-16"
+      >
         <article className="flex flex-col">
           <div className="flex flex-row items-center justify-between">
             <div className="mb-4 text-4xl font-semibold">Course Dashboard</div>
             <DropdownMenu.Root>
               <DropdownMenu.Trigger asChild>
-                <button className="flex h-12 w-52 flex-row items-center gap-4 rounded-md bg-primary p-6 text-white transition-all hover:scale-105">
+                <button
+                  id="tutorial-2"
+                  className="flex h-12 w-52 flex-row items-center gap-4 rounded-md bg-primary p-6 text-white transition-all hover:scale-105"
+                >
                   <PlusIcon />
                   <div className="">Add New Plan</div>
                   <ChevronIcon className="rotate-90" />
