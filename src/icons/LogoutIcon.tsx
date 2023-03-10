@@ -2,11 +2,13 @@ import { SVGProps } from 'react';
 
 export default function LogoutIcon(props: SVGProps<SVGSVGElement>): JSX.Element {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
-        fillRule="evenodd"
-        d="M7.5 3.75A1.5 1.5 0 006 5.25v13.5a1.5 1.5 0 001.5 1.5h6a1.5 1.5 0 001.5-1.5V15a.75.75 0 011.5 0v3.75a3 3 0 01-3 3h-6a3 3 0 01-3-3V5.25a3 3 0 013-3h6a3 3 0 013 3V9A.75.75 0 0115 9V5.25a1.5 1.5 0 00-1.5-1.5h-6zm10.72 4.72a.75.75 0 011.06 0l3 3a.75.75 0 010 1.06l-3 3a.75.75 0 11-1.06-1.06l1.72-1.72H9a.75.75 0 010-1.5h10.94l-1.72-1.72a.75.75 0 010-1.06z"
-        clipRule="evenodd"
+        d="M7.22222 11.1111L4.11111 8M4.11111 8L7.22222 4.88889M4.11111 8L15 8M11.1111 11.1111V11.8889C11.1111 13.1776 10.0664 14.2222 8.77778 14.2222H3.33333C2.04467 14.2222 1 13.1776 1 11.8889V4.11111C1 2.82245 2.04467 1.77778 3.33333 1.77778H8.77778C10.0664 1.77778 11.1111 2.82245 11.1111 4.11111V4.88889"
+        stroke="#312E81"
+        strokeWidth="1.67"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

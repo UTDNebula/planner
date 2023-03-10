@@ -61,12 +61,12 @@ export default function Sidebar({ isMobile }: { isMobile: boolean }): JSX.Elemen
         } flex h-screen max-h-screen flex-col border-r-[1px] border-r-[#e0e0e0] bg-white  transition-all`}
       >
         {!isMobile && (
-          <div className="relative mt-10 mb-[80px] flex h-fit w-full items-center justify-center">
+          <div className="relative mt-6 mb-[70px] flex h-fit w-full items-center justify-center">
             {open && <LogoIcon />}
             <ChevronIcon
               onClick={() => setOpen(!open)}
-              className={`absolute right-5 top-0 h-4 w-4 cursor-pointer ${
-                !open ? '' : 'rotate-180'
+              className={` h-4 w-4 cursor-pointer ${
+                !open ? '' : 'absolute right-5 top-0 rotate-180'
               }`}
               strokeWidth={2.5}
             />
@@ -91,11 +91,11 @@ export default function Sidebar({ isMobile }: { isMobile: boolean }): JSX.Elemen
         <div className="flex-grow"></div>
 
         <button
-          className="flex items-center  gap-6 px-5 pb-5 align-bottom"
+          className="mx-4 flex  items-center gap-6 px-5 pb-5 align-bottom"
           onClick={() => signOut()}
         >
           <LogoutIcon className="h-6 w-6" />
-          {open && <span>Log Out</span>}
+          {open && <span className="text-[18px]">Log Out</span>}
         </button>
       </div>
     </>

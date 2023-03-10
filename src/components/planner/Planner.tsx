@@ -172,7 +172,7 @@ export default function Planner({
         <DragOverlay dropAnimation={null}>
           {activeCourse &&
             (activeCourse.from === 'semester-tile' ? (
-              <SemesterCourseItem course={activeCourse.course} isDragging />
+              <SemesterCourseItem course={activeCourse.course} isDragging isValid />
             ) : activeCourse.from === 'course-list' ? (
               <SidebarCourseItem course={activeCourse.course} isDragging />
             ) : null)}
