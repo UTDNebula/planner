@@ -1,42 +1,55 @@
 import Link from 'next/link';
 import { signOut } from 'next-auth/react';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import ChevronIcon from '@/icons/ChevronIcon';
-import CreditsIcon from '@/icons/CreditsIcon';
 import HomeIcon from '@/icons/HomeIcon';
 import LogoutIcon from '@/icons/LogoutIcon';
 import ProfileIcon from '@/icons/ProfileIcon';
 import { useRouter } from 'next/router';
+import LogoIcon from '@/icons/LogoIcon';
+import ContactIcon from '@/icons/ContactIcon';
+import FeedbackIcon from '@/icons/FeedbackIcon';
+import GlobalIcon from '@/icons/GlobalIcon';
 
 export default function Sidebar({ isMobile }: { isMobile: boolean }): JSX.Element {
   const [open, setOpen] = useState(!isMobile);
   const [display, setDisplay] = useState(true);
-  const hiddenRoutes = ['/app/plans'];
+  const hiddenRoutes = useMemo(() => ['/app/plans'], []);
   const router = useRouter();
   useEffect(() => setOpen(!isMobile), [isMobile]);
 
   useEffect(() => {
     setDisplay(!hiddenRoutes.reduce((acc, cur) => acc && router.pathname.startsWith(cur), true));
-  }, [router.pathname]);
+  }, [hiddenRoutes, router.pathname]);
 
   if (!display) return <></>;
 
   const sidebarItems = [
     {
       url: '/app/home',
-      label: 'Home Page',
+      label: 'Dashboard',
       Icon: HomeIcon,
     },
     {
       url: '/app/profile',
-      label: 'My Profile',
+      label: 'Profile',
       Icon: ProfileIcon,
     },
     {
-      url: '/app/credits',
-      label: 'Course History',
-      Icon: CreditsIcon,
+      url: 'https://www.google.com',
+      label: 'Contact Support',
+      Icon: ContactIcon,
+    },
+    {
+      url: 'https://www.google.com',
+      label: 'Feedback Form',
+      Icon: FeedbackIcon,
+    },
+    {
+      url: 'https://www.google.com',
+      label: 'Join Our Discord',
+      Icon: GlobalIcon,
     },
   ];
 
@@ -44,27 +57,33 @@ export default function Sidebar({ isMobile }: { isMobile: boolean }): JSX.Elemen
     <>
       <div
         className={`${
-          open ? 'w-[240px] shrink-0' : 'w-auto'
+          open ? 'w-[288px] shrink-0' : 'w-auto'
         } flex h-screen max-h-screen flex-col border-r-[1px] border-r-[#e0e0e0] bg-white  transition-all`}
       >
         {!isMobile && (
-          <div
-            className={`${open ? 'justify-between' : 'justify-center'} flex h-16 items-center p-4`}
-          >
-            {open && <h4 className="text-primary-900">Planner</h4>}
+          <div className="relative mt-10 mb-[80px] flex h-fit w-full items-center justify-center">
+            {open && <LogoIcon />}
             <ChevronIcon
               onClick={() => setOpen(!open)}
-              className={`h-4 w-4 cursor-pointer ${!open ? '' : 'rotate-180'}`}
+              className={`absolute right-5 top-0 h-4 w-4 cursor-pointer ${
+                !open ? '' : 'rotate-180'
+              }`}
               strokeWidth={2.5}
             />
           </div>
         )}
-        <ul className="flex flex-col">
+        <ul className="flex flex-col gap-y-[25px]">
           {sidebarItems.map(({ url, label, Icon }, i) => (
             <Link key={url + i} href={url}>
-              <li className="flex cursor-pointer items-center gap-6 px-5 py-3">
-                <Icon className="h-6 w-6" />
-                {open && <span>{label}</span>}
+              <li
+                className={`${
+                  router.pathname === url && 'rounded-lg bg-primary font-medium text-white'
+                } mx-4 flex cursor-pointer items-center gap-6 px-4 py-2`}
+              >
+                <div className="flex h-full w-6 items-center justify-center">
+                  <Icon className="h-6 w-6" />
+                </div>
+                {open && <span className="text-[18px] ">{label}</span>}
               </li>
             </Link>
           ))}
