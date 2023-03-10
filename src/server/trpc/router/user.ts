@@ -148,15 +148,24 @@ export const userRouter = router({
       }
 
       const { startSemester: userStartSemester, endSemester: userEndSemester } = user.profile;
-      const earliestSemFromTranscript = takenCourses.reduce(
-        (prev, curr) => (isEarlierSemester(prev.semesterCode, curr.semesterCode) ? prev : curr),
-        takenCourses[0],
-      ).semesterCode;
 
-      const latestSemFromTranscript = takenCourses.reduce(
-        (prev, curr) => (!isEarlierSemester(prev.semesterCode, curr.semesterCode) ? prev : curr),
-        takenCourses[0],
-      ).semesterCode;
+      const earliestSemFromTranscript =
+        takenCourses.length > 0
+          ? takenCourses.reduce(
+              (prev, curr) =>
+                isEarlierSemester(prev.semesterCode, curr.semesterCode) ? prev : curr,
+              takenCourses[0],
+            ).semesterCode
+          : userStartSemester;
+
+      const latestSemFromTranscript =
+        takenCourses.length > 0
+          ? takenCourses.reduce(
+              (prev, curr) =>
+                !isEarlierSemester(prev.semesterCode, curr.semesterCode) ? prev : curr,
+              takenCourses[0],
+            ).semesterCode
+          : userEndSemester;
 
       const startSemester = isEarlierSemester(userStartSemester, earliestSemFromTranscript)
         ? userStartSemester
