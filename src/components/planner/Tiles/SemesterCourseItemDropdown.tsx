@@ -1,11 +1,11 @@
 import { FC } from 'react';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import ClipboardListIcon from '@/icons/ClipboardListIcon';
 import ColorSwatchIcon from '@/icons/ColorSwatchIcon';
 import ChevronIcon from '@/icons/ChevronIcon';
 import DeleteIcon from '@/icons/DeleteIcon';
 import { tagColors } from '../utils';
 import { ObjectID } from 'bson';
+import LockIcon from '@/icons/LockIcon';
 
 const itemClasses =
   'flex items-center gap-x-3 border-b border-neutral-300 px-2 py-2 hover:bg-neutral-200 cursor-pointer text-sm';
@@ -21,6 +21,7 @@ export interface SemesterTileDropdownProps {
   onOpenChange: (open: boolean) => void;
   toggleLock: () => void;
   locked: boolean;
+  semesterLocked: boolean;
 }
 
 const SemesterCourseItemDropdown: FC<SemesterTileDropdownProps> = ({
@@ -28,6 +29,7 @@ const SemesterCourseItemDropdown: FC<SemesterTileDropdownProps> = ({
   changeColor,
   open,
   onOpenChange,
+  semesterLocked,
   children,
   toggleLock,
   locked,
@@ -47,25 +49,24 @@ const SemesterCourseItemDropdown: FC<SemesterTileDropdownProps> = ({
           align="start"
         >
           <DropdownMenu.Item
-            className={!locked ? itemClasses : `${itemClasses} ${disabledClasses}`}
-            onClick={!locked ? deleteCourse : undefined}
-            disabled={locked}
+            className={!(locked||semesterLocked) ? itemClasses : `${itemClasses} ${disabledClasses}`}
+            onClick={!(locked||semesterLocked) ? deleteCourse : undefined}
+            disabled={(locked||semesterLocked)}
           >
             <DeleteIcon />
             <span>Delete</span>
           </DropdownMenu.Item>
-          <DropdownMenu.Item className={itemClasses} onClick={toggleLock}>
-            {/* TODO: Change icon */}
-            <ClipboardListIcon />
+          <DropdownMenu.Item className={!(semesterLocked) ? itemClasses : itemClasses + " " + disabledClasses} onClick={!(semesterLocked)?toggleLock : undefined} disabled={semesterLocked}>
+            <LockIcon />
             <span>{locked ? 'Unlock' : 'Lock'} course</span>
           </DropdownMenu.Item>
 
           <DropdownMenu.Sub>
             <DropdownMenu.SubTrigger
               className={`${
-                !locked ? itemClasses : `${itemClasses} ${disabledClasses}`
+                !(locked||semesterLocked) ? itemClasses : `${itemClasses} ${disabledClasses}`
               } justify-between border-none`}
-              disabled={locked}
+              disabled={locked || semesterLocked}
             >
               <div className="flex items-center gap-x-3">
                 <ColorSwatchIcon />

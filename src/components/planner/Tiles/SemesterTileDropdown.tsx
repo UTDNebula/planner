@@ -7,6 +7,7 @@ import ColorSwatchIcon from '@/icons/ColorSwatchIcon';
 import ChevronIcon from '@/icons/ChevronIcon';
 import { tagColors } from '../utils';
 import { ObjectID } from 'bson';
+import LockIcon from '@/icons/LockIcon';
 
 const itemClasses =
   'flex items-center gap-x-3 border-b border-neutral-300 px-2 py-2 hover:bg-neutral-200 cursor-pointer text-sm';
@@ -54,11 +55,12 @@ const SemesterTileDropdown: FC<SemesterTileDropdownProps> = ({
             <span>Clear courses</span>
           </DropdownMenu.Item>
           <DropdownMenu.Item className={itemClasses} onClick={toggleLock}>
+            <LockIcon/>
             <span>{locked ? 'Unlock' : 'Lock'} semester</span>
           </DropdownMenu.Item>
           <DropdownMenu.Item
             className={!locked ? itemClasses : `${itemClasses} ${disabledClasses}`}
-            onClick={!locked ? deleteAllCourses : undefined}
+            onClick={!locked ? selectAllCourses : undefined}
             disabled={locked}
           >
             <ClipboardListIcon />

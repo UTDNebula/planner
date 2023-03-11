@@ -8,6 +8,8 @@ import DraggableSemesterCourseItem from './SemesterCourseItem';
 import ChevronIcon from '@/icons/ChevronIcon';
 import SemesterTileDropdown from './SemesterTileDropdown';
 import { useSemestersContext } from '../SemesterContext';
+import LockIcon from '@/icons/LockIcon';
+import UnlockedIcon from '@/icons/UnlockedIcon';
 import { tagColors } from '../utils';
 
 export interface SemesterTileProps {
@@ -42,7 +44,7 @@ export const MemoizedSemesterTile = React.memo(
     return (
       <div
         ref={ref}
-        className={`flex h-fit select-none flex-col gap-y-2 overflow-hidden rounded-2xl border border-neutral-300 bg-white`}
+        className={`flex h-fit select-none flex-col gap-y-2 overflow-hidden rounded-2xl border border-neutral-300 ${semester.locked ? 'bg-neutral-200' : 'bg-white'}`}
       >
         <span className={`h-2 w-full transition-all ${tagColors[semester.color]}`}></span>
         <div className="flex flex-col gap-y-4 px-4 py-2">
@@ -55,12 +57,15 @@ export const MemoizedSemesterTile = React.memo(
               onClick={() => setOpen(!open)}
             />
           </article>
-          <div className="flex flex-row items-center justify-between">
-            <div className="flex h-10 flex-row items-center justify-center">
-              <h3 className={`text-2xl font-semibold tracking-tight text-primary-900`}>
+          <div className={`flex flex-row items-center justify-between ${semester.locked ? 'text-neutral-400' : 'text-primary-900'}`}>
+            <div className={`flex h-10 flex-row items-center justify-center align-middle gap-2`}>
+              <h3 className={`text-2xl font-semibold tracking-tight`}></h3>
                 {displaySemesterCode(semester.code)}
               </h3>
-              {semester.locked && <span>lockIcon</span>}
+              <span>
+                {!semester.locked ? <UnlockedIcon/> : <LockIcon/>}
+              </span>
+
             </div>
             <SemesterTileDropdown
               locked={semester.locked}
