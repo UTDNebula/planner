@@ -1,10 +1,11 @@
 from major.requirements.edge_cases.business_administration import (
     BusinessAdministrationElectiveRequirement,
     SomeRequirement,
-    # PrefixBucketRequirement,
 )
 from major.requirements.shared import PrefixBucketRequirement
 import json
+
+from major.requirements.shared import PrefixBucketRequirement
 
 
 def test_major_guided_elective_requirement() -> None:
@@ -50,6 +51,7 @@ def test_major_guided_elective_requirement() -> None:
         """
         {
             "matcher": "BA_ElectiveRequirement",
+            "metadata": {"id": 1},
             "required_count": 2,
             "required_hours": 15,
             "prefix_groups": [

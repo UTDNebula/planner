@@ -84,7 +84,7 @@ def test_computer_science_solver() -> None:
         "DEF 9199",
     ]
 
-    data = json.loads(open("degree_data/computer_science.json", "r").read())
+    data = json.loads(open("degree_data/Computer Science(BS).json", "r").read())
 
     requirements_data = data["requirements"]["major"]
 
@@ -176,7 +176,7 @@ def test_accounting_solver() -> None:
         "MKT 4360",
     ]
 
-    data = json.loads(open("degree_data/accounting.json", "r").read())
+    data = json.loads(open("degree_data/Accounting(BS).json", "r").read())
 
     requirements_data = data["requirements"]["major"]
 
@@ -283,7 +283,7 @@ def test_software_engineering_solver() -> None:
         "ABC 4499",
     ]
 
-    data = json.loads(open("degree_data/software_engineering.json", "r").read())
+    data = json.loads(open("degree_data/Software Engineering(BS).json", "r").read())
 
     requirements_data = data["requirements"]["major"]
 
@@ -295,13 +295,11 @@ def test_software_engineering_solver() -> None:
     solver = MajorRequirementsSolver(
         MISSING_GUIDED_ELECTIVE, copy.deepcopy(requirements)
     ).solve()
-    print(str(solver))
 
     assert solver.can_graduate() == False
 
     solver = MajorRequirementsSolver(
         GRADUATEABLE_COURSES, copy.deepcopy(requirements)
     ).solve()
-    print(str(solver))
 
     assert solver.can_graduate()

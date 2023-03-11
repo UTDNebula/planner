@@ -5,7 +5,7 @@ from major.requirements import (
     HoursRequirement,
     FreeElectiveRequirement,
     SelectRequirement,
-    PrefixRequirement,
+    PrefixBucketRequirement,
 )
 import json
 
@@ -20,6 +20,7 @@ def test_course_requirement() -> None:
         """
         {
             "matcher": "CourseRequirement",
+            "metadata": {"id": 1},
             "course": "HIST 1301"
         }
         """
@@ -44,13 +45,16 @@ def test_and_requirement() -> None:
         """
         {
             "matcher": "AndRequirement",
+            "metadata": {"id": 1},
             "requirements": [
                 {
                     "matcher": "CourseRequirement",
+                    "metadata": {"id": 2},
                     "course": "HIST 1301"
                 },
                 {
                     "matcher": "CourseRequirement",
+                    "metadata": {"id": 3},
                     "course": "HIST 1302"
                 }
             ]
@@ -79,13 +83,16 @@ def test_or_requirement() -> None:
         """
         {
             "matcher": "OrRequirement",
+            "metadata": {"id": 1},
             "requirements": [
                 {
                     "matcher": "CourseRequirement",
+                    "metadata": {"id": 2},
                     "course": "HIST 1301"
                 },
                 {
                     "matcher": "CourseRequirement",
+                    "metadata": {"id": 3},
                     "course": "HIST 1302"
                 }
             ]
@@ -118,28 +125,56 @@ def test_hours_requirement() -> None:
         ],
     )
 
-    assert hours_req.fulfilled_hours == 0
+    assert hours_req.get_fulfilled_hours() == 0
     assert hours_req.is_fulfilled() == False
 
     hours_req.attempt_fulfill("ACCT 3322")
     hours_req.attempt_fulfill("FFFF 1111")
 
-    assert hours_req.fulfilled_hours == 3
+    assert hours_req.get_fulfilled_hours() == 3
     assert hours_req.is_fulfilled() == False
 
     hours_req.attempt_fulfill("ACCT 3322")
-    assert hours_req.fulfilled_hours == 3
+    assert hours_req.get_fulfilled_hours() == 3
     assert hours_req.is_fulfilled() == False
 
     hours_req.attempt_fulfill("ACCT 4301")
     hours_req.attempt_fulfill("FIN 3380")
     hours_req.attempt_fulfill("FIN 3390")
 
-    assert hours_req.fulfilled_hours == 12
+    assert hours_req.get_fulfilled_hours() == 12
     assert hours_req.is_fulfilled() == True
 
     hours_req.attempt_fulfill("FIN 3330")
-    assert hours_req.fulfilled_hours == 12
+    assert hours_req.get_fulfilled_hours() == 12
+    assert hours_req.is_fulfilled() == True
+
+    data = json.loads(
+        """
+        {
+            "matcher": "HoursRequirement",
+            "metadata": {"id": 1},
+            "required_hours": 3,
+            "requirements": [  
+                {
+                    "matcher": "CourseRequirement",
+                    "metadata": {"id": 2},
+                    "course": "HIST 1301"
+                },
+                {
+                    "matcher": "CourseRequirement",
+                    "metadata": {"id": 3},
+                    "course": "HIST 1302"
+                }
+            ]
+        }
+        """
+    )
+
+    hours_req = HoursRequirement.from_json(data)
+    hours_req.attempt_fulfill("HIST 1301")
+
+    assert hours_req.get_fulfilled_hours() == 3
     assert hours_req.is_fulfilled() == True
 
 
@@ -161,6 +196,7 @@ def test_free_elective_requirement() -> None:
         """
         {
             "matcher": "FreeElectiveRequirement",
+            "metadata": {"id": 1},
             "required_hours": 10,
             "excluded_courses": ["HIST 1301", "HIST 1302"]
         }
@@ -202,9 +238,42 @@ def test_select_requirement() -> None:
     assert select_req.fulfilled_count == 2
     assert select_req.is_fulfilled() == True
 
+    data = json.loads(
+        """
+        {
+            "matcher": "SelectRequirement",
+            "metadata": {"id": 1},
+            "required_count": 2,
+            "requirements": [
+                {
+                    "matcher": "CourseRequirement",
+                    "metadata": {"id": 2},
+                    "course": "HIST 1301"
+                },
+                {
+                    "matcher": "CourseRequirement",
+                    "metadata": {"id": 3},
+                    "course": "HIST 1302"
+                },
+                {
+                    "matcher": "CourseRequirement",
+                    "metadata": {"id": 4},
+                    "course": "HIST 3301"
+                }
+            ]
+        }
+        """
+    )
 
-def test_prefix_requirement() -> None:
-    prefix_req = PrefixRequirement("CS")
+    select_req = SelectRequirement.from_json(data)
+
+    assert select_req.attempt_fulfill("HIST 1301")
+    assert select_req.is_fulfilled() == False
+    assert select_req.fulfilled_count == 1
+
+
+def test_prefix_bucket_requirement() -> None:
+    prefix_req = PrefixBucketRequirement("CS")
     assert prefix_req.filled == False
 
     prefix_req.attempt_fulfill("BCOM 1000")
