@@ -52,8 +52,8 @@
                 ]
             },
             { "type": "CourseRequirement", "course": "COMM 3351" }, { "type": "CourseRequirement", "course": "COMM 4360" }, { "type": "CourseRequirement", "course": "COMM 4314" },
-            { type: "HoursRequirement", "required_hours": 6, "requirements": [{ "type": "CourseRequirement", "course": "COMM 3320" }, { "type": "CourseRequirement", "course": "COMM 3321" }, { "type": "CourseRequirement", "course": "COMM 3340" }, { "type": "CourseRequirement", "course": "THEA 3372" }] },
-            { type: "PrefixRequirement", "prefix": "COMM" },
+            { "type": "HoursRequirement", "required_hours": 6, "requirements": [{ "type": "CourseRequirement", "course": "COMM 3320" }, { "type": "CourseRequirement", "course": "COMM 3321" }, { "type": "CourseRequirement", "course": "COMM 3340" }, { "type": "CourseRequirement", "course": "THEA 3372" }] },
+            { "type": "PrefixRequirement", "prefix": "COMM" },
             // END: III. Major Requirements, Upper-Division: 39 semester credit hours
             { "type": "CourseRequirement", "course": "ARHM 1100" },
             {
