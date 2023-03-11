@@ -49,14 +49,20 @@ const SemesterCourseItemDropdown: FC<SemesterTileDropdownProps> = ({
           align="start"
         >
           <DropdownMenu.Item
-            className={!(locked||semesterLocked) ? itemClasses : `${itemClasses} ${disabledClasses}`}
-            onClick={!(locked||semesterLocked) ? deleteCourse : undefined}
-            disabled={(locked||semesterLocked)}
+            className={
+              !(locked || semesterLocked) ? itemClasses : `${itemClasses} ${disabledClasses}`
+            }
+            onClick={!(locked || semesterLocked) ? deleteCourse : undefined}
+            disabled={locked || semesterLocked}
           >
             <DeleteIcon />
             <span>Delete</span>
           </DropdownMenu.Item>
-          <DropdownMenu.Item className={!(semesterLocked) ? itemClasses : itemClasses + " " + disabledClasses} onClick={!(semesterLocked)?toggleLock : undefined} disabled={semesterLocked}>
+          <DropdownMenu.Item
+            className={!semesterLocked ? itemClasses : itemClasses + ' ' + disabledClasses}
+            onClick={!semesterLocked ? toggleLock : undefined}
+            disabled={semesterLocked}
+          >
             <LockIcon />
             <span>{locked ? 'Unlock' : 'Lock'} course</span>
           </DropdownMenu.Item>
@@ -64,7 +70,7 @@ const SemesterCourseItemDropdown: FC<SemesterTileDropdownProps> = ({
           <DropdownMenu.Sub>
             <DropdownMenu.SubTrigger
               className={`${
-                !(locked||semesterLocked) ? itemClasses : `${itemClasses} ${disabledClasses}`
+                !(locked || semesterLocked) ? itemClasses : `${itemClasses} ${disabledClasses}`
               } justify-between border-none`}
               disabled={locked || semesterLocked}
             >

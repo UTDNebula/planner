@@ -14,9 +14,7 @@ import { appRouter } from '@/server/trpc/router/_app';
 import { trpc } from '@/utils/trpc';
 import { generateSemesters } from '@/utils/utilFunctions';
 
-import { PageTwoTypes } from '../../components/onboarding/pg_2';
 import { authOptions } from '../api/auth/[...nextauth]';
-import dynamic from 'next/dynamic';
 
 /**
  * The first onboarding page for the application.

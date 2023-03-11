@@ -60,7 +60,11 @@ export const MemoizedSemesterCourseItem = React.memo(
         ref={ref}
         {...props}
         className={`flex h-[50px] w-full cursor-grab flex-row items-center rounded-md  border border-[#D4D4D4] ${
-          !course.locked || isValid || isValid === undefined ? (course.locked ? "bg-neutral-200" : "bg-inherit") : 'bg-[#FFFBEB]'
+          !course.locked || isValid || isValid === undefined
+            ? course.locked
+              ? 'bg-neutral-200'
+              : 'bg-inherit'
+            : 'bg-[#FFFBEB]'
         } ${semesterLocked || course.locked ? 'text-neutral-400' : 'text-[#1C2A6D]'}`}
         // onClick={() => setDropdownOpen((prev) => !prev)}
         onClick={() => setDropdownOpen(true)}
@@ -123,8 +127,8 @@ export const MemoizedSemesterCourseItem = React.memo(
                 }
               }}
             />
-            <span className={"text-sm"}>{course.code}</span>
-            <div className="ml-auto mr-2 flex text-xs font-semibold items-center justify-center align-middle gap-2">
+            <span className="text-sm">{course.code}</span>
+            <div className="ml-auto mr-2 flex items-center justify-center gap-2 align-middle text-xs font-semibold">
               {!isValid && (
                 <PrereqWarnHoverCard
                   prereqs={prereqs}
@@ -144,7 +148,7 @@ export const MemoizedSemesterCourseItem = React.memo(
                   </span>
                 </PrereqWarnHoverCard>
               )}
-              {course.locked && <LockIcon/>}
+              {course.locked && <LockIcon />}
             </div>
           </div>
         </CourseInfoHoverCard>
@@ -192,7 +196,6 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
     <SemesterCourseItem
       onLockChange={onLockChange}
       ref={setNodeRef}
-
       style={{
         visibility: isDragging ? 'hidden' : 'unset',
       }}

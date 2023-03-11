@@ -55,7 +55,7 @@ const SemesterTileDropdown: FC<SemesterTileDropdownProps> = ({
             <span>Clear courses</span>
           </DropdownMenu.Item>
           <DropdownMenu.Item className={itemClasses} onClick={toggleLock}>
-            <LockIcon/>
+            <LockIcon />
             <span>{locked ? 'Unlock' : 'Lock'} semester</span>
           </DropdownMenu.Item>
           <DropdownMenu.Item
