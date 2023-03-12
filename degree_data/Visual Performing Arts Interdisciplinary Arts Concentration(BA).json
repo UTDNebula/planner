@@ -1,0 +1,80 @@
+{
+  "abbreviation": "Visual and Performing Arts with Interdisciplinary Arts Concentration (BA)",
+  "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ah/visual-and-performing-arts-interdisciplinary-arts",
+  "minimum_credit_hours": 120,
+  "name": "Bachelor of Arts in Visual and Performing Arts with Interdisciplinary Arts Concentration",
+  "school": "School of Arts, Humanities, and Technology",
+  "subtype": "Major",
+  "year": "2022-2023",
+  "requirements": {
+    "core": "@import ./core.json",
+    "major": [
+      {
+        "matcher": "BAGuidedElectiveRequirement",
+        "required_count": 2,
+        "required_hours": 15,
+        "minimum_level": 3,
+        "prefix_groups": [
+          {
+            "matcher": "PrefixBucketRequirement",
+            "prefix": "AHST"
+          },
+          {
+            "matcher": "PrefixBucketRequirement",
+            "prefix": "ARTS"
+          },
+          {
+            "matcher": "PrefixBucketRequirement",
+            "prefix": "COMM"
+          },
+          {
+            "matcher": "PrefixBucketRequirement",
+            "prefix": "FILM"
+          },
+          {
+            "matcher": "PrefixBucketRequirement",
+            "prefix": "DANC"
+          },
+          {
+            "matcher": "PrefixBucketRequirement",
+            "prefix": "MUSI"
+          },
+          {
+            "matcher": "PrefixBucketRequirement",
+            "prefix": "THEA"
+          }
+        ]
+      },
+
+      { "matcher": "CourseRequirement", "course": "VPAS 3340" },
+      { "matcher": "CourseRequirement", "course": "VPAS 4389" },
+      {
+        "matcher": "OrRequirement",
+        "requirements": [
+          { "matcher": "CourseRequirement", "course": "VPAS 4390" },
+          { "matcher": "CourseRequirement", "course": "VPAS 4V99" }
+        ]
+      },
+      {
+        "matcher": "HoursRequirement",
+        "required_hours": 3,
+        "requirements": [
+          { "matcher": "CourseRequirement", "course": "ARTS 3311" },
+          { "matcher": "CourseRequirement", "course": "ARTS 4310" },
+          { "matcher": "CourseRequirement", "course": "COMM 4370" },
+          { "matcher": "CourseRequirement", "course": "COMM 4371" },
+          { "matcher": "CourseRequirement", "course": "ENTP 3301" },
+          { "matcher": "CourseRequirement", "course": "ISAH 4V50" },
+          { "matcher": "CourseRequirement", "course": "VPAS 4310" }
+        ]
+      },
+
+      { "matcher": "CourseRequirement", "course": "ARHM 1100" },
+      {
+        "matcher": "FreeElectiveRequirement",
+        "required_hours": 0,
+        "excluded_courses": []
+      }
+    ]
+  }
+}
