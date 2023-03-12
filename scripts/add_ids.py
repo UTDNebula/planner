@@ -75,7 +75,7 @@ for dir in dir_list:
 
         # Write to file
         f = open(f"degree_data/{dir}", "w")
-        f.write(json.dumps(data))
+        f.write(json.dumps(data, indent=2))
         f.close()
     except:
         print(dir)

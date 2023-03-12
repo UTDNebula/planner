@@ -43,37 +43,119 @@
             "matcher": "PrefixBucketRequirement",
             "prefix": "THEA"
           }
-        ]
+        ],
+        "metadata": {
+          "id": "Visual and Performing Arts with Interdisciplinary Arts Concentration (BA)-0"
+        }
       },
-
-      { "matcher": "CourseRequirement", "course": "VPAS 3340" },
-      { "matcher": "CourseRequirement", "course": "VPAS 4389" },
+      {
+        "matcher": "CourseRequirement",
+        "course": "VPAS 3340",
+        "metadata": {
+          "id": "Visual and Performing Arts with Interdisciplinary Arts Concentration (BA)-1"
+        }
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "VPAS 4389",
+        "metadata": {
+          "id": "Visual and Performing Arts with Interdisciplinary Arts Concentration (BA)-2"
+        }
+      },
       {
         "matcher": "OrRequirement",
         "requirements": [
-          { "matcher": "CourseRequirement", "course": "VPAS 4390" },
-          { "matcher": "CourseRequirement", "course": "VPAS 4V99" }
-        ]
+          {
+            "matcher": "CourseRequirement",
+            "course": "VPAS 4390",
+            "metadata": {
+              "id": "Visual and Performing Arts with Interdisciplinary Arts Concentration (BA)-4"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "VPAS 4V99",
+            "metadata": {
+              "id": "Visual and Performing Arts with Interdisciplinary Arts Concentration (BA)-5"
+            }
+          }
+        ],
+        "metadata": {
+          "id": "Visual and Performing Arts with Interdisciplinary Arts Concentration (BA)-3"
+        }
       },
       {
         "matcher": "HoursRequirement",
         "required_hours": 3,
         "requirements": [
-          { "matcher": "CourseRequirement", "course": "ARTS 3311" },
-          { "matcher": "CourseRequirement", "course": "ARTS 4310" },
-          { "matcher": "CourseRequirement", "course": "COMM 4370" },
-          { "matcher": "CourseRequirement", "course": "COMM 4371" },
-          { "matcher": "CourseRequirement", "course": "ENTP 3301" },
-          { "matcher": "CourseRequirement", "course": "ISAH 4V50" },
-          { "matcher": "CourseRequirement", "course": "VPAS 4310" }
-        ]
+          {
+            "matcher": "CourseRequirement",
+            "course": "ARTS 3311",
+            "metadata": {
+              "id": "Visual and Performing Arts with Interdisciplinary Arts Concentration (BA)-7"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ARTS 4310",
+            "metadata": {
+              "id": "Visual and Performing Arts with Interdisciplinary Arts Concentration (BA)-8"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "COMM 4370",
+            "metadata": {
+              "id": "Visual and Performing Arts with Interdisciplinary Arts Concentration (BA)-9"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "COMM 4371",
+            "metadata": {
+              "id": "Visual and Performing Arts with Interdisciplinary Arts Concentration (BA)-10"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ENTP 3301",
+            "metadata": {
+              "id": "Visual and Performing Arts with Interdisciplinary Arts Concentration (BA)-11"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ISAH 4V50",
+            "metadata": {
+              "id": "Visual and Performing Arts with Interdisciplinary Arts Concentration (BA)-12"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "VPAS 4310",
+            "metadata": {
+              "id": "Visual and Performing Arts with Interdisciplinary Arts Concentration (BA)-13"
+            }
+          }
+        ],
+        "metadata": {
+          "id": "Visual and Performing Arts with Interdisciplinary Arts Concentration (BA)-6"
+        }
       },
-
-      { "matcher": "CourseRequirement", "course": "ARHM 1100" },
+      {
+        "matcher": "CourseRequirement",
+        "course": "ARHM 1100",
+        "metadata": {
+          "id": "Visual and Performing Arts with Interdisciplinary Arts Concentration (BA)-14"
+        }
+      },
       {
         "matcher": "FreeElectiveRequirement",
         "required_hours": 0,
-        "excluded_courses": []
+        "excluded_courses": [],
+        "metadata": {
+          "id": "Visual and Performing Arts with Interdisciplinary Arts Concentration (BA)-15"
+        }
       }
     ]
   }

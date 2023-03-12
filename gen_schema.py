@@ -111,7 +111,7 @@ for i in requirement_schemas:
 
 schema["$defs"] = {
     "requirement": {
-        "anyOf": list(map(lambda x: {"type": "object", "properties": x, "additionalProperties": False}, requirement_schemas))
+        "anyOf": list(map(lambda x: {"type": "object", "properties": x, "additionalProperties": False, "requirements": ["metadata"]}, requirement_schemas))
     },
 }
 

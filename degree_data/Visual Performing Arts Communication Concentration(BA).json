@@ -1,65 +1,337 @@
 {
-    "abbreviation": "Visual and Performing Arts with Communication Concentration (BA)",
-    "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ah/visual-and-performing-arts-communication",
-    "minimum_credit_hours": 120,
-    "name": "Bachelor of Arts in Visual and Performing Arts with Communication Concentration",
-    "school": "School of Arts, Humanities, and Technology",
-    "subtype": "Major",
-    "year": "2022-2023",
-    "requirements": {
-        "core": "@import ./core.json",
-        "major": [
-
-            {
-                "matcher": "OrRequirement", 
-                "requirements": [
-                    { "matcher": "CourseRequirement", "course": "AHST 1303" },
-                    { "matcher": "CourseRequirement", "course": "AHST 1304" },
-                    { "matcher": "CourseRequirement", "course": "AHST 2331" },
-                    { "matcher": "CourseRequirement", "course": "ARTS 1301" }, 
-                    { "matcher": "CourseRequirement", "course": "DANC 1305" }, 
-                    { "matcher": "CourseRequirement", "course": "DANC 1310" }, 
-                    { "matcher": "CourseRequirement", "course": "FILM 1303" }, 
-                    { "matcher": "CourseRequirement", "course": "THEA 1310" }, 
-                    { "matcher": "CourseRequirement", "course": "FILM 2332" }, 
-                    { "matcher": "CourseRequirement", "course": "MUSI 1306" }, 
-                    { "matcher": "CourseRequirement", "course": "MUSI 2322" }
-                ]
-            },
-            { "matcher": "OrRequirement", "requirements": [{ "matcher": "CourseRequirement", "course": "COMM 1320" }, { "matcher": "CourseRequirement", "course": "COMM 1315" }, { "matcher": "CourseRequirement", "course": "COMM 2314" }, { "matcher": "CourseRequirement", "course": "COMM 2317" }, { "matcher": "CourseRequirement", "course": "THEA 1351" }, { "matcher": "CourseRequirement", "course": "THEA 1352" }, { "matcher": "CourseRequirement", "course": "THEA 2372" }, { "matcher": "CourseRequirement", "course": "THEA 2373" }] },
-
-
-            { "matcher": "CourseRequirement", "course": "VPAS 3340" }, { "matcher": "CourseRequirement", "course": "VPAS 4389" },
-            {
-                "matcher": "OrRequirement",
-                "requirements": [
-                    { "matcher": "CourseRequirement", "course": "VPAS 4390" },
-                    { "matcher": "CourseRequirement", "course": "VPAS 4V99" }
-                ]
-            },
-            {
-                "matcher": "HoursRequirement",
-                "required_hours": 3,
-                "requirements": [
-                    { "matcher": "CourseRequirement", "course": "ARTS 3311" },
-                    { "matcher": "CourseRequirement", "course": "ARTS 4310" },
-                    { "matcher": "CourseRequirement", "course": "COMM 4370" },
-                    { "matcher": "CourseRequirement", "course": "COMM 4371" },
-                    { "matcher": "CourseRequirement", "course": "ENTP 3301" },
-                    { "matcher": "CourseRequirement", "course": "ISAH 4V50" },
-                    { "matcher": "CourseRequirement", "course": "VPAS 4310" }
-                ]
-            },
-            { "matcher": "CourseRequirement", "course": "COMM 3351" }, { "matcher": "CourseRequirement", "course": "COMM 4360" }, { "matcher": "CourseRequirement", "course": "COMM 4314" },
-            { "matcher": "HoursRequirement", "required_hours": 6, "requirements": [{ "matcher": "CourseRequirement", "course": "COMM 3320" }, { "matcher": "CourseRequirement", "course": "COMM 3321" }, { "matcher": "CourseRequirement", "course": "COMM 3340" }, { "matcher": "CourseRequirement", "course": "THEA 3372" }] },
-            { "matcher": "PrefixBucketRequirement", "prefix": "COMM" },
-
-            { "matcher": "CourseRequirement", "course": "ARHM 1100" },
-            {
-                "matcher": "FreeElectiveRequirement",
-                "required_hours": 0,
-                "excluded_courses": []
+  "abbreviation": "Visual and Performing Arts with Communication Concentration (BA)",
+  "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ah/visual-and-performing-arts-communication",
+  "minimum_credit_hours": 120,
+  "name": "Bachelor of Arts in Visual and Performing Arts with Communication Concentration",
+  "school": "School of Arts, Humanities, and Technology",
+  "subtype": "Major",
+  "year": "2022-2023",
+  "requirements": {
+    "core": "@import ./core.json",
+    "major": [
+      {
+        "matcher": "OrRequirement",
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "AHST 1303",
+            "metadata": {
+              "id": "Visual and Performing Arts with Communication Concentration (BA)-1"
             }
-        ]
-    }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "AHST 1304",
+            "metadata": {
+              "id": "Visual and Performing Arts with Communication Concentration (BA)-2"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "AHST 2331",
+            "metadata": {
+              "id": "Visual and Performing Arts with Communication Concentration (BA)-3"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ARTS 1301",
+            "metadata": {
+              "id": "Visual and Performing Arts with Communication Concentration (BA)-4"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "DANC 1305",
+            "metadata": {
+              "id": "Visual and Performing Arts with Communication Concentration (BA)-5"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "DANC 1310",
+            "metadata": {
+              "id": "Visual and Performing Arts with Communication Concentration (BA)-6"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "FILM 1303",
+            "metadata": {
+              "id": "Visual and Performing Arts with Communication Concentration (BA)-7"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "THEA 1310",
+            "metadata": {
+              "id": "Visual and Performing Arts with Communication Concentration (BA)-8"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "FILM 2332",
+            "metadata": {
+              "id": "Visual and Performing Arts with Communication Concentration (BA)-9"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MUSI 1306",
+            "metadata": {
+              "id": "Visual and Performing Arts with Communication Concentration (BA)-10"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MUSI 2322",
+            "metadata": {
+              "id": "Visual and Performing Arts with Communication Concentration (BA)-11"
+            }
+          }
+        ],
+        "metadata": {
+          "id": "Visual and Performing Arts with Communication Concentration (BA)-0"
+        }
+      },
+      {
+        "matcher": "OrRequirement",
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "COMM 1320",
+            "metadata": {
+              "id": "Visual and Performing Arts with Communication Concentration (BA)-13"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "COMM 1315",
+            "metadata": {
+              "id": "Visual and Performing Arts with Communication Concentration (BA)-14"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "COMM 2314",
+            "metadata": {
+              "id": "Visual and Performing Arts with Communication Concentration (BA)-15"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "COMM 2317",
+            "metadata": {
+              "id": "Visual and Performing Arts with Communication Concentration (BA)-16"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "THEA 1351",
+            "metadata": {
+              "id": "Visual and Performing Arts with Communication Concentration (BA)-17"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "THEA 1352",
+            "metadata": {
+              "id": "Visual and Performing Arts with Communication Concentration (BA)-18"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "THEA 2372",
+            "metadata": {
+              "id": "Visual and Performing Arts with Communication Concentration (BA)-19"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "THEA 2373",
+            "metadata": {
+              "id": "Visual and Performing Arts with Communication Concentration (BA)-20"
+            }
+          }
+        ],
+        "metadata": {
+          "id": "Visual and Performing Arts with Communication Concentration (BA)-12"
+        }
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "VPAS 3340",
+        "metadata": {
+          "id": "Visual and Performing Arts with Communication Concentration (BA)-21"
+        }
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "VPAS 4389",
+        "metadata": {
+          "id": "Visual and Performing Arts with Communication Concentration (BA)-22"
+        }
+      },
+      {
+        "matcher": "OrRequirement",
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "VPAS 4390",
+            "metadata": {
+              "id": "Visual and Performing Arts with Communication Concentration (BA)-24"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "VPAS 4V99",
+            "metadata": {
+              "id": "Visual and Performing Arts with Communication Concentration (BA)-25"
+            }
+          }
+        ],
+        "metadata": {
+          "id": "Visual and Performing Arts with Communication Concentration (BA)-23"
+        }
+      },
+      {
+        "matcher": "HoursRequirement",
+        "required_hours": 3,
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "ARTS 3311",
+            "metadata": {
+              "id": "Visual and Performing Arts with Communication Concentration (BA)-27"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ARTS 4310",
+            "metadata": {
+              "id": "Visual and Performing Arts with Communication Concentration (BA)-28"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "COMM 4370",
+            "metadata": {
+              "id": "Visual and Performing Arts with Communication Concentration (BA)-29"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "COMM 4371",
+            "metadata": {
+              "id": "Visual and Performing Arts with Communication Concentration (BA)-30"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ENTP 3301",
+            "metadata": {
+              "id": "Visual and Performing Arts with Communication Concentration (BA)-31"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ISAH 4V50",
+            "metadata": {
+              "id": "Visual and Performing Arts with Communication Concentration (BA)-32"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "VPAS 4310",
+            "metadata": {
+              "id": "Visual and Performing Arts with Communication Concentration (BA)-33"
+            }
+          }
+        ],
+        "metadata": {
+          "id": "Visual and Performing Arts with Communication Concentration (BA)-26"
+        }
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "COMM 3351",
+        "metadata": {
+          "id": "Visual and Performing Arts with Communication Concentration (BA)-34"
+        }
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "COMM 4360",
+        "metadata": {
+          "id": "Visual and Performing Arts with Communication Concentration (BA)-35"
+        }
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "COMM 4314",
+        "metadata": {
+          "id": "Visual and Performing Arts with Communication Concentration (BA)-36"
+        }
+      },
+      {
+        "matcher": "HoursRequirement",
+        "required_hours": 6,
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "COMM 3320",
+            "metadata": {
+              "id": "Visual and Performing Arts with Communication Concentration (BA)-38"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "COMM 3321",
+            "metadata": {
+              "id": "Visual and Performing Arts with Communication Concentration (BA)-39"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "COMM 3340",
+            "metadata": {
+              "id": "Visual and Performing Arts with Communication Concentration (BA)-40"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "THEA 3372",
+            "metadata": {
+              "id": "Visual and Performing Arts with Communication Concentration (BA)-41"
+            }
+          }
+        ],
+        "metadata": {
+          "id": "Visual and Performing Arts with Communication Concentration (BA)-37"
+        }
+      },
+      {
+        "matcher": "PrefixBucketRequirement",
+        "prefix": "COMM",
+        "metadata": {
+          "id": "Visual and Performing Arts with Communication Concentration (BA)-42"
+        }
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "ARHM 1100",
+        "metadata": {
+          "id": "Visual and Performing Arts with Communication Concentration (BA)-43"
+        }
+      },
+      {
+        "matcher": "FreeElectiveRequirement",
+        "required_hours": 0,
+        "excluded_courses": [],
+        "metadata": {
+          "id": "Visual and Performing Arts with Communication Concentration (BA)-44"
+        }
+      }
+    ]
+  }
 }
