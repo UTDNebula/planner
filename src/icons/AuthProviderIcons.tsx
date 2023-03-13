@@ -51,5 +51,4 @@ const AuthProviderIcons: { [provider: string]: [icon: SVGProps<SVGSVGElement>] }
     </>,
   ],
 };
-// {AuthProviderIcons["disc"]}
 export default AuthProviderIcons;
