@@ -1,12 +1,3 @@
-# Missing VPA Degrees
-
-
-- Bachelor of Arts in Literature (120 semester credit hours)
-
-        - BA in Literature - Creative Writing Concentration
-        - BA in Literature - Rhetoric and Communication Concentration
-        - BA in Literature - Spanish Concentration
-
 # Required Fixes
 
 ## degree_data/arts_humanities_technology/Visual Performing Arts Art History Concentration(BA).json

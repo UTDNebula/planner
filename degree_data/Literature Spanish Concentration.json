@@ -1,8 +1,8 @@
 {
-    "abbreviation": "Literature with Creative Writing Concentration (BA)",
-    "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ah/literature-creative-writing",
+    "abbreviation": "Literature with Spanish Concentration (BA)",
+    "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ah/literature-spanish",
     "minimum_credit_hours": 120,
-    "name": "Bachelor of Arts in Literature with Creative Writing Concentration",
+    "name": "Bachelor of Arts in Literature with Spanish Concentration",
     "school": "School of Arts and Humanities",
     "subtype": "Major",
     "year": "2022-2023",
@@ -43,31 +43,11 @@
             "id": "be7d2724-c04f-46b4-a765-491b47dd9af9"
           }
         },
-        {"matcher":"CourseRequirement","course":"CRWT 2301","metadata":{"id":"d2b57a43-399e-428c-bec3-32b7c48258f1"}},
         {
           "matcher": "HoursRequirement",
           "required_hours": 12,
           "requirements": [
-            {
-              "matcher": "CourseRequirement",
-              "course": "LIT 3300",
-              "metadata": { "id": "2eae70a5-b922-402c-9aab-d5522d1263c6" }
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "LIT 3339",
-              "metadata": { "id": "23fa76f0-f282-40ab-9e5b-c67a52afa9e5" }
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "LIT 4329",
-              "metadata": { "id": "55611dec-f78a-4d19-b7c2-a17b399f324c" }
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "LIT 4390",
-              "metadata": { "id": "cce65cd2-ad5f-4678-86c4-ebaf2ec08f5f" }
-            }
+            {"matcher":"CourseRequirement","course":"LIT 3300","metadata":{"id":"0c77c5c9-f956-487b-93a6-ab1ebf5a8550"}},{"matcher":"CourseRequirement","course":"LIT 3339","metadata":{"id":"985a9ea3-fe8c-41b8-9356-601a7b109f04"}},{"matcher":"CourseRequirement","course":"LIT 4329","metadata":{"id":"84615b45-fb62-4303-a9aa-3e94d903cb83"}},{"matcher":"CourseRequirement","course":"ISAH 4V50","metadata":{"id":"5c5237e0-7d1d-4b28-be0f-e5b58ccef1e5"}}
           ],
           "metadata": {
             "id": "9cd2f699-212c-4bd4-bd08-66bbb7fbf6b5"
@@ -134,21 +114,14 @@
         },
         {
           "matcher": "OtherRequirement",
-          "description": "12 semester credit hours of upper-division creative writing workshops in at least two genres (e.g., poetry and fiction).",
+          "description": "Select 15 semester credit hours of SPAN electives (at least 6 semester credit hours must be at the upper-level). Students who do not place into SPAN 1312 will also need to complete SPAN 1311.",
           "metadata": {
-            "id": "e44f3a0e-b091-4ac9-9e3e-810aa5a6c3c8"
-          }
-        },
-        {
-          "matcher": "OtherRequirement",
-          "description": "3 semester credit hours of foreign language, upper-division LIT, or CRWT electives.",
-          "metadata": {
-            "id": "a1a4d71f-a59b-4e86-814c-c8960e26dd69"
+            "id": "e9132a2a-4747-4ffa-afcb-f35bafd10312"
           }
         },
         {
             "matcher": "FreeElectiveRequirement",
-            "required_hours": 30,
+            "required_hours": 33,
             "excluded_courses": [],
             "metadata": {
               "id": "e86dd7bf-76a7-4a73-85b9-83a585f279df"
