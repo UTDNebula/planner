@@ -6,6 +6,7 @@ from major.requirements import (
     FreeElectiveRequirement,
     SelectRequirement,
     PrefixBucketRequirement,
+    OtherRequirement
 )
 import json
 
@@ -281,3 +282,26 @@ def test_prefix_bucket_requirement() -> None:
 
     prefix_req.attempt_fulfill("CS 1336")
     assert prefix_req.filled == True
+
+def test_other_requirement() -> None:
+    other_req = OtherRequirement("Other Requirement")
+    assert other_req.is_fulfilled() == False
+
+    other_req.attempt_fulfill("CS 1336")
+    assert other_req.is_fulfilled() == False
+
+    data = json.loads(
+        """
+        {
+            "matcher": "OtherRequirement",
+            "metadata": {"id": 1},
+            "description": "Other Requirement"
+        }
+        """
+    )
+
+    other_req = OtherRequirement.from_json(data)
+    assert other_req.is_fulfilled() == False
+
+    other_req.attempt_fulfill("CS 1336")
+    assert other_req.is_fulfilled() == False
