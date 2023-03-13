@@ -1,0 +1,68 @@
+{
+  "abbreviation": "Latin American Studies (BA)",
+  "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ah/history",
+  "minimum_credit_hours": 128,
+  "name": "Bachelor of Arts in Latin American Studies (BA)",
+  "school": "School of Arts, Humanities, and Technology",
+  "subtype": "Major",
+  "year": "2022-2023",
+  "requirements": {
+    "core": "@import ./core.json",
+    "major": [
+      {
+        "matcher": "HoursRequirement",
+        "required_hours": 9,
+        "requirements": [
+          {"matcher":"CourseRequirement","course":"HIST 2350","metadata":{"id":"2eae106a-ee88-4cca-aaa4-c30518dca8ab"}},
+          {
+            "matcher": "HoursRequirement",
+            "required_hours": 6,
+            "requirements": [
+              {"matcher":"CourseRequirement","course":"LIT 2350","metadata":{"id":"465afc76-1205-4754-ad37-21e5c10423c3"}},{"matcher":"CourseRequirement","course":"HIST 3301","metadata":{"id":"f7838cb2-d2f8-4ada-9dbf-65ddbfe9d886"}},{"matcher":"CourseRequirement","course":"GEOG 2303","metadata":{"id":"6475146e-126c-4020-bf4b-84c91abe6d4f"}}
+            ],
+            "metadata": {
+              "id": "eca9a6f0-30bc-4de3-907f-fdc755c8544f"
+            }
+          }
+        ],
+        "metadata": {
+          "id": "dec12281-56cd-4df0-939a-ce0773a4b92b"
+        }
+      },
+      {
+        "matcher": "OtherRequirement",
+        "description": "Foreign Language Requirement: 12 semester credit hours of Approved Language",
+        "metadata": {
+          "id": "765b7ca2-4f75-4f64-94b7-82643af28fe4"
+        }
+      },
+      {
+        "matcher": "HoursRequirement",
+        "required_hours": 6,
+        "requirements": [
+          {"matcher":"CourseRequirement","course":"LATS 3301","metadata":{"id":"a0207a8b-4681-468e-b922-c1a49458dae5"}},
+          {
+            "matcher": "HoursRequirement",
+            "required_hours": 3,
+            "requirements": [{"matcher":"CourseRequirement","course":"HIST 3398","metadata":{"id":"d076d94d-f034-4c87-9358-f0f7d6c0858c"}},{"matcher":"CourseRequirement","course":"HIST 3399","metadata":{"id":"3f20d9b4-8684-43fe-b09c-209f6f476a25"}}],
+            "metadata": {
+              "id": "bc35fa70-0bf4-4c4d-a8ee-14688d08b9c6"
+            }
+          }
+        ],
+        "metadata": {
+          "id": "97c380a9-ef4e-439b-b2f3-dc7e69b67b61"
+        }
+      },
+      
+      {
+        "matcher": "FreeElectiveRequirement",
+        "required_hours": 33,
+        "excluded_courses": [],
+        "metadata": {
+          "id": "d0a53bba-6902-4f97-88b8-06f14289c9be"
+        }
+      }
+    ]
+  }
+}

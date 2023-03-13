@@ -1,7 +1,5 @@
 # Missing VPA Degrees
 
-- Bachelor of Arts in History (120 semester credit hours)
-- Bachelor of Arts in Latin American Studies (120 semester credit hours)
 
 - Bachelor of Arts in Literature (120 semester credit hours)
 
@@ -61,3 +59,6 @@
 - Select any 3 semester credit hours of upper-level AHST or FILM courses
 - Select any 3 semester credit hours from any 4000 level ARTS studio course
 - Select any 6 semester credit hours upper level VPA courses from the following prefixes: AHST, ARTS, COMM, DANC, FILM, MUSI, THEA
+
+## degree_data/Latin American Studies (BA).json
+Latin American Studies Major Electives: 18 semester credit hours-Students must complete courses from the following list in at least two disciplinary areas. Students must complete at least 9 semester credit hours in a single disciplinary area.
