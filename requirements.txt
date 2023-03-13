@@ -44,6 +44,7 @@ ruamel.yaml.clib==0.2.7
 six==1.16.0
 tomli==2.0.1
 types-Flask-Cors==3.0.10.2
+types-jsonschema==4.17.0.6
 typing_extensions==4.4.0
 urllib3==1.26.13
 Werkzeug==2.2.2
