@@ -7,8 +7,6 @@
         - BA in Literature - Rhetoric and Communication Concentration
         - BA in Literature - Spanish Concentration
 
-- Bachelor of Arts in Philosophy (120 semester credit hours)
-
 # Required Fixes
 
 ## degree_data/arts_humanities_technology/Visual Performing Arts Art History Concentration(BA).json
