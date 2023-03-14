@@ -125,6 +125,20 @@
         }
       },
       {
+        "matcher": "OtherRequirement",
+        "description": "15 semester credit hours of upper-division Historical Context courses",
+        "metadata": {
+          "id": "ef71b958-4d4f-450b-9bdd-2beba5f94df5"
+        }
+      },
+      {
+        "matcher": "OtherRequirement",
+        "description": "3 semester credit hours of upper-level Related Courses from the School of Arts and Humanities (excluding the AHST prefix)",
+        "metadata": {
+          "id": "22774bf5-b1e4-4259-8438-8c4560a0b343"
+        }
+      },
+      {
         "matcher": "FreeElectiveRequirement",
         "required_hours": 0,
         "excluded_courses": [],

@@ -1,11 +1,5 @@
 # Required Fixes
 
-## degree_data/arts_humanities_technology/Visual Performing Arts Art History Concentration(BA).json
-
-- Need to create some sort of other requirement for "3 semester credit hours of upper-level Related Courses from the School of Arts and Humanities (excluding the AHST prefix)"
-- other, 15 semester credit hours of upper-division Historical Context courses
-- other, 9 semester credit hours of upper-division Visual and Performing Arts electives
-
 ## degree_data/Visual Performing Arts Communication Concentration(BA).json
 
 - Need to create some sort of other requirement for "3 semester credit hours of upper-level Related Courses from the School of Arts and Humanities (excluding the COMM prefix)"
