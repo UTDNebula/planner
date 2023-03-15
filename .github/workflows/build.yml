@@ -46,7 +46,7 @@ jobs:
           # Next Auth Discord Provider
           DISCORD_CLIENT_ID: 123
           DISCORD_CLIENT_SECRET: abc
-          
+
           # Next Auth Google Provider
           GOOGLE_CLIENT_ID: 123
           GOOGLE_CLIENT_SECRET: abc
