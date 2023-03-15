@@ -112,10 +112,7 @@ export default function OnboardingPage() {
       handleSubmit();
     }
   };
-  const decrementPage = () => {
-    setPage(Math.max(page - 1, 0));
-  };
-
+  
   useEffect(() => {
     setValidNextPage(validate[page]);
   });
@@ -123,29 +120,19 @@ export default function OnboardingPage() {
   // TODO: Find better way to structure this glorified form.
   return (
     <>
-      <div className="flex min-h-screen flex-col items-center justify-center bg-[#F9FAFB]">
-        <div className="flex text-3xl font-extrabold text-[#111827]">planner.</div>
-        <div className="flex h-screen items-center justify-center bg-[#FFFFFF] p-5 shadow-2xl transition-all sm:my-4 sm:h-auto  sm:py-10 sm:px-32">
-          <div className="flex flex-col items-center justify-center ">
+      <div className="relative flex h-screen flex-col items-center justify-center space-y-10 bg-white">
+        <section>
+          <div className="w-auto">
             {jsxElem[page]}
-            <div className="justify-start">
-              <button
-                onClick={decrementPage}
-                disabled={page == 0}
-                className="mr-10 rounded font-bold text-[#4B4EFC] disabled:opacity-50"
-              >
-                BACK
-              </button>
-              <button
-                onClick={incrementPage}
-                disabled={!validNextPage}
-                className="rounded font-bold text-[#4B4EFC] disabled:opacity-50"
-              >
-                NEXT
-              </button>
-            </div>
+            <button
+              onClick={incrementPage}
+              disabled={!validNextPage}
+              className="w-full rounded-lg bg-[#6366F1] py-3 text-center text-[16px] font-semibold text-white hover:bg-[#EEF2FF] hover:text-[#312E81] disabled:opacity-50"
+            >
+              Create Account
+            </button>
           </div>
-        </div>
+        </section>
       </div>
     </>
   );
