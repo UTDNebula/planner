@@ -4,6 +4,8 @@ import type { PrismaClient } from '@prisma/client';
 import NextAuth, { type NextAuthOptions } from 'next-auth';
 import DiscordProvider from 'next-auth/providers/discord';
 import EmailProvider from 'next-auth/providers/email';
+import GoogleProvider from "next-auth/providers/google";
+import FacebookProvider from "next-auth/providers/facebook";
 
 import { env } from '../../../env/server.mjs';
 import { prisma } from '../../../server/db/client';
@@ -23,9 +25,38 @@ export const authOptions: NextAuthOptions = {
   // @ts-ignore ignore-next-line
   adapter: PrismaAdapter(prisma as unknown as PrismaClient),
   providers: [
+    GoogleProvider({
+      clientId: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code"
+        }
+      },
+      profile(profile) {
+        // profile type can be found here: https://next-auth.js.org/providers/discord
+        return {
+          id: profile.sub,
+          email: profile.email,
+        };
+      },
+    }),
     DiscordProvider({
       clientId: env.DISCORD_CLIENT_ID,
       clientSecret: env.DISCORD_CLIENT_SECRET,
+      profile(profile) {
+        // profile type can be found here: https://next-auth.js.org/providers/discord
+        return {
+          id: profile.id,
+          email: profile.email,
+        };
+      },
+    }),
+    FacebookProvider({
+      clientId: env.FACEBOOK_CLIENT_ID,
+      clientSecret: env.FACEBOOK_CLIENT_SECRET,
       profile(profile) {
         // profile type can be found here: https://next-auth.js.org/providers/discord
         return {
@@ -50,7 +81,7 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: '/auth/login',
     signOut: '/',
-    newUser: '/app/onboarding', // TODO: Redirect to signup page
+    newUser: '/auth/signup', // TODO: Redirect to signup page
   },
 };
 export default NextAuth(authOptions);
