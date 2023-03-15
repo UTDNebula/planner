@@ -1,6 +1,4 @@
-import logo from '@public/Nebula_Planner_Logo.png';
 import { InferGetServerSidePropsType } from 'next';
-import Image from 'next/image';
 import { getProviders, signIn, useSession } from 'next-auth/react';
 import React, { useEffect } from 'react';
 import EmojiIcon from "@/icons/EmojiIcon";
@@ -111,7 +109,7 @@ export default function AuthPage({
               </div>
               <div className="flex place-content-center">
                 <h4 className="text-lg text-[#A3A3A3] font-normal">
-                  Don't have an account? <Link className='font-semibold text-[#4F46E5] hover:underline' href="/auth/signup">Sign up</Link>
+                  Don&apos;t have an account? <Link className='font-semibold text-[#4F46E5] hover:underline' href="/auth/signup">Sign up</Link>
                 </h4>
               </div>
             </section>

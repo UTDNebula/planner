@@ -1,5 +1,3 @@
-import SearchIcon from '@mui/icons-material/Search';
-import { IconButton } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import Popper from '@mui/material/Popper';
 import TextField from '@mui/material/TextField';

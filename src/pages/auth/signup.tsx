@@ -1,6 +1,4 @@
-import logo from '@public/Nebula_Planner_Logo.png';
 import { InferGetServerSidePropsType } from 'next';
-import Image from 'next/image';
 import { getProviders, signIn, useSession } from 'next-auth/react';
 import React from 'react';
 import EmojiIcon from "@/icons/EmojiIcon";
@@ -9,7 +7,6 @@ import majorsList from '@data/majors.json';
 import { useRouter } from 'next/router';
 import AuthIcons from "@/icons/AuthIcons";
 import Link from 'next/link';
-import AutoCompleteMajor from './AutoCompleteMajor';
 import useSearch from '@/components/search/search';
 
 // import AuthCard from '../../components/auth/AuthCard';

@@ -1,14 +1,10 @@
 import React from 'react';
-import BuddyIcon from '@/icons/BuddyIcon';
-import PersonIcon from '@/icons/PersonIcon';
-import { SemesterCode, SemesterType } from '@prisma/client';
-import { FormControl, MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import { SemesterCode } from '@prisma/client';
+import { MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import EmojiIcons from '@/icons/EmojiIcon';
 import AutoCompleteMajor from '@/pages/auth/AutoCompleteMajor';
 import majorsList from '@data/majors.json';
 import useSearch from '../search/search';
-import { SxProps } from '@mui/material/styles';
-import { generateSemesters } from '@/utils/utilFunctions';
 
 export type WelcomeTypes = {
   name: string;

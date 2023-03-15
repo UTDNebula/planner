@@ -20,6 +20,10 @@ export const serverSchema = z.object({
   ),
   DISCORD_CLIENT_ID: z.string(),
   DISCORD_CLIENT_SECRET: z.string(),
+  GOOGLE_CLIENT_ID: z.string(),
+  GOOGLE_CLIENT_SECRET: z.string(),
+  FACEBOOK_CLIENT_ID: z.string(),
+  FACEBOOK_CLIENT_SECRET: z.string(),
 
   EMAIL_SERVER_HOST: z.string(),
   EMAIL_SERVER_PORT: z.string(),
