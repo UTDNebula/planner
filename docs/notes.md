@@ -1,31 +1,4 @@
 # Required Fixes
-
-## degree_data/Visual Performing Arts Communication Concentration(BA).json
-
-- Need to create some sort of other requirement for "3 semester credit hours of upper-level Related Courses from the School of Arts and Humanities (excluding the COMM prefix)"
-
-## degree_data/Visual Performing Arts Dance Concentration(BA).json
-
-- Need to create some sort of other requirement for "3 semester credit hours from a DANC/THEA/MUSI studio ensemble course"
-
-- Need to create some sort of other requirement for "3 semester credit hours from a DANC studio"
-- Need to create some sort of other requirement for "3 semester credit hours of upper-level Related Courses from the School of Arts and Humanities (excluding the DANC prefix)"
-        - Other req for "Upper-Level Visual and Performing Arts Historical Context course"
-- other req, '12 semester credit hours of 3000/4000-level Dance Studio and Ensemble courses'
-- other req, "3 semester credit hours of upper-division Visual and Performing Arts elective"
-
-## degree_data/Visual Performing Arts Film Concentration(BA).json
-
-- Need to create some sort of other requirement for "3 semester credit hours of upper-level Related Courses from the School of Arts and Humanities (excluding the AHST prefix)"
-- 6 semester credit hours of upper-division Visual and Performing Arts electives: Students may select any combination of upper-division courses in Art History, Communication, Dance, Film Studies, Music, Theatre, Visual Art, and/or Visual and Performing Arts.
-- 6 semester credit hours of Major Related courses: Students may select any combination of upper-division courses from the School of Arts and Humanities.
-
-## degree_data/Visual Performing Arts Interdisciplinary Arts Concentration(BA).json
-
-- Need to create some sort of other requirement for "3 semester credit hours of upper-level Related Courses from the School of Arts and Humanities (excluding the AHST prefix)"
-- discipline1/discipline2
-- fix minimum level thing
-
 ## degree_data/Visual Performing Arts Music Concentration(BA).json
 
 - Need to create some sort of other requirement for "3 semester credit hours of upper-level Related Courses from the School of Arts and Humanities (excluding the AHST prefix)"

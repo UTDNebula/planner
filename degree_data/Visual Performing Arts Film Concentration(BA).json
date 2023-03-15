@@ -52,6 +52,13 @@
         }
       },
       {
+        "matcher": "OtherRequirement",
+        "description": "3 semester credit hours of upper-level Related Courses from the School of Arts and Humanities (excluding the AHST prefix)",
+        "metadata": {
+          "id": "0ff2d0b1-571f-4cda-ada8-1a95db7b0c36"
+        }
+      },
+      {
         "matcher": "HoursRequirement",
         "required_hours": 3,
         "requirements": [
@@ -281,6 +288,20 @@
         ],
         "metadata": {
           "id": "Visual and Performing Arts with Film Concentration (BA)-22"
+        }
+      },
+      {
+        "matcher": "OtherRequirement",
+        "description": "6 semester credit hours of upper-division Visual and Performing Arts electives: Students may select any combination of upper-division courses in Art History, Communication, Dance, Film Studies, Music, Theatre, Visual Art, and/or Visual and Performing Arts.",
+        "metadata": {
+          "id": "a33242cb-a20d-4831-8162-6a46fe61d196"
+        }
+      },
+      {
+        "matcher": "OtherRequirement",
+        "description": "6 semester credit hours of Major Related courses: Students may select any combination of upper-division courses from the School of Arts and Humanities.",
+        "metadata": {
+          "id": "cd45515c-f6be-4cde-a2c3-da3d5244c24f"
         }
       },
       {

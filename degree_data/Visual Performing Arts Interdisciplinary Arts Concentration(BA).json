@@ -10,45 +10,6 @@
     "core": "@import ./core.json",
     "major": [
       {
-        "matcher": "BAGuidedElectiveRequirement",
-        "required_count": 2,
-        "required_hours": 15,
-        "minimum_level": 3,
-        "prefix_groups": [
-          {
-            "matcher": "PrefixBucketRequirement",
-            "prefix": "AHST"
-          },
-          {
-            "matcher": "PrefixBucketRequirement",
-            "prefix": "ARTS"
-          },
-          {
-            "matcher": "PrefixBucketRequirement",
-            "prefix": "COMM"
-          },
-          {
-            "matcher": "PrefixBucketRequirement",
-            "prefix": "FILM"
-          },
-          {
-            "matcher": "PrefixBucketRequirement",
-            "prefix": "DANC"
-          },
-          {
-            "matcher": "PrefixBucketRequirement",
-            "prefix": "MUSI"
-          },
-          {
-            "matcher": "PrefixBucketRequirement",
-            "prefix": "THEA"
-          }
-        ],
-        "metadata": {
-          "id": "Visual and Performing Arts with Interdisciplinary Arts Concentration (BA)-0"
-        }
-      },
-      {
         "matcher": "CourseRequirement",
         "course": "VPAS 3340",
         "metadata": {
@@ -85,61 +46,48 @@
         }
       },
       {
+        "matcher": "OtherRequirement",
+        "description": "3 semester credit hours of upper-level Related Courses from the School of Arts and Humanities (excluding prefixes used in Discipline I and II)",
+        "metadata": {
+          "id": "900fc105-a13e-447e-9424-9920151fbc83"
+        }
+      },
+      {
         "matcher": "HoursRequirement",
         "required_hours": 3,
         "requirements": [
-          {
-            "matcher": "CourseRequirement",
-            "course": "ARTS 3311",
-            "metadata": {
-              "id": "Visual and Performing Arts with Interdisciplinary Arts Concentration (BA)-7"
-            }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "ARTS 4310",
-            "metadata": {
-              "id": "Visual and Performing Arts with Interdisciplinary Arts Concentration (BA)-8"
-            }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "COMM 4370",
-            "metadata": {
-              "id": "Visual and Performing Arts with Interdisciplinary Arts Concentration (BA)-9"
-            }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "COMM 4371",
-            "metadata": {
-              "id": "Visual and Performing Arts with Interdisciplinary Arts Concentration (BA)-10"
-            }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "ENTP 3301",
-            "metadata": {
-              "id": "Visual and Performing Arts with Interdisciplinary Arts Concentration (BA)-11"
-            }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "ISAH 4V50",
-            "metadata": {
-              "id": "Visual and Performing Arts with Interdisciplinary Arts Concentration (BA)-12"
-            }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "VPAS 4310",
-            "metadata": {
-              "id": "Visual and Performing Arts with Interdisciplinary Arts Concentration (BA)-13"
-            }
-          }
+          {"matcher":"CourseRequirement","course":"VPAS 4310","metadata":{"id":"f6a5c266-f737-4e56-a4e3-0e8bd400435f"}},{"matcher":"CourseRequirement","course":"ARTS 3311","metadata":{"id":"73bfaecd-4ff8-4d21-af50-6b52a2a6990f"}},{"matcher":"CourseRequirement","course":"ARTS 4310","metadata":{"id":"238f32b6-552a-4edd-b13c-512fc0a2e449"}},{"matcher":"CourseRequirement","course":"COMM 4370","metadata":{"id":"c4160033-f843-4705-af24-6e701c4ec3a8"}},{"matcher":"CourseRequirement","course":"COMM 4371","metadata":{"id":"53a923d1-0a86-4c15-bc92-c9e51410547e"}},{"matcher":"CourseRequirement","course":"ENTP 3301","metadata":{"id":"7156634f-3a25-49ea-af76-e8d49e0829c8"}},{"matcher":"CourseRequirement","course":"ISAH 4V50","metadata":{"id":"2d540f59-d3b1-47c1-9940-421fb52bc180"}}
         ],
         "metadata": {
           "id": "Visual and Performing Arts with Interdisciplinary Arts Concentration (BA)-6"
+        }
+      },
+      {
+        "matcher": "OtherRequirement",
+        "description": "Discipline I Prep Course: 3 semester credit hours of lower-division AHST, ARTS, COMM, FILM, DANC, MUSI, or THEA courses.",
+        "metadata": {
+          "id": "8f2a8027-9cb1-4af2-ab99-325625504da0"
+        }
+      },
+      {
+        "matcher": "OtherRequirement",
+        "description": "Discipline II Prep Course: 3 semester credit hours of lower-division AHST, ARTS, COMM, FILM, DANC, MUSI, or THEA courses.",
+        "metadata": {
+          "id": "50e75242-7d20-4374-aca3-0ff6c21fe7f2"
+        }
+      },
+      {
+        "matcher": "OtherRequirement",
+        "description": "Discipline I Prep Course: 15 semester credit hours of lower-division AHST, ARTS, COMM, FILM, DANC, MUSI, or THEA courses.",
+        "metadata": {
+          "id": "46fb6f19-951a-4b8e-ae45-ecf5219a4e99"
+        }
+      },
+      {
+        "matcher": "OtherRequirement",
+        "description": "Discipline II Prep Course: 15 semester credit hours of lower-division AHST, ARTS, COMM, FILM, DANC, MUSI, or THEA courses.",
+        "metadata": {
+          "id": "eb4b3c85-93fd-475f-8c08-5d897c721717"
         }
       },
       {

@@ -195,6 +195,13 @@
         }
       },
       {
+        "matcher": "OtherRequirement",
+        "description": "3 semester credit hours of upper-level Related Courses from the School of Arts and Humanities (excluding the COMM prefix)",
+        "metadata": {
+          "id": "ac3dd31e-639d-4158-8e4b-502dcff944f8"
+        }
+      },
+      {
         "matcher": "HoursRequirement",
         "required_hours": 3,
         "requirements": [

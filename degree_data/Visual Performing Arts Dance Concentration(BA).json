@@ -1,6 +1,6 @@
 {
   "abbreviation": "Visual and Performing Arts with Dance Concentration (BA)",
-  "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ah/visual-and-performing-arts-art-history",
+  "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ah/visual-and-performing-arts-dance",
   "minimum_credit_hours": 120,
   "name": "Bachelor of Arts in Visual and Performing Arts with Dance Concentration",
   "school": "School of Arts, Humanities, and Technology",
@@ -21,6 +21,20 @@
         "course": "DANC 1305",
         "metadata": {
           "id": "Visual and Performing Arts with Dance Concentration (BA)-1"
+        }
+      },
+      {
+        "matcher": "OtherRequirement",
+        "description": "3 semester credit hours from a DANC studio",
+        "metadata": {
+          "id": "5d273cbb-647c-44d1-ad17-495dd9cc7f22"
+        }
+      },
+      {
+        "matcher": "OtherRequirement",
+        "description": "3 semester credit hours from a DANC/THEA/MUSI studio ensemble course",
+        "metadata": {
+          "id": "b2ac2e7d-6314-4f0d-9217-64d87636c6b0"
         }
       },
       {
@@ -57,6 +71,13 @@
         ],
         "metadata": {
           "id": "Visual and Performing Arts with Dance Concentration (BA)-4"
+        }
+      },
+      {
+        "matcher": "OtherRequirement",
+        "description": "3 semester credit hours of upper-level Related Courses from the School of Arts and Humanities (excluding the DANC prefix)",
+        "metadata": {
+          "id": "f9b4b7c6-eba5-492f-881e-9fb202fc0eab"
         }
       },
       {
@@ -126,10 +147,24 @@
             "metadata": {
               "id": "Visual and Performing Arts with Dance Concentration (BA)-16"
             }
+          },
+          {
+            "matcher": "OtherRequirement",
+            "description": "Upper-Level Visual and Performing Arts Historical Context course",
+            "metadata": {
+              "id": "c1a4e865-9ddc-4a32-ae83-d34aec63a190"
+            }
           }
         ],
         "metadata": {
           "id": "Visual and Performing Arts with Dance Concentration (BA)-15"
+        }
+      },
+      {
+        "matcher": "OtherRequirement",
+        "description": "12 semester credit hours of 3000/4000-level Dance Studio and Ensemble courses",
+        "metadata": {
+          "id": "5a5874fa-f93b-4677-94aa-b84439a3cab1"
         }
       },
       {
@@ -159,6 +194,13 @@
         ],
         "metadata": {
           "id": "Visual and Performing Arts with Dance Concentration (BA)-18"
+        }
+      },
+      {
+        "matcher": "OtherRequirement",
+        "description": "3 semester credit hours of upper-division Visual and Performing Arts elective",
+        "metadata": {
+          "id": "8ea0d952-6db7-427a-b610-f7dd9d8b6902"
         }
       },
       {
