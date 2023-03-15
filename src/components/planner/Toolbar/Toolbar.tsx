@@ -1,4 +1,3 @@
-import AddFileIcon from '@/icons/AddFileIcon';
 import DownloadIcon from '@/icons/DownloadIcon';
 import EditIcon from '@/icons/EditIcon';
 import { FC, useState } from 'react';

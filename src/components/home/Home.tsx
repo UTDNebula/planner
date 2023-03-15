@@ -6,7 +6,6 @@ import { useState } from 'react';
 import PlanCard from '../landing/PlanCard';
 import TemplateModal from '../template/Modal';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import { Steps } from 'intro.js-react';
 
 /**
  * A list of the user's plans
