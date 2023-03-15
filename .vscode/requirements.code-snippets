@@ -5,7 +5,8 @@
       "CourseRequirement"
     ],
     "description": "Empty body of CourseRequirement",
-    "body": "{\n  \"matcher\": \"CourseRequirement\",\n  \"course\": \"\",\n  \"metadata\": {\n    \"id\": \"$UUID\"\n  }\n}"
+    "body": "{\n  \"matcher\": \"CourseRequirement\",\n  \"course\": \"\",\n  \"metadata\": {\n    \"id\": \"$UUID\"\n  }\n}",
+    "scope": "json"
   },
   "AndRequirement": {
     "prefix": [
@@ -13,7 +14,8 @@
       "AndRequirement"
     ],
     "description": "Empty body of AndRequirement",
-    "body": "{\n  \"matcher\": \"AndRequirement\",\n  \"requirements\": [],\n  \"metadata\": {\n    \"id\": \"$UUID\"\n  }\n}"
+    "body": "{\n  \"matcher\": \"AndRequirement\",\n  \"requirements\": [],\n  \"metadata\": {\n    \"id\": \"$UUID\"\n  }\n}",
+    "scope": "json"
   },
   "OrRequirement": {
     "prefix": [
@@ -21,7 +23,8 @@
       "OrRequirement"
     ],
     "description": "Empty body of OrRequirement",
-    "body": "{\n  \"matcher\": \"OrRequirement\",\n  \"requirements\": [],\n  \"metadata\": {\n    \"id\": \"$UUID\"\n  }\n}"
+    "body": "{\n  \"matcher\": \"OrRequirement\",\n  \"requirements\": [],\n  \"metadata\": {\n    \"id\": \"$UUID\"\n  }\n}",
+    "scope": "json"
   },
   "FreeElectiveRequirement": {
     "prefix": [
@@ -29,7 +32,8 @@
       "FreeElectiveRequirement"
     ],
     "description": "Empty body of FreeElectiveRequirement",
-    "body": "{\n  \"matcher\": \"FreeElectiveRequirement\",\n  \"excluded_courses\": [],\n  \"required_hours\": 0,\n  \"metadata\": {\n    \"id\": \"$UUID\"\n  }\n}"
+    "body": "{\n  \"matcher\": \"FreeElectiveRequirement\",\n  \"excluded_courses\": [],\n  \"required_hours\": 0,\n  \"metadata\": {\n    \"id\": \"$UUID\"\n  }\n}",
+    "scope": "json"
   },
   "SelectRequirement": {
     "prefix": [
@@ -37,7 +41,8 @@
       "SelectRequirement"
     ],
     "description": "Empty body of SelectRequirement",
-    "body": "{\n  \"matcher\": \"SelectRequirement\",\n  \"requirements\": [],\n  \"required_count\": 0,\n  \"metadata\": {\n    \"id\": \"$UUID\"\n  }\n}"
+    "body": "{\n  \"matcher\": \"SelectRequirement\",\n  \"requirements\": [],\n  \"required_count\": 0,\n  \"metadata\": {\n    \"id\": \"$UUID\"\n  }\n}",
+    "scope": "json"
   },
   "HoursRequirement": {
     "prefix": [
@@ -45,7 +50,8 @@
       "HoursRequirement"
     ],
     "description": "Empty body of HoursRequirement",
-    "body": "{\n  \"matcher\": \"HoursRequirement\",\n  \"required_hours\": 0,\n  \"requirements\": [],\n  \"metadata\": {\n    \"id\": \"$UUID\"\n  }\n}"
+    "body": "{\n  \"matcher\": \"HoursRequirement\",\n  \"required_hours\": 0,\n  \"requirements\": [],\n  \"metadata\": {\n    \"id\": \"$UUID\"\n  }\n}",
+    "scope": "json"
   },
   "PrefixBucketRequirement": {
     "prefix": [
@@ -53,7 +59,8 @@
       "PrefixBucketRequirement"
     ],
     "description": "Empty body of PrefixBucketRequirement",
-    "body": "{\n  \"matcher\": \"PrefixBucketRequirement\",\n  \"prefix\": \"\",\n  \"metadata\": {\n    \"id\": \"$UUID\"\n  }\n}"
+    "body": "{\n  \"matcher\": \"PrefixBucketRequirement\",\n  \"prefix\": \"\",\n  \"metadata\": {\n    \"id\": \"$UUID\"\n  }\n}",
+    "scope": "json"
   },
   "OtherRequirement": {
     "prefix": [
@@ -61,7 +68,8 @@
       "OtherRequirement"
     ],
     "description": "Empty body of OtherRequirement",
-    "body": "{\n  \"matcher\": \"OtherRequirement\",\n  \"description\": \"\",\n  \"metadata\": {\n    \"id\": \"$UUID\"\n  }\n}"
+    "body": "{\n  \"matcher\": \"OtherRequirement\",\n  \"description\": \"\",\n  \"metadata\": {\n    \"id\": \"$UUID\"\n  }\n}",
+    "scope": "json"
   },
   "CSGuidedElectiveRequirement": {
     "prefix": [
@@ -69,7 +77,8 @@
       "CSGuidedElectiveRequirement"
     ],
     "description": "Empty body of CSGuidedElectiveRequirement",
-    "body": "{\n  \"matcher\": \"CSGuidedElectiveRequirement\",\n  \"required_count\": 0,\n  \"starts_with\": \"\",\n  \"also_fulfills\": [],\n  \"metadata\": {\n    \"id\": \"$UUID\"\n  }\n}"
+    "body": "{\n  \"matcher\": \"CSGuidedElectiveRequirement\",\n  \"required_count\": 0,\n  \"starts_with\": \"\",\n  \"also_fulfills\": [],\n  \"metadata\": {\n    \"id\": \"$UUID\"\n  }\n}",
+    "scope": "json"
   },
   "BAGuidedElectiveRequirement": {
     "prefix": [
@@ -77,7 +86,8 @@
       "BAGuidedElectiveRequirement"
     ],
     "description": "Empty body of BAGuidedElectiveRequirement",
-    "body": "{\n  \"matcher\": \"BAGuidedElectiveRequirement\",\n  \"required_count\": 0,\n  \"required_hours\": 0,\n  \"prefix_groups\": [],\n  \"metadata\": {\n    \"id\": \"$UUID\"\n  }\n}"
+    "body": "{\n  \"matcher\": \"BAGuidedElectiveRequirement\",\n  \"required_count\": 0,\n  \"required_hours\": 0,\n  \"prefix_groups\": [],\n  \"metadata\": {\n    \"id\": \"$UUID\"\n  },\n  \"upper_division\": false\n}",
+    "scope": "json"
   },
   "SomeRequirement": {
     "prefix": [
@@ -85,7 +95,8 @@
       "SomeRequirement"
     ],
     "description": "Empty body of SomeRequirement",
-    "body": "{\n  \"matcher\": \"SomeRequirement\",\n  \"requirements\": [],\n  \"metadata\": {\n    \"id\": \"$UUID\"\n  }\n}"
+    "body": "{\n  \"matcher\": \"SomeRequirement\",\n  \"requirements\": [],\n  \"metadata\": {\n    \"id\": \"$UUID\"\n  }\n}",
+    "scope": "json"
   },
-  "$comment": "Generated by /Users/json/Documents/src/thekevinge/degree-validator/gen_schema.py on 2023-03-13 16:54:38.803021"
+  "$comment": "Generated by /Users/json/Documents/src/thekevinge/degree-validator/gen_schema.py on 2023-03-15 13:01:02.004805"
 }

@@ -48,6 +48,9 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
 
     prefix_groups: list[list[str]]
         Groups of department prefixes
+    
+    upper_division: bool
+        Sets whether requirement is only satisfied by upper division courses. Defaults to True, if False the requirement will only be satisfied by lower division courses.
 
     """
 
@@ -56,6 +59,7 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
         required_count: int,
         required_hours: int,
         prefix_groups: list[AbstractRequirement],
+        upper_division: bool = True,
         metadata: dict[str, Any] = {},
     ) -> None:
         self.prefix_groups = prefix_groups
@@ -65,15 +69,16 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
         self.fulfilled_hours = 0
         self.valid_courses: dict[str, int] = {}
         self.metadata = metadata
+        self.upper_division = upper_division
         self.override_filled = False
 
     def attempt_fulfill(self, course: str) -> bool:
         if self.is_fulfilled():
             return False
 
-        # First check if upper level elective
+        # First check if correct level elective
         if utils.get_level_from_course(course) < 3:
-            return False
+            return not self.upper_division
 
         # Now check if course satisfies a group
         for group in self.prefix_groups:
@@ -111,6 +116,7 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
         required_hours: int
         prefix_groups: list[OrRequirement.Req]
         metadata: dict[str, Any]
+        upper_division: bool
 
     @classmethod
     def from_json(cls, json: JSON) -> BusinessAdministrationElectiveRequirement:
@@ -119,6 +125,7 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
             "matcher": "BAGuidedElectiveRequirement",
             "required_count": 3,
             "required_hours": 15,
+            "upper_division": true,
             "prefix_groups": [
             {
                 "matcher": "SomeRequirement",
@@ -156,6 +163,7 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
             json["required_count"],
             json["required_hours"],
             requirements,
+            json["upper_division"] if "upper_division" in json else True,
             json["metadata"],
         )
 
@@ -171,6 +179,7 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
                     json.loads(req.to_json()) for req in self.prefix_groups
                 ],
                 "valid_courses": self.valid_courses,
+                "upper_division": self.upper_division,
             }
         )
 
@@ -180,6 +189,7 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
         required_hours: {self.required_hours}
         fulfilled_count: {self.fulfilled_count}
         fulfilled_hours: {self.fulfilled_hours}
+        upper_division: {self.upper_division}
         _______________
         Required fulfilled: {self.is_fulfilled()}
         """

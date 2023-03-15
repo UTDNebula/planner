@@ -162,7 +162,8 @@ snips = dict(
                         findall("[A-Z]", curr["matcher"]["const"])
                     ).lower(), curr["matcher"]["const"]],
                     "description" : f'Empty body of {curr["matcher"]["const"]}',
-                    "body": dumps(requirement_schema_to_empty_json_body(curr), indent=2)
+                    "body": dumps(requirement_schema_to_empty_json_body(curr), indent=2),
+                    "scope": "json"
                 },
                 requirement_schemas,
             )
