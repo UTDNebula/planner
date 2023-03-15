@@ -112,7 +112,7 @@ export default function OnboardingPage() {
       handleSubmit();
     }
   };
-  
+
   useEffect(() => {
     setValidNextPage(validate[page]);
   });

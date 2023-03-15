@@ -40,15 +40,13 @@ export default function Welcome({
     handleChange({ endSemester: sem });
   };
 
-  const [major, setMajor] = React.useState("");
+  const [major, setMajor] = React.useState('');
 
   const { results, updateQuery } = useSearch({
-    getData: async () =>
-      majors ? majors.map((major) => ({ filMajor: `${major}` })) : [],
+    getData: async () => (majors ? majors.map((major) => ({ filMajor: `${major}` })) : []),
     initialQuery: '',
     filterFn: (major, query) => major.filMajor.toLowerCase().includes(query.toLowerCase()),
   });
-
 
   const handleFirstSemesterChange = (event: SelectChangeEvent) => {
     type semesterChars = 'f' | 'u' | 's';
@@ -93,7 +91,13 @@ export default function Welcome({
   };
 
   const checkValidate = () => {
-    const isValid = name && startSemester && endSemester && Math.floor(endSemester.year) >= Math.floor(startSemester.year) ? true : false;
+    const isValid =
+      name &&
+      startSemester &&
+      endSemester &&
+      Math.floor(endSemester.year) >= Math.floor(startSemester.year)
+        ? true
+        : false;
     handleValidate(isValid);
   };
 
@@ -107,53 +111,57 @@ export default function Welcome({
 
   return (
     <div>
-      <div className='flex flex-wrap'>
-        {EmojiIcons["sparkle"]}
-        <h1 className="-mt-2 text-3xl font-bold leading-normal tracking-tight text-[36px] ml-2">Create An Account</h1>
+      <div className="flex flex-wrap">
+        {EmojiIcons['sparkle']}
+        <h1 className="-mt-2 ml-2 text-3xl text-[36px] font-bold leading-normal tracking-tight">
+          Create An Account
+        </h1>
       </div>
-      <p className="text-sm leading-normal text-[16px] text-[#737373] font-semibold">
-          Tell us your name, major, and school semesters!
+      <p className="text-sm text-[16px] font-semibold leading-normal text-[#737373]">
+        Tell us your name, major, and school semesters!
       </p>
       <section className="mt-7 space-y-5">
         <div className="relative mb-4">
           <input
             type="text"
-            className="w-[500px] text-[14px] bg-[#F5F5F5] text-[#737373] rounded border p-3 pl-4 outline-none focus:border-[#6366F1]"
+            className="w-[500px] rounded border bg-[#F5F5F5] p-3 pl-4 text-[14px] text-[#737373] outline-none focus:border-[#6366F1]"
             value={name}
-            onChange={setName as React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> | undefined}
+            onChange={
+              setName as
+                | React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
+                | undefined
+            }
             placeholder="Name"
           ></input>
         </div>
-    
+
         <div className="relative mb-4">
-            <AutoCompleteMajor
-              className='border outline-none rounded w-[500px]'
-              key={0}
-              onValueChange={(value) => setMajor(value)}
-              onInputChange={(query: string) => updateQuery(query)}
-              options={results.map((major: { filMajor: string; }) => major.filMajor)}
-              autoFocus>
-            </AutoCompleteMajor>
+          <AutoCompleteMajor
+            className="w-[500px] rounded border outline-none"
+            key={0}
+            onValueChange={(value) => setMajor(value)}
+            onInputChange={(query: string) => updateQuery(query)}
+            options={results.map((major: { filMajor: string }) => major.filMajor)}
+            autoFocus
+          ></AutoCompleteMajor>
         </div>
-        <div className='flex items-center justify-between'>
-          <div className='relative mb-4'>
+        <div className="flex items-center justify-between">
+          <div className="relative mb-4">
             <Select
-              className="w-[225px] h-[50px] text-[14px]  bg-[#F5F5F5] text-[#737373] rounded border pl-1 outline-none"
+              className="h-[50px] w-[225px] rounded  border bg-[#F5F5F5] pl-1 text-[14px] text-[#737373] outline-none"
               sx={{
                 '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
                   borderColor: '#6366F1',
                 },
                 '.MuiOutlinedInput-notchedOutline': { border: 0 },
               }}
-              inputProps={
-                {
-                  style: {
-                    fontSize:"30px"
-                  }
-                }
-              }
+              inputProps={{
+                style: {
+                  fontSize: '30px',
+                },
+              }}
               displayEmpty
-              id='startingSemInfo'
+              id="startingSemInfo"
               value={startSemester.semester.toString()}
               onChange={handleFirstSemesterChange}
             >
@@ -170,23 +178,21 @@ export default function Welcome({
           </div>
           <div className="relative mb-4">
             <Select
-              className="w-[225px] h-[50px] text-[14px]  bg-[#F5F5F5] text-[#737373] rounded border pl-1 outline-none"
+              className="h-[50px] w-[225px] rounded  border bg-[#F5F5F5] pl-1 text-[14px] text-[#737373] outline-none"
               sx={{
                 '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
                   borderColor: '#6366F1',
                 },
                 '.MuiOutlinedInput-notchedOutline': { border: 0 },
-                paddingRight: -10
+                paddingRight: -10,
               }}
-              inputProps={
-                {
-                  style: {
-                    fontSize:"30px"
-                  }
-                }
-              }
+              inputProps={{
+                style: {
+                  fontSize: '30px',
+                },
+              }}
               displayEmpty
-              id='startingSemInfo'
+              id="startingSemInfo"
               value={startSemester.year.toString()}
               onChange={handleFirstSemesterChangeYear}
             >
@@ -226,26 +232,24 @@ export default function Welcome({
             </Select>
           </div>
         </div>
-        <div className='flex items-center justify-between'>
-        <div className='relative mb-4'>
+        <div className="flex items-center justify-between">
+          <div className="relative mb-4">
             <Select
-              className="w-[225px] h-[50px] text-[14px]  bg-[#F5F5F5] text-[#737373] rounded border pl-1 outline-none"
+              className="h-[50px] w-[225px] rounded  border bg-[#F5F5F5] pl-1 text-[14px] text-[#737373] outline-none"
               sx={{
                 '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
                   borderColor: '#6366F1',
                 },
                 '.MuiOutlinedInput-notchedOutline': { border: 0 },
-                paddingRight: -10
+                paddingRight: -10,
               }}
-              inputProps={
-                {
-                  style: {
-                    fontSize:"30px"
-                  }
-                }
-              }
+              inputProps={{
+                style: {
+                  fontSize: '30px',
+                },
+              }}
               displayEmpty
-              id='endingSemInfo'
+              id="endingSemInfo"
               value={endSemester.semester.toString()}
               onChange={handleSecondSemesterChange}
             >
@@ -262,25 +266,23 @@ export default function Welcome({
           </div>
           <div className="relative mb-4">
             <Select
-              className="w-[225px] h-[50px] text-[14px]  bg-[#F5F5F5] text-[#737373] rounded border pl-1 outline-none"
+              className="h-[50px] w-[225px] rounded  border bg-[#F5F5F5] pl-1 text-[14px] text-[#737373] outline-none"
               sx={{
                 '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
                   borderColor: '#6366F1',
                 },
                 '.MuiOutlinedInput-notchedOutline': { border: 0 },
-                paddingRight: -10
+                paddingRight: -10,
               }}
-              inputProps={
-                {
-                  style: {
-                    fontSize:"30px"
-                  }
-                }
-              }
+              inputProps={{
+                style: {
+                  fontSize: '30px',
+                },
+              }}
               displayEmpty
-              id='startingSemInfo'
+              id="startingSemInfo"
               value={endSemester.year.toString()}
-              defaultValue='2026'
+              defaultValue="2026"
               onChange={handleSecondSemesterChangeYear}
             >
               <MenuItem className="text-sm" value={'2020'}>
@@ -320,7 +322,7 @@ export default function Welcome({
           </div>
         </div>
       </section>
-      <div className="pb-5"/>
+      <div className="pb-5" />
     </div>
   );
 }

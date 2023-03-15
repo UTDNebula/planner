@@ -34,13 +34,11 @@ const AutoCompleteMajor: FC<AutoCompleteMajorProps & React.ComponentPropsWithout
           {...props}
           placement="bottom"
           anchorEl={containerRef.current}
-          className="z-[9999] text-sm overflow-hidden rounded-[10px] shadow-lg"
+          className="z-[9999] overflow-hidden rounded-[10px] text-sm shadow-lg"
           style={{
             width: width,
             border: '1px solid #EDEFF7',
           }}
-          
-          
         />
       );
     },
@@ -48,9 +46,7 @@ const AutoCompleteMajor: FC<AutoCompleteMajorProps & React.ComponentPropsWithout
   );
 
   return (
-    <div
-      {...props}
-    >
+    <div {...props}>
       <div ref={containerRef} className="absolute -bottom-3 left-0 h-full w-full"></div>
       <Autocomplete
         freeSolo
@@ -65,9 +61,9 @@ const AutoCompleteMajor: FC<AutoCompleteMajorProps & React.ComponentPropsWithout
             <TextField
               {...params}
               variant="standard"
-              className="font-semibold h-11 outline-none appearance-none text-[14px] bg-[#F5F5F5] border border-[#6366F1] text-[#D4D4D4] rounded pl-4"
+              className="h-11 appearance-none rounded border border-[#6366F1] bg-[#F5F5F5] pl-4 text-[14px] font-semibold text-[#D4D4D4] outline-none"
               inputProps={{
-                style: { fontSize: 14, marginTop:8, fontWeight: "500" },
+                style: { fontSize: 14, marginTop: 8, fontWeight: '500' },
                 ...params.inputProps,
               }}
               placeholder={placeholder}
