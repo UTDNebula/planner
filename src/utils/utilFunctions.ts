@@ -130,8 +130,9 @@ export function createSemesterCodeRange(
   startSemester: SemesterCode,
   endSemester: SemesterCode,
   includeEnd: boolean,
+  includeStart = true,
 ) {
-  const semesterCodes = [startSemester];
+  const semesterCodes = includeStart ? [startSemester] : [];
   let currSemester = createNewSemesterCode(startSemester);
   while (isEarlierSemester(currSemester, endSemester)) {
     semesterCodes.push(currSemester);
@@ -149,3 +150,25 @@ export function createSemesterCodeRange(
 export function isSemCodeEqual(semCodeOne: SemesterCode, semCodeTwo: SemesterCode) {
   return semCodeOne.semester === semCodeTwo.semester && semCodeOne.year === semCodeTwo.year;
 }
+
+const semesterPrecedence = {
+  f: 0,
+  s: 1,
+  u: 2,
+} as const;
+
+// Returns true if s1 is earlier than s2
+export const isSemesterEarlier = (s1: SemesterCode, s2: SemesterCode) => {
+  return (
+    s1.year < s2.year ||
+    (s1.year === s2.year && semesterPrecedence[s1.semester] < semesterPrecedence[s2.semester])
+  );
+};
+
+// Returns true if s1 is later than s2
+export const isSemesterLater = (s1: SemesterCode, s2: SemesterCode) => {
+  return (
+    s1.year > s2.year ||
+    (s1.year === s2.year && semesterPrecedence[s1.semester] > semesterPrecedence[s2.semester])
+  );
+};

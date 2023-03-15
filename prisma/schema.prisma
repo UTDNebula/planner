@@ -51,6 +51,8 @@ model Plan {
   User            User?               @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId          String?             @db.ObjectId
   requirements    DegreeRequirements?
+  startSemester   SemesterCode
+  endSemester     SemesterCode
 }
 
 model DegreeRequirements {

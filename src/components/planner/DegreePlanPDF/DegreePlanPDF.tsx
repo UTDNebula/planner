@@ -31,8 +31,8 @@ const DegreePlanPDF: FC<DegreePlanPDFProps> = ({ studentName, planTitle, semeste
       <Page size="A4" style={styles.page} wrap={false}>
         <View style={styles.section}>
           <Header studentName={studentName} degreePlanTitle={planTitle}></Header>
-          {semesters.map((semester) => (
-            <View key={displaySemesterCode(semester.code)} wrap={false}>
+          {semesters.map((semester, i) => (
+            <View key={displaySemesterCode(semester.code) + i} wrap={false}>
               <SemesterHeader title={displaySemesterCode(semester.code)}></SemesterHeader>
               <SemesterTable courses={semester.courses}></SemesterTable>
             </View>

@@ -6,6 +6,7 @@ const colorClasses = {
   secondary:
     'bg-generic-white hover:bg-neutral-50 disabled:bg-generic-white border border-neutral-300',
   tertiary: 'bg-primary-100 text-primary-900',
+  border: 'border-1 border-[#E5E5E5] bg-white',
 };
 
 const sizeClasses = {

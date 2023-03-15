@@ -1,11 +1,17 @@
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
-import { Semester } from '@/components/planner/types';
-import { createNewYear } from '@/utils/utilFunctions';
+import { Semester as PlanSemester } from '@/components/planner/types';
+import {
+  createNewYear,
+  createSemesterCodeRange,
+  isSemesterEarlier,
+  isSemesterLater,
+} from '@/utils/utilFunctions';
 
 import { protectedProcedure, router } from '../trpc';
-import { Prisma } from '@prisma/client';
+import { Prisma, SemesterCode, Semester } from '@prisma/client';
+import { ObjectId } from 'bson';
 
 export const planRouter = router({
   getUserPlans: protectedProcedure.query(async ({ ctx }) => {
@@ -87,6 +93,83 @@ export const planRouter = router({
       return false;
     }
   }),
+  modifySemesters: protectedProcedure
+    .input(
+      z.object({
+        planId: z.string(),
+        newStartSemester: z.object({
+          semester: z.string(),
+          year: z.number(),
+        }),
+        newEndSemester: z.object({
+          semester: z.string(),
+          year: z.number(),
+        }),
+      }),
+    )
+    .mutation(async ({ ctx, input: { planId, newStartSemester, newEndSemester } }) => {
+      const plan = await ctx.prisma.plan.findUnique({
+        where: { id: planId },
+        select: { semesters: true },
+      });
+
+      if (!plan) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Plan not found',
+        });
+      }
+
+      if (plan.semesters.length > 0) {
+        // Delete all semesters outside of the new semester range
+        let newSemesters = plan.semesters.filter(
+          ({ code }) =>
+            !isSemesterEarlier(code, newStartSemester as SemesterCode) &&
+            !isSemesterLater(code, newEndSemester as SemesterCode),
+        );
+
+        // Prepend semesters if new semester range is earlier than first semester
+        const firstSemesterCode = plan.semesters[0].code;
+        const lastSemesterCode = plan.semesters[plan.semesters.length - 1].code;
+        if (isSemesterEarlier(newStartSemester as SemesterCode, firstSemesterCode)) {
+          newSemesters = [
+            ...(createSemesterCodeRange(
+              newStartSemester as SemesterCode,
+              firstSemesterCode,
+              false,
+              true,
+            ).map((semesterCode) => ({
+              code: semesterCode,
+              color: '',
+              planId,
+              id: new ObjectId().toString(),
+            })) as Semester[]),
+            ...newSemesters,
+          ];
+        }
+
+        // Append semesters if new semester range is later than last semeseter
+        if (isSemesterLater(newEndSemester as SemesterCode, lastSemesterCode)) {
+          newSemesters = [
+            ...newSemesters,
+            ...(createSemesterCodeRange(
+              lastSemesterCode,
+              newEndSemester as SemesterCode,
+              true,
+              false,
+            ).map((semesterCode) => ({
+              code: semesterCode,
+              color: '',
+              planId,
+              id: new ObjectId().toString(),
+            })) as Semester[]),
+          ];
+        }
+
+        await ctx.prisma.semester.deleteMany({ where: { planId } });
+        await ctx.prisma.semester.createMany({ data: newSemesters });
+      }
+    }),
   deleteYear: protectedProcedure.input(z.string().min(1)).mutation(async ({ ctx, input }) => {
     try {
       const semesterIds = await ctx.prisma.user.findUnique({
@@ -141,7 +224,7 @@ export const planRouter = router({
           });
         }
 
-        const newYear: Semester[] = createNewYear(
+        const newYear: PlanSemester[] = createNewYear(
           plan.semesters[0] ? plan.semesters[0].code : { semester: 'u', year: 2022 },
         );
 

@@ -1,11 +1,12 @@
-import { Prisma } from '@prisma/client';
+import { Prisma, SemesterCode, SemesterType, TemplateDataType } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import { ObjectID } from 'bson';
 import { z } from 'zod';
 
-import { createNewYear, isSemCodeEqual } from '@/utils/utilFunctions';
+import { createNewSemesterCode, createNewYear, isSemCodeEqual } from '@/utils/utilFunctions';
 
 import { protectedProcedure, router } from '../trpc';
+import { isEarlierSemester } from '@/utils/plannerUtils';
 
 export const userRouter = router({
   getUser: protectedProcedure.query(async ({ ctx }) => {
@@ -139,49 +140,76 @@ export const userRouter = router({
         },
       });
 
-      // Create # semesters based on user's starting & ending semester
-      const startSemester = user?.profile?.startSemester ?? {
-        semester: 'f',
-        year: new Date().getMonth() > 7 ? new Date().getFullYear() : new Date().getFullYear() - 1,
-      };
-      const endSemester = user?.profile?.endSemester ?? {
-        semester: 's',
-        year: startSemester.year + 4,
-      };
+      if (!user || !user.profile) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'User not found',
+        });
+      }
 
-      // Since we display plans by year, we need to determine what the start & end year is via some annoying logic
-      const startYear =
-        startSemester?.semester === 'f' ? startSemester.year : startSemester.year - 1;
+      const { startSemester: userStartSemester, endSemester: userEndSemester } = user.profile;
 
-      const endYear = endSemester?.semester === 'f' ? endSemester.year + 1 : endSemester.year;
+      const earliestSemFromTranscript =
+        takenCourses.length > 0
+          ? takenCourses.reduce(
+              (prev, curr) =>
+                isEarlierSemester(prev.semesterCode, curr.semesterCode) ? prev : curr,
+              takenCourses[0],
+            ).semesterCode
+          : userStartSemester;
 
+      const latestSemFromTranscript =
+        takenCourses.length > 0
+          ? takenCourses.reduce(
+              (prev, curr) =>
+                !isEarlierSemester(prev.semesterCode, curr.semesterCode) ? prev : curr,
+              takenCourses[0],
+            ).semesterCode
+          : userEndSemester;
+
+      const startSemester = isEarlierSemester(userStartSemester, earliestSemFromTranscript)
+        ? userStartSemester
+        : earliestSemFromTranscript;
+
+      const endSemester = !isEarlierSemester(userEndSemester, latestSemFromTranscript)
+        ? userEndSemester
+        : latestSemFromTranscript;
+
+      if (!isEarlierSemester(startSemester, endSemester)) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Start semester cannot be equal or later than end semester',
+        });
+      }
+
+      let currSem = startSemester;
       const semesterData: Prisma.SemesterCreateInput[] = [];
 
-      // createNewYear creates a new year like this: 22-> F22, S23, U23
-      // Thus, to include S23 & U23, you put the year below
-      for (let i = startYear; i < endYear; i++) {
-        semesterData.push(
-          ...createNewYear({ semester: 'f', year: i }).map((sem) => {
-            // Add credits to each semester
-            const courses: string[] = [];
+      // Create semesters and add courses from transcript to each semester
+      while (isEarlierSemester(currSem, endSemester) || isSemCodeEqual(currSem, endSemester)) {
+        // Create new semester
 
-            for (const course of takenCourses) {
-              if (isSemCodeEqual(course.semesterCode, sem.code)) {
-                courses.push(course.courseCode);
-              }
-            }
+        const courses: string[] = [];
 
-            return {
-              ...sem,
-              id: sem.id.toString(),
-              courses: { create: courses.map((course) => ({ code: course, color: '' })) },
-            };
-          }),
-        );
+        for (const course of takenCourses) {
+          if (isSemCodeEqual(course.semesterCode, currSem)) {
+            courses.push(course.courseCode);
+          }
+        }
+
+        const newSem: Prisma.SemesterCreateInput = {
+          code: currSem,
+          color: '',
+          courses: createCoursesForUserPlan(courses),
+        };
+
+        semesterData.push(newSem);
+
+        currSem = createNewSemesterCode(currSem);
       }
 
       const semesters: Prisma.SemesterUncheckedCreateNestedManyWithoutPlanInput = {
-        create: semesterData, // Prepopulate with semester
+        create: semesterData,
       };
 
       const plansInput: Prisma.PlanUncheckedCreateWithoutUserInput = {
@@ -190,6 +218,8 @@ export const userRouter = router({
         semesters: semesters,
         requirements: degreeRequirements,
         transferCredits,
+        startSemester,
+        endSemester,
       };
 
       const plans: Prisma.PlanUpdateManyWithoutUserNestedInput = {
@@ -275,6 +305,8 @@ export const userRouter = router({
         name: 'Copy-' + plan!.name,
         semesters: semesters,
         requirements: degreeRequirements,
+        endSemester: plan!.endSemester,
+        startSemester: plan!.startSemester,
       };
 
       const plans: Prisma.PlanUpdateManyWithoutUserNestedInput = {
@@ -308,7 +340,6 @@ export const userRouter = router({
   createTemplateUserPlan: protectedProcedure
     .input(z.string().min(1))
     .mutation(async ({ ctx, input }) => {
-      console.info('CRI');
       const userId = ctx.session.user.id;
       try {
         const template = await ctx.prisma.template.findUnique({
@@ -336,8 +367,7 @@ export const userRouter = router({
           });
         }
 
-        const major = template.name;
-        const templateData = template.templateData;
+        const { name: major, templateData } = template;
 
         // Get user info
         const user = await ctx.prisma.user.findFirst({
@@ -347,55 +377,22 @@ export const userRouter = router({
           },
         });
 
-        // Create # semesters based on user's starting semester
-        const startSemester = user?.profile?.startSemester ?? {
-          semester: 'f',
-          year: new Date().getMonth() > 7 ? new Date().getFullYear() : new Date().getFullYear() - 1,
-        };
-
-        // Since we display plans by year, we need to determine what the start & end year is via some annoying logic
-        const startYear =
-          startSemester?.semester === 'f' ? startSemester.year : startSemester.year - 1;
-
-        const semesterData: Prisma.SemesterCreateInput[] = [];
-
-        // createNewYear creates a new year like this: 22-> F22, S23, U23
-        // Thus, to include S23 & U23, you put the year below
-        for (let i = startYear; i < startYear + 4; i++) {
-          // We use counter to ensure that we access templateData 0-7
-          // B/c semesterData goes from 0-11
-          let counter = 0;
-          semesterData.push(
-            ...createNewYear({ semester: 'f', year: i }).map((sem, idx) => {
-              // Add credits to each semester
-              const courses: string[] = [];
-              if (idx % 3 === 2) {
-                return {
-                  ...sem,
-                  id: sem.id.toString(),
-                  courses: { create: courses.map((course) => ({ code: course, color: '' })) },
-                };
-              }
-              templateData[i - startYear + counter].items.map((course) => {
-                const countOfCoursesWithSameCode = courses.reduce(
-                  (count, curr) => count + (course.name == curr ? 1 : 0),
-                  0,
-                );
-                if (countOfCoursesWithSameCode > 0) {
-                  courses.push(`${course.name} ${countOfCoursesWithSameCode}`);
-                } else {
-                  courses.push(course.name);
-                }
-              });
-              counter++;
-              return {
-                ...sem,
-                id: sem.id.toString(),
-                courses: { create: courses.map((course) => ({ code: course, color: '' })) },
-              };
-            }),
-          );
+        if (!user || !user.profile) {
+          throw new TRPCError({
+            code: 'NOT_FOUND',
+            message: 'User not found',
+          });
         }
+
+        const { startSemester, endSemester } = getStartingAndEndingSemesters(
+          user.profile.startSemester,
+        );
+
+        // Add template courses to semesters
+        const semesterData = addTemplateCoursesToPlan({
+          startYear: startSemester.year,
+          templateData,
+        });
 
         const semesters: Prisma.SemesterUncheckedCreateNestedManyWithoutPlanInput = {
           create: semesterData, // Prepopulate with semester
@@ -412,18 +409,22 @@ export const userRouter = router({
             },
           };
 
-        const plansInput: Prisma.PlanUncheckedCreateWithoutUserInput = {
+        const plansInput = {
           name: major,
           semesters: semesters,
           requirements: degreeRequirements,
+          startSemester,
+          endSemester,
         };
-        const plans: Prisma.PlanUpdateManyWithoutUserNestedInput = {
-          create: plansInput,
-        };
+
         const updatedUser = await ctx.prisma.user.update({
-          where: { id: userId },
+          where: {
+            id: userId,
+          },
           data: {
-            plans: plans,
+            plans: {
+              create: plansInput,
+            },
           },
           select: {
             plans: {
@@ -439,7 +440,95 @@ export const userRouter = router({
         });
         return updatedUser.plans[0].id;
       } catch (error) {
+        console.log('HELP');
         console.error(error);
       }
     }),
 });
+
+// createNewYear creates a new year like this: 22-> F22, S23, U23
+// Thus, to include S23 & U23, you put the year below
+const addTemplateCoursesToPlan = ({
+  startYear,
+  templateData,
+}: {
+  startYear: number;
+  templateData: {
+    semester: number;
+    items: {
+      name: string;
+      type: TemplateDataType;
+    }[];
+  }[];
+}): Prisma.SemesterCreateInput[] => {
+  const semesterData: Prisma.SemesterCreateInput[] = [];
+
+  // Iterate over each year
+  for (let i = 0; i < 4; i++) {
+    // Create new semesters for the academic year
+    const fallSem: Prisma.SemesterCreateInput = {
+      code: { semester: 'f', year: startYear + i },
+      courses: createCoursesFromTemplate({ items: templateData[i * 2].items }),
+      color: '',
+    };
+
+    const springSem = {
+      code: { semester: 's' as SemesterType, year: startYear + i + 1 },
+      courses: createCoursesFromTemplate({ items: templateData[i * 2 + 1].items }),
+      color: '',
+    };
+
+    const summerSem = {
+      code: { semester: 'u' as SemesterType, year: startYear + i + 1 },
+      courses: createCoursesFromTemplate({ items: [] }),
+      color: '',
+    };
+
+    const newYear = [fallSem, springSem, summerSem];
+
+    semesterData.push(...newYear);
+  }
+  return semesterData;
+};
+
+const createCoursesForUserPlan = (courses: string[]) => {
+  return {
+    create: courses.map((course) => {
+      return { code: course, color: '' };
+    }),
+  };
+};
+
+const createCoursesFromTemplate = ({
+  items,
+}: {
+  items: { name: string; type: TemplateDataType }[];
+}): Prisma.CourseCreateNestedManyWithoutSemesterInput => {
+  // Duplicate placeholder courses exist in the template
+  // Make them unique by appending an increment at the end
+  const duplicateCourses: { [key: string]: number } = {};
+  return {
+    create: items.map((item) => {
+      if (item.name in duplicateCourses) {
+        duplicateCourses[item.name] += 1;
+        const code = `${item.name} - ${duplicateCourses[item.name]}`;
+        return { code, color: '' };
+      }
+      duplicateCourses[item.name] = 0;
+      return { code: item.name, color: '' };
+    }),
+  };
+};
+
+const getStartingAndEndingSemesters = (userStartSemester: SemesterCode) => {
+  // For template plans, always add courses to Fall of whatever year they start with
+  const startYear =
+    userStartSemester.semester === 'f' ? userStartSemester.year : userStartSemester.year - 1;
+
+  // Define start and end semesters here
+
+  const startSemester: SemesterCode = { semester: 'f', year: startYear };
+  const endSemester: SemesterCode = { semester: 'u', year: startYear + 4 };
+
+  return { startSemester, endSemester };
+};

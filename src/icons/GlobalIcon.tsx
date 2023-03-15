@@ -1,6 +1,6 @@
-import { SVGProps } from 'react';
+import { FC, SVGProps } from 'react';
 
-export default function BackArrowIcon(props: SVGProps<SVGSVGElement>) {
+const DeleteIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
   return (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -12,4 +12,6 @@ export default function BackArrowIcon(props: SVGProps<SVGSVGElement>) {
       />
     </svg>
   );
-}
+};
+
+export default DeleteIcon;

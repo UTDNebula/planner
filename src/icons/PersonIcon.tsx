@@ -8,7 +8,7 @@ const PersonIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
       height="16"
       fill="none"
       viewBox="0 0 13 16"
-      stroke="#171717"
+      stroke="currentColor"
       {...props}
     >
       <path
