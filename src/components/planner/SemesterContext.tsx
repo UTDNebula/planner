@@ -123,11 +123,10 @@ export type SemestersReducerAction =
       type: 'changeSemesterLock';
       locked: boolean;
       semesterId: string;
-    } 
+    }
   | {
       type: 'reinitState';
       semesters: Semester[];
-
     };
 
 export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
