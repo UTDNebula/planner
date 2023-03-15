@@ -17,6 +17,7 @@ export interface Semester {
   code: SemesterCode;
   courses: DraggableCourse[];
   color: keyof typeof tagColors;
+  locked: boolean;
 }
 
 export interface Course {
@@ -32,6 +33,7 @@ export interface DraggableCourse extends Course {
   hours?: number;
   prereqs?: string[];
   color: keyof typeof tagColors;
+  locked: boolean;
 }
 
 export interface DegreeRequirementGroup {

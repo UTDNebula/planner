@@ -7,22 +7,29 @@ import ColorSwatchIcon from '@/icons/ColorSwatchIcon';
 import ChevronIcon from '@/icons/ChevronIcon';
 import { tagColors } from '../utils';
 import { ObjectID } from 'bson';
+import LockIcon from '@/icons/LockIcon';
 
 const itemClasses =
   'flex items-center gap-x-3 border-b border-neutral-300 px-2 py-2 hover:bg-neutral-200 cursor-pointer text-sm';
 
 const contentClasses = 'w-64 rounded-md border border-neutral-300 bg-generic-white z-[9999]';
 
+const disabledClasses = 'text-black/25 cursor-default';
+
 export interface SemesterTileDropdownProps {
   deleteAllCourses: () => void;
   selectAllCourses: () => void;
   changeColor: (color: keyof typeof tagColors) => void;
+  locked: boolean;
+  toggleLock: () => void;
 }
 
 const SemesterTileDropdown: FC<SemesterTileDropdownProps> = ({
   deleteAllCourses,
   selectAllCourses,
   changeColor,
+  locked,
+  toggleLock,
 }) => {
   const id = new ObjectID().toString();
   return (
@@ -39,17 +46,34 @@ const SemesterTileDropdown: FC<SemesterTileDropdownProps> = ({
           sideOffset={10}
           align="start"
         >
-          <DropdownMenu.Item className={itemClasses} onClick={deleteAllCourses}>
+          <DropdownMenu.Item
+            className={!locked ? itemClasses : `${itemClasses} ${disabledClasses}`}
+            onClick={!locked ? deleteAllCourses : undefined}
+            disabled={locked}
+          >
             <ArchiveIcon />
             <span>Clear courses</span>
           </DropdownMenu.Item>
-          <DropdownMenu.Item className={itemClasses} onClick={selectAllCourses}>
+          <DropdownMenu.Item className={itemClasses} onClick={toggleLock}>
+            <LockIcon />
+            <span>{locked ? 'Unlock' : 'Lock'} semester</span>
+          </DropdownMenu.Item>
+          <DropdownMenu.Item
+            className={!locked ? itemClasses : `${itemClasses} ${disabledClasses}`}
+            onClick={!locked ? selectAllCourses : undefined}
+            disabled={locked}
+          >
             <ClipboardListIcon />
             <span>Select all courses</span>
           </DropdownMenu.Item>
 
           <DropdownMenu.Sub>
-            <DropdownMenu.SubTrigger className={itemClasses + ' justify-between border-none'}>
+            <DropdownMenu.SubTrigger
+              className={`${
+                !locked ? itemClasses : `${itemClasses} ${disabledClasses}`
+              } justify-between border-none`}
+              disabled={locked}
+            >
               <div className="flex items-center gap-x-3">
                 <ColorSwatchIcon />
                 <span>Change color</span>

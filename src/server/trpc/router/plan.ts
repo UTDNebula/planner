@@ -427,6 +427,46 @@ export const planRouter = router({
       });
       return true;
     }),
+  changeCourseLock: protectedProcedure
+    .input(
+      z.object({
+        semesterId: z.string(),
+        courseName: z.string(),
+        locked: z.boolean(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      await ctx.prisma.course.update({
+        where: {
+          semesterId_code: {
+            semesterId: input.semesterId,
+            code: input.courseName,
+          },
+        },
+        data: {
+          locked: input.locked,
+        },
+      });
+      return true;
+    }),
+  changeSemesterLock: protectedProcedure
+    .input(
+      z.object({
+        semesterId: z.string(),
+        locked: z.boolean(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      await ctx.prisma.semester.update({
+        where: {
+          id: input.semesterId,
+        },
+        data: {
+          locked: input.locked,
+        },
+      });
+      return true;
+    }),
   addBypass: protectedProcedure
     .input(z.object({ planId: z.string(), requirement: z.string() }))
     .mutation(async ({ ctx, input }) => {

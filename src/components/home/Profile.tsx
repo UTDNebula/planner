@@ -11,7 +11,6 @@ import MenuItem from '@mui/material/MenuItem';
 import Button from '../Button';
 import { toast } from 'react-toastify';
 import FormHelperText from '@mui/material/FormHelperText';
-import Router from 'next/router';
 import { signOut } from 'next-auth/react';
 
 type ProfilePageProps = {

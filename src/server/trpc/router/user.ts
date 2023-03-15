@@ -3,7 +3,7 @@ import { TRPCError } from '@trpc/server';
 import { ObjectID } from 'bson';
 import { z } from 'zod';
 
-import { createNewSemesterCode, createNewYear, isSemCodeEqual } from '@/utils/utilFunctions';
+import { createNewSemesterCode, isSemCodeEqual } from '@/utils/utilFunctions';
 
 import { protectedProcedure, router } from '../trpc';
 import { isEarlierSemester } from '@/utils/plannerUtils';

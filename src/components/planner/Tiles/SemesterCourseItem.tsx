@@ -3,7 +3,7 @@ import React, { ComponentPropsWithoutRef, FC, forwardRef, useRef, useState } fro
 
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import { DragDataFromSemesterTile, DraggableCourse, Semester } from '../types';
-import CheckIcon from '@mui/icons-material/Check';
+import LockIcon from '@/icons/LockIcon';
 import Checkbox from '@/components/Checkbox';
 import SemesterCourseItemDropdown from './SemesterCourseItemDropdown';
 import { tagColors } from '../utils';
@@ -16,6 +16,7 @@ import PrereqWarnHoverCard from '../PrereqWarnHoverCard';
 
 export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'> {
   course: DraggableCourse;
+  semesterLocked?: boolean;
   isSelected?: boolean;
   isValid?: boolean;
   isDragging?: boolean;
@@ -23,6 +24,7 @@ export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'>
   onDeselectCourse?: () => void;
   onDeleteCourse?: () => void;
   onColorChange?: (color: keyof typeof tagColors) => void;
+  onLockChange?: (lock: boolean) => void;
 }
 
 /** UI implementation of a semester course */
@@ -38,6 +40,8 @@ export const MemoizedSemesterCourseItem = React.memo(
       onDeleteCourse,
       onColorChange,
       isValid,
+      onLockChange,
+      semesterLocked,
       ...props
     },
     ref,
@@ -56,8 +60,12 @@ export const MemoizedSemesterCourseItem = React.memo(
         ref={ref}
         {...props}
         className={`flex h-[50px] w-full cursor-grab flex-row items-center rounded-md  border border-[#D4D4D4] ${
-          isValid || isValid === undefined ? 'bg-generic-white' : 'bg-[#FFFBEB]'
-        }`}
+          !course.locked || isValid || isValid === undefined
+            ? course.locked
+              ? 'bg-neutral-200'
+              : 'bg-inherit'
+            : 'bg-[#FFFBEB]'
+        } ${semesterLocked || course.locked ? 'text-neutral-400' : 'text-[#1C2A6D]'}`}
         // onClick={() => setDropdownOpen((prev) => !prev)}
         onClick={() => setDropdownOpen(true)}
         onMouseEnter={() => {
@@ -93,6 +101,9 @@ export const MemoizedSemesterCourseItem = React.memo(
                 }
                 setDropdownOpen(open);
               }}
+              locked={course.locked}
+              semesterLocked={semesterLocked || false}
+              toggleLock={() => onLockChange && onLockChange(!course.locked)}
               changeColor={(color) => onColorChange && onColorChange(color)}
               deleteCourse={() => onDeleteCourse && onDeleteCourse()}
             >
@@ -102,7 +113,8 @@ export const MemoizedSemesterCourseItem = React.memo(
             </SemesterCourseItemDropdown>
 
             <Checkbox
-              style={{ width: '20px', height: '20px' }}
+              disabled={course.locked}
+              style={{ width: '20px', height: '20px', backgroundColor: 'inherit' }}
               checked={isSelected}
               onClick={(e) => e.stopPropagation()}
               onCheckedChange={(checked) => {
@@ -115,8 +127,8 @@ export const MemoizedSemesterCourseItem = React.memo(
                 }
               }}
             />
-            <span className="text-sm text-[#1C2A6D]">{course.code}</span>
-            <div className="ml-auto mr-2 flex text-xs font-semibold">
+            <span className="text-sm">{course.code}</span>
+            <div className="ml-auto mr-2 flex items-center justify-center gap-2 align-middle text-xs font-semibold">
               {!isValid && (
                 <PrereqWarnHoverCard
                   prereqs={prereqs}
@@ -136,6 +148,7 @@ export const MemoizedSemesterCourseItem = React.memo(
                   </span>
                 </PrereqWarnHoverCard>
               )}
+              {course.locked && <LockIcon />}
             </div>
           </div>
         </CourseInfoHoverCard>
@@ -155,6 +168,7 @@ export interface DraggableSemesterCourseItemProps {
   onDeselectCourse: () => void;
   onDeleteCourse: () => void;
   onColorChange: (color: keyof typeof tagColors) => void;
+  onLockChange: (lock: boolean) => void;
 }
 
 /** Compositional wrapper around SemesterCourseItem */
@@ -167,10 +181,12 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
   onDeleteCourse,
   isSelected,
   onColorChange,
+  onLockChange,
 }) => {
   const { setNodeRef, attributes, listeners, isDragging } = useDraggable({
     id: dragId,
     data: { from: 'semester-tile', semester, course } as DragDataFromSemesterTile,
+    disabled: course.locked || semester.locked,
   });
 
   const { planId } = useSemestersContext();
@@ -178,6 +194,7 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
   const isValid = prereqData.data?.prereqValidation.get(course.code)?.[0];
   return (
     <SemesterCourseItem
+      onLockChange={onLockChange}
       ref={setNodeRef}
       style={{
         visibility: isDragging ? 'hidden' : 'unset',
@@ -190,6 +207,7 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
       onDeselectCourse={onDeselectCourse}
       onDeleteCourse={onDeleteCourse}
       isSelected={isSelected}
+      semesterLocked={semester.locked}
       onColorChange={onColorChange}
       isValid={isValid || isValid === undefined} // Show as valid if isValid is undefined
     />

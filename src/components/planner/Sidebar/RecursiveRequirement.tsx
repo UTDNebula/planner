@@ -151,6 +151,7 @@ function CourseRequirementComponent({
         taken: courses.includes(req.course),
         status: req.filled ? 'complete' : 'incomplete',
         hours: validCourses[req.course],
+        locked: false,
       }}
       dragId={id.toString()}
     />

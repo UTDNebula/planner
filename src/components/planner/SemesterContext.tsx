@@ -46,6 +46,8 @@ export interface SemestersContextState {
   toggleOffAllYearFilters: () => void;
   toggleOffAllSemesterFilters: () => void;
   filters: Filter[];
+  handleCourseLock: (semesterId: string, locked: boolean, courseName: string) => void;
+  handleSemesterLock: (semesterId: string, locked: boolean) => void;
 }
 
 type Filter =
@@ -109,6 +111,17 @@ export type SemestersReducerAction =
   | {
       type: 'changeSemesterColor';
       color: keyof typeof tagColors;
+      semesterId: string;
+    }
+  | {
+      type: 'changeCourseLock';
+      locked: boolean;
+      semesterId: string;
+      courseName: string;
+    }
+  | {
+      type: 'changeSemesterLock';
+      locked: boolean;
       semesterId: string;
     }
   | {
@@ -241,6 +254,19 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
             if (semester.id.toString() !== action.semesterId) return semester;
             return { ...semester, color: action.color };
           });
+        case 'changeCourseLock':
+          return state.map((semester) => {
+            if (semester.id.toString() !== action.semesterId) return semester;
+            const idx = semester.courses.findIndex((course) => course.code === action.courseName);
+            semester.courses[idx].locked = action.locked;
+            return semester;
+          });
+        case 'changeSemesterLock':
+          return state.map((semester) =>
+            semester.id.toString() == action.semesterId
+              ? { ...semester, locked: action.locked }
+              : semester,
+          );
         default:
           return state;
       }
@@ -265,6 +291,42 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
   );
 
   useEffect(() => console.log('stateChange', { semesters }), [semesters]);
+
+  const changeCourseLock = trpc.plan.changeCourseLock.useMutation();
+  const changeSemesterLock = trpc.plan.changeSemesterLock.useMutation();
+
+  const handleSemesterLock = (semesterId: string, locked: boolean) => {
+    dispatchSemesters({
+      type: 'changeSemesterLock',
+      locked,
+      semesterId,
+    });
+
+    addTask({
+      func: ({ locked, semesterId }) => changeSemesterLock.mutateAsync({ locked, semesterId }),
+      args: { locked, semesterId },
+    });
+  };
+
+  const handleCourseLock = (semesterId: string, locked: boolean, courseName: string) => {
+    handleDeselectCourses([
+      semesters
+        .find((s) => s.id.toString() === semesterId)
+        ?.courses.find((c) => c.code === courseName)
+        ?.id.toString() ?? '',
+    ]);
+    dispatchSemesters({
+      type: 'changeCourseLock',
+      locked,
+      semesterId,
+      courseName,
+    });
+    addTask({
+      func: ({ locked, semesterId, courseName }) =>
+        changeCourseLock.mutateAsync({ locked, semesterId, courseName }),
+      args: { locked, semesterId, courseName },
+    });
+  };
 
   const addCourse = trpc.plan.addCourseToSemester.useMutation({
     async onSuccess() {
@@ -632,6 +694,8 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
         toggleOffAllYearFilters,
         toggleOffAllSemesterFilters,
         filters,
+        handleCourseLock,
+        handleSemesterLock,
       }}
     >
       {children}
@@ -641,10 +705,12 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
 
 const parsePlanSemestersFromPlan = (plan: Plan): Semester[] => {
   return plan.semesters.map((sem) => ({
+    locked: sem.locked,
     code: sem.code,
     id: new ObjectID(sem.id),
     color: Object.keys(tagColors).includes(sem.color) ? (sem.color as keyof typeof tagColors) : '',
     courses: sem.courses.map((course) => ({
+      locked: course.locked,
       id: new ObjectID(course.id),
       color: course.color as keyof typeof tagColors,
       code: course.code,
