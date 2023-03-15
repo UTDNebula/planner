@@ -47,6 +47,14 @@ jobs:
           DISCORD_CLIENT_ID: 123
           DISCORD_CLIENT_SECRET: abc
 
+          # Next Auth Google Provider
+          GOOGLE_CLIENT_ID: 123
+          GOOGLE_CLIENT_SECRET: abc
+
+          # Next Auth Facebook provider
+          FACEBOOK_CLIENT_ID: 123
+          FACEBOOK_CLIENT_SECRET: abc
+
           # Email Server
           EMAIL_SERVER_HOST: host
           EMAIL_SERVER_PORT: 1234
