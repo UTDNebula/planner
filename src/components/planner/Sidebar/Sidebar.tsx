@@ -19,11 +19,6 @@ import { trpc } from '@/utils/trpc';
 import { DegreeRequirements } from './types';
 import ChevronIcon from '@/icons/ChevronIcon';
 
-export enum SearchType {
-  TITLE,
-  CODE,
-}
-
 function CourseSelectorContainer({
   degreeRequirements,
   courses,
@@ -36,7 +31,6 @@ function CourseSelectorContainer({
   });
 
   const { data, isLoading } = q;
-  const [searchType, setSearchType] = useState<SearchType>(SearchType.CODE);
 
   const { results, updateQuery } = useSearch({
     getData: async () =>
