@@ -48,6 +48,7 @@
     "eslint": "^8.8.0",
     "eslint-plugin-unused-imports": "^2.0.0",
     "framer-motion": "^6.2.3",
+    "fuse.js": "^6.6.2",
     "intersection-observer": "^0.12.2",
     "intro.js": "^6.0.0",
     "intro.js-react": "^0.7.1",

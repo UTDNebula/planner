@@ -1,11 +1,12 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { SearchBarTwo } from '@components/credits/SearchBar';
 import React, { useRef, useState } from 'react';
+import Fuse from 'fuse.js';
 
 import RequirementsContainer from '@/components/planner/Sidebar/RequirementsContainer';
 import useSearch from '@/components/search/search';
 
-import { DraggableCourse, GetDragIdByCourse } from '../types';
+import { Course, DraggableCourse, GetDragIdByCourse } from '../types';
 import DraggableCourseList from './DraggableCourseList';
 import { ObjectID } from 'bson';
 
@@ -15,9 +16,13 @@ export interface CourseSelectorContainerProps {
   getSearchedDragId: GetDragIdByCourse;
   getRequirementDragId: GetDragIdByCourse;
 }
-import { trpc } from '@/utils/trpc';
+import { RouterOutputs, trpc } from '@/utils/trpc';
 import { DegreeRequirements } from './types';
 import ChevronIcon from '@/icons/ChevronIcon';
+import useFuse from '../useFuse';
+type CourseData = RouterOutputs['courses']['publicGetAllCourses'];
+type ArrayElement<ArrayType extends readonly unknown[]> =
+  ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
 
 function CourseSelectorContainer({
   degreeRequirements,
@@ -32,7 +37,33 @@ function CourseSelectorContainer({
 
   const { data, isLoading } = q;
 
-  const { results, updateQuery } = useSearch({
+  React.useEffect(() => {
+    if (!isLoading) {
+      const fuse = new Fuse(data ?? [], {
+        includeScore: true,
+        threshold: 0.3,
+        useExtendedSearch: true,
+        keys: [
+          'title',
+          {
+            name: 'code',
+            getFn: (c) => `${c.subject_prefix} ${c.course_number}`,
+          },
+        ],
+      });
+      console.log(fuse.search('CS 1336'));
+    }
+  }, [isLoading]);
+
+  const { results, updateQuery } = useFuse<Course>({
+    dataSet:
+      data?.map((c) => ({ code: `${c.subject_prefix} ${c.course_number}`, title: c.title })) ?? [],
+
+    keys: ['title', 'code'],
+    threshold: 0.2,
+  });
+
+  /* const { results, updateQuery } = useSearch({
     getData: async () =>
       data
         ? data.map((c) => ({ code: `${c.subject_prefix} ${c.course_number}`, title: c.title }))
@@ -41,7 +72,7 @@ function CourseSelectorContainer({
     filterFn: (elm, query) =>
       query.length > 0 ? elm['code'].toLowerCase().includes(query.toLowerCase()) : false,
     constraints: [0, 5],
-  });
+  }); */
 
   const courseResults = React.useMemo(() => {
     return results.map((result) => {

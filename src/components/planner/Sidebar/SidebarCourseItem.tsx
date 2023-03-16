@@ -88,8 +88,6 @@ export default function DraggableSidebarCourseItem({
       ref={setNodeRef}
       course={course}
       style={{ transform: CSS.Translate.toString(transform) }}
-      className="tooltip"
-      data-tip={course.title}
       isDragging={isDragging}
       {...listeners}
       {...attributes}
