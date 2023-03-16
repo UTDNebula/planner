@@ -33,18 +33,22 @@ import type {
 } from './types';
 import { DegreeRequirements } from './Sidebar/types';
 
-import Toolbar from './Toolbar';
+import Toolbar from './Toolbar/Toolbar';
 import { useSemestersContext } from './SemesterContext';
 import SelectedCoursesToast from './SelectedCoursesToast';
 import TransferBank from './TransferBank';
 import PlannerMouseSensor from './PlannerMouseSensor';
 import { trpc } from '@/utils/trpc';
+import Router from 'next/router';
 
 /** PlannerTool Props */
 export interface PlannerProps {
   degreeRequirements: DegreeRequirements;
-  transferCredits: string[];
+  prereqData?: Map<string, boolean>;
+  transferCredits: Array<string>;
 }
+
+/** Controlled wrapper around course list and semester tiles */
 
 /** Controlled wrapper around course list and semester tiles */
 export default function Planner({
@@ -52,7 +56,8 @@ export default function Planner({
   transferCredits,
 }: PlannerProps): JSX.Element {
   const {
-    semesters,
+    planId,
+    filteredSemesters,
     handleAddCourseToSemester,
     handleAddYear,
     handleMoveCourseFromSemesterToSemester,
@@ -66,13 +71,26 @@ export default function Planner({
 
   const utils = trpc.useContext();
 
+  const degreeRequirementsQuery = trpc.plan.getDegreeRequirements.useQuery({ planId });
+  const degreeRequirementsData = degreeRequirementsQuery.data;
+
   // Hacky
   const updatePlan = async () => {
     await utils.user.getUser.invalidate();
   };
+
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const deletePlan = trpc.plan.deletePlanById.useMutation({
+    onSuccess: () => {
+      setDeleteLoading(true);
+      utils.plan.invalidate().then(() => Router.push('/app'));
+    },
+    onSettled: () => setDeleteLoading(false),
+  });
+
   useEffect(() => {
     updatePlan();
-  }, [semesters]);
+  }, [filteredSemesters]);
 
   // Course that is currently being dragged
   const [activeCourse, setActiveCourse] = useState<ActiveDragData | null>(null);
@@ -88,13 +106,13 @@ export default function Planner({
   );
 
   const courseCodes = useMemo(
-    () => semesters.flatMap((sem) => sem.courses).map((course) => course.code),
-    [semesters],
+    () => filteredSemesters.flatMap((sem) => sem.courses).map((course) => course.code),
+    [filteredSemesters],
   );
 
   const courseIds = useMemo(
-    () => semesters.flatMap((sem) => sem.courses).map((course) => course.id.toString()),
-    [semesters],
+    () => filteredSemesters.flatMap((sem) => sem.courses).map((course) => course.id.toString()),
+    [filteredSemesters],
   );
 
   const handleOnDragStart = ({ active }: { active: Active }) => {
@@ -154,20 +172,29 @@ export default function Planner({
         <DragOverlay dropAnimation={null}>
           {activeCourse &&
             (activeCourse.from === 'semester-tile' ? (
-              <SemesterCourseItem course={activeCourse.course} />
+              <SemesterCourseItem course={activeCourse.course} isDragging isValid />
             ) : activeCourse.from === 'course-list' ? (
-              <SidebarCourseItem course={activeCourse.course} />
+              <SidebarCourseItem course={activeCourse.course} isDragging />
             ) : null)}
         </DragOverlay>
 
-        <section ref={ref} className="flex max-h-screen flex-grow flex-col gap-y-6 p-4 pb-0">
-          <Toolbar title={title} major="Computer Science" studentName="Dev" />
+        <section
+          ref={ref}
+          className="flex max-h-screen flex-grow flex-col gap-y-6 overflow-y-scroll p-4 pb-0"
+        >
+          <Toolbar
+            planId={planId}
+            title={title}
+            major={degreeRequirementsData?.major ?? 'undecided'}
+            studentName="Dev"
+            deletePlan={() => deletePlan.mutateAsync(planId)}
+            deleteLoading={deleteLoading}
+          />
 
-          {transferCredits.length > 0 && <TransferBank transferCredits={transferCredits} />}
-
-          <article className="h-full overflow-x-hidden overflow-y-scroll">
+          <article className="flex h-full  flex-col gap-y-5 overflow-x-hidden">
+            {transferCredits.length > 0 && <TransferBank transferCredits={transferCredits} />}
             <div className="flex h-fit gap-5">
-              {semesters
+              {filteredSemesters
                 .reduce(
                   (acc, curr, index) => {
                     acc[index % 3].push(curr);
@@ -178,10 +205,6 @@ export default function Planner({
                 .map((column, index) => (
                   <MasonryColumn key={`column-${index}`} column={column} />
                 ))}
-            </div>
-            <div className="col-span-full flex h-10 items-center justify-center gap-8">
-              <button onClick={handleRemoveYear}>- Remove Year</button>
-              <button onClick={handleAddYear}>+ Add Year</button>
             </div>
           </article>
         </section>

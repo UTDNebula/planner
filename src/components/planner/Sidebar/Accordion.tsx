@@ -4,12 +4,14 @@ export default function Accordian({
   header,
   children,
   filled = false,
+  startOpen = false,
 }: {
   header: JSX.Element;
   children: JSX.Element;
   filled?: boolean;
+  startOpen?: boolean;
 }) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(startOpen);
   function toggleAccordion() {
     setOpen(!open);
   }

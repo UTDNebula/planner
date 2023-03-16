@@ -1,5 +1,6 @@
+import * as Dialog from '@radix-ui/react-dialog';
 import { SearchBarTwo } from '@components/credits/SearchBar';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 import RequirementsContainer from '@/components/planner/Sidebar/RequirementsContainer';
 import useSearch from '@/components/search/search';
@@ -36,14 +37,6 @@ function CourseSelectorContainer({
 
   const { data, isLoading } = q;
   const [searchType, setSearchType] = useState<SearchType>(SearchType.CODE);
-  const filterFn = React.useCallback(
-    (elm: { code: string; title: string }, query: string) => {
-      return (searchType === SearchType.CODE ? elm['code'] : elm['title'])
-        .toLowerCase()
-        .includes(query.toLowerCase());
-    },
-    [searchType],
-  );
 
   const { results, updateQuery } = useSearch({
     getData: async () =>
@@ -51,7 +44,8 @@ function CourseSelectorContainer({
         ? data.map((c) => ({ code: `${c.subject_prefix} ${c.course_number}`, title: c.title }))
         : [],
     initialQuery: '@',
-    filterFn: (elm, query) => filterFn(elm, query),
+    filterFn: (elm, query) =>
+      query.length > 0 ? elm['code'].toLowerCase().includes(query.toLowerCase()) : false,
     constraints: [0, 5],
   });
 
@@ -67,18 +61,12 @@ function CourseSelectorContainer({
 
   const [open, setOpen] = useState(true);
 
-  const handleSearchTypeChange = () => {
-    if (searchType === SearchType.CODE) {
-      setSearchType(SearchType.TITLE);
-    } else {
-      setSearchType(SearchType.CODE);
-    }
-  };
-
+  const [displayResults, setDisplay] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
   return (
     <>
       {open ? (
-        <div className="h-screen w-[30%] overflow-x-hidden overflow-y-scroll">
+        <div className="z-10 h-screen w-[30%] min-w-[30%] overflow-x-hidden overflow-y-scroll">
           <div className="flex h-fit min-h-full w-full flex-col gap-y-4 bg-white p-4">
             <div className="flex flex-col">
               <div className="flex flex-row items-center">
@@ -90,29 +78,44 @@ function CourseSelectorContainer({
                 <h1 className="pl-2 text-2xl font-medium tracking-tight">Plan Requirements</h1>
               </div>
               <h6 className="text-sm tracking-tight text-gray-400">Drag courses onto your plan</h6>
-              <div className="form-control">
-                <label className="label cursor-pointer justify-center gap-3">
-                  <span className="label-text">Course Code</span>
-                  <input
-                    type="checkbox"
-                    className="toggle"
-                    onChange={() => handleSearchTypeChange()}
-                  />
-                  <span className="label-text">Course Title</span>
-                </label>
+            </div>
+            <div className="z-[999] drop-shadow-2xl">
+              <SearchBarTwo
+                onClick={() => setDisplay(true)}
+                updateQuery={(q) => {
+                  updateQuery(q);
+                  setDisplay(true);
+                }}
+                className={`${
+                  displayResults
+                    ? 'rounded-b-none border-b-transparent'
+                    : 'rounded-b-[10px] border-b-inherit'
+                }`}
+                placeholder="Search courses"
+              />
+              <div className="relative">
+                <div
+                  ref={ref}
+                  className="absolute z-[99] w-full overflow-clip rounded-b-[10px] bg-white"
+                ></div>
               </div>
             </div>
-            <SearchBarTwo
-              updateQuery={updateQuery}
-              placeholder="Search courses"
-              searchType={searchType}
-            />
 
-            <div className="bg-white p-4">
-              {results.length > 0 && (
-                <DraggableCourseList courses={courseResults} getDragId={getSearchedDragId} />
+            <Dialog.Root open={displayResults} onOpenChange={(v) => setDisplay(v)} modal={false}>
+              {ref.current && (
+                <Dialog.Portal className="z-[99]" container={ref?.current}>
+                  <Dialog.Content
+                    asChild
+                    className="z-[999]"
+                    onOpenAutoFocus={(e) => e.preventDefault()}
+                  >
+                    <div className="w-full border-[2px] border-[#EDEFF7] bg-white p-4 drop-shadow-2xl">
+                      <DraggableCourseList courses={courseResults} getDragId={getSearchedDragId} />
+                    </div>
+                  </Dialog.Content>
+                </Dialog.Portal>
               )}
-            </div>
+            </Dialog.Root>
             {degreeRequirements.requirements.map((req, idx) => (
               <RequirementsContainer
                 key={idx}
@@ -124,7 +127,7 @@ function CourseSelectorContainer({
           </div>
         </div>
       ) : (
-        <div className="flex h-screen w-[50px] flex-col items-center border border-neutral-300 bg-white py-8">
+        <div className="z-10 flex h-screen w-[50px] flex-col items-center border border-neutral-300 bg-white py-8">
           <ChevronIcon
             onClick={() => setOpen(!open)}
             className={`h-4 w-4 cursor-pointer ${!open ? 'rotate-180' : ''}`}

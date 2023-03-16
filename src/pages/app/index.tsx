@@ -29,10 +29,10 @@ export default function MiniDrawer() {
   const userQuery = trpc.user.getUser.useQuery();
   const { data } = userQuery;
   console.table(data);
-  // if (data && !data.onboardingComplete) {
-  //   router.push('/app/onboarding');
-  //   return;
-  // }
+  if (data && !data.onboardingComplete) {
+    router.push('/app/onboarding');
+    return;
+  }
 
   router.push('/app/home');
 }

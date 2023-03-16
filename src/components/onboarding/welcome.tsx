@@ -1,12 +1,13 @@
 import React from 'react';
-import BuddyIcon from '@/icons/BuddyIcon';
-import PersonIcon from '@/icons/PersonIcon';
 import { SemesterCode } from '@prisma/client';
-import { FormControl, MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import { MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import EmojiIcons from '@/icons/EmojiIcon';
+import AutoCompleteMajor from '@/pages/auth/AutoCompleteMajor';
+import majorsList from '@data/majors.json';
+import useSearch from '../search/search';
 
 export type WelcomeTypes = {
-  firstName: string;
-  lastName: string;
+  name: string;
   startSemester: SemesterCode;
   endSemester: SemesterCode;
 };
@@ -24,14 +25,11 @@ export default function Welcome({
   handleValidate,
   semesterOptions,
 }: WelcomeData): JSX.Element {
-  const { firstName, lastName, startSemester, endSemester }: WelcomeTypes = data;
+  const majors = majorsList as string[];
+  const { name, startSemester, endSemester }: WelcomeTypes = data;
 
-  const setFirstName = (event: SelectChangeEvent<string>) => {
-    handleChange({ firstName: event.target.value });
-  };
-
-  const setLastName = (event: SelectChangeEvent<string>) => {
-    handleChange({ lastName: event.target.value });
+  const setName = (event: SelectChangeEvent<string>) => {
+    handleChange({ name: event.target.value });
   };
 
   const setStartSemester = (sem: SemesterCode) => {
@@ -41,6 +39,14 @@ export default function Welcome({
   const setEndSemester = (sem: SemesterCode) => {
     handleChange({ endSemester: sem });
   };
+
+  const [major, setMajor] = React.useState('');
+
+  const { results, updateQuery } = useSearch({
+    getData: async () => (majors ? majors.map((major) => ({ filMajor: `${major}` })) : []),
+    initialQuery: '',
+    filterFn: (major, query) => major.filMajor.toLowerCase().includes(query.toLowerCase()),
+  });
 
   const handleFirstSemesterChange = (event: SelectChangeEvent) => {
     type semesterChars = 'f' | 'u' | 's';
@@ -71,10 +77,10 @@ export default function Welcome({
         secondSemester = 'f';
         break;
       case 'u':
-        secondSemester = 's';
+        secondSemester = 'u';
         break;
       case 's':
-        secondSemester = 'u';
+        secondSemester = 's';
         break;
     }
     setEndSemester({ year: endSemester.year, semester: secondSemester });
@@ -85,7 +91,13 @@ export default function Welcome({
   };
 
   const checkValidate = () => {
-    const isValid = firstName && lastName && startSemester && endSemester ? true : false;
+    const isValid =
+      name &&
+      startSemester &&
+      endSemester &&
+      Math.floor(endSemester.year) >= Math.floor(startSemester.year)
+        ? true
+        : false;
     handleValidate(isValid);
   };
 
@@ -98,207 +110,219 @@ export default function Welcome({
   }, []);
 
   return (
-    <div className="animate-intro">
-      <div className="-mb-5"></div>
-      <BuddyIcon className="flex w-full items-center justify-center"></BuddyIcon>
-      <div className="pt-5" />
-      <h2 className="inline text-4xl font-extrabold tracking-tight text-gray-800">Welcome to </h2>
-      <h2 className="inline text-4xl font-extrabold tracking-tight text-[#4B4EFC]">planner</h2>
-
-      <figcaption className="font-small">
-        <div className="mb-1 flex content-center items-center justify-center py-2 text-sm text-[#737373]">
-          Please fill out the forms below
+    <div>
+      <div className="flex flex-wrap">
+        {EmojiIcons['sparkle']}
+        <h1 className="-mt-2 ml-2 text-3xl text-[36px] font-bold leading-normal tracking-tight">
+          Create An Account
+        </h1>
+      </div>
+      <p className="text-sm text-[16px] font-semibold leading-normal text-[#737373]">
+        Tell us your name, major, and school semesters!
+      </p>
+      <section className="mt-7 space-y-5">
+        <div className="relative mb-4">
+          <input
+            type="text"
+            className="w-[500px] rounded border bg-[#F5F5F5] p-3 pl-4 text-[14px] text-[#737373] outline-none focus:border-[#6366F1]"
+            value={name}
+            onChange={
+              setName as
+                | React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
+                | undefined
+            }
+            placeholder="Name"
+          ></input>
         </div>
-      </figcaption>
-      <div className="pb-1 text-sm font-medium">First Name</div>
-      <div className="relative">
-        <input
-          value={firstName}
-          onChange={
-            setFirstName as
-              | React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
-              | undefined
-          }
-          type="text"
-          placeholder="First Name"
-          className="input-bordered input inline h-9 w-full pl-10 text-sm"
-        />
-        <PersonIcon className="absolute left-4 bottom-2.5 inline"></PersonIcon>
-      </div>
-      <div className="pt-5 pb-1 text-sm font-medium">Last Name</div>
-      <div className="relative">
-        <input
-          value={lastName}
-          onChange={
-            setLastName as
-              | React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
-              | undefined
-          }
-          type="text"
-          placeholder="Last Name"
-          className="input-bordered input h-9 w-full pl-10 text-sm"
-        />
-        <PersonIcon className="absolute left-4 bottom-2.5 inline"></PersonIcon>
-      </div>
-      <h2 className="pt-5 pb-1 text-sm font-medium">Start Semester</h2>
-      <article className="grid gap-y-0 md:grid-cols-2 md:gap-x-10 lg:gap-x-0">
-        <FormControl size="small" sx={{ mt: 0.5, width: 113 }}>
-          <Select
-            className="text-sm"
-            inputProps={{
-              style: {
-                fontSize: 14,
-              },
-            }}
-            displayEmpty
-            labelId="demo-simple-select-autowidth-label"
-            id="demo-simple-select-autowidth"
-            value={startSemester.semester.toString()}
-            onChange={handleFirstSemesterChange}
-            autoWidth
-          >
-            <MenuItem className="text-sm" value="f">
-              Fall
-            </MenuItem>
-            <MenuItem className="text-sm" value="u">
-              Summer
-            </MenuItem>
-            <MenuItem className="text-sm" value="s">
-              Spring
-            </MenuItem>
-          </Select>
-        </FormControl>
-        <FormControl size="small" sx={{ mt: 0.5, ml: 6.5, width: 113 }}>
-          <Select
-            className="text-sm"
-            labelId="demo-simple-select-autowidth-label"
-            id="demo-simple-select-autowidth"
-            value={startSemester.year.toString()}
-            onChange={handleFirstSemesterChangeYear}
-            autoWidth
-            inputProps={{
-              style: {
-                fontSize: 14,
-              },
-            }}
-            displayEmpty
-          >
-            <MenuItem className="text-sm" value={'2020'}>
-              2020
-            </MenuItem>
-            <MenuItem className="text-sm" value={'2021'}>
-              2021
-            </MenuItem>
-            <MenuItem className="text-sm" value={'2022'}>
-              2022
-            </MenuItem>
-            <MenuItem className="text-sm" value={'2023'}>
-              2023
-            </MenuItem>
-            <MenuItem className="text-sm" value={'2024'}>
-              2024
-            </MenuItem>
-            <MenuItem className="text-sm" value={'2025'}>
-              2025
-            </MenuItem>
-            <MenuItem className="text-sm" value={'2026'}>
-              2026
-            </MenuItem>
-            <MenuItem className="text-sm" value={'2027'}>
-              2027
-            </MenuItem>
-            <MenuItem className="text-sm" value={'2028'}>
-              2028
-            </MenuItem>
-            <MenuItem className="text-sm" value={'2029'}>
-              2029
-            </MenuItem>
-            <MenuItem className="text-sm" value={'2030'}>
-              2030
-            </MenuItem>
-          </Select>
-        </FormControl>
-      </article>
-      <h2 className="col-span-full pt-5 pb-1 text-sm font-medium">End Semester</h2>
-      <article className="grid gap-y-0 md:grid-cols-2">
-        <FormControl size="small" sx={{ mt: 0.5, width: 113 }}>
-          <Select
-            className="text-sm"
-            labelId="demo-simple-select-autowidth-label"
-            id="demo-simple-select-autowidth"
-            value={endSemester.semester.toString()}
-            onChange={handleSecondSemesterChange}
-            autoWidth
-            inputProps={{
-              style: {
-                fontSize: 14,
-              },
-            }}
-            displayEmpty
-          >
-            <MenuItem className="text-sm" value="f">
-              Fall
-            </MenuItem>
-            <MenuItem className="text-sm" value="u">
-              Summer
-            </MenuItem>
-            <MenuItem className="text-sm" value="s">
-              Spring
-            </MenuItem>
-          </Select>
-        </FormControl>
-        <FormControl size="small" sx={{ mt: 0.5, ml: 6.5, width: 113 }}>
-          <Select
-            className="text-sm"
-            labelId="demo-simple-select-autowidth-label"
-            id="demo-simple-select-autowidth"
-            value={endSemester.year.toString()}
-            onChange={handleSecondSemesterChangeYear}
-            autoWidth
-            inputProps={{
-              style: {
-                fontSize: 14,
-              },
-            }}
-            displayEmpty
-          >
-            <MenuItem className="text-sm" value={'2020'}>
-              2020
-            </MenuItem>
-            <MenuItem className="text-sm" value={'2021'}>
-              2021
-            </MenuItem>
-            <MenuItem className="text-sm" value={'2022'}>
-              2022
-            </MenuItem>
-            <MenuItem className="text-sm" value={'2023'}>
-              2023
-            </MenuItem>
-            <MenuItem className="text-sm" value={'2024'}>
-              2024
-            </MenuItem>
-            <MenuItem className="text-sm" value={'2025'}>
-              2025
-            </MenuItem>
-            <MenuItem className="text-sm" value={'2026'}>
-              2026
-            </MenuItem>
-            <MenuItem className="text-sm" value={'2027'}>
-              2027
-            </MenuItem>
-            <MenuItem className="text-sm" value={'2028'}>
-              2028
-            </MenuItem>
-            <MenuItem className="text-sm" value={'2029'}>
-              2029
-            </MenuItem>
-            <MenuItem className="text-sm" value={'2030'}>
-              2030
-            </MenuItem>
-          </Select>
-        </FormControl>
-      </article>
-      <div className="pb-5"></div>
+
+        <div className="relative mb-4">
+          <AutoCompleteMajor
+            className="w-[500px] rounded border outline-none"
+            key={0}
+            onValueChange={(value) => setMajor(value)}
+            onInputChange={(query: string) => updateQuery(query)}
+            options={results.map((major: { filMajor: string }) => major.filMajor)}
+            autoFocus
+          ></AutoCompleteMajor>
+        </div>
+        <div className="flex items-center justify-between">
+          <div className="relative mb-4">
+            <Select
+              className="h-[50px] w-[225px] rounded  border bg-[#F5F5F5] pl-1 text-[14px] text-[#737373] outline-none"
+              sx={{
+                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#6366F1',
+                },
+                '.MuiOutlinedInput-notchedOutline': { border: 0 },
+              }}
+              inputProps={{
+                style: {
+                  fontSize: '30px',
+                },
+              }}
+              displayEmpty
+              id="startingSemInfo"
+              value={startSemester.semester.toString()}
+              onChange={handleFirstSemesterChange}
+            >
+              <MenuItem className="text-sm" value="f">
+                Fall
+              </MenuItem>
+              <MenuItem className="text-sm" value="u">
+                Summer
+              </MenuItem>
+              <MenuItem className="text-sm" value="s">
+                Spring
+              </MenuItem>
+            </Select>
+          </div>
+          <div className="relative mb-4">
+            <Select
+              className="h-[50px] w-[225px] rounded  border bg-[#F5F5F5] pl-1 text-[14px] text-[#737373] outline-none"
+              sx={{
+                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#6366F1',
+                },
+                '.MuiOutlinedInput-notchedOutline': { border: 0 },
+                paddingRight: -10,
+              }}
+              inputProps={{
+                style: {
+                  fontSize: '30px',
+                },
+              }}
+              displayEmpty
+              id="startingSemInfo"
+              value={startSemester.year.toString()}
+              onChange={handleFirstSemesterChangeYear}
+            >
+              <MenuItem className="text-sm" value={'2020'}>
+                2020
+              </MenuItem>
+              <MenuItem className="text-sm" value={'2021'}>
+                2021
+              </MenuItem>
+              <MenuItem className="text-sm" value={'2022'}>
+                2022
+              </MenuItem>
+              <MenuItem className="text-sm" value={'2023'}>
+                2023
+              </MenuItem>
+              <MenuItem className="text-sm" value={'2024'}>
+                2024
+              </MenuItem>
+              <MenuItem className="text-sm" value={'2025'}>
+                2025
+              </MenuItem>
+              <MenuItem className="text-sm" value={'2026'}>
+                2026
+              </MenuItem>
+              <MenuItem className="text-sm" value={'2027'}>
+                2027
+              </MenuItem>
+              <MenuItem className="text-sm" value={'2028'}>
+                2028
+              </MenuItem>
+              <MenuItem className="text-sm" value={'2029'}>
+                2029
+              </MenuItem>
+              <MenuItem className="text-sm" value={'2030'}>
+                2030
+              </MenuItem>
+            </Select>
+          </div>
+        </div>
+        <div className="flex items-center justify-between">
+          <div className="relative mb-4">
+            <Select
+              className="h-[50px] w-[225px] rounded  border bg-[#F5F5F5] pl-1 text-[14px] text-[#737373] outline-none"
+              sx={{
+                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#6366F1',
+                },
+                '.MuiOutlinedInput-notchedOutline': { border: 0 },
+                paddingRight: -10,
+              }}
+              inputProps={{
+                style: {
+                  fontSize: '30px',
+                },
+              }}
+              displayEmpty
+              id="endingSemInfo"
+              value={endSemester.semester.toString()}
+              onChange={handleSecondSemesterChange}
+            >
+              <MenuItem className="text-sm" value="f">
+                Fall
+              </MenuItem>
+              <MenuItem className="text-sm" value="u">
+                Summer
+              </MenuItem>
+              <MenuItem className="text-sm" value="s">
+                Spring
+              </MenuItem>
+            </Select>
+          </div>
+          <div className="relative mb-4">
+            <Select
+              className="h-[50px] w-[225px] rounded  border bg-[#F5F5F5] pl-1 text-[14px] text-[#737373] outline-none"
+              sx={{
+                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#6366F1',
+                },
+                '.MuiOutlinedInput-notchedOutline': { border: 0 },
+                paddingRight: -10,
+              }}
+              inputProps={{
+                style: {
+                  fontSize: '30px',
+                },
+              }}
+              displayEmpty
+              id="startingSemInfo"
+              value={endSemester.year.toString()}
+              defaultValue="2026"
+              onChange={handleSecondSemesterChangeYear}
+            >
+              <MenuItem className="text-sm" value={'2020'}>
+                2020
+              </MenuItem>
+              <MenuItem className="text-sm" value={'2021'}>
+                2021
+              </MenuItem>
+              <MenuItem className="text-sm" value={'2022'}>
+                2022
+              </MenuItem>
+              <MenuItem className="text-sm" value={'2023'}>
+                2023
+              </MenuItem>
+              <MenuItem className="text-sm" value={'2024'}>
+                2024
+              </MenuItem>
+              <MenuItem className="text-sm" value={'2025'}>
+                2025
+              </MenuItem>
+              <MenuItem className="text-sm" value={'2026'}>
+                2026
+              </MenuItem>
+              <MenuItem className="text-sm" value={'2027'}>
+                2027
+              </MenuItem>
+              <MenuItem className="text-sm" value={'2028'}>
+                2028
+              </MenuItem>
+              <MenuItem className="text-sm" value={'2029'}>
+                2029
+              </MenuItem>
+              <MenuItem className="text-sm" value={'2030'}>
+                2030
+              </MenuItem>
+            </Select>
+          </div>
+        </div>
+      </section>
+      <div className="pb-5" />
     </div>
   );
 }

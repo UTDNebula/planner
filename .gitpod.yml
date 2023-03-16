@@ -1,0 +1,14 @@
+vscode:
+  extensions:
+    - bradlc.vscode-tailwindcss
+    - esbenp.prettier-vscode
+    - dbaeumer.vscode-eslint
+    - Prisma.prisma
+tasks:
+  - init: npm install
+    command: npm run dev:gitpod
+ports:
+  - port: 3000
+    onOpen: 'open-browser'
+    description: 'Next.js dev server'
+    visibility: 'public'

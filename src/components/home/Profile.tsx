@@ -3,12 +3,15 @@ import Avatar from '@mui/material/Avatar';
 import { purple } from '@mui/material/colors';
 import { useEffect, useMemo, useState } from 'react';
 import { trpc } from '@/utils/trpc';
-import { createSemesterCodeRange, displaySemesterCode } from '@/utils/utilFunctions';
+import { displaySemesterCode } from '@/utils/utilFunctions';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { getStartingPlanSemester } from '@/utils/plannerUtils';
+import Button from '../Button';
+import { toast } from 'react-toastify';
+import FormHelperText from '@mui/material/FormHelperText';
+import { signOut } from 'next-auth/react';
 
 type ProfilePageProps = {
   isDesktop: boolean;
@@ -20,18 +23,18 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
   const userQuery = trpc.user.getUser.useQuery();
   const utils = trpc.useContext();
 
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const deleteUser = trpc.user.deleteUser.useMutation({
+    onSettled: () => setDeleteLoading(false),
+    onSuccess: async () => {
+      utils.user.getUser.invalidate();
+      signOut();
+    },
+  });
+
   const { data, isLoading } = userQuery;
 
-  const user = trpc.user.getUser.useQuery();
-  const semesters = useMemo(
-    () =>
-      createSemesterCodeRange(
-        user.data?.profile?.startSemester ?? { semester: 'f', year: 2022 },
-        getStartingPlanSemester(),
-        true,
-      ),
-    [],
-  );
+  const [updateLoading, setUpdateLoading] = useState(false);
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -40,10 +43,15 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
   const [secondSem, setSecondSem] = useState('');
   const [secondYear, setSecondYear] = useState('');
 
+  const [boxOneHandler, setBoxOneHandler] = useState('');
+  const [boxTwoHandler, setBoxTwoHandler] = useState('');
+  const [boxTwoHandlerText, setBoxTwoHandlerText] = useState('');
+
   useEffect(() => {
     if (!isLoading) {
       setName(data?.profile?.name ?? '');
       setEmail(data?.email ?? '');
+
       setFirstSem(
         displaySemesterCode(data?.profile?.startSemester ?? { semester: 'f', year: 404 }).split(
           ' ',
@@ -70,10 +78,16 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
   const updateProfile = trpc.user.updateUserProfile.useMutation({
     async onSuccess() {
       await utils.user.getUser.invalidate();
+      setUpdateLoading(false);
     },
   });
 
   const handleSubmit = () => {
+    if (boxTwoHandler == 'red') {
+      return false;
+    }
+
+    setUpdateLoading(true);
     type semesterChars = 'f' | 'u' | 's';
     let firstSemester!: semesterChars;
 
@@ -100,29 +114,65 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
         secondSemester = 'u';
         break;
     }
-    updateProfile.mutateAsync({
-      name: name,
-      startSemester: { semester: firstSemester, year: Number(firstYear) },
-      endSemester: { semester: secondSemester, year: Number(secondYear) },
-    });
-    return true;
+    toast.promise(
+      updateProfile.mutateAsync({
+        name: name,
+        startSemester: { semester: firstSemester, year: Number(firstYear) },
+        endSemester: { semester: secondSemester, year: Number(secondYear) },
+      }),
+      {
+        pending: 'Updating profile...',
+        success: 'Profile updated!',
+        error: 'Error creating profile',
+      },
+      {
+        autoClose: 1000,
+      },
+    );
+    setBoxOneHandler('lightgreen');
+    setBoxTwoHandler('lightgreen');
+    setBoxTwoHandlerText('');
+  };
+
+  const checkSemesterValidity = (
+    firSem: string,
+    firYear: string,
+    secSem: string,
+    secYear: string,
+  ) => {
+    if (
+      (parseInt(firYear) == parseInt(secYear) &&
+        ((firSem == 'Summer' && secSem == 'Spring') || (firSem == 'Fall' && secSem != 'Fall'))) ||
+      parseInt(firYear) > parseInt(secYear)
+    ) {
+      setBoxTwoHandler('red');
+      setBoxTwoHandlerText('End semester is before start semester');
+    } else {
+      setBoxTwoHandler('primary');
+      setBoxTwoHandlerText('');
+    }
+    setBoxOneHandler('primary');
   };
 
   const handleFirstSemesterChange = (event: SelectChangeEvent) => {
+    checkSemesterValidity(event.target.value, firstYear, secondSem, secondYear);
     setFirstSem(event.target.value);
     return true;
   };
 
   const handleFirstSemesterChangeYear = (event: SelectChangeEvent) => {
+    checkSemesterValidity(firstSem, event.target.value, secondSem, secondYear);
     setFirstYear(event.target.value);
     return true;
   };
   const handleSecondSemesterChange = (event: SelectChangeEvent) => {
+    checkSemesterValidity(firstSem, firstYear, event.target.value, secondYear);
     setSecondSem(event.target.value);
     return true;
   };
 
   const handleSecondSemesterChangeYear = (event: SelectChangeEvent) => {
+    checkSemesterValidity(firstSem, firstYear, secondSem, event.target.value);
     setSecondYear(event.target.value);
     return true;
   };
@@ -141,6 +191,7 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
   if (isLoading) {
     return <div>Loading...</div>;
   }
+
   return (
     <main className="flex h-full w-full flex-col overflow-y-auto">
       <div className="mt-4 flex flex-col items-center gap-y-4 self-center">
@@ -196,6 +247,16 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
                     onChange={handleFirstSemesterChange}
                     autoWidth
                     label="Age"
+                    sx={{
+                      '&.MuiOutlinedInput-root': {
+                        '& fieldset': {
+                          borderColor: boxOneHandler,
+                        },
+                        '&.Mui-focused fieldset': {
+                          borderColor: boxOneHandler,
+                        },
+                      },
+                    }}
                   >
                     <MenuItem value="Fall">Fall</MenuItem>
                     <MenuItem value="Summer">Summer</MenuItem>
@@ -209,6 +270,16 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
                     id="demo-simple-select-autowidth"
                     value={firstYear}
                     onChange={handleFirstSemesterChangeYear}
+                    sx={{
+                      '&.MuiOutlinedInput-root': {
+                        '& fieldset': {
+                          borderColor: boxOneHandler,
+                        },
+                        '&.Mui-focused fieldset': {
+                          borderColor: boxOneHandler,
+                        },
+                      },
+                    }}
                     autoWidth
                     label="Age"
                   >
@@ -237,6 +308,16 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
                     id="demo-simple-select-autowidth"
                     value={secondSem}
                     onChange={handleSecondSemesterChange}
+                    sx={{
+                      '&.MuiOutlinedInput-root': {
+                        '& fieldset': {
+                          borderColor: boxTwoHandler,
+                        },
+                        '&.Mui-focused fieldset': {
+                          borderColor: boxTwoHandler,
+                        },
+                      },
+                    }}
                     autoWidth
                     label="Age"
                   >
@@ -252,6 +333,16 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
                     id="demo-simple-select-autowidth"
                     value={secondYear}
                     onChange={handleSecondSemesterChangeYear}
+                    sx={{
+                      '&.MuiOutlinedInput-root': {
+                        '& fieldset': {
+                          borderColor: boxTwoHandler,
+                        },
+                        '&.Mui-focused fieldset': {
+                          borderColor: boxTwoHandler,
+                        },
+                      },
+                    }}
                     autoWidth
                     label="Age"
                   >
@@ -269,35 +360,26 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
                   </Select>
                 </FormControl>
               </article>
+              <FormHelperText sx={{ color: 'red' }}> {boxTwoHandlerText} </FormHelperText>
             </article>
-            <button
-              onClick={handleSubmit}
-              className="col-span-full flex h-12 w-40 items-center justify-center self-center rounded-2xl bg-[#3E61ED] p-4 text-white"
-            >
+            <Button onClick={handleSubmit} isLoading={updateLoading}>
               Update Profile
-            </button>
+            </Button>
           </article>
-        </section>
-        <section className="flex w-full flex-col rounded-2xl bg-white px-8 py-4">
-          <h1>Reset Password</h1>
-          <div className="text-sm ">Click this button to reset your password</div>
-          <button
-            onClick={handleResetPassword}
-            className="mt-5 flex h-8 w-20 items-center justify-center rounded-xl bg-[#3E61ED] p-4 text-white"
-          >
-            Reset
-          </button>
         </section>
         <section className="mb-8 flex w-full flex-col rounded-2xl bg-white px-8 py-4">
           <h1>Delete My Account</h1>
           <div className="text-sm ">Deleting your account will remove all user data</div>
-          <button
-            disabled={true} // temporary measure for beta
-            onClick={() => console.log('Hi')}
-            className="mt-5 flex h-8 w-20 items-center justify-center rounded-xl bg-[#FF0041] p-4 text-white disabled:opacity-40"
+          <Button
+            isLoading={deleteLoading}
+            className="mt-5"
+            onClick={() => {
+              setDeleteLoading(true);
+              deleteUser.mutateAsync();
+            }}
           >
             Delete
-          </button>
+          </Button>
         </section>
       </div>
     </main>

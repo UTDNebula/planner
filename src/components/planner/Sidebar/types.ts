@@ -9,6 +9,7 @@ export type DegreeRequirements = {
 export type DegreeRequirement = Requirement & {
   name: string;
   type: string;
+  min_hours: number;
   requirements: RequirementGroupTypes[];
   num_fulfilled_requirements: number;
   num_requirements: number;

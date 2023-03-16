@@ -1,6 +1,6 @@
 import { SemesterCode } from '@prisma/client';
 
-import { createNewYear, displaySemesterCode } from './utilFunctions';
+import { createNewYear, displaySemesterCode, isSemCodeEqual } from './utilFunctions';
 
 export interface RecentSemester {
   year: number;
@@ -81,16 +81,12 @@ export function reorderList<T>(list: T[], startIndex: number, endIndex: number) 
 
 export function formatDegreeValidationRequest(
   semesters: { code: SemesterCode; id: string; courses: string[] }[],
+  transferCredits: string[],
   requirements = { core: true, majors: ['computer_science'], minors: [] },
   bypasses: string[] = [],
 ) {
-  const getDegreeName = (degree: string) => {
-    const temp = degree.split(' ').join('_').split('(').join('_');
-    return temp?.substring(0, temp.length - 1).toLowerCase();
-  };
-
   return {
-    courses: semesters.flatMap((s) => s.courses),
+    courses: [...semesters.flatMap((s) => s.courses), ...transferCredits],
     requirements: requirements,
     bypasses,
   };
@@ -153,10 +149,7 @@ export function addCreditsToPlan(
  * Is semesterOne earlier than semesterTwo
  */
 export const isEarlierSemester = (semesterOne: SemesterCode, semesterTwo: SemesterCode) => {
-  if (
-    JSON.stringify({ semester: semesterOne.semester, year: semesterOne.year }) ===
-    JSON.stringify({ semester: semesterTwo.semester, year: semesterTwo.year })
-  ) {
+  if (isSemCodeEqual(semesterOne, semesterTwo)) {
     return false;
   } else if (semesterOne.year > semesterTwo.year) {
     return false;

@@ -2,13 +2,13 @@ import { SVGProps } from 'react';
 
 export default function BackArrowIcon(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="3 0 15 27" fill="currentColor" {...props}>
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
-        xmlns="http://www.w3.org/2000/svg"
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M13 9L18.5 9L13 3.5L13 9ZM6 2L14 2L20 8L20 20C20 21.1021 19.1034 22 18 22L6 22C4.88538 22 4 21.1021 4 20L4 4C4 2.89407 4.89437 2 6 2ZM15 18L15 16L6 16L6 18L15 18ZM18 14L18 12L6 12L6 14L18 14Z"
-        fill="#1C2A6D"
+        d="M15 8C15 11.866 11.866 15 8 15M15 8C15 4.13401 11.866 1 8 1M15 8H1M8 15C4.13401 15 1 11.866 1 8M8 15C9.28866 15 10.3333 11.866 10.3333 8C10.3333 4.13401 9.28866 1 8 1M8 15C6.71134 15 5.66667 11.866 5.66667 8C5.66667 4.13401 6.71134 1 8 1M1 8C1 4.13401 4.13401 1 8 1"
+        stroke="currentColor"
+        strokeWidth="1.67"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-
 export default function RequirementsCarousel({
   requirementsList,
   requirementInfo,
@@ -13,17 +11,9 @@ export default function RequirementsCarousel({
   setOverflow: (isOverflow: boolean) => void;
   carousel: boolean;
 }) {
-  useEffect(() => {
-    setTimeout(() => setOverflow(false), 500);
-  }, [overflow]);
-
   return (
     <>
-      <div
-        className={`${
-          (overflow || !carousel) && 'overflow-hidden'
-        } flex flex-row rounded-2xl border border-neutral-300`}
-      >
+      <div className={`flex flex-row overflow-hidden rounded-2xl border border-neutral-300`}>
         <div
           className={`z-30 h-full min-w-full rounded-md px-4 py-4 duration-500 ${
             carousel && '-translate-x-full'

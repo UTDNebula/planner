@@ -7,10 +7,12 @@ import { Plan, Semester, DraggableCourse } from './types';
 import { customCourseSort } from './utils';
 import { useTaskQueue } from '@/utils/useTaskQueue';
 import { tagColors } from './utils';
+import { SemesterType } from '@prisma/client';
 
 export interface SemestersContextState {
   planId: string;
-  semesters: Semester[];
+  filteredSemesters: Semester[];
+  allSemesters: Semester[];
   selectedCourseCount: number;
   bypasses: string[];
   courseIsSelected: (courseId: string) => boolean;
@@ -37,7 +39,21 @@ export interface SemestersContextState {
   handleAddBypass: ({ planId, requirement }: { planId: string; requirement: string }) => void;
   handleRemoveBypass: ({ planId, requirement }: { planId: string; requirement: string }) => void;
   title: string;
+  toggleColorFilter: (color: keyof typeof tagColors) => void;
+  toggleYearFilter: (year: number) => void;
+  toggleSemesterFilter: (semester: SemesterType) => void;
+  toggleOffAllColorFilters: () => void;
+  toggleOffAllYearFilters: () => void;
+  toggleOffAllSemesterFilters: () => void;
+  filters: Filter[];
+  handleCourseLock: (semesterId: string, locked: boolean, courseName: string) => void;
+  handleSemesterLock: (semesterId: string, locked: boolean) => void;
 }
+
+type Filter =
+  | { type: 'year'; year: number }
+  | { type: 'color'; color: keyof typeof tagColors }
+  | { type: 'semester'; semester: SemesterType };
 
 export const SemestersContext = createContext<SemestersContextState | null>(null);
 
@@ -96,6 +112,21 @@ export type SemestersReducerAction =
       type: 'changeSemesterColor';
       color: keyof typeof tagColors;
       semesterId: string;
+    }
+  | {
+      type: 'changeCourseLock';
+      locked: boolean;
+      semesterId: string;
+      courseName: string;
+    }
+  | {
+      type: 'changeSemesterLock';
+      locked: boolean;
+      semesterId: string;
+    }
+  | {
+      type: 'reinitState';
+      semesters: Semester[];
     };
 
 export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
@@ -151,6 +182,9 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
   >(
     (state, action) => {
       switch (action.type) {
+        case 'reinitState':
+          return action.semesters;
+
         case 'addSemesters':
           return [...state, ...action.newSemesters];
 
@@ -163,22 +197,15 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
               ? {
                   ...semester,
                   courses: [...semester.courses, action.newCourse],
-                  courseColors: [...semester.courseColors, ''],
                 }
               : semester,
           );
 
         case 'removeCourseFromSemester':
           return state.map((semester) => {
-            const courseColors = semester.courseColors.slice();
-            courseColors.splice(
-              semester.courses.findIndex((course) => course.id.toString() === action.courseId),
-              1,
-            );
             return semester.id.toString() === action.semesterId
               ? {
                   ...semester,
-                  courseColors,
                   courses: semester.courses.filter(
                     (course) => course.id.toString() !== action.courseId,
                   ),
@@ -196,26 +223,12 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
               return {
                 ...semester,
                 courses: [...semester.courses, action.course],
-                courseColors: [
-                  ...semester.courseColors,
-                  oldSem.courseColors[
-                    oldSem.courses.findIndex((c) => c.code === action.course.code)
-                  ],
-                ],
               };
             }
 
             if (semester.id.toString() === action.originSemesterId) {
-              const courseColors = semester.courseColors.slice();
-              courseColors.splice(
-                semester.courses.findIndex(
-                  (course) => course.id.toString() === action.course.id.toString(),
-                ),
-                1,
-              );
               return {
                 ...semester,
-                courseColors,
                 courses: semester.courses.filter(
                   (course) => course.id.toString() !== action.course.id.toString(),
                 ),
@@ -227,34 +240,46 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
 
         case 'deleteAllCoursesFromSemester':
           return state.map((semester) =>
-            semester.id.toString() === action.semesterId
-              ? { ...semester, courses: [], courseColors: [] }
-              : semester,
+            semester.id.toString() === action.semesterId ? { ...semester, courses: [] } : semester,
           );
         case 'changeCourseColor':
           return state.map((semester) => {
             if (semester.id.toString() !== action.semesterId) return semester;
-            const courseColors = semester.courseColors.slice();
             const idx = semester.courses.findIndex((course) => course.code === action.courseCode);
-            console.log({ idx }, action.courseCode, semester.courses, semester.courseColors);
-            courseColors[idx] = action.color;
             semester.courses[idx].color = action.color;
-            return {
-              ...semester,
-              courseColors,
-            };
+            return semester;
           });
         case 'changeSemesterColor':
           return state.map((semester) => {
             if (semester.id.toString() !== action.semesterId) return semester;
             return { ...semester, color: action.color };
           });
+        case 'changeCourseLock':
+          return state.map((semester) => {
+            if (semester.id.toString() !== action.semesterId) return semester;
+            const idx = semester.courses.findIndex((course) => course.code === action.courseName);
+            semester.courses[idx].locked = action.locked;
+            return semester;
+          });
+        case 'changeSemesterLock':
+          return state.map((semester) =>
+            semester.id.toString() == action.semesterId
+              ? { ...semester, locked: action.locked }
+              : semester,
+          );
         default:
           return state;
       }
     },
     plan ? parsePlanSemestersFromPlan(plan) : [],
   );
+
+  useEffect(() => {
+    dispatchSemesters({
+      type: 'reinitState',
+      semesters: plan ? parsePlanSemestersFromPlan(plan) : [],
+    });
+  }, [plan]);
 
   const sortedSemesters = useMemo(
     () =>
@@ -267,19 +292,61 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
 
   useEffect(() => console.log('stateChange', { semesters }), [semesters]);
 
+  const changeCourseLock = trpc.plan.changeCourseLock.useMutation();
+  const changeSemesterLock = trpc.plan.changeSemesterLock.useMutation();
+
+  const handleSemesterLock = (semesterId: string, locked: boolean) => {
+    dispatchSemesters({
+      type: 'changeSemesterLock',
+      locked,
+      semesterId,
+    });
+
+    addTask({
+      func: ({ locked, semesterId }) => changeSemesterLock.mutateAsync({ locked, semesterId }),
+      args: { locked, semesterId },
+    });
+  };
+
+  const handleCourseLock = (semesterId: string, locked: boolean, courseName: string) => {
+    handleDeselectCourses([
+      semesters
+        .find((s) => s.id.toString() === semesterId)
+        ?.courses.find((c) => c.code === courseName)
+        ?.id.toString() ?? '',
+    ]);
+    dispatchSemesters({
+      type: 'changeCourseLock',
+      locked,
+      semesterId,
+      courseName,
+    });
+    addTask({
+      func: ({ locked, semesterId, courseName }) =>
+        changeCourseLock.mutateAsync({ locked, semesterId, courseName }),
+      args: { locked, semesterId, courseName },
+    });
+  };
+
   const addCourse = trpc.plan.addCourseToSemester.useMutation({
     async onSuccess() {
-      await utils.plan.getPlanById.invalidate();
+      await utils.validator.degreeValidator.invalidate();
+      await utils.validator.prereqValidator.invalidate();
     },
   });
 
   const removeCourse = trpc.plan.removeCourseFromSemester.useMutation({
     async onSuccess() {
-      await utils.plan.getPlanById.invalidate();
+      await utils.validator.degreeValidator.invalidate();
+      await utils.validator.prereqValidator.invalidate();
     },
   });
 
-  const moveCourse = trpc.plan.moveCourseFromSemester.useMutation();
+  const moveCourse = trpc.plan.moveCourseFromSemester.useMutation({
+    async onSuccess() {
+      await utils.validator.prereqValidator.invalidate();
+    },
+  });
 
   const createYear = trpc.plan.addYear.useMutation();
 
@@ -328,6 +395,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
           },
           {
             autoClose: 1000,
+            position: 'bottom-right',
           },
         ),
       args: { semesterIds: semesterIds.map((id) => id.toString()) },
@@ -349,6 +417,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
             },
             {
               autoClose: 1000,
+              position: 'bottom-right',
             },
           )
           .catch((err) => console.error(err)),
@@ -381,6 +450,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
             },
             {
               autoClose: 1000,
+              position: 'bottom-right',
             },
           )
           .catch((err) => console.error(err)),
@@ -396,6 +466,9 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
     if (isDuplicate) {
       toast.warn(
         `You're already taking ${newCourse.code} in ${targetSemester.code.year}${targetSemester.code.semester}`,
+        {
+          position: 'bottom-right',
+        },
       );
       return;
     }
@@ -415,6 +488,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
             error: 'Error in adding ' + courseName,
           },
           {
+            position: 'bottom-right',
             autoClose: 1000,
           },
         ),
@@ -433,6 +507,9 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
     if (isDuplicate) {
       toast.warn(
         `You're already taking ${courseToMove.code} in ${originSemester.code.year}${destinationSemester.code.semester}`,
+        {
+          position: 'bottom-right',
+        },
       );
       return;
     }
@@ -460,6 +537,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
             },
             {
               autoClose: 1000,
+              position: 'bottom-right',
             },
           )
           .catch((err) => console.error(err)),
@@ -498,7 +576,8 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
   });
   const removeBypass = trpc.plan.removeBypass.useMutation({
     async onSuccess() {
-      await utils.plan.getPlanById.invalidate();
+      await utils.validator.degreeValidator.invalidate();
+      await utils.validator.prereqValidator.invalidate();
     },
   });
 
@@ -510,12 +589,87 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
     removeBypass.mutateAsync({ planId, requirement });
   };
 
+  const [filters, setFilters] = useState<Filter[]>([]);
+
+  const toggleOffAllColorFilters = () =>
+    setFilters(filters.filter((filter) => filter.type !== 'color'));
+
+  const toggleOffAllYearFilters = () =>
+    setFilters(filters.filter((filter) => filter.type !== 'year'));
+
+  const toggleOffAllSemesterFilters = () =>
+    setFilters(filters.filter((filter) => filter.type !== 'semester'));
+
+  const toggleColorFilter = (color: keyof typeof tagColors) => {
+    const hasFilter = filters.some((filter) => filter.type === 'color' && filter.color === color);
+    if (!hasFilter) setFilters([...filters, { type: 'color', color }]);
+    else setFilters(filters.filter((filter) => filter.type === 'color' && filter.color !== color));
+  };
+
+  const toggleYearFilter = (year: number) => {
+    const hasFilter = filters.some((filter) => filter.type === 'year' && filter.year === year);
+    if (!hasFilter) setFilters([...filters, { type: 'year', year }]);
+    else setFilters(filters.filter((filter) => !(filter.type === 'year' && filter.year === year)));
+  };
+
+  const toggleSemesterFilter = (semesterCode: SemesterType) => {
+    const hasFilter = filters.some(
+      (filter) => filter.type === 'semester' && filter.semester === semesterCode,
+    );
+    if (!hasFilter) setFilters([...filters, { type: 'semester', semester: semesterCode }]);
+    else
+      setFilters(
+        filters.filter(
+          (filter) => !(filter.type === 'semester' && filter.semester === semesterCode),
+        ),
+      );
+  };
+
+  const filteredSemesters = useMemo(() => {
+    let filtered = sortedSemesters;
+    for (const filter of filters) {
+      switch (filter.type) {
+        case 'year':
+          const yearFilters = filters.filter((filter) => filter.type === 'year') as {
+            type: 'year';
+            year: number;
+          }[];
+          filtered = filtered.filter((semester) =>
+            yearFilters.some((filter) => filter.year === semester.code.year),
+          );
+          break;
+
+        case 'color':
+          const colorFilters = filters.filter((filter) => filter.type === 'color') as {
+            type: 'color';
+            color: keyof typeof tagColors;
+          }[];
+          filtered = filtered.filter((semester) =>
+            colorFilters.some((filter) => filter.color === semester.color),
+          );
+          break;
+
+        case 'semester':
+          const semesterFilters = filters.filter((filter) => filter.type === 'semester') as {
+            type: 'semester';
+            semester: SemesterType;
+          }[];
+
+          filtered = filtered.filter((semester) =>
+            semesterFilters.some((filter) => filter.semester === semester.code.semester),
+          );
+      }
+    }
+    return filtered;
+  }, [sortedSemesters, filters]);
+
   return (
     <SemestersContext.Provider
       value={{
         planId: plan.id,
         title: plan.name,
-        semesters: sortedSemesters,
+        allSemesters: semesters,
+        filteredSemesters,
         bypasses: bypasses,
         selectedCourseCount: selectedCourseIds.size,
         courseIsSelected,
@@ -533,6 +687,15 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
         handleSemesterColorChange,
         handleAddBypass,
         handleRemoveBypass,
+        toggleColorFilter,
+        toggleYearFilter,
+        toggleSemesterFilter,
+        toggleOffAllColorFilters,
+        toggleOffAllYearFilters,
+        toggleOffAllSemesterFilters,
+        filters,
+        handleCourseLock,
+        handleSemesterLock,
       }}
     >
       {children}
@@ -542,16 +705,15 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
 
 const parsePlanSemestersFromPlan = (plan: Plan): Semester[] => {
   return plan.semesters.map((sem) => ({
+    locked: sem.locked,
     code: sem.code,
     id: new ObjectID(sem.id),
-    courseColors: sem.courseColors,
     color: Object.keys(tagColors).includes(sem.color) ? (sem.color as keyof typeof tagColors) : '',
-    courses: sem.courses.map((course: string, index) => ({
-      id: new ObjectID(),
-      code: course,
-      color: Object.keys(tagColors).includes(sem.courseColors[index])
-        ? (sem.courseColors[index] as keyof typeof tagColors)
-        : '',
+    courses: sem.courses.map((course) => ({
+      locked: course.locked,
+      id: new ObjectID(course.id),
+      color: course.color as keyof typeof tagColors,
+      code: course.code,
     })),
   }));
 };

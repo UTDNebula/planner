@@ -1,10 +1,12 @@
-import logo from '@public/Nebula_Planner_Logo.png';
 import { InferGetServerSidePropsType } from 'next';
-import Image from 'next/image';
 import { getProviders, signIn, useSession } from 'next-auth/react';
-import React from 'react';
+import React, { useEffect } from 'react';
+import EmojiIcon from '@/icons/EmojiIcon';
 
 import { useRouter } from 'next/router';
+import AuthIcons from '@/icons/AuthIcons';
+import Link from 'next/link';
+import { toast } from 'react-toastify';
 
 // import AuthCard from '../../components/auth/AuthCard';
 // import LoginCard from '@components/auth/Login'
@@ -26,7 +28,18 @@ export default function AuthPage({
     if (router && status === 'authenticated') {
       router.push('/app');
     }
-  }, []);
+  }, [router, status]);
+
+  useEffect(() => {
+    if (router.asPath.includes('OAuthAccountNotLinked')) {
+      toast.warn(
+        'You already have an account with this email. Try signing in with a different sign in method, or sign up with a different email.',
+        {
+          autoClose: false,
+        },
+      );
+    }
+  }, [router.asPath]);
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -39,84 +52,77 @@ export default function AuthPage({
     });
   };
   return (
-    <>
-      <div className="relative flex h-screen flex-col items-center justify-center space-y-10 bg-gradient-to-r from-purple-500 to-blue-500">
-        <section>
-          <div className="m-2 bg-white md:rounded-md md:shadow-md">
-            <div className="w-96 rounded bg-white p-6 shadow-none md:shadow-lg ">
-              <div className="mb-4 flex items-center justify-center">
-                <Image
-                  src={logo}
-                  alt="Logo"
-                  width="120"
-                  height="120"
-                  className="rounded-full"
-                  priority
-                />
-              </div>
-              <h1 className="mb-2 text-center text-3xl font-semibold leading-normal">Sign in</h1>
-              <p className="text-sm leading-normal">
-                Log in to your Nebula Profile to continue to Planner.
-              </p>
-              <section className="mt-5 space-y-5">
-                <div className="relative mb-4">
-                  <input
-                    type="email"
-                    className="w-full rounded border border-black p-3 outline-none focus:border-black"
-                    value={email}
-                    onChange={handleEmailChange}
-                    placeholder="Email"
-                    onKeyDown={(e) => {
-                      if (e.key == 'Enter') {
-                        handleEmailSignIn();
-                      }
-                    }}
-                  ></input>
-                </div>
-                <button
-                  onClick={handleEmailSignIn}
-                  className="w-full rounded-lg bg-blue-700 py-3 text-center text-lg text-white hover:bg-blue-800"
-                >
-                  Sign in
-                </button>
-                {providers && (
-                  <div className="mx-auto -mb-6 items-center rounded-lg border-2 border-red-400 pb-1">
-                    <h4 className="text-s text-center text-gray-700">or</h4>
-                  </div>
-                )}
-                {providers &&
-                  Object.values(providers).map((provider, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() =>
-                        signIn(provider.id, {
-                          callbackUrl: '/app',
-                        })
-                      }
-                      className="block w-full appearance-none items-center justify-center rounded-lg border border-gray-500 bg-gray-100 py-3 px-3 leading-tight text-gray-700 shadow hover:bg-gray-200 hover:text-gray-700 focus:outline-none"
-                    >
-                      <h4 className="text-center text-lg text-blue-700">
-                        Sign in with {provider.name}
-                      </h4>
-                    </button>
-                  ))}
-                <div className="flex place-content-center">
-                  <h4 className="text-lg">
-                    {showSignIn ? 'New to Nebula?' : 'Existing User?'}
-                    <button
-                      onClick={() => setShowSignIn(!showSignIn)}
-                      className="ml-2 text-lg font-semibold text-blue-700 hover:rounded-lg hover:bg-blue-200"
-                    >
-                      {showSignIn ? 'Sign Up' : 'Sign In'}
-                    </button>
-                  </h4>
-                </div>
-              </section>
-            </div>
+    <div className="relative flex h-screen flex-col items-center justify-center space-y-10 bg-[#ffffff]">
+      <section>
+        <div className="w-auto">
+          <div className="flex flex-wrap">
+            <div>{EmojiIcon['waveEmoji']}</div>
+            <h1 className="-mt-2 ml-2 text-3xl text-[36px] font-bold leading-normal tracking-tight">
+              Welcome Back!
+            </h1>
           </div>
-        </section>
-      </div>
-    </>
+          <p className="text-sm text-[16px] font-medium leading-normal text-[#737373]">
+            Sign in to continue using Nebula Planner
+          </p>
+          <section className="mt-7 space-y-5">
+            {/* Change functionality of login */}
+            <div className="relative mb-4">
+              <input
+                type="email"
+                className="w-[500px] rounded border bg-[#F5F5F5] p-3 pl-4 text-[14px] text-[#737373] outline-none focus:border-[#6366F1]"
+                value={email}
+                onChange={handleEmailChange}
+                placeholder="Email Address"
+                onKeyDown={(e) => {
+                  if (e.key == 'Enter') {
+                    handleEmailSignIn();
+                  }
+                }}
+              ></input>
+            </div>
+            <button
+              onClick={handleEmailSignIn}
+              className="w-full rounded-lg bg-[#6366F1] py-3 text-center text-[16px] font-semibold text-white hover:bg-[#EEF2FF] hover:text-[#312E81]"
+            >
+              Continue
+            </button>
+            {providers && (
+              <div className="relative flex items-center py-5">
+                <div className="flex-grow border-t border-gray-400"></div>
+                <span className="mx-4 flex-shrink font-medium text-gray-400">
+                  or log in using other accounts
+                </span>
+                <div className="flex-grow border-t border-gray-400"></div>
+              </div>
+            )}
+            <div className="flex w-full appearance-none items-center justify-center rounded-lg pb-4">
+              {providers &&
+                Object.values(providers).map((provider, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => {
+                      signIn(provider.id, {
+                        callbackUrl: '/app',
+                      });
+                    }}
+                    className={`-ml-2 h-10 rounded-full px-3 text-gray-200 `}
+                  >
+                    {AuthIcons[provider.id]}
+                  </button>
+                ))}
+            </div>
+            <div className="flex place-content-center">
+              <h4 className="text-lg font-normal text-[#A3A3A3]">
+                Don&apos;t have an account?{' '}
+                <Link className="font-semibold text-[#4F46E5] hover:underline" href="/auth/signup">
+                  Sign up
+                </Link>
+              </h4>
+            </div>
+          </section>
+        </div>
+      </section>
+    </div>
   );
 }
 export async function getStaticProps() {

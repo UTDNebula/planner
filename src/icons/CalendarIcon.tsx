@@ -4,10 +4,10 @@ const CalendarIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="17"
+      width="16"
       height="16"
       fill="none"
-      viewBox="0 0 17 16"
+      viewBox="0 0 16 16"
       stroke="currentColor"
       {...props}
     >
@@ -15,7 +15,7 @@ const CalendarIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="1.67"
-        d="M5.38889 4.11111V1M11.6111 4.11111V1M4.61111 7.22222H12.3889M3.05556 15H13.9444C14.8036 15 15.5 14.3036 15.5 13.4444V4.11111C15.5 3.252 14.8036 2.55556 13.9444 2.55556H3.05556C2.19645 2.55556 1.5 3.252 1.5 4.11111V13.4444C1.5 14.3036 2.19645 15 3.05556 15Z"
+        d="M4.889 4.111V1m6.222 3.111V1m-7 6.222h7.778M2.556 15h10.888c.86 0 1.556-.696 1.556-1.556V4.111c0-.859-.696-1.555-1.556-1.555H2.556C1.696 2.556 1 3.252 1 4.11v9.333C1 14.304 1.696 15 2.556 15z"
       ></path>
     </svg>
   );

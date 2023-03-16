@@ -37,7 +37,7 @@ model Profile {
   name          String
   startSemester SemesterCode
   endSemester   SemesterCode
-  user          User         @relation(fields: [userId], references: [id])
+  user          User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId        String       @unique @db.ObjectId
 }
 
@@ -48,9 +48,11 @@ model Plan {
   updatedAt       DateTime            @default(now()) @map("updated_at")
   semesters       Semester[]
   transferCredits String[]
-  User            User?               @relation(fields: [userId], references: [id])
+  User            User?               @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId          String?             @db.ObjectId
   requirements    DegreeRequirements?
+  startSemester   SemesterCode
+  endSemester     SemesterCode
 }
 
 model DegreeRequirements {
@@ -68,14 +70,25 @@ model Bypass {
   hours       Int
 }
 
+model Course {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  code       String
+  color      String    @default("")
+  semester   Semester? @relation(fields: [semesterId], references: [id], onDelete: Cascade)
+  semesterId String?   @db.ObjectId
+  locked     Boolean   @default(false)
+  
+  @@unique([semesterId, code])
+}
+
 model Semester {
-  id           String       @id @default(auto()) @map("_id") @db.ObjectId
-  code         SemesterCode
-  courses      String[] // Store course catalog codes
-  plan         Plan?        @relation(fields: [planId], references: [id], onDelete: Cascade)
-  planId       String?      @db.ObjectId
-  courseColors String[]
-  color        String       @default("")
+  id      String       @id @default(auto()) @map("_id") @db.ObjectId
+  code    SemesterCode
+  courses Course[]
+  plan    Plan?        @relation(fields: [planId], references: [id], onDelete: Cascade)
+  planId  String?      @db.ObjectId
+  color   String       @default("")
+  locked  Boolean      @default(false)
 }
 
 type SemesterCode {
@@ -95,7 +108,7 @@ model Credit {
   semesterCode SemesterCode
   transfer     Boolean
   userId       String       @db.ObjectId
-  user         User?        @relation(fields: [userId], references: [id])
+  user         User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model AcademicDetails {

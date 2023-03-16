@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import '../styles/globals.css';
 import 'react-toastify/dist/ReactToastify.css';
+import 'intro.js/introjs.css';
 
 import { createTheme, StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
 import { AnimateSharedLayout } from 'framer-motion';
@@ -72,8 +73,6 @@ const NebulaApp: AppType<{ session: Session | null }> = ({
   // TODO: Properly type check this
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-
-  // alert(router.pathname);
 
   return (
     <SessionProvider session={session}>

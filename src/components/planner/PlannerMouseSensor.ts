@@ -16,7 +16,6 @@ function shouldHandleEvent(element: HTMLElement | null) {
   let cur = element;
 
   while (cur) {
-    console.log({ cur });
     if (cur.dataset && cur.dataset.noDnd) {
       return false;
     }

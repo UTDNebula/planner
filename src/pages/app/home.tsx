@@ -7,7 +7,6 @@ import superjson from 'superjson';
 import { appRouter } from '@/server/trpc/router/_app';
 
 import Home from '../../components/home/Home';
-import useMedia from '../../utils/media';
 import { authOptions } from '../api/auth/[...nextauth]';
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -25,8 +24,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   };
 }
 export default function MiniDrawer() {
-  const isDesktop = useMedia('(min-width: 900px)');
-
   return <Home />;
 }
 
