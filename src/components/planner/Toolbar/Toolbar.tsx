@@ -16,7 +16,6 @@ import { trpc } from '@/utils/trpc';
 import EditableMajorTitle from './EditablePlanTitle';
 import EditableMajor from '../EditableMajor';
 
-
 export interface ToolbarProps {
   planId: string;
   title: string;
