@@ -4,8 +4,8 @@ import type { PrismaClient } from '@prisma/client';
 import NextAuth, { type NextAuthOptions } from 'next-auth';
 import DiscordProvider from 'next-auth/providers/discord';
 import EmailProvider from 'next-auth/providers/email';
-import GoogleProvider from "next-auth/providers/google";
-import FacebookProvider from "next-auth/providers/facebook";
+import GoogleProvider from 'next-auth/providers/google';
+import FacebookProvider from 'next-auth/providers/facebook';
 
 import { env } from '../../../env/server.mjs';
 import { prisma } from '../../../server/db/client';
@@ -30,10 +30,10 @@ export const authOptions: NextAuthOptions = {
       clientSecret: env.GOOGLE_CLIENT_SECRET,
       authorization: {
         params: {
-          prompt: "consent",
-          access_type: "offline",
-          response_type: "code"
-        }
+          prompt: 'consent',
+          access_type: 'offline',
+          response_type: 'code',
+        },
       },
       profile(profile) {
         // profile type can be found here: https://next-auth.js.org/providers/discord

@@ -569,4 +569,40 @@ export const planRouter = router({
         return degreeRequirements;
       } catch {}
     }),
+  updatePlanTitle: protectedProcedure
+    .input(z.object({ planId: z.string(), title: z.string().min(1) }))
+    .mutation(async ({ ctx, input }) => {
+      try {
+        const { planId, title } = input;
+        await ctx.prisma.plan.update({
+          where: {
+            id: planId,
+          },
+          data: {
+            name: title,
+          },
+        });
+        return true;
+      } catch {
+        return false;
+      }
+    }),
+  updatePlanMajor: protectedProcedure
+    .input(z.object({ planId: z.string(), major: z.string().min(1) }))
+    .mutation(async ({ ctx, input }) => {
+      try {
+        const { planId, major } = input;
+        await ctx.prisma.degreeRequirements.update({
+          where: {
+            planId,
+          },
+          data: {
+            major,
+          },
+        });
+        return true;
+      } catch {
+        return false;
+      }
+    }),
 });

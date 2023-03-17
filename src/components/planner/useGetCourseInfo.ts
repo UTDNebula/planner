@@ -32,7 +32,7 @@ const getPrereqs = (
         if (elem.type !== 'course' && elem.type !== 'other' && elem.options) {
           elem.options.map((elem2: any) => {
             if (elem2.type !== 'course' && elem2.type !== 'other') {
-              elem2.options.map((elem3: any) => {
+              elem2.options?.map((elem3: any) => {
                 courseData?.map((elem4) => {
                   if (elem4.id === elem3.class_reference) {
                     prereqs.push(elem4.subject_prefix + ' ' + elem4.course_number);
