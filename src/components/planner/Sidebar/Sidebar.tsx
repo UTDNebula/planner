@@ -1,10 +1,8 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { SearchBarTwo } from '@components/credits/SearchBar';
 import React, { useRef, useState } from 'react';
-import Fuse from 'fuse.js';
 
 import RequirementsContainer from '@/components/planner/Sidebar/RequirementsContainer';
-import useSearch from '@/components/search/search';
 
 import { Course, DraggableCourse, GetDragIdByCourse } from '../types';
 import DraggableCourseList from './DraggableCourseList';
@@ -44,17 +42,6 @@ function CourseSelectorContainer({
     keys: ['title', 'code'],
     threshold: 0.2,
   });
-
-  /* const { results, updateQuery } = useSearch({
-    getData: async () =>
-      data
-        ? data.map((c) => ({ code: `${c.subject_prefix} ${c.course_number}`, title: c.title }))
-        : [],
-    initialQuery: '@',
-    filterFn: (elm, query) =>
-      query.length > 0 ? elm['code'].toLowerCase().includes(query.toLowerCase()) : false,
-    constraints: [0, 5],
-  }); */
 
   const courseResults = React.useMemo(() => {
     return results.map((result) => {
