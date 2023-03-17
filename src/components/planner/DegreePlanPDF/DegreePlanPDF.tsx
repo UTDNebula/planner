@@ -445,6 +445,7 @@ const convertSemestersToAcademicYears = (
     }
 
     // Add to academic year
+
     academicYears.push(academicYear);
   }
   return academicYears;
