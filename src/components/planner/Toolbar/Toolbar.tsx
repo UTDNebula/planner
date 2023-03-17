@@ -1,6 +1,5 @@
 import DownloadIcon from '@/icons/DownloadIcon';
-import EditIcon from '@/icons/EditIcon';
-import { FC, useState } from 'react';
+import { FC, useMemo, useState } from 'react';
 import Button from '../../Button';
 import SwitchVerticalIcon from '@/icons/SwitchVerticalIcon';
 import { PDFDownloadLink } from '@react-pdf/renderer';
@@ -13,6 +12,8 @@ import SettingsIcon from '@/icons/SettingsIcon';
 import SettingsDropdown from './SettingsDropdown';
 import EditSemestersModal from './EditSemestersModal';
 import DeletePlanModal from '@/shared-components/DeletePlanModal';
+import EditableMajorTitle from './EditablePlanTitle';
+import EditableMajor from '../EditableMajor';
 
 export interface ToolbarProps {
   planId: string;
@@ -44,7 +45,7 @@ const Toolbar: FC<ToolbarProps> = ({
               <ArrowBackIcon fontSize="medium" />
             </Link>
           </button>
-          <h1 className="text-3xl font-semibold tracking-tight">{title}</h1>
+          <EditableMajorTitle initialTitle={title} planId={planId} />
         </div>
         <div className="flex h-min items-center gap-3">
           <Button size="medium" icon={<DownloadIcon />}>
@@ -100,11 +101,8 @@ const Toolbar: FC<ToolbarProps> = ({
         </div>
       </article>
 
-      <article className="flex justify-between pl-7">
-        <button className="flex items-center gap-x-3 rounded-2xl bg-primary-100 py-2 px-3 tracking-tight">
-          <span className="text-lg font-semibold text-primary-800">{major}</span>
-          <EditIcon className="text-primary-800" />
-        </button>
+      <article className="flex h-10 items-center pl-7">
+        <EditableMajor major={major} planId={planId} />
       </article>
     </section>
   );
