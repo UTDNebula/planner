@@ -1,5 +1,5 @@
 import DownloadIcon from '@/icons/DownloadIcon';
-import { FC, useMemo, useState } from 'react';
+import { FC, useState } from 'react';
 import Button from '../../Button';
 import SwitchVerticalIcon from '@/icons/SwitchVerticalIcon';
 import { PDFDownloadLink } from '@react-pdf/renderer';
