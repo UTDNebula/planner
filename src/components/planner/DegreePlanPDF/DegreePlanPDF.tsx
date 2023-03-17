@@ -79,25 +79,35 @@ const DegreePlanPDF: FC<DegreePlanPDFProps> = ({
               const fallCourse =
                 i < year.fall.length ? (
                   <>
-                    <Text
+                    <View
                       style={{
                         flex: 5,
                         fontSize: '10px',
                         paddingLeft: '2px',
-                        borderLeft: '1px solid black',
+                        borderLeft: '1px solid #D4D4D4',
+                        flexDirection: 'row',
+                        display: 'flex',
+                        flexWrap: 'wrap',
                       }}
                     >
-                      {year.fall[i].code} | {year.fall[i].title}
-                    </Text>
+                      <Text>
+                        <Text style={{ color: '#6466f1', paddingRight: '4px' }}>
+                          {year.fall[i].code}
+                        </Text>
+                        <Text> </Text>
+                        {year.fall[i].title}
+                      </Text>
+                    </View>
                     <Text
                       style={{
                         flex: 1,
                         fontSize: '10px',
                         paddingLeft: '2px',
-                        borderLeft: '1px solid black',
+                        borderLeft: '1px solid #D4D4D4',
+                        textAlign: 'center',
                       }}
                     >
-                      {getSemesterHourFromCourseCode(year.fall[i].code)}
+                      {year.fall[i].credits}
                     </Text>
                   </>
                 ) : (
@@ -107,7 +117,7 @@ const DegreePlanPDF: FC<DegreePlanPDFProps> = ({
                         flex: 5,
                         fontSize: '10px',
                         paddingLeft: '2px',
-                        borderLeft: '1px solid black',
+                        borderLeft: '1px solid #D4D4D4',
                       }}
                     >
                       {' '}
@@ -117,7 +127,7 @@ const DegreePlanPDF: FC<DegreePlanPDFProps> = ({
                         flex: 1,
                         fontSize: '10px',
                         paddingLeft: '2px',
-                        borderLeft: '1px solid black',
+                        borderLeft: '1px solid #D4D4D4',
                       }}
                     >
                       {' '}
@@ -127,25 +137,33 @@ const DegreePlanPDF: FC<DegreePlanPDFProps> = ({
               const springCourse =
                 i < year.spring.length ? (
                   <>
-                    <Text
+                    <View
                       style={{
                         flex: 5,
                         fontSize: '10px',
                         paddingLeft: '2px',
-                        borderLeft: '1px solid black',
+                        borderLeft: '1px solid #D4D4D4',
+                        flexDirection: 'row',
+                        display: 'flex',
+                        flexWrap: 'wrap',
                       }}
                     >
-                      {year.spring[i].code} | {year.spring[i].title}
-                    </Text>
+                      <Text>
+                        <Text style={{ color: '#6466f1' }}>{year.spring[i].code}</Text>
+                        <Text> </Text>
+                        {year.spring[i].title}
+                      </Text>
+                    </View>
                     <Text
                       style={{
                         flex: 1,
                         fontSize: '10px',
                         paddingLeft: '2px',
-                        borderLeft: '1px solid black',
+                        borderLeft: '1px solid #D4D4D4',
+                        textAlign: 'center',
                       }}
                     >
-                      {getSemesterHourFromCourseCode(year.spring[i].code)}
+                      {year.spring[i].credits}
                     </Text>
                   </>
                 ) : (
@@ -155,7 +173,7 @@ const DegreePlanPDF: FC<DegreePlanPDFProps> = ({
                         flex: 5,
                         fontSize: '10px',
                         paddingLeft: '2px',
-                        borderLeft: '1px solid black',
+                        borderLeft: '1px solid #D4D4D4',
                       }}
                     >
                       {' '}
@@ -165,7 +183,7 @@ const DegreePlanPDF: FC<DegreePlanPDFProps> = ({
                         flex: 1,
                         fontSize: '10px',
                         paddingLeft: '2px',
-                        borderLeft: '1px solid black',
+                        borderLeft: '1px solid #D4D4D4',
                       }}
                     >
                       {' '}
@@ -175,26 +193,36 @@ const DegreePlanPDF: FC<DegreePlanPDFProps> = ({
               const summerCourse =
                 i < year.summer.length ? (
                   <>
-                    <Text
+                    <View
                       style={{
                         flex: 5,
                         fontSize: '10px',
                         paddingLeft: '2px',
-                        borderLeft: '1px solid black',
+                        borderLeft: '1px solid #D4D4D4',
+                        flexDirection: 'row',
+                        display: 'flex',
+                        flexWrap: 'wrap',
                       }}
                     >
-                      {year.summer[i].code} | {year.summer[i].title}
-                    </Text>
+                      <Text>
+                        <Text style={{ color: '#6466f1', marginRight: '4px' }}>
+                          {year.summer[i].code}
+                        </Text>
+                        <Text> </Text>
+                        {year.summer[i].title}
+                      </Text>
+                    </View>
                     <Text
                       style={{
                         flex: 1,
                         fontSize: '10px',
                         paddingLeft: '2px',
-                        borderLeft: '1px solid black',
-                        borderRight: '1px solid black',
+                        borderLeft: '1px solid #D4D4D4',
+                        borderRight: '1px solid #D4D4D4',
+                        textAlign: 'center',
                       }}
                     >
-                      {getSemesterHourFromCourseCode(year.summer[i].code)}
+                      {year.summer[i].credits}
                     </Text>
                   </>
                 ) : (
@@ -204,7 +232,7 @@ const DegreePlanPDF: FC<DegreePlanPDFProps> = ({
                         flex: 5,
                         fontSize: '10px',
                         paddingLeft: '2px',
-                        borderLeft: '1px solid black',
+                        borderLeft: '1px solid #D4D4D4',
                       }}
                     >
                       {' '}
@@ -214,8 +242,8 @@ const DegreePlanPDF: FC<DegreePlanPDFProps> = ({
                         flex: 1,
                         fontSize: '10px',
                         paddingLeft: '2px',
-                        borderLeft: '1px solid black',
-                        borderRight: '1px solid black',
+                        borderLeft: '1px solid #D4D4D4',
+                        borderRight: '1px solid #D4D4D4',
                       }}
                     >
                       {' '}
@@ -224,7 +252,11 @@ const DegreePlanPDF: FC<DegreePlanPDFProps> = ({
                 );
               const row = (
                 <View
-                  style={{ display: 'flex', flexDirection: 'row', borderBottom: '1px solid black' }}
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    borderBottom: '1px solid #D4D4D4',
+                  }}
                 >
                   {fallCourse}
                   {springCourse}
@@ -242,7 +274,7 @@ const DegreePlanPDF: FC<DegreePlanPDFProps> = ({
                     fontSize: 12,
                     fontStyle: 'bold',
                     textAlign: 'center',
-                    border: '1px solid black',
+                    border: '1px solid #D4D4D4',
                     borderBottom: '0px',
                     backgroundColor: '#e0e7ff',
                   }}
@@ -253,7 +285,7 @@ const DegreePlanPDF: FC<DegreePlanPDFProps> = ({
                   style={{
                     display: 'flex',
                     flexDirection: 'row',
-                    border: '1px solid black',
+                    border: '1px solid #D4D4D4',
                   }}
                 >
                   <Text
@@ -267,7 +299,7 @@ const DegreePlanPDF: FC<DegreePlanPDFProps> = ({
                       fontSize: '14px',
                       flex: 1,
                       paddingLeft: '2px',
-                      borderLeft: '1px solid black',
+                      borderLeft: '1px solid #D4D4D4',
                     }}
                   >
                     SCH
@@ -277,7 +309,7 @@ const DegreePlanPDF: FC<DegreePlanPDFProps> = ({
                       fontSize: '14px',
                       flex: 5,
                       paddingLeft: '2px',
-                      borderLeft: '1px solid black',
+                      borderLeft: '1px solid #D4D4D4',
                     }}
                   >
                     {`Spring ${year.startingYear + 1}`}
@@ -287,7 +319,7 @@ const DegreePlanPDF: FC<DegreePlanPDFProps> = ({
                       fontSize: '14px',
                       flex: 1,
                       paddingLeft: '2px',
-                      borderLeft: '1px solid black',
+                      borderLeft: '1px solid #D4D4D4',
                     }}
                   >
                     SCH
@@ -297,7 +329,7 @@ const DegreePlanPDF: FC<DegreePlanPDFProps> = ({
                       fontSize: '14px',
                       flex: 5,
                       paddingLeft: '2px',
-                      borderLeft: '1px solid black',
+                      borderLeft: '1px solid #D4D4D4',
                     }}
                   >
                     {`Summer ${year.startingYear + 1}`}
@@ -307,13 +339,35 @@ const DegreePlanPDF: FC<DegreePlanPDFProps> = ({
                       fontSize: '14px',
                       flex: 1,
                       paddingLeft: '2px',
-                      borderLeft: '1px solid black',
+                      borderLeft: '1px solid #D4D4D4',
                     }}
                   >
                     SCH
                   </Text>
                 </View>
                 {rows}
+                <View
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    borderTop: '0px',
+                    border: '1px solid #D4D4D4',
+                    backgroundColor: '#e0e7ff',
+                  }}
+                >
+                  <View style={{ flex: 5 }}></View>
+                  <Text style={{ flex: 1, textAlign: 'center', fontSize: '10px' }}>
+                    {year.fall.map((c) => c.credits).reduce((a, b) => a + b, 0)}
+                  </Text>
+                  <View style={{ flex: 5 }}></View>
+                  <Text style={{ flex: 1, textAlign: 'center', fontSize: '10px' }}>
+                    {year.spring.map((c) => c.credits).reduce((a, b) => a + b, 0)}
+                  </Text>
+                  <View style={{ flex: 5 }}></View>
+                  <Text style={{ flex: 1, textAlign: 'center', fontSize: '10px' }}>
+                    {year.summer.map((c) => c.credits).reduce((a, b) => a + b, 0)}
+                  </Text>
+                </View>
               </View>
             );
           })}
