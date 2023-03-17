@@ -37,24 +37,6 @@ function CourseSelectorContainer({
 
   const { data, isLoading } = q;
 
-  React.useEffect(() => {
-    if (!isLoading) {
-      const fuse = new Fuse(data ?? [], {
-        includeScore: true,
-        threshold: 0.3,
-        useExtendedSearch: true,
-        keys: [
-          'title',
-          {
-            name: 'code',
-            getFn: (c) => `${c.subject_prefix} ${c.course_number}`,
-          },
-        ],
-      });
-      console.log(fuse.search('CS 1336'));
-    }
-  }, [isLoading]);
-
   const { results, updateQuery } = useFuse<Course>({
     dataSet:
       data?.map((c) => ({ code: `${c.subject_prefix} ${c.course_number}`, title: c.title })) ?? [],
