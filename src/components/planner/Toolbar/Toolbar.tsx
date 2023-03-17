@@ -2,7 +2,7 @@ import DownloadIcon from '@/icons/DownloadIcon';
 import { FC, useState } from 'react';
 import Button from '../../Button';
 import SwitchVerticalIcon from '@/icons/SwitchVerticalIcon';
-import { PDFDownloadLink } from '@react-pdf/renderer';
+import { PDFDownloadLink, usePDF } from '@react-pdf/renderer';
 import { useSemestersContext } from '../SemesterContext';
 import FilterByDropdown from './FilterByDropdown';
 import DegreePlanPDF from '../DegreePlanPDF/DegreePlanPDF';
@@ -12,6 +12,7 @@ import SettingsIcon from '@/icons/SettingsIcon';
 import SettingsDropdown from './SettingsDropdown';
 import EditSemestersModal from './EditSemestersModal';
 import DeletePlanModal from '@/shared-components/DeletePlanModal';
+import { trpc } from '@/utils/trpc';
 import EditableMajorTitle from './EditablePlanTitle';
 import EditableMajor from '../EditableMajor';
 
@@ -19,6 +20,7 @@ export interface ToolbarProps {
   planId: string;
   title: string;
   major: string;
+  transferCredits: string[];
   studentName: string;
   deletePlan: () => void;
   deleteLoading: boolean;
@@ -28,6 +30,7 @@ const Toolbar: FC<ToolbarProps> = ({
   planId,
   title,
   major,
+  transferCredits,
   studentName,
   deletePlan,
   deleteLoading,
@@ -35,6 +38,10 @@ const Toolbar: FC<ToolbarProps> = ({
   const { allSemesters: semesters } = useSemestersContext();
   const [editSemestersModalOpen, setEditSemestersModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+
+  const q = trpc.courses.publicGetAllCourses.useQuery(undefined);
+
+  const { data: coursesData } = q;
 
   return (
     <section className="flex w-full flex-col justify-center gap-y-5">
@@ -51,7 +58,13 @@ const Toolbar: FC<ToolbarProps> = ({
           <Button size="medium" icon={<DownloadIcon />}>
             <PDFDownloadLink
               document={
-                <DegreePlanPDF studentName={studentName} planTitle={title} semesters={semesters} />
+                <DegreePlanPDF
+                  studentName={studentName}
+                  planTitle={title}
+                  semesters={semesters}
+                  transferCredits={transferCredits}
+                  coursesData={coursesData ?? []}
+                />
               }
             >
               <span className="whitespace-nowrap" id="hello">

@@ -72,6 +72,9 @@ export default function Planner({
   const utils = trpc.useContext();
 
   const degreeRequirementsQuery = trpc.plan.getDegreeRequirements.useQuery({ planId });
+  const userQuery = trpc.user.getUser.useQuery();
+  const { data: userData } = userQuery;
+
   const degreeRequirementsData = degreeRequirementsQuery.data;
 
   // Hacky
@@ -186,7 +189,8 @@ export default function Planner({
             planId={planId}
             title={title}
             major={degreeRequirementsData?.major ?? 'undecided'}
-            studentName="Dev"
+            transferCredits={transferCredits}
+            studentName={userData?.profile?.name ?? 'Student'}
             deletePlan={() => deletePlan.mutateAsync(planId)}
             deleteLoading={deleteLoading}
           />
