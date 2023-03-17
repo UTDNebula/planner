@@ -1,5 +1,4 @@
-import { trpc } from '@/utils/trpc';
-import { displaySemesterCode, getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
+import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
 import { Prisma, SemesterCode } from '@prisma/client';
 import { Document, Font, Page, StyleSheet, View, Text } from '@react-pdf/renderer';
 import React, { FC } from 'react';
@@ -36,6 +35,7 @@ interface DegreePlanPDFProps {
   studentName: string;
   planTitle: string;
   semesters: Semester[];
+  transferCredits: string[];
   coursesData: {
     title: string;
     id: string;
@@ -64,17 +64,186 @@ const DegreePlanPDF: FC<DegreePlanPDFProps> = ({
   studentName,
   planTitle,
   semesters,
+  transferCredits,
   coursesData,
 }) => {
   // Separate semesters into academic years
-
   const academicYears = convertSemestersToAcademicYears(semesters, coursesData);
+
+  const transferCreditRows = [];
+  let transferCreditRow = [];
+  for (let i = 0; i < transferCredits.length; i++) {
+    transferCreditRow.push(transferCredits[i]);
+    if (i % 3 === 2 || i + 1 === transferCredits.length) {
+      transferCreditRows.push([...transferCreditRow]);
+      transferCreditRow = [];
+    }
+  }
 
   return (
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.section}>
           <Header studentName={studentName} degreePlanTitle={planTitle}></Header>
+
+          {/* Transfer Credit Table */}
+          <View
+            style={{
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              marginBottom: '10px',
+            }}
+          >
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: '12px',
+                fontWeight: 'semibold',
+                backgroundColor: '#e0e7ff',
+              }}
+            >
+              Transfer Credits
+            </Text>
+            <View
+              style={{
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'row',
+                fontSize: '11px',
+                fontWeight: 'semibold',
+              }}
+            >
+              <View style={{ flex: 5, borderLeft: '1px solid #D4D4D4' }}>
+                <Text>Transfer</Text>
+              </View>
+              <View style={{ flex: 1, borderLeft: '1px solid #D4D4D4', textAlign: 'center' }}>
+                <Text>SCH</Text>
+              </View>
+              <View style={{ flex: 5, borderLeft: '1px solid #D4D4D4' }}>
+                <Text>Transfer</Text>
+              </View>
+              <View style={{ flex: 1, borderLeft: '1px solid #D4D4D4', textAlign: 'center' }}>
+                <Text>SCH</Text>
+              </View>{' '}
+              <View style={{ flex: 5, borderLeft: '1px solid #D4D4D4' }}>
+                <Text>Transfer</Text>
+              </View>
+              <View
+                style={{
+                  flex: 1,
+                  textAlign: 'center',
+                  borderLeft: '1px solid #D4D4D4',
+                  borderRight: '1px solid #D4D4D4',
+                }}
+              >
+                <Text>SCH</Text>
+              </View>
+            </View>
+            {transferCreditRows.map((row, idx) => {
+              if (row.length === 3) {
+                return (
+                  <View
+                    key={idx}
+                    style={{
+                      width: '100%',
+                      borderTop: '1px solid #D4D4D4',
+                      display: 'flex',
+                      flexDirection: 'row',
+                      fontSize: '9.5px',
+                    }}
+                  >
+                    <View style={{ flex: 5, borderLeft: '1px solid #D4D4D4' }}>
+                      <Text>{row[0]}</Text>
+                    </View>
+                    <View style={{ flex: 1, borderLeft: '1px solid #D4D4D4', textAlign: 'center' }}>
+                      <Text>{getSemesterHourFromCourseCode(row[0])}</Text>
+                    </View>
+                    <View style={{ flex: 5, borderLeft: '1px solid #D4D4D4' }}>
+                      <Text>{row[1]}</Text>
+                    </View>
+                    <View style={{ flex: 1, borderLeft: '1px solid #D4D4D4', textAlign: 'center' }}>
+                      <Text>{getSemesterHourFromCourseCode(row[1])}</Text>
+                    </View>
+                    <View style={{ flex: 5, borderLeft: '1px solid #D4D4D4' }}>
+                      <Text>{row[2]}</Text>
+                    </View>
+                    <View
+                      style={{
+                        flex: 1,
+                        borderLeft: '1px solid #D4D4D4',
+                        borderRight: '1px solid #D4D4D4',
+                        textAlign: 'center',
+                      }}
+                    >
+                      <Text>{getSemesterHourFromCourseCode(row[2])}</Text>
+                    </View>
+                  </View>
+                );
+              }
+
+              const length = row.length;
+              return (
+                <View
+                  key={idx}
+                  style={{
+                    width: '100%',
+                    borderTop: '1px solid #D4D4D4',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    fontSize: '9.5px',
+                  }}
+                >
+                  <View style={{ flex: 5, borderLeft: '1px solid #D4D4D4' }}>
+                    <Text>{length >= 1 && row[0]}</Text>
+                  </View>
+                  <View style={{ flex: 1, borderLeft: '1px solid #D4D4D4', textAlign: 'center' }}>
+                    <Text>{length >= 1 && getSemesterHourFromCourseCode(row[0])}</Text>
+                  </View>
+                  <View style={{ flex: 5, borderLeft: '1px solid #D4D4D4' }}>
+                    <Text>{length >= 2 && row[1]}</Text>
+                  </View>
+                  <View style={{ flex: 1, borderLeft: '1px solid #D4D4D4', textAlign: 'center' }}>
+                    <Text>{length >= 2 && getSemesterHourFromCourseCode(row[1])}</Text>
+                  </View>
+                  <View style={{ flex: 5, borderLeft: '1px solid #D4D4D4' }}></View>
+                  <View
+                    style={{
+                      flex: 1,
+                      borderLeft: '1px solid #D4D4D4',
+                      borderRight: '1px solid #D4D4D4',
+                      textAlign: 'center',
+                    }}
+                  ></View>
+                </View>
+              );
+            })}
+            <View
+              style={{
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'row',
+                fontSize: '11px',
+                fontWeight: 'semibold',
+                backgroundColor: '#e0e7ff',
+              }}
+            >
+              <View style={{ flex: 5 }}>
+                <Text>Total Credits</Text>
+              </View>
+              <View style={{ flex: 1 }}></View>
+              <View style={{ flex: 5 }}></View>
+              <View style={{ flex: 1 }}></View> <View style={{ flex: 5 }}></View>
+              <View style={{ flex: 1 }}>
+                <Text>
+                  {transferCredits
+                    .map((credit) => getSemesterHourFromCourseCode(credit) ?? 3)
+                    .reduce((a, b) => a + b, 0)}
+                </Text>
+              </View>
+            </View>
+          </View>
+
           {academicYears.map((year, _) => {
             // Get max number of rows
             const maxRows = Math.max(year.fall.length, year.spring.length, year.summer.length);
@@ -366,6 +535,7 @@ const DegreePlanPDF: FC<DegreePlanPDFProps> = ({
                     SCH
                   </Text>
                 </View>
+
                 {rows}
                 <View
                   style={{

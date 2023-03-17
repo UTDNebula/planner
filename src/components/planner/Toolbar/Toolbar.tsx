@@ -19,6 +19,7 @@ export interface ToolbarProps {
   planId: string;
   title: string;
   major: string;
+  transferCredits: string[];
   studentName: string;
   deletePlan: () => void;
   deleteLoading: boolean;
@@ -28,6 +29,7 @@ const Toolbar: FC<ToolbarProps> = ({
   planId,
   title,
   major,
+  transferCredits,
   studentName,
   deletePlan,
   deleteLoading,
@@ -59,6 +61,7 @@ const Toolbar: FC<ToolbarProps> = ({
                   studentName={studentName}
                   planTitle={title}
                   semesters={semesters}
+                  transferCredits={transferCredits}
                   coursesData={coursesData ?? []}
                 />
               }

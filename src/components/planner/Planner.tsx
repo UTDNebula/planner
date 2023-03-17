@@ -189,6 +189,7 @@ export default function Planner({
             planId={planId}
             title={title}
             major={degreeRequirementsData?.major ?? 'undecided'}
+            transferCredits={transferCredits}
             studentName={userData?.profile?.name ?? 'Student'}
             deletePlan={() => deletePlan.mutateAsync(planId)}
             deleteLoading={deleteLoading}
