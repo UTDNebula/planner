@@ -14,9 +14,7 @@ import {
 } from './types';
 import { GetDragIdByCourseAndReq } from '../types';
 import { RecursiveRequirement } from './RecursiveRequirement';
-import { DragIndicator } from '@mui/icons-material';
 import { useSemestersContext } from '../SemesterContext';
-
 function RequirementContainerHeader({
   name,
   status,
@@ -157,12 +155,16 @@ const getRequirementGroup = (
 };
 
 export const ProgressComponent = ({ value, max }: { value: number; max: number }) => {
+  const heh = `${(value * 100) / max}%`;
+
   return (
     <div className="flex w-24 flex-col items-center justify-center">
-      <span className="w-max text-[10px]">
+      <div className="w-max text-[10px]">
         {value}/{max} done
-      </span>
-      <progress value={value} max={max} className="h-2 w-full appearance-none rounded-full" />
+      </div>
+      <div className="h-4 w-full overflow-hidden rounded-2xl bg-[#F5F5F5]">
+        <div style={{ width: heh }} className={`h-full bg-primary`}></div>
+      </div>
     </div>
   );
 };
@@ -244,6 +246,7 @@ export default function RequirementsContainer({
 
               return (
                 <button
+                  key={idx}
                   onClick={() => {
                     toggleCarousel();
                     setRequirementIdx(idx);
