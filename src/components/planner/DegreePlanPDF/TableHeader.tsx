@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 24,
     textAlign: 'left',
-    fontStyle: 'bold',
+
     flexGrow: 1,
   },
   courseCode: {

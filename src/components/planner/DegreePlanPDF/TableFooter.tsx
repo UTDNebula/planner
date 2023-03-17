@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
   courseGrade: {
     width: '100%',
     fontSize: 12,
-    fontStyle: 'bold',
+
     textAlign: 'right',
     paddingRight: 4,
   },

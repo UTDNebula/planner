@@ -6,19 +6,24 @@ import React, { FC } from 'react';
 
 import { Semester } from '../types';
 import Header from './Header';
-import SemesterHeader from './SemesterHeader';
-import SemesterTable from './SemesterTable';
 
-// Font.register({
-//   family: 'Inter',
-//   fonts: [{ src: '@public/assets/fonts/Inter/InterRegular.ttf' }],
-// });
+Font.register({
+  family: 'Inter',
+  fonts: [
+    {
+      src: 'https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfMZg.ttf',
+    },
+    {
+      src: 'https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuGKYMZg.ttf',
+      fontWeight: 'semibold',
+    },
+  ],
+});
 
 const styles = StyleSheet.create({
   page: {
     flexDirection: 'column',
-    // fontFamily: 'Inter',
-    fontFamily: 'Times-Roman',
+    fontFamily: 'Inter',
   },
   section: {
     margin: 10,
@@ -271,15 +276,17 @@ const DegreePlanPDF: FC<DegreePlanPDFProps> = ({
                 <View
                   style={{
                     width: '100%',
-                    fontSize: 12,
-                    fontStyle: 'bold',
+
+                    // fontStyle: 'bold',
                     textAlign: 'center',
                     border: '1px solid #D4D4D4',
                     borderBottom: '0px',
                     backgroundColor: '#e0e7ff',
                   }}
                 >
-                  <Text>{`${year.startingYear} - ${year.startingYear + 1}`}</Text>
+                  <Text style={{ fontSize: 10, fontWeight: 'semibold' }}>{`${year.startingYear} - ${
+                    year.startingYear + 1
+                  }`}</Text>
                 </View>
                 <View
                   style={{
@@ -289,57 +296,71 @@ const DegreePlanPDF: FC<DegreePlanPDFProps> = ({
                   }}
                 >
                   <Text
-                    style={{ fontSize: '14px', flex: 5, marginLeft: '-2px', paddingRight: '4px' }}
+                    style={{
+                      fontSize: '10px',
+                      flex: 5,
+                      marginLeft: '-2px',
+                      paddingRight: '4px',
+                      fontWeight: 'semibold',
+                    }}
                   >
                     {' '}
                     {`Fall ${year.startingYear}`}
                   </Text>
                   <Text
                     style={{
-                      fontSize: '14px',
+                      fontSize: '10px',
                       flex: 1,
                       paddingLeft: '2px',
                       borderLeft: '1px solid #D4D4D4',
+                      fontWeight: 'semibold',
+                      textAlign: 'center',
                     }}
                   >
                     SCH
                   </Text>
                   <Text
                     style={{
-                      fontSize: '14px',
+                      fontSize: '10px',
                       flex: 5,
                       paddingLeft: '2px',
                       borderLeft: '1px solid #D4D4D4',
+                      fontWeight: 'semibold',
                     }}
                   >
                     {`Spring ${year.startingYear + 1}`}
                   </Text>
                   <Text
                     style={{
-                      fontSize: '14px',
+                      fontSize: '10px',
                       flex: 1,
                       paddingLeft: '2px',
                       borderLeft: '1px solid #D4D4D4',
+                      fontWeight: 'semibold',
+                      textAlign: 'center',
                     }}
                   >
                     SCH
                   </Text>
                   <Text
                     style={{
-                      fontSize: '14px',
+                      fontSize: '10px',
                       flex: 5,
                       paddingLeft: '2px',
                       borderLeft: '1px solid #D4D4D4',
+                      fontWeight: 'semibold',
                     }}
                   >
                     {`Summer ${year.startingYear + 1}`}
                   </Text>
                   <Text
                     style={{
-                      fontSize: '14px',
+                      fontSize: '10px',
                       flex: 1,
                       paddingLeft: '2px',
                       borderLeft: '1px solid #D4D4D4',
+                      fontWeight: 'semibold',
+                      textAlign: 'center',
                     }}
                   >
                     SCH
@@ -356,15 +377,36 @@ const DegreePlanPDF: FC<DegreePlanPDFProps> = ({
                   }}
                 >
                   <View style={{ flex: 5 }}></View>
-                  <Text style={{ flex: 1, textAlign: 'center', fontSize: '10px' }}>
+                  <Text
+                    style={{
+                      flex: 1,
+                      textAlign: 'center',
+                      fontSize: '10px',
+                      fontWeight: 'semibold',
+                    }}
+                  >
                     {year.fall.map((c) => c.credits).reduce((a, b) => a + b, 0)}
                   </Text>
                   <View style={{ flex: 5 }}></View>
-                  <Text style={{ flex: 1, textAlign: 'center', fontSize: '10px' }}>
+                  <Text
+                    style={{
+                      flex: 1,
+                      textAlign: 'center',
+                      fontSize: '10px',
+                      fontWeight: 'semibold',
+                    }}
+                  >
                     {year.spring.map((c) => c.credits).reduce((a, b) => a + b, 0)}
                   </Text>
                   <View style={{ flex: 5 }}></View>
-                  <Text style={{ flex: 1, textAlign: 'center', fontSize: '10px' }}>
+                  <Text
+                    style={{
+                      flex: 1,
+                      textAlign: 'center',
+                      fontSize: '10px',
+                      fontWeight: 'semibold',
+                    }}
+                  >
                     {year.summer.map((c) => c.credits).reduce((a, b) => a + b, 0)}
                   </Text>
                 </View>

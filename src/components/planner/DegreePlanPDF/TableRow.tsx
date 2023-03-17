@@ -10,7 +10,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 24,
     fontSize: 12,
-    fontStyle: 'bold',
   },
   courseCode: {
     width: '25%',

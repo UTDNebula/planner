@@ -32,7 +32,7 @@ const PlanHeader = ({ studentName, degreePlanTitle }: PlanHeaderProp) => (
       marginBottom: '20px',
     }}
   >
-    <Text style={{ fontSize: '16px', fontStyle: 'bold' }}>{degreePlanTitle}</Text>
+    <Text style={{ fontSize: '16px' }}>{degreePlanTitle}</Text>
     <Text style={{ fontSize: '12px' }}>{studentName}</Text>
   </View>
 );
