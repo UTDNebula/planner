@@ -55,6 +55,22 @@ const EditMajorAutocomplete = ({
     // },
   });
 
+  const handleSaveMajor = () => {
+    setEditMajor(false);
+
+    toast.promise(
+      updatePlanMajor.mutateAsync({ major, planId }),
+      {
+        pending: 'Updating plan major...',
+        success: 'Plan major updated!',
+        error: 'Error updating plan major',
+      },
+      {
+        autoClose: 1000,
+      },
+    );
+  };
+
   return (
     <Autocomplete
       disablePortal
@@ -62,20 +78,13 @@ const EditMajorAutocomplete = ({
       value={major}
       onChange={(_, value) => setMajor(value)}
       options={majors}
+      onKeyDown={(event) => {
+        if (event.key === 'Enter') {
+          handleSaveMajor();
+        }
+      }}
       onBlur={() => {
-        setEditMajor(false);
-
-        toast.promise(
-          updatePlanMajor.mutateAsync({ major, planId }),
-          {
-            pending: 'Updating plan major...',
-            success: 'Plan major updated!',
-            error: 'Error updating plan major',
-          },
-          {
-            autoClose: 1000,
-          },
-        );
+        handleSaveMajor();
       }}
       className="flex items-center gap-x-3 rounded-2xl bg-primary-100 px-3"
       sx={{
