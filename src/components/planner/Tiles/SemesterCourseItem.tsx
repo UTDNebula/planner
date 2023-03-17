@@ -107,7 +107,7 @@ export const MemoizedSemesterCourseItem = React.memo(
               changeColor={(color) => onColorChange && onColorChange(color)}
               deleteCourse={() => onDeleteCourse && onDeleteCourse()}
             >
-              <button className="cursor-pointer rounded-md py-[2px] transition-all duration-300 hover:bg-neutral-100">
+              <button className="cursor-pointer rounded-md py-[2px]  hover:bg-neutral-100">
                 <DragIndicatorIcon fontSize="inherit" className="text-[16px] text-neutral-300" />
               </button>
             </SemesterCourseItemDropdown>
