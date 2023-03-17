@@ -99,11 +99,13 @@ const DegreePlanPDF: FC<DegreePlanPDFProps> = ({
           <Header studentName={studentName} degreePlanTitle={planTitle}></Header>
 
           {/* Transfer Credit Table */}
-          <AcademicYearTable
-            tableName="Transfer Credits"
-            tableHeaders={['Transfer', 'SCH', 'Transfer', 'SCH', 'Transfer', 'SCH']}
-            tableData={transferCreditRows}
-          />
+          {transferCreditRows.length > 0 && (
+            <AcademicYearTable
+              tableName="Transfer Credits"
+              tableHeaders={['Transfer', 'SCH', 'Transfer', 'SCH', 'Transfer', 'SCH']}
+              tableData={transferCreditRows}
+            />
+          )}
 
           {academicYears.map((year, idx) => {
             // Get max number of rows
