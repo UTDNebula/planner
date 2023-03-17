@@ -1,4 +1,4 @@
-import EditIcon from '@/icons/EditIcon';
+import PencilIcon from '@/icons/PencilIcon';
 import { trpc } from '@/utils/trpc';
 import React from 'react';
 import { toast } from 'react-toastify';
@@ -47,7 +47,7 @@ export default function EditableMajorTitle({
           }}
         >
           <span className="text-3xl font-semibold">{title}</span>
-          <EditIcon className="text-primary-800" />
+          <PencilIcon className="text-primary-800" />
         </button>
       ) : (
         <input
