@@ -71,7 +71,9 @@ function CourseSelectorContainer({
                 />
                 <h1 className="pl-2 text-2xl font-medium tracking-tight">Plan Requirements</h1>
               </div>
-              <h6 className="text-sm tracking-tight text-gray-400">Drag courses onto your plan</h6>
+              <h6 className="text-base tracking-tight text-gray-500">
+                Drag courses onto your plan
+              </h6>
             </div>
             <div className="z-[999] drop-shadow-2xl">
               <SearchBarTwo
