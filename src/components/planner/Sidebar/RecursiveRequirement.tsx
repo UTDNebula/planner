@@ -26,33 +26,37 @@ export function RecursiveRequirement({
         );
       case 'Or':
         return (
-          <div className="flex flex-col">
-            <Accordion header={<div>Select one of the following</div>} filled={req.filled}>
-              <>
-                {req.requirements.map((req2, idx) => (
+          <Accordion header={<div>Select one of the following options</div>} filled={req.filled}>
+            <>
+              {req.requirements.map((req2, idx) => (
+                <>
+                  <div className="h-2 px-2 text-sm">Option {idx + 1}</div>
                   <RecursiveRequirement
                     key={idx}
                     req={req2}
                     courses={courses}
                     validCourses={validCourses}
                   />
-                ))}
-              </>
-            </Accordion>
-          </div>
+                </>
+              ))}
+            </>
+          </Accordion>
         );
       case 'And':
         return (
-          <div className="flex flex-col">
-            <Accordion header={<div>Select all of the following</div>} filled={req.filled}>
+          <div className="flex flex-col rounded-md border border-neutral-300 py-4">
+            <Accordion header={<div>Select all of the following options</div>} filled={req.filled}>
               <>
                 {req.requirements.map((req2, idx) => (
-                  <RecursiveRequirement
-                    key={idx}
-                    req={req2}
-                    courses={courses}
-                    validCourses={validCourses}
-                  />
+                  <>
+                    <div className="h-2 px-2 text-sm">Option {idx + 1}</div>
+                    <RecursiveRequirement
+                      key={idx}
+                      req={req2}
+                      courses={courses}
+                      validCourses={validCourses}
+                    />
+                  </>
                 ))}
               </>
             </Accordion>
@@ -60,67 +64,63 @@ export function RecursiveRequirement({
         );
       case 'Select':
         return (
-          <div className="flex flex-col">
-            <Accordion
-              header={<div>Select {req.required_count} of the following</div>}
-              filled={req.filled}
-            >
-              <>
-                {req.requirements.map((req2, idx) => (
+          <Accordion
+            header={<div>Select {req.required_count} of the following options</div>}
+            filled={req.filled}
+          >
+            <>
+              {req.requirements.map((req2, idx) => (
+                <>
+                  <div className="h-2 px-2 text-sm">Option {idx + 1}</div>
                   <RecursiveRequirement
                     key={idx}
                     req={req2}
                     courses={courses}
                     validCourses={validCourses}
                   />
-                ))}
-              </>
-            </Accordion>
-          </div>
+                </>
+              ))}
+            </>
+          </Accordion>
         );
       case 'Hours':
         return (
-          <div className="flex flex-col">
-            <Accordion
-              header={
-                <div>Select {req.required_hours} credit hours from the following classes</div>
-              }
-              filled={req.filled}
-            >
-              <>
-                {req.requirements.map((req2, idx) => (
+          <Accordion
+            header={<div>Select {req.required_hours} credit hours from the following classes</div>}
+            filled={req.filled}
+          >
+            <>
+              {req.requirements.map((req2, idx) => (
+                <>
+                  <div className="h-2 px-2 text-sm">Option {idx + 1}</div>
                   <RecursiveRequirement
                     key={idx}
                     req={req2}
                     courses={courses}
                     validCourses={validCourses}
                   />
-                ))}
-              </>
-            </Accordion>
-          </div>
+                </>
+              ))}
+            </>
+          </Accordion>
         );
       case 'BA General Business Electives':
         return (
-          <div className="flex flex-col">
-            <Accordion
-              header={
-                <div>Select {req.required_hours} credit hours from the following classes</div>
-              }
-              filled={req.filled}
-            >
-              <>
-                {req.prefix_groups.map((req2, idx) => (
-                  <RecursiveRequirement
-                    key={idx}
-                    req={req2}
-                    courses={courses}
-                    validCourses={validCourses}
-                  />
-                ))}
-              </>
-            </Accordion>
-          </div>
+          <Accordion
+            header={<div>Select {req.required_hours} credit hours from the following classes</div>}
+            filled={req.filled}
+          >
+            <>
+              {req.prefix_groups.map((req2, idx) => (
+                <RecursiveRequirement
+                  key={idx}
+                  req={req2}
+                  courses={courses}
+                  validCourses={validCourses}
+                />
+              ))}
+            </>
+          </Accordion>
         );
       case 'Prefix':
         return <div>Classes with {req.prefix}</div>;
