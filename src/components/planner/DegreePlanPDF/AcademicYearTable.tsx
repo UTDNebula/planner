@@ -1,4 +1,3 @@
-import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
 import { View, Text } from '@react-pdf/renderer';
 
 type CourseOnPDF = {

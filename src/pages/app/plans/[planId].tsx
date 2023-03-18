@@ -9,7 +9,6 @@ import { createContextInner } from '@/server/trpc/context';
 import { appRouter } from '@/server/trpc/router/_app';
 import usePlan from '@/components/planner/usePlan';
 import { SemestersContextProvider } from '@/components/planner/SemesterContext';
-import { Steps } from 'intro.js-react';
 
 /**
  * A page that displays the details of a specific student academic plan.

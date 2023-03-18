@@ -2,7 +2,7 @@ import DownloadIcon from '@/icons/DownloadIcon';
 import { FC, useState } from 'react';
 import Button from '../../Button';
 import SwitchVerticalIcon from '@/icons/SwitchVerticalIcon';
-import { PDFDownloadLink, usePDF } from '@react-pdf/renderer';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 import { useSemestersContext } from '../SemesterContext';
 import FilterByDropdown from './FilterByDropdown';
 import DegreePlanPDF from '../DegreePlanPDF/DegreePlanPDF';

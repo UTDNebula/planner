@@ -1,6 +1,5 @@
 import React from 'react';
 import ChevronIcon from '@/icons/ChevronIcon';
-import CheckIcon from '@/icons/CheckIcon';
 export default function Accordion({
   header,
   children,

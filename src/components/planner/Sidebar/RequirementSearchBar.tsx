@@ -1,5 +1,4 @@
 import FilterIcon from '@/icons/FilterIcon';
-import { Search as SearchIcon } from '@mui/icons-material';
 import React, { useState } from 'react';
 
 /**
