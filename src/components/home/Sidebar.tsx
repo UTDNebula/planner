@@ -78,7 +78,7 @@ export default function Sidebar({ isMobile }: { isMobile: boolean }): JSX.Elemen
               <li
                 className={`${
                   router.pathname === url && 'rounded-lg bg-primary font-medium text-white'
-                } mx-4 flex cursor-pointer items-center gap-6 px-4 py-2`}
+                } mx-4 flex cursor-pointer items-center gap-6 rounded-md px-4 py-2 hover:rounded-lg hover:bg-primary hover:text-white`}
               >
                 <div className="flex h-full w-6 items-center justify-center">
                   <Icon className="h-6 w-6" />
