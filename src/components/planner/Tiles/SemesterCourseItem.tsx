@@ -59,7 +59,9 @@ export const MemoizedSemesterCourseItem = React.memo(
       <div
         ref={ref}
         {...props}
-        className={`flex h-[50px] w-full cursor-grab flex-row items-center rounded-md border  border-[#D4D4D4] bg-[#FFFFFF] ${
+        className={`flex h-[50px] w-full cursor-grab flex-row items-center rounded-md border border-[#D4D4D4] ${
+          isValid ? 'bg-[#FFFFFF]' : 'bg-[#FEFBED]'
+        }  ${
           !course.locked || isValid || isValid === undefined
             ? course.locked
               ? 'bg-neutral-200'
