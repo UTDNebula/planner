@@ -2,7 +2,6 @@
 import '../styles/globals.css';
 import 'react-toastify/dist/ReactToastify.css';
 import 'intro.js/introjs.css';
-import Script from 'next/script';
 
 import { createTheme, StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
 import { AnimateSharedLayout } from 'framer-motion';
@@ -53,7 +52,6 @@ const theme = createTheme({
 
 import type { NextComponentType } from 'next'; //Import Component type
 import { Router } from 'next/router';
-import { env } from '@/env/server.mjs';
 
 //Add custom appProp type then use union to add it
 type CustomAppProps = AppProps & {
@@ -80,7 +78,6 @@ const NebulaApp: AppType<{ session: Session | null }> = ({
     <SessionProvider session={session}>
       <ReactQueryDevtools initialIsOpen={false} />
       <Head>
-        <Script src={env.ANALYTICS} />
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta

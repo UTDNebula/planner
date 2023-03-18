@@ -31,7 +31,6 @@ export const serverSchema = z.object({
   EMAIL_SERVER_PASSWORD: z.string(),
   EMAIL_FROM: z.string(),
   VALIDATOR: z.string(),
-  ANALYTICS: z.string(),
 });
 
 /**
