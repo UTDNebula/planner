@@ -162,7 +162,7 @@ export const ProgressComponent = ({ value, max }: { value: number; max: number }
       <div className="w-max text-[10px]">
         {value}/{max} done
       </div>
-      <div className="h-4 w-full overflow-hidden rounded-2xl bg-[#F5F5F5]">
+      <div className="h-3 w-full overflow-hidden rounded-2xl bg-[#F5F5F5]">
         <div style={{ width: heh }} className={`h-full bg-primary`}></div>
       </div>
     </div>
@@ -221,8 +221,8 @@ export default function RequirementsContainer({
         <Accordion
           startOpen={true}
           header={
-            <div className="flex w-full flex-row items-center justify-between gap-2">
-              <div className="my-1 whitespace-nowrap text-xl font-semibold tracking-tight">
+            <div className="flex w-full flex-row items-center justify-between gap-2 ">
+              <div className="my-1 max-w-[70%] overflow-hidden text-ellipsis whitespace-nowrap text-xl font-semibold tracking-tight">
                 {degreeRequirement.name}
               </div>
 
@@ -256,7 +256,7 @@ export default function RequirementsContainer({
                     className="flex items-center gap-x-4 rounded-md border border-neutral-300 px-5 py-4"
                     key={idx}
                   >
-                    <div className="max-w-[50%] overflow-hidden text-ellipsis whitespace-nowrap text-sm">
+                    <div className="max-w-[50%] flex-grow justify-start overflow-hidden text-ellipsis whitespace-nowrap text-start">
                       {elm.metadata ? elm.metadata.name : 'hi'}
                     </div>
                     <div className="flex flex-row items-center px-[5px] text-[11px]">
