@@ -60,9 +60,9 @@ export const SidebarCourseItem = React.memo(
               <DragIndicatorIcon fontSize="inherit" className="mr-3 text-[16px] text-[#D4D4D4]" />
               {course.code}
             </span>
-            <div className="">
+            <div className="flex flex-row items-center gap-x-2">
               {course.hours && course.hours < getSemesterHourFromCourseCode(course.code)! && (
-                <div>{course.hours}</div>
+                <div>{course.hours} hours </div>
               )}
               {course.status === 'complete' && <CheckIcon fontSize="small" />}
             </div>

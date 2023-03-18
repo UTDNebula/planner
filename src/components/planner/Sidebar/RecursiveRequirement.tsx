@@ -26,7 +26,7 @@ export function RecursiveRequirement({
         );
       case 'Or':
         return (
-          <div className=" rounded-md border border-neutral-300 p-4">
+          <div className="rounded-md border border-neutral-300 p-4">
             <Accordion
               header={<div className="font-medium">Select one of the following options</div>}
               filled={req.filled}

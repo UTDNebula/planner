@@ -1,5 +1,6 @@
 import React from 'react';
 import ChevronIcon from '@/icons/ChevronIcon';
+import CheckIcon from '@/icons/CheckIcon';
 export default function Accordion({
   header,
   children,
@@ -16,19 +17,21 @@ export default function Accordion({
     setOpen(!open);
   }
   return (
-    <div className={` rounded-md ${filled ? 'opacity-50' : ''}`}>
+    <div className={` rounded-md ${filled ? ' opacity-50' : ''}`}>
       <button
         className="flex w-full flex-row items-center justify-between px-2 duration-500"
         onClick={toggleAccordion}
       >
         {header}
-        <ChevronIcon
-          className={`${
-            open ? '-rotate-90' : 'rotate-90'
-          } ml-2 h-3 w-3 transform cursor-pointer text-neutral-500 transition-all duration-500`}
-          fontSize="inherit"
-          onClick={() => setOpen(!open)}
-        />
+        <div className="flex flex-row">
+          <ChevronIcon
+            className={`${
+              open ? '-rotate-90' : 'rotate-90'
+            } ml-2 h-3 w-3 transform cursor-pointer text-neutral-500 transition-all duration-500`}
+            fontSize="inherit"
+            onClick={() => setOpen(!open)}
+          />
+        </div>
       </button>
 
       <div

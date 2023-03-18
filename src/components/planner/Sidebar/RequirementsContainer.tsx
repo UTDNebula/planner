@@ -15,6 +15,7 @@ import {
 import { GetDragIdByCourseAndReq } from '../types';
 import { RecursiveRequirement } from './RecursiveRequirement';
 import { useSemestersContext } from '../SemesterContext';
+
 function RequirementContainerHeader({
   name,
   progress,
@@ -24,7 +25,7 @@ function RequirementContainerHeader({
   progress: { value: number; max: number; unit: string };
   setCarousel: (state: boolean) => void;
 }) {
-  const { value, max } = progress;
+  const { value, max, unit } = progress;
   return (
     <div className="flex w-full flex-row items-start justify-start">
       <button onClick={() => setCarousel(false)}>
@@ -43,10 +44,18 @@ function RequirementContainerHeader({
           />
         </svg>
       </button>
-      <div>
-        <div className="text-base font-medium">{name}</div>
-        {/* <div className="text-[10px]">{status}</div> */}
-        <ProgressComponent value={value} max={max} unit={'hours'} />
+      <div className="">
+        <div className="flex flex-row items-center justify-between font-medium">
+          <div className="w-[70%] overflow-hidden text-ellipsis whitespace-nowrap text-[18px] font-semibold">
+            {name}
+          </div>
+
+          <div className="w-fit text-[14px] font-medium">
+            {value}/{max} {unit}
+          </div>
+        </div>
+
+        <ProgressComponent2 value={value} max={max} unit={'hours'} />
       </div>
     </div>
   );
@@ -96,7 +105,7 @@ const getRequirementGroup = (
         progress: {
           value: degreeRequirement.num_fulfilled_requirements,
           max: degreeRequirement.num_requirements,
-          unit: 'requirements',
+          unit: 'reqs',
         },
         description: degreeRequirement.metadata.description ?? '',
         req: degreeRequirement,
@@ -177,6 +186,26 @@ const getRequirementGroup = (
   }
 };
 
+export const ProgressComponent2 = ({
+  value,
+  max,
+  unit = 'done',
+}: {
+  value: number;
+  max: number;
+  unit?: string;
+}) => {
+  const heh = `${(value * 100) / max}%`;
+
+  return (
+    <div className="flex w-80 flex-col items-center justify-center">
+      <div className="mt-2 h-1 w-full overflow-hidden rounded-2xl bg-[#F5F5F5] ">
+        <div style={{ width: heh }} className={`h-full bg-primary`}></div>
+      </div>
+    </div>
+  );
+};
+
 export const ProgressComponent = ({
   value,
   max,
@@ -252,8 +281,8 @@ export default function RequirementsContainer({
         <Accordion
           startOpen={true}
           header={
-            <div className="flex w-full flex-row items-center justify-between gap-2 ">
-              <div className="my-1 max-w-[70%] overflow-hidden text-ellipsis whitespace-nowrap text-xl font-semibold tracking-tight">
+            <div className="mr-2 flex w-full flex-row justify-between gap-2">
+              <div className="my-1 w-52 overflow-hidden text-ellipsis whitespace-nowrap text-start  text-xl font-semibold ">
                 {degreeRequirement.name}
               </div>
 
