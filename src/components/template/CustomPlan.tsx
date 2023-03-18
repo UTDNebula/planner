@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 
 import ErrorMessage from '../common/ErrorMessage';
 import courseCode from '@/data/courseCode.json';
-import { SemesterType, SemesterCode } from '@prisma/client';
+import type { SemesterType, SemesterCode } from '@prisma/client';
 import { Credit } from '../credits/types';
 import { UnwrapArray } from '@/types/util-types';
 import type { PDFDocumentProxy } from 'pdfjs-dist';

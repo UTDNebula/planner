@@ -1,5 +1,5 @@
 import { Prisma, PrismaClient, TemplateDataType } from '@prisma/client';
-import { ObjectID, ObjectId } from 'bson';
+import { ObjectId } from 'bson';
 
 import dummyTemplate from '../src/data/degree_template.json';
 const prisma = new PrismaClient();
@@ -36,7 +36,7 @@ async function main() {
 
       for (let i = 0; i < value.length; i++) {
         // Create TemplateData ID
-        const id = new ObjectID().toString();
+        const id = new ObjectId().toString();
 
         const templateDataItems: Array<Prisma.TemplateItemCreateManyInput> = [];
         for (let j = 0; j < value[i].length; j++) {

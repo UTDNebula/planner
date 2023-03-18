@@ -1,6 +1,6 @@
 import { trpc } from '@/utils/trpc';
 import { createNewYear, displaySemesterCode, isSemCodeEqual } from '@/utils/utilFunctions';
-import { SemesterCode } from '@prisma/client';
+import type { SemesterCode } from '@prisma/client';
 import * as Dialog from '@radix-ui/react-dialog';
 import { FC, useState } from 'react';
 import Button from '../../Button';

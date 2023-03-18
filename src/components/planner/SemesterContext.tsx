@@ -7,7 +7,7 @@ import { Plan, Semester, DraggableCourse } from './types';
 import { customCourseSort } from './utils';
 import { useTaskQueue } from '@/utils/useTaskQueue';
 import { tagColors } from './utils';
-import { SemesterType } from '@prisma/client';
+import type { SemesterType } from '@prisma/client';
 
 export interface SemestersContextState {
   planId: string;

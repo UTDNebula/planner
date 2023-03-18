@@ -1,4 +1,4 @@
-import { FC, SVGProps } from 'react';
+import type { FC, SVGProps } from 'react';
 
 const EditIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
   return (
