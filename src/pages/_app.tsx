@@ -52,6 +52,7 @@ const theme = createTheme({
 
 import type { NextComponentType } from 'next'; //Import Component type
 import { Router } from 'next/router';
+import { env } from '@/env/client.mjs';
 
 //Add custom appProp type then use union to add it
 type CustomAppProps = AppProps & {
@@ -97,6 +98,13 @@ const NebulaApp: AppType<{ session: Session | null }> = ({
         <link href="/planner@32px.png" rel="icon" type="image/png" sizes="32x32" />
         <link rel="apple-touch-icon" href="/apple-icon.png"></link>
         <meta name="theme-color" content="#4659A7" />
+
+        <script
+          async
+          defer
+          data-website-id={env.NEXT_PUBLIC_UMAMI_WEBSITE_ID}
+          src={'http://localhost:3000/api/umami/test'}
+        />
       </Head>
       <AnimateSharedLayout>
         <StyledEngineProvider injectFirst>
