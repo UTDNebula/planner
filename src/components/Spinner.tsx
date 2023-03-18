@@ -1,4 +1,4 @@
-import type { FC, SVGProps } from 'react';
+import { FC, SVGProps } from 'react';
 
 const sizeClasses = {
   small: 'h-2 w-2',

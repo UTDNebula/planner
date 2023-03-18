@@ -1,4 +1,4 @@
-import type { SemesterCode } from '@prisma/client';
+import { SemesterCode } from '@prisma/client';
 
 import { createNewYear, displaySemesterCode, isSemCodeEqual } from './utilFunctions';
 

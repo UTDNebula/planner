@@ -1,5 +1,5 @@
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
-import type { SemesterCode } from '@prisma/client';
+import { SemesterCode } from '@prisma/client';
 import { FC, useMemo, useState } from 'react';
 
 import { trpc } from '@/utils/trpc';

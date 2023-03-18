@@ -1,4 +1,4 @@
-import type { FC, SVGProps } from 'react';
+import { FC, SVGProps } from 'react';
 
 const ClipboardListIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
   return (

@@ -1,6 +1,6 @@
 import { RouterOutputs } from '@/utils/trpc';
 import { UniqueIdentifier } from '@dnd-kit/core';
-import type { SemesterCode } from '@prisma/client';
+import { SemesterCode } from '@prisma/client';
 import { ObjectID } from 'bson';
 import { tagColors } from './utils';
 

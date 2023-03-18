@@ -4,7 +4,7 @@ import ColorSwatchIcon from '@/icons/ColorSwatchIcon';
 import ChevronIcon from '@/icons/ChevronIcon';
 import { tagColors } from '../utils';
 import { useSemestersContext } from '../SemesterContext';
-import type { SemesterType } from '@prisma/client';
+import { SemesterType } from '@prisma/client';
 import Checkbox from '../../Checkbox';
 import CalendarIcon from '@/icons/CalendarIcon';
 import ClockIcon from '@/icons/ClockIcon';

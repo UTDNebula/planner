@@ -1,4 +1,4 @@
-import type { FC, SVGProps } from 'react';
+import { FC, SVGProps } from 'react';
 
 const DotFilledIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
   return (
