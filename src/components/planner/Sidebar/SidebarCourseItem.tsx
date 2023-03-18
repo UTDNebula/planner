@@ -55,15 +55,17 @@ export const SidebarCourseItem = React.memo(
           side="left"
           title={title || ''}
         >
-          <div>
+          <div className="flex w-full flex-row justify-between">
             <span className="text-sm text-[#1C2A6D]">
               <DragIndicatorIcon fontSize="inherit" className="mr-3 text-[16px] text-[#D4D4D4]" />
               {course.code}
             </span>
-            {course.hours && course.hours < getSemesterHourFromCourseCode(course.code)! && (
-              <div>{course.hours}</div>
-            )}
-            {course.status === 'complete' && <CheckIcon fontSize="small" />}
+            <div className="">
+              {course.hours && course.hours < getSemesterHourFromCourseCode(course.code)! && (
+                <div>{course.hours}</div>
+              )}
+              {course.status === 'complete' && <CheckIcon fontSize="small" />}
+            </div>
           </div>
         </CourseInfoHoverCard>
       </div>
