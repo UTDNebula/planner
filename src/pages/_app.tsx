@@ -25,7 +25,7 @@ Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
 
-import { trpc } from '../utils/trpc';
+import { getBaseUrl, trpc } from '../utils/trpc';
 const theme = createTheme({
   typography: {
     allVariants: {
@@ -100,12 +100,14 @@ const NebulaApp: AppType<{ session: Session | null }> = ({
         <link rel="apple-touch-icon" href="/apple-icon.png"></link>
         <meta name="theme-color" content="#4659A7" />
 
-        <script
-          async
-          defer
-          data-website-id={env.NEXT_PUBLIC_UMAMI_WEBSITE_ID}
-          src={'http://localhost:3000/api/umami/test'}
-        />
+        {process.env.NODE_ENV === 'production' && (
+          <script
+            async
+            defer
+            data-website-id={env.NEXT_PUBLIC_UMAMI_WEBSITE_ID}
+            src={`${getBaseUrl()}/api/umami/test`}
+          />
+        )}
       </Head>
       <AnimateSharedLayout>
         <StyledEngineProvider injectFirst>
