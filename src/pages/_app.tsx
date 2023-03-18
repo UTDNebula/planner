@@ -2,6 +2,7 @@
 import '../styles/globals.css';
 import 'react-toastify/dist/ReactToastify.css';
 import 'intro.js/introjs.css';
+import Script from 'next/script';
 
 import { createTheme, StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
 import { AnimateSharedLayout } from 'framer-motion';
@@ -78,6 +79,7 @@ const NebulaApp: AppType<{ session: Session | null }> = ({
     <SessionProvider session={session}>
       <ReactQueryDevtools initialIsOpen={false} />
       <Head>
+        <Script src="https://example.com/script.js" />
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta
