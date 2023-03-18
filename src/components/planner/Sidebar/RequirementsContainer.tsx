@@ -17,13 +17,14 @@ import { RecursiveRequirement } from './RecursiveRequirement';
 import { useSemestersContext } from '../SemesterContext';
 function RequirementContainerHeader({
   name,
-  status,
+  progress,
   setCarousel,
 }: {
   name: string;
-  status: string;
+  progress: { value: number; max: number; unit: string };
   setCarousel: (state: boolean) => void;
 }) {
+  const { value, max } = progress;
   return (
     <div className="flex w-full flex-row items-start justify-start">
       <button onClick={() => setCarousel(false)}>
@@ -44,7 +45,8 @@ function RequirementContainerHeader({
       </button>
       <div>
         <div className="text-base">{name}</div>
-        <div className="text-[10px]">{status}</div>
+        {/* <div className="text-[10px]">{status}</div> */}
+        <ProgressComponent value={value} max={max} unit={'hours'} />
       </div>
     </div>
   );
@@ -54,7 +56,7 @@ const getRequirementGroup = (
   degreeRequirement: RequirementGroupTypes,
 ): {
   name: string;
-  status: string;
+  progress: { value: number; max: number; unit: string };
   description: string;
   req: RequirementGroupTypes;
   getData: () => Promise<RequirementTypes[]>;
@@ -90,7 +92,12 @@ const getRequirementGroup = (
     case 'And':
       return {
         name: degreeRequirement.metadata.name,
-        status: `${degreeRequirement.num_fulfilled_requirements} / ${degreeRequirement.num_requirements} requirements`,
+
+        progress: {
+          value: degreeRequirement.num_fulfilled_requirements,
+          max: degreeRequirement.num_requirements,
+          unit: 'requirements',
+        },
         description: degreeRequirement.metadata.description ?? '',
         req: degreeRequirement,
         getData: () => Promise.resolve(degreeRequirement.requirements),
@@ -99,7 +106,12 @@ const getRequirementGroup = (
     case 'Hours':
       return {
         name: degreeRequirement.metadata.name,
-        status: `${degreeRequirement.fulfilled_hours} / ${degreeRequirement.required_hours} hours`,
+
+        progress: {
+          value: degreeRequirement.fulfilled_hours,
+          max: degreeRequirement.required_hours,
+          unit: 'hours',
+        },
         description: degreeRequirement.metadata.description ?? '',
         req: degreeRequirement,
         getData: () => Promise.resolve(degreeRequirement.requirements),
@@ -109,7 +121,12 @@ const getRequirementGroup = (
       // Some function to get courses
       return {
         name: 'Free Electives',
-        status: `${degreeRequirement.fulfilled_hours} / ${degreeRequirement.required_hours} hours`,
+
+        progress: {
+          value: degreeRequirement.fulfilled_hours,
+          max: degreeRequirement.required_hours,
+          unit: 'hours',
+        },
         description: degreeRequirement.metadata.description ?? '',
         req: degreeRequirement,
         getData: async () =>
@@ -126,7 +143,12 @@ const getRequirementGroup = (
     case 'CS Guided Electives':
       return {
         name: degreeRequirement.metadata.name ?? 'CS Guided Electives',
-        status: `${degreeRequirement.fulfilled_count} / ${degreeRequirement.required_count} courses`,
+
+        progress: {
+          value: degreeRequirement.fulfilled_count,
+          max: degreeRequirement.required_count,
+          unit: 'courses',
+        },
         description: degreeRequirement.metadata.description ?? '',
         req: degreeRequirement,
         getData: async () =>
@@ -144,7 +166,8 @@ const getRequirementGroup = (
     default: {
       return {
         name: '',
-        status: 'NOT SUPPORTED',
+
+        progress: { value: 0, max: 1, unit: 'none' },
         req: degreeRequirement,
         description: '',
         getData: () => Promise.resolve([] as RequirementTypes[]),
@@ -154,13 +177,21 @@ const getRequirementGroup = (
   }
 };
 
-export const ProgressComponent = ({ value, max }: { value: number; max: number }) => {
+export const ProgressComponent = ({
+  value,
+  max,
+  unit = 'done',
+}: {
+  value: number;
+  max: number;
+  unit?: string;
+}) => {
   const heh = `${(value * 100) / max}%`;
 
   return (
     <div className="flex w-24 flex-col items-center justify-center">
       <div className="w-max text-[10px]">
-        {value}/{max} done
+        {value}/{max} {unit}
       </div>
       <div className="h-3 w-full overflow-hidden rounded-2xl bg-[#F5F5F5]">
         <div style={{ width: heh }} className={`h-full bg-primary`}></div>
@@ -295,7 +326,7 @@ function RequirementContainer({
   courses,
 }: RequirementContainerProps): JSX.Element {
   // Handles logic for displaying correct requirement group
-  const { name, status, description, getData, filterFunction } =
+  const { name, progress, description, getData, filterFunction } =
     getRequirementGroup(degreeRequirement);
 
   const { results, updateQuery } = useSearch({
@@ -321,7 +352,7 @@ function RequirementContainer({
   // Handles logic for adding bypass to requirement
   return (
     <>
-      <RequirementContainerHeader name={name} status={status} setCarousel={setCarousel} />
+      <RequirementContainerHeader name={name} progress={progress} setCarousel={setCarousel} />
       <div className="text-[14px]">{description}</div>
 
       <div className=" flex h-full flex-col gap-y-2 overflow-x-hidden overflow-y-scroll">
