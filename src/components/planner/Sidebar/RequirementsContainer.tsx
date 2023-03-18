@@ -370,9 +370,9 @@ function RequirementContainer({
           );
         })}
       </div>
-      <button onClick={handleUpdateBypass}>
-        {hasBypass ? 'Mark as Incomplete' : 'Mark as Completed'}
-      </button>
+      {/* <button onClick={handleUpdateBypass}>
+        {hasBypass ? 'Mark as Incomplete' : 'Mark Requirement as Completed'}
+      </button> */}
     </>
   );
 }
