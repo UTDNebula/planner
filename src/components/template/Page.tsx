@@ -18,9 +18,7 @@ export function Page({ title, subtitle, children, actions, close }: PropsWithChi
           <CloseIcon fontSize="small" />
         </button>
       </div>
-      <div className="flex flex-col gap-3">
-        {children}
-      </div>
+      <div className="flex flex-col gap-3">{children}</div>
       <div className="flex gap-6 place-self-end font-medium">
         {actions.map(({ name, onClick, color, loading }, index) => (
           <Button color={color} onClick={onClick} key={index} isLoading={loading}>

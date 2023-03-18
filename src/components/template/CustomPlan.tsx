@@ -16,7 +16,7 @@ const majors = majorsList as string[];
 
 type TakenCourse = UnwrapArray<RouterInputs['user']['createUserPlan']['takenCourses']>;
 
-export default function CustomPlan({ onDismiss }: { onDismiss: ()=>void }) {
+export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
   const [name, setName] = useState('');
   const [major, setMajor] = useState(majors[0]);
   const [transferCredits, setTransferCredits] = useState<string[]>([]);
@@ -216,31 +216,30 @@ export default function CustomPlan({ onDismiss }: { onDismiss: ()=>void }) {
           name: 'Next',
           onClick: () => setPageState(1),
           color: 'primary',
-        }
+        },
       ]}
     >
-      
-        <p className="text-sm font-semibold">Plan Name</p>
-        <input
-          className="w-full rounded-md border border-neutral-500 py-3 px-4 text-sm text-black/80 placeholder:text-neutral-400"
-          placeholder="Name your plan"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
+      <p className="text-sm font-semibold">Plan Name</p>
+      <input
+        className="w-full rounded-md border border-neutral-500 py-3 px-4 text-sm text-black/80 placeholder:text-neutral-400"
+        placeholder="Name your plan"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
 
-        <p className="text-sm font-semibold">Choose your major</p>
-        <select
-          className="w-full rounded-md border border-neutral-500 py-3 px-4 text-sm text-black/80"
-          onChange={(e) => setMajor(e.target.value)}
-          defaultValue="placeholder"
-        >
-          <option disabled value="placeholder">
-            <p className="text-neutral-400">Find your major...</p>
-          </option>
-          {majors.map((major, idx) => (
-            <option key={idx}>{major}</option>
-          ))}
-        </select>
+      <p className="text-sm font-semibold">Choose your major</p>
+      <select
+        className="w-full rounded-md border border-neutral-500 py-3 px-4 text-sm text-black/80"
+        onChange={(e) => setMajor(e.target.value)}
+        defaultValue="placeholder"
+      >
+        <option disabled value="placeholder">
+          <p className="text-neutral-400">Find your major...</p>
+        </option>
+        {majors.map((major, idx) => (
+          <option key={idx}>{major}</option>
+        ))}
+      </select>
     </Page>,
     <Page
       key="custom-plan-transcript"
@@ -289,26 +288,27 @@ export default function CustomPlan({ onDismiss }: { onDismiss: ()=>void }) {
           <p className="text-neutral-500">PDF file up to 5MB</p>
         </button>
         {file && (
-          <div className="flex w-full gap-3 justify-between items-center">
+          <div className="flex w-full items-center justify-between gap-3">
             <span>
-            <svg
-              width="32"
-              height="32"
-              viewBox="0 0 32 32"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <rect width="32" height="32" rx="16" fill="#F5F5FF" />
-              <path
-                d="M14.1334 16.0004H17.8668M14.1334 18.4893H17.8668M19.1112 21.6004H12.889C12.2017 21.6004 11.6445 21.0432 11.6445 20.3559V11.6448C11.6445 10.9575 12.2017 10.4004 12.889 10.4004H16.3646C16.5296 10.4004 16.6879 10.4659 16.8046 10.5826L20.1734 13.9515C20.2901 14.0682 20.3556 14.2264 20.3556 14.3915V20.3559C20.3556 21.0432 19.7985 21.6004 19.1112 21.6004Z"
-                stroke="#4B4EFC"
-                strokeWidth="1.336"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg></span>
+              <svg
+                width="32"
+                height="32"
+                viewBox="0 0 32 32"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect width="32" height="32" rx="16" fill="#F5F5FF" />
+                <path
+                  d="M14.1334 16.0004H17.8668M14.1334 18.4893H17.8668M19.1112 21.6004H12.889C12.2017 21.6004 11.6445 21.0432 11.6445 20.3559V11.6448C11.6445 10.9575 12.2017 10.4004 12.889 10.4004H16.3646C16.5296 10.4004 16.6879 10.4659 16.8046 10.5826L20.1734 13.9515C20.2901 14.0682 20.3556 14.2264 20.3556 14.3915V20.3559C20.3556 21.0432 19.7985 21.6004 19.1112 21.6004Z"
+                  stroke="#4B4EFC"
+                  strokeWidth="1.336"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </span>
 
-            <div className="flex flex-col w-full">
+            <div className="flex w-full flex-col">
               <p>{file.name}</p>
               <p className={`text-sm ${error ? 'text-red-500' : 'text-neutral-400'}`}>
                 {Math.floor(file.size / 1000)}KB •{' '}
