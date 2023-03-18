@@ -41,7 +41,7 @@ export default function PlanDetailPage(
     <div className="flex h-screen max-h-screen w-screen flex-col overflow-hidden">
       {plan && (
         <SemestersContextProvider planId={planId} plan={plan} bypasses={bypasses ?? []}>
-          <Steps enabled={true} steps={steps} initialStep={0} onExit={() => console.log('HI')} />
+          {/* <Steps enabled={true} steps={steps} initialStep={0} onExit={() => console.log('HI')} /> */}
           <Planner degreeRequirements={validation} transferCredits={plan.transferCredits} />
         </SemestersContextProvider>
       )}

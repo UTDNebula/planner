@@ -59,7 +59,9 @@ export const MemoizedSemesterCourseItem = React.memo(
       <div
         ref={ref}
         {...props}
-        className={`flex h-[50px] w-full cursor-grab flex-row items-center rounded-md border  border-[#D4D4D4] bg-[#FFFFFF] ${
+        className={`flex h-[50px] w-full cursor-grab flex-row items-center rounded-md border border-[#D4D4D4] ${
+          isValid ? 'bg-[#FFFFFF]' : 'bg-[#FEFBED]'
+        }  ${
           !course.locked || isValid || isValid === undefined
             ? course.locked
               ? 'bg-neutral-200'
@@ -107,7 +109,7 @@ export const MemoizedSemesterCourseItem = React.memo(
               changeColor={(color) => onColorChange && onColorChange(color)}
               deleteCourse={() => onDeleteCourse && onDeleteCourse()}
             >
-              <button className="cursor-pointer rounded-md py-[2px] transition-all duration-300 hover:bg-neutral-100">
+              <button className="cursor-pointer rounded-md py-[2px]  hover:bg-neutral-100">
                 <DragIndicatorIcon fontSize="inherit" className="text-[16px] text-neutral-300" />
               </button>
             </SemesterCourseItemDropdown>

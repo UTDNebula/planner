@@ -1,3 +1,4 @@
+import FilterIcon from '@/icons/FilterIcon';
 import { Search as SearchIcon } from '@mui/icons-material';
 import React, { useState } from 'react';
 
@@ -19,15 +20,14 @@ export default function SearchBar({ updateQuery }: SearchBarProps): JSX.Element 
   };
 
   return (
-    <div className="sticky top-0 z-30 flex min-h-[30px] flex-row items-center justify-between rounded-md border border-[#1C2A6D] bg-white pl-5 pr-2">
+    <div className="sticky top-0 z-30 flex min-h-[40px] flex-row items-center rounded-md border border-[#1C2A6D] bg-white px-2 ">
+      <FilterIcon className="" />
       <input
-        className="text-xs outline-none"
+        className=" ml-2 text-sm outline-none"
         placeholder="Filter requirements"
         value={query}
         onChange={handleQueryUpdate}
       />
-
-      <SearchIcon />
     </div>
   );
 }

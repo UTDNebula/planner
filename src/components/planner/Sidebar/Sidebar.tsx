@@ -1,10 +1,8 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { SearchBarTwo } from '@components/credits/SearchBar';
 import React, { useRef, useState } from 'react';
-import Fuse from 'fuse.js';
 
 import RequirementsContainer from '@/components/planner/Sidebar/RequirementsContainer';
-import useSearch from '@/components/search/search';
 
 import { Course, DraggableCourse, GetDragIdByCourse } from '../types';
 import DraggableCourseList from './DraggableCourseList';
@@ -45,17 +43,6 @@ function CourseSelectorContainer({
     threshold: 0.2,
   });
 
-  /* const { results, updateQuery } = useSearch({
-    getData: async () =>
-      data
-        ? data.map((c) => ({ code: `${c.subject_prefix} ${c.course_number}`, title: c.title }))
-        : [],
-    initialQuery: '@',
-    filterFn: (elm, query) =>
-      query.length > 0 ? elm['code'].toLowerCase().includes(query.toLowerCase()) : false,
-    constraints: [0, 5],
-  }); */
-
   const courseResults = React.useMemo(() => {
     return results.map((result) => {
       return {
@@ -84,7 +71,9 @@ function CourseSelectorContainer({
                 />
                 <h1 className="pl-2 text-2xl font-medium tracking-tight">Plan Requirements</h1>
               </div>
-              <h6 className="text-sm tracking-tight text-gray-400">Drag courses onto your plan</h6>
+              <h6 className="text-base tracking-tight text-gray-500">
+                Drag courses onto your plan
+              </h6>
             </div>
             <div className="z-[999] drop-shadow-2xl">
               <SearchBarTwo
