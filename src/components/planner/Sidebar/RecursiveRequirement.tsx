@@ -26,26 +26,34 @@ export function RecursiveRequirement({
         );
       case 'Or':
         return (
-          <Accordion header={<div>Select one of the following options</div>} filled={req.filled}>
-            <>
-              {req.requirements.map((req2, idx) => (
-                <>
-                  <div className="h-2 px-2 text-sm">Option {idx + 1}</div>
-                  <RecursiveRequirement
-                    key={idx}
-                    req={req2}
-                    courses={courses}
-                    validCourses={validCourses}
-                  />
-                </>
-              ))}
-            </>
-          </Accordion>
+          <div className=" rounded-md border border-neutral-300 p-4">
+            <Accordion
+              header={<div className="font-medium">Select one of the following options</div>}
+              filled={req.filled}
+            >
+              <>
+                {req.requirements.map((req2, idx) => (
+                  <>
+                    <div className="h-2 px-2 text-sm">Option {idx + 1}</div>
+                    <RecursiveRequirement
+                      key={idx}
+                      req={req2}
+                      courses={courses}
+                      validCourses={validCourses}
+                    />
+                  </>
+                ))}
+              </>
+            </Accordion>
+          </div>
         );
       case 'And':
         return (
-          <div className="flex flex-col rounded-md border border-neutral-300 py-4">
-            <Accordion header={<div>Select all of the following options</div>} filled={req.filled}>
+          <div className="flex flex-col rounded-md border border-neutral-300 p-4">
+            <Accordion
+              header={<div className="font-medium">Select all of the following options</div>}
+              filled={req.filled}
+            >
               <>
                 {req.requirements.map((req2, idx) => (
                   <>
@@ -64,63 +72,81 @@ export function RecursiveRequirement({
         );
       case 'Select':
         return (
-          <Accordion
-            header={<div>Select {req.required_count} of the following options</div>}
-            filled={req.filled}
-          >
-            <>
-              {req.requirements.map((req2, idx) => (
-                <>
-                  <div className="h-2 px-2 text-sm">Option {idx + 1}</div>
-                  <RecursiveRequirement
-                    key={idx}
-                    req={req2}
-                    courses={courses}
-                    validCourses={validCourses}
-                  />
-                </>
-              ))}
-            </>
-          </Accordion>
+          <div className=" rounded-md border border-neutral-300 p-4">
+            <Accordion
+              header={
+                <div className="font-medium">
+                  Select {req.required_count} of the following options
+                </div>
+              }
+              filled={req.filled}
+            >
+              <>
+                {req.requirements.map((req2, idx) => (
+                  <>
+                    <div className="h-2 px-2 text-sm">Option {idx + 1}</div>
+                    <RecursiveRequirement
+                      key={idx}
+                      req={req2}
+                      courses={courses}
+                      validCourses={validCourses}
+                    />
+                  </>
+                ))}
+              </>
+            </Accordion>
+          </div>
         );
       case 'Hours':
         return (
-          <Accordion
-            header={<div>Select {req.required_hours} credit hours from the following classes</div>}
-            filled={req.filled}
-          >
-            <>
-              {req.requirements.map((req2, idx) => (
-                <>
-                  <div className="h-2 px-2 text-sm">Option {idx + 1}</div>
+          <div className="rounded-md border border-neutral-300 p-4">
+            <Accordion
+              header={
+                <div className="font-medium">
+                  Select {req.required_hours} credit hours from the following classes
+                </div>
+              }
+              filled={req.filled}
+            >
+              <>
+                {req.requirements.map((req2, idx) => (
+                  <>
+                    <div className="h-2 px-2 text-sm">Option {idx + 1}</div>
+                    <RecursiveRequirement
+                      key={idx}
+                      req={req2}
+                      courses={courses}
+                      validCourses={validCourses}
+                    />
+                  </>
+                ))}
+              </>
+            </Accordion>
+          </div>
+        );
+      case 'BA General Business Electives':
+        return (
+          <div className=" rounded-md border border-neutral-300 p-4">
+            <Accordion
+              header={
+                <div className="font-medium">
+                  Select {req.required_hours} credit hours from the following classes
+                </div>
+              }
+              filled={req.filled}
+            >
+              <>
+                {req.prefix_groups.map((req2, idx) => (
                   <RecursiveRequirement
                     key={idx}
                     req={req2}
                     courses={courses}
                     validCourses={validCourses}
                   />
-                </>
-              ))}
-            </>
-          </Accordion>
-        );
-      case 'BA General Business Electives':
-        return (
-          <Accordion
-            header={<div>Select {req.required_hours} credit hours from the following classes</div>}
-            filled={req.filled}
-          >
-            <>
-              {req.prefix_groups.map((req2, idx) => (
-                <RecursiveRequirement
-                  key={idx}
-                  req={req2}
-                  courses={courses}
-                  validCourses={validCourses}
-                />
-              ))}
-            </>
-          </Accordion>
+                ))}
+              </>
+            </Accordion>
+          </div>
         );
       case 'Prefix':
         return <div>Classes with {req.prefix}</div>;

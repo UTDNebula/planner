@@ -44,7 +44,7 @@ function RequirementContainerHeader({
         </svg>
       </button>
       <div>
-        <div className="text-base">{name}</div>
+        <div className="text-base font-medium">{name}</div>
         {/* <div className="text-[10px]">{status}</div> */}
         <ProgressComponent value={value} max={max} unit={'hours'} />
       </div>
