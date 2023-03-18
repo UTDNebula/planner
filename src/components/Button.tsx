@@ -15,7 +15,7 @@ const sizeClasses = {
   small: 'px-3 py-1.5 gap-x-1.5 text-xs',
 };
 
-interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
+export interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
   color?: keyof typeof colorClasses;
   size?: keyof typeof sizeClasses;
   icon?: React.ReactNode;

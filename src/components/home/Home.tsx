@@ -16,9 +16,7 @@ export default function PlansPage(): JSX.Element {
   const userQuery = trpc.user.getUser.useQuery();
   const { data } = userPlanQuery;
   const userData = userQuery.data;
-  if (!data) {
-    return <div>You have not created any plans yet</div>;
-  }
+  const [planPage, setPlanPage] = useState<0 | 1>(1);
 
   const steps = [
     {
@@ -69,42 +67,50 @@ export default function PlansPage(): JSX.Element {
       >
         <article className="flex flex-col">
           <div className="flex flex-row items-center justify-between">
-            <div className="mb-4 text-4xl font-semibold">Course Dashboard</div>
+            <div className="mb-4 text-4xl font-semibold tracking-tight text-primary-900">
+              My Degree Plans
+            </div>
             <DropdownMenu.Root>
-              <DropdownMenu.Trigger asChild>
+              <DropdownMenu.Trigger>
                 <button
                   id="tutorial-2"
-                  className="flex h-12 w-52 flex-row items-center gap-4 rounded-md bg-primary p-6 text-white transition-all hover:scale-105"
+                  className="flex h-12 flex-row items-center gap-4 rounded-md bg-primary p-6 text-white transition-all hover:bg-primary-600 active:bg-primary-600"
                 >
                   <PlusIcon />
-                  <div className="">Add New Plan</div>
+                  <p>Add New Plan</p>
                   <ChevronIcon className="rotate-90" />
                 </button>
               </DropdownMenu.Trigger>
 
               <DropdownMenu.Portal>
-                <DropdownMenu.Content className="DropdownMenuContent w-52 border-2 bg-white">
-                  <DropdownMenu.Item className="DropdownMenuItem flex h-12 items-center justify-center hover:bg-primary hover:text-white">
-                    <button className="h-full w-full" onClick={() => setOpenTemplateModal(true)}>
-                      Add Custom Plan
-                    </button>
-                  </DropdownMenu.Item>
-                  <DropdownMenu.Separator className="DropdownMenuSeparator h-0.5 w-52 bg-black opacity-10" />
-                  <DropdownMenu.Item className="DropdownMenuItem flex h-12 items-center justify-center hover:bg-primary hover:text-white">
-                    <button className="h-full w-full" onClick={() => setOpenTemplateModal(true)}>
-                      Add Template Plan
-                    </button>
-                  </DropdownMenu.Item>
+                <DropdownMenu.Content className="relative top-2 w-min rounded-md border border-neutral-300 bg-generic-white drop-shadow-xl">
+                  <DropdownItem
+                    text="Add Custom Plan"
+                    onClick={() => {
+                      setPlanPage(0);
+                      setOpenTemplateModal(true);
+                    }}
+                  />
+
+                  <DropdownMenu.Separator className="DropdownMenuSeparator h-0.5 bg-black opacity-10" />
+                  <DropdownItem
+                    text="Add Template Plan"
+                    onClick={() => {
+                      setPlanPage(1);
+                      setOpenTemplateModal(true);
+                    }}
+                  />
                 </DropdownMenu.Content>
               </DropdownMenu.Portal>
             </DropdownMenu.Root>
           </div>
-          <div className="ml-1 mb-10 text-lg font-semibold text-[#737373]">
-            Welcome {userData?.profile?.name ?? 'Temoc'}
+          <div className="mb-10 text-lg font-semibold text-[#737373]">
+            Welcome{userData?.profile?.name ? ', ' + userData.profile.name : ''}
           </div>
         </article>
-        <article className=" grid h-fit w-fit grid-cols-3 gap-12">
-          {data.plans.map((plan) => (
+        {data?.plans.length === 0 && <div>You have not created any plans yet.</div>}
+        <article className="grid h-fit w-fit grid-cols-3 gap-12">
+          {data?.plans.map((plan) => (
             <PlanCard
               key={plan.id}
               id={plan.id}
@@ -115,7 +121,22 @@ export default function PlansPage(): JSX.Element {
         </article>
         <article></article>
       </section>
-      {openTemplateModal && <TemplateModal setOpenTemplateModal={setOpenTemplateModal} />}
+      {openTemplateModal && (
+        <TemplateModal setOpenTemplateModal={setOpenTemplateModal} page={planPage} />
+      )}
     </>
   );
 }
+
+interface ItemProps {
+  text: string;
+  onClick: () => void;
+}
+const DropdownItem = ({ text, onClick }: ItemProps) => (
+  <DropdownMenu.Item
+    onClick={onClick}
+    className="flex w-full min-w-max cursor-pointer items-center gap-x-3 border-b border-neutral-300 px-2 py-2 text-sm hover:bg-neutral-200"
+  >
+    <span className="h-full w-full">{text}</span>
+  </DropdownMenu.Item>
+);
