@@ -63,7 +63,7 @@ export default function PlanCard({ id, name, major }: PlanCardProps) {
               </PlanCardDropdown>
               <DeletePlanModal
                 open={openDeleteModal}
-                onOpenChange={(open) => setOpenDeleteModal(open)}
+                onClose={() => setOpenDeleteModal(false)}
                 deletePlan={() => {
                   setDeleting(true);
                   deletePlan.mutateAsync(id);

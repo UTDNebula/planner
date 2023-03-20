@@ -1,16 +1,17 @@
+import Modal from '@/components/Modal';
 import { trpc } from '@/utils/trpc';
 import { createNewYear, displaySemesterCode, isSemCodeEqual } from '@/utils/utilFunctions';
 import { SemesterCode } from '@prisma/client';
-import * as Dialog from '@radix-ui/react-dialog';
 import { FC, useState } from 'react';
 import Button from '../../Button';
 import SemestersSelect from './SemestersSelect';
 
-export interface EditSemestersModalProps extends Dialog.DialogProps {
+export interface EditSemestersModalProps {
   planId: string;
   startSemester: SemesterCode;
   endSemester: SemesterCode;
   closeModal: () => void;
+  open: boolean;
 }
 
 // Generates n-year worth of semesters before and after the given semester
@@ -53,72 +54,62 @@ const EditSemestersModal: FC<EditSemestersModalProps> = ({
   const endSemesterOptions: SemesterCode[] = genSurroundingSemesterCodes(endSemester, 3);
 
   return (
-    <Dialog.Root {...props}>
-      <Dialog.Portal>
-        <Dialog.Trigger asChild>
-          <span>Edit profile</span>
-        </Dialog.Trigger>
+    <Modal onClose={closeModal} {...props}>
+      <h1 className="text-lg font-medium">Edit semesters</h1>
+      <p className="mt-2 text-base text-neutral-400">
+        {'WARNING: This will add/delete semesters. This action cannot be undone.'}
+      </p>
 
-        <Dialog.Overlay className="fixed inset-0 z-50 bg-generic-black bg-opacity-60" />
-        <Dialog.Content className="fixed left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2 transform rounded-md bg-generic-white p-6">
-          <Dialog.Title className="text-lg font-medium">Edit semesters</Dialog.Title>
-          <Dialog.Description className="mt-2 text-base text-neutral-400">
-            {'WARNING: This will add/delete semesters. This action cannot be undone.'}
-          </Dialog.Description>
-
-          <div className="mt-4 flex flex-col gap-y-3">
-            <div className="inline-grid grid-cols-[125px_auto] items-center gap-1">
-              <label htmlFor="start-semester" className="whitespace-nowrap">
-                Start semester
-              </label>
-              <SemestersSelect
-                id="start-semester"
-                placeholder={displaySemesterCode(startSemester)}
-                semesterCodes={startSemesterOptions}
-                onValueChange={(value) => setNewStartSemester(JSON.parse(value))}
-              />
-            </div>
-            <div className="mt-2 inline-grid grid-cols-[125px_auto] items-center gap-1">
-              <label htmlFor="end-semester" className="whitespace-nowrap">
-                End semester
-              </label>
-              <SemestersSelect
-                id="end-semester"
-                placeholder={displaySemesterCode(endSemester)}
-                semesterCodes={endSemesterOptions}
-                onValueChange={(value) => setNewEndSemester(JSON.parse(value))}
-              />
-            </div>
-          </div>
-          <div className="mt-4 ml-auto flex w-fit gap-x-4">
-            <Dialog.Close asChild>
-              <Button
-                color="secondary"
-                onClick={(e) => {
-                  e.stopPropagation();
-                }}
-              >
-                Cancel
-              </Button>
-            </Dialog.Close>
-            <Button
-              isLoading={isModifyLoading}
-              onClick={(e) => {
-                e.stopPropagation();
-                setIsModifyLoading(true);
-                modifySemesters.mutateAsync({
-                  planId,
-                  newEndSemester,
-                  newStartSemester,
-                });
-              }}
-            >
-              Save changes
-            </Button>
-          </div>
-        </Dialog.Content>
-      </Dialog.Portal>
-    </Dialog.Root>
+      <div className="mt-4 flex flex-col gap-y-3">
+        <div className="inline-grid grid-cols-[125px_auto] items-center gap-1">
+          <label htmlFor="start-semester" className="whitespace-nowrap">
+            Start semester
+          </label>
+          <SemestersSelect
+            id="start-semester"
+            placeholder={displaySemesterCode(startSemester)}
+            semesterCodes={startSemesterOptions}
+            onValueChange={(value) => setNewStartSemester(JSON.parse(value))}
+          />
+        </div>
+        <div className="mt-2 inline-grid grid-cols-[125px_auto] items-center gap-1">
+          <label htmlFor="end-semester" className="whitespace-nowrap">
+            End semester
+          </label>
+          <SemestersSelect
+            id="end-semester"
+            placeholder={displaySemesterCode(endSemester)}
+            semesterCodes={endSemesterOptions}
+            onValueChange={(value) => setNewEndSemester(JSON.parse(value))}
+          />
+        </div>
+      </div>
+      <div className="mt-4 ml-auto flex w-fit gap-x-4">
+        <Button
+          color="secondary"
+          onClick={(e) => {
+            e.stopPropagation();
+            closeModal();
+          }}
+        >
+          Cancel
+        </Button>
+        <Button
+          isLoading={isModifyLoading}
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsModifyLoading(true);
+            modifySemesters.mutateAsync({
+              planId,
+              newEndSemester,
+              newStartSemester,
+            });
+          }}
+        >
+          Save changes
+        </Button>
+      </div>
+    </Modal>
   );
 };
 
