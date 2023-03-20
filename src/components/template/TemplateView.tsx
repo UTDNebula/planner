@@ -36,7 +36,7 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
   });
 
   const handleTemplateCreation = async (major: string) => {
-    const selectedTemplate = templates.find(t=>t.id === major);
+    const selectedTemplate = templates.find((t) => t.id === major);
     if (!selectedTemplate) {
       return;
     }
