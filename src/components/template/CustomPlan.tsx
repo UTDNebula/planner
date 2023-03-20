@@ -35,10 +35,13 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
     },
   });
 
+  const [uploadLoading, setUploadLoading] = useState(false);
   const [loading, setLoading] = useState(false);
+
   const [error, setError] = useState<string | null>(null);
 
   async function handleSubmit() {
+    setLoading(true);
     const planId = await createUserPlan.mutateAsync({
       name,
       major,
@@ -312,7 +315,7 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
               <p>{file.name}</p>
               <p className={`text-sm ${error ? 'text-red-500' : 'text-neutral-400'}`}>
                 {Math.floor(file.size / 1000)}KB •{' '}
-                {error ? 'Upload failed.' : loading ? 'Uploading...' : '100% uploaded.'}{' '}
+                {error ? 'Upload failed.' : uploadLoading ? 'Uploading...' : '100% uploaded.'}{' '}
               </p>
             </div>
             <button
@@ -353,13 +356,13 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
             if (e.target.files && e.target.files[0]) {
               const file = e.target.files[0];
               setError(null);
-              setLoading(true);
+              setUploadLoading(true);
               setFile(file);
               await parseTranscript(file).catch(() => {
                 setError('An error occured loading transcript');
-                setLoading(false);
+                setUploadLoading(false);
               });
-              setLoading(false);
+              setUploadLoading(false);
             }
           }}
         />

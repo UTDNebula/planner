@@ -9,6 +9,7 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
 
   const [name, setName] = useState('');
   const [major, setMajor] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const { data, isError } = trpc.template.getAllTemplates.useQuery();
 
@@ -36,6 +37,7 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
   });
 
   const handleTemplateCreation = async (major: string) => {
+    setLoading(true);
     const selectedTemplate = templates.find((t) => t.id === major);
     if (!selectedTemplate) {
       return;
@@ -65,6 +67,7 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
           name: 'Create Plan',
           onClick: () => handleTemplateCreation(major),
           color: 'primary',
+          loading,
         },
       ]}
     >

@@ -47,7 +47,7 @@ const AutoCompleteMajor: FC<AutoCompleteMajorProps & React.ComponentPropsWithout
 
   return (
     <div {...props}>
-      <div ref={containerRef} className="absolute -bottom-3 left-0 h-full w-full"></div>
+      <div ref={containerRef} className="absolute -bottom-3 left-0 h-full w-full "></div>
       <Autocomplete
         freeSolo
         disableClearable
@@ -63,7 +63,7 @@ const AutoCompleteMajor: FC<AutoCompleteMajorProps & React.ComponentPropsWithout
               variant="standard"
               className="h-11 appearance-none rounded border border-[#6366F1] bg-[#F5F5F5] pl-4 text-[14px] font-semibold text-[#D4D4D4] outline-none"
               inputProps={{
-                style: { fontSize: 14, marginTop: 8, fontWeight: '500' },
+                style: { fontSize: 14, marginTop: 8, color: '#737373' },
                 ...params.inputProps,
               }}
               placeholder={placeholder}

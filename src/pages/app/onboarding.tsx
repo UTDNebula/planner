@@ -15,6 +15,7 @@ import { trpc } from '@/utils/trpc';
 import { generateSemesters } from '@/utils/utilFunctions';
 
 import { authOptions } from '../api/auth/[...nextauth]';
+import Button from '@/components/Button';
 
 /**
  * The first onboarding page for the application.
@@ -50,6 +51,7 @@ const initialOnboardingData: OnboardingData = {
 
 export default function OnboardingPage() {
   const [onboardingData, setOnboardingData] = useState<OnboardingData>(initialOnboardingData);
+  const [isModifyLoading, setIsModifyLoading] = React.useState(false);
 
   const handleOnboardingDataUpdate = (updatedFields: Partial<OnboardingData>) => {
     setOnboardingData({ ...onboardingData, ...updatedFields });
@@ -124,13 +126,28 @@ export default function OnboardingPage() {
         <section>
           <div className="w-auto">
             {jsxElem[page]}
-            <button
+            <Button
+              disabled={!validNextPage}
+              className="hover:bg-[#EEF2FF] hover:text-[#312E81]"
+              width="full"
+              size="large"
+              font="large"
+              isLoading={isModifyLoading}
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsModifyLoading(true);
+                incrementPage();
+              }}
+            >
+              Create Account
+            </Button>
+            {/* <button
               onClick={incrementPage}
               disabled={!validNextPage}
               className="w-full rounded-lg bg-[#6366F1] py-3 text-center text-[16px] font-semibold text-white hover:bg-[#EEF2FF] hover:text-[#312E81] disabled:opacity-50"
             >
               Create Account
-            </button>
+            </button> */}
           </div>
         </section>
       </div>
