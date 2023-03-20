@@ -300,9 +300,13 @@ export const validatorRouter = router({
         return { plan: planData, validation: [], bypasses: [] };
       }
 
+      // TODO: will we always ignore odd credits such as 'PSY 1---'?
+      const regex = /([a-z0-9])* ([a-z0-9]){4}$/gi;
+      const validTransferCredits = transferCredits.filter((credit) => credit.match(regex) !== null);
+
       const body = formatDegreeValidationRequest(
         semestersWithCourses,
-        transferCredits,
+        validTransferCredits,
         {
           core: true,
           majors: [degreeRequirements.major], // TODO: Standardize names
