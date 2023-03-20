@@ -18,6 +18,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   });
 
   await ssg.user.getUser.prefetch();
+  ssg.template.getAllTemplates.prefetch();
   return {
     props: {
       trpcState: ssg.dehydrate(),

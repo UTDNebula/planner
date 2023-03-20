@@ -81,7 +81,7 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: '/auth/login',
     signOut: '/',
-    newUser: '/auth/signup', // TODO: Redirect to signup page
+    newUser: '/app/onboarding',
   },
 };
 export default NextAuth(authOptions);
