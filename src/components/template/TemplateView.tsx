@@ -36,10 +36,10 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
   });
 
   const handleTemplateCreation = async (major: string) => {
-    const selectedTemplate = templates.find(t=>t.id === major);
+    const selectedTemplate = templates.find((t) => t.id === major);
 
     try {
-      const planId = await createTemplateUserPlan.mutateAsync(selectedTemplate.id!);
+      const planId = await createTemplateUserPlan.mutateAsync(selectedTemplate!.id);
       if (!planId) {
         return router.push('/app/home');
       }
