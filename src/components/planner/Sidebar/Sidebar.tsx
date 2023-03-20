@@ -112,14 +112,21 @@ function CourseSelectorContainer({
                 </Dialog.Portal>
               )}
             </Dialog.Root>
-            {degreeRequirements.requirements.map((req, idx) => (
-              <RequirementsContainer
-                key={idx}
-                degreeRequirement={req}
-                courses={courses}
-                getCourseItemDragId={getRequirementDragId}
-              />
-            ))}
+            {degreeRequirements.requirements.length > 0 ? (
+              degreeRequirements.requirements.map((req, idx) => (
+                <RequirementsContainer
+                  key={idx}
+                  degreeRequirement={req}
+                  courses={courses}
+                  getCourseItemDragId={getRequirementDragId}
+                />
+              ))
+            ) : (
+              <div className="text-center text-xs font-medium leading-5 text-[#A3A3A3]">
+                Our engineer team is working hard to add course progress to your major. Thanks for
+                your understanding and stay tuned!
+              </div>
+            )}
           </div>
         </div>
       ) : (
