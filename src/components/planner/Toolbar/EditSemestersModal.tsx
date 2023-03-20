@@ -1,4 +1,4 @@
-import Modal, { ModalProps } from '@/components/Modal';
+import Modal from '@/components/Modal';
 import { trpc } from '@/utils/trpc';
 import { createNewYear, displaySemesterCode, isSemCodeEqual } from '@/utils/utilFunctions';
 import { SemesterCode } from '@prisma/client';
