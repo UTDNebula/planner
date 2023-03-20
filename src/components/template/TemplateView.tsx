@@ -1,14 +1,15 @@
 import { trpc } from '@/utils/trpc';
 import router from 'next/router';
-import { Dispatch, SetStateAction, useState } from 'react';
-import DataGrid from '../credits/DataGrid';
-import SearchBar from '../credits/SearchBar';
-import Button from '../Button';
+import { useState } from 'react';
+import NProgress from 'nprogress'; //nprogress module
 
-export default function TemplateView({ setPage }: { setPage: Dispatch<SetStateAction<number>> }) {
+import { Page } from './Page';
+
+export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
   const utils = trpc.useContext();
 
-  const [templateQuery, setTemplateQuery] = useState('');
+  const [name, setName] = useState('');
+  const [major, setMajor] = useState('');
 
   const { data, isError } = trpc.template.getAllTemplates.useQuery();
 
@@ -44,67 +45,57 @@ export default function TemplateView({ setPage }: { setPage: Dispatch<SetStateAc
 
     try {
       const planId = await createTemplateUserPlan.mutateAsync(selectedTemplate[0].id);
+      NProgress.start();
       if (!planId) {
         return router.push('/app/home');
       }
       return router.push(`/app/plans/${planId}`);
     } catch (error) {
       console.error(error);
+      NProgress.done();
     }
   };
   return (
-    <div
-      onClick={(e) => e.stopPropagation()}
-      className="relative max-h-[90vh] w-full max-w-4xl flex-col items-center justify-center gap-2 overflow-y-scroll rounded-lg bg-white p-10"
+    <Page
+      title="Select a Degree Template"
+      subtitle="Find your degree template to start planning"
+      close={onDismiss}
+      actions={[
+        {
+          name: 'Cancel',
+          onClick: onDismiss,
+          color: 'secondary',
+        },
+        {
+          name: 'Create Plan',
+          onClick: () => handleTemplateCreation(major),
+          color: 'primary',
+        },
+      ]}
     >
-      <Button onClick={() => setPage(0)}>Back</Button>
-      <div className="flex flex-col items-center justify-center gap-2">
-        <div className="text-center text-2xl font-medium">Choose one of the templates</div>
-      </div>
-      <div className="sticky -top-10 z-50 bg-white pt-10">
-        <SearchBar placeholder="Search template" updateQuery={(query) => setTemplateQuery(query)} />
-      </div>
+      <p className="text-sm font-semibold">Plan Name</p>
+      <input
+        className="w-full rounded-md border border-neutral-500 py-3 px-4 text-sm text-black/80 placeholder:text-neutral-400"
+        placeholder="Name your plan"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
 
-      <div className="max-h-[400px] gap-2 px-2 py-4">
-        <DataGrid
-          columns={[
-            {
-              title: 'Templates',
-              key: 'templateName',
-              valueGetter: (name) => name.templateName,
-            },
-          ]}
-          rows={
-            [...orderedTemplate.map((x) => ({ templateName: x.name }))] as {
-              templateName: string;
-            }[]
-          }
-          childrenProps={{
-            headerProps: {
-              style: {
-                padding: '20px 0',
-              },
-            },
-            gridProps: {
-              style: {},
-            },
-            rowProps: {
-              style: {
-                borderTop: '1px solid #DEDFE1',
-                padding: '20px 0',
-                cursor: 'pointer',
-              },
-              onClick: (row) => {
-                const newRow: { templateName: string } = row as { templateName: string };
-                handleTemplateCreation(newRow.templateName);
-              },
-            },
-          }}
-          RowCellComponent={({ children }) => <span className="text-black">{children}</span>}
-          TitleComponent={({ children }) => <h4 className="text-black">{children}</h4>}
-          LoadingComponent={() => <h2 className="text-black">Loading...</h2>}
-        />
-      </div>
-    </div>
+      <p className="text-sm font-semibold">Search degree template</p>
+      <select
+        className="w-full rounded-md border border-neutral-500 py-3 px-4 text-sm text-black/80"
+        onChange={(e) => setMajor(e.target.value)}
+        defaultValue="placeholder"
+      >
+        <option disabled value="placeholder">
+          <p className="text-neutral-400">Find your major...</p>
+        </option>
+        {orderedTemplate.map((major) => (
+          <option value={major.id} key={major.id}>
+            {major.name}
+          </option>
+        ))}
+      </select>
+    </Page>
   );
 }

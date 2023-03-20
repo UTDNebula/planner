@@ -43,6 +43,10 @@
   p {
     @apply text-[16px];
   }
+
+  .salt {
+    font-feature-settings: 'salt' on;
+  }
 }
 @tailwind components;
 

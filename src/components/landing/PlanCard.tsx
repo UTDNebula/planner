@@ -44,7 +44,7 @@ export default function PlanCard({ id, name, major }: PlanCardProps) {
             <h4 className="overflow-hidden text-ellipsis whitespace-nowrap text-[15px] font-normal ">
               {major}
             </h4>
-            <button
+            <div
               className="dropdown h-fit w-fit"
               onClick={(e) => {
                 e.stopPropagation();
@@ -70,7 +70,7 @@ export default function PlanCard({ id, name, major }: PlanCardProps) {
                 }}
                 deleteLoading={deleting}
               />
-            </button>
+            </div>
           </div>
           <div className="flex flex-grow items-center text-xl font-semibold">{name}</div>
         </button>

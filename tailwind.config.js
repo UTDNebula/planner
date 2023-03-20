@@ -88,6 +88,7 @@ module.exports = {
       },
       animation: {
         hide: 'fadeInTwo 1s ease-in-out',
+        fade: 'fadeInTwo 150ms ease-in-out',
         intro: 'fadeIn 0.75s ease-in-out',
         fadeDown: 'fadeDown 0.75s ease-in-out',
       },
