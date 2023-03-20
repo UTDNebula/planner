@@ -36,10 +36,12 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
   });
 
   const handleTemplateCreation = async (major: string) => {
-    const selectedTemplate = templates.find((t) => t.id === major);
-
+    const selectedTemplate = templates.find(t=>t.id === major);
+    if (!selectedTemplate) {
+      return;
+    }
     try {
-      const planId = await createTemplateUserPlan.mutateAsync(selectedTemplate!.id);
+      const planId = await createTemplateUserPlan.mutateAsync(selectedTemplate.id);
       if (!planId) {
         return router.push('/app/home');
       }
@@ -81,7 +83,7 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
         defaultValue="placeholder"
       >
         <option disabled value="placeholder">
-          <option className="text-neutral-400">Find your major...</option>
+          Find your major...
         </option>
         {orderedTemplate.map((major) => (
           <option value={major.id} key={major.id}>

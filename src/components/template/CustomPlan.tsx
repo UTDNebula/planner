@@ -234,7 +234,7 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
         defaultValue="placeholder"
       >
         <option disabled value="placeholder">
-          <p className="text-neutral-400">Find your major...</p>
+          Find your major...
         </option>
         {majors.map((major, idx) => (
           <option key={idx}>{major}</option>
