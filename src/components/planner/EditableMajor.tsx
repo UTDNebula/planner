@@ -50,9 +50,9 @@ const EditMajorAutocomplete = ({
   const utils = trpc.useContext();
 
   const updatePlanMajor = trpc.plan.updatePlanMajor.useMutation({
-    // async onSuccess() {
-    //   await utils.validator.degreeValidator.invalidate();
-    // },
+    async onSuccess() {
+      await utils.validator.degreeValidator.invalidate();
+    },
   });
 
   const handleSaveMajor = () => {
