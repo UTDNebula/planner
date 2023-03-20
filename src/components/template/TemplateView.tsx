@@ -1,7 +1,6 @@
 import { trpc } from '@/utils/trpc';
 import router from 'next/router';
-import { useState } from 'react';
-import NProgress from 'nprogress'; //nprogress module
+import { useState } from 'react'; //nprogress module
 
 import { Page } from './Page';
 
@@ -37,22 +36,16 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
   });
 
   const handleTemplateCreation = async (major: string) => {
-    const selectedTemplate = templates.filter((template) => {
-      if (template.name === major) {
-        return template;
-      }
-    });
+    const selectedTemplate = templates.find(t=>t.id === major);
 
     try {
-      const planId = await createTemplateUserPlan.mutateAsync(selectedTemplate[0].id);
-      NProgress.start();
+      const planId = await createTemplateUserPlan.mutateAsync(selectedTemplate.id!);
       if (!planId) {
         return router.push('/app/home');
       }
       return router.push(`/app/plans/${planId}`);
     } catch (error) {
       console.error(error);
-      NProgress.done();
     }
   };
   return (
@@ -88,7 +81,7 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
         defaultValue="placeholder"
       >
         <option disabled value="placeholder">
-          <p className="text-neutral-400">Find your major...</p>
+          <option className="text-neutral-400">Find your major...</option>
         </option>
         {orderedTemplate.map((major) => (
           <option value={major.id} key={major.id}>
