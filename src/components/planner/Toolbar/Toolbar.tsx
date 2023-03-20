@@ -93,11 +93,11 @@ const Toolbar: FC<ToolbarProps> = ({
             startSemester={semesters[0].code}
             endSemester={semesters[semesters.length - 1].code}
             open={editSemestersModalOpen}
-            onOpenChange={setEditSemestersModalOpen}
           />
+
           <DeletePlanModal
             open={deleteModalOpen}
-            onOpenChange={setDeleteModalOpen}
+            onClose={() => setDeleteModalOpen(false)}
             deletePlan={deletePlan}
             deleteLoading={deleteLoading}
           />
