@@ -3,6 +3,7 @@ import { SearchBarTwo } from '@components/credits/SearchBar';
 import React, { useRef, useState } from 'react';
 
 import RequirementsContainer from '@/components/planner/Sidebar/RequirementsContainer';
+import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
 
 import { Course, DraggableCourse, GetDragIdByCourse } from '../types';
 import DraggableCourseList from './DraggableCourseList';
@@ -53,6 +54,29 @@ function CourseSelectorContainer({
     }) as DraggableCourse[];
   }, [results, courses]);
 
+  let sum = 0;
+  courses.forEach((string) => {
+    sum += getSemesterHourFromCourseCode(string) ?? 3;
+  });
+
+  const CreditsTaken = ({
+    taken,
+    min,
+    unit = 'Credits Taken',
+  }: {
+    taken: number;
+    min: number;
+    unit?: string;
+  }) => {
+    return (
+      <div className="flex items-center gap-x-3 rounded-full bg-primary-100 px-3 py-2">
+        <span className="text-xs font-semibold text-primary-800">
+          {taken}/{min} {unit}
+        </span>
+      </div>
+    );
+  };
+
   const [open, setOpen] = useState(true);
 
   const [displayResults, setDisplay] = useState(false);
@@ -63,13 +87,21 @@ function CourseSelectorContainer({
         <div className="z-0 h-screen w-[30%] min-w-[30%] overflow-x-hidden overflow-y-scroll">
           <div className="flex h-fit min-h-full w-full flex-col gap-y-4 bg-white p-4">
             <div className="flex flex-col">
-              <div className="flex flex-row items-center">
+              <div className="flex flex-row items-center justify-around">
                 <ChevronIcon
                   onClick={() => setOpen(!open)}
                   className={`h-4 w-4 cursor-pointer ${open ? '' : 'rotate-180'}`}
                   strokeWidth={2.5}
                 />
                 <h1 className="pl-2 text-2xl font-medium tracking-tight">Plan Requirements</h1>
+                <CreditsTaken
+                  taken={sum}
+                  min={
+                    degreeRequirements.requirements.length > 0
+                      ? degreeRequirements.requirements[1].min_hours
+                      : 120
+                  }
+                />
               </div>
               <h6 className="text-base tracking-tight text-gray-500">
                 Drag courses onto your plan
