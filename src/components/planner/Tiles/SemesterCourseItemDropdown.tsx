@@ -6,6 +6,7 @@ import DeleteIcon from '@/icons/DeleteIcon';
 import { tagColors } from '../utils';
 import { ObjectID } from 'bson';
 import LockIcon from '@/icons/LockIcon';
+import UnfilledWarningIcon from '@/icons/UnfilledWarningIcon';
 
 const itemClasses =
   'flex items-center gap-x-3 border-b border-neutral-300 px-2 py-2 hover:bg-neutral-200 cursor-pointer text-sm';
@@ -22,6 +23,8 @@ export interface SemesterTileDropdownProps {
   toggleLock: () => void;
   locked: boolean;
   semesterLocked: boolean;
+  prereqOverriden: boolean;
+  onPrereqOverrideChange: () => void;
 }
 
 const SemesterCourseItemDropdown: FC<SemesterTileDropdownProps> = ({
@@ -33,6 +36,8 @@ const SemesterCourseItemDropdown: FC<SemesterTileDropdownProps> = ({
   children,
   toggleLock,
   locked,
+  prereqOverriden,
+  onPrereqOverrideChange,
 }) => {
   const id = new ObjectID().toString();
   return (
@@ -57,6 +62,13 @@ const SemesterCourseItemDropdown: FC<SemesterTileDropdownProps> = ({
           >
             <DeleteIcon />
             <span>Delete</span>
+          </DropdownMenu.Item>
+
+          <DropdownMenu.Item className={itemClasses} onClick={onPrereqOverrideChange}>
+            <UnfilledWarningIcon />
+            <span>
+              {prereqOverriden ? 'Remove Pre-reqs Override' : 'Override Pre-reqs Warning'}
+            </span>
           </DropdownMenu.Item>
           <DropdownMenu.Item
             className={!semesterLocked ? itemClasses : itemClasses + ' ' + disabledClasses}
