@@ -24,14 +24,23 @@ def test_degrees(file: DirEntry[str]) -> None:
 )
 def test_degrees_include_first_year_seminar(file: DirEntry[str]) -> None:
     data = json.loads(open(file, "r").read())
-    # TODO: fill
-    first_year_seminar_courses = {"School of Arts, Humanities, and Technology": "ARHM 1100", "School of Natural Sciences and Mathematics": "NATS 1101", "Erik Jonsson School of Engineering and Computer Science": "ECS 1100", "Naveen Jindal School of Management": "BCOM 1300"}
+    first_year_seminar_courses = {
+        "School of Arts, Humanities, and Technology": ["ARHM 1100"],
+        "School of Arts and Humanities": ["ARHM 1100"],
+        "School of Natural Sciences and Mathematics": ["NATS 1101"],
+        "Erik Jonsson School of Engineering and Computer Science": ["ECS 1100"],
+        "Naveen Jindal School of Management": ["BCOM 1300", "BCOM 3300"],
+    }
+
     school = data["school"]
     if school not in first_year_seminar_courses:
         return
     degree_includes_first_year_seminar = False
     for requirement in data["requirements"]["major"]:
-        if requirement["matcher"] == "CourseRequirement" and requirement["course"] == first_year_seminar_courses[school]:
+        if (
+            requirement["matcher"] == "CourseRequirement"
+            and requirement["course"] in first_year_seminar_courses[school]
+        ):
             degree_includes_first_year_seminar = True
     assert degree_includes_first_year_seminar
 
