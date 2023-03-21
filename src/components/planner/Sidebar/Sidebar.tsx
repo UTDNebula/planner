@@ -3,14 +3,9 @@ import { SearchBarTwo } from '@components/credits/SearchBar';
 import React, { useRef, useState } from 'react';
 
 import RequirementsContainer from '@/components/planner/Sidebar/RequirementsContainer';
+import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
 
 import { Course, DraggableCourse, GetDragIdByCourse } from '../types';
-import {
-  RequirementGroupTypes,
-  RequirementTypes,
-  CourseRequirement,
-  DegreeRequirement,
-} from './types';
 import DraggableCourseList from './DraggableCourseList';
 import { ObjectID } from 'bson';
 
@@ -19,12 +14,13 @@ export interface CourseSelectorContainerProps {
   courses: string[];
   getSearchedDragId: GetDragIdByCourse;
   getRequirementDragId: GetDragIdByCourse;
-  degreeRequirement: DegreeRequirement;
 }
 import { RouterOutputs, trpc } from '@/utils/trpc';
 import { DegreeRequirements } from './types';
 import ChevronIcon from '@/icons/ChevronIcon';
 import useFuse from '../useFuse';
+import { Item } from '@radix-ui/react-dropdown-menu';
+import { number } from 'zod';
 type CourseData = RouterOutputs['courses']['publicGetAllCourses'];
 type ArrayElement<ArrayType extends readonly unknown[]> =
   ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
@@ -34,7 +30,6 @@ function CourseSelectorContainer({
   courses,
   getSearchedDragId,
   getRequirementDragId,
-  degreeRequirement,
 }: CourseSelectorContainerProps) {
   // TODO: Provide UI indicator for errors
   const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
@@ -62,6 +57,11 @@ function CourseSelectorContainer({
       };
     }) as DraggableCourse[];
   }, [results, courses]);
+
+  let sum = 0;
+  courses.forEach((string) => {
+    sum += getSemesterHourFromCourseCode(string);
+  });
 
   const CreditsTaken = ({
     taken,
@@ -92,7 +92,7 @@ function CourseSelectorContainer({
         <div className="z-10 h-screen w-[30%] min-w-[30%] overflow-x-hidden overflow-y-scroll">
           <div className="flex h-fit min-h-full w-full flex-col gap-y-4 bg-white p-4">
             <div className="flex flex-col">
-              <div className="flex flex-row items-center">
+              <div className="flex flex-row items-center justify-around">
                 <ChevronIcon
                   onClick={() => setOpen(!open)}
                   className={`h-4 w-4 cursor-pointer ${open ? '' : 'rotate-180'}`}
@@ -100,7 +100,7 @@ function CourseSelectorContainer({
                 />
                 <h1 className="pl-2 text-2xl font-medium tracking-tight">Plan Requirements</h1>
                 <CreditsTaken
-                  taken={0}
+                  taken={sum}
                   min={degreeRequirements.requirements[1].min_hours}
                 />
               </div>
