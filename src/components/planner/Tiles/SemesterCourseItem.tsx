@@ -18,7 +18,8 @@ export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'>
   course: DraggableCourse;
   semesterLocked?: boolean;
   isSelected?: boolean;
-  isValid?: boolean;
+  isValid: boolean;
+  requirementsData?: [Array<string>, Array<string>, Array<string>];
   isDragging?: boolean;
   onSelectCourse?: () => void;
   onDeselectCourse?: () => void;
@@ -40,6 +41,7 @@ export const MemoizedSemesterCourseItem = React.memo(
       onDeleteCourse,
       onColorChange,
       isValid,
+      requirementsData,
       onLockChange,
       semesterLocked,
       ...props
@@ -88,11 +90,12 @@ export const MemoizedSemesterCourseItem = React.memo(
           )}
         </div>
 
-        <CourseInfoHoverCard
-          prereqs={prereqs}
-          open={hoverOpen}
-          onOpenChange={(open) => !dropdownOpen && setHoverOpen(open)}
+        <PrereqWarnHoverCard
+          prereqs={requirementsData === undefined ? [[], [], []] : requirementsData}
+          open={hoverIconOpen}
+          onOpenChange={(hoverOpen) => !dropdownOpen && setHoverIconOpen(hoverOpen)}
           title={title || ''}
+          isValid={isValid}
         >
           <div className="flex w-full flex-row items-center gap-x-3">
             <SemesterCourseItemDropdown
@@ -131,29 +134,22 @@ export const MemoizedSemesterCourseItem = React.memo(
             />
             <span className="text-sm">{course.code}</span>
             <div className="ml-auto mr-2 flex items-center justify-center gap-2 align-middle text-xs font-semibold">
-              {!isValid && (
-                <PrereqWarnHoverCard
-                  prereqs={prereqs}
-                  open={hoverIconOpen}
-                  onOpenChange={(hoverOpen) => !dropdownOpen && setHoverIconOpen(hoverOpen)}
-                >
-                  <span
-                    className="text-[#22C55E]"
-                    onMouseEnter={() => {
-                      setHoverIconOpen(true);
-                    }}
-                    onMouseLeave={() => {
-                      setHoverIconOpen(false);
-                    }}
-                  >
-                    <WarningIcon />
-                  </span>
-                </PrereqWarnHoverCard>
-              )}
+              <span
+                className="text-[#22C55E]"
+                onMouseEnter={() => {
+                  setHoverIconOpen(true);
+                }}
+                onMouseLeave={() => {
+                  setHoverIconOpen(false);
+                }}
+              >
+                {!isValid && <WarningIcon />}
+              </span>
+
               {course.locked && <LockIcon />}
             </div>
           </div>
-        </CourseInfoHoverCard>
+        </PrereqWarnHoverCard>
       </div>
     );
   }),
@@ -192,8 +188,35 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
   });
 
   const { planId } = useSemestersContext();
-  const prereqData = trpc.validator.prereqValidator.useQuery(planId);
-  const isValid = prereqData.data?.prereqValidation.get(course.code)?.[0];
+  const requirementsData = trpc.validator.prereqValidator.useQuery(planId);
+  const isValid: [boolean, boolean, boolean] = [true, true, true];
+  const hoverList: [Array<string>, Array<string>, Array<string>] = [[], [], []];
+  const prereqData = requirementsData.data?.prereq?.get(course.code);
+  const coreqData = requirementsData.data?.coreq?.get(course.code);
+  const coorpreData = requirementsData.data?.coorepre?.get(course.code);
+  if (coreqData) {
+    isValid[1] = coreqData.length > 0 ? false : true;
+    coreqData.map((data) => {
+      const tmp = data[0].join(', ');
+      hoverList[1].push(tmp.concat(' (', data[1].toString(), ')'));
+    });
+  }
+  if (prereqData) {
+    isValid[0] = prereqData.length > 0 ? false : true;
+    prereqData.map((data) => {
+      const tmp = data[0].join(', ');
+      hoverList[0].push(tmp.concat(' (', data[1].toString(), ')'));
+    });
+  }
+
+  if (coorpreData) {
+    isValid[2] = coorpreData.length > 0 ? false : true;
+    coorpreData.map((data) => {
+      const tmp = data[0].join(', ');
+      hoverList[2].push(tmp.concat(' (', data[1].toString(), ')'));
+    });
+  }
+
   return (
     <SemesterCourseItem
       onLockChange={onLockChange}
@@ -211,7 +234,8 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
       isSelected={isSelected}
       semesterLocked={semester.locked}
       onColorChange={onColorChange}
-      isValid={isValid || isValid === undefined} // Show as valid if isValid is undefined
+      isValid={isValid[0] && isValid[1] && isValid[2]} // Show as valid if isValid is undefined
+      requirementsData={hoverList}
     />
   );
 };

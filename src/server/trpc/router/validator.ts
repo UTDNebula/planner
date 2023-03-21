@@ -73,9 +73,10 @@ export const validatorRouter = router({
        *  key: course id
        *  value: boolean to represent validity
        */
-      const preReqHash = new Map<string, [Array<Array<string>>, number]>();
-      const coReqHash = new Map<string, [Array<Array<string>>, number]>();
-      const coOrPreqHash = new Map<string, [boolean, number]>();
+      const courseHash = new Map<string, number>();
+      const coReqHash = new Map<string, Array<[Array<string>, number]>>();
+      const preReqHash = new Map<string, Array<[Array<string>, number]>>();
+      const coOrPreReqHash = new Map<string, Array<[Array<string>, number]>>();
       /* Recursive function to check for prereqs.
        *  TODO: Move to a client side function. Possibly a hook.
        */
@@ -83,34 +84,31 @@ export const validatorRouter = router({
         if (!planData?.semesters[i] || !planData?.semesters[i].courses) continue;
         for (let j = 0; j < planData?.semesters[i].courses.length; j++) {
           const course = planData?.semesters[i].courses[j];
-          coReqHash.set(course.code, [[], i]);
-          preReqHash.set(course.code, [[], i]);
-          coOrPreqHash.set(course.code, [true, i]);
+          courseHash.set(course.code.trim(), i);
         }
       }
+
       const checkForPreRecursive = (
         requirements: CollectionOptions,
         semester: number,
-      ): Array<Array<string>> => {
-        const prereqNotMet: Array<Array<string>> = [];
+      ): Array<[Array<string>, number]> => {
+        const prereqNotMet: Array<[Array<string>, number]> = [];
         let count = 0;
         if (requirements.options.length === 0) {
           return [];
         }
-        const temp: Array<string> = [];
+        const temp: [Array<string>, number] = [[], 0];
         for (const option of requirements.options) {
           if (option.type === 'course') {
             const course = courseMapWithIdKey.get(option.class_reference);
             if (course) {
-              const data = preReqHash.get(course as string);
-              if (!data) {
-                temp.push(course as string);
-                continue;
-              }
-              if (data[1] < semester) {
+              const data = courseHash.get(course as string);
+              if (data === undefined) {
+                temp[0].push(course as string);
+              } else if (data < semester) {
                 count++;
               } else {
-                temp.push(course as string);
+                temp[0].push(course as string);
               }
             }
           } else if (option.type === 'collection') {
@@ -120,12 +118,16 @@ export const validatorRouter = router({
             } else {
               count++;
             }
+          } else if (option.type === 'other') {
+            count++;
           }
         }
+
         if (count >= requirements.required) {
           return [];
         }
-        if (temp.length > 0) {
+        if (temp[0].length > 0) {
+          temp[1] = requirements.required - count;
           prereqNotMet.push(temp);
         }
         return prereqNotMet;
@@ -134,104 +136,95 @@ export const validatorRouter = router({
       const checkForCoRecursive = (
         requirements: CollectionOptions,
         semester: number,
-      ): Array<Array<string>> => {
-        const coreqNotMet: Array<Array<string>> = [];
+      ): Array<[Array<string>, number]> => {
+        const coreqNotMet: Array<[Array<string>, number]> = [];
         let count = 0;
         if (requirements.options.length === 0) {
           return [];
         }
-        const temp: Array<string> = [];
+        const temp: [Array<string>, number] = [[], 0];
         for (const option of requirements.options) {
           if (option.type === 'course') {
             const course = courseMapWithIdKey.get(option.class_reference);
             if (course) {
-              const data = preReqHash.get(course as string);
-              if (!data) {
-                temp.push(course as string);
+              const data = courseHash.get(course as string);
+              if (data === undefined) {
+                temp[0].push(course as string);
                 continue;
               }
-              if (data[1] === semester) {
+              if (data === semester) {
                 count++;
               } else {
-                temp.push(course as string);
+                temp[0].push(course as string);
               }
             }
           } else if (option.type === 'collection') {
-            const prereq = checkForCoRecursive(option, semester);
-            if (prereq.length > 0) {
-              coreqNotMet.push(...prereq);
+            const coreq = checkForCoRecursive(option, semester);
+            if (coreq.length > 0) {
+              coreqNotMet.push(...coreq);
             } else {
               count++;
             }
+          } else if (option.type === 'other') {
+            count++;
           }
         }
         if (count >= requirements.required) {
           return [];
         }
-        if (temp.length > 0) {
+        if (temp[0].length > 0) {
+          temp[1] = requirements.required;
           coreqNotMet.push(temp);
         }
         return coreqNotMet;
       };
 
-      // const checkForCoOrPreRecursive = (
-      //   requirements: CollectionOptions,
-      //   semester: number,
-      // ): boolean => {
-      //   if (requirements.options.length === 0) {
-      //     return true;
-      //   }
-      //   let flag = 0;
-      //   for (const option of requirements.options) {
-      //     if (option.type === 'course') {
-      //       const course = courseMapWithIdKey.get(option.class_reference);
-      //       if (course) {
-      //         const preReq = courseMapWithCodeKey.get(course as string);
-      //         if (preReq) {
-      //           const data = coOrPreqHash.get(course as string);
-      //           if (!data) continue;
-      //           if (data[1] <= semester) {
-      //             flag++;
-      //           }
-      //         }
-      //       }
-      //     } else if (option.type === 'collection') {
-      //       if (checkForCoOrPreRecursive(option, semester)) {
-      //         flag++;
-      //       }
-      //     }
-      //   }
-      //   if (flag >= requirements.required) {
-      //     return true;
-      //   }
-      //   return false;
-      // };
-      const prereqValidation = async (planData: PlanData) => {
-        console.log('prereqValidation');
-        for (let i = 0; i < planData?.semesters.length; i++) {
-          if (!planData?.semesters[i] || !planData?.semesters[i].courses) continue;
-          for (let j = 0; j < planData?.semesters[i].courses.length; j++) {
-            const course = planData?.semesters[i].courses[j];
-            const preReqsForCourse = courseMapWithCodeKey.get(course.code);
-            if (!preReqsForCourse) {
-              continue;
-            }
-
-            const flag = checkForPreRecursive(preReqsForCourse.prereqs as CollectionOptions, i);
-            if (flag.length > 0) {
-              console.log(course.code);
-
-              for (const course of flag) {
-                console.log({ course });
+      const checkForCoOrPreRecursive = (
+        requirements: CollectionOptions,
+        semester: number,
+      ): Array<[Array<string>, number]> => {
+        const coreqNotMet: Array<[Array<string>, number]> = [];
+        let count = 0;
+        if (requirements.options.length === 0) {
+          return [];
+        }
+        const temp: [Array<string>, number] = [[], 0];
+        for (const option of requirements.options) {
+          if (option.type === 'course') {
+            const course = courseMapWithIdKey.get(option.class_reference);
+            if (course) {
+              const data = courseHash.get(course as string);
+              if (data === undefined) {
+                temp[0].push(course as string);
+                continue;
+              }
+              if (data <= semester) {
+                count++;
+              } else {
+                temp[0].push(course as string);
               }
             }
-            preReqHash.set(course.code, [flag, i]);
+          } else if (option.type === 'collection') {
+            const coreq = checkForCoRecursive(option, semester);
+            if (coreq.length > 0) {
+              coreqNotMet.push(...coreq);
+            } else {
+              count++;
+            }
+          } else if (option.type === 'other') {
+            count++;
           }
         }
+        if (count >= requirements.required) {
+          return [];
+        }
+        if (temp[0].length > 0) {
+          temp[1] = requirements.required;
+          coreqNotMet.push(temp);
+        }
+        return coreqNotMet;
       };
-
-      const coreqValidation = async (planData: PlanData) => {
-        console.log('coreq');
+      const prereqValidation = async (planData: PlanData) => {
         for (let i = 0; i < planData?.semesters.length; i++) {
           if (!planData?.semesters[i] || !planData?.semesters[i].courses) continue;
           for (let j = 0; j < planData?.semesters[i].courses.length; j++) {
@@ -240,62 +233,48 @@ export const validatorRouter = router({
             if (!reqsForCourse) {
               continue;
             }
-
-            const flag = checkForCoRecursive(reqsForCourse.coreqs as CollectionOptions, i);
-            if (flag.length > 0) {
-              console.log(course.code);
-
-              for (const course of flag) {
-                console.log({ course });
-              }
-            }
-            coReqHash.set(course.code, [flag, i]);
+            const flag = checkForPreRecursive(reqsForCourse.prereqs as CollectionOptions, i);
+            preReqHash.set(course.code, flag);
           }
         }
       };
 
-      // const coreqValidation = async (planData: PlanData) => {
-      //   for (let i = 0; i < planData?.semesters.length; i++) {
-      //     if (!planData?.semesters[i] || !planData?.semesters[i].courses) continue;
-      //     for (let j = 0; j < planData?.semesters[i].courses.length; j++) {
-      //       const course = planData?.semesters[i].courses[j];
-      //       const preReqsForCourse = courseMapWithCodeKey.get(course.code);
-      //       if (!preReqsForCourse) {
-      //         continue;
-      //       }
-      //       const flag = checkForCoRecursive(preReqsForCourse.coreqs as CollectionOptions, i);
-      //       coreqHash.set(course.code, [flag, i]);
-      //     }
-      //   }
-      // };
-      // const coOrPrereqValidation = async (planData: PlanData) => {
-      //   for (let i = 0; i < planData?.semesters.length; i++) {
-      //     if (!planData?.semesters[i] || !planData?.semesters[i].courses) continue;
-      //     for (let j = 0; j < planData?.semesters[i].courses.length; j++) {
-      //       const course = planData?.semesters[i].courses[j];
-      //       const preReqsForCourse = courseMapWithCodeKey.get(course.code);
-      //       if (!preReqsForCourse) {
-      //         continue;
-      //       }
-      //       const flag = checkForCoOrPreRecursive(
-      //         preReqsForCourse.co_or_pre_requisites as CollectionOptions,
-      //         i,
-      //       );
-      //       coOrPreqHash.set(course.code, [flag, i]);
-      //     }
-      //   }
-      // };
+      const coreqValidation = async (planData: PlanData) => {
+        for (let i = 0; i < planData?.semesters.length; i++) {
+          if (!planData?.semesters[i] || !planData?.semesters[i].courses) continue;
+          for (let j = 0; j < planData?.semesters[i].courses.length; j++) {
+            const course = planData?.semesters[i].courses[j];
+            const reqsForCourse = courseMapWithCodeKey.get(course.code);
+            if (!reqsForCourse) {
+              continue;
+            }
+            const flag = checkForCoRecursive(reqsForCourse.coreqs as CollectionOptions, i);
+            coReqHash.set(course.code, flag);
+          }
+        }
+      };
+      const coOrPrereqValidation = async (planData: PlanData) => {
+        for (let i = 0; i < planData?.semesters.length; i++) {
+          if (!planData?.semesters[i] || !planData?.semesters[i].courses) continue;
+          for (let j = 0; j < planData?.semesters[i].courses.length; j++) {
+            const course = planData?.semesters[i].courses[j];
+            const reqsForCourse = courseMapWithCodeKey.get(course.code);
+            if (!reqsForCourse) {
+              continue;
+            }
+            const flag = checkForCoOrPreRecursive(
+              reqsForCourse.co_or_pre_requisites as CollectionOptions,
+              i,
+            );
+            coOrPreReqHash.set(course.code, flag);
+          }
+        }
+      };
       await prereqValidation(planData);
       await coreqValidation(planData);
-      // await coOrPrereqValidation(planData);
+      await coOrPrereqValidation(planData);
 
-      // coOrPreqHash.forEach((value, key) => {
-      //   const preReq = preReqHash.get(key);
-      //   const coReq = coreqHash.get(key);
-      //   if (!coReq || !preReq) return;
-      //   preReqHash.set(key, [value[0] && coReq[0] && preReq[0], value[1]]);
-      // });
-      return { prereqValidation: preReqHash };
+      return { prereq: preReqHash, coreq: coReqHash, coorepre: coOrPreReqHash };
     } catch (error) {
       console.log('ERROR');
       console.log(error);
@@ -400,8 +379,14 @@ type CourseOptions = {
   type: 'course';
 };
 
+type OtherOptions = {
+  type: 'other';
+  condition: null;
+  description: string;
+};
+
 type CollectionOptions = {
   required: number;
   type: 'collection';
-  options: Array<CourseOptions> | Array<CollectionOptions>;
+  options: Array<CourseOptions> | Array<CollectionOptions> | Array<OtherOptions>;
 };
