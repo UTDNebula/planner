@@ -11,7 +11,7 @@ import { useSemestersContext } from '../SemesterContext';
 import { trpc } from '@/utils/trpc';
 import CourseInfoHoverCard from '../CourseInfoHoverCard';
 import useGetCourseInfo from '../useGetCourseInfo';
-import WarningIcon from '@/icons/WarningIcon';
+import FilledWarningIcon from '@/icons/FilledWarningIcon';
 import PrereqWarnHoverCard from '../PrereqWarnHoverCard';
 
 export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'> {
@@ -25,6 +25,7 @@ export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'>
   onDeleteCourse?: () => void;
   onColorChange?: (color: keyof typeof tagColors) => void;
   onLockChange?: (lock: boolean) => void;
+  onPrereqOverrideChange?: (override: boolean) => void;
 }
 
 /** UI implementation of a semester course */
@@ -41,6 +42,7 @@ export const MemoizedSemesterCourseItem = React.memo(
       onColorChange,
       isValid,
       onLockChange,
+      onPrereqOverrideChange,
       semesterLocked,
       ...props
     },
@@ -60,7 +62,7 @@ export const MemoizedSemesterCourseItem = React.memo(
         ref={ref}
         {...props}
         className={`flex h-[50px] w-full cursor-grab flex-row items-center rounded-md border border-[#D4D4D4] ${
-          isValid ? 'bg-[#FFFFFF]' : 'bg-[#FEFBED]'
+          !isValid && !course.prereqOveridden ? 'bg-[#FEFBED]' : 'bg-[#FFFFFF]'
         }  ${
           !course.locked || isValid || isValid === undefined
             ? course.locked
@@ -104,6 +106,10 @@ export const MemoizedSemesterCourseItem = React.memo(
                 setDropdownOpen(open);
               }}
               locked={course.locked}
+              onPrereqOverrideChange={() =>
+                onPrereqOverrideChange && onPrereqOverrideChange(!course.prereqOveridden)
+              }
+              prereqOverriden={course.prereqOveridden}
               semesterLocked={semesterLocked || false}
               toggleLock={() => onLockChange && onLockChange(!course.locked)}
               changeColor={(color) => onColorChange && onColorChange(color)}
@@ -131,14 +137,14 @@ export const MemoizedSemesterCourseItem = React.memo(
             />
             <span className="text-sm">{course.code}</span>
             <div className="ml-auto mr-2 flex items-center justify-center gap-2 align-middle text-xs font-semibold">
-              {!isValid && (
+              {!isValid && !course.prereqOveridden && prereqs.length > 0 && (
                 <PrereqWarnHoverCard
                   prereqs={prereqs}
                   open={hoverIconOpen}
                   onOpenChange={(hoverOpen) => !dropdownOpen && setHoverIconOpen(hoverOpen)}
                 >
-                  <span className="text-[#22C55E]">
-                    <WarningIcon />
+                  <span className="text-[#FBBF24]">
+                    <FilledWarningIcon />
                   </span>
                 </PrereqWarnHoverCard>
               )}
@@ -163,6 +169,7 @@ export interface DraggableSemesterCourseItemProps {
   onDeleteCourse: () => void;
   onColorChange: (color: keyof typeof tagColors) => void;
   onLockChange: (lock: boolean) => void;
+  onPrereqOverrideChange: (override: boolean) => void;
 }
 
 /** Compositional wrapper around SemesterCourseItem */
@@ -176,6 +183,7 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
   isSelected,
   onColorChange,
   onLockChange,
+  onPrereqOverrideChange,
 }) => {
   const { setNodeRef, attributes, listeners, isDragging } = useDraggable({
     id: dragId,
@@ -203,6 +211,7 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
       isSelected={isSelected}
       semesterLocked={semester.locked}
       onColorChange={onColorChange}
+      onPrereqOverrideChange={onPrereqOverrideChange}
       isValid={isValid || isValid === undefined} // Show as valid if isValid is undefined
     />
   );

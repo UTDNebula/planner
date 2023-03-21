@@ -38,6 +38,7 @@ export const MemoizedSemesterTile = React.memo(
       handleColorChange,
       handleCourseLock,
       handleSemesterLock,
+      handleCoursePrereqOverride,
     } = useSemestersContext();
 
     // QUESTION: isValid color?
@@ -91,6 +92,9 @@ export const MemoizedSemesterTile = React.memo(
             {semester.courses.map((course) => (
               <DraggableSemesterCourseItem
                 onLockChange={(lock) => handleCourseLock(semester.id.toString(), lock, course.code)}
+                onPrereqOverrideChange={(override) =>
+                  handleCoursePrereqOverride(semester.id.toString(), override, course.code)
+                }
                 isSelected={courseIsSelected(course.id.toString())}
                 onSelectCourse={() => handleSelectCourses([course.id.toString()])}
                 onDeselectCourse={() => handleDeselectCourses([course.id.toString()])}
