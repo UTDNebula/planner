@@ -5,6 +5,12 @@ import React, { useRef, useState } from 'react';
 import RequirementsContainer from '@/components/planner/Sidebar/RequirementsContainer';
 
 import { Course, DraggableCourse, GetDragIdByCourse } from '../types';
+import {
+  RequirementGroupTypes,
+  RequirementTypes,
+  CourseRequirement,
+  DegreeRequirement,
+} from './types';
 import DraggableCourseList from './DraggableCourseList';
 import { ObjectID } from 'bson';
 
@@ -13,6 +19,7 @@ export interface CourseSelectorContainerProps {
   courses: string[];
   getSearchedDragId: GetDragIdByCourse;
   getRequirementDragId: GetDragIdByCourse;
+  degreeRequirement: DegreeRequirement;
 }
 import { RouterOutputs, trpc } from '@/utils/trpc';
 import { DegreeRequirements } from './types';
@@ -27,6 +34,7 @@ function CourseSelectorContainer({
   courses,
   getSearchedDragId,
   getRequirementDragId,
+  degreeRequirement,
 }: CourseSelectorContainerProps) {
   // TODO: Provide UI indicator for errors
   const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
@@ -34,6 +42,8 @@ function CourseSelectorContainer({
   });
 
   const { data, isLoading } = q;
+
+  console.log(courses)
 
   const { results, updateQuery } = useFuse<Course>({
     dataSet:
@@ -53,6 +63,25 @@ function CourseSelectorContainer({
     }) as DraggableCourse[];
   }, [results, courses]);
 
+  const CreditsTaken = ({
+    taken,
+    min,
+    unit = 'Credits Taken',
+  }: {
+    taken: number;
+    min: number;
+    unit?: string;
+  }) => {
+
+    return (
+      <div className="flex items-center gap-x-3 rounded-2xl bg-primary-100 p-3">
+        <span className="text-xs font-semibold text-primary-800">
+          {taken}/{min} {unit}
+        </span>
+      </div>
+    );
+  };
+
   const [open, setOpen] = useState(true);
 
   const [displayResults, setDisplay] = useState(false);
@@ -70,6 +99,10 @@ function CourseSelectorContainer({
                   strokeWidth={2.5}
                 />
                 <h1 className="pl-2 text-2xl font-medium tracking-tight">Plan Requirements</h1>
+                <CreditsTaken
+                  taken={0}
+                  min={degreeRequirements.requirements[1].min_hours}
+                />
               </div>
               <h6 className="text-base tracking-tight text-gray-500">
                 Drag courses onto your plan
@@ -82,11 +115,10 @@ function CourseSelectorContainer({
                   updateQuery(q);
                   setDisplay(true);
                 }}
-                className={`${
-                  displayResults
-                    ? 'rounded-b-none border-b-transparent'
-                    : 'rounded-b-[10px] border-b-inherit'
-                }`}
+                className={`${displayResults
+                  ? 'rounded-b-none border-b-transparent'
+                  : 'rounded-b-[10px] border-b-inherit'
+                  }`}
                 placeholder="Search courses"
               />
               <div className="relative">
