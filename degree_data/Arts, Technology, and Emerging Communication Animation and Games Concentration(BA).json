@@ -1,0 +1,51 @@
+{
+  "abbreviation": "Arts, Technology, and Emerging Communication with Animation and Games Concentration (BA)",
+  "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/atec/arts-and-technology-animation",
+  "minimum_credit_hours": 120,
+  "name": "Bachelor of Arts in Arts, Technology, and Emerging Communication with Animation and Games Concentration (BA)",
+  "school": "School of Arts, Technology, and Emerging Communication",
+  "subtype": "Major",
+  "year": "2022-2023",
+  "requirements": {
+    "core": "@import ./core.json",
+    "major": [
+      {
+        "matcher": "CourseRequirement",
+        "course": "ATCM 2300",
+        "metadata": { "id": "93bdde17-4079-4a19-9891-a0a7ff8ee279" }
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "ATCM 2301",
+        "metadata": { "id": "0dfec53a-0a44-4fcd-a989-8f44becaa186" }
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "ATCM 2302",
+        "metadata": { "id": "dddf48d4-f97f-4fef-b8a4-7c12d6bc605f" }
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "CS 1335",
+        "metadata": { "id": "9bdc6974-a3fa-4e15-b0ee-61616f3099e1" }
+      },
+      {"matcher":"CourseRequirement","course":"ATCM 2303","metadata":{"id":"6c2955f9-c13c-4f9d-b9ac-67eaf3d6880c"}},{"matcher":"CourseRequirement","course":"ATCM 2310","metadata":{"id":"9cd88bbb-40b6-49fd-a50e-999093bc20b0"}},
+      {
+        "matcher": "OrRequirement",
+        "requirements": [{"matcher":"CourseRequirement","course":"ATCM 2321","metadata":{"id":"cca32f70-252d-487b-851c-5ef7362f8761"}},{"matcher":"CourseRequirement","course":"ATCM 2330","metadata":{"id":"b2995d5c-f0e5-469c-9526-ad3c8764de35"}},{"matcher":"CourseRequirement","course":"ATCM 2345","metadata":{"id":"01208703-3f02-43c6-886c-87ac25b0968c"}},{"matcher":"CourseRequirement","course":"ATCM 2350","metadata":{"id":"ddc1c284-739c-4896-8172-3b4ac944a5e2"}},{"matcher":"CourseRequirement","course":"ATCM 2355","metadata":{"id":"f17f2433-73b6-4d38-824f-a271d7f40c63"}}],
+        "metadata": {
+          "id": "ff2e95d4-84ec-4630-8bfd-ea0ba71edb05"
+        }
+      },
+      {
+        "matcher": "OrRequirement",
+        "requirements": [{"matcher":"CourseRequirement","course":"ATCM 2315","metadata":{"id":"4329bd12-e805-4496-bf30-7e31eeb6ad35"}},{"matcher":"CourseRequirement","course":"ATCM 2375","metadata":{"id":"7fad4613-ce14-44ae-8a01-44861c1191b0"}}],
+        "metadata": {
+          "id": "6766f9b1-f1e8-41e0-a33a-ae0c12626c33"
+        }
+      }
+      // TODO: III. Major Requirements, Upper-Division: 24 semester credit hours
+      // TODO: IV. Elective Requirements: 30 semester credit hours
+    ]
+  }
+}
