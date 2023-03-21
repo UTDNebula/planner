@@ -1,9 +1,8 @@
+import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
 import { View, Text } from '@react-pdf/renderer';
 
-type CourseOnPDF = {
-  code: string;
-  title: string;
-};
+export const DEFAULT_COURSE_CREDIT_HOUR = 3;
+
 export default function AcademicYearTable({
   tableName,
   tableHeaders,
@@ -12,6 +11,7 @@ export default function AcademicYearTable({
   tableName: string;
   tableHeaders: string[];
   tableData: (
+    | null
     | number
     | {
         code: string;
@@ -19,6 +19,16 @@ export default function AcademicYearTable({
       }
   )[][];
 }) {
+  let creditsSum = 0;
+
+  tableData
+    .flatMap((elm) => elm)
+    .forEach((elm) => {
+      if (typeof elm !== 'number' && elm !== null) {
+        const creditHrs = getSemesterHourFromCourseCode(elm.code) ?? DEFAULT_COURSE_CREDIT_HOUR;
+        creditsSum += creditHrs;
+      }
+    });
   return (
     <View
       style={{
@@ -44,7 +54,7 @@ export default function AcademicYearTable({
       {tableData.map((row, idx) => (
         <AcademicTableRow key={idx} elements={row} />
       ))}
-      <ShowCreditsRow creditsSum={10} />
+      <ShowCreditsRow creditsSum={creditsSum} />
     </View>
   );
 }

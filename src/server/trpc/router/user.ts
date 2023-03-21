@@ -19,6 +19,8 @@ export const userRouter = router({
         emailVerified: true,
         onboardingComplete: true,
         profile: true,
+        seenHomeOnboardingModal: true,
+        seenPlanOnboardingModal: true,
       },
     });
     if (!userInfo) {
@@ -444,6 +446,47 @@ export const userRouter = router({
         console.error(error);
       }
     }),
+  seenHomeOnboarding: protectedProcedure.mutation(async ({ ctx }) => {
+    try {
+      const userInfo = await ctx.prisma.user.update({
+        where: {
+          id: ctx.session.user.id,
+        },
+        data: {
+          seenHomeOnboardingModal: true,
+        },
+      });
+      if (!userInfo) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'User not found',
+        });
+      }
+
+      console.log(userInfo);
+      return userInfo;
+    } catch {
+      console.error('WHY YOU NO WORK');
+    }
+  }),
+  seenPlanOnboarding: protectedProcedure.mutation(async ({ ctx }) => {
+    const userInfo = await ctx.prisma.user.update({
+      where: {
+        id: ctx.session.user.id,
+      },
+      data: {
+        seenPlanOnboardingModal: true,
+      },
+    });
+    if (!userInfo) {
+      throw new TRPCError({
+        code: 'NOT_FOUND',
+        message: 'User not found',
+      });
+    }
+
+    return userInfo;
+  }),
 });
 
 // createNewYear creates a new year like this: 22-> F22, S23, U23

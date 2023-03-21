@@ -55,7 +55,7 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
   return (
     <Page
       title="Select a Degree Template"
-      subtitle="Find your degree template to start planning"
+      subtitle="Find a degree template to start planning."
       close={onDismiss}
       actions={[
         {

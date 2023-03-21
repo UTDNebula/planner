@@ -4,7 +4,8 @@ import { Document, Font, Page, StyleSheet, View } from '@react-pdf/renderer';
 import React, { FC } from 'react';
 
 import { Semester } from '../types';
-import AcademicYearTable from './AcademicYearTable';
+import { customCourseSort } from '../utils';
+import AcademicYearTable, { DEFAULT_COURSE_CREDIT_HOUR } from './AcademicYearTable';
 import Header from './Header';
 
 Font.register({
@@ -40,6 +41,7 @@ const styles = StyleSheet.create({
 interface DegreePlanPDFProps {
   studentName: string;
   planTitle: string;
+  major: string;
   semesters: Semester[];
   transferCredits: string[];
   coursesData: {
@@ -69,6 +71,7 @@ interface CourseData {
 const DegreePlanPDF: FC<DegreePlanPDFProps> = ({
   studentName,
   planTitle,
+  major,
   semesters,
   transferCredits,
   coursesData,
@@ -85,7 +88,9 @@ const DegreePlanPDF: FC<DegreePlanPDFProps> = ({
         coursesData.find((c) => transferCredits[i] === `${c.subject_prefix} ${c.course_number}`)
           ?.title ?? '',
     });
-    transferCreditRow.push(getSemesterHourFromCourseCode(transferCredits[i]) ?? 3);
+    transferCreditRow.push(
+      getSemesterHourFromCourseCode(transferCredits[i]) ?? DEFAULT_COURSE_CREDIT_HOUR,
+    );
     if (i % 3 === 2 || i + 1 === transferCredits.length) {
       transferCreditRows.push([...transferCreditRow]);
       transferCreditRow = [];
@@ -96,7 +101,7 @@ const DegreePlanPDF: FC<DegreePlanPDFProps> = ({
     <Document>
       <Page size="A4" style={styles.page} wrap={false}>
         <View style={styles.section}>
-          <Header studentName={studentName} degreePlanTitle={planTitle}></Header>
+          <Header studentName={studentName} degreePlanTitle={planTitle} major={major}></Header>
 
           {/* Transfer Credit Table */}
           {transferCreditRows.length > 0 && (
@@ -109,27 +114,43 @@ const DegreePlanPDF: FC<DegreePlanPDFProps> = ({
 
           {academicYears.map((year, idx) => {
             // Get max number of rows
-            const maxRows = Math.max(year.fall.length, year.spring.length, year.summer.length);
+            const maxRows = Math.max(year.fall.length, year.spring.length, year.summer.length, 5);
+
             const rows = [];
             let newRow = [];
 
             for (let i = 0; i < maxRows; i++) {
               if (i < year.fall.length) {
                 newRow.push({ code: year.fall[i].code, title: year.fall[i].title });
-                newRow.push(getSemesterHourFromCourseCode(year.fall[i].code) ?? 3);
+                newRow.push(
+                  getSemesterHourFromCourseCode(year.fall[i].code) ?? DEFAULT_COURSE_CREDIT_HOUR,
+                );
+              } else {
+                newRow.push(null, null);
               }
 
               if (i < year.spring.length) {
                 newRow.push({ code: year.spring[i].code, title: year.spring[i].title });
-                newRow.push(getSemesterHourFromCourseCode(year.spring[i].code) ?? 3);
+                newRow.push(
+                  getSemesterHourFromCourseCode(year.spring[i].code) ?? DEFAULT_COURSE_CREDIT_HOUR,
+                );
+              } else {
+                newRow.push(null, null);
               }
               if (i < year.summer.length) {
                 newRow.push({ code: year.summer[i].code, title: year.summer[i].title });
-                newRow.push(getSemesterHourFromCourseCode(year.summer[i].code) ?? 3);
+                newRow.push(
+                  getSemesterHourFromCourseCode(year.summer[i].code) ?? DEFAULT_COURSE_CREDIT_HOUR,
+                );
+              } else {
+                newRow.push(null, null);
               }
               rows.push([...newRow]);
               newRow = [];
             }
+
+            console.log(rows);
+            console.log('HM');
 
             return (
               <AcademicYearTable
@@ -219,6 +240,13 @@ const convertSemestersToAcademicYears = (
       academicYear.summer = [];
     }
 
+    // Sort courses alphabetically
+    academicYear.fall = customCourseSort(academicYear.fall);
+    academicYear.spring = customCourseSort(academicYear.spring);
+    academicYear.summer = customCourseSort(academicYear.summer);
+
+    console.log(academicYear);
+    console.log('WHY');
     // Add to academic year
     academicYears.push(academicYear);
   }
@@ -248,7 +276,7 @@ const addCoursesToSemester = (
       title:
         coursesData.find((c) => `${c.subject_prefix} ${c.course_number}` === course.code)?.title ??
         '',
-      credits: getSemesterHourFromCourseCode(course.code) ?? 3,
+      credits: getSemesterHourFromCourseCode(course.code) ?? DEFAULT_COURSE_CREDIT_HOUR,
     };
   });
 };
