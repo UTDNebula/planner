@@ -18,4 +18,5 @@ REQUIREMENTS_MAP: dict[str, Type[AbstractRequirement]] = {
     # Business Administration Edge Cases
     "BAGuidedElectiveRequirement": business_administration.BusinessAdministrationElectiveRequirement,
     "SomeRequirement": business_administration.SomeRequirement,
+    "MultiGroupElectiveRequirement": MultiGroupElectiveRequirement,
 }
