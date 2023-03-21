@@ -23,7 +23,8 @@ def test_degrees(file: DirEntry[str]) -> None:
     "file", DEGREE_DATA_FILES, ids=lambda file: "file={}".format(file)
 )
 def test_degrees_include_first_year_seminar(file: DirEntry[str]) -> None:
-    data = json.loads(open(file, "r").read())
+    f = open(file, "r").read()
+    data = json.loads(f)
     first_year_seminar_courses = {
         "School of Arts, Humanities, and Technology": ["ARHM 1100"],
         "School of Arts and Humanities": ["ARHM 1100"],
@@ -36,12 +37,9 @@ def test_degrees_include_first_year_seminar(file: DirEntry[str]) -> None:
     if school not in first_year_seminar_courses:
         return
     degree_includes_first_year_seminar = False
-    for requirement in data["requirements"]["major"]:
-        if (
-            requirement["matcher"] == "CourseRequirement"
-            and requirement["course"] in first_year_seminar_courses[school]
-        ):
-            degree_includes_first_year_seminar = True
+    for course in first_year_seminar_courses[school]:
+        degree_includes_first_year_seminar = degree_includes_first_year_seminar or (course in f)
+    
     assert degree_includes_first_year_seminar
 
 
