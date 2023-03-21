@@ -60,7 +60,7 @@ function CourseSelectorContainer({
   return (
     <>
       {open ? (
-        <div className="z-10 h-screen w-[30%] min-w-[30%] overflow-x-hidden overflow-y-scroll">
+        <div className="z-0 h-screen w-[30%] min-w-[30%] overflow-x-hidden overflow-y-scroll">
           <div className="flex h-fit min-h-full w-full flex-col gap-y-4 bg-white p-4">
             <div className="flex flex-col">
               <div className="flex flex-row items-center">
@@ -130,7 +130,7 @@ function CourseSelectorContainer({
           </div>
         </div>
       ) : (
-        <div className="z-10 flex h-screen w-[50px] flex-col items-center border border-neutral-300 bg-white py-8">
+        <div className="z-0 flex h-screen w-[50px] flex-col items-center border border-neutral-300 bg-white py-8">
           <ChevronIcon
             onClick={() => setOpen(!open)}
             className={`h-4 w-4 cursor-pointer ${!open ? 'rotate-180' : ''}`}
