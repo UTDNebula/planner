@@ -355,7 +355,6 @@ section:nth-child(odd) {
 }
 
 #team li {
-  color: var(--gray);
   display: inline-block;
   font-size: .9rem;
   padding: .5rem;
@@ -367,11 +366,27 @@ section:nth-child(odd) {
   padding: .5rem 1rem;
 }
 
+.selectedTeam {
+  background-color: #3772ff;
+  border-color: #3772ff;
+  color: white !important;
+  border-radius: 1.5em;
+  padding: .5rem 1rem;
+}
+
 .team {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   width: 90%;
   margin-top: 3vh;
+}
+
+.hidden {
+  display: none;
+}
+
+.visible {
+  display: grid;
 }
 
 .member img {
