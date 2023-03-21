@@ -19,8 +19,6 @@ import { RouterOutputs, trpc } from '@/utils/trpc';
 import { DegreeRequirements } from './types';
 import ChevronIcon from '@/icons/ChevronIcon';
 import useFuse from '../useFuse';
-import { Item } from '@radix-ui/react-dropdown-menu';
-import { number } from 'zod';
 type CourseData = RouterOutputs['courses']['publicGetAllCourses'];
 type ArrayElement<ArrayType extends readonly unknown[]> =
   ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
@@ -37,8 +35,6 @@ function CourseSelectorContainer({
   });
 
   const { data, isLoading } = q;
-
-  console.log(courses)
 
   const { results, updateQuery } = useFuse<Course>({
     dataSet:
@@ -116,8 +112,8 @@ function CourseSelectorContainer({
                   setDisplay(true);
                 }}
                 className={`${displayResults
-                  ? 'rounded-b-none border-b-transparent'
-                  : 'rounded-b-[10px] border-b-inherit'
+                    ? 'rounded-b-none border-b-transparent'
+                    : 'rounded-b-[10px] border-b-inherit'
                   }`}
                 placeholder="Search courses"
               />
