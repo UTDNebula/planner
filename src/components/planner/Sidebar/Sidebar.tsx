@@ -56,7 +56,7 @@ function CourseSelectorContainer({
 
   let sum = 0;
   courses.forEach((string) => {
-    sum += getSemesterHourFromCourseCode(string);
+    sum += getSemesterHourFromCourseCode(string) ?? 3;
   });
 
   const CreditsTaken = ({
@@ -68,9 +68,8 @@ function CourseSelectorContainer({
     min: number;
     unit?: string;
   }) => {
-
     return (
-      <div className="flex items-center gap-x-3 rounded-2xl bg-primary-100 p-3">
+      <div className="flex items-center gap-x-3 rounded-full bg-primary-100 px-3 py-2">
         <span className="text-xs font-semibold text-primary-800">
           {taken}/{min} {unit}
         </span>
@@ -97,7 +96,11 @@ function CourseSelectorContainer({
                 <h1 className="pl-2 text-2xl font-medium tracking-tight">Plan Requirements</h1>
                 <CreditsTaken
                   taken={sum}
-                  min={degreeRequirements.requirements[1].min_hours}
+                  min={
+                    degreeRequirements.requirements.length > 0
+                      ? degreeRequirements.requirements[1].min_hours
+                      : 120
+                  }
                 />
               </div>
               <h6 className="text-base tracking-tight text-gray-500">
@@ -111,10 +114,11 @@ function CourseSelectorContainer({
                   updateQuery(q);
                   setDisplay(true);
                 }}
-                className={`${displayResults
+                className={`${
+                  displayResults
                     ? 'rounded-b-none border-b-transparent'
                     : 'rounded-b-[10px] border-b-inherit'
-                  }`}
+                }`}
                 placeholder="Search courses"
               />
               <div className="relative">
