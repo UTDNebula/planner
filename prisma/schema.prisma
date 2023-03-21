@@ -77,7 +77,7 @@ model Course {
   semester   Semester? @relation(fields: [semesterId], references: [id], onDelete: Cascade)
   semesterId String?   @db.ObjectId
   locked     Boolean   @default(false)
-  
+
   @@unique([semesterId, code])
 }
 
@@ -143,15 +143,17 @@ model Session {
 }
 
 model User {
-  id                 String    @id @default(auto()) @map("_id") @db.ObjectId
-  email              String?   @unique
-  emailVerified      DateTime?
-  onboardingComplete Boolean   @default(false)
-  credit             Credit[]
-  accounts           Account[] // Wait can a user have multiple accounts?
-  sessions           Session[]
-  profile            Profile?
-  plans              Plan[]
+  id                      String    @id @default(auto()) @map("_id") @db.ObjectId
+  email                   String?   @unique
+  emailVerified           DateTime?
+  onboardingComplete      Boolean   @default(false)
+  seenHomeOnboardingModal Boolean   @default(false)
+  seenPlanOnboardingModal Boolean   @default(false)
+  credit                  Credit[]
+  accounts                Account[] // Wait can a user have multiple accounts?
+  sessions                Session[]
+  profile                 Profile?
+  plans                   Plan[]
 }
 
 model VerificationToken {

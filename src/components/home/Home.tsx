@@ -6,6 +6,8 @@ import { useState } from 'react';
 import PlanCard from '../landing/PlanCard';
 import TemplateModal from '../template/Modal';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import { Steps } from 'intro.js-react';
+import React from 'react';
 
 /**
  * A list of the user's plans
@@ -13,10 +15,25 @@ import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 export default function PlansPage(): JSX.Element {
   const [openTemplateModal, setOpenTemplateModal] = useState(false);
   const userPlanQuery = trpc.plan.getUserPlans.useQuery();
+  const updateSeenHomeOnboarding = trpc.user.seenHomeOnboarding.useMutation({
+    async onSuccess() {
+      await utils.user.getUser.invalidate();
+    },
+  });
   const userQuery = trpc.user.getUser.useQuery();
   const { data } = userPlanQuery;
   const userData = userQuery.data;
   const [planPage, setPlanPage] = useState<0 | 1>(1);
+
+  const [showHomeOnboardingModal, setShowHomeOnboardingModal] = useState(false);
+  React.useEffect(() => {
+    setShowHomeOnboardingModal((userData && !userData.seenHomeOnboardingModal) ?? false);
+  }, [userData]);
+
+  const handleCloseHomeOnboarding = () => {
+    setShowHomeOnboardingModal(false);
+    updateSeenHomeOnboarding.mutateAsync();
+  };
 
   const steps = [
     {
@@ -48,7 +65,6 @@ export default function PlansPage(): JSX.Element {
       ),
     },
     {
-      element: '#tutorial-3',
       intro: (
         <div className="">
           The sidebar provides access to your profile, tech support, and feedback form. If you
@@ -58,9 +74,17 @@ export default function PlansPage(): JSX.Element {
     },
   ];
 
+  const utils = trpc.useContext();
+
   return (
     <>
-      {/* <Steps enabled={true} steps={steps} initialStep={0} onExit={() => console.log('HI')} /> */}
+      <Steps
+        enabled={showHomeOnboardingModal}
+        steps={steps}
+        initialStep={0}
+        onExit={handleCloseHomeOnboarding}
+        options={{ doneLabel: 'Done' }}
+      />
       <section
         id="tutorial-1"
         className="flex max-h-screen flex-grow flex-col gap-4 overflow-y-scroll p-16"
@@ -108,7 +132,17 @@ export default function PlansPage(): JSX.Element {
             Welcome{userData?.profile?.name ? ', ' + userData.profile.name : ''}
           </div>
         </article>
-        {data?.plans.length === 0 && <div>You have not created any plans yet.</div>}
+        {data?.plans.length === 0 && (
+          <div className="flex h-[40vh] flex-col items-center justify-center">
+            <div className="mb-4 text-2xl font-semibold text-[#A3A3A3]">
+              Add New Plan To Get Started
+            </div>
+            <div className="text-center text-lg text-[#A3A3A3]">
+              Pick template plan if you are a freshman. Pick a <br />
+              custom plan if you have transfer credits.
+            </div>
+          </div>
+        )}
         <article className="grid h-fit w-fit grid-cols-3 gap-12">
           {data?.plans.map((plan) => (
             <PlanCard

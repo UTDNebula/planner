@@ -5,11 +5,20 @@ import { PageProps } from './CustomPlan';
 
 export function Page({ title, subtitle, children, actions, close }: PropsWithChildren<PageProps>) {
   return (
-    <section className="flex flex-col justify-center gap-4">
+    <section className="flex flex-col justify-center gap-4 ">
       <div className="flex justify-between">
         <div className="flex flex-col gap-1">
           <h1 className="text-4xl font-semibold tracking-tight">{title}</h1>
-          <p className="text-sm text-neutral-500">{subtitle}</p>
+          <p className="text-[14px] leading-6 text-neutral-500">
+            {subtitle} {'Download your transcript '}
+            <a
+              href="https://registrar.utdallas.edu/transcript/unofficial/"
+              className="text-primary underline"
+            >
+              here
+            </a>
+          </p>
+          <p className="text-sm text-neutral-500"></p>
         </div>
         <button
           onClick={close}

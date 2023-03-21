@@ -122,9 +122,11 @@ function CourseSelectorContainer({
                 />
               ))
             ) : (
-              <div className="text-center text-xs font-medium leading-5 text-[#A3A3A3]">
-                Our engineer team is working hard to add course progress to your major. Thanks for
-                your understanding and stay tuned!
+              <div className="flex h-[30vh] flex-grow text-base leading-5 text-[#A3A3A3]">
+                <div className="mx-12 mt-44 items-center justify-center text-center leading-6">
+                  Our engineer team is working hard to add course progress to your major. Thanks for
+                  your understanding and stay tuned!
+                </div>
               </div>
             )}
           </div>

@@ -247,7 +247,7 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
     <Page
       key="custom-plan-transcript"
       title="Upload Transcript"
-      subtitle="Upload your transcript to make your custom plan"
+      subtitle="Upload your transcript to make your custom plan. https://registrar.utdallas.edu/transcript/unofficial/"
       close={onDismiss}
       actions={[
         {
