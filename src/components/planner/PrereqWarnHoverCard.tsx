@@ -15,7 +15,7 @@ export const PrereqWarnHoverCard: FC<PrereqHoverCardProps> = ({
   side = 'top',
   children,
 }) => (
-  <HoverCard.Root open={open} onOpenChange={onOpenChange}>
+  <HoverCard.Root open={open} onOpenChange={onOpenChange} openDelay={0}>
     <HoverCard.Trigger asChild>{children}</HoverCard.Trigger>
     <HoverCard.Portal>
       <HoverCard.Content
