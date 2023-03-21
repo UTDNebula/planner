@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import '../styles/globals.css';
 import 'react-toastify/dist/ReactToastify.css';
-import 'intro.js/introjs.css';
+import '../styles/introjs.css';
 
 import { createTheme, StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
 import { AnimateSharedLayout } from 'framer-motion';

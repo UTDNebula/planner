@@ -90,7 +90,7 @@ export const MemoizedSemesterCourseItem = React.memo(
 
         <CourseInfoHoverCard
           prereqs={prereqs}
-          open={hoverOpen}
+          open={hoverOpen && !hoverIconOpen}
           onOpenChange={(open) => !dropdownOpen && setHoverOpen(open)}
           title={title || ''}
         >
@@ -137,15 +137,7 @@ export const MemoizedSemesterCourseItem = React.memo(
                   open={hoverIconOpen}
                   onOpenChange={(hoverOpen) => !dropdownOpen && setHoverIconOpen(hoverOpen)}
                 >
-                  <span
-                    className="text-[#22C55E]"
-                    onMouseEnter={() => {
-                      setHoverIconOpen(true);
-                    }}
-                    onMouseLeave={() => {
-                      setHoverIconOpen(false);
-                    }}
-                  >
+                  <span className="text-[#22C55E]">
                     <WarningIcon />
                   </span>
                 </PrereqWarnHoverCard>

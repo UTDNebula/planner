@@ -61,6 +61,7 @@ const Toolbar: FC<ToolbarProps> = ({
                 <DegreePlanPDF
                   studentName={studentName}
                   planTitle={title}
+                  major={major}
                   semesters={semesters}
                   transferCredits={transferCredits}
                   coursesData={coursesData ?? []}

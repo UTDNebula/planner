@@ -20,9 +20,10 @@ const styles = StyleSheet.create({
 interface PlanHeaderProp {
   degreePlanTitle: string;
   studentName: string;
+  major: string;
 }
 
-const PlanHeader = ({ studentName, degreePlanTitle }: PlanHeaderProp) => (
+const PlanHeader = ({ studentName, degreePlanTitle, major }: PlanHeaderProp) => (
   <View
     style={{
       display: 'flex',
@@ -34,6 +35,7 @@ const PlanHeader = ({ studentName, degreePlanTitle }: PlanHeaderProp) => (
   >
     <Text style={{ fontSize: '16px', fontWeight: 'bold' }}>{degreePlanTitle}</Text>
     <Text style={{ fontSize: '12px', fontWeight: 'semibold' }}>{studentName}</Text>
+    <Text style={{ fontSize: '10px', fontWeight: 'light' }}>{major}</Text>
   </View>
 );
 

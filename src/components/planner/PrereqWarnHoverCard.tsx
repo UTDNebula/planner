@@ -15,12 +15,12 @@ export const PrereqWarnHoverCard: FC<PrereqHoverCardProps> = ({
   side = 'top',
   children,
 }) => (
-  <HoverCard.Root open={open} onOpenChange={onOpenChange}>
+  <HoverCard.Root open={open} onOpenChange={onOpenChange} openDelay={0}>
     <HoverCard.Trigger asChild>{children}</HoverCard.Trigger>
     <HoverCard.Portal>
       <HoverCard.Content
         side={side}
-        className="z-[999] w-[250px] animate-[slideUpAndFade_0.3s] rounded-md border border-neutral-200 bg-generic-white p-5 shadow-sm"
+        className="z-[9999] w-[250px] animate-[slideUpAndFade_0.3s] rounded-md border border-neutral-200 bg-generic-white p-5 shadow-sm"
         sideOffset={5}
       >
         <h3 className="mb-2 text-lg font-semibold">Prerequisites not met: </h3>
