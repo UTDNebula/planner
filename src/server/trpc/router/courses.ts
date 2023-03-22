@@ -40,14 +40,3 @@ export const coursesRouter = router({
     return courseMapWithCodeKey;
   }),
 });
-
-type Courses = {
-  code: string;
-  prereq: Array<Prerequisites>;
-};
-
-type Prerequisites = {
-  codes: Array<string>;
-  type: string;
-  required: number;
-};
