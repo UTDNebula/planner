@@ -18,7 +18,13 @@ export default function PlanDetailPage(
 ): JSX.Element {
   const { planId } = props;
 
-  const { plan, validation, bypasses, isPlanLoading, handlePlanDelete } = usePlan({ planId });
+  const {
+    plan,
+    validation,
+    degreeRequirements: degreeRequirementsData,
+    bypasses,
+    isPlanLoading,
+  } = usePlan({ planId });
 
   // Indicate UI loading
   if (isPlanLoading) {
@@ -41,7 +47,11 @@ export default function PlanDetailPage(
       {plan && (
         <SemestersContextProvider planId={planId} plan={plan} bypasses={bypasses ?? []}>
           {/* <Steps enabled={true} steps={steps} initialStep={0} onExit={() => console.log('HI')} /> */}
-          <Planner degreeRequirements={validation} transferCredits={plan.transferCredits} />
+          <Planner
+            degreeRequirements={validation}
+            degreeRequirementsData={degreeRequirementsData ?? { id: 'loading', major: 'undecided' }}
+            transferCredits={plan.transferCredits}
+          />
         </SemestersContextProvider>
       )}
     </div>
@@ -60,10 +70,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext<{ pl
 
   // await ssg.courses.publicGetSanitizedCourses.prefetch();
   // await Promise.all([
-  //   ssg.validator.prereqValidator.prefetch(planId),
-  //   ssg.validator.degreeValidator.prefetch(planId),
-  //   ssg.plan.getPlanById.prefetch(planId),
-  //   ssg.plan.getDegreeRequirements.prefetch({ planId }),
+  ssg.validator.prereqValidator.prefetch(planId);
+  ssg.validator.degreeValidator.prefetch(planId);
+  ssg.plan.getPlanById.prefetch(planId);
+  ssg.plan.getDegreeRequirements.prefetch({ planId });
   // ]);
 
   return {

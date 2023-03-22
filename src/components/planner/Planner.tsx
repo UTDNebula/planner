@@ -44,6 +44,7 @@ import Router from 'next/router';
 /** PlannerTool Props */
 export interface PlannerProps {
   degreeRequirements: DegreeRequirements;
+  degreeRequirementsData: { id: string; major: string };
   prereqData?: Map<string, boolean>;
   transferCredits: Array<string>;
 }
@@ -53,6 +54,7 @@ export interface PlannerProps {
 /** Controlled wrapper around course list and semester tiles */
 export default function Planner({
   degreeRequirements,
+  degreeRequirementsData,
   transferCredits,
 }: PlannerProps): JSX.Element {
   const {
@@ -69,11 +71,8 @@ export default function Planner({
 
   const utils = trpc.useContext();
 
-  const degreeRequirementsQuery = trpc.plan.getDegreeRequirements.useQuery({ planId });
   const userQuery = trpc.user.getUser.useQuery();
   const { data: userData } = userQuery;
-
-  const { data: degreeRequirementsData } = degreeRequirementsQuery;
 
   // Hacky
   const updatePlan = async () => {
