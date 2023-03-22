@@ -128,7 +128,7 @@ function CourseSelectorContainer({
                 ></div>
               </div>
             </div>
-            (
+
             <Dialog.Root open={displayResults} onOpenChange={(v) => setDisplay(v)} modal={false}>
               {ref.current && (
                 <Dialog.Portal className="z-[99]" container={ref?.current}>
@@ -145,13 +145,13 @@ function CourseSelectorContainer({
                         />
                       </div>
                     ) : (
-                      <div>Courses are loading</div>
+                      <div className="p-4 text-2xl">Courses are loading</div>
                     )}
                   </Dialog.Content>
                 </Dialog.Portal>
               )}
             </Dialog.Root>
-            )
+
             {degreeRequirements.requirements.length > 0 ? (
               degreeRequirements.requirements.map((req, idx) => (
                 <RequirementsContainer
