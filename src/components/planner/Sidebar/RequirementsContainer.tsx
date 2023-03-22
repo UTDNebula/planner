@@ -97,6 +97,8 @@ const getRequirementGroup = (
     }
   };
 
+  let courses: string[] = [];
+
   switch (degreeRequirement.matcher) {
     case 'And':
       return {
@@ -128,6 +130,8 @@ const getRequirementGroup = (
       };
     case 'FreeElectives':
       // Some function to get courses
+      courses = Object.keys(degreeRequirement.valid_courses);
+
       return {
         name: 'Free Electives',
 
@@ -143,13 +147,14 @@ const getRequirementGroup = (
             ? q.data.map((c) => ({
                 course: `${c.subject_prefix} ${c.course_number}`,
                 matcher: 'Course',
-                filled: false,
+                filled: courses.includes(`${c.subject_prefix} ${c.course_number}`),
                 metadata: {},
               }))
             : [],
         filterFunction: filterFunc,
       };
     case 'CS Guided Electives':
+      courses = Object.keys(degreeRequirement.valid_courses);
       return {
         name: degreeRequirement.metadata.name ?? 'CS Guided Electives',
 
@@ -166,6 +171,7 @@ const getRequirementGroup = (
                 .map((c) => ({
                   course: `${c.subject_prefix} ${c.course_number}`,
                   matcher: 'Course',
+                  filled: courses.includes(`${c.subject_prefix} ${c.course_number}`),
                 }))
                 .filter((c) => c.course.includes('CS 43')) as CourseRequirement[])
             : [],
