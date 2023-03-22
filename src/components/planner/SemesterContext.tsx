@@ -48,6 +48,11 @@ export interface SemestersContextState {
   filters: Filter[];
   handleCourseLock: (semesterId: string, locked: boolean, courseName: string) => void;
   handleSemesterLock: (semesterId: string, locked: boolean) => void;
+  handleCoursePrereqOverride: (
+    semesterId: string,
+    prereqOverriden: boolean,
+    courseName: string,
+  ) => void;
 }
 
 type Filter =
@@ -122,6 +127,12 @@ export type SemestersReducerAction =
   | {
       type: 'changeSemesterLock';
       locked: boolean;
+      semesterId: string;
+    }
+  | {
+      type: 'changeCoursePrereqOverride';
+      prereqOverriden: boolean;
+      courseName: string;
       semesterId: string;
     }
   | {
@@ -267,6 +278,19 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
               ? { ...semester, locked: action.locked }
               : semester,
           );
+        case 'changeCoursePrereqOverride':
+          return state.map((semester) =>
+            semester.id.toString() === action.semesterId
+              ? {
+                  ...semester,
+                  courses: semester.courses.map((course) =>
+                    course.code === action.courseName
+                      ? { ...course, prereqOveridden: action.prereqOverriden }
+                      : course,
+                  ),
+                }
+              : semester,
+          );
         default:
           return state;
       }
@@ -325,6 +349,27 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
       func: ({ locked, semesterId, courseName }) =>
         changeCourseLock.mutateAsync({ locked, semesterId, courseName }),
       args: { locked, semesterId, courseName },
+    });
+  };
+
+  const changeCoursePrereqOverride = trpc.plan.changeCoursePrereqOverride.useMutation();
+
+  const handleCoursePrereqOverride = (
+    semesterId: string,
+    prereqOverriden: boolean,
+    courseName: string,
+  ) => {
+    dispatchSemesters({
+      type: 'changeCoursePrereqOverride',
+      courseName,
+      prereqOverriden,
+      semesterId,
+    });
+
+    addTask({
+      func: ({ semesterId, courseName, prereqOverriden }) =>
+        changeCoursePrereqOverride.mutateAsync({ semesterId, courseName, prereqOverriden }),
+      args: { semesterId, courseName, prereqOverriden },
     });
   };
 
@@ -696,6 +741,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
         filters,
         handleCourseLock,
         handleSemesterLock,
+        handleCoursePrereqOverride,
       }}
     >
       {children}
@@ -709,11 +755,15 @@ const parsePlanSemestersFromPlan = (plan: Plan): Semester[] => {
     code: sem.code,
     id: new ObjectID(sem.id),
     color: Object.keys(tagColors).includes(sem.color) ? (sem.color as keyof typeof tagColors) : '',
-    courses: sem.courses.map((course) => ({
-      locked: course.locked,
-      id: new ObjectID(course.id),
-      color: course.color as keyof typeof tagColors,
-      code: course.code,
-    })),
+    courses: sem.courses.map(
+      (course) =>
+        ({
+          locked: course.locked,
+          id: new ObjectID(course.id),
+          color: course.color as keyof typeof tagColors,
+          code: course.code,
+          prereqOveridden: course.prereqOverriden,
+        } as DraggableCourse),
+    ),
   }));
 };

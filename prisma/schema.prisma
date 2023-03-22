@@ -77,7 +77,8 @@ model Course {
   semester   Semester? @relation(fields: [semesterId], references: [id], onDelete: Cascade)
   semesterId String?   @db.ObjectId
   locked     Boolean   @default(false)
-
+  prereqOverriden Boolean @default(false)
+  
   @@unique([semesterId, code])
 }
 

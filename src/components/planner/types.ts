@@ -35,6 +35,7 @@ export interface DraggableCourse extends Course {
   prereqs?: string[];
   color: keyof typeof tagColors;
   locked: boolean;
+  prereqOveridden: boolean;
 }
 
 export interface DegreeRequirementGroup {

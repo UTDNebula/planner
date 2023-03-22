@@ -427,6 +427,28 @@ export const planRouter = router({
       });
       return true;
     }),
+  changeCoursePrereqOverride: protectedProcedure
+    .input(
+      z.object({
+        semesterId: z.string(),
+        courseName: z.string(),
+        prereqOverriden: z.boolean(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      await ctx.prisma.course.update({
+        where: {
+          semesterId_code: {
+            semesterId: input.semesterId,
+            code: input.courseName,
+          },
+        },
+        data: {
+          prereqOverriden: input.prereqOverriden,
+        },
+      });
+      return true;
+    }),
   changeCourseLock: protectedProcedure
     .input(
       z.object({
