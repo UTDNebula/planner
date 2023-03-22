@@ -11,10 +11,12 @@ export function Page({ title, subtitle, children, actions, close }: PropsWithChi
           <h1 className="text-4xl font-semibold tracking-tight">{title}</h1>
           <p className="text-[14px] leading-6 text-neutral-500">
             {subtitle}
-            {title === 'Select a Degree Template' && (
+            {title === 'Upload Transcript' && (
               <span>
-                {' Download your transcript '}
+                {' Download it '}
                 <a
+                  target="_blank"
+                  rel="noopener noreferrer"
                   href="https://registrar.utdallas.edu/transcript/unofficial/"
                   className="text-primary underline"
                 >

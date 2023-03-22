@@ -55,6 +55,7 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
     const selectedTemplate = templatesData.find((t) => t.name === major);
     if (!selectedTemplate) {
       alert('Template not found. Please try again');
+      setLoading(false);
       return;
     }
     try {
