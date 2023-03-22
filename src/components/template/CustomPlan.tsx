@@ -42,6 +42,7 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
     getData: async () => (majors ? majors.map((major) => ({ filMajor: `${major}` })) : []),
     initialQuery: '',
     filterFn: (major, query) => major.filMajor.toLowerCase().includes(query.toLowerCase()),
+    constraints: [0, 100],
   });
 
   const [uploadLoading, setUploadLoading] = useState(false);
@@ -254,7 +255,7 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
     <Page
       key="custom-plan-transcript"
       title="Upload Transcript"
-      subtitle="Upload your transcript to make your custom plan. https://registrar.utdallas.edu/transcript/unofficial/"
+      subtitle="Upload your transcript to make your custom plan."
       close={onDismiss}
       actions={[
         {

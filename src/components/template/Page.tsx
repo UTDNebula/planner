@@ -10,13 +10,18 @@ export function Page({ title, subtitle, children, actions, close }: PropsWithChi
         <div className="flex flex-col gap-1">
           <h1 className="text-4xl font-semibold tracking-tight">{title}</h1>
           <p className="text-[14px] leading-6 text-neutral-500">
-            {subtitle} {'Download your transcript '}
-            <a
-              href="https://registrar.utdallas.edu/transcript/unofficial/"
-              className="text-primary underline"
-            >
-              here
-            </a>
+            {subtitle}
+            {title === 'Select a Degree Template' && (
+              <span>
+                {' Download your transcript '}
+                <a
+                  href="https://registrar.utdallas.edu/transcript/unofficial/"
+                  className="text-primary underline"
+                >
+                  here
+                </a>
+              </span>
+            )}
           </p>
           <p className="text-sm text-neutral-500"></p>
         </div>

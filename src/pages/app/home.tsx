@@ -17,6 +17,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   });
 
   await ssg.plan.getUserPlans.prefetch();
+
   return {
     props: {
       trpcState: ssg.dehydrate(),

@@ -12,7 +12,7 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
   const [major, setMajor] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const { data, isError } = trpc.template.getAllTemplates.useQuery();
+  const { data: templatesData, isError } = trpc.template.getAllTemplates.useQuery();
 
   const createTemplateUserPlan = trpc.user.createTemplateUserPlan.useMutation({
     async onSuccess() {
@@ -22,9 +22,10 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
 
   const { results, updateQuery } = useSearch({
     getData: async () =>
-      templates ? templates.map((major) => ({ filMajor: `${major.name}` })) : [],
+      templatesData ? templatesData.map((major) => ({ filMajor: `${major.name}` })) : [],
     initialQuery: '',
     filterFn: (major, query) => major.filMajor.toLowerCase().includes(query.toLowerCase()),
+    constraints: [0, 100],
   });
 
   if (isError) {
@@ -32,12 +33,11 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
     return <div>Error fetching templates</div>;
   }
 
-  if (!data) {
+  if (!templatesData) {
     return <div>Loading...</div>;
   }
-  const templates = data;
 
-  const orderedTemplate = templates.sort((a, b) => {
+  const orderedTemplate = templatesData.sort((a, b) => {
     if (a.name! < b.name!) {
       return -1;
     }
@@ -47,8 +47,9 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
   const handleTemplateCreation = async (major: string) => {
     setLoading(true);
 
-    const selectedTemplate = templates.find((t) => t.name === major);
+    const selectedTemplate = templatesData.find((t) => t.name === major);
     if (!selectedTemplate) {
+      alert('Template not found. Please try again');
       return;
     }
     try {
