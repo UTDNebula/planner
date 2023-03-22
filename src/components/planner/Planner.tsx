@@ -86,7 +86,7 @@ export default function Planner({
   const deletePlan = trpc.plan.deletePlanById.useMutation({
     onSuccess: () => {
       setDeleteLoading(true);
-      utils.plan.invalidate().then(() => Router.push('/app'));
+      utils.plan.invalidate().then(() => Router.push('/app/home'));
     },
     onSettled: () => setDeleteLoading(false),
   });
