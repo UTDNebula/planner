@@ -22,7 +22,7 @@ export default function PlanDetailPage(
 
   // Indicate UI loading
   if (isPlanLoading) {
-    return <div>Loading</div>;
+    return <div className="text-2xl">Your plan is loading....please sit tight :)</div>;
   }
 
   const steps = [
