@@ -1,8 +1,9 @@
 import { trpc } from '@/utils/trpc';
 import router from 'next/router';
 import { useState } from 'react'; //nprogress module
-
+import AutoCompleteMajor from '@/pages/auth/AutoCompleteMajor';
 import { Page } from './Page';
+import useSearch from '../search/search';
 
 export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
   const utils = trpc.useContext();
@@ -17,6 +18,13 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
     async onSuccess() {
       await utils.user.getUser.invalidate();
     },
+  });
+
+  const { results, updateQuery } = useSearch({
+    getData: async () =>
+      templates ? templates.map((major) => ({ filMajor: `${major.name}` })) : [],
+    initialQuery: '',
+    filterFn: (major, query) => major.filMajor.toLowerCase().includes(query.toLowerCase()),
   });
 
   if (isError) {
@@ -38,7 +46,8 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
 
   const handleTemplateCreation = async (major: string) => {
     setLoading(true);
-    const selectedTemplate = templates.find((t) => t.id === major);
+
+    const selectedTemplate = templates.find((t) => t.name === major);
     if (!selectedTemplate) {
       return;
     }
@@ -80,20 +89,16 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
       />
 
       <p className="text-sm font-semibold">Search degree template</p>
-      <select
-        className="w-full rounded-md border border-neutral-500 py-3 px-4 text-sm text-black/80"
-        onChange={(e) => setMajor(e.target.value)}
-        defaultValue="placeholder"
-      >
-        <option disabled value="placeholder">
-          Find your major...
-        </option>
-        {orderedTemplate.map((major) => (
-          <option value={major.id} key={major.id}>
-            {major.name}
-          </option>
-        ))}
-      </select>
+      <div className="relative mb-4">
+        <AutoCompleteMajor
+          className="w-[500px] rounded border outline-none"
+          key={0}
+          onValueChange={(value) => setMajor(value)}
+          onInputChange={(query: string) => updateQuery(query)}
+          options={results.map((major: { filMajor: string }) => major.filMajor)}
+          autoFocus
+        ></AutoCompleteMajor>
+      </div>
     </Page>
   );
 }
