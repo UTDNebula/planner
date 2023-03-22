@@ -6,7 +6,8 @@ from major.requirements import (
     FreeElectiveRequirement,
     SelectRequirement,
     PrefixBucketRequirement,
-    OtherRequirement
+    OtherRequirement,
+    MultiGroupElectiveRequirement,
 )
 import json
 
@@ -283,6 +284,7 @@ def test_prefix_bucket_requirement() -> None:
     prefix_req.attempt_fulfill("CS 1336")
     assert prefix_req.filled == True
 
+
 def test_other_requirement() -> None:
     other_req = OtherRequirement("Other Requirement")
     assert other_req.is_fulfilled() == False
@@ -305,3 +307,82 @@ def test_other_requirement() -> None:
 
     other_req.attempt_fulfill("CS 1336")
     assert other_req.is_fulfilled() == False
+
+
+def test_multi_group_elective_requirement() -> None:
+    valid_req_with_no_hrs_requirement = MultiGroupElectiveRequirement(
+        [
+            CourseRequirement(
+                "ATCM 2330", False, {"id": "41b3882e-ba4e-414c-b2fe-20d86e729bca"}
+            ),
+            CourseRequirement(
+                "ATCM 2303", False, {"id": "9a91a68b-ef2e-4a92-a447-94b783a81dc6"}
+            ),
+            CourseRequirement(
+                "ATCM 2334", False, {"id": "83258a8d-c71c-44e4-b713-a1e63fcf50cf"}
+            ),
+        ],
+        2,
+        0,
+    )
+
+    # Shouldn't be fulfilled on instantiation
+    assert valid_req_with_no_hrs_requirement.is_fulfilled() == False
+
+
+    for course in [
+        "ATCM 2330",
+        "ATCM 2303",
+    ]:
+        assert valid_req_with_no_hrs_requirement.attempt_fulfill(course)
+
+    assert valid_req_with_no_hrs_requirement.is_fulfilled() == True
+
+    # This requirement should not fulfill because we are looking for 6 hrs in one group, but each group can only take 3 hrs
+    req_with_invalid_hrs_requirement = MultiGroupElectiveRequirement(
+        [
+            CourseRequirement(
+                "ATCM 2330", False, {"id": "41b3882e-ba4e-414c-b2fe-20d86e729bca"}
+            ),
+            CourseRequirement(
+                "ATCM 2303", False, {"id": "9a91a68b-ef2e-4a92-a447-94b783a81dc6"}
+            ),
+            CourseRequirement(
+                "ATCM 2334", False, {"id": "83258a8d-c71c-44e4-b713-a1e63fcf50cf"}
+            ),
+        ],
+        2,
+        6
+    )
+
+    for course in [
+        "ATCM 2330",
+        "ATCM 2303",
+    ]:
+        assert req_with_invalid_hrs_requirement.attempt_fulfill(course)
+
+    assert req_with_invalid_hrs_requirement.is_fulfilled() == False
+    
+    req_with_valid_hrs_requirement = MultiGroupElectiveRequirement(
+        [
+            CourseRequirement(
+                "ATCM 2330", False, {"id": "41b3882e-ba4e-414c-b2fe-20d86e729bca"}
+            ),
+            CourseRequirement(
+                "ATCM 2303", False, {"id": "9a91a68b-ef2e-4a92-a447-94b783a81dc6"}
+            ),
+            CourseRequirement(
+                "ATCM 2334", False, {"id": "83258a8d-c71c-44e4-b713-a1e63fcf50cf"}
+            ),
+        ],
+        2,
+        3
+    )
+
+    for course in [
+        "ATCM 2330",
+        "ATCM 2303",
+    ]:
+        assert req_with_valid_hrs_requirement.attempt_fulfill(course)
+
+    assert req_with_valid_hrs_requirement.is_fulfilled() == True

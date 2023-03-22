@@ -695,7 +695,7 @@ class MultiGroupElectiveRequirement(AbstractRequirement):
             return True
         return (
             self.get_num_fulfilled_requirements() >= self.requirement_count
-            and max(self.req_hrs.values()) >= self.minimum_hours_in_area
+            and max(self.req_hrs.values() if len(self.req_hrs.keys()) > 0 else [0]) >= self.minimum_hours_in_area
         )
     
     def to_json(self) -> Json[Any]:
@@ -705,6 +705,12 @@ class MultiGroupElectiveRequirement(AbstractRequirement):
             "requirements": [req.to_json() for req in self.requirements],
             "minimum_hours_in_area": self.minimum_hours_in_area,
             "metadata": self.metadata,
+            "req_hrs": self.req_hrs,
+            "filled": self.is_fulfilled(),
+            "num_fulfilled_requirements": self.get_num_fulfilled_requirements(),
+            "requirements": [
+                json.loads(req.to_json()) for req in self.requirements
+            ],
         })
 
     def attempt_fulfill(self, course: str) -> bool:
@@ -716,13 +722,15 @@ class MultiGroupElectiveRequirement(AbstractRequirement):
             if fulfilled:
                 try:
                     hrs = utils.get_hours_from_course(course)
-                    id = requirement["metadata"]["id"] # type: ignore
+                    id = requirement.metadata["id"] # type: ignore
+                    if not id:
+                        raise Exception("No identifier for requirement", requirement)
                     if id in self.req_hrs:
                         self.req_hrs[id] += hrs
                     else:
                         self.req_hrs[id] = hrs
                 except ValueError:
-                    pass
+                    print("Failed to parse hrs from course")
                 finally:
                     return True
         return False
@@ -739,3 +747,13 @@ class MultiGroupElectiveRequirement(AbstractRequirement):
                 return True
         return False
     
+    def __str__(self) -> str:
+        return f"""{MultiGroupElectiveRequirement.__name__} - {self.is_fulfilled()}
+        requirement_count: {self.requirement_count}
+        requirements: {self.requirements}
+        minimum_hours_in_area: {self.minimum_hours_in_area}
+        metadata: {self.metadata}
+        req_hrs: {self.req_hrs}
+        "filled": self.is_fulfilled()
+        "num_fulfilled_requirements": {self.get_num_fulfilled_requirements()}
+        """
