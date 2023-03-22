@@ -9,10 +9,11 @@ import SemesterCourseItemDropdown from './SemesterCourseItemDropdown';
 import { tagColors } from '../utils';
 import { useSemestersContext } from '../SemesterContext';
 import { trpc } from '@/utils/trpc';
-import WarningIcon from '@mui/icons-material/Warning';
+
 import useGetCourseInfo from '../useGetCourseInfo';
 
 import PrereqWarnHoverCard from '../PrereqWarnHoverCard';
+import FilledWarningIcon from '@/icons/FilledWarningIcon';
 
 export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'> {
   course: DraggableCourse;
@@ -141,7 +142,7 @@ export const MemoizedSemesterCourseItem = React.memo(
             <span className="text-sm">{course.code}</span>
             <div className="ml-auto mr-2 flex items-center justify-center gap-2 align-middle text-xs font-semibold">
               <span
-                className="text-[#22C55E]"
+                className=""
                 onMouseEnter={() => {
                   setHoverIconOpen(true);
                 }}
@@ -149,7 +150,11 @@ export const MemoizedSemesterCourseItem = React.memo(
                   setHoverIconOpen(false);
                 }}
               >
-                {!isValid && <WarningIcon />}
+                {!isValid && (
+                  <span className="text-[#FBBF24]">
+                    <FilledWarningIcon />
+                  </span>
+                )}
               </span>
 
               {course.locked && <LockIcon />}
