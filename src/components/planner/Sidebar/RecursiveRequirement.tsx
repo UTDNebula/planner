@@ -57,7 +57,6 @@ export function RecursiveRequirement({
               <>
                 {req.requirements.map((req2, idx) => (
                   <>
-                    <div className="h-2 px-2 text-sm">Option {idx + 1}</div>
                     <RecursiveRequirement
                       key={idx}
                       req={req2}

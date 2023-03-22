@@ -137,13 +137,21 @@ function CourseSelectorContainer({
                     className="z-[999]"
                     onOpenAutoFocus={(e) => e.preventDefault()}
                   >
-                    <div className="w-full border-[2px] border-[#EDEFF7] bg-white p-4 drop-shadow-2xl">
-                      <DraggableCourseList courses={courseResults} getDragId={getSearchedDragId} />
-                    </div>
+                    {!isLoading ? (
+                      <div className="w-full border-[2px] border-[#EDEFF7] bg-white p-4 drop-shadow-2xl">
+                        <DraggableCourseList
+                          courses={courseResults}
+                          getDragId={getSearchedDragId}
+                        />
+                      </div>
+                    ) : (
+                      <div className="p-4 text-2xl">Courses are loading</div>
+                    )}
                   </Dialog.Content>
                 </Dialog.Portal>
               )}
             </Dialog.Root>
+
             {degreeRequirements.requirements.length > 0 ? (
               degreeRequirements.requirements.map((req, idx) => (
                 <RequirementsContainer

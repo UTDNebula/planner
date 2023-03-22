@@ -45,8 +45,8 @@ function RequirementContainerHeader({
         </svg>
       </button>
       <div className="">
-        <div className="flex flex-row items-center justify-between font-medium">
-          <div className="w-[70%] overflow-hidden text-ellipsis whitespace-nowrap text-[18px] font-semibold">
+        <div className="flex w-full flex-row items-center  justify-between border-2 border-blue-500 font-medium">
+          <div className="max-w-[60%] overflow-hidden text-ellipsis whitespace-nowrap border-2 border-black text-[18px] font-semibold">
             {name}
           </div>
 
@@ -362,11 +362,22 @@ function RequirementContainer({
     getData: getData,
     initialQuery: '',
     filterFn: filterFunction,
+    constraints: [0, 100],
   });
 
   React.useEffect(() => {
     updateQuery('');
   }, [degreeRequirement]);
+
+  // Put filled requirements first
+  const sortedResults = [...results].sort((req1, req2) => {
+    if (req1.filled && !req2.filled) {
+      return -1;
+    } else if (req2.filled && !req1.filled) {
+      return 1;
+    }
+    return 0;
+  });
 
   const { planId, bypasses, handleAddBypass, handleRemoveBypass } = useSemestersContext();
 
@@ -386,7 +397,7 @@ function RequirementContainer({
 
       <div className=" flex h-full flex-col gap-y-2 overflow-x-hidden overflow-y-scroll">
         <RequirementSearchBar updateQuery={updateQuery} />
-        {results.map((req, idx) => {
+        {sortedResults.map((req, idx) => {
           return (
             <RecursiveRequirement
               key={idx}
