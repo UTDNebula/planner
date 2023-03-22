@@ -574,7 +574,7 @@ export const planRouter = router({
       try {
         const { planId } = input;
 
-        const degreeRequirements = await ctx.prisma.degreeRequirements.findUnique({
+        const degreeRequirements = await ctx.prisma.degreeRequirements.findFirst({
           where: {
             planId,
           },

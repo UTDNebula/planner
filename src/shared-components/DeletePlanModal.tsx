@@ -15,7 +15,8 @@ const DeletePlanModal: FC<DeleteModalProps> = ({ deletePlan, deleteLoading, onCl
       <p className="mt-2 text-base text-neutral-400">
         {'Are you sure you want to delete? This action cannot be undone.'}
       </p>
-      <div className="mt-4 flex h-full w-full justify-end gap-x-4 ">
+      <div className="mt-4 flex h-full w-full flex-row gap-x-4">
+        <div className="flex-grow"></div>
         <Button
           className="ml-autoc"
           color="tertiary"

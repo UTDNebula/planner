@@ -44,6 +44,7 @@ import Router from 'next/router';
 /** PlannerTool Props */
 export interface PlannerProps {
   degreeRequirements: DegreeRequirements;
+  degreeRequirementsData: { id: string; major: string };
   prereqData?: Map<string, boolean>;
   transferCredits: Array<string>;
 }
@@ -53,15 +54,14 @@ export interface PlannerProps {
 /** Controlled wrapper around course list and semester tiles */
 export default function Planner({
   degreeRequirements,
+  degreeRequirementsData,
   transferCredits,
 }: PlannerProps): JSX.Element {
   const {
     planId,
     filteredSemesters,
     handleAddCourseToSemester,
-    handleAddYear,
     handleMoveCourseFromSemesterToSemester,
-    handleRemoveYear,
     selectedCourseCount,
     handleDeselectAllCourses,
     handleSelectCourses,
@@ -71,11 +71,8 @@ export default function Planner({
 
   const utils = trpc.useContext();
 
-  const degreeRequirementsQuery = trpc.plan.getDegreeRequirements.useQuery({ planId });
   const userQuery = trpc.user.getUser.useQuery();
   const { data: userData } = userQuery;
-
-  const degreeRequirementsData = degreeRequirementsQuery.data;
 
   // Hacky
   const updatePlan = async () => {
@@ -86,7 +83,7 @@ export default function Planner({
   const deletePlan = trpc.plan.deletePlanById.useMutation({
     onSuccess: () => {
       setDeleteLoading(true);
-      utils.plan.invalidate().then(() => Router.push('/app'));
+      utils.plan.invalidate().then(() => Router.push('/app/home'));
     },
     onSettled: () => setDeleteLoading(false),
   });

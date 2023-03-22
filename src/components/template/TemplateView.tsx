@@ -1,8 +1,10 @@
 import { trpc } from '@/utils/trpc';
 import router from 'next/router';
 import { useState } from 'react'; //nprogress module
-
+import AutoCompleteMajor from '@/pages/auth/AutoCompleteMajor';
 import { Page } from './Page';
+import useSearch from '../search/search';
+import React from 'react';
 
 export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
   const utils = trpc.useContext();
@@ -11,7 +13,7 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
   const [major, setMajor] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const { data, isError } = trpc.template.getAllTemplates.useQuery();
+  const { data: templatesData, isLoading, isError } = trpc.template.getAllTemplates.useQuery();
 
   const createTemplateUserPlan = trpc.user.createTemplateUserPlan.useMutation({
     async onSuccess() {
@@ -19,31 +21,48 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
     },
   });
 
+  const { results, updateQuery } = useSearch({
+    getData: async () =>
+      templatesData ? templatesData.map((major) => ({ filMajor: `${major.name}` })) : [],
+    initialQuery: '',
+    filterFn: (major, query) => major.filMajor.toLowerCase().includes(query.toLowerCase()),
+    constraints: [0, 100],
+  });
+
+  React.useEffect(() => {
+    updateQuery('');
+  }, [isLoading]);
+
   if (isError) {
     console.error('Error fetching templates');
     return <div>Error fetching templates</div>;
   }
 
-  if (!data) {
+  if (!templatesData) {
     return <div>Loading...</div>;
   }
-  const templates = data;
 
-  const orderedTemplate = templates.sort((a, b) => {
+  const orderedTemplate = templatesData.sort((a, b) => {
     if (a.name! < b.name!) {
       return -1;
     }
     return 1;
   });
 
-  const handleTemplateCreation = async (major: string) => {
+  const handleTemplateCreation = async (name: string, major: string) => {
     setLoading(true);
-    const selectedTemplate = templates.find((t) => t.id === major);
+
+    const selectedTemplate = templatesData.find((t) => t.name === major);
     if (!selectedTemplate) {
+      alert('Template not found. Please try again');
+      setLoading(false);
       return;
     }
     try {
-      const planId = await createTemplateUserPlan.mutateAsync(selectedTemplate.id);
+      const planId = await createTemplateUserPlan.mutateAsync({
+        name,
+        templateName: selectedTemplate.id,
+      });
       if (!planId) {
         return router.push('/app/home');
       }
@@ -65,7 +84,7 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
         },
         {
           name: 'Create Plan',
-          onClick: () => handleTemplateCreation(major),
+          onClick: () => handleTemplateCreation(name, major),
           color: 'primary',
           loading,
         },
@@ -80,20 +99,16 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
       />
 
       <p className="text-sm font-semibold">Search degree template</p>
-      <select
-        className="w-full rounded-md border border-neutral-500 py-3 px-4 text-sm text-black/80"
-        onChange={(e) => setMajor(e.target.value)}
-        defaultValue="placeholder"
-      >
-        <option disabled value="placeholder">
-          Find your major...
-        </option>
-        {orderedTemplate.map((major) => (
-          <option value={major.id} key={major.id}>
-            {major.name}
-          </option>
-        ))}
-      </select>
+      <div className="relative mb-4">
+        <AutoCompleteMajor
+          className="w-[500px] rounded border outline-none"
+          key={0}
+          onValueChange={(value) => setMajor(value)}
+          onInputChange={(query: string) => updateQuery(query)}
+          options={results.map((major: { filMajor: string }) => major.filMajor)}
+          autoFocus
+        ></AutoCompleteMajor>
+      </div>
     </Page>
   );
 }

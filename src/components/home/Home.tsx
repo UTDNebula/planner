@@ -8,6 +8,7 @@ import TemplateModal from '../template/Modal';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { Steps } from 'intro.js-react';
 import React from 'react';
+import { useRouter } from 'next/router';
 
 /**
  * A list of the user's plans
@@ -21,14 +22,20 @@ export default function PlansPage(): JSX.Element {
     },
   });
   const userQuery = trpc.user.getUser.useQuery();
+
   const { data } = userPlanQuery;
   const userData = userQuery.data;
   const [planPage, setPlanPage] = useState<0 | 1>(1);
+  const router = useRouter();
 
   const [showHomeOnboardingModal, setShowHomeOnboardingModal] = useState(false);
   React.useEffect(() => {
     setShowHomeOnboardingModal((userData && !userData.seenHomeOnboardingModal) ?? false);
-  }, [userData]);
+    if (userData && !userData.onboardingComplete) {
+      router.push('/app/onboarding');
+      return;
+    }
+  }, [userData, router]);
 
   const handleCloseHomeOnboarding = () => {
     setShowHomeOnboardingModal(false);

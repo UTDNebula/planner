@@ -37,7 +37,7 @@ export default function AuthPage({
       console.log('yeah so I am actually existing');
     }
     if (router && status === 'authenticated') {
-      router.push('/app');
+      router.push('/app/home');
     }
   }, [router, status]);
 
@@ -48,7 +48,7 @@ export default function AuthPage({
   const handleEmailSignIn = () => {
     signIn('email', {
       email,
-      callbackUrl: '/app',
+      callbackUrl: '/app/home',
     });
   };
 
@@ -109,7 +109,7 @@ export default function AuthPage({
                     key={idx}
                     onClick={() =>
                       signIn(provider.id, {
-                        callbackUrl: '/app',
+                        callbackUrl: '/app/home',
                       })
                     }
                     className={`-ml-2 h-10 rounded-full px-3 text-gray-200 `}

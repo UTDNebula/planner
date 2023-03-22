@@ -1,6 +1,6 @@
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import majorsList from '@data/majors.json';
 import EditIcon from '@/icons/EditIcon';
 import { trpc } from '@/utils/trpc';
@@ -9,6 +9,10 @@ import { toast } from 'react-toastify';
 const EditableMajor = ({ major: initialMajor, planId }: { major: string; planId: string }) => {
   const [editMajor, setEditMajor] = useState(false);
   const [major, setMajor] = useState(initialMajor);
+
+  useEffect(() => {
+    setMajor(initialMajor);
+  }, [initialMajor]);
 
   return (
     <>

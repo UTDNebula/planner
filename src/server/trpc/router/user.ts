@@ -340,13 +340,14 @@ export const userRouter = router({
    *  - always 4 years
    */
   createTemplateUserPlan: protectedProcedure
-    .input(z.string().min(1))
+    .input(z.object({ name: z.string(), templateName: z.string() }))
     .mutation(async ({ ctx, input }) => {
+      const { name, templateName } = input;
       const userId = ctx.session.user.id;
       try {
-        const template = await ctx.prisma.template.findUnique({
+        const template = await ctx.prisma.template.findFirst({
           where: {
-            id: input,
+            id: templateName,
           },
           include: {
             templateData: {
@@ -368,10 +369,12 @@ export const userRouter = router({
             message: 'Template not found',
           });
         }
+        console.log('TEMPLATE FOUND');
 
         const { name: major, templateData } = template;
 
         // Get user info
+
         const user = await ctx.prisma.user.findFirst({
           where: { id: userId },
           select: {
@@ -392,7 +395,7 @@ export const userRouter = router({
 
         // Add template courses to semesters
         const semesterData = addTemplateCoursesToPlan({
-          startYear: startSemester.year,
+          startYear: user.profile.startSemester.year,
           templateData,
         });
 
@@ -412,7 +415,7 @@ export const userRouter = router({
           };
 
         const plansInput = {
-          name: major,
+          name,
           semesters: semesters,
           requirements: degreeRequirements,
           startSemester,
@@ -440,6 +443,7 @@ export const userRouter = router({
             },
           },
         });
+
         return updatedUser.plans[0].id;
       } catch (error) {
         console.log('HELP');
@@ -528,6 +532,9 @@ const addTemplateCoursesToPlan = ({
     };
 
     const newYear = [fallSem, springSem, summerSem];
+    console.log(newYear);
+    console.log(summerSem);
+    console.log('HELP');
 
     semesterData.push(...newYear);
   }
@@ -535,11 +542,21 @@ const addTemplateCoursesToPlan = ({
 };
 
 const createCoursesForUserPlan = (courses: string[]) => {
-  return {
-    create: courses.map((course) => {
-      return { code: course, color: '' };
-    }),
-  };
+  if (courses.length > 0)
+    return {
+      createMany: {
+        data: courses.map((course) => {
+          return { code: course, color: '' };
+        }),
+      },
+    };
+  else {
+    return {
+      create: courses.map((course) => {
+        return { code: course, color: '' };
+      }),
+    };
+  }
 };
 
 const createCoursesFromTemplate = ({
@@ -550,17 +567,25 @@ const createCoursesFromTemplate = ({
   // Duplicate placeholder courses exist in the template
   // Make them unique by appending an increment at the end
   const duplicateCourses: { [key: string]: number } = {};
-  return {
-    create: items.map((item) => {
-      if (item.name in duplicateCourses) {
-        duplicateCourses[item.name] += 1;
-        const code = `${item.name} - ${duplicateCourses[item.name]}`;
-        return { code, color: '' };
-      }
-      duplicateCourses[item.name] = 0;
-      return { code: item.name, color: '' };
-    }),
-  };
+  if (items.length > 0) {
+    return {
+      createMany: {
+        data: items.map((item) => {
+          if (item.name in duplicateCourses) {
+            duplicateCourses[item.name] += 1;
+            const code = `${item.name} - ${duplicateCourses[item.name]}`;
+            return { code, color: '' };
+          }
+          duplicateCourses[item.name] = 0;
+          return { code: item.name, color: '' };
+        }),
+      },
+    };
+  } else {
+    return {
+      create: [],
+    };
+  }
 };
 
 const getStartingAndEndingSemesters = (userStartSemester: SemesterCode) => {
