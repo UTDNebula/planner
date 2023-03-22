@@ -28,11 +28,11 @@ export const PrereqWarnHoverCard: FC<PrereqHoverCardProps> = ({
         sideOffset={5}
       >
         <h3 className="mb-2 text-lg font-semibold">{title}</h3>
-        {isValid && (
+        {/* {isValid && (
           <span className="text-md mb-2 font-medium">
             All requirements for this course are completed
           </span>
-        )}
+        )} */}
         {prereqs[0].length > 0 && (
           <>
             <h3 className="py-2 text-base font-semibold">Prerequisites not met: </h3>
