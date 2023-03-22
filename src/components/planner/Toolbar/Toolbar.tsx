@@ -39,7 +39,11 @@ const Toolbar: FC<ToolbarProps> = ({
   const [editSemestersModalOpen, setEditSemestersModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
-  const q = trpc.courses.publicGetAllCourses.useQuery(undefined);
+  const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
+    staleTime: Infinity,
+    cacheTime: Infinity,
+    refetchOnWindowFocus: false,
+  });
 
   const { data: coursesData } = q;
 

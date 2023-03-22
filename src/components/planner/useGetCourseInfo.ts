@@ -5,8 +5,9 @@ import { useMemo } from 'react';
 // Highly inefficient
 const useGetCourseInfo = (courseCode: string): { prereqs: string[]; title?: string } => {
   const { data } = trpc.courses.publicGetAllCourses.useQuery(undefined, {
+    staleTime: Infinity,
+    cacheTime: Infinity,
     refetchOnWindowFocus: false,
-    cacheTime: 10000000,
   });
   const { prereqs, title } = useMemo(
     () => (data ? getPrereqs(data, courseCode) : { prereqs: [] }),

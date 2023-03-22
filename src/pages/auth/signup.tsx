@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import AuthIcons from '@/icons/AuthIcons';
 import Link from 'next/link';
 import useSearch from '@/components/search/search';
+import { trpc } from '@/utils/trpc';
 
 // import AuthCard from '../../components/auth/AuthCard';
 // import LoginCard from '@components/auth/Login'
@@ -20,6 +21,12 @@ export default function AuthPage({
 }: InferGetServerSidePropsType<typeof getStaticProps>): JSX.Element {
   const [email, setEmail] = React.useState('');
 
+  // Fetch courses now & put in cache
+  const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
+    staleTime: Infinity,
+    cacheTime: Infinity,
+    refetchOnWindowFocus: false,
+  });
   const majors = majorsList as string[];
 
   const { results, updateQuery } = useSearch({

@@ -31,6 +31,8 @@ function CourseSelectorContainer({
 }: CourseSelectorContainerProps) {
   // TODO: Provide UI indicator for errors
   const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
+    staleTime: Infinity,
+    cacheTime: Infinity,
     refetchOnWindowFocus: false,
   });
 

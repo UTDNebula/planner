@@ -72,6 +72,8 @@ const getRequirementGroup = (
   filterFunction: (elm: RequirementTypes, query: string) => boolean;
 } => {
   const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
+    staleTime: Infinity,
+    cacheTime: Infinity,
     refetchOnWindowFocus: false,
   });
 
