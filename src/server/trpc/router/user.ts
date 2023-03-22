@@ -340,13 +340,14 @@ export const userRouter = router({
    *  - always 4 years
    */
   createTemplateUserPlan: protectedProcedure
-    .input(z.string().min(1))
+    .input(z.object({ name: z.string(), templateName: z.string() }))
     .mutation(async ({ ctx, input }) => {
+      const { name, templateName } = input;
       const userId = ctx.session.user.id;
       try {
         const template = await ctx.prisma.template.findUnique({
           where: {
-            id: input,
+            id: templateName,
           },
           include: {
             templateData: {
@@ -412,7 +413,7 @@ export const userRouter = router({
           };
 
         const plansInput = {
-          name: major,
+          name,
           semesters: semesters,
           requirements: degreeRequirements,
           startSemester,

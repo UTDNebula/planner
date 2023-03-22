@@ -4,6 +4,7 @@ import { useState } from 'react'; //nprogress module
 import AutoCompleteMajor from '@/pages/auth/AutoCompleteMajor';
 import { Page } from './Page';
 import useSearch from '../search/search';
+import React from 'react';
 
 export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
   const utils = trpc.useContext();
@@ -12,7 +13,7 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
   const [major, setMajor] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const { data: templatesData, isError } = trpc.template.getAllTemplates.useQuery();
+  const { data: templatesData, isLoading, isError } = trpc.template.getAllTemplates.useQuery();
 
   const createTemplateUserPlan = trpc.user.createTemplateUserPlan.useMutation({
     async onSuccess() {
@@ -27,6 +28,10 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
     filterFn: (major, query) => major.filMajor.toLowerCase().includes(query.toLowerCase()),
     constraints: [0, 100],
   });
+
+  React.useEffect(() => {
+    updateQuery('');
+  }, [isLoading]);
 
   if (isError) {
     console.error('Error fetching templates');
@@ -44,7 +49,7 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
     return 1;
   });
 
-  const handleTemplateCreation = async (major: string) => {
+  const handleTemplateCreation = async (name: string, major: string) => {
     setLoading(true);
 
     const selectedTemplate = templatesData.find((t) => t.name === major);
@@ -53,7 +58,10 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
       return;
     }
     try {
-      const planId = await createTemplateUserPlan.mutateAsync(selectedTemplate.id);
+      const planId = await createTemplateUserPlan.mutateAsync({
+        name,
+        templateName: selectedTemplate.id,
+      });
       if (!planId) {
         return router.push('/app/home');
       }
@@ -75,7 +83,7 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
         },
         {
           name: 'Create Plan',
-          onClick: () => handleTemplateCreation(major),
+          onClick: () => handleTemplateCreation(name, major),
           color: 'primary',
           loading,
         },

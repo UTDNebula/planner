@@ -59,9 +59,7 @@ export default function Planner({
     planId,
     filteredSemesters,
     handleAddCourseToSemester,
-    handleAddYear,
     handleMoveCourseFromSemesterToSemester,
-    handleRemoveYear,
     selectedCourseCount,
     handleDeselectAllCourses,
     handleSelectCourses,
@@ -75,7 +73,7 @@ export default function Planner({
   const userQuery = trpc.user.getUser.useQuery();
   const { data: userData } = userQuery;
 
-  const degreeRequirementsData = degreeRequirementsQuery.data;
+  const { data: degreeRequirementsData } = degreeRequirementsQuery;
 
   // Hacky
   const updatePlan = async () => {
