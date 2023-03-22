@@ -71,7 +71,6 @@ const AutoCompleteMajor: FC<AutoCompleteMajorProps & React.ComponentPropsWithout
                 ...params.InputProps,
                 disableUnderline: true,
               }}
-              autoFocus={autoFocus}
             />
           );
         }}
