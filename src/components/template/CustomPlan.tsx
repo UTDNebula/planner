@@ -5,6 +5,7 @@ import { ButtonProps } from '../Button';
 
 import { useRouter } from 'next/router';
 
+import AutoCompleteMajor from '@/pages/auth/AutoCompleteMajor';
 import ErrorMessage from '../common/ErrorMessage';
 import courseCode from '@/data/courseCode.json';
 import { SemesterType, SemesterCode } from '@prisma/client';
@@ -12,6 +13,8 @@ import { Credit } from '../credits/types';
 import { UnwrapArray } from '@/types/util-types';
 import type { PDFDocumentProxy } from 'pdfjs-dist';
 import { Page } from './Page';
+import useSearch from '../search/search';
+
 const majors = majorsList as string[];
 
 type TakenCourse = UnwrapArray<RouterInputs['user']['createUserPlan']['takenCourses']>;
@@ -33,6 +36,12 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
     async onSuccess() {
       await utils.user.getUser.invalidate();
     },
+  });
+
+  const { results, updateQuery } = useSearch({
+    getData: async () => (majors ? majors.map((major) => ({ filMajor: `${major}` })) : []),
+    initialQuery: '',
+    filterFn: (major, query) => major.filMajor.toLowerCase().includes(query.toLowerCase()),
   });
 
   const [uploadLoading, setUploadLoading] = useState(false);
@@ -231,18 +240,16 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
       />
 
       <p className="text-sm font-semibold">Choose your major</p>
-      <select
-        className="w-full rounded-md border border-neutral-500 py-3 px-4 text-sm text-black/80"
-        onChange={(e) => setMajor(e.target.value)}
-        defaultValue="placeholder"
-      >
-        <option disabled value="placeholder">
-          Find your major...
-        </option>
-        {majors.map((major, idx) => (
-          <option key={idx}>{major}</option>
-        ))}
-      </select>
+      <div className="relative mb-4">
+        <AutoCompleteMajor
+          className="w-[500px] rounded border outline-none"
+          key={0}
+          onValueChange={(value) => setMajor(value)}
+          onInputChange={(query: string) => updateQuery(query)}
+          options={results.map((major: { filMajor: string }) => major.filMajor)}
+          autoFocus
+        ></AutoCompleteMajor>
+      </div>
     </Page>,
     <Page
       key="custom-plan-transcript"
