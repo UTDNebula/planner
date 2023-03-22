@@ -97,6 +97,7 @@ const getRequirementGroup = (
     }
   };
 
+  let courses: string[] = [];
   switch (degreeRequirement.matcher) {
     case 'And':
       return {
@@ -127,10 +128,12 @@ const getRequirementGroup = (
         filterFunction: filterFunc,
       };
     case 'FreeElectives':
-      // Some function to get courses
+      courses = Object.keys(degreeRequirement.valid_courses);
+      console.log(courses);
+      console.log('HI');
+
       return {
         name: 'Free Electives',
-
         progress: {
           value: degreeRequirement.fulfilled_hours,
           max: degreeRequirement.required_hours,
@@ -143,13 +146,14 @@ const getRequirementGroup = (
             ? q.data.map((c) => ({
                 course: `${c.subject_prefix} ${c.course_number}`,
                 matcher: 'Course',
-                filled: false,
+                filled: courses.includes(`${c.subject_prefix} ${c.course_number}`),
                 metadata: {},
               }))
             : [],
         filterFunction: filterFunc,
       };
     case 'CS Guided Electives':
+      courses = Object.keys(degreeRequirement.valid_courses);
       return {
         name: degreeRequirement.metadata.name ?? 'CS Guided Electives',
 
@@ -166,6 +170,7 @@ const getRequirementGroup = (
                 .map((c) => ({
                   course: `${c.subject_prefix} ${c.course_number}`,
                   matcher: 'Course',
+                  filled: courses.includes(`${c.subject_prefix} ${c.course_number}`),
                 }))
                 .filter((c) => c.course.includes('CS 43')) as CourseRequirement[])
             : [],
@@ -362,7 +367,7 @@ function RequirementContainer({
     getData: getData,
     initialQuery: '',
     filterFn: filterFunction,
-    constraints: [0, 100],
+    constraints: [0, 3000],
   });
 
   React.useEffect(() => {
@@ -370,14 +375,16 @@ function RequirementContainer({
   }, [degreeRequirement]);
 
   // Put filled requirements first
-  const sortedResults = [...results].sort((req1, req2) => {
-    if (req1.filled && !req2.filled) {
-      return -1;
-    } else if (req2.filled && !req1.filled) {
-      return 1;
-    }
-    return 0;
-  });
+  const sortedResults = [...results]
+    .sort((req1, req2) => {
+      if (req1.filled && !req2.filled) {
+        return -1;
+      } else if (req2.filled && !req1.filled) {
+        return 1;
+      }
+      return 0;
+    })
+    .slice(0, 100);
 
   const { planId, bypasses, handleAddBypass, handleRemoveBypass } = useSemestersContext();
 
