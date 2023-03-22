@@ -128,7 +128,7 @@ function CourseSelectorContainer({
                 ></div>
               </div>
             </div>
-
+            (
             <Dialog.Root open={displayResults} onOpenChange={(v) => setDisplay(v)} modal={false}>
               {ref.current && (
                 <Dialog.Portal className="z-[99]" container={ref?.current}>
@@ -137,13 +137,21 @@ function CourseSelectorContainer({
                     className="z-[999]"
                     onOpenAutoFocus={(e) => e.preventDefault()}
                   >
-                    <div className="w-full border-[2px] border-[#EDEFF7] bg-white p-4 drop-shadow-2xl">
-                      <DraggableCourseList courses={courseResults} getDragId={getSearchedDragId} />
-                    </div>
+                    {!isLoading ? (
+                      <div className="w-full border-[2px] border-[#EDEFF7] bg-white p-4 drop-shadow-2xl">
+                        <DraggableCourseList
+                          courses={courseResults}
+                          getDragId={getSearchedDragId}
+                        />
+                      </div>
+                    ) : (
+                      <div>Courses are loading</div>
+                    )}
                   </Dialog.Content>
                 </Dialog.Portal>
               )}
             </Dialog.Root>
+            )
             {degreeRequirements.requirements.length > 0 ? (
               degreeRequirements.requirements.map((req, idx) => (
                 <RequirementsContainer
