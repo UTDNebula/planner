@@ -30,6 +30,16 @@ export const validatorRouter = router({
         },
       });
 
+      const courseNumbersList =
+        planData?.semesters
+          .map((c) => c.courses)
+          .flatMap((c) => c)
+          .map((value) => {
+            const hi = value.code.split(' ');
+            return [hi[1]];
+          })
+          .flatMap((c) => c) ?? [];
+
       if (!planData) {
         throw new TRPCError({
           code: 'NOT_FOUND',
@@ -44,6 +54,9 @@ export const validatorRouter = router({
           prerequisites: true,
           corequisites: true,
           co_or_pre_requisites: true,
+        },
+        where: {
+          course_number: { in: courseNumbersList },
         },
       });
 
