@@ -2,6 +2,7 @@ import { initTRPC, TRPCError } from '@trpc/server';
 import superjson from 'superjson';
 
 import { type Context } from './context';
+import { cachedCoursesFromAPI } from './router/prefetch';
 
 const t = initTRPC.context<Context>().create({
   transformer: superjson,
@@ -9,6 +10,9 @@ const t = initTRPC.context<Context>().create({
     return shape;
   },
 });
+
+cachedCoursesFromAPI.log('Getting cached courses when loading TRPC module');
+cachedCoursesFromAPI.get();
 
 export const router = t.router;
 

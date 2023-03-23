@@ -8,7 +8,6 @@ import AuthIcons from '@/icons/AuthIcons';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
 import Button from '@/components/Button';
-import { trpc } from '@/utils/trpc';
 
 /**
  * A page that presents a sign-in/sign-up box to the user.
@@ -22,13 +21,6 @@ export default function AuthPage({
   const router = useRouter();
   const { status } = useSession();
   const [isModifyLoading, setIsModifyLoading] = React.useState(false);
-
-  // Fetch courses here and put in cache
-  const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
-    staleTime: Infinity,
-    cacheTime: Infinity,
-    refetchOnWindowFocus: false,
-  });
 
   React.useEffect(() => {
     if (router && status === 'authenticated') {

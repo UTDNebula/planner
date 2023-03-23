@@ -5,12 +5,14 @@ import { formatDegreeValidationRequest } from '@/utils/plannerUtils';
 
 import { protectedProcedure, router } from '../trpc';
 import { Course, Prisma, Semester } from '@prisma/client';
+import { cachedCoursesFromAPI } from './prefetch';
 
 type PlanData = {
   id: string;
   name: string;
   semesters: (Semester & { courses: Course[] })[];
 };
+
 export const validatorRouter = router({
   prereqValidator: protectedProcedure.input(z.string().min(1)).query(async ({ ctx, input }) => {
     try {
@@ -30,35 +32,14 @@ export const validatorRouter = router({
         },
       });
 
-      const courseNumbersList =
-        planData?.semesters
-          .map((c) => c.courses)
-          .flatMap((c) => c)
-          .map((value) => {
-            const hi = value.code.split(' ');
-            return [hi[1]];
-          })
-          .flatMap((c) => c) ?? [];
-
       if (!planData) {
         throw new TRPCError({
           code: 'NOT_FOUND',
           message: 'Plan not found',
         });
       }
-      const coursesFromApi = await ctx.platformPrisma.courses.findMany({
-        select: {
-          course_number: true,
-          subject_prefix: true,
-          id: true,
-          prerequisites: true,
-          corequisites: true,
-          co_or_pre_requisites: true,
-        },
-        where: {
-          course_number: { in: courseNumbersList },
-        },
-      });
+
+      const coursesFromAPI = await cachedCoursesFromAPI.get();
 
       /*  sanitizing data from API db.
        *  TODO: Fix this later somehow
@@ -73,7 +54,7 @@ export const validatorRouter = router({
         }
       >();
 
-      for (const course of coursesFromApi) {
+      for (const course of coursesFromAPI) {
         courseMapWithCodeKey.set(`${course.subject_prefix} ${course.course_number}`, {
           prereqs: course.prerequisites,
           coreqs: course.corequisites,
