@@ -5,8 +5,7 @@ import { formatDegreeValidationRequest } from '@/utils/plannerUtils';
 
 import { protectedProcedure, router } from '../trpc';
 import { Course, Prisma, Semester } from '@prisma/client';
-import rawCourses from '@data/courses.json';
-import { JSONCourse } from './courses';
+import courses, { JSONCourse } from '@data/courses.json';
 
 type PlanData = {
   id: string;
@@ -32,24 +31,13 @@ export const validatorRouter = router({
         },
       });
 
-      const courseNumbersList =
-        planData?.semesters
-          .map((c) => c.courses)
-          .flatMap((c) => c)
-          .map((value) => {
-            const hi = value.code.split(' ');
-            return [hi[1]];
-          })
-          .flatMap((c) => c) ?? [];
-
       if (!planData) {
         throw new TRPCError({
           code: 'NOT_FOUND',
           message: 'Plan not found',
         });
       }
-      const coursesFromApi: JSONCourse[] = rawCourses as unknown as JSONCourse[];
-
+      const coursesFromApi: JSONCourse[] = courses;
       /*  sanitizing data from API db.
        *  TODO: Fix this later somehow
        */
