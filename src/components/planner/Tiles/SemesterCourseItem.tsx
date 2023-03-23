@@ -79,7 +79,7 @@ export const MemoizedSemesterCourseItem = React.memo(
         // onClick={() => setDropdownOpen((prev) => !prev)}
         onClick={() => setDropdownOpen(true)}
         onMouseEnter={() => {
-          hoverTimer.current = setTimeout(() => setHoverIconOpen(true), 500);
+          if (!dropdownOpen) hoverTimer.current = setTimeout(() => setHoverIconOpen(true), 500);
         }}
         onMouseLeave={() => {
           setHoverOpen(false);
