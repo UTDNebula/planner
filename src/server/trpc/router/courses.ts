@@ -1,18 +1,11 @@
 import { Prisma } from '@prisma/client';
 import { router, publicProcedure } from '../trpc';
 
+import courses, { JSONCourse } from '@data/courses.json';
+
 export const coursesRouter = router({
   publicGetAllCourses: publicProcedure.query(async ({ ctx }) => {
-    const courses = await ctx.platformPrisma.courses.findMany({
-      select: {
-        course_number: true,
-        subject_prefix: true,
-        id: true,
-        prerequisites: true,
-        title: true,
-      },
-    });
-    return courses;
+    return courses as JSONCourse[];
   }),
   publicGetSanitizedCourses: publicProcedure.query(async ({ ctx }) => {
     const courses = await ctx.platformPrisma.courses.findMany({

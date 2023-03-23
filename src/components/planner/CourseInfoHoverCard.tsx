@@ -2,7 +2,7 @@ import { FC } from 'react';
 import * as HoverCard from '@radix-ui/react-hover-card';
 
 interface CourseInfoHoverCardProps {
-  prereqs: string[];
+  prereqs: string[][];
   open: boolean;
   onOpenChange: (open: boolean) => void;
   side?: 'top' | 'left' | 'bottom' | 'right';
@@ -26,17 +26,42 @@ export const CourseInfoHoverCard: FC<CourseInfoHoverCardProps> = ({
         sideOffset={5}
       >
         <h3 className="mb-2 text-lg font-semibold">{title}</h3>
-        <h3 className="mb-2 text-lg font-medium">Prerequisites</h3>
-        {prereqs.length > 0 ? (
-          <ol className="flex list-disc flex-wrap gap-3">
-            {prereqs.map((prereq) => (
-              <li key={prereq} className="ml-4">
-                {prereq}
-              </li>
-            ))}
-          </ol>
-        ) : (
-          <span>None</span>
+
+        {prereqs[0].length > 0 && (
+          <>
+            <h3 className="mb-2 text-lg font-medium">Prerequisites</h3>
+            <ol className="flex list-disc flex-wrap gap-3">
+              {prereqs[0].map((prereq) => (
+                <li key={prereq} className="ml-4">
+                  {prereq}
+                </li>
+              ))}
+            </ol>
+          </>
+        )}
+        {prereqs[1].length > 0 && (
+          <>
+            <h3 className="mb-2 text-lg font-medium">Corequisites</h3>
+            <ol className="flex list-disc flex-wrap gap-3">
+              {prereqs[1].map((prereq) => (
+                <li key={prereq} className="ml-4">
+                  {prereq}
+                </li>
+              ))}
+            </ol>
+          </>
+        )}
+        {prereqs[2].length > 0 && (
+          <>
+            <h3 className="mb-2 text-lg font-medium">Prerequisites or Corequisites</h3>
+            <ol className="flex list-disc flex-wrap gap-3">
+              {prereqs[2].map((prereq) => (
+                <li key={prereq} className="ml-4">
+                  {prereq}
+                </li>
+              ))}
+            </ol>
+          </>
         )}
         <HoverCard.Arrow className="fill-primary" />
       </HoverCard.Content>

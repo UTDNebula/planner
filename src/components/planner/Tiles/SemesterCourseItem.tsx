@@ -99,7 +99,7 @@ export const MemoizedSemesterCourseItem = React.memo(
 
         <PrereqWarnHoverCard
           prereqs={requirementsData === undefined ? [[], [], []] : requirementsData}
-          open={hoverIconOpen}
+          open={hoverIconOpen && !course.prereqOveridden}
           onOpenChange={(hoverOpen) => {
             console.info('not used');
           }}
@@ -154,7 +154,7 @@ export const MemoizedSemesterCourseItem = React.memo(
                   setHoverIconOpen(false);
                 }}
               >
-                {!isValid && (
+                {!isValid && !course.prereqOveridden && (
                   <span className="text-[#FBBF24]">
                     <FilledWarningIcon />
                   </span>
@@ -256,6 +256,7 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
       onColorChange={onColorChange}
       isValid={isValid[0] && isValid[1] && isValid[2]} // Show as valid if isValid is undefined
       requirementsData={hoverList}
+      onPrereqOverrideChange={onPrereqOverrideChange}
     />
   );
 };

@@ -31,7 +31,7 @@ export const SidebarCourseItem = React.memo(
       if (isDragging) clearTimeout(hoverTimer.current);
     }, [isDragging]);
 
-    const { prereqs, title } = useGetCourseInfo(course.code);
+    const { prereqs, coreqs, co_or_pre, title } = useGetCourseInfo(course.code);
 
     return (
       <div
@@ -49,7 +49,7 @@ export const SidebarCourseItem = React.memo(
         }}
       >
         <CourseInfoHoverCard
-          prereqs={prereqs}
+          prereqs={[prereqs, coreqs, co_or_pre]}
           open={hoverOpen && !isDragging}
           onOpenChange={(open) => setHoverOpen(open)}
           side="left"

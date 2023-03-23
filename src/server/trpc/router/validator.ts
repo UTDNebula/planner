@@ -5,11 +5,13 @@ import { formatDegreeValidationRequest } from '@/utils/plannerUtils';
 
 import { protectedProcedure, router } from '../trpc';
 import { Course, Prisma, Semester } from '@prisma/client';
+import courses, { JSONCourse } from '@data/courses.json';
 
 type PlanData = {
   id: string;
   name: string;
   semesters: (Semester & { courses: Course[] })[];
+  transferCredits: string[];
 };
 export const validatorRouter = router({
   prereqValidator: protectedProcedure.input(z.string().min(1)).query(async ({ ctx, input }) => {
@@ -22,6 +24,7 @@ export const validatorRouter = router({
         select: {
           name: true,
           id: true,
+          transferCredits: true,
           semesters: {
             include: {
               courses: true,
@@ -30,36 +33,13 @@ export const validatorRouter = router({
         },
       });
 
-      const courseNumbersList =
-        planData?.semesters
-          .map((c) => c.courses)
-          .flatMap((c) => c)
-          .map((value) => {
-            const hi = value.code.split(' ');
-            return [hi[1]];
-          })
-          .flatMap((c) => c) ?? [];
-
       if (!planData) {
         throw new TRPCError({
           code: 'NOT_FOUND',
           message: 'Plan not found',
         });
       }
-      const coursesFromApi = await ctx.platformPrisma.courses.findMany({
-        select: {
-          course_number: true,
-          subject_prefix: true,
-          id: true,
-          prerequisites: true,
-          corequisites: true,
-          co_or_pre_requisites: true,
-        },
-        where: {
-          course_number: { in: courseNumbersList },
-        },
-      });
-
+      const coursesFromApi: JSONCourse[] = courses;
       /*  sanitizing data from API db.
        *  TODO: Fix this later somehow
        */
@@ -99,6 +79,12 @@ export const validatorRouter = router({
           const course = planData?.semesters[i].courses[j];
           courseHash.set(course.code.trim(), i);
         }
+      }
+
+      // Run on transfer credits
+      for (let i = 0; i < planData.transferCredits.length; i++) {
+        const course = planData.transferCredits[i];
+        courseHash.set(course.trim(), -1);
       }
 
       const checkForPreRecursive = (
@@ -253,6 +239,15 @@ export const validatorRouter = router({
       };
 
       const coreqValidation = async (planData: PlanData) => {
+        // for (let i = 0; i < planData.transferCredits.length; i++) {
+        //   const course = planData.transferCredits[i];
+        //   const reqsForCourse = courseMapWithCodeKey.get(course);
+        //   if (!reqsForCourse) {
+        //     continue;
+        //   }
+        //   const flag = checkForCoRecursive(reqsForCourse.prereqs as CollectionOptions, i);
+        //   coReqHash.set(course, flag);
+        // }
         for (let i = 0; i < planData?.semesters.length; i++) {
           if (!planData?.semesters[i] || !planData?.semesters[i].courses) continue;
           for (let j = 0; j < planData?.semesters[i].courses.length; j++) {
@@ -267,6 +262,15 @@ export const validatorRouter = router({
         }
       };
       const coOrPrereqValidation = async (planData: PlanData) => {
+        // for (let i = 0; i < planData.transferCredits.length; i++) {
+        //   const course = planData.transferCredits[i];
+        //   const reqsForCourse = courseMapWithCodeKey.get(course);
+        //   if (!reqsForCourse) {
+        //     continue;
+        //   }
+        //   const flag = checkForCoOrPreRecursive(reqsForCourse.prereqs as CollectionOptions, i);
+        //   coOrPreReqHash.set(course, flag);
+        // }
         for (let i = 0; i < planData?.semesters.length; i++) {
           if (!planData?.semesters[i] || !planData?.semesters[i].courses) continue;
           for (let j = 0; j < planData?.semesters[i].courses.length; j++) {
