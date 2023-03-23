@@ -11,6 +11,8 @@ from major.requirements import (
 )
 import json
 
+from major.requirements.edge_cases.business_administration import SomeRequirement
+
 
 def test_course_requirement() -> None:
     course_req = CourseRequirement("HIST 1301")
@@ -296,7 +298,7 @@ def test_other_requirement() -> None:
         """
         {
             "matcher": "OtherRequirement",
-            "metadata": {"id": 1},
+            "metadata": {"id": "1"},
             "description": "Other Requirement"
         }
         """
@@ -307,6 +309,9 @@ def test_other_requirement() -> None:
 
     other_req.attempt_fulfill("CS 1336")
     assert other_req.is_fulfilled() == False
+
+    other_req.override_fill("1")
+    assert other_req.is_fulfilled()
 
 
 def test_multi_group_elective_requirement() -> None:
@@ -386,3 +391,16 @@ def test_multi_group_elective_requirement() -> None:
         assert req_with_valid_hrs_requirement.attempt_fulfill(course)
 
     assert req_with_valid_hrs_requirement.is_fulfilled() == True
+    # TODO: this
+    sample_atec_req = MultiGroupElectiveRequirement([
+        SomeRequirement([], metadata={"id": "41b3882e-ba4e-414c-b2fe-20d86e729bca"}),
+        SomeRequirement([], metadata={"id": "46e56cc0-c3be-48fd-980b-9dbb71d4f9bf"}),
+    ],2, 6)
+
+    courses: list[str] = ["ATCM 2330", "ATCM 2303", "ATCM 2334"]
+
+    for c in range(len(courses)):
+        assert sample_atec_req.attempt_fulfill(courses[c])
+
+    assert sample_atec_req.is_fulfilled()
+    

@@ -651,7 +651,7 @@ class MultiGroupElectiveRequirement(AbstractRequirement):
         List of child requirements
     
     minimum_hours_in_area: int
-        Minimum # of credit hours that must be fulfilled in an area before the parent requirement is fulfilled. If None, then no minimum is required. Defaults to 1.
+        Minimum # of credit hours that must be fulfilled in an area before the parent requirement is fulfilled. If set to 0, then no minimum is required. Defaults to 0.
 
     """
     class Req(TypedDict):
@@ -664,7 +664,7 @@ class MultiGroupElectiveRequirement(AbstractRequirement):
         metadata: dict[str, Any]
     
     def __init__(
-        self, requirements: list[AbstractRequirement], requirement_count: int, minimum_hours_in_area: int = 1, metadata: dict[str, Any] = {}
+        self, requirements: list[AbstractRequirement], requirement_count: int, minimum_hours_in_area: int = 0, metadata: dict[str, Any] = {}
     ) -> None:
         self.requirements = requirements
         self.requirement_count = requirement_count
