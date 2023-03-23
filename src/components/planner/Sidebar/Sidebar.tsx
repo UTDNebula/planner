@@ -147,7 +147,9 @@ function CourseSelectorContainer({
                         />
                       </div>
                     ) : (
-                      <div className="p-4 text-2xl">Courses are loading</div>
+                      <div className="p-4 text-base text-[#757575]">
+                        Please wait, courses are loading....
+                      </div>
                     )}
                   </Dialog.Content>
                 </Dialog.Portal>
