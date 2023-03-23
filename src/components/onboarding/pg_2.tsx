@@ -37,6 +37,8 @@ export default function PageTwo({ handleChange, data, startSemester }: Page2data
   const [semesterCode, setSemester] = useState<SemesterCode>(semesters[0]);
 
   const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
+    staleTime: Infinity,
+    cacheTime: Infinity,
     refetchOnWindowFocus: false,
   });
   const { results, updateQuery } = useSearch({

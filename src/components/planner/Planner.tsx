@@ -80,9 +80,9 @@ export default function Planner({
   };
 
   const [deleteLoading, setDeleteLoading] = useState(false);
+
   const deletePlan = trpc.plan.deletePlanById.useMutation({
     onSuccess: () => {
-      setDeleteLoading(true);
       utils.plan.invalidate().then(() => Router.push('/app/home'));
     },
     onSettled: () => setDeleteLoading(false),
@@ -188,7 +188,10 @@ export default function Planner({
             major={degreeRequirementsData?.major ?? 'undecided'}
             transferCredits={transferCredits}
             studentName={userData?.profile?.name ?? 'Student'}
-            deletePlan={() => deletePlan.mutateAsync(planId)}
+            deletePlan={() => {
+              setDeleteLoading(true);
+              deletePlan.mutateAsync(planId);
+            }}
             deleteLoading={deleteLoading}
           />
 

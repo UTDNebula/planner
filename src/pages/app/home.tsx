@@ -16,9 +16,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     transformer: superjson,
   });
 
-  await ssg.plan.getUserPlans.prefetch();
-  // Prefetch all courses caused it's used in the plan
-  ssg.courses.publicGetAllCourses.prefetch();
+  await Promise.all([ssg.user.getUser.prefetch(), ssg.plan.getUserPlans.prefetch()]);
+
   return {
     props: {
       trpcState: ssg.dehydrate(),

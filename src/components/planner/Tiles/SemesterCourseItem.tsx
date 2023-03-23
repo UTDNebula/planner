@@ -57,6 +57,9 @@ export const MemoizedSemesterCourseItem = React.memo(
     const openHover = () => !isDragging && !dropdownOpen && setHoverOpen(true);
 
     const hoverTimer = useRef<ReturnType<typeof setTimeout>>();
+    // const handleOpenHover = (hoverOpen: boolean) => {
+    //   hoverTimer.current = setTimeout(() => setHoverIconOpen(hoverOpen), 500);
+    // };
 
     const { prereqs, title } = useGetCourseInfo(course.code);
 
@@ -76,10 +79,11 @@ export const MemoizedSemesterCourseItem = React.memo(
         // onClick={() => setDropdownOpen((prev) => !prev)}
         onClick={() => setDropdownOpen(true)}
         onMouseEnter={() => {
-          hoverTimer.current = setTimeout(() => openHover(), 500);
+          hoverTimer.current = setTimeout(() => setHoverIconOpen(true), 500);
         }}
         onMouseLeave={() => {
           setHoverOpen(false);
+          setHoverIconOpen(false);
           if (hoverTimer.current) {
             clearTimeout(hoverTimer.current);
           }
@@ -96,7 +100,9 @@ export const MemoizedSemesterCourseItem = React.memo(
         <PrereqWarnHoverCard
           prereqs={requirementsData === undefined ? [[], [], []] : requirementsData}
           open={hoverIconOpen}
-          onOpenChange={(hoverOpen) => !dropdownOpen && setHoverIconOpen(hoverOpen)}
+          onOpenChange={(hoverOpen) => {
+            console.info('not used');
+          }}
           title={title || ''}
           isValid={isValid}
         >
@@ -119,9 +125,7 @@ export const MemoizedSemesterCourseItem = React.memo(
               changeColor={(color) => onColorChange && onColorChange(color)}
               deleteCourse={() => onDeleteCourse && onDeleteCourse()}
             >
-              <button className="cursor-pointer rounded-md py-[2px]  hover:bg-neutral-100">
-                <DragIndicatorIcon fontSize="inherit" className="text-[16px] text-neutral-300" />
-              </button>
+              <DragIndicatorIcon fontSize="inherit" className="text-[16px] text-neutral-300" />
             </SemesterCourseItemDropdown>
 
             <Checkbox
@@ -201,7 +205,10 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
   });
 
   const { planId } = useSemestersContext();
-  const requirementsData = trpc.validator.prereqValidator.useQuery(planId);
+  const requirementsData = trpc.validator.prereqValidator.useQuery(planId, {
+    staleTime: 100000000,
+  });
+
   const isValid: [boolean, boolean, boolean] = [true, true, true];
   const hoverList: [Array<string>, Array<string>, Array<string>] = [[], [], []];
   const prereqData = requirementsData.data?.prereq?.get(course.code);
@@ -211,14 +218,14 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
     isValid[1] = coreqData.length > 0 ? false : true;
     coreqData.map((data) => {
       const tmp = data[0].join(', ');
-      hoverList[1].push(tmp.concat(' (', data[1].toString(), ')'));
+      hoverList[1].push(tmp.concat(' (', data[1].toString(), ' required)'));
     });
   }
   if (prereqData) {
     isValid[0] = prereqData.length > 0 ? false : true;
     prereqData.map((data) => {
       const tmp = data[0].join(', ');
-      hoverList[0].push(tmp.concat(' (', data[1].toString(), ')'));
+      hoverList[0].push(tmp.concat(' (', data[1].toString(), ' required)'));
     });
   }
 
@@ -226,7 +233,7 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
     isValid[2] = coorpreData.length > 0 ? false : true;
     coorpreData.map((data) => {
       const tmp = data[0].join(', ');
-      hoverList[2].push(tmp.concat(' (', data[1].toString(), ')'));
+      hoverList[2].push(tmp.concat(' (', data[1].toString(), ' required)'));
     });
   }
 

@@ -21,17 +21,16 @@ export default function PlansPage(): JSX.Element {
       await utils.user.getUser.invalidate();
     },
   });
-  const userQuery = trpc.user.getUser.useQuery();
+  const { data: userData, isLoading } = trpc.user.getUser.useQuery(undefined, { staleTime: 0 });
 
   const { data } = userPlanQuery;
-  const userData = userQuery.data;
   const [planPage, setPlanPage] = useState<0 | 1>(1);
   const router = useRouter();
 
   const [showHomeOnboardingModal, setShowHomeOnboardingModal] = useState(false);
   React.useEffect(() => {
     setShowHomeOnboardingModal((userData && !userData.seenHomeOnboardingModal) ?? false);
-    if (userData && !userData.onboardingComplete) {
+    if (!isLoading && userData && !userData.onboardingComplete) {
       router.push('/app/onboarding');
       return;
     }

@@ -1,6 +1,6 @@
 import Modal from '@/components/Modal';
 import { trpc } from '@/utils/trpc';
-import { createNewYear, displaySemesterCode, isSemCodeEqual } from '@/utils/utilFunctions';
+import { displaySemesterCode, generateSemesters } from '@/utils/utilFunctions';
 import { SemesterCode } from '@prisma/client';
 import { FC, useState } from 'react';
 import Button from '../../Button';
@@ -16,18 +16,7 @@ export interface EditSemestersModalProps {
 
 // Generates n-year worth of semesters before and after the given semester
 const genSurroundingSemesterCodes = (middleSemester: SemesterCode, n: number): SemesterCode[] => {
-  return [
-    ...new Array(n)
-      .fill(0)
-      .flatMap((_, i) => createNewYear({ ...middleSemester, year: middleSemester.year - i }))
-      .map((semester) => semester.code),
-    ...new Array(n)
-      .fill(0)
-      .flatMap((_, i) => createNewYear({ ...middleSemester, year: middleSemester.year + i }))
-      .map((semester) => semester.code),
-  ]
-    .sort((a, b) => (a.year > b.year ? 1 : -1))
-    .filter((semCode) => !isSemCodeEqual(semCode, middleSemester));
+  return generateSemesters(n, middleSemester.year - n / (2 * 3), 'f', true).map((sem) => sem.code);
 };
 
 const EditSemestersModal: FC<EditSemestersModalProps> = ({
@@ -50,9 +39,12 @@ const EditSemestersModal: FC<EditSemestersModalProps> = ({
   const [newStartSemester, setNewStartSemester] = useState(startSemester);
   const [newEndSemester, setNewEndSemester] = useState(endSemester);
 
-  const startSemesterOptions: SemesterCode[] = genSurroundingSemesterCodes(startSemester, 3);
-  const endSemesterOptions: SemesterCode[] = genSurroundingSemesterCodes(endSemester, 3);
+  const startSemesterOptions: SemesterCode[] = genSurroundingSemesterCodes(startSemester, 12);
+  const endSemesterOptions: SemesterCode[] = genSurroundingSemesterCodes(endSemester, 12);
 
+  console.log('HI');
+  console.log(startSemesterOptions);
+  console.log(endSemesterOptions);
   return (
     <Modal onClose={closeModal} {...props}>
       <h1 className="text-lg font-medium">Edit semesters</h1>

@@ -68,9 +68,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext<{ pl
 
   const planId = context.params?.planId as string;
 
-  // await ssg.courses.publicGetSanitizedCourses.prefetch();
   await Promise.all([
-    // ssg.validator.prereqValidator.prefetch(planId),
+    ssg.validator.prereqValidator.prefetch(planId),
     ssg.validator.degreeValidator.prefetch(planId),
     ssg.plan.getPlanById.prefetch(planId),
     ssg.plan.getDegreeRequirements.prefetch({ planId }),

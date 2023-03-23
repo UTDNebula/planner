@@ -320,7 +320,28 @@
       },
       "ITSS 4090"
     ],
-    ["OPRE 3310", "OBHR 3310", "ITSS 4370"]
+    [
+      "OPRE 3310",
+      "OBHR 3310",
+      "ITSS 4370",
+      {
+        "options": "ITSS Guided Elective Upper Level"
+      },
+      {
+        "options": "INTS Guided Elective Upper Level"
+      },
+      "BA 4095"
+    ],
+    [
+      "IMS 3310",
+      "ITSS 4395",
+      {
+        "options": "ITSS Guided Elective Upper Level"
+      },
+      {
+        "options": "Free Elective"
+      }
+    ]
   ],
   "Economics(BS)": [
     [

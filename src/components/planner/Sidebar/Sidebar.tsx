@@ -31,6 +31,8 @@ function CourseSelectorContainer({
 }: CourseSelectorContainerProps) {
   // TODO: Provide UI indicator for errors
   const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
+    staleTime: Infinity,
+    cacheTime: Infinity,
     refetchOnWindowFocus: false,
   });
 
@@ -145,7 +147,9 @@ function CourseSelectorContainer({
                         />
                       </div>
                     ) : (
-                      <div className="p-4 text-2xl">Courses are loading</div>
+                      <div className="p-4 text-base text-[#757575]">
+                        Please wait, courses are loading....
+                      </div>
                     )}
                   </Dialog.Content>
                 </Dialog.Portal>

@@ -120,55 +120,21 @@ export const planRouter = router({
         });
       }
 
-      if (plan.semesters.length > 0) {
-        // Delete all semesters outside of the new semester range
-        let newSemesters = plan.semesters.filter(
-          ({ code }) =>
-            !isSemesterEarlier(code, newStartSemester as SemesterCode) &&
-            !isSemesterLater(code, newEndSemester as SemesterCode),
-        );
+      // Since we're deleting things anyway, we can just create new xD
+      const newSems = createSemesterCodeRange(
+        newStartSemester as SemesterCode,
+        newEndSemester as SemesterCode,
+        true,
+        true,
+      ).map((semesterCode) => ({
+        code: semesterCode,
+        color: '',
+        planId,
+        id: new ObjectId().toString(),
+      })) as Semester[];
 
-        // Prepend semesters if new semester range is earlier than first semester
-        const firstSemesterCode = plan.semesters[0].code;
-        const lastSemesterCode = plan.semesters[plan.semesters.length - 1].code;
-        if (isSemesterEarlier(newStartSemester as SemesterCode, firstSemesterCode)) {
-          newSemesters = [
-            ...(createSemesterCodeRange(
-              newStartSemester as SemesterCode,
-              firstSemesterCode,
-              false,
-              true,
-            ).map((semesterCode) => ({
-              code: semesterCode,
-              color: '',
-              planId,
-              id: new ObjectId().toString(),
-            })) as Semester[]),
-            ...newSemesters,
-          ];
-        }
-
-        // Append semesters if new semester range is later than last semeseter
-        if (isSemesterLater(newEndSemester as SemesterCode, lastSemesterCode)) {
-          newSemesters = [
-            ...newSemesters,
-            ...(createSemesterCodeRange(
-              lastSemesterCode,
-              newEndSemester as SemesterCode,
-              true,
-              false,
-            ).map((semesterCode) => ({
-              code: semesterCode,
-              color: '',
-              planId,
-              id: new ObjectId().toString(),
-            })) as Semester[]),
-          ];
-        }
-
-        await ctx.prisma.semester.deleteMany({ where: { planId } });
-        await ctx.prisma.semester.createMany({ data: newSemesters });
-      }
+      await ctx.prisma.semester.deleteMany({ where: { planId } });
+      await ctx.prisma.semester.createMany({ data: newSems });
     }),
   deleteYear: protectedProcedure.input(z.string().min(1)).mutation(async ({ ctx, input }) => {
     try {
