@@ -143,6 +143,7 @@ export default function Welcome({
             onInputChange={(query: string) => updateQuery(query)}
             options={results.map((major: { filMajor: string }) => major.filMajor)}
             autoFocus
+            textFieldClassName="h-11 appearance-none rounded border border-[#6366F1] bg-[#F5F5F5] pl-4 text-[14px] font-semibold text-[#D4D4D4] outline-none"
           ></AutoCompleteMajor>
         </div>
         <div className="flex items-center justify-between">

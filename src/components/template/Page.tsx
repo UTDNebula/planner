@@ -3,12 +3,15 @@ import Button from '../Button';
 import CloseIcon from '@mui/icons-material/Close';
 import { PageProps } from './CustomPlan';
 
-export function Page({ title, subtitle, children, actions, close }: PropsWithChildren<PageProps>) {
+export function Page({ title, titleoption, subtitle, children, actions, close }: PropsWithChildren<PageProps>) {
   return (
     <section className="flex flex-col justify-center gap-4 ">
       <div className="flex justify-between">
         <div className="flex flex-col gap-1">
-          <h1 className="text-4xl font-semibold tracking-tight">{title}</h1>
+          <div className="grid grid-flow-col gap-1 auto-cols-max items-baseline">
+            <h1 className="text-4xl font-semibold tracking-tight">{title}</h1>
+            <p className="text-4x1 text-neutral-500 pl-2"> {titleoption} </p>
+          </div>
           <p className="text-[14px] leading-6 text-neutral-500">
             {subtitle} {'Download your transcript '}
             <a

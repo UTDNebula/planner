@@ -10,6 +10,7 @@ interface AutoCompleteMajorProps extends React.ComponentPropsWithoutRef<'div'> {
   autoFocus?: boolean;
   placeholder?: string;
   defaultValue?: string;
+  textFieldClassName?: string;
 }
 
 const AutoCompleteMajor: FC<AutoCompleteMajorProps & React.ComponentPropsWithoutRef<'button'>> = ({
@@ -19,6 +20,7 @@ const AutoCompleteMajor: FC<AutoCompleteMajorProps & React.ComponentPropsWithout
   autoFocus,
   placeholder = 'Choose your major',
   defaultValue = '',
+  textFieldClassName,
   ...props
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -61,9 +63,9 @@ const AutoCompleteMajor: FC<AutoCompleteMajorProps & React.ComponentPropsWithout
             <TextField
               {...params}
               variant="standard"
-              className="h-11 appearance-none rounded border border-[#6366F1] bg-[#F5F5F5] pl-4 text-[14px] font-semibold text-[#D4D4D4] outline-none"
+              className={textFieldClassName}
               inputProps={{
-                style: { fontSize: 14, marginTop: 8, color: '#737373' },
+                style: { fontSize: 14, marginTop: 8, color: '#1a1a1a', fontWeight: 500 },
                 ...params.inputProps,
               }}
               placeholder={placeholder}

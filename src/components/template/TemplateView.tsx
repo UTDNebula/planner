@@ -64,6 +64,7 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
   return (
     <Page
       title="Select a Degree Template"
+      titleoption=''
       subtitle="Find a degree template to start planning."
       close={onDismiss}
       actions={[
@@ -91,11 +92,12 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
       <p className="text-sm font-semibold">Search degree template</p>
       <div className="relative mb-4">
         <AutoCompleteMajor
-          className="w-[500px] rounded border outline-none"
+          className="w-full rounded-md border border-neutral-500 text-sm text-black/80 placeholder:text-neutral-400"
           key={0}
           onValueChange={(value) => setMajor(value)}
           onInputChange={(query: string) => updateQuery(query)}
           options={results.map((major: { filMajor: string }) => major.filMajor)}
+          textFieldClassName="h-11 appearance-none rounded-md border border-neutral-500 bg-[#FFFFFF] pl-4 text-sm text-black/80 placeholder:text-neutral-400"
           autoFocus
         ></AutoCompleteMajor>
       </div>

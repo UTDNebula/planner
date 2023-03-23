@@ -216,6 +216,7 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
     <Page
       key="custom-plan-details"
       title="Create a Custom Plan"
+      titleoption=''
       subtitle="Name your plan and choose your major"
       close={onDismiss}
       actions={[
@@ -242,18 +243,20 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
       <p className="text-sm font-semibold">Choose your major</p>
       <div className="relative mb-4">
         <AutoCompleteMajor
-          className="w-[500px] rounded border outline-none"
+          className="w-full rounded-md border border-neutral-500 text-sm text-black/80 placeholder:text-neutral-400"
           key={0}
           onValueChange={(value) => setMajor(value)}
           onInputChange={(query: string) => updateQuery(query)}
           options={results.map((major: { filMajor: string }) => major.filMajor)}
           autoFocus
+          textFieldClassName="h-11 appearance-none rounded-md border border-neutral-500 bg-[#FFFFFF] pl-4 text-sm text-black/80 placeholder:text-neutral-400"
         ></AutoCompleteMajor>
       </div>
     </Page>,
     <Page
       key="custom-plan-transcript"
       title="Upload Transcript"
+      titleoption='(Optional)'
       subtitle="Upload your transcript to make your custom plan. https://registrar.utdallas.edu/transcript/unofficial/"
       close={onDismiss}
       actions={[
@@ -404,6 +407,7 @@ const isTerm = (str: string) => {
 
 export interface PageProps {
   title: string;
+  titleoption: string;
   subtitle: string;
   close: () => void;
   actions: {
