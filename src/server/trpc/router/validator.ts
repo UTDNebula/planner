@@ -48,7 +48,7 @@ export const validatorRouter = router({
           message: 'Plan not found',
         });
       }
-      const coursesFromApi: JSONCourse[] = rawCourses;
+      const coursesFromApi: JSONCourse[] = rawCourses as unknown as JSONCourse[];
 
       /*  sanitizing data from API db.
        *  TODO: Fix this later somehow
