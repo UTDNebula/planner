@@ -1,8 +1,8 @@
 import { initTRPC, TRPCError } from '@trpc/server';
 import superjson from 'superjson';
+import { cachedCoursesFromAPI } from './router/cache';
 
 import { type Context } from './context';
-import { cachedCoursesFromAPI } from './router/cache';
 
 const t = initTRPC.context<Context>().create({
   transformer: superjson,
@@ -11,10 +11,10 @@ const t = initTRPC.context<Context>().create({
   },
 });
 
-cachedCoursesFromAPI.log('Getting cached courses when loading TRPC module');
-cachedCoursesFromAPI.get();
-
 export const router = t.router;
+
+cachedCoursesFromAPI.log('Initializing cache from server/trpc');
+cachedCoursesFromAPI.get();
 
 /**
  * Unprotected procedure

@@ -1,6 +1,7 @@
 import { Prisma as PlatformPrisma } from '../../../../prisma/generated/platform';
 import { Mutex } from 'async-mutex';
 import { platformPrisma } from '@/server/db/platform_client';
+import { env } from '@/env/server.mjs';
 
 type CoursesFromAPI = Array<
   PlatformPrisma.coursesGetPayload<{
@@ -16,27 +17,30 @@ type CoursesFromAPI = Array<
   }>
 > | null;
 
-export const cachedCoursesFromAPI: {
-  _inner: CoursesFromAPI | null;
-  _mutex: Mutex;
-  log: (msg: string) => void;
-  get: () => Promise<NonNullable<CoursesFromAPI>>;
-} = {
-  _inner: null,
-  _mutex: new Mutex(),
-  log: (msg: string) => console.log(`===== Cache: ${msg} =====`),
-  get: async (): Promise<NonNullable<CoursesFromAPI>> => {
-    cachedCoursesFromAPI.log('attempting to acquire mutex');
-    const release = await cachedCoursesFromAPI._mutex.acquire();
-    cachedCoursesFromAPI.log('mutex acquired');
+class Cache {
+  _inner: CoursesFromAPI | null = null;
+  _mutex: Mutex = new Mutex();
+  id: number;
+
+  constructor(id: number) {
+    this.id = id;
+  }
+  log(msg: string) {
+    console.log(`===== Cache ${this.id}: ${msg} =====`);
+  }
+
+  async get(): Promise<NonNullable<CoursesFromAPI>> {
+    this.log('attempting to acquire mutex');
+    const release = await this._mutex.acquire();
+    this.log('mutex acquired');
 
     if (!platformPrisma) {
       throw new Error('Cache needs platform client to be initialized');
     }
 
-    if (cachedCoursesFromAPI._inner === null) {
-      cachedCoursesFromAPI.log('fetching Courses from API');
-      cachedCoursesFromAPI._inner = await platformPrisma.courses.findMany({
+    if (this._inner === null) {
+      this.log('fetching Courses from API');
+      this._inner = await platformPrisma.courses.findMany({
         select: {
           title: true,
           course_number: true,
@@ -50,6 +54,17 @@ export const cachedCoursesFromAPI: {
     }
 
     release();
-    return cachedCoursesFromAPI._inner;
-  },
-};
+    return this._inner;
+  }
+}
+
+declare global {
+  // eslint-disable-next-line no-var
+  var cachedCoursesFromAPI: Cache | null;
+}
+
+export const cachedCoursesFromAPI = global.cachedCoursesFromAPI || new Cache(Math.random());
+
+if (env.NODE_ENV !== 'production') {
+  global.cachedCoursesFromAPI = cachedCoursesFromAPI;
+}

@@ -5,6 +5,7 @@ import { type Session } from 'next-auth';
 import { getServerAuthSession } from '../common/get-server-auth-session';
 import { prisma } from '../db/client';
 import { platformPrisma } from '../db/platform_client';
+
 type CreateContextOptions = {
   session: Session | null;
 };

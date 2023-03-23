@@ -4,6 +4,7 @@ import { cachedCoursesFromAPI } from './cache';
 
 export const coursesRouter = router({
   publicGetAllCourses: publicProcedure.query(async () => {
+    cachedCoursesFromAPI.log('ATTEMPTING FROM GETALLCOURSES');
     return await cachedCoursesFromAPI.get();
   }),
   publicGetSanitizedCourses: publicProcedure.query(async () => {
