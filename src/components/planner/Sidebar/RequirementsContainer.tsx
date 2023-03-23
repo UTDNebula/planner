@@ -44,9 +44,9 @@ function RequirementContainerHeader({
           />
         </svg>
       </button>
-      <div className="">
-        <div className="flex w-full flex-row items-center  justify-between  font-medium">
-          <div className="max-w-[60%] overflow-hidden text-ellipsis whitespace-nowrap text-[18px] font-semibold">
+      <div className="overflow-hidden">
+        <div className="flex w-full flex-row items-center justify-between font-medium">
+          <div className="w-[70%] overflow-hidden text-ellipsis whitespace-nowrap text-[18px] font-semibold">
             {name}
           </div>
 
