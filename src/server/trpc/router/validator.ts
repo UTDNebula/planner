@@ -5,6 +5,8 @@ import { formatDegreeValidationRequest } from '@/utils/plannerUtils';
 
 import { protectedProcedure, router } from '../trpc';
 import { Course, Prisma, Semester } from '@prisma/client';
+import rawCourses from '@data/courses.json';
+import { JSONCourse } from './courses';
 
 type PlanData = {
   id: string;
@@ -46,19 +48,7 @@ export const validatorRouter = router({
           message: 'Plan not found',
         });
       }
-      const coursesFromApi = await ctx.platformPrisma.courses.findMany({
-        select: {
-          course_number: true,
-          subject_prefix: true,
-          id: true,
-          prerequisites: true,
-          corequisites: true,
-          co_or_pre_requisites: true,
-        },
-        where: {
-          course_number: { in: courseNumbersList },
-        },
-      });
+      const coursesFromApi: JSONCourse[] = rawCourses;
 
       /*  sanitizing data from API db.
        *  TODO: Fix this later somehow

@@ -30,13 +30,8 @@ function CourseSelectorContainer({
   getRequirementDragId,
 }: CourseSelectorContainerProps) {
   // TODO: Provide UI indicator for errors
-  const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
-    staleTime: Infinity,
-    cacheTime: Infinity,
-    refetchOnWindowFocus: false,
-  });
 
-  const { data, isLoading } = q;
+  const { data, isLoading } = trpc.courses.publicGetAllCourses.useQuery();
 
   const { results, updateQuery } = useFuse<Course>({
     dataSet:
