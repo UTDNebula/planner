@@ -59,24 +59,24 @@ const Toolbar: FC<ToolbarProps> = ({
           <EditableMajorTitle initialTitle={title} planId={planId} />
         </div>
         <div className="flex h-min items-center gap-3">
-          <Button size="medium" icon={<DownloadIcon />}>
-            <PDFDownloadLink
-              document={
-                <DegreePlanPDF
-                  studentName={studentName}
-                  planTitle={title}
-                  major={major}
-                  semesters={semesters}
-                  transferCredits={transferCredits}
-                  coursesData={coursesData ?? []}
-                />
-              }
-            >
+          <PDFDownloadLink
+            document={
+              <DegreePlanPDF
+                studentName={studentName}
+                planTitle={title}
+                major={major}
+                semesters={semesters}
+                transferCredits={transferCredits}
+                coursesData={coursesData ?? []}
+              />
+            }
+          >
+            <Button size="medium" icon={<DownloadIcon />}>
               <span className="whitespace-nowrap" id="hello">
                 Export Degree Plan
               </span>
-            </PDFDownloadLink>
-          </Button>
+            </Button>
+          </PDFDownloadLink>
 
           <FilterByDropdown>
             <Button
