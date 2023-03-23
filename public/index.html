@@ -209,27 +209,27 @@
 </footer>
 <script>
   function showDesign() {
-    document.getElementById("designTeam").style.display = "grid";
-    document.getElementById("engineeringTeam").style.display = "none";
-    document.getElementById("productTeam").style.display = "none";
+    document.getElementById("designTeam").classList.add("active");
+    document.getElementById("engineeringTeam").classList.remove("active");
+    document.getElementById("productTeam").classList.remove("active");
 
     document.getElementById("designSelection").classList.add("selectedTeam");
     document.getElementById("engineeringSelection").classList.remove("selectedTeam");
     document.getElementById("productSelection").classList.remove("selectedTeam");
   }
   function showEngineering() {
-    document.getElementById("designTeam").style.display = "none";
-    document.getElementById("engineeringTeam").style.display = "grid";
-    document.getElementById("productTeam").style.display = "none";
+    document.getElementById("designTeam").classList.remove("active");
+    document.getElementById("engineeringTeam").classList.add("active");
+    document.getElementById("productTeam").classList.remove("active");
 
     document.getElementById("designSelection").classList.remove("selectedTeam");
     document.getElementById("engineeringSelection").classList.add("selectedTeam");
     document.getElementById("productSelection").classList.remove("selectedTeam");
   }
   function showProduct() {
-    document.getElementById("designTeam").style.display = "none";
-    document.getElementById("engineeringTeam").style.display = "none";
-    document.getElementById("productTeam").style.display = "grid";
+    document.getElementById("designTeam").classList.remove("active");
+    document.getElementById("engineeringTeam").classList.remove("active");
+    document.getElementById("productTeam").classList.add("active");
 
     document.getElementById("designSelection").classList.remove("selectedTeam");
     document.getElementById("engineeringSelection").classList.remove("selectedTeam");
