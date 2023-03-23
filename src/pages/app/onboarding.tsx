@@ -80,8 +80,6 @@ export default function OnboardingPage() {
     setValidate(temp);
   };
 
-  // const { updateName } = useAuthContext();
-
   const handleSubmit = async () => {
     const { name, startSemester, endSemester } = onboardingData;
 
@@ -95,6 +93,7 @@ export default function OnboardingPage() {
       await addProfile.mutateAsync(input);
     } catch (error) {}
 
+    alert('HI');
     router.push('/app/home');
   };
 
