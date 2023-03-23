@@ -1,6 +1,20 @@
-import { CoursesFromAPI } from './courses';
+import { Prisma as PlatformPrisma } from '../../../../prisma/generated/platform';
 import { Mutex } from 'async-mutex';
 import { platformPrisma } from '@/server/db/platform_client';
+
+type CoursesFromAPI = Array<
+  PlatformPrisma.coursesGetPayload<{
+    select: {
+      title: true;
+      course_number: true;
+      subject_prefix: true;
+      id: true;
+      prerequisites: true;
+      corequisites: true;
+      co_or_pre_requisites: true;
+    };
+  }>
+> | null;
 
 export const cachedCoursesFromAPI: {
   _inner: CoursesFromAPI | null;

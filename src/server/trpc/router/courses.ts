@@ -1,21 +1,6 @@
 import { Prisma } from '@prisma/client';
 import { router, publicProcedure } from '../trpc';
-import { Prisma as PlatformPrisma } from '../../../../prisma/generated/platform';
-import { cachedCoursesFromAPI } from './prefetch';
-
-export type CoursesFromAPI = Array<
-  PlatformPrisma.coursesGetPayload<{
-    select: {
-      title: true;
-      course_number: true;
-      subject_prefix: true;
-      id: true;
-      prerequisites: true;
-      corequisites: true;
-      co_or_pre_requisites: true;
-    };
-  }>
-> | null;
+import { cachedCoursesFromAPI } from './cache';
 
 export const coursesRouter = router({
   publicGetAllCourses: publicProcedure.query(async () => {
