@@ -5,7 +5,7 @@ import { formatDegreeValidationRequest } from '@/utils/plannerUtils';
 
 import { protectedProcedure, router } from '../trpc';
 import { Course, Prisma, Semester } from '@prisma/client';
-import { cachedCoursesFromAPI } from './prefetch';
+import { cachedCoursesFromAPI } from './cache';
 
 type PlanData = {
   id: string;
