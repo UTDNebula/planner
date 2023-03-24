@@ -151,7 +151,7 @@ export const validatorRouter = router({
                 temp[0].push(course as string);
                 continue;
               }
-              if (data === semester) {
+              if (data <= semester) {
                 count++;
               } else {
                 temp[0].push(course as string);
@@ -239,15 +239,6 @@ export const validatorRouter = router({
       };
 
       const coreqValidation = async (planData: PlanData) => {
-        // for (let i = 0; i < planData.transferCredits.length; i++) {
-        //   const course = planData.transferCredits[i];
-        //   const reqsForCourse = courseMapWithCodeKey.get(course);
-        //   if (!reqsForCourse) {
-        //     continue;
-        //   }
-        //   const flag = checkForCoRecursive(reqsForCourse.prereqs as CollectionOptions, i);
-        //   coReqHash.set(course, flag);
-        // }
         for (let i = 0; i < planData?.semesters.length; i++) {
           if (!planData?.semesters[i] || !planData?.semesters[i].courses) continue;
           for (let j = 0; j < planData?.semesters[i].courses.length; j++) {
