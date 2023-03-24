@@ -3,6 +3,7 @@ import React, { useMemo } from 'react';
 import DraggableSidebarCourseItem from './SidebarCourseItem';
 import { CourseRequirement, RequirementTypes } from './types';
 import Accordion from './Accordion';
+import { trpc } from '@/utils/trpc';
 
 /**
  * Group of requirements that's recursive?
@@ -166,6 +167,17 @@ function CourseRequirementComponent({
   validCourses: { [key: string]: number };
 }) {
   const id = useMemo(() => new ObjectID(), []);
+  const courseQuery = trpc.courses.publicGetAllCourses.useQuery(undefined, {
+    staleTime: Infinity,
+    cacheTime: Infinity,
+  });
+  const { data, isLoading } = courseQuery;
+
+  let title = '';
+  if (data && !isLoading) {
+    const course = data.find((c) => `${c.subject_prefix} ${c.course_number}` === req.course);
+    title = course ? course.title : '';
+  }
 
   return (
     <DraggableSidebarCourseItem
@@ -178,6 +190,7 @@ function CourseRequirementComponent({
         hours: validCourses[req.course],
         locked: false,
         prereqOveridden: false,
+        title,
       }}
       dragId={id.toString()}
     />

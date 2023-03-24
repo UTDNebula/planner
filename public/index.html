@@ -24,7 +24,7 @@
     <div>
       <h2>Navigate your degree with ease</h2>
       <h1>Launch Your Degree Plan with Nebula Planner</h1>
-      <h3>Blast off your academic journey to the moon with Nebula <br/> Labs Planner - the ultimate tool for customizing your <br/> four-year degree.</h3>
+      <h3>Blast off your academic journey to the moon with Nebula Labs Planner - the ultimate tool for customizing your four-year degree.</h3>
       <div class="buttons">
         <button><a href="/auth/login" class="login button">Get Started</a></button>
         <button><a href="#features" class="button">Learn More</a></button>
@@ -69,35 +69,6 @@
     <button><a href="/auth/login" class="login button">Get Started</a></button>
   </section>
   <section id="team">
-    <script>
-      function showDesign() {
-        document.getElementById("designTeam").style.display = "grid";
-        document.getElementById("engineeringTeam").style.display = "none";
-        document.getElementById("productTeam").style.display = "none";
-
-        document.getElementById("designSelection").classList.add("selectedTeam");
-        document.getElementById("engineeringSelection").classList.remove("selectedTeam");
-        document.getElementById("productSelection").classList.remove("selectedTeam");
-      }
-      function showEngineering() {
-        document.getElementById("designTeam").style.display = "none";
-        document.getElementById("engineeringTeam").style.display = "grid";
-        document.getElementById("productTeam").style.display = "none";
-        
-        document.getElementById("designSelection").classList.remove("selectedTeam");
-        document.getElementById("engineeringSelection").classList.add("selectedTeam");
-        document.getElementById("productSelection").classList.remove("selectedTeam");
-      }
-      function showProduct() {
-        document.getElementById("designTeam").style.display = "none";
-        document.getElementById("engineeringTeam").style.display = "none";
-        document.getElementById("productTeam").style.display = "grid";
-
-        document.getElementById("designSelection").classList.remove("selectedTeam");
-        document.getElementById("engineeringSelection").classList.remove("selectedTeam");
-        document.getElementById("productSelection").classList.add("selectedTeam");
-      }
-   </script>
     <h2>Meet the team</h2>
     <ul>
       <a href="#team" style="cursor: pointer; color: var(--gray)" id="designSelection" onclick="showDesign()"><li>Design</li></a>
@@ -236,5 +207,36 @@
   <hr>
   <p>Copyright © 2023. All rights reserved</p>
 </footer>
+<script>
+  function showDesign() {
+    document.getElementById("designTeam").classList.add("active");
+    document.getElementById("engineeringTeam").classList.remove("active");
+    document.getElementById("productTeam").classList.remove("active");
+
+    document.getElementById("designSelection").classList.add("selectedTeam");
+    document.getElementById("engineeringSelection").classList.remove("selectedTeam");
+    document.getElementById("productSelection").classList.remove("selectedTeam");
+  }
+  function showEngineering() {
+    document.getElementById("designTeam").classList.remove("active");
+    document.getElementById("engineeringTeam").classList.add("active");
+    document.getElementById("productTeam").classList.remove("active");
+
+    document.getElementById("designSelection").classList.remove("selectedTeam");
+    document.getElementById("engineeringSelection").classList.add("selectedTeam");
+    document.getElementById("productSelection").classList.remove("selectedTeam");
+  }
+  function showProduct() {
+    document.getElementById("designTeam").classList.remove("active");
+    document.getElementById("engineeringTeam").classList.remove("active");
+    document.getElementById("productTeam").classList.add("active");
+
+    document.getElementById("designSelection").classList.remove("selectedTeam");
+    document.getElementById("engineeringSelection").classList.remove("selectedTeam");
+    document.getElementById("productSelection").classList.add("selectedTeam");
+  }
+
+  showDesign();
+</script>
 </body>
 </html>

@@ -15,13 +15,19 @@ import { useRouter } from 'next/router';
  */
 export default function PlansPage(): JSX.Element {
   const [openTemplateModal, setOpenTemplateModal] = useState(false);
-  const userPlanQuery = trpc.plan.getUserPlans.useQuery();
+  const userPlanQuery = trpc.plan.getUserPlans.useQuery(undefined, {
+    staleTime: Infinity,
+    cacheTime: Infinity,
+  });
   const updateSeenHomeOnboarding = trpc.user.seenHomeOnboarding.useMutation({
     async onSuccess() {
       await utils.user.getUser.invalidate();
     },
   });
-  const { data: userData, isLoading } = trpc.user.getUser.useQuery(undefined, { staleTime: 0 });
+  const { data: userData, isLoading } = trpc.user.getUser.useQuery(undefined, {
+    staleTime: Infinity,
+    cacheTime: Infinity,
+  });
 
   const { data } = userPlanQuery;
   const [planPage, setPlanPage] = useState<0 | 1>(1);
