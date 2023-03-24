@@ -228,7 +228,7 @@ const str = `<!DOCTYPE html>
       headers: {
         "Content-type": "application/json; charset=UTF-8"
       }
-    }).then(response => response.json()).then(json => console.log(json));
+    }).then(response => response.json()).then(json => alert("Email has been sent!"));
   });
 </script>
 </body>
