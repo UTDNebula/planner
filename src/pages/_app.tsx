@@ -100,7 +100,7 @@ const NebulaApp: AppType<{ session: Session | null }> = ({
         <link rel="apple-touch-icon" href="/apple-icon.png"></link>
         <meta name="theme-color" content="#4659A7" />
 
-        {process.env.NODE_ENV === 'production' && (
+        {process.env.VERCEL_ENV === 'production' && (
           <script
             async
             defer
