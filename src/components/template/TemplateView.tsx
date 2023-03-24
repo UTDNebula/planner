@@ -13,7 +13,14 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
   const [major, setMajor] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const { data: templatesData, isLoading, isError } = trpc.template.getAllTemplates.useQuery();
+  const {
+    data: templatesData,
+    isLoading,
+    isError,
+  } = trpc.template.getAllTemplates.useQuery(undefined, {
+    staleTime: Infinity,
+    cacheTime: Infinity,
+  });
 
   const createTemplateUserPlan = trpc.user.createTemplateUserPlan.useMutation({
     async onSuccess() {

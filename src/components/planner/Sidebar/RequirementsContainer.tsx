@@ -131,8 +131,6 @@ const getRequirementGroup = (
       };
     case 'FreeElectives':
       courses = Object.keys(degreeRequirement.valid_courses);
-      console.log(courses);
-      console.log('HI');
 
       return {
         name: 'Free Electives',

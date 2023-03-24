@@ -376,7 +376,6 @@ export const userRouter = router({
             message: 'Template not found',
           });
         }
-        console.log('TEMPLATE FOUND');
 
         const { name: major, templateData } = template;
 
@@ -453,7 +452,6 @@ export const userRouter = router({
 
         return updatedUser.plans[0].id;
       } catch (error) {
-        console.log('HELP');
         console.error(error);
       }
     }),
@@ -475,7 +473,6 @@ export const userRouter = router({
         });
       }
 
-      console.log(userInfo);
       return userInfo;
     } catch {
       console.error('WHY YOU NO WORK');
@@ -541,9 +538,6 @@ const addTemplateCoursesToPlan = ({
     };
 
     const newYear = [fallSem, springSem, summerSem];
-    console.log(newYear);
-    console.log(summerSem);
-    console.log('HELP');
 
     semesterData.push(...newYear);
   }

@@ -42,9 +42,6 @@ const EditSemestersModal: FC<EditSemestersModalProps> = ({
   const startSemesterOptions: SemesterCode[] = genSurroundingSemesterCodes(startSemester, 12);
   const endSemesterOptions: SemesterCode[] = genSurroundingSemesterCodes(endSemester, 12);
 
-  console.log('HI');
-  console.log(startSemesterOptions);
-  console.log(endSemesterOptions);
   return (
     <Modal onClose={closeModal} {...props}>
       <h1 className="text-lg font-medium">Edit semesters</h1>
