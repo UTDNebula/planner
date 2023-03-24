@@ -21,13 +21,21 @@ type TakenCourse = UnwrapArray<RouterInputs['user']['createUserPlan']['takenCour
 
 export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
   const [name, setName] = useState('');
-  const [major, setMajor] = useState(majors[0]);
+  const [major, setMajor] = useState<string | null>(null);
   const [transferCredits, setTransferCredits] = useState<string[]>([]);
   const [takenCourses, setTakenCourses] = useState<TakenCourse[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File | undefined>();
 
+  const [planNameError, setPlanNameError] = useState(false);
+  const [majorError, setMajorError] = useState(false);
+  const setErrors = () => {
+    setPlanNameError(name === '');
+    setMajorError(major === null);
+  };
+
   const [page, setPageState] = useState<keyof typeof pages>(0);
+  console.log({ major });
 
   const router = useRouter();
   const utils = trpc.useContext();
@@ -51,14 +59,16 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
   const [error, setError] = useState<string | null>(null);
 
   async function handleSubmit() {
-    setLoading(true);
-    const planId = await createUserPlan.mutateAsync({
-      name,
-      major,
-      transferCredits,
-      takenCourses,
-    });
-    router.push(`/app/plans/${planId}`);
+    if (name !== '' && major !== null) {
+      setLoading(true);
+      const planId = await createUserPlan.mutateAsync({
+        name,
+        major,
+        transferCredits,
+        takenCourses,
+      });
+      router.push(`/app/plans/${planId}`);
+    }
   }
 
   const parseTranscript = async (file: File) => {
@@ -227,18 +237,32 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
         },
         {
           name: 'Next',
-          onClick: () => setPageState(1),
+          onClick: () => {
+            if (name !== '' && major !== null) {
+              setPageState(1);
+              return;
+            }
+
+            setErrors();
+          },
           color: 'primary',
         },
       ]}
     >
       <p className="text-sm font-semibold">Plan Name</p>
-      <input
-        className="w-full rounded-md border border-neutral-500 py-3 px-4 text-sm text-black/80 placeholder:text-neutral-400"
-        placeholder="Name your plan"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
+      <div className="flex flex-col gap-2">
+        <input
+          className="w-full rounded-md border border-neutral-500 py-3 px-4 text-sm text-black/80 placeholder:text-neutral-400"
+          placeholder="Name your plan"
+          value={name}
+          onChange={(e) => {
+            setName(e.target.value);
+          }}
+        />
+        <small className={`${planNameError ? 'visible' : 'invisible'}  text-red-500`}>
+          Please provide a plan name
+        </small>
+      </div>
 
       <p className="text-sm font-semibold">Choose your major</p>
       <div className="relative mb-4">
@@ -251,6 +275,9 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
           autoFocus
         ></AutoCompleteMajor>
       </div>
+      <small className={`${majorError ? 'visible' : 'invisible'} -mt-6  text-red-500`}>
+        Please select a valid major
+      </small>
     </Page>,
     <Page
       key="custom-plan-transcript"
@@ -260,7 +287,9 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
       actions={[
         {
           name: 'Back',
-          onClick: () => setPageState(0),
+          onClick: () => {
+            setPageState(0);
+          },
           color: 'secondary',
         },
         {
