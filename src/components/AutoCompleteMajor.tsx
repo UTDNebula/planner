@@ -37,12 +37,12 @@ const AutoCompleteMajor: FC<AutoCompleteMajorProps & React.ComponentPropsWithout
           className="z-[9999] overflow-hidden rounded-[10px] text-sm shadow-lg"
           style={{
             width: width,
-            border: '1px solid #EDEFF7',
+            border: options.length > 0 ? '1px solid #EDEFF7' : 'none',
           }}
         />
       );
     },
-    [containerRef],
+    [containerRef, options.length],
   );
 
   return (
@@ -52,7 +52,9 @@ const AutoCompleteMajor: FC<AutoCompleteMajorProps & React.ComponentPropsWithout
         freeSolo
         disableClearable
         onChange={(_, value) => onValueChange(value ?? '')}
-        onInputChange={(_, query) => onInputChange(query)}
+        onInputChange={(_, query) => {
+          onInputChange(query);
+        }}
         options={options}
         fullWidth
         PopperComponent={CustomPopper}
