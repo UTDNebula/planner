@@ -5,7 +5,7 @@ import { ButtonProps } from '../Button';
 
 import { useRouter } from 'next/router';
 
-import AutoCompleteMajor from '@/pages/auth/AutoCompleteMajor';
+import AutoCompleteMajor from '@/components/AutoCompleteMajor';
 import ErrorMessage from '../common/ErrorMessage';
 import courseCode from '@/data/courseCode.json';
 import { SemesterType, SemesterCode } from '@prisma/client';
