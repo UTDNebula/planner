@@ -55,10 +55,12 @@ export const SidebarCourseItem = React.memo(
           side="left"
           title={title || ''}
         >
-          <div className="flex w-full flex-row justify-between">
-            <span className="text-sm text-[#1C2A6D]">
+          <div className="flex w-full flex-row items-center justify-between">
+            <span className="flex w-full flex-row items-center overflow-hidden text-sm text-[#1C2A6D]">
               <DragIndicatorIcon fontSize="inherit" className="mr-3 text-[16px] text-[#D4D4D4]" />
-              {course.code}
+              <div className="mr-4 w-full overflow-hidden text-ellipsis whitespace-nowrap">
+                {course.code} - {course.title}
+              </div>
             </span>
             <div className="flex flex-row items-center gap-x-2">
               {course.hours && course.hours < getSemesterHourFromCourseCode(course.code)! && (
