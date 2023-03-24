@@ -46,6 +46,13 @@
         }
       },
       {
+        "matcher": "OtherRequirement",
+        "description": "3 semester credit hours of upper-level Related Courses from the School of Arts and Humanities (excluding the ARTS prefix)",
+        "metadata": {
+          "id": "32cd2fb0-4ffa-43e0-a4fb-b5708b0f9874"
+        }
+      },
+      {
         "matcher": "HoursRequirement",
         "required_hours": 3,
         "requirements": [
@@ -131,6 +138,13 @@
         ],
         "metadata": {
           "id": "Visual and Performing Arts with Photo-Video-Digital Concentration (BA)-13"
+        }
+      },
+      {
+        "matcher": "OtherRequirement",
+        "description": "Select any 3 semester credit hours of upper-level AHST or FILM courses",
+        "metadata": {
+          "id": "aea5d237-8416-44bb-93f7-9090f2ee3383"
         }
       },
       {
@@ -222,6 +236,20 @@
         }
       },
       {
+        "matcher": "OtherRequirement",
+        "description": "Select any 3 semester credit hours from any 4000 level ARTS studio course",
+        "metadata": {
+          "id": "0d399b67-8a65-47b0-808d-7e92b4d6bb83"
+        }
+      },
+      {
+        "matcher": "OtherRequirement",
+        "description": "Select any 6 semester credit hours upper level VPA courses from the following prefixes: AHST, ARTS, COMM, DANC, FILM, MUSI, THEA",
+        "metadata": {
+          "id": "189fb207-8e41-4626-be32-95491fc8feae"
+        }
+      },
+      {
         "matcher": "CourseRequirement",
         "course": "ARHM 1100",
         "metadata": {
@@ -230,7 +258,7 @@
       },
       {
         "matcher": "FreeElectiveRequirement",
-        "required_hours": 0,
+        "required_hours": 24,
         "excluded_courses": [],
         "metadata": {
           "id": "Visual and Performing Arts with Photo-Video-Digital Concentration (BA)-30"
