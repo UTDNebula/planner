@@ -8,7 +8,7 @@ from .base import AbstractRequirement
 import utils
 
 from typing import Any, TypedDict
-from major.requirements import AbstractRequirement, map
+from major.requirements import AbstractRequirement
 from functools import reduce
 
 class CourseRequirement(AbstractRequirement):
@@ -740,9 +740,10 @@ class MajorGuidedElectiveRequirement(AbstractRequirement):
         """
 
         also_fulfills: list[AbstractRequirement] = []
+        from .map import REQUIREMENTS_MAP
         for requirement in json["also_fulfills"]:
             also_fulfills.append(
-                map.REQUIREMENTS_MAP[requirement["matcher"]].from_json(requirement)
+                REQUIREMENTS_MAP[requirement["matcher"]].from_json(requirement)
             )
 
         return cls(
@@ -772,64 +773,6 @@ class MajorGuidedElectiveRequirement(AbstractRequirement):
         fulfilled_count: {self.__true_fulfilled_total()}
         """
         return s
-
-class OtherRequirement(AbstractRequirement):
-    """Requirement which cannot be fulfilled automatically and is intended for users to manually verify and bypass if filled.
-    Parameters
-    __________
-    description: str
-        A description of the requirement to be shown to the user
-    """
-    def __init__(
-        self,
-        description: str,
-        metadata: dict[str, str] = {},
-    ) -> None:
-        self.metadata = metadata
-        self.override_filled = False
-        self.description = description
-
-    def is_fulfilled(self) -> bool:
-        return self.override_filled
-
-    def attempt_fulfill(self, course: str) -> bool:
-        return False
-
-    def override_fill(self, index: str) -> bool:
-        if self.metadata["id"] == index:
-            self.override_filled = True
-            return True
-        return False
-
-    class JSON(TypedDict):
-        description: str
-        metadata: dict[str, Any]
-
-    @classmethod
-    def from_json(cls, json: JSON) -> OtherRequirement:
-        """
-        {
-            "description": "Select any 3 semester credit hours from any 4000 level ARTS studio course"
-        }
-        """
-
-        return cls(json["description"], json["metadata"])
-
-    def to_json(self) -> Json[Any]:
-        return json.dumps(
-            {
-                "matcher": "Other",
-                "metadata": self.metadata,
-                "filled": self.is_fulfilled()
-            }
-        )
-
-    def __str__(self) -> str:
-        s = f"""{OtherRequirement.__name__} - {self.is_fulfilled()}
-        metadata: {self.metadata}
-        """
-        return s
-
 
 
 class MultiGroupElectiveRequirement(AbstractRequirement):
