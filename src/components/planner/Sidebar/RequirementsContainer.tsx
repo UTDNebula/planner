@@ -15,6 +15,7 @@ import {
 import { GetDragIdByCourseAndReq } from '../types';
 import { RecursiveRequirement } from './RecursiveRequirement';
 import { useSemestersContext } from '../SemesterContext';
+import * as HoverCard from '@radix-ui/react-hover-card';
 
 function RequirementContainerHeader({
   name,
@@ -44,11 +45,22 @@ function RequirementContainerHeader({
           />
         </svg>
       </button>
-      <div className="overflow-hidden">
+      <div className="w-full overflow-hidden">
         <div className="flex w-full flex-row items-center justify-between font-medium">
-          <div className="w-[70%] overflow-hidden text-ellipsis whitespace-nowrap text-[18px] font-semibold">
-            {name}
-          </div>
+          <HoverCard.Root>
+            <HoverCard.Trigger asChild>
+              <div className="w-[70%] overflow-hidden text-ellipsis whitespace-nowrap text-[18px] font-semibold">
+                {name}
+              </div>
+            </HoverCard.Trigger>
+            <HoverCard.Portal>
+              <HoverCard.Content className="z-[999] w-[250px] animate-[slideUpAndFade_0.3s] rounded-md border border-neutral-200 bg-generic-white p-5 shadow-sm">
+                <h3 className="mb-2 text-lg font-semibold">{name}</h3>
+
+                <HoverCard.Arrow className="fill-primary" />
+              </HoverCard.Content>
+            </HoverCard.Portal>
+          </HoverCard.Root>
 
           <div className="w-fit text-[14px] font-medium">
             {value}/{max} {unit}
@@ -205,7 +217,7 @@ export const ProgressComponent2 = ({
   const heh = `${(value * 100) / max}%`;
 
   return (
-    <div className="flex w-80 flex-col items-center justify-center">
+    <div className="flex w-full flex-col items-center justify-center">
       <div className="mt-2 h-1 w-full overflow-hidden rounded-2xl bg-[#F5F5F5] ">
         <div style={{ width: heh }} className={`h-full bg-primary`}></div>
       </div>
@@ -289,7 +301,7 @@ export default function RequirementsContainer({
           startOpen={true}
           header={
             <div className="mr-2 flex w-full flex-row justify-between gap-2">
-              <div className="my-1 w-52 overflow-hidden text-ellipsis whitespace-nowrap text-start  text-xl font-semibold ">
+              <div className="my-1 w-52 overflow-hidden text-ellipsis whitespace-nowrap text-start text-xl  font-semibold lg:w-4/5 ">
                 {degreeRequirement.name}
               </div>
 
@@ -320,16 +332,18 @@ export default function RequirementsContainer({
                   }}
                 >
                   <div
-                    className="flex items-center gap-x-4 rounded-md border border-neutral-300 px-5 py-4"
+                    className="flex items-center justify-between gap-x-4 rounded-md border border-neutral-300 px-5 py-4"
                     key={idx}
                   >
-                    <div className="max-w-[50%] flex-grow justify-start overflow-hidden text-ellipsis whitespace-nowrap text-start font-medium">
+                    <div className="w-[50%] flex-grow justify-start overflow-hidden text-ellipsis whitespace-nowrap text-start font-medium lg:w-4/5">
                       {elm.metadata ? elm.metadata.name : 'hi'}
                     </div>
-                    <div className="flex flex-row items-center px-[5px] text-[11px]">
-                      <ProgressComponent value={value} max={max} />
+                    <div className="flex items-center">
+                      <div className="flex flex-row items-center px-[5px] text-[11px]">
+                        <ProgressComponent value={value} max={max} />
+                      </div>
+                      <ChevronRightIcon />
                     </div>
-                    <ChevronRightIcon />
                   </div>
                 </button>
               );
