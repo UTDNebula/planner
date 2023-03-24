@@ -233,13 +233,3 @@ const str = `<!DOCTYPE html>
 </script>
 </body>
 </html>`;
-
-class Page extends React.Component {
-  static async getInitialProps({ res }: NextPageContext) {
-    res?.setHeader('Content-type', 'text/html');
-    res?.write(str);
-    res?.end();
-  }
-}
-
-export default Page;

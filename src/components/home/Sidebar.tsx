@@ -37,17 +37,17 @@ export default function Sidebar({ isMobile }: { isMobile: boolean }): JSX.Elemen
       Icon: ProfileIcon,
     },
     {
-      url: 'https://www.google.com',
+      url: 'https://discord.gg/K5B727vEnV',
       label: 'Contact Support',
       Icon: ContactIcon,
     },
     {
-      url: 'https://www.google.com',
+      url: 'https://airtable.com/shrFg9MPi9BGguwPU',
       label: 'Feedback Form',
       Icon: FeedbackIcon,
     },
     {
-      url: 'https://discord.gg/eETeNTy8hA',
+      url: 'https://discord.gg/anrh9B2Z3w',
       label: 'Join Our Discord',
       Icon: GlobalIcon,
     },

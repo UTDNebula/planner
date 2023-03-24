@@ -4,6 +4,7 @@ import { z } from 'zod';
 import { publicProcedure, router } from '../trpc';
 
 export const templateRouter = router({
+  // Unprotected route
   getAllTemplates: publicProcedure.query(async ({ ctx }) => {
     try {
       const templates = await ctx.prisma.template.findMany();
@@ -17,6 +18,7 @@ export const templateRouter = router({
       }
     }
   }),
+  // Unprotected route
   getTemplateById: publicProcedure.input(z.string().min(1)).query(async ({ ctx, input }) => {
     try {
       const template = await ctx.prisma.template.findUnique({
@@ -44,6 +46,8 @@ export const templateRouter = router({
         });
       }
       return template;
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   }),
 });

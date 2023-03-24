@@ -149,9 +149,6 @@ const DegreePlanPDF: FC<DegreePlanPDFProps> = ({
               newRow = [];
             }
 
-            console.log(rows);
-            console.log('HM');
-
             return (
               <AcademicYearTable
                 key={idx}
@@ -245,8 +242,6 @@ const convertSemestersToAcademicYears = (
     academicYear.spring = customCourseSort(academicYear.spring);
     academicYear.summer = customCourseSort(academicYear.summer);
 
-    console.log(academicYear);
-    console.log('WHY');
     // Add to academic year
     academicYears.push(academicYear);
   }

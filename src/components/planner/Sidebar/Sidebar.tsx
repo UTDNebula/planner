@@ -31,6 +31,8 @@ function CourseSelectorContainer({
 }: CourseSelectorContainerProps) {
   // TODO: Provide UI indicator for errors
 
+  console.log(degreeRequirements);
+
   const { data, isLoading } = trpc.courses.publicGetAllCourses.useQuery();
 
   const { results, updateQuery } = useFuse<Course>({

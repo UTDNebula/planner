@@ -20,6 +20,13 @@ export interface Requirement {
   metadata: { [key: string]: string };
   filled: boolean;
 }
+
+export type OrRequirementGroup = Requirement & {
+  matcher: 'Or';
+  requirements: RequirementTypes[];
+  num_requirements: number;
+  num_fulfilled_requirements: number;
+};
 export type AndRequirementGroup = Requirement & {
   matcher: 'And';
   requirements: RequirementTypes[];
@@ -53,6 +60,13 @@ export type CSGuidedElectiveGroup = Requirement & {
   valid_courses: { [course: string]: number };
 };
 
+export type SelectRequirementGroup = Requirement & {
+  matcher: 'Select';
+  required_count: number;
+  fulfilled_count: number;
+  requirements: RequirementTypes[];
+};
+
 export type BAGuidedElectives = Requirement & {
   matcher: 'BA General Business Electives';
   required_count: number;
@@ -82,7 +96,9 @@ export type HoursRequirement = Requirement & {
  * i.e. Major Preparatory Courses, Free Electives
  */
 export type RequirementGroupTypes =
+  | OrRequirementGroup
   | AndRequirementGroup
+  | SelectRequirementGroup
   | HoursRequirementGroup
   | FreeElectiveRequirementGroup
   | CSGuidedElectiveGroup;
