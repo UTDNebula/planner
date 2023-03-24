@@ -35,7 +35,6 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
   };
 
   const [page, setPageState] = useState<keyof typeof pages>(0);
-  console.log({ major });
 
   const router = useRouter();
   const utils = trpc.useContext();
