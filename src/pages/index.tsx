@@ -1,4 +1,15 @@
-<!DOCTYPE html>
+import React from 'react';
+import {NextPageContext} from 'next';
+import {env} from '@/env/client.mjs';
+import {getBaseUrl} from '@utils/trpc';
+
+let umami = '';
+
+if (process.env.NODE_ENV === 'production') {
+  umami = `<script async defer data-website-id="${env.NEXT_PUBLIC_UMAMI_WEBSITE_ID}" src="${getBaseUrl()}/api/umami/test"></script>`;
+}
+
+const str = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -7,6 +18,7 @@
   <link rel="stylesheet" href="./index.css">
   <meta property="og:title" content="planner.">
   <meta property="og:description" content="Say goodbye to the stress and hassle of degree planning and hello to a smooth, organized path towards graduation with Nebula Planner.">
+  ${umami}
 </head>
 <body>
 <header>
@@ -239,4 +251,14 @@
   showDesign();
 </script>
 </body>
-</html>
+</html>`;
+
+class Page extends React.Component {
+  static async getInitialProps({ res }: NextPageContext) {
+    res?.setHeader('Content-type', 'text/html')
+    res?.write(str);
+    res?.end();
+  }
+}
+
+export default Page;

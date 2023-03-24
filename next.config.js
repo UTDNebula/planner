@@ -16,14 +16,6 @@ const nextConfig = withBundleAnalyzer({
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
-  rewrites: async () => {
-    return [
-      {
-        source: '/',
-        destination: '/index.html',
-      },
-    ];
-  },
 });
 
 module.exports = nextConfig;
