@@ -15,7 +15,7 @@ import {
 import { GetDragIdByCourseAndReq } from '../types';
 import { RecursiveRequirement } from './RecursiveRequirement';
 import { useSemestersContext } from '../SemesterContext';
-import { JSONCourse } from '@/data/courses.json';
+import * as HoverCard from '@radix-ui/react-hover-card';
 
 function RequirementContainerHeader({
   name,
@@ -45,11 +45,22 @@ function RequirementContainerHeader({
           />
         </svg>
       </button>
-      <div className="overflow-hidden">
+      <div className="w-full overflow-hidden">
         <div className="flex w-full flex-row items-center justify-between font-medium">
-          <div className="w-[70%] overflow-hidden text-ellipsis whitespace-nowrap text-[18px] font-semibold">
-            {name}
-          </div>
+          <HoverCard.Root>
+            <HoverCard.Trigger asChild>
+              <div className="w-[70%] overflow-hidden text-ellipsis whitespace-nowrap text-[18px] font-semibold">
+                {name}
+              </div>
+            </HoverCard.Trigger>
+            <HoverCard.Portal>
+              <HoverCard.Content className="z-[999] w-[250px] animate-[slideUpAndFade_0.3s] rounded-md border border-neutral-200 bg-generic-white p-5 shadow-sm">
+                <h3 className="mb-2 text-lg font-semibold">{name}</h3>
+
+                <HoverCard.Arrow className="fill-primary" />
+              </HoverCard.Content>
+            </HoverCard.Portal>
+          </HoverCard.Root>
 
           <div className="w-fit text-[14px] font-medium">
             {value}/{max} {unit}
@@ -64,7 +75,6 @@ function RequirementContainerHeader({
 
 const getRequirementGroup = (
   degreeRequirement: RequirementGroupTypes,
-  allCourses: JSONCourse[] | undefined,
 ): {
   name: string;
   progress: { value: number; max: number; unit: string };
@@ -73,6 +83,12 @@ const getRequirementGroup = (
   getData: () => Promise<RequirementTypes[]>;
   filterFunction: (elm: RequirementTypes, query: string) => boolean;
 } => {
+  const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
+    staleTime: Infinity,
+    cacheTime: Infinity,
+    refetchOnWindowFocus: false,
+  });
+
   const filterFunc = (elm: RequirementTypes, query: string) => {
     query = query.toLowerCase();
     switch (elm.matcher) {
@@ -97,20 +113,6 @@ const getRequirementGroup = (
 
   let courses: string[] = [];
   switch (degreeRequirement.matcher) {
-    case 'Or':
-      return {
-        name: degreeRequirement.metadata.name,
-
-        progress: {
-          value: degreeRequirement.filled ? 1 : 0,
-          max: 1,
-          unit: 'req',
-        },
-        description: degreeRequirement.metadata.description ?? '',
-        req: degreeRequirement,
-        getData: () => Promise.resolve(degreeRequirement.requirements),
-        filterFunction: filterFunc,
-      };
     case 'And':
       return {
         name: degreeRequirement.metadata.name,
@@ -118,20 +120,6 @@ const getRequirementGroup = (
         progress: {
           value: degreeRequirement.num_fulfilled_requirements,
           max: degreeRequirement.num_requirements,
-          unit: 'reqs',
-        },
-        description: degreeRequirement.metadata.description ?? '',
-        req: degreeRequirement,
-        getData: () => Promise.resolve(degreeRequirement.requirements),
-        filterFunction: filterFunc,
-      };
-    case 'Select':
-      return {
-        name: degreeRequirement.metadata.name,
-
-        progress: {
-          value: degreeRequirement.fulfilled_count,
-          max: degreeRequirement.required_count,
           unit: 'reqs',
         },
         description: degreeRequirement.metadata.description ?? '',
@@ -155,6 +143,8 @@ const getRequirementGroup = (
       };
     case 'FreeElectives':
       courses = Object.keys(degreeRequirement.valid_courses);
+      console.log(courses);
+      console.log('HI');
 
       return {
         name: 'Free Electives',
@@ -166,8 +156,8 @@ const getRequirementGroup = (
         description: degreeRequirement.metadata.description ?? '',
         req: degreeRequirement,
         getData: async () =>
-          allCourses
-            ? allCourses.map((c) => ({
+          q.data
+            ? q.data.map((c) => ({
                 course: `${c.subject_prefix} ${c.course_number}`,
                 matcher: 'Course',
                 filled: courses.includes(`${c.subject_prefix} ${c.course_number}`),
@@ -189,8 +179,8 @@ const getRequirementGroup = (
         description: degreeRequirement.metadata.description ?? '',
         req: degreeRequirement,
         getData: async () =>
-          allCourses
-            ? (allCourses
+          q.data
+            ? (q.data
                 .map((c) => ({
                   course: `${c.subject_prefix} ${c.course_number}`,
                   matcher: 'Course',
@@ -227,7 +217,7 @@ export const ProgressComponent2 = ({
   const heh = `${(value * 100) / max}%`;
 
   return (
-    <div className="flex w-80 flex-col items-center justify-center">
+    <div className="flex w-full flex-col items-center justify-center">
       <div className="mt-2 h-1 w-full overflow-hidden rounded-2xl bg-[#F5F5F5] ">
         <div style={{ width: heh }} className={`h-full bg-primary`}></div>
       </div>
@@ -260,10 +250,6 @@ export const ProgressComponent = ({
 
 export const displayRequirementProgress = (elm: RequirementGroupTypes) => {
   switch (elm.matcher) {
-    case 'Select':
-      return { value: elm.fulfilled_count, max: elm.required_count };
-    case 'Or':
-      return { value: elm.filled ? 1 : 0, max: 1 };
     case 'And':
       return { value: elm.num_fulfilled_requirements, max: elm.num_requirements };
     case 'CS Guided Electives':
@@ -288,11 +274,6 @@ export default function RequirementsContainer({
   courses,
   getCourseItemDragId,
 }: RequirementsContainerProps) {
-  const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
-    staleTime: Infinity,
-    cacheTime: Infinity,
-    refetchOnWindowFocus: false,
-  });
   const [requirementIdx, setRequirementIdx] = React.useState<number>(0);
 
   /**
@@ -320,7 +301,7 @@ export default function RequirementsContainer({
           startOpen={true}
           header={
             <div className="mr-2 flex w-full flex-row justify-between gap-2">
-              <div className="my-1 w-52 overflow-hidden text-ellipsis whitespace-nowrap text-start  text-xl font-semibold ">
+              <div className="my-1 w-52 overflow-hidden text-ellipsis whitespace-nowrap text-start text-xl  font-semibold lg:w-4/5 ">
                 {degreeRequirement.name}
               </div>
 
@@ -333,7 +314,7 @@ export default function RequirementsContainer({
         >
           <>
             {degreeRequirement.requirements.map((elm, idx) => {
-              const { name } = getRequirementGroup(elm, q.data);
+              const { name } = getRequirementGroup(elm);
               const { value, max } = displayRequirementProgress(elm);
 
               const id = elm.metadata.id.toString();
@@ -351,16 +332,18 @@ export default function RequirementsContainer({
                   }}
                 >
                   <div
-                    className="flex items-center gap-x-4 rounded-md border border-neutral-300 px-5 py-4"
+                    className="flex items-center justify-between gap-x-4 rounded-md border border-neutral-300 px-5 py-4"
                     key={idx}
                   >
-                    <div className="max-w-[50%] flex-grow justify-start overflow-hidden text-ellipsis whitespace-nowrap text-start font-medium">
-                      {name}
+                    <div className="w-[50%] flex-grow justify-start overflow-hidden text-ellipsis whitespace-nowrap text-start font-medium lg:w-4/5">
+                      {elm.metadata ? elm.metadata.name : 'hi'}
                     </div>
-                    <div className="flex flex-row items-center px-[5px] text-[11px]">
-                      <ProgressComponent value={value} max={max} />
+                    <div className="flex items-center">
+                      <div className="flex flex-row items-center px-[5px] text-[11px]">
+                        <ProgressComponent value={value} max={max} />
+                      </div>
+                      <ChevronRightIcon />
                     </div>
-                    <ChevronRightIcon />
                   </div>
                 </button>
               );
@@ -393,15 +376,8 @@ function RequirementContainer({
   courses,
 }: RequirementContainerProps): JSX.Element {
   // Handles logic for displaying correct requirement group
-  const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
-    staleTime: Infinity,
-    cacheTime: Infinity,
-    refetchOnWindowFocus: false,
-  });
-  const { name, progress, description, getData, filterFunction } = getRequirementGroup(
-    degreeRequirement,
-    q.data,
-  );
+  const { name, progress, description, getData, filterFunction } =
+    getRequirementGroup(degreeRequirement);
 
   const { results, updateQuery } = useSearch({
     getData: getData,
