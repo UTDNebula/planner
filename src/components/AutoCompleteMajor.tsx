@@ -17,7 +17,7 @@ const AutoCompleteMajor: FC<AutoCompleteMajorProps & React.ComponentPropsWithout
   onInputChange,
   options,
   autoFocus,
-  placeholder = 'Choose your major',
+  placeholder = 'Major',
   defaultValue = '',
   ...props
 }) => {
@@ -63,7 +63,7 @@ const AutoCompleteMajor: FC<AutoCompleteMajorProps & React.ComponentPropsWithout
             <TextField
               {...params}
               variant="standard"
-              className="h-11 appearance-none rounded border border-[#6366F1] bg-white pl-4 text-[14px] font-semibold text-black outline-none"
+              className="h-11 appearance-none rounded border bg-[#F5F5F5] border-[#6366F1] pl-4 text-[14px] font-semibold text-black outline-none"
               inputProps={{
                 style: { fontSize: 14, marginTop: 8 },
                 ...params.inputProps,
