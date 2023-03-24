@@ -16,7 +16,11 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     transformer: superjson,
   });
 
-  await Promise.all([ssg.user.getUser.prefetch(), ssg.plan.getUserPlans.prefetch()]);
+  await Promise.all([
+    ssg.user.getUser.prefetch(),
+    ssg.plan.getUserPlans.prefetch(),
+    ssg.template.getAllTemplates.prefetch(),
+  ]);
 
   return {
     props: {

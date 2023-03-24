@@ -14,6 +14,7 @@ type PlanData = {
   transferCredits: string[];
 };
 export const validatorRouter = router({
+  // Protected route: ensures session user is same as plan owner
   prereqValidator: protectedProcedure.input(z.string().min(1)).query(async ({ ctx, input }) => {
     try {
       // Fetch current plan
@@ -24,6 +25,7 @@ export const validatorRouter = router({
         select: {
           name: true,
           id: true,
+          userId: true,
           transferCredits: true,
           semesters: {
             include: {
@@ -39,6 +41,11 @@ export const validatorRouter = router({
           message: 'Plan not found',
         });
       }
+
+      if (ctx.session.user.id !== planData.userId) {
+        throw new TRPCError({ code: 'FORBIDDEN' });
+      }
+
       const coursesFromApi: JSONCourse[] = courses;
       /*  sanitizing data from API db.
        *  TODO: Fix this later somehow
@@ -151,7 +158,7 @@ export const validatorRouter = router({
                 temp[0].push(course as string);
                 continue;
               }
-              if (data === semester) {
+              if (data <= semester) {
                 count++;
               } else {
                 temp[0].push(course as string);
@@ -239,15 +246,6 @@ export const validatorRouter = router({
       };
 
       const coreqValidation = async (planData: PlanData) => {
-        // for (let i = 0; i < planData.transferCredits.length; i++) {
-        //   const course = planData.transferCredits[i];
-        //   const reqsForCourse = courseMapWithCodeKey.get(course);
-        //   if (!reqsForCourse) {
-        //     continue;
-        //   }
-        //   const flag = checkForCoRecursive(reqsForCourse.prereqs as CollectionOptions, i);
-        //   coReqHash.set(course, flag);
-        // }
         for (let i = 0; i < planData?.semesters.length; i++) {
           if (!planData?.semesters[i] || !planData?.semesters[i].courses) continue;
           for (let j = 0; j < planData?.semesters[i].courses.length; j++) {
@@ -262,15 +260,6 @@ export const validatorRouter = router({
         }
       };
       const coOrPrereqValidation = async (planData: PlanData) => {
-        // for (let i = 0; i < planData.transferCredits.length; i++) {
-        //   const course = planData.transferCredits[i];
-        //   const reqsForCourse = courseMapWithCodeKey.get(course);
-        //   if (!reqsForCourse) {
-        //     continue;
-        //   }
-        //   const flag = checkForCoOrPreRecursive(reqsForCourse.prereqs as CollectionOptions, i);
-        //   coOrPreReqHash.set(course, flag);
-        // }
         for (let i = 0; i < planData?.semesters.length; i++) {
           if (!planData?.semesters[i] || !planData?.semesters[i].courses) continue;
           for (let j = 0; j < planData?.semesters[i].courses.length; j++) {
@@ -293,10 +282,11 @@ export const validatorRouter = router({
 
       return { prereq: preReqHash, coreq: coReqHash, coorepre: coOrPreReqHash };
     } catch (error) {
-      console.log('ERROR');
-      console.log(error);
+      console.error(error);
+      return null;
     }
   }),
+  // Protected route: ensures session user is same as plan owner
   degreeValidator: protectedProcedure.input(z.string().min(1)).query(async ({ ctx, input }) => {
     try {
       // Fetch current plan
@@ -307,6 +297,7 @@ export const validatorRouter = router({
         select: {
           name: true,
           id: true,
+          userId: true,
           semesters: {
             include: {
               courses: true,
@@ -321,6 +312,10 @@ export const validatorRouter = router({
           code: 'NOT_FOUND',
           message: 'Plan not found',
         });
+      }
+
+      if (ctx.session.user.id !== planData.userId) {
+        throw new TRPCError({ code: 'FORBIDDEN' });
       }
 
       const { semesters, transferCredits } = planData;
@@ -389,8 +384,7 @@ export const validatorRouter = router({
 
       return { plan: planData, validation: validationData, bypasses };
     } catch (error) {
-      console.log('ERROR');
-      console.log(error);
+      console.error(error);
     }
   }),
 });

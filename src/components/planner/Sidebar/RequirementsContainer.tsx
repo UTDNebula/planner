@@ -131,8 +131,6 @@ const getRequirementGroup = (
       };
     case 'FreeElectives':
       courses = Object.keys(degreeRequirement.valid_courses);
-      console.log(courses);
-      console.log('HI');
 
       return {
         name: 'Free Electives',
@@ -324,7 +322,7 @@ export default function RequirementsContainer({
                     key={idx}
                   >
                     <div className="max-w-[50%] flex-grow justify-start overflow-hidden text-ellipsis whitespace-nowrap text-start font-medium">
-                      {elm.metadata ? elm.metadata.name : 'hi'}
+                      {name}
                     </div>
                     <div className="flex flex-row items-center px-[5px] text-[11px]">
                       <ProgressComponent value={value} max={max} />

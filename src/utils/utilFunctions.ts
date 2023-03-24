@@ -176,3 +176,10 @@ export const isSemesterLater = (s1: SemesterCode, s2: SemesterCode) => {
     (s1.year === s2.year && semesterPrecedence[s1.semester] > semesterPrecedence[s2.semester])
   );
 };
+
+const regex =
+  /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+export const isValidEmail = (email: string) => {
+  return regex.test(email);
+};

@@ -65,7 +65,7 @@ const SemesterCourseItemDropdown: FC<SemesterTileDropdownProps> = ({
           </DropdownMenu.Item>
 
           <DropdownMenu.Item className={itemClasses} onClick={onPrereqOverrideChange}>
-            <UnfilledWarningIcon />
+            <UnfilledWarningIcon stroke="black" />
             <span>{prereqOverriden ? 'Show Pre-reqs Warning' : 'Dismiss Pre-reqs Warning'}</span>
           </DropdownMenu.Item>
           <DropdownMenu.Item

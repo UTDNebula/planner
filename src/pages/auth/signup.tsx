@@ -1,6 +1,6 @@
 import { InferGetServerSidePropsType } from 'next';
 import { getProviders, signIn, useSession } from 'next-auth/react';
-import React from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import EmojiIcon from '@/icons/EmojiIcon';
 import majorsList from '@data/majors.json';
 
@@ -9,9 +9,11 @@ import AuthIcons from '@/icons/AuthIcons';
 import Link from 'next/link';
 import useSearch from '@/components/search/search';
 import { trpc } from '@/utils/trpc';
+import Button from '@/components/Button';
+import { isValidEmail } from '@/utils/utilFunctions';
 
-// import AuthCard from '../../components/auth/AuthCard';
-// import LoginCard from '@components/auth/Login'
+// Time elapsed after typing email to display error
+const EMAIL_VALIDATION_ERROR_TIMEOUT_MS = 600;
 
 /**
  * A page that presents a sign-in/sign-up box to the user.
@@ -19,7 +21,12 @@ import { trpc } from '@/utils/trpc';
 export default function AuthPage({
   providers,
 }: InferGetServerSidePropsType<typeof getStaticProps>): JSX.Element {
-  const [email, setEmail] = React.useState('');
+  const [email, setEmail] = useState('');
+  const [isModifyLoading, setIsModifyLoading] = useState(false);
+  const [isEmailValid, setIsEmailValid] = useState(false);
+
+  const displayEmailError = useMemo(() => !isEmailValid && email !== '', [isEmailValid, email]);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   // Fetch courses now & put in cache
   const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
@@ -39,7 +46,7 @@ export default function AuthPage({
   const router = useRouter();
   const { status } = useSession();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (router.asPath.includes('OAuthAccountNotLinked')) {
       console.log('yeah so I am actually existing');
     }
@@ -49,14 +56,24 @@ export default function AuthPage({
   }, [router, status]);
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIsEmailValid(true);
+    setTimeout(
+      () => setIsEmailValid(isValidEmail(event.target.value)),
+      EMAIL_VALIDATION_ERROR_TIMEOUT_MS,
+    );
     setEmail(event.target.value);
   };
 
   const handleEmailSignIn = () => {
-    signIn('email', {
-      email,
-      callbackUrl: '/app/home',
-    });
+    if (isEmailValid) {
+      setIsModifyLoading(true);
+      signIn('email', {
+        email,
+        callbackUrl: '/app/home',
+      });
+    } else {
+      inputRef.current?.focus();
+    }
   };
 
   return (
@@ -75,31 +92,38 @@ export default function AuthPage({
           <section className="mt-7 space-y-5">
             <div className="relative mb-4">
               <input
+                ref={inputRef}
                 type="email"
-                className="w-[500px] rounded border bg-[#F5F5F5] p-3 pl-4 text-[14px] text-[#737373] outline-none focus:border-[#6366F1]"
+                className={`w-full rounded border bg-[#F5F5F5] p-3 pl-4 text-[14px] text-[#737373] outline-none focus:border-primary ${
+                  displayEmailError ? '!border-red-500' : ''
+                }`}
                 value={email}
                 onChange={handleEmailChange}
                 placeholder="Email Address"
                 onKeyDown={(e) => {
-                  if (email.endsWith('.com') && email.includes('@')) {
-                    if (e.key == 'Enter') {
-                      handleEmailSignIn();
-                    }
+                  if (e.key == 'Enter') {
+                    handleEmailSignIn();
                   }
                 }}
-              ></input>
+              />
+              <small className={`${displayEmailError ? 'visible' : 'invisible'}  text-red-500`}>
+                Please provide a valid email
+              </small>
             </div>
 
-            <button
-              onClick={() => {
-                if (email.endsWith('.com') && email.includes('@')) {
-                  handleEmailSignIn();
-                }
+            <Button
+              className="hover:bg-[#EEF2FF] hover:text-[#312E81]"
+              width="full"
+              size="large"
+              font="large"
+              isLoading={isModifyLoading}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleEmailSignIn();
               }}
-              className="w-full rounded-lg bg-[#6366F1] py-3 text-center text-[16px] font-semibold text-white hover:bg-[#EEF2FF] hover:text-[#312E81]"
             >
               Continue
-            </button>
+            </Button>
             {providers && (
               <div className="relative flex items-center py-5">
                 <div className="flex-grow border-t border-gray-400"></div>

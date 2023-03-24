@@ -13,6 +13,7 @@ export interface usePlanReturn {
   prereqData?: Map<string, boolean>;
   bypasses?: string[];
   isPlanLoading: boolean;
+
   handlePlanDelete: () => Promise<boolean>;
 }
 
@@ -32,6 +33,14 @@ const usePlan = ({ planId }: usePlanProps): usePlanReturn => {
     },
   });
 
+  // Redirect user back to login screen if not signed in
+  // Workaround since it's not known how to handle user redirects in tRPC middleware
+  // See https://stackoverflow.com/questions/75169481/create-t3-app-redirect-inside-a-trpc-middleware-if-user-is-not-signed
+  if (planQuery.error && planQuery.error.data?.code === 'FORBIDDEN') {
+    alert('Unauthorized user');
+    router.push('/');
+  }
+
   const handlePlanDelete = async () => {
     return deletePlan
       .mutateAsync(planId)
@@ -48,6 +57,7 @@ const usePlan = ({ planId }: usePlanProps): usePlanReturn => {
     degreeRequirements: degreeRequirementsQuery?.data,
     bypasses: degreeValidationData?.bypasses,
     isPlanLoading: planQuery.isLoading || validationLoading || degreeRequirementsQuery.isLoading,
+
     handlePlanDelete,
   };
 };
