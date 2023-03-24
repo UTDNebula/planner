@@ -47,7 +47,7 @@ export default function Sidebar({ isMobile }: { isMobile: boolean }): JSX.Elemen
       Icon: FeedbackIcon,
     },
     {
-      url: 'https://discord.gg/eETeNTy8hA',
+      url: 'https://discord.gg/kqd6ZT9wXg',
       label: 'Join Our Discord',
       Icon: GlobalIcon,
     },
