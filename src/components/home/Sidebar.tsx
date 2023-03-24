@@ -37,7 +37,7 @@ export default function Sidebar({ isMobile }: { isMobile: boolean }): JSX.Elemen
       Icon: ProfileIcon,
     },
     {
-      url: 'https://docs.google.com/forms/d/e/1FAIpQLScnwBOiEi3IcDRyxzHoFqV8kwPhYkgeBCdU_N4TsUpiLpJ1sA/viewform',
+      url: 'https://discord.gg/K5B727vEnV',
       label: 'Contact Support',
       Icon: ContactIcon,
     },
@@ -47,7 +47,7 @@ export default function Sidebar({ isMobile }: { isMobile: boolean }): JSX.Elemen
       Icon: FeedbackIcon,
     },
     {
-      url: 'https://discord.gg/kqd6ZT9wXg',
+      url: 'https://discord.gg/anrh9B2Z3w',
       label: 'Join Our Discord',
       Icon: GlobalIcon,
     },
