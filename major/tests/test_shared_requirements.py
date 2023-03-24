@@ -391,16 +391,104 @@ def test_multi_group_elective_requirement() -> None:
         assert req_with_valid_hrs_requirement.attempt_fulfill(course)
 
     assert req_with_valid_hrs_requirement.is_fulfilled() == True
-    # TODO: this
-    sample_atec_req = MultiGroupElectiveRequirement([
-        SomeRequirement([], metadata={"id": "41b3882e-ba4e-414c-b2fe-20d86e729bca"}),
-        SomeRequirement([], metadata={"id": "46e56cc0-c3be-48fd-980b-9dbb71d4f9bf"}),
-    ],2, 6)
 
-    courses: list[str] = ["ATCM 2330", "ATCM 2303", "ATCM 2334"]
 
-    for c in range(len(courses)):
-        assert sample_atec_req.attempt_fulfill(courses[c])
+    dat = {
+            "matcher": "MultiGroupElectiveRequirement",
+            "requirement_count": 2,
+            "requirements": [
+              {
+                "matcher": "SomeRequirement",
+                "requirements": [
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "ATCM 3305",
+                    "metadata": { "id": "006c6d6c-14e3-4fe6-bb62-719c77907f82" }
+                  },
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "ATCM 3306",
+                    "metadata": { "id": "6c34c3cc-e826-4e2e-a3e4-e409025a9811" }
+                  },
+                ],
+                "metadata": {
+                  "id": "eb2f3604-fca7-4981-abe1-5bb9fadfc6f6"
+                }
+              },
+              {
+                "matcher": "SomeRequirement",
+                "requirements": [
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "ATCM 3315",
+                    "metadata": { "id": "6af07aa1-deb4-45c3-abf4-95e068eb3647" }
+                  },
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "ATCM 3320",
+                    "metadata": { "id": "9bacebdb-4400-4e14-8b26-a9ad121399ca" }
+                  },
+                ],
+                "metadata": {
+                  "id": "7ad01eac-fe39-4112-917d-cd224ec64894"
+                }
+              },
+              {
+                "matcher": "SomeRequirement",
+                "requirements": [
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "ATCM 3336",
+                    "metadata": { "id": "6bb2b9e7-c062-4ac6-ba71-51ccc46eb04a" }
+                  },
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "ATCM 3337",
+                    "metadata": { "id": "b4f1e2d5-1686-4ecc-855c-8f3d929c41bd" }
+                  },
+                ],
+                "metadata": {
+                  "id": "4597d751-626f-43cf-b168-a035af70651f"
+                }
+              },
+              {
+                "matcher": "SomeRequirement",
+                "requirements": [
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "ATCM 3346",
+                    "metadata": { "id": "9cff514f-a531-4ce1-aed7-6a8356dcc092" }
+                  },
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "ATCM 3350",
+                    "metadata": { "id": "c21336f9-2b76-43ab-8812-2f1e5d0923ff" }
+                  },
+                ],
+                "metadata": {
+                  "id": "37dca0a9-f954-4c04-8bec-fc93fa54539c"
+                }
+              }
+            ],
+            "minimum_hours_in_area": 6,
+            "metadata": {
+              "id": "4d066b30-77e1-4a17-9cea-7a3fb4246fe0"
+            }
+          }
+    
+    valid_atec_req = MultiGroupElectiveRequirement.from_json(dat) # type: ignore
 
-    assert sample_atec_req.is_fulfilled()
+    assert valid_atec_req.is_fulfilled() == False
+
+    for course in ["ATCM 3315", "ATCM 3337", "ATCM 3336"]:
+        assert valid_atec_req.attempt_fulfill(course)
+
+    assert valid_atec_req.is_fulfilled()
+
+    unfillable_atec_req = MultiGroupElectiveRequirement.from_json(dat) # type: ignore
+    assert unfillable_atec_req.is_fulfilled() == False
+    for course in ["ATCM 3315", "ATCM 3337"]:
+        assert unfillable_atec_req.attempt_fulfill(course)
+    assert unfillable_atec_req.is_fulfilled() == False
+
     
