@@ -1,4 +1,17 @@
-<!DOCTYPE html>
+import React from 'react';
+import { NextPageContext } from 'next';
+import { env } from '@/env/client.mjs';
+import { getBaseUrl } from '@utils/trpc';
+
+let umami = '';
+
+if (process.env.VERCEL_ENV === 'production') {
+  umami = `<script async defer data-website-id="${
+    env.NEXT_PUBLIC_UMAMI_WEBSITE_ID
+  }" src="${getBaseUrl()}/api/umami/test"></script>`;
+}
+
+const str = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -7,6 +20,7 @@
   <link rel="stylesheet" href="./index.css">
   <meta property="og:title" content="planner.">
   <meta property="og:description" content="Say goodbye to the stress and hassle of degree planning and hello to a smooth, organized path towards graduation with Nebula Planner.">
+  ${umami}
 </head>
 <body>
 <header>
@@ -146,7 +160,7 @@
   </section>
   <section id="contact">
     <h2>Contact Us</h2>
-    <form>
+    <form id="contactForm">
       <div>
         <img src="./icons8-mail-96.png" alt="Mail">
         <h3>Email</h3>
@@ -202,6 +216,30 @@
   }
 
   showDesign();
+  
+  document.querySelector("#contactForm").addEventListener("submit", e => {
+    e.preventDefault();
+    fetch("/api/mail", {
+      method: "POST",
+      body: JSON.stringify({
+        email: document.querySelector("#email").value,
+        message: document.querySelector("#message").value,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      }
+    }).then(response => response.json()).then(json => alert("Email has been sent!"));
+  });
 </script>
 </body>
-</html>
+</html>`;
+
+class Page extends React.Component {
+  static async getInitialProps({ res }: NextPageContext) {
+    res?.setHeader('Content-type', 'text/html');
+    res?.write(str);
+    res?.end();
+  }
+}
+
+export default Page;
