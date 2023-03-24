@@ -9,6 +9,7 @@ import { protectedProcedure, router } from '../trpc';
 import { isEarlierSemester } from '@/utils/plannerUtils';
 
 export const userRouter = router({
+  // Protected route: route uses session user id
   getUser: protectedProcedure.query(async ({ ctx }) => {
     const userInfo = await ctx.prisma.user.findUnique({
       where: {
@@ -32,11 +33,13 @@ export const userRouter = router({
 
     return userInfo;
   }),
+  // Protected route: route uses session user id
   deleteUser: protectedProcedure.mutation(async ({ ctx }) => {
     const userId = ctx.session.user.id;
 
     await ctx.prisma.user.delete({ where: { id: userId } });
   }),
+  // Protected route: route uses session user id
   updateUserProfile: protectedProcedure
     .input(
       z.object({
@@ -64,6 +67,7 @@ export const userRouter = router({
       console.table(user);
       return user;
     }),
+  // Protected route: route uses session user id
   updateUserOnboard: protectedProcedure
     .input(
       z.object({
@@ -105,6 +109,7 @@ export const userRouter = router({
    * Create a new user plan
    *  - takes in plan name, major, transfer credits, and courses already taken
    */
+  // Protected route: route uses session user id
   createUserPlan: protectedProcedure
     .input(
       z.object({
@@ -250,6 +255,7 @@ export const userRouter = router({
    * Duplicates a user plan based on an existing one
    *  - Takes in id, major
    */
+  // Protected route: route uses session user id
   duplicateUserPlan: protectedProcedure
     .input(z.object({ id: z.string(), major: z.string() }))
     .mutation(async ({ ctx, input }) => {
@@ -339,6 +345,7 @@ export const userRouter = router({
    *  - ignores credits for now
    *  - always 4 years
    */
+  // Protected route: route uses session user id
   createTemplateUserPlan: protectedProcedure
     .input(z.object({ name: z.string(), templateName: z.string() }))
     .mutation(async ({ ctx, input }) => {
@@ -369,7 +376,6 @@ export const userRouter = router({
             message: 'Template not found',
           });
         }
-        console.log('TEMPLATE FOUND');
 
         const { name: major, templateData } = template;
 
@@ -446,10 +452,10 @@ export const userRouter = router({
 
         return updatedUser.plans[0].id;
       } catch (error) {
-        console.log('HELP');
         console.error(error);
       }
     }),
+  // Protected route: route uses session user id
   seenHomeOnboarding: protectedProcedure.mutation(async ({ ctx }) => {
     try {
       const userInfo = await ctx.prisma.user.update({
@@ -467,12 +473,12 @@ export const userRouter = router({
         });
       }
 
-      console.log(userInfo);
       return userInfo;
     } catch {
       console.error('WHY YOU NO WORK');
     }
   }),
+  // Protected route: route uses session user id
   seenPlanOnboarding: protectedProcedure.mutation(async ({ ctx }) => {
     const userInfo = await ctx.prisma.user.update({
       where: {
@@ -532,9 +538,6 @@ const addTemplateCoursesToPlan = ({
     };
 
     const newYear = [fallSem, springSem, summerSem];
-    console.log(newYear);
-    console.log(summerSem);
-    console.log('HELP');
 
     semesterData.push(...newYear);
   }

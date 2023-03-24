@@ -24,7 +24,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
     const mailOptions = {
       from: req.body.email,
-      to: 'planner@utdallas.edu',
+      to: 'planner@utdnebula.com',
       subject: 'Planner Feedback',
       text: `The following message was sent by ${req.body.email} from the contact form on the planner website: ${req.body.message}`,
       html: `<p style="font-family: sans-serif">

@@ -15,6 +15,7 @@ import {
 import { GetDragIdByCourseAndReq } from '../types';
 import { RecursiveRequirement } from './RecursiveRequirement';
 import { useSemestersContext } from '../SemesterContext';
+import { JSONCourse } from '@/data/courses.json';
 import * as HoverCard from '@radix-ui/react-hover-card';
 
 function RequirementContainerHeader({
@@ -75,6 +76,7 @@ function RequirementContainerHeader({
 
 const getRequirementGroup = (
   degreeRequirement: RequirementGroupTypes,
+  allCourses: JSONCourse[] | undefined,
 ): {
   name: string;
   progress: { value: number; max: number; unit: string };
@@ -83,12 +85,6 @@ const getRequirementGroup = (
   getData: () => Promise<RequirementTypes[]>;
   filterFunction: (elm: RequirementTypes, query: string) => boolean;
 } => {
-  const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
-    staleTime: Infinity,
-    cacheTime: Infinity,
-    refetchOnWindowFocus: false,
-  });
-
   const filterFunc = (elm: RequirementTypes, query: string) => {
     query = query.toLowerCase();
     switch (elm.matcher) {
@@ -113,6 +109,20 @@ const getRequirementGroup = (
 
   let courses: string[] = [];
   switch (degreeRequirement.matcher) {
+    case 'Or':
+      return {
+        name: degreeRequirement.metadata.name,
+
+        progress: {
+          value: degreeRequirement.filled ? 1 : 0,
+          max: 1,
+          unit: 'req',
+        },
+        description: degreeRequirement.metadata.description ?? '',
+        req: degreeRequirement,
+        getData: () => Promise.resolve(degreeRequirement.requirements),
+        filterFunction: filterFunc,
+      };
     case 'And':
       return {
         name: degreeRequirement.metadata.name,
@@ -120,6 +130,20 @@ const getRequirementGroup = (
         progress: {
           value: degreeRequirement.num_fulfilled_requirements,
           max: degreeRequirement.num_requirements,
+          unit: 'reqs',
+        },
+        description: degreeRequirement.metadata.description ?? '',
+        req: degreeRequirement,
+        getData: () => Promise.resolve(degreeRequirement.requirements),
+        filterFunction: filterFunc,
+      };
+    case 'Select':
+      return {
+        name: degreeRequirement.metadata.name,
+
+        progress: {
+          value: degreeRequirement.fulfilled_count,
+          max: degreeRequirement.required_count,
           unit: 'reqs',
         },
         description: degreeRequirement.metadata.description ?? '',
@@ -143,8 +167,6 @@ const getRequirementGroup = (
       };
     case 'FreeElectives':
       courses = Object.keys(degreeRequirement.valid_courses);
-      console.log(courses);
-      console.log('HI');
 
       return {
         name: 'Free Electives',
@@ -156,8 +178,8 @@ const getRequirementGroup = (
         description: degreeRequirement.metadata.description ?? '',
         req: degreeRequirement,
         getData: async () =>
-          q.data
-            ? q.data.map((c) => ({
+          allCourses
+            ? allCourses.map((c) => ({
                 course: `${c.subject_prefix} ${c.course_number}`,
                 matcher: 'Course',
                 filled: courses.includes(`${c.subject_prefix} ${c.course_number}`),
@@ -179,8 +201,8 @@ const getRequirementGroup = (
         description: degreeRequirement.metadata.description ?? '',
         req: degreeRequirement,
         getData: async () =>
-          q.data
-            ? (q.data
+          allCourses
+            ? (allCourses
                 .map((c) => ({
                   course: `${c.subject_prefix} ${c.course_number}`,
                   matcher: 'Course',
@@ -250,6 +272,10 @@ export const ProgressComponent = ({
 
 export const displayRequirementProgress = (elm: RequirementGroupTypes) => {
   switch (elm.matcher) {
+    case 'Select':
+      return { value: elm.fulfilled_count, max: elm.required_count };
+    case 'Or':
+      return { value: elm.filled ? 1 : 0, max: 1 };
     case 'And':
       return { value: elm.num_fulfilled_requirements, max: elm.num_requirements };
     case 'CS Guided Electives':
@@ -274,6 +300,11 @@ export default function RequirementsContainer({
   courses,
   getCourseItemDragId,
 }: RequirementsContainerProps) {
+  const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
+    staleTime: Infinity,
+    cacheTime: Infinity,
+    refetchOnWindowFocus: false,
+  });
   const [requirementIdx, setRequirementIdx] = React.useState<number>(0);
 
   /**
@@ -314,7 +345,7 @@ export default function RequirementsContainer({
         >
           <>
             {degreeRequirement.requirements.map((elm, idx) => {
-              const { name } = getRequirementGroup(elm);
+              const { name } = getRequirementGroup(elm, q.data);
               const { value, max } = displayRequirementProgress(elm);
 
               const id = elm.metadata.id.toString();
@@ -335,8 +366,8 @@ export default function RequirementsContainer({
                     className="flex items-center justify-between gap-x-4 rounded-md border border-neutral-300 px-5 py-4"
                     key={idx}
                   >
-                    <div className="w-[50%] flex-grow justify-start overflow-hidden text-ellipsis whitespace-nowrap text-start font-medium lg:w-4/5">
-                      {elm.metadata ? elm.metadata.name : 'hi'}
+                    <div className="max-w-[50%] flex-grow justify-start overflow-hidden text-ellipsis whitespace-nowrap text-start font-medium">
+                      {name}
                     </div>
                     <div className="flex items-center">
                       <div className="flex flex-row items-center px-[5px] text-[11px]">
@@ -376,8 +407,15 @@ function RequirementContainer({
   courses,
 }: RequirementContainerProps): JSX.Element {
   // Handles logic for displaying correct requirement group
-  const { name, progress, description, getData, filterFunction } =
-    getRequirementGroup(degreeRequirement);
+  const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
+    staleTime: Infinity,
+    cacheTime: Infinity,
+    refetchOnWindowFocus: false,
+  });
+  const { name, progress, description, getData, filterFunction } = getRequirementGroup(
+    degreeRequirement,
+    q.data,
+  );
 
   const { results, updateQuery } = useSearch({
     getData: getData,

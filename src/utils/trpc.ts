@@ -6,6 +6,8 @@ import superjson from 'superjson';
 
 export const getBaseUrl = () => {
   if (typeof window !== 'undefined') return '';
+  // For prod, we get the base url via env variable
+  if (process.env.VERCEL_ENV === 'production') return `https://${process.env.PRODUCTION_BASE_URL}`;
   if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
   return `http://localhost:${process.env.PORT ?? 3000}`;
 };
