@@ -91,98 +91,63 @@ const str = `<!DOCTYPE html>
     </ul>
     <div id="designTeam" class="team">
       <div class="member">
-        <img src="./person.png" alt="Person">
-        <h4>Caleb</h4>
-        <h5>Lead</h5>
+        <img src="./team/Aanos.jpeg" width="200px" height="200px" alt="Person">
+        <h4>Aanos Mahmood</h4>
+        <h5>Design Lead</h5>
       </div>
       <div class="member">
-        <img src="./person.png" alt="Person">
-        <h4>Solomon</h4>
+        <img src="./team/hilary.jpeg" alt="Person">
+        <h4>Hilary Nguyen</h4>
         <h5>Designer</h5>
       </div>
       <div class="member">
-        <img src="./person.png" alt="Person">
-        <h4>Jason</h4>
+        <img src="./team/Solomon (1).jpeg" width="200px" alt="Person">
+        <h4>Solomon Wakhungu</h4>
         <h5>Designer</h5>
-      </div>
-      <div class="member">
-        <img src="./person.png" alt="Person">
-        <h4>Caleb</h4>
-        <h5>Lead</h5>
-      </div>
-      <div class="member">
-        <img src="./person.png" alt="Person">
-        <h4>Caleb</h4>
-        <h5>Lead</h5>
-      </div>
-      <div class="member">
-        <img src="./person.png" alt="Person">
-        <h4>Caleb</h4>
-        <h5>Lead</h5>
-      </div>
-      <div class="member">
-        <img src="./person.png" alt="Person">
-        <h4>Caleb</h4>
-        <h5>Lead</h5>
-      </div>
-      <div class="member">
-        <img src="./person.png" alt="Person">
-        <h4>Caleb</h4>
-        <h5>Lead</h5>
-      </div>
-      <div class="member">
-        <img src="./person.png" alt="Person">
-        <h4>Caleb</h4>
-        <h5>Lead</h5>
       </div>
     </div>
     <div id="engineeringTeam" class="team">
       <div class="member">
-        <img src="./person.png" alt="Person">
-        <h4>Caleb</h4>
-        <h5>Lead</h5>
+        <img src="./team/Caleb.jpeg" alt="Person">
+        <h4>Caleb Lim</h4>
+        <h5>Project Lead</h5>
       </div>
       <div class="member">
-        <img src="./person.png" alt="Person">
-        <h4>Solomon</h4>
-        <h5>Designer</h5>
+        <img src="./team/Aravindan.jpeg" alt="Person">
+        <h4>Aravindan Kasiraman</h4>
+        <h5>Developer</h5>
       </div>
       <div class="member">
-        <img src="./person.png" alt="Person">
-        <h4>Jason</h4>
-        <h5>Designer</h5>
+        <img src="./team/Jason.jpeg" alt="Person">
+        <h4>Jason Antwi-Appah</h4>
+        <h5>Developer</h5>
       </div>
       <div class="member">
-        <img src="./person.png" alt="Person">
-        <h4>Caleb</h4>
-        <h5>Lead</h5>
+        <img src="./team/Kevin.jpeg" alt="Person">
+        <h4>Kevin Ge</h4>
+        <h5>Developer</h5>
       </div>
       <div class="member">
-        <img src="./person.png" alt="Person">
-        <h4>Caleb</h4>
-        <h5>Lead</h5>
+        <img src="./team/JCGarza.jpeg" alt="Person">
+        <h4>JC Garza</h4>
+        <h5>Developer</h5>
       </div>
       <div class="member">
-        <img src="./person.png" alt="Person">
-        <h4>Caleb</h4>
-        <h5>Lead</h5>
+        <img src="./team/Saidarsh.jpeg" alt="Person">
+        <h4>Saidarsh Tukkadi</h4>
+        <h5>Developer</h5>
+      </div>
+      <div class="member">
+        <img src="./team/Loki.jpeg" alt="Person">
+        <h4>Lokesh Yerneni</h4>
+        <h5>Developer</h5>
       </div>
     </div>
     <div id="productTeam" class="team">
       <div class="member">
-        <img src="./person.png" alt="Person">
-        <h4>Caleb</h4>
-        <h5>Lead</h5>
-      </div>
-      <div class="member">
-        <img src="./person.png" alt="Person">
-        <h4>Solomon</h4>
-        <h5>Designer</h5>
-      </div>
-      <div class="member">
-        <img src="./person.png" alt="Person">
-        <h4>Jason</h4>
-        <h5>Designer</h5>
+        <img src="./team/stephanie.jpg" alt="Person">
+        <h4>Stephanie Li</h4>
+        <h5>Product Lead</h5>
       </div>
     </div>
   </section>
