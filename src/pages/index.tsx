@@ -1,4 +1,17 @@
-<!DOCTYPE html>
+import React from 'react';
+import { NextPageContext } from 'next';
+import { env } from '@/env/client.mjs';
+import { getBaseUrl } from '@utils/trpc';
+
+let umami = '';
+
+if (process.env.VERCEL_ENV === 'production') {
+  umami = `<script async defer data-website-id="${
+    env.NEXT_PUBLIC_UMAMI_WEBSITE_ID
+  }" src="${getBaseUrl()}/api/umami/test"></script>`;
+}
+
+const str = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -7,6 +20,7 @@
   <link rel="stylesheet" href="./index.css">
   <meta property="og:title" content="planner.">
   <meta property="og:description" content="Say goodbye to the stress and hassle of degree planning and hello to a smooth, organized path towards graduation with Nebula Planner.">
+  ${umami}
 </head>
 <body>
 <header>
@@ -77,98 +91,63 @@
     </ul>
     <div id="designTeam" class="team">
       <div class="member">
-        <img src="./person.png" alt="Person">
-        <h4>Caleb</h4>
-        <h5>Lead</h5>
+        <img src="./team/Aanos.jpeg" width="200px" height="200px" alt="Person">
+        <h4>Aanos Mahmood</h4>
+        <h5>Design Lead</h5>
       </div>
       <div class="member">
-        <img src="./person.png" alt="Person">
-        <h4>Solomon</h4>
+        <img src="./team/hilary.jpeg" alt="Person">
+        <h4>Hilary Nguyen</h4>
         <h5>Designer</h5>
       </div>
       <div class="member">
-        <img src="./person.png" alt="Person">
-        <h4>Jason</h4>
+        <img src="./team/Solomon (1).jpeg" width="200px" alt="Person">
+        <h4>Solomon Wakhungu</h4>
         <h5>Designer</h5>
-      </div>
-      <div class="member">
-        <img src="./person.png" alt="Person">
-        <h4>Caleb</h4>
-        <h5>Lead</h5>
-      </div>
-      <div class="member">
-        <img src="./person.png" alt="Person">
-        <h4>Caleb</h4>
-        <h5>Lead</h5>
-      </div>
-      <div class="member">
-        <img src="./person.png" alt="Person">
-        <h4>Caleb</h4>
-        <h5>Lead</h5>
-      </div>
-      <div class="member">
-        <img src="./person.png" alt="Person">
-        <h4>Caleb</h4>
-        <h5>Lead</h5>
-      </div>
-      <div class="member">
-        <img src="./person.png" alt="Person">
-        <h4>Caleb</h4>
-        <h5>Lead</h5>
-      </div>
-      <div class="member">
-        <img src="./person.png" alt="Person">
-        <h4>Caleb</h4>
-        <h5>Lead</h5>
       </div>
     </div>
     <div id="engineeringTeam" class="team">
       <div class="member">
-        <img src="./person.png" alt="Person">
-        <h4>Caleb</h4>
-        <h5>Lead</h5>
+        <img src="./team/Caleb.jpeg" alt="Person">
+        <h4>Caleb Lim</h4>
+        <h5>Project Lead</h5>
       </div>
       <div class="member">
-        <img src="./person.png" alt="Person">
-        <h4>Solomon</h4>
-        <h5>Designer</h5>
+        <img src="./team/Aravindan.jpeg" alt="Person">
+        <h4>Aravindan Kasiraman</h4>
+        <h5>Developer</h5>
       </div>
       <div class="member">
-        <img src="./person.png" alt="Person">
-        <h4>Jason</h4>
-        <h5>Designer</h5>
+        <img src="./team/Jason.jpeg" alt="Person">
+        <h4>Jason Antwi-Appah</h4>
+        <h5>Developer</h5>
       </div>
       <div class="member">
-        <img src="./person.png" alt="Person">
-        <h4>Caleb</h4>
-        <h5>Lead</h5>
+        <img src="./team/Kevin.jpeg" alt="Person">
+        <h4>Kevin Ge</h4>
+        <h5>Developer</h5>
       </div>
       <div class="member">
-        <img src="./person.png" alt="Person">
-        <h4>Caleb</h4>
-        <h5>Lead</h5>
+        <img src="./team/JCGarza.jpeg" alt="Person">
+        <h4>JC Garza</h4>
+        <h5>Developer</h5>
       </div>
       <div class="member">
-        <img src="./person.png" alt="Person">
-        <h4>Caleb</h4>
-        <h5>Lead</h5>
+        <img src="./team/Saidarsh.jpeg" alt="Person">
+        <h4>Saidarsh Tukkadi</h4>
+        <h5>Developer</h5>
+      </div>
+      <div class="member">
+        <img src="./team/Loki.jpeg" alt="Person">
+        <h4>Lokesh Yerneni</h4>
+        <h5>Developer</h5>
       </div>
     </div>
     <div id="productTeam" class="team">
       <div class="member">
-        <img src="./person.png" alt="Person">
-        <h4>Caleb</h4>
-        <h5>Lead</h5>
-      </div>
-      <div class="member">
-        <img src="./person.png" alt="Person">
-        <h4>Solomon</h4>
-        <h5>Designer</h5>
-      </div>
-      <div class="member">
-        <img src="./person.png" alt="Person">
-        <h4>Jason</h4>
-        <h5>Designer</h5>
+        <img src="./team/stephanie.jpg" alt="Person">
+        <h4>Stephanie Li</h4>
+        <h5>Product Lead</h5>
       </div>
     </div>
   </section>
@@ -181,7 +160,7 @@
   </section>
   <section id="contact">
     <h2>Contact Us</h2>
-    <form>
+    <form id="contactForm">
       <div>
         <img src="./icons8-mail-96.png" alt="Mail">
         <h3>Email</h3>
@@ -237,6 +216,30 @@
   }
 
   showDesign();
+  
+  document.querySelector("#contactForm").addEventListener("submit", e => {
+    e.preventDefault();
+    fetch("/api/mail", {
+      method: "POST",
+      body: JSON.stringify({
+        email: document.querySelector("#email").value,
+        message: document.querySelector("#message").value,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      }
+    }).then(response => response.json()).then(json => alert("Email has been sent!"));
+  });
 </script>
 </body>
-</html>
+</html>`;
+
+class Page extends React.Component {
+  static async getInitialProps({ res }: NextPageContext) {
+    res?.setHeader('Content-type', 'text/html');
+    res?.write(str);
+    res?.end();
+  }
+}
+
+export default Page;
