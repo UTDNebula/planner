@@ -62,7 +62,11 @@ export default function Sidebar({ isMobile }: { isMobile: boolean }): JSX.Elemen
       >
         {!isMobile && (
           <div className="relative mt-6 mb-[70px] flex h-fit w-full items-center justify-center">
-            {open && <LogoIcon />}
+            {open && (
+              <Link key={'/app/home'} href={'/app/home'}>
+                <LogoIcon />
+              </Link>
+            )}
             <ChevronIcon
               onClick={() => setOpen(!open)}
               className={` h-4 w-4 cursor-pointer ${
