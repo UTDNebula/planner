@@ -283,7 +283,7 @@ export const validatorRouter = router({
       return { prereq: preReqHash, coreq: coReqHash, coorepre: coOrPreReqHash };
     } catch (error) {
       console.error(error);
-      return false;
+      return null;
     }
   }),
   // Protected route: ensures session user is same as plan owner
@@ -297,7 +297,7 @@ export const validatorRouter = router({
         select: {
           name: true,
           id: true,
-          userId:true,
+          userId: true,
           semesters: {
             include: {
               courses: true,
