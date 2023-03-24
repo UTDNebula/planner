@@ -30,8 +30,8 @@
         "metadata": { "id": "9bdc6974-a3fa-4e15-b0ee-61616f3099e1" }
       },
       {
-        "matcher": "HoursRequirement",
-        "required_hours": 6,
+        "matcher": "SelectRequirement",
+        "required_count": 2,
         "requirements": [{"matcher":"CourseRequirement","course":"ATCM 2340","metadata":{"id":"aee22860-b9b1-4ab0-b402-42749584dca1"}},{"matcher":"CourseRequirement","course":"ATCM 2345","metadata":{"id":"09e2ae6f-6a78-4d1e-9d99-5cb158982db8"}},{"matcher":"CourseRequirement","course":"ATCM 2350","metadata":{"id":"602881a8-9e82-4f4d-ba99-99874aeb3b60"}},{"matcher":"CourseRequirement","course":"ATCM 2355","metadata":{"id":"51098fd3-651f-4d4a-a6f8-a7c69f6a4682"}}],
         "metadata": {
           "id": "9b290654-c69e-4a66-b579-a3d701c488bd"
@@ -46,16 +46,16 @@
       },
       {"matcher":"CourseRequirement","course":"ATCM 3301","metadata":{"id":"8de559ba-2bf5-4359-aa38-f2e39e61496b"}},{"matcher":"CourseRequirement","course":"ATCM 4384","metadata":{"id":"f43bbd0f-390d-4f10-9942-7ff6b5807b13"}},
       {
-        "matcher": "HoursRequirement",
-        "required_hours": 9,
+        "matcher": "SelectRequirement",
+        "required_count": 3,
         "requirements": [{"matcher":"CourseRequirement","course":"ATCM 3345","metadata":{"id":"090fdf0e-cffc-4dd0-9a9b-b5d8036a624d"}},{"matcher":"CourseRequirement","course":"ATCM 3346","metadata":{"id":"baf64cfb-6502-4e12-a0cf-384dd6d9ffdd"}},{"matcher":"CourseRequirement","course":"ATCM 3350","metadata":{"id":"d0979f1b-2869-4f57-936f-9f1e7a58d1fe"}},{"matcher":"CourseRequirement","course":"ATCM 3355","metadata":{"id":"6a527115-2043-40a2-8e96-23319a2605a0"}},{"matcher":"CourseRequirement","course":"ATCM 3356","metadata":{"id":"825fe08e-402a-4e6f-8352-3c54a142e863"}},{"matcher":"CourseRequirement","course":"ATCM 3357","metadata":{"id":"92fef932-6d82-40ab-b7b3-29614f43810e"}}],
         "metadata": {
           "id": "fb774dff-7ba0-4193-8c13-18cd0b092f79"
         }
       },
       {
-        "matcher": "HoursRequirement",
-        "required_hours": 6,
+        "matcher": "SelectRequirement",
+        "required_count": 2,
         "requirements": [{"matcher":"CourseRequirement","course":"ATCM 4330","metadata":{"id":"5fdb8ab8-6474-411b-9da7-cecc4a11cabc"}},{"matcher":"CourseRequirement","course":"ATCM 4346","metadata":{"id":"d0448c00-b6b5-42a7-be19-96c5d84a381c"}},{"matcher":"CourseRequirement","course":"ATCM 4350","metadata":{"id":"fb15d3b2-0bc9-4b32-ac85-c422b2d16fbc"}},{"matcher":"CourseRequirement","course":"ATCM 4351","metadata":{"id":"32b76cd6-5fb4-4573-8839-7941ad9fdfe9"}},{"matcher":"CourseRequirement","course":"ATCM 4357","metadata":{"id":"3bbf621b-5ee4-4745-84a3-63e4b916c037"}}],
         "metadata": {
           "id": "e2fe3f6c-9ec4-45e6-a188-8efc997eb748"

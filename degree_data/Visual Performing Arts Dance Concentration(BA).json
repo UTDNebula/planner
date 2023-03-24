@@ -212,7 +212,7 @@
       },
       {
         "matcher": "FreeElectiveRequirement",
-        "required_hours": 0,
+        "required_hours": 33,
         "excluded_courses": [],
         "metadata": {
           "id": "Visual and Performing Arts with Dance Concentration (BA)-22"

@@ -446,6 +446,13 @@
         }
       },
       {
+        "matcher": "CourseRequirement",
+        "course": "ARHM 1100",
+        "metadata": {
+          "id": "Visual and Performing Arts with Art History Concentration (BA)-15"
+        }
+      },
+      {
         "matcher": "FreeElectiveRequirement",
         "required_hours": 36,
         "excluded_courses": [],

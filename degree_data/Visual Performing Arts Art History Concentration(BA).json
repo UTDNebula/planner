@@ -139,8 +139,15 @@
         }
       },
       {
+        "matcher": "OtherRequirement",
+        "description": "9 semester credit hours of upper-division Visual and Performing Arts electives",
+        "metadata": {
+          "id": "82e499cb-6b3b-4540-b0e0-f47f355750a3"
+        }
+      },
+      {
         "matcher": "FreeElectiveRequirement",
-        "required_hours": 0,
+        "required_hours": 39,
         "excluded_courses": [],
         "metadata": {
           "id": "Visual and Performing Arts with Art History Concentration (BA)-16"

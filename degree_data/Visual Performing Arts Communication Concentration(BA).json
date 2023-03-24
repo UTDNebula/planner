@@ -318,10 +318,17 @@
         }
       },
       {
-        "matcher": "PrefixBucketRequirement",
-        "prefix": "COMM",
+        "matcher": "HoursRequirement",
+        "required_hours": 9,
+        "requirements": [{
+          "matcher": "PrefixBucketRequirement",
+          "prefix": "COMM",
+          "metadata": {
+            "id": "Visual and Performing Arts with Communication Concentration (BA)-42"
+          }
+        }],
         "metadata": {
-          "id": "Visual and Performing Arts with Communication Concentration (BA)-42"
+          "id": "6553dec8-9b57-4f77-ab43-0737ab163c8d"
         }
       },
       {
@@ -333,7 +340,7 @@
       },
       {
         "matcher": "FreeElectiveRequirement",
-        "required_hours": 0,
+        "required_hours": 39,
         "excluded_courses": [],
         "metadata": {
           "id": "Visual and Performing Arts with Communication Concentration (BA)-44"

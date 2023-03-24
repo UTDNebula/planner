@@ -88,7 +88,14 @@
           },
           {
             "matcher": "PrefixBucketRequirement",
-            "prefix": "CRWT",
+            "prefix": "CRWT 3",
+            "metadata": {
+              "id": "6567a3e7-58b9-4fc5-8dd8-6892f0b6725e"
+            }
+          },
+          {
+            "matcher": "PrefixBucketRequirement",
+            "prefix": "CRWT 4",
             "metadata": {
               "id": "6567a3e7-58b9-4fc5-8dd8-6892f0b6725e"
             }
@@ -136,6 +143,13 @@
         "description": "15 semester credit hours from any foreign language electives or upper-division LIT, or CRWT electives.",
         "metadata": {
           "id": "e44f3a0e-b091-4ac9-9e3e-810aa5a6c3c8"
+        }
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "ARHM 1100",
+        "metadata": {
+          "id": "Visual and Performing Arts with Art History Concentration (BA)-15"
         }
       },
       {

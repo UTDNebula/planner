@@ -9,6 +9,21 @@
   "requirements": {
     "core": "@import ./core.json",
     "major": [
+
+      {
+        "matcher": "OtherRequirement",
+        "description": "Discipline I Prep Course: 15 semester credit hours of lower-division AHST, ARTS, COMM, FILM, DANC, MUSI, or THEA courses.",
+        "metadata": {
+          "id": "46fb6f19-951a-4b8e-ae45-ecf5219a4e99"
+        }
+      },
+      {
+        "matcher": "OtherRequirement",
+        "description": "Discipline II Prep Course: 15 semester credit hours of lower-division AHST, ARTS, COMM, FILM, DANC, MUSI, or THEA courses.",
+        "metadata": {
+          "id": "eb4b3c85-93fd-475f-8c08-5d897c721717"
+        }
+      },
       {
         "matcher": "CourseRequirement",
         "course": "VPAS 3340",
@@ -64,30 +79,16 @@
       },
       {
         "matcher": "OtherRequirement",
-        "description": "Discipline I Prep Course: 3 semester credit hours of lower-division AHST, ARTS, COMM, FILM, DANC, MUSI, or THEA courses.",
+        "description": "Discipline I: Select 15 semester credit hours of upper-division AHST, ARTS, COMM, FILM, DANC, MUSI, or THEA courses (within the same prefix)",
         "metadata": {
           "id": "8f2a8027-9cb1-4af2-ab99-325625504da0"
         }
       },
       {
         "matcher": "OtherRequirement",
-        "description": "Discipline II Prep Course: 3 semester credit hours of lower-division AHST, ARTS, COMM, FILM, DANC, MUSI, or THEA courses.",
+        "description": "Discipline I: Select 3 semester credit hours of upper-division AHST, ARTS, COMM, FILM, DANC, MUSI, or THEA courses (within the same prefix, but not the same prefix as Discipline I).",
         "metadata": {
           "id": "50e75242-7d20-4374-aca3-0ff6c21fe7f2"
-        }
-      },
-      {
-        "matcher": "OtherRequirement",
-        "description": "Discipline I Prep Course: 15 semester credit hours of lower-division AHST, ARTS, COMM, FILM, DANC, MUSI, or THEA courses.",
-        "metadata": {
-          "id": "46fb6f19-951a-4b8e-ae45-ecf5219a4e99"
-        }
-      },
-      {
-        "matcher": "OtherRequirement",
-        "description": "Discipline II Prep Course: 15 semester credit hours of lower-division AHST, ARTS, COMM, FILM, DANC, MUSI, or THEA courses.",
-        "metadata": {
-          "id": "eb4b3c85-93fd-475f-8c08-5d897c721717"
         }
       },
       {
@@ -99,7 +100,7 @@
       },
       {
         "matcher": "FreeElectiveRequirement",
-        "required_hours": 0,
+        "required_hours": 33,
         "excluded_courses": [],
         "metadata": {
           "id": "Visual and Performing Arts with Interdisciplinary Arts Concentration (BA)-15"

@@ -182,7 +182,7 @@
       },
       {
         "matcher": "FreeElectiveRequirement",
-        "required_hours": 0,
+        "required_hours": 13,
         "excluded_courses": [],
         "metadata": {
           "id": "Visual and Performing Arts with Music Concentration (BA)-20"

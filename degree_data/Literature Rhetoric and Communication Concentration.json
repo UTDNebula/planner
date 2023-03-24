@@ -70,7 +70,14 @@
             },
             {
               "matcher": "PrefixBucketRequirement",
-              "prefix": "CRWT",
+              "prefix": "CRWT 3",
+              "metadata": {
+                "id": "6567a3e7-58b9-4fc5-8dd8-6892f0b6725e"
+              }
+            },
+            {
+              "matcher": "PrefixBucketRequirement",
+              "prefix": "CRWT 4",
               "metadata": {
                 "id": "6567a3e7-58b9-4fc5-8dd8-6892f0b6725e"
               }
@@ -140,6 +147,13 @@
           ],
           "metadata": {
             "id": "8cee4b06-1f80-4ec3-9362-de837c44a92c"
+          }
+        },
+        {
+          "matcher": "CourseRequirement",
+          "course": "ARHM 1100",
+          "metadata": {
+            "id": "Visual and Performing Arts with Art History Concentration (BA)-15"
           }
         },
         {

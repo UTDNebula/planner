@@ -16,6 +16,13 @@
         }
       },
       {
+        "matcher": "OtherRequirement",
+        "description": "3 semester credit hours of lower-level Visual and Performing Arts Prep Course",
+        "metadata": {
+          "id": "e9ce0d6f-c441-4c77-ab0b-063ec483bf2f"
+        }
+      },
+      {
         "matcher": "CourseRequirement",
         "course": "VPAS 3340",
         "metadata": {
@@ -121,17 +128,23 @@
         "required_hours": 9,
         "requirements": [
           {
-            "matcher": "CourseRequirement",
-            "course": "FILM 3321",
+            "matcher": "SomeRequirement",
+            "requirements": [{
+              "matcher": "CourseRequirement",
+              "course": "FILM 3321",
+              "metadata": {
+                "id": "Visual and Performing Arts with Film Concentration (BA)-15"
+              }
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "FILM 3325",
+              "metadata": {
+                "id": "Visual and Performing Arts with Film Concentration (BA)-16"
+              }
+            }],
             "metadata": {
-              "id": "Visual and Performing Arts with Film Concentration (BA)-15"
-            }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "FILM 3325",
-            "metadata": {
-              "id": "Visual and Performing Arts with Film Concentration (BA)-16"
+              "id": "22c4107e-17ee-4774-9ebc-5c051400092c"
             }
           }
         ],
@@ -313,7 +326,7 @@
       },
       {
         "matcher": "FreeElectiveRequirement",
-        "required_hours": 0,
+        "required_hours": 30,
         "excluded_courses": [],
         "metadata": {
           "id": "Visual and Performing Arts with Film Concentration (BA)-39"
