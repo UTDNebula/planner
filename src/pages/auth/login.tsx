@@ -139,6 +139,7 @@ export default function AuthPage({
                   <button
                     key={idx}
                     onClick={() => {
+                      setIsModifyLoading(true);
                       signIn(provider.id, {
                         callbackUrl: '/app/home',
                       });
