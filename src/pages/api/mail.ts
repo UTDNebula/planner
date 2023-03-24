@@ -28,8 +28,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       subject: 'Planner Feedback',
       text: `The following message was sent by ${req.body.email} from the contact form on the planner website: ${req.body.message}`,
       html: `<p style="font-family: sans-serif">
-              The following message was sent by <em>${escapeHtml(req.body.email)}</em> from the contact form
-              on the planner website:
+              The following message was sent by <em>${escapeHtml(req.body.email)}</em> from the
+              contact form on the planner website:
             </p>
             <p style="font-family: sans-serif">${escapeHtml(req.body.message)}</p>`,
     };
