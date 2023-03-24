@@ -143,8 +143,6 @@ const getRequirementGroup = (
       };
     case 'FreeElectives':
       courses = Object.keys(degreeRequirement.valid_courses);
-      console.log(courses);
-      console.log('HI');
 
       return {
         name: 'Free Electives',
@@ -300,8 +298,8 @@ export default function RequirementsContainer({
         <Accordion
           startOpen={true}
           header={
-            <div className="mr-2 flex w-full flex-row justify-between gap-2">
-              <div className="my-1 w-52 overflow-hidden text-ellipsis whitespace-nowrap text-start text-xl  font-semibold lg:w-4/5 ">
+            <div className="mr-2 flex w-full flex-row justify-between gap-2 ">
+              <div className="my-1 w-52 overflow-hidden text-ellipsis whitespace-nowrap text-start text-xl  font-semibold  ">
                 {degreeRequirement.name}
               </div>
 
@@ -336,7 +334,7 @@ export default function RequirementsContainer({
                     key={idx}
                   >
                     <div className="w-[50%] flex-grow justify-start overflow-hidden text-ellipsis whitespace-nowrap text-start font-medium lg:w-4/5">
-                      {elm.metadata ? elm.metadata.name : 'hi'}
+                      {name}
                     </div>
                     <div className="flex items-center">
                       <div className="flex flex-row items-center px-[5px] text-[11px]">
