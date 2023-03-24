@@ -204,7 +204,7 @@ export const validatorRouter = router({
               }
             }
           } else if (option.type === 'collection') {
-            const coreq = checkForCoRecursive(option, semester);
+            const coreq = checkForCoOrPreRecursive(option, semester);
             if (coreq.length > 0) {
               coreqNotMet.push(...coreq);
             } else {

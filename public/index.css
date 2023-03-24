@@ -163,6 +163,7 @@ main {
   color: var(--gray);
   font-weight: normal;
   font-size: 1rem;
+  max-width: 30vw;
 }
 
 #intro img, #plan img {
@@ -220,7 +221,11 @@ button {
 
   #intro h1 {
     font-size: 2.5rem;
-    max-width: 300px;
+    max-width: 400px;
+  }
+
+  #intro h3 {
+    max-width: 400px;
   }
 
   #intro > div {
@@ -374,6 +379,10 @@ section:nth-child(odd) {
   grid-template-columns: repeat(3, 1fr);
   width: 90%;
   margin-top: 3vh;
+}
+
+.team:not(.active) {
+  display: none;
 }
 
 .hidden {
