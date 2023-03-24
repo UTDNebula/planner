@@ -1,7 +1,7 @@
 import { trpc } from '@/utils/trpc';
 import router from 'next/router';
 import { useState } from 'react'; //nprogress module
-import AutoCompleteMajor from '@/pages/auth/AutoCompleteMajor';
+import AutoCompleteMajor from '@/components/AutoCompleteMajor';
 import { Page } from './Page';
 import useSearch from '../search/search';
 import React from 'react';
