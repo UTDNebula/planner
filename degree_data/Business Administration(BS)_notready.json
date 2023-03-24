@@ -317,7 +317,10 @@
       {
         "excluded_courses": [],
         "matcher": "FreeElectiveRequirement",
-        "metadata": { "id": "Business Administration(BS)-48" },
+        "metadata": {
+          "id": "Business Administration(BS)-48",
+          "name": "Free Electives"
+        },
         "required_hours": 12
       }
     ]
