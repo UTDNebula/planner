@@ -14,85 +14,85 @@ import { Prisma, SemesterCode, Semester } from '@prisma/client';
 import { ObjectId } from 'bson';
 
 export const planRouter = router({
+  // Protected route: route uses session user id to find user plans
   getUserPlans: protectedProcedure.query(async ({ ctx }) => {
-    try {
-      const plans = await ctx.prisma.user.findUnique({
-        where: {
-          id: ctx.session.user.id,
-        },
-        select: {
-          plans: {
-            select: {
-              name: true,
-              requirements: true,
-              id: true,
-            },
+    const plans = await ctx.prisma.user.findUnique({
+      where: {
+        id: ctx.session.user.id,
+      },
+      select: {
+        plans: {
+          select: {
+            name: true,
+            requirements: true,
+            id: true,
           },
         },
-      });
-      return plans;
-    } catch (error) {}
-  }),
-  getPlanById: protectedProcedure.input(z.string().min(1)).query(async ({ ctx, input }) => {
-    try {
-      // Fetch current plan
-      const planData = await ctx.prisma.plan.findUnique({
-        where: {
-          id: input,
-        },
-        select: {
-          name: true,
-          id: true,
-          semesters: {
-            include: {
-              courses: true,
-            },
-          },
-          transferCredits: true,
-        },
-      });
+      },
+    });
 
-      if (!planData) {
-        throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: 'Plan not found',
-        });
-      }
-      return { plan: planData };
-    } catch (error) {
-      console.log('ERROR');
-      console.log(error);
-    }
+    return plans;
   }),
+  // Protected route: checks if session user and plan owner have the same id
+  getPlanById: protectedProcedure.input(z.string().min(1)).query(async ({ ctx, input }) => {
+    // Fetch current plan
+    const planData = await ctx.prisma.plan.findUnique({
+      where: {
+        id: input,
+      },
+      select: {
+        name: true,
+        id: true,
+        userId: true,
+        semesters: {
+          include: {
+            courses: true,
+          },
+        },
+        transferCredits: true,
+      },
+    });
+
+    if (!planData) {
+      throw new TRPCError({
+        code: 'NOT_FOUND',
+        message: 'Plan not found',
+      });
+    }
+
+    if (ctx.session.user.id !== planData.userId) {
+      throw new TRPCError({ code: 'FORBIDDEN' });
+    }
+
+    return { plan: planData };
+  }),
+  // Protected route: route uses session user id
   deletePlanById: protectedProcedure.input(z.string().min(1)).mutation(async ({ ctx, input }) => {
     // check if plans belongs to user with id = ctx.session.user.id
-    try {
-      const planData = await ctx.prisma.user.findUnique({
-        where: {
-          id: ctx.session.user.id,
-        },
-        select: {
-          plans: {
-            where: {
-              id: input,
-            },
-            select: {
-              id: true,
-            },
+    const planData = await ctx.prisma.user.findUnique({
+      where: {
+        id: ctx.session.user.id,
+      },
+      select: {
+        plans: {
+          where: {
+            id: input,
+          },
+          select: {
+            id: true,
           },
         },
-      });
-      const plan = planData?.plans[0];
-      await ctx.prisma.plan.delete({
-        where: {
-          id: plan?.id,
-        },
-      });
-      return true;
-    } catch (error) {
-      return false;
-    }
+      },
+    });
+    const plan = planData?.plans[0];
+    await ctx.prisma.plan.delete({
+      where: {
+        id: plan?.id,
+      },
+    });
+    return true;
   }),
+  // Protected route: checks if session user and plan owner have the same id
   modifySemesters: protectedProcedure
     .input(
       z.object({
@@ -110,7 +110,7 @@ export const planRouter = router({
     .mutation(async ({ ctx, input: { planId, newStartSemester, newEndSemester } }) => {
       const plan = await ctx.prisma.plan.findUnique({
         where: { id: planId },
-        select: { semesters: true },
+        select: { semesters: true, userId: true },
       });
 
       if (!plan) {
@@ -118,6 +118,10 @@ export const planRouter = router({
           code: 'NOT_FOUND',
           message: 'Plan not found',
         });
+      }
+
+      if (ctx.session.user.id !== plan.userId) {
+        throw new TRPCError({ code: 'FORBIDDEN' });
       }
 
       // Since we're deleting things anyway, we can just create new xD
@@ -136,6 +140,7 @@ export const planRouter = router({
       await ctx.prisma.semester.deleteMany({ where: { planId } });
       await ctx.prisma.semester.createMany({ data: newSems });
     }),
+  // Protected route: route uses session user id
   deleteYear: protectedProcedure.input(z.string().min(1)).mutation(async ({ ctx, input }) => {
     try {
       const semesterIds = await ctx.prisma.user.findUnique({
@@ -168,6 +173,7 @@ export const planRouter = router({
       return false;
     }
   }),
+  // Protected route: checks if session user and plan owner have the same id
   addYear: protectedProcedure
     .input(z.object({ planId: z.string(), semesterIds: z.array(z.string()).length(3) }))
     .mutation(async ({ ctx, input }) => {
@@ -178,16 +184,22 @@ export const planRouter = router({
             id: planId,
           },
           select: {
+            userId: true,
             semesters: {
               take: -1,
             },
           },
         });
+
         if (!plan) {
           throw new TRPCError({
             code: 'NOT_FOUND',
             message: 'Plan not found',
           });
+        }
+
+        if (ctx.session.user.id !== plan.userId) {
+          throw new TRPCError({ code: 'FORBIDDEN' });
         }
 
         const newYear: PlanSemester[] = createNewYear(
@@ -214,9 +226,11 @@ export const planRouter = router({
         });
         return true;
       } catch (error) {
-        console.log(error);
+        console.error(error);
+        return false;
       }
     }),
+  // Protected route: route uses session user id
   addCourseToSemester: protectedProcedure
     .input(z.object({ planId: z.string(), semesterId: z.string(), courseName: z.string() }))
     .mutation(async ({ ctx, input }) => {
@@ -228,6 +242,7 @@ export const planRouter = router({
         await ctx.prisma.semester.update({
           where: {
             id: semesterId,
+            plan: { userId: ctx.session.user.id },
           },
           data: {
             courses: {
@@ -242,9 +257,11 @@ export const planRouter = router({
         });
         return true;
       } catch (error) {
-        console.log(error);
+        console.error(error);
+        return false;
       }
     }),
+  // Protected route: route uses session user id
   removeCourseFromSemester: protectedProcedure
     .input(z.object({ planId: z.string(), semesterId: z.string(), courseName: z.string() }))
     .mutation(async ({ ctx, input }) => {
@@ -255,6 +272,7 @@ export const planRouter = router({
         // Once integrated w/ Nebula API, use Promise.all() to call concurrently
         await ctx.prisma.course.delete({
           where: {
+            semester: { plan: { userId: ctx.session.user.id } },
             semesterId_code: {
               semesterId,
               code: courseName,
@@ -264,14 +282,16 @@ export const planRouter = router({
         return true;
       } catch (error) {
         console.error(error);
+        return false;
       }
     }),
+  // Protected route: route uses session user id
   deleteAllCoursesFromSemester: protectedProcedure
     .input(z.object({ semesterId: z.string() }))
     .mutation(async ({ ctx, input: { semesterId } }) => {
       await ctx.prisma.course
         .deleteMany({
-          where: { semesterId },
+          where: { semesterId, semester: { plan: { userId: ctx.session.user.id } } },
         })
         .catch((err) => {
           if (err instanceof Prisma.PrismaClientKnownRequestError) {
@@ -284,6 +304,7 @@ export const planRouter = router({
           }
         });
     }),
+  // Protected route: route uses session user id
   moveCourseFromSemester: protectedProcedure
     .input(
       z.object({
@@ -299,6 +320,7 @@ export const planRouter = router({
 
         await ctx.prisma.course.update({
           where: {
+            semester: { plan: { userId: ctx.session.user.id } },
             semesterId_code: {
               semesterId: oldSemesterId,
               code: courseName,
@@ -313,6 +335,7 @@ export const planRouter = router({
         console.error(error);
       }
     }),
+  // Unprotected route
   validateDegreePlan: protectedProcedure
     .input(
       z.object({
@@ -352,6 +375,7 @@ export const planRouter = router({
         console.log(error);
       }
     }),
+  // Protected route: route uses session user id
   changeSemesterColor: protectedProcedure
     .input(
       z.object({
@@ -363,6 +387,7 @@ export const planRouter = router({
       await ctx.prisma.semester.update({
         where: {
           id: input.semesterId,
+          plan: { userId: ctx.session.user.id },
         },
         data: {
           color: input.color,
@@ -370,6 +395,7 @@ export const planRouter = router({
       });
       return true;
     }),
+  // Protected route: route uses session user id
   changeCourseColor: protectedProcedure
     .input(
       z.object({
@@ -382,6 +408,7 @@ export const planRouter = router({
     .mutation(async ({ ctx, input }) => {
       await ctx.prisma.course.update({
         where: {
+          semester: { plan: { userId: ctx.session.user.id } },
           semesterId_code: {
             semesterId: input.semesterId,
             code: input.courseName,
@@ -393,6 +420,7 @@ export const planRouter = router({
       });
       return true;
     }),
+  // Protected route: route uses session user id
   changeCoursePrereqOverride: protectedProcedure
     .input(
       z.object({
@@ -404,6 +432,7 @@ export const planRouter = router({
     .mutation(async ({ ctx, input }) => {
       await ctx.prisma.course.update({
         where: {
+          semester: { plan: { userId: ctx.session.user.id } },
           semesterId_code: {
             semesterId: input.semesterId,
             code: input.courseName,
@@ -415,6 +444,7 @@ export const planRouter = router({
       });
       return true;
     }),
+  // Protected route: route uses session user id
   changeCourseLock: protectedProcedure
     .input(
       z.object({
@@ -426,6 +456,7 @@ export const planRouter = router({
     .mutation(async ({ ctx, input }) => {
       await ctx.prisma.course.update({
         where: {
+          semester: { plan: { userId: ctx.session.user.id } },
           semesterId_code: {
             semesterId: input.semesterId,
             code: input.courseName,
@@ -437,6 +468,7 @@ export const planRouter = router({
       });
       return true;
     }),
+  // Protected route: route uses session user id
   changeSemesterLock: protectedProcedure
     .input(
       z.object({
@@ -447,6 +479,7 @@ export const planRouter = router({
     .mutation(async ({ ctx, input }) => {
       await ctx.prisma.semester.update({
         where: {
+          plan: { userId: ctx.session.user.id },
           id: input.semesterId,
         },
         data: {
@@ -455,6 +488,7 @@ export const planRouter = router({
       });
       return true;
     }),
+  // Protected route: route uses session user id
   addBypass: protectedProcedure
     .input(z.object({ planId: z.string(), requirement: z.string() }))
     .mutation(async ({ ctx, input }) => {
@@ -463,6 +497,7 @@ export const planRouter = router({
 
         const degreeRequirements = await ctx.prisma.degreeRequirements.findUnique({
           where: {
+            plan: { userId: ctx.session.user.id },
             planId,
           },
           select: {
@@ -479,6 +514,7 @@ export const planRouter = router({
 
         const updatedDegreeRequirements = await ctx.prisma.degreeRequirements.update({
           where: {
+            plan: { userId: ctx.session.user.id },
             id: degreeRequirements.id,
           },
           data: {
@@ -489,9 +525,10 @@ export const planRouter = router({
         return true;
       } catch (e) {
         console.error(e);
+        return false;
       }
     }),
-
+  // Protected route: route uses session user id
   removeBypass: protectedProcedure
     .input(z.object({ planId: z.string(), requirement: z.string() }))
     .mutation(async ({ ctx, input }) => {
@@ -500,6 +537,7 @@ export const planRouter = router({
 
         const degreeRequirements = await ctx.prisma.degreeRequirements.findUnique({
           where: {
+            plan: { userId: ctx.session.user.id },
             planId,
           },
           select: {
@@ -520,6 +558,7 @@ export const planRouter = router({
         // If we know the bypass model exists, we can update it directly
         const newBypass = await ctx.prisma.degreeRequirements.update({
           where: {
+            plan: { userId: ctx.session.user.id },
             id: degreeRequirements.id, // Null-assertion bc type narrowing is being dumb here
           },
           data: {
@@ -530,10 +569,7 @@ export const planRouter = router({
         return newBypass.id;
       } catch {}
     }),
-  getBypasses: protectedProcedure.input(z.object({})).query(async ({ ctx, input }) => {
-    try {
-    } catch {}
-  }),
+  // Protected route: route uses session user id
   getDegreeRequirements: protectedProcedure
     .input(z.object({ planId: z.string() }))
     .query(async ({ ctx, input }) => {
@@ -542,6 +578,7 @@ export const planRouter = router({
 
         const degreeRequirements = await ctx.prisma.degreeRequirements.findFirst({
           where: {
+            plan: { userId: ctx.session.user.id },
             planId,
           },
           select: {
@@ -557,6 +594,7 @@ export const planRouter = router({
         return degreeRequirements;
       } catch {}
     }),
+  // Protected route: route uses session user id
   updatePlanTitle: protectedProcedure
     .input(z.object({ planId: z.string(), title: z.string().min(1) }))
     .mutation(async ({ ctx, input }) => {
@@ -564,6 +602,7 @@ export const planRouter = router({
         const { planId, title } = input;
         await ctx.prisma.plan.update({
           where: {
+            userId: ctx.session.user.id,
             id: planId,
           },
           data: {
@@ -575,6 +614,7 @@ export const planRouter = router({
         return false;
       }
     }),
+  // Protected route: route uses session user id
   updatePlanMajor: protectedProcedure
     .input(z.object({ planId: z.string(), major: z.string().min(1) }))
     .mutation(async ({ ctx, input }) => {
@@ -582,6 +622,7 @@ export const planRouter = router({
         const { planId, major } = input;
         await ctx.prisma.degreeRequirements.update({
           where: {
+            plan: { userId: ctx.session.user.id },
             planId,
           },
           data: {
