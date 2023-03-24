@@ -11,7 +11,7 @@ import Head from 'next/head';
 import { ToastContainer } from 'react-toastify';
 import { type Session } from 'next-auth';
 import { SessionProvider, useSession } from 'next-auth/react';
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 import Layout from '@/components/home/Layout';
 import NProgress from 'nprogress'; //nprogress module
@@ -54,6 +54,7 @@ const theme = createTheme({
 import type { NextComponentType } from 'next'; //Import Component type
 import { Router } from 'next/router';
 import { env } from '@/env/client.mjs';
+import ScreenSizeWarnModal from '@/shared-components/ScreenSizeWarnModal';
 
 //Add custom appProp type then use union to add it
 type CustomAppProps = AppProps & {
@@ -72,9 +73,15 @@ const NebulaApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }: CustomAppProps) => {
-  // TODO: Properly type check this
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
+  const [displayScreenSizeWarning, setDisplayScreenSizeWarning] = useState(false);
+  const [hasWarned, setHasWarned] = useState(false);
+
+  useEffect(() => {
+    const handler = () => setDisplayScreenSizeWarning(window.innerWidth < 1017);
+    handler();
+    window.addEventListener('resize', handler);
+    return () => window.removeEventListener('resize', handler);
+  }, []);
 
   return (
     <SessionProvider session={session}>
@@ -109,6 +116,10 @@ const NebulaApp: AppType<{ session: Session | null }> = ({
           />
         )}
       </Head>
+      <ScreenSizeWarnModal
+        open={displayScreenSizeWarning && !hasWarned}
+        onClose={() => setHasWarned(true)}
+      />
       <AnimateSharedLayout>
         <StyledEngineProvider injectFirst>
           <ThemeProvider theme={theme}>
