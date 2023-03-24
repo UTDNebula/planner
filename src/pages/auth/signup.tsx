@@ -1,6 +1,6 @@
 import { InferGetServerSidePropsType } from 'next';
 import { getProviders, signIn, useSession } from 'next-auth/react';
-import { useState, useEffect, isValidElement, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import EmojiIcon from '@/icons/EmojiIcon';
 import majorsList from '@data/majors.json';
 
@@ -12,8 +12,8 @@ import { trpc } from '@/utils/trpc';
 import Button from '@/components/Button';
 import { isValidEmail } from '@/utils/utilFunctions';
 
-// import AuthCard from '../../components/auth/AuthCard';
-// import LoginCard from '@components/auth/Login'
+// Time elapsed after typing email to display error
+const EMAIL_VALIDATION_ERROR_TIMEOUT_MS = 600;
 
 /**
  * A page that presents a sign-in/sign-up box to the user.
@@ -24,6 +24,8 @@ export default function AuthPage({
   const [email, setEmail] = useState('');
   const [isModifyLoading, setIsModifyLoading] = useState(false);
   const [isEmailValid, setIsEmailValid] = useState(false);
+
+  const displayEmailError = useMemo(() => !isEmailValid && email !== '', [isEmailValid, email]);
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Fetch courses now & put in cache
@@ -54,7 +56,11 @@ export default function AuthPage({
   }, [router, status]);
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setIsEmailValid(isValidEmail(event.target.value));
+    setIsEmailValid(true);
+    setTimeout(
+      () => setIsEmailValid(isValidEmail(event.target.value)),
+      EMAIL_VALIDATION_ERROR_TIMEOUT_MS,
+    );
     setEmail(event.target.value);
   };
 
@@ -89,7 +95,7 @@ export default function AuthPage({
                 ref={inputRef}
                 type="email"
                 className={`w-full rounded border bg-[#F5F5F5] p-3 pl-4 text-[14px] text-[#737373] outline-none focus:border-primary ${
-                  !isEmailValid && email !== '' ? '!border-red-500' : ''
+                  displayEmailError ? '!border-red-500' : ''
                 }`}
                 value={email}
                 onChange={handleEmailChange}
@@ -100,11 +106,7 @@ export default function AuthPage({
                   }
                 }}
               />
-              <small
-                className={`${
-                  !isEmailValid && email !== '' ? 'visible' : 'invisible'
-                }  text-red-500`}
-              >
+              <small className={`${displayEmailError ? 'visible' : 'invisible'}  text-red-500`}>
                 Please provide a valid email
               </small>
             </div>
