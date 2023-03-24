@@ -26,12 +26,12 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       from: req.body.email,
       to: 'planner@utdallas.edu',
       subject: 'Planner Feedback',
-      text: `The following message was sent through the contact form on the planner website, from ${req.body.email}: ${req.body.message}`,
-      html: `<p>
-              The following message was sent through the contact form on the planner website,
-              from ${escapeHtml(req.body.email)}:
+      text: `The following message was sent by ${req.body.email} from the contact form on the planner website: ${req.body.message}`,
+      html: `<p style="font-family: sans-serif">
+              The following message was sent by <em>${escapeHtml(req.body.email)}</em> from the contact form
+              on the planner website:
             </p>
-            <p>${escapeHtml(req.body.message)}</p>`,
+            <p style="font-family: sans-serif">${escapeHtml(req.body.message)}</p>`,
     };
 
     transporter.verify(function (error: Error) {
