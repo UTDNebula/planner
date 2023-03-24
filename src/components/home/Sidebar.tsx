@@ -37,12 +37,12 @@ export default function Sidebar({ isMobile }: { isMobile: boolean }): JSX.Elemen
       Icon: ProfileIcon,
     },
     {
-      url: 'https://www.google.com',
+      url: 'https://docs.google.com/forms/d/e/1FAIpQLScnwBOiEi3IcDRyxzHoFqV8kwPhYkgeBCdU_N4TsUpiLpJ1sA/viewform',
       label: 'Contact Support',
       Icon: ContactIcon,
     },
     {
-      url: 'https://www.google.com',
+      url: 'https://airtable.com/shrFg9MPi9BGguwPU',
       label: 'Feedback Form',
       Icon: FeedbackIcon,
     },
