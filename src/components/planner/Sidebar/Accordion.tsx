@@ -35,7 +35,7 @@ export default function Accordion({
 
       <div
         className={`overflow-hidden transition-all duration-700 ${
-          open ? 'max-h-[999px]' : 'max-h-0'
+          open ? '' : 'max-h-0'
         }`}
       >
         <div className="flex flex-col gap-y-4 pt-2">{children}</div>
