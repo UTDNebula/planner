@@ -210,27 +210,27 @@
           {
             "course": "EE 4325",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 37 }
+            "metadata": { "id": "37" }
           },
           {
             "course": "SE 4351",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 38 }
+            "metadata": { "id": "38" }
           },
           {
             "course": "SE 4352",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 39 }
+            "metadata": { "id": "39" }
           },
           {
             "course": "SE 4367",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 40 }
+            "metadata": { "id": "40" }
           },
           {
             "course": "SE 4381",
             "matcher": "CourseRequirement",
-            "metadata": { "id": 41 }
+            "metadata": { "id": "41" }
           }
         ],
         "matcher": "CSGuidedElectiveRequirement",

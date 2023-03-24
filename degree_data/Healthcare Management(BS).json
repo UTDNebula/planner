@@ -9,22 +9,7 @@
   "requirements": {
     "core": "@import ./core.json",
     "major": [
-      {
-        "matcher": "CourseRequirement",
-        "course": "ACCT 2301",
-        "metadata": { "id": "Healthcare Management(BS)-0" }
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "ACCT 2302",
-        "metadata": { "id": "Healthcare Management(BS)-1" }
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "BLAW 2301",
-        "metadata": { "id": "Healthcare Management(BS)-2" }
-      },
-      {
+      {"matcher":"CourseRequirement","course":"ACCT 2301","metadata":{"id":"81a1d4eb-daa6-4391-b541-3309f96f69fc"}},{"matcher":"CourseRequirement","course":"ACCT 2302","metadata":{"id":"709b7aff-b7a5-431c-ac19-5c66b0a46543"}},{"matcher":"CourseRequirement","course":"BLAW 2301","metadata":{"id":"b95f3fda-83f2-4979-b91e-ea68d4be4208"}},{
         "matcher": "OrRequirement",
         "requirements": [
           {
@@ -47,246 +32,78 @@
       },
       {
         "matcher": "OrRequirement",
-        "requirements": [
-          {
-            "matcher": "CourseRequirement",
-            "course": "OPRE 3360",
-            "metadata": { "id": "Healthcare Management(BS)-8" }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "STAT 3360",
-            "metadata": { "id": "Healthcare Management(BS)-9" }
-          }
-        ],
-        "metadata": { "id": "Healthcare Management(BS)-7" }
+        "requirements": [{"matcher":"CourseRequirement","course":"OPRE 3360","metadata":{"id":"33ed2fcb-d5b1-48eb-8d52-6de5120ff416"}},{"matcher":"CourseRequirement","course":"STAT 3360","metadata":{"id":"ea329e13-ca67-45e1-8abc-42ae60e8f3d0"}}],
+        "metadata": {
+          "id": "64659abb-d22b-437d-9dc5-56ef7aa556ce"
+        }
       },
       {
         "matcher": "SelectRequirement",
+        "requirements": [{"matcher":"CourseRequirement","course":"BA 1310","metadata":{"id":"8c3f8c8b-df5f-41e5-ba99-3a1f5ecec03b"}},{"matcher":"CourseRequirement","course":"BA 1320","metadata":{"id":"842b81ab-886f-4d26-94d7-6959eea8588a"}},{"matcher":"CourseRequirement","course":"ECON 2301","metadata":{"id":"eeb89afe-33a6-4abc-adb1-0386e60750a9"}},{"matcher":"CourseRequirement","course":"ECON 2302","metadata":{"id":"796ec537-8393-4d04-8e45-ff3ebef3a930"}}],
         "required_count": 2,
-        "requirements": [
-          {
-            "matcher": "CourseRequirement",
-            "course": "BA 1310",
-            "metadata": { "id": "Healthcare Management(BS)-11" }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "BA 1320",
-            "metadata": { "id": "Healthcare Management(BS)-12" }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "ECON 2301",
-            "metadata": { "id": "Healthcare Management(BS)-13" }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "ECON 2302",
-            "metadata": { "id": "Healthcare Management(BS)-14" }
-          }
-        ],
-        "metadata": { "id": "Healthcare Management(BS)-10" }
+        "metadata": {
+          "id": "7d93e101-f855-4129-a1f5-8d006e164d7f"
+        }
       },
       {
         "matcher": "OrRequirement",
-        "requirements": [
-          {
-            "matcher": "CourseRequirement",
-            "course": "BCOM 3300",
-            "metadata": { "id": "Healthcare Management(BS)-16" }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "BCOM 1300",
-            "metadata": { "id": "Healthcare Management(BS)-17" }
-          }
-        ],
-        "metadata": { "id": "Healthcare Management(BS)-15" }
+        "requirements": [{"matcher":"CourseRequirement","course":"BCOM 1300","metadata":{"id":"43efbd83-122d-41b2-9264-a00636e684cf"}},{"matcher":"CourseRequirement","course":"BCOM 3300","metadata":{"id":"e2397c0a-05df-4fe5-ab44-52953d81532f"}}],
+        "metadata": {
+          "id": "d719be35-2571-41b8-b962-542e07b1ec77"
+        }
       },
-      {
-        "matcher": "CourseRequirement",
-        "course": "BCOM 4300",
-        "metadata": { "id": "Healthcare Management(BS)-18" }
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "FIN 3320",
-        "metadata": { "id": "Healthcare Management(BS)-19" }
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "IMS 3310",
-        "metadata": { "id": "Healthcare Management(BS)-20" }
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "ITSS 3300",
-        "metadata": { "id": "Healthcare Management(BS)-21" }
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "MKT 3300",
-        "metadata": { "id": "Healthcare Management(BS)-22" }
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "OBHR 3330",
-        "metadata": { "id": "Healthcare Management(BS)-23" }
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "OBHR 3310",
-        "metadata": { "id": "Healthcare Management(BS)-24" }
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "OPRE 3310",
-        "metadata": { "id": "Healthcare Management(BS)-25" }
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "BLAW 3301",
-        "metadata": { "id": "Healthcare Management(BS)-26" }
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "OBHR 3310",
-        "metadata": { "id": "Healthcare Management(BS)-27" }
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "OBHR 4331",
-        "metadata": { "id": "Healthcare Management(BS)-28" }
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "OBHR 4333",
-        "metadata": { "id": "Healthcare Management(BS)-29" }
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "OBHR 4334",
-        "metadata": { "id": "Healthcare Management(BS)-30" }
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "OBHR 4335",
-        "metadata": { "id": "Healthcare Management(BS)-31" }
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "OBHR 4354",
-        "metadata": { "id": "Healthcare Management(BS)-32" }
-      },
-      {
-        "matcher": "CourseRequirement",
-        "course": "OBHR 4395",
-        "metadata": { "id": "Healthcare Management(BS)-33" }
-      },
+      {"matcher":"CourseRequirement","course":"BCOM 4300","metadata":{"id":"d26b6742-fd5f-488a-8abc-b65ad161d5e6"}},{"matcher":"CourseRequirement","course":"IMS 3310","metadata":{"id":"24d6fcf1-ae58-4057-aaa7-4eafe5e2d9bf"}},{"matcher":"CourseRequirement","course":"FIN 3320","metadata":{"id":"97a2ed47-6cdc-4649-bed3-a17729f1e098"}},{"matcher":"CourseRequirement","course":"ITSS 3300","metadata":{"id":"852c81ae-74c3-480e-ab2e-b6a232007525"}},
       {
         "matcher": "OrRequirement",
-        "requirements": [
-          {
-            "matcher": "CourseRequirement",
-            "course": "OBHR 4V90",
-            "metadata": { "id": "Healthcare Management(BS)-35" }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "OBHR 4090",
-            "metadata": { "id": "Healthcare Management(BS)-36" }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "BA 4090",
-            "metadata": { "id": "Healthcare Management(BS)-37" }
-          }
-        ],
-        "metadata": { "id": "Healthcare Management(BS)-34" }
+        "requirements": [{"matcher":"CourseRequirement","course":"OBHR 3330","metadata":{"id":"b023b911-2605-4871-934e-221e0f9f5b2e"}},{"matcher":"CourseRequirement","course":"OBHR 3310","metadata":{"id":"5a92346e-1c30-40cc-90d5-d035a2065d02"}}],
+        "metadata": {
+          "id": "bb06761d-1d26-4c80-8931-934bbd083f74"
+        }
       },
+      {"matcher":"CourseRequirement","course":"OPRE 3310","metadata":{"id":"094bdadf-8d21-4c74-a7c9-67c2e726e9ad"}},{"matcher":"CourseRequirement","course":"MKT 3300","metadata":{"id":"c7bf2aea-c0d6-45fb-a4b3-0aa25c8b38f3"}},
+      {"matcher":"CourseRequirement","course":"HMGT 3301","metadata":{"id":"52b5c13f-4010-494e-8e94-c7a831a3e477"}},{"matcher":"CourseRequirement","course":"HMGT 3310","metadata":{"id":"bc8a05cf-84f1-49eb-af34-18a4da92f31a"}},{"matcher":"CourseRequirement","course":"HMGT 3311","metadata":{"id":"2522d71c-1c4e-4d6f-841a-44f6eb913ed1"}},
       {
         "matcher": "OrRequirement",
-        "requirements": [
-          {
-            "matcher": "CourseRequirement",
-            "course": "IMS 4335",
-            "metadata": { "id": "Healthcare Management(BS)-39" }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "ENTP 4340",
-            "metadata": { "id": "Healthcare Management(BS)-40" }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "MKT 4360",
-            "metadata": { "id": "Healthcare Management(BS)-41" }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "BA 4095",
-            "metadata": { "id": "Healthcare Management(BS)-42" }
-          }
-        ],
-        "metadata": { "id": "Healthcare Management(BS)-38" }
+        "requirements": [{"matcher":"CourseRequirement","course":"HMGT 3320","metadata":{"id":"3f75dc22-277c-4b23-b4bc-0e341535b5de"}},{"matcher":"CourseRequirement","course":"ECON 3330","metadata":{"id":"13ded759-c4d5-487c-a0d6-e543c87207be"}}],
+        "metadata": {
+          "id": "20ab26eb-9a9a-487b-a944-f3158b42bcae"
+        }
       },
+      {"matcher":"CourseRequirement","course":"HMGT 4321","metadata":{"id":"f8564cb7-8afa-4e69-882d-043036c27d4e"}},
+      {
+        "matcher": "OrRequirement",
+        "requirements": [{"matcher":"CourseRequirement","course":"HMGT 4395","metadata":{"id":"5653fd7d-dd64-4836-8735-22801fa000b8"}},{"matcher":"CourseRequirement","course":"BPS 4395","metadata":{"id":"9674de51-d053-40da-985e-e6f601859f0e"}},{"matcher":"CourseRequirement","course":"ENTP 4395","metadata":{"id":"5e413fb7-4060-464a-97da-e7859461e6a1"}}],
+        "metadata": {
+          "id": "0a804dd3-b4d2-4e68-b253-a1f6511ede27"
+        }
+      },
+      {"matcher":"CourseRequirement","course":"HMGT 3080","metadata":{"id":"9e4519e1-562c-4df2-86cd-3427d08ec4c5"}},
       {
         "matcher": "HoursRequirement",
-        "required_hours": 9,
+        "required_hours": 12,
         "requirements": [
-          {
-            "matcher": "CourseRequirement",
-            "course": "IMS 4330",
-            "metadata": { "id": "Healthcare Management(BS)-44" }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "OBHR 4300",
-            "metadata": { "id": "Healthcare Management(BS)-45" }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "OBHR 4310",
-            "metadata": { "id": "Healthcare Management(BS)-46" }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "OBHR 4336",
-            "metadata": { "id": "Healthcare Management(BS)-47" }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "OBHR 4337",
-            "metadata": { "id": "Healthcare Management(BS)-48" }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "OBHR 4338",
-            "metadata": { "id": "Healthcare Management(BS)-49" }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "OBHR 4350",
-            "metadata": { "id": "Healthcare Management(BS)-50" }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "OBHR 4352",
-            "metadata": { "id": "Healthcare Management(BS)-51" }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "OBHR 4356",
-            "metadata": { "id": "Healthcare Management(BS)-52" }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "OBHR 4361",
-            "metadata": { "id": "Healthcare Management(BS)-53" }
+          {"matcher":"CourseRequirement","course":"HMGT 4V90","metadata":{"id":"7a8fc034-c19a-4893-aea5-ddbbc2c2f04f"}},{"matcher":"CourseRequirement","course":"HMGT 4090","metadata":{"id":"c79da4e3-a19f-4e12-977f-366c3784c6c4"}},{"matcher":"CourseRequirement","course":"BA 4090","metadata":{"id":"a04a1284-0323-4ce0-8703-408aadcb29fa"}},
+        {
+          "matcher": "OrRequirement",
+          "requirements": [{"matcher":"CourseRequirement","course":"IMS 4335","metadata":{"id":"a0ae9d06-9b92-40f6-91bd-85fd25c4308c"}},{"matcher":"CourseRequirement","course":"ENTP 4340","metadata":{"id":"9f6fc98d-5283-4d6e-9a3b-88411a5451b4"}},{"matcher":"CourseRequirement","course":"MKT 4360","metadata":{"id":"65181af0-687e-47e6-b31a-6f4d60aea578"}},{"matcher":"CourseRequirement","course":"BA 4095","metadata":{"id":"d5bd6821-5906-45f4-a052-078aa32ece3f"}}],
+          "metadata": {
+            "id": "93274e92-20f1-4b7f-8ccc-266f7d58ece5"
           }
-        ],
-        "metadata": { "id": "Healthcare Management(BS)-43" }
+        },
+        {"matcher":"CourseRequirement","course":"HMGT 4V81","metadata":{"id":"152387c1-5948-4171-8ade-c73ec5ed49f6"}},
+        {
+          "matcher": "OrRequirement",
+          "requirements": [{"matcher":"CourseRequirement","course":"HMGT 3320","metadata":{"id":"1b203bd0-9dad-45c2-a756-c4d02f66f70d"}},{"matcher":"CourseRequirement","course":"ECON 3330","metadata":{"id":"c07ce290-9436-4a12-8d65-9d677bd447d7"}}],
+          "metadata": {
+            "id": "47559ea3-6c50-40fd-b66c-99afd073e8a1"
+          }
+        },
+        {"matcher":"CourseRequirement","course":"ENTP 3301","metadata":{"id":"89262c90-416b-473c-b0a8-472e2d983859"}},{"matcher":"CourseRequirement","course":"ENTP 4320","metadata":{"id":"57588bef-ecbb-483e-9b85-04fb71c1a38f"}},{"matcher":"CourseRequirement","course":"ITSS 4300","metadata":{"id":"682c0a84-8001-49d8-84d3-56419faba1e1"}},{"matcher":"CourseRequirement","course":"ITSS 4330","metadata":{"id":"c2f77efd-1445-48b3-ab12-01af381a6035"}},{"matcher":"CourseRequirement","course":"ITSS 4340","metadata":{"id":"27941a67-7ce1-426a-bfbf-07ab7818abab"}},{"matcher":"CourseRequirement","course":"ITSS 4351","metadata":{"id":"3cec3a73-cd6b-48f0-8bc2-695a0c93d67e"}},{"matcher":"CourseRequirement","course":"MECO 3360","metadata":{"id":"6314e074-10de-4190-a3ee-674b73ed24c0"}},{"matcher":"CourseRequirement","course":"MECO 3361","metadata":{"id":"2de59ef4-93d7-4864-9b3d-36cde53fc485"}},{"matcher":"CourseRequirement","course":"MECO 4303","metadata":{"id":"7e8f9992-778c-4694-81c9-06ebc592a855"}},{"matcher":"CourseRequirement","course":"MKT 4331","metadata":{"id":"0f38a59f-6f27-4e57-b057-974e037ed69c"}},{"matcher":"CourseRequirement","course":"MKT 4332","metadata":{"id":"7fef8ad7-a686-4c6e-9488-9b08aadb6e95"}},{"matcher":"CourseRequirement","course":"OBHR 4300","metadata":{"id":"ab4b02e6-123b-4fbb-9e75-017f7a134d9f"}},{"matcher":"CourseRequirement","course":"OBHR 4310","metadata":{"id":"7a61220d-eba3-4267-b105-635b7b85caff"}},{"matcher":"CourseRequirement","course":"OBHR 4352","metadata":{"id":"d3190ef7-a9fe-4e80-b9b5-f943c11f5fd3"}},{"matcher":"CourseRequirement","course":"OPRE 3330","metadata":{"id":"85212808-868c-44b5-b6f0-9ef17e1e804e"}},{"matcher":"CourseRequirement","course":"OPRE 4310","metadata":{"id":"d1e3a737-06a8-4dbe-aa2d-d0aadd090db1"}},{"matcher":"CourseRequirement","course":"OPRE 4350","metadata":{"id":"eb73e647-6a29-4d6e-849c-451a5edb1c85"}},{"matcher":"CourseRequirement","course":"OPRE 4355","metadata":{"id":"cddda785-38ed-46e4-a4ad-910b1bc99bb1"}}
+
+      ],
+        "metadata": {
+          "id": "f0c6d228-caf5-4a0f-b299-fc18d91ceb4e"
+        }
       },
       {
         "matcher": "FreeElectiveRequirement",

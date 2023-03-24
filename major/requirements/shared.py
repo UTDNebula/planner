@@ -8,7 +8,7 @@ from .base import AbstractRequirement
 import utils
 
 from typing import Any, TypedDict
-from major.requirements import AbstractRequirement, map
+from major.requirements import AbstractRequirement
 from functools import reduce
 
 class CourseRequirement(AbstractRequirement):
@@ -429,6 +429,66 @@ class HoursRequirement(AbstractRequirement):
         return s
 
 
+class OtherRequirement(AbstractRequirement):
+    """Requirement which cannot be fulfilled automatically and is intended for users to manually verify and bypass if filled.
+
+    Parameters
+    __________
+    description: str
+        A description of the requirement to be shown to the user
+
+    """
+    def __init__(
+        self,
+        description: str,
+        metadata: dict[str, str] = {},
+    ) -> None:
+        self.metadata = metadata
+        self.override_filled = False
+        self.description = description
+
+    def is_fulfilled(self) -> bool:
+        return self.override_filled
+    
+    def attempt_fulfill(self, course: str) -> bool:
+        return False
+
+    def override_fill(self, index: str) -> bool:
+        if self.metadata["id"] == index:
+            self.override_filled = True
+            return True
+        return False
+    
+    class JSON(TypedDict):
+        description: str
+        metadata: dict[str, Any]
+
+    @classmethod
+    def from_json(cls, json: JSON) -> OtherRequirement:
+        """
+        {
+            "description": "Select any 3 semester credit hours from any 4000 level ARTS studio course"
+        }
+        """
+
+        return cls(json["description"], json["metadata"])
+
+    def to_json(self) -> Json[Any]:
+        return json.dumps(
+            {
+                "matcher": "Other",
+                "metadata": self.metadata,
+                "filled": self.is_fulfilled()
+            }
+        )
+
+    def __str__(self) -> str:
+        s = f"""{OtherRequirement.__name__} - {self.is_fulfilled()}
+        metadata: {self.metadata}
+        """
+        return s
+
+
 class FreeElectiveRequirement(AbstractRequirement):
     """Defines Major Free Electives
 
@@ -646,6 +706,7 @@ class MajorGuidedElectiveRequirement(AbstractRequirement):
         if self.metadata["id"] == index:
             self.override_filled = True
             return True
+
         for requirement in self.also_fulfills:
             if requirement.override_fill(index):
                 return True
@@ -679,9 +740,10 @@ class MajorGuidedElectiveRequirement(AbstractRequirement):
         """
 
         also_fulfills: list[AbstractRequirement] = []
+        from .map import REQUIREMENTS_MAP
         for requirement in json["also_fulfills"]:
             also_fulfills.append(
-                map.REQUIREMENTS_MAP[requirement["matcher"]].from_json(requirement)
+                REQUIREMENTS_MAP[requirement["matcher"]].from_json(requirement)
             )
 
         return cls(
@@ -711,3 +773,121 @@ class MajorGuidedElectiveRequirement(AbstractRequirement):
         fulfilled_count: {self.__true_fulfilled_total()}
         """
         return s
+
+
+class MultiGroupElectiveRequirement(AbstractRequirement):
+    """
+    Similar to an SelectRequirement, but requires at least 1 requirement to meet or exceed the minimum count of hours.
+    Parameters
+    __________
+    requirement_count: int
+        Minimum # of requirements that must be fulfilled before the parent requirement is fulfilled
+    requirements: list[AbstractRequirement]
+        List of child requirements
+    
+    minimum_hours_in_area: int
+        Minimum # of credit hours that must be fulfilled in an area before the parent requirement is fulfilled. If set to 0, then no minimum is required. Defaults to 0.
+    """
+    class Req(TypedDict):
+        matcher: str
+
+    class JSON(TypedDict):
+        requirement_count: int
+        requirements: list[MultiGroupElectiveRequirement.Req]
+        minimum_hours_in_area: int
+        metadata: dict[str, Any]
+
+    def __init__(
+        self, requirements: list[AbstractRequirement], requirement_count: int, minimum_hours_in_area: int = 0, metadata: dict[str, Any] = {}
+    ) -> None:
+        self.requirements = requirements
+        self.requirement_count = requirement_count
+        self.minimum_hours_in_area = minimum_hours_in_area
+        self.metadata = metadata
+        self.req_hrs: dict[str, int] = {}
+        self.override_filled = False
+
+    @classmethod
+    def from_json(cls, json: JSON) -> MultiGroupElectiveRequirement:
+        from .map import REQUIREMENTS_MAP
+        requirements: list[AbstractRequirement] = []
+        for requirement_data in json["requirements"]:
+            requirement = REQUIREMENTS_MAP[requirement_data["matcher"]].from_json(
+                requirement_data
+            )
+            requirements.append(requirement)
+
+        return cls(
+            requirements,
+            json["requirement_count"],
+            json["minimum_hours_in_area"],
+            json["metadata"],
+        )
+
+    def is_fulfilled(self) -> bool:
+        if self.override_filled:
+            return True
+        return (
+            self.get_num_fulfilled_requirements() >= self.requirement_count
+            and max(self.req_hrs.values() if len(self.req_hrs.keys()) > 0 else [0]) >= self.minimum_hours_in_area
+        )
+
+    def to_json(self) -> Json[Any]:
+        return json.dumps({
+            "matcher": "MultiGroupElectiveRequirement",
+            "requirement_count": self.requirement_count,
+            "requirements": [req.to_json() for req in self.requirements],
+            "minimum_hours_in_area": self.minimum_hours_in_area,
+            "metadata": self.metadata,
+            "req_hrs": self.req_hrs,
+            "filled": self.is_fulfilled(),
+            "num_fulfilled_requirements": self.get_num_fulfilled_requirements(),
+            "requirements": [
+                json.loads(req.to_json()) for req in self.requirements
+            ],
+        })
+
+    def attempt_fulfill(self, course: str) -> bool:
+        if self.is_fulfilled():
+            return False
+
+        for requirement in self.requirements:
+            fulfilled = requirement.attempt_fulfill(course)
+            if fulfilled:
+                try:
+                    hrs = utils.get_hours_from_course(course)
+                    id = requirement.metadata["id"] # type: ignore
+                    if not id:
+                        raise Exception("No identifier for requirement", requirement)
+                    if id in self.req_hrs:
+                        self.req_hrs[id] += hrs
+                    else:
+                        self.req_hrs[id] = hrs
+                except ValueError:
+                    print("Failed to parse hrs from course")
+                finally:
+                    return True
+        return False
+
+    def get_num_fulfilled_requirements(self) -> int:
+        return sum([1 for req in self.requirements if req.is_fulfilled()])
+
+    def override_fill(self, index: str) -> bool:
+        if self.metadata["id"] == index:
+            self.override_filled = True
+            return True
+        for requirement in self.requirements:
+            if requirement.override_fill(index):
+                return True
+        return False
+
+    def __str__(self) -> str:
+        return f"""{MultiGroupElectiveRequirement.__name__} - {self.is_fulfilled()}
+        requirement_count: {self.requirement_count}
+        requirements: {self.requirements}
+        minimum_hours_in_area: {self.minimum_hours_in_area}
+        metadata: {self.metadata}
+        req_hrs: {self.req_hrs}
+        "filled": self.is_fulfilled()
+        "num_fulfilled_requirements": {self.get_num_fulfilled_requirements()}
+        """

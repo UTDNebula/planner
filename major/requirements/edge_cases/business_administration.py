@@ -48,7 +48,6 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
 
     prefix_groups: list[list[str]]
         Groups of department prefixes
-
     """
 
     def __init__(
