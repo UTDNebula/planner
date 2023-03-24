@@ -366,8 +366,8 @@ export default function RequirementsContainer({
                     className="flex items-center justify-between gap-x-4 rounded-md border border-neutral-300 px-5 py-4"
                     key={idx}
                   >
-                    <div className="max-w-[50%] flex-grow justify-start overflow-hidden text-ellipsis whitespace-nowrap text-start font-medium">
-                      {name}
+                    <div className="w-[50%] flex-grow justify-start overflow-hidden text-ellipsis whitespace-nowrap text-start font-medium lg:w-4/5">
+                      {elm.metadata ? elm.metadata.name : 'hi'}
                     </div>
                     <div className="flex items-center">
                       <div className="flex flex-row items-center px-[5px] text-[11px]">

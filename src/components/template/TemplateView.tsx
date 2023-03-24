@@ -1,7 +1,7 @@
 import { trpc } from '@/utils/trpc';
 import router from 'next/router';
 import { useState } from 'react'; //nprogress module
-import AutoCompleteMajor from '@/pages/auth/AutoCompleteMajor';
+import AutoCompleteMajor from '@/components/AutoCompleteMajor';
 import { Page } from './Page';
 import useSearch from '../search/search';
 import React from 'react';
@@ -10,8 +10,15 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
   const utils = trpc.useContext();
 
   const [name, setName] = useState('');
-  const [major, setMajor] = useState('');
+  const [major, setMajor] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  const [planNameError, setPlanNameError] = useState(false);
+  const [majorError, setMajorError] = useState(false);
+  const setErrors = () => {
+    setPlanNameError(name === '');
+    setMajorError(major === null);
+  };
 
   const {
     data: templatesData,
@@ -91,19 +98,30 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
         },
         {
           name: 'Create Plan',
-          onClick: () => handleTemplateCreation(name, major),
+          onClick: () => {
+            if (name !== '' && major !== null) {
+              handleTemplateCreation(name, major);
+              return;
+            }
+            setErrors();
+          },
           color: 'primary',
           loading,
         },
       ]}
     >
       <p className="text-sm font-semibold">Plan Name</p>
-      <input
-        className="w-full rounded-md border border-neutral-500 py-3 px-4 text-sm text-black/80 placeholder:text-neutral-400"
-        placeholder="Name your plan"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
+      <div className="flex flex-col gap-2">
+        <input
+          className="w-full rounded-md border border-neutral-500 py-3 px-4 text-sm text-black/80 placeholder:text-neutral-400"
+          placeholder="Name your plan"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <small className={`${planNameError ? 'visible' : 'invisible'}  text-red-500`}>
+          Please provide a plan name
+        </small>
+      </div>
 
       <p className="text-sm font-semibold">Search degree template</p>
       <div className="relative mb-4">
@@ -116,6 +134,9 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
           autoFocus
         ></AutoCompleteMajor>
       </div>
+      <small className={`${majorError ? 'visible' : 'hidden'} -mt-6  text-red-500`}>
+        Please select a valid major
+      </small>
     </Page>
   );
 }
