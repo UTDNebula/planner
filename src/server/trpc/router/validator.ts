@@ -125,7 +125,7 @@ export const validatorRouter = router({
               count++;
             }
           } else if (option.type === 'other') {
-            count++;
+            // count++;
           }
         }
 
@@ -172,7 +172,7 @@ export const validatorRouter = router({
               count++;
             }
           } else if (option.type === 'other') {
-            count++;
+            // count++;
           }
         }
         if (count >= requirements.required) {
@@ -218,7 +218,7 @@ export const validatorRouter = router({
               count++;
             }
           } else if (option.type === 'other') {
-            count++;
+            // count++;
           }
         }
         if (count >= requirements.required) {
