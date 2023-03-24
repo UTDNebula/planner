@@ -160,7 +160,7 @@ const str = `<!DOCTYPE html>
   </section>
   <section id="contact">
     <h2>Contact Us</h2>
-    <form>
+    <form id="contactForm">
       <div>
         <img src="./icons8-mail-96.png" alt="Mail">
         <h3>Email</h3>
@@ -216,6 +216,20 @@ const str = `<!DOCTYPE html>
   }
 
   showDesign();
+  
+  document.querySelector("#contactForm").addEventListener("submit", e => {
+    e.preventDefault();
+    fetch("/api/mail", {
+      method: "POST",
+      body: JSON.stringify({
+        email: document.querySelector("#email").value,
+        message: document.querySelector("#message").value,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      }
+    }).then(response => response.json()).then(json => console.log(json));
+  });
 </script>
 </body>
 </html>`;
