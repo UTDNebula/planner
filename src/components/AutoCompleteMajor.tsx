@@ -63,9 +63,9 @@ const AutoCompleteMajor: FC<AutoCompleteMajorProps & React.ComponentPropsWithout
             <TextField
               {...params}
               variant="standard"
-              className="h-11 appearance-none rounded border border-[#6366F1] bg-[#F5F5F5] pl-4 text-[14px] font-semibold text-[#D4D4D4] outline-none"
+              className="h-11 appearance-none rounded border border-[#6366F1] bg-white pl-4 text-[14px] font-semibold text-black outline-none"
               inputProps={{
-                style: { fontSize: 14, marginTop: 8, color: '#737373' },
+                style: { fontSize: 14, marginTop: 8 },
                 ...params.inputProps,
               }}
               placeholder={placeholder}
