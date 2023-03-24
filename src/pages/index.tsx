@@ -5,7 +5,7 @@ import { getBaseUrl } from '@utils/trpc';
 
 let umami = '';
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.VERCEL_ENV === 'production') {
   umami = `<script async defer data-website-id="${
     env.NEXT_PUBLIC_UMAMI_WEBSITE_ID
   }" src="${getBaseUrl()}/api/umami/test"></script>`;
