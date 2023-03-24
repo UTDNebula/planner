@@ -1,6 +1,6 @@
 from .base import AbstractRequirement
 from .shared import *
-from .edge_cases import business_administration, computer_science
+from .edge_cases import business_administration, computer_science, arts_technology_emerging_communication
 from typing import Type
 
 REQUIREMENTS_MAP: dict[str, Type[AbstractRequirement]] = {
@@ -19,4 +19,5 @@ REQUIREMENTS_MAP: dict[str, Type[AbstractRequirement]] = {
     "BAGuidedElectiveRequirement": business_administration.BusinessAdministrationElectiveRequirement,
     "SomeRequirement": business_administration.SomeRequirement,
     "MultiGroupElectiveRequirement": MultiGroupElectiveRequirement,
+    "ATECPrescribedElectiveRequirement": arts_technology_emerging_communication.ATECPrescribedElectiveRequirement,
 }

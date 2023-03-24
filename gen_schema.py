@@ -100,7 +100,11 @@ for req_name in REQUIREMENTS_MAP:
             )
             requirement_schema_props[prop_name] = s
         else:
-            raise Exception("Expected property to be forward ref")
+            try:
+                s = primitive_to_schema(prop_type)
+                requirement_schema_props[prop_name] = s
+            except:
+                raise Exception("Failed to convert", prop_type, "to schema for", req, prop_name)
     requirement_schema_props.setdefault("metadata", metadata_schema)
     requirement_schemas.append(requirement_schema_props)
 
