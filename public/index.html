@@ -3,10 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>planner.</title>
-  <link rel="stylesheet" href="./index.css">
-  <meta property="og:title" content="planner.">
+  <title>Planner</title>
+  <meta property="og:title" content="Planner">
   <meta property="og:description" content="Say goodbye to the stress and hassle of degree planning and hello to a smooth, organized path towards graduation with Nebula Planner.">
+  <meta property="og:image" content="/img.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="manifest" href="/site.webmanifest"/>
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#090b2a" />
+  <meta name="msapplication-TileColor" content="#4659A7" />
+  <meta name="theme-color" content="#4659A7" />
+  <link rel="stylesheet" href="/index.css">
 </head>
 <body>
 <header>
@@ -168,7 +176,7 @@
   </section>
 </main>
 <footer>
-  <h1>planner.</h1>
+  <img src="planner_logo.svg" width="160" alt="planner logo"/>
   <hr>
   <p>Copyright © 2023. All rights reserved</p>
 </footer>
@@ -202,7 +210,7 @@
   }
 
   showDesign();
-  
+
   document.querySelector("#contactForm").addEventListener("submit", e => {
     e.preventDefault();
     fetch("/api/mail", {

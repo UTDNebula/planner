@@ -98,13 +98,13 @@ const NebulaApp: AppType<{ session: Session | null }> = ({
           content="A tool to help students plan their degree plans and college experience at UTD."
         />
         <meta name="keywords" content="UTD, UT Dallas, degree planner" />
-        <title>Nebula Web</title>
-        <link rel="icon" href="/Nebula_Planner_Logo.png" />
-        <link rel="manifest" href="/manifest.json" />
-
-        <link href="/planner@16px.png" rel="icon" type="image/png" sizes="16x16" />
-        <link href="/planner@32px.png" rel="icon" type="image/png" sizes="32x32" />
-        <link rel="apple-touch-icon" href="/apple-icon.png"></link>
+        <title>Planner</title>
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="manifest" href="/site.webmanifest"/>
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#090b2a" />
+        <meta name="msapplication-TileColor" content="#4659A7" />
         <meta name="theme-color" content="#4659A7" />
 
         {process.env.VERCEL_ENV === 'production' && (
