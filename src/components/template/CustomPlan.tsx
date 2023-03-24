@@ -274,7 +274,7 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
           autoFocus
         ></AutoCompleteMajor>
       </div>
-      <small className={`${majorError ? 'visible' : 'invisible'} -mt-6  text-red-500`}>
+      <small className={`${majorError ? 'visible' : 'hidden'} -mt-6  text-red-500`}>
         Please select a valid major
       </small>
     </Page>,
