@@ -298,7 +298,7 @@ export default function RequirementsContainer({
       carousel={carousel}
       requirementsList={
         <Accordion
-          startOpen={true}
+          startOpen={false}
           header={
             <div className="mr-2 flex w-[calc(100%-2rem)] flex-row justify-between gap-2 ">
               <div className="my-1 overflow-hidden text-ellipsis whitespace-nowrap text-start text-xl  font-semibold  ">
