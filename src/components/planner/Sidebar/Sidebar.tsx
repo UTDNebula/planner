@@ -173,7 +173,7 @@ function CourseSelectorContainer({
             <div className="flex flex-grow items-end justify-end text-sm ">
               <div>
                 <span className="font-bold">Warning:</span> This is an unofficial tool not
-                affiliated with the university.For official advice, please consult the course
+                affiliated with the university. For official advice, please consult the course
                 catalog and confirm with your department advisors. <br /> <br />
                 Problems with degree or prerequisite validation? Request edits here or send an email
                 to planner@utdnebula.com.
