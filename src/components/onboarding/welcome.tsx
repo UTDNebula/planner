@@ -145,7 +145,9 @@ export default function Welcome({
             autoFocus
           ></AutoCompleteMajor>
         </div>
-        <div className="mb-2"><b>Starting Semester:</b></div>
+        <div className="mb-2">
+          <b>Starting Semester:</b>
+        </div>
         <div className="flex items-center justify-between">
           <div className="relative mb-4">
             <Select
@@ -233,7 +235,9 @@ export default function Welcome({
             </Select>
           </div>
         </div>
-        <div className="mb-2"><b>Ending Semester:</b></div>
+        <div className="mb-2">
+          <b>Ending Semester:</b>
+        </div>
         <div className="flex items-center justify-between">
           <div className="relative mb-4">
             <Select
