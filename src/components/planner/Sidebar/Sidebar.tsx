@@ -84,7 +84,7 @@ function CourseSelectorContainer({
     <>
       {open ? (
         <div className="z-0 h-screen w-[30%] min-w-[30%] overflow-x-hidden overflow-y-scroll">
-          <div className="flex h-fit min-h-full w-full flex-col gap-y-4 bg-white p-4">
+          <div className="flex h-fit min-h-screen w-full flex-col gap-y-4 bg-white p-4">
             <div className="flex flex-col">
               <div className="flex flex-row items-center justify-around">
                 <ChevronIcon
@@ -170,6 +170,15 @@ function CourseSelectorContainer({
                 </div>
               </div>
             )}
+            <div className="flex flex-grow items-end justify-end text-sm ">
+              <div>
+                <span className="font-bold">Warning:</span> This is an unofficial tool not
+                affiliated with the university. For official advice, please consult the course
+                catalog and confirm with your department advisors. <br /> <br />
+                Problems with degree or prerequisite validation? Request edits here or send an email
+                to planner@utdnebula.com.
+              </div>
+            </div>
           </div>
         </div>
       ) : (

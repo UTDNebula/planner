@@ -367,6 +367,9 @@ export const userRouter = router({
                   },
                 },
               },
+              orderBy: {
+                semester: 'asc',
+              },
             },
           },
         });
