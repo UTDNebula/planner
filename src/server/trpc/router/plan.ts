@@ -2,16 +2,12 @@ import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
 import { Semester as PlanSemester } from '@/components/planner/types';
-import {
-  createNewYear,
-  createSemesterCodeRange,
-  isSemesterEarlier,
-  isSemesterLater,
-} from '@/utils/utilFunctions';
+import { createNewYear, createSemesterCodeRange } from '@/utils/utilFunctions';
 
 import { protectedProcedure, router } from '../trpc';
 import { Prisma, SemesterCode, Semester } from '@prisma/client';
 import { ObjectId } from 'bson';
+import { isEarlierSemester } from '@/utils/plannerUtils';
 
 export const planRouter = router({
   // Protected route: route uses session user id to find user plans
@@ -52,6 +48,13 @@ export const planRouter = router({
         transferCredits: true,
       },
     });
+
+    // Make sure semesters are in right orer
+    if (planData && planData.semesters) {
+      planData.semesters = planData.semesters.sort((a, b) =>
+        isEarlierSemester(a.code, b.code) ? -1 : 1,
+      );
+    }
 
     if (!planData) {
       throw new TRPCError({
