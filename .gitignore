@@ -51,3 +51,6 @@ prisma/generated
 
 # Storybook
 /storybook-static
+
+# Sentry
+.sentryclirc
