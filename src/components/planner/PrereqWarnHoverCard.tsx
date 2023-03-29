@@ -3,6 +3,7 @@ import * as HoverCard from '@radix-ui/react-hover-card';
 
 interface PrereqHoverCardProps {
   prereqs: [Array<string>, Array<string>, Array<string>];
+  description: string;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   isValid: boolean;
@@ -12,6 +13,7 @@ interface PrereqHoverCardProps {
 
 export const PrereqWarnHoverCard: FC<PrereqHoverCardProps> = ({
   prereqs,
+  description,
   open,
   onOpenChange,
   side = 'top',
@@ -24,7 +26,7 @@ export const PrereqWarnHoverCard: FC<PrereqHoverCardProps> = ({
     <HoverCard.Portal>
       <HoverCard.Content
         side={side}
-        className="z-[9999] w-[250px] animate-[slideUpAndFade_0.3s] rounded-md border border-neutral-200 bg-generic-white p-5 shadow-sm"
+        className="z-[9999] w-[400px] animate-[slideUpAndFade_0.3s] rounded-md border border-neutral-200 bg-generic-white p-5 shadow-sm"
         sideOffset={5}
       >
         <h3 className="mb-2 text-lg font-semibold">{title}</h3>
@@ -70,7 +72,8 @@ export const PrereqWarnHoverCard: FC<PrereqHoverCardProps> = ({
               ))}
             </ol>
           </>
-        )}{' '}
+        )}
+        {/* <div>{description}</div> */}
         <HoverCard.Arrow className="fill-primary" />
       </HoverCard.Content>
     </HoverCard.Portal>

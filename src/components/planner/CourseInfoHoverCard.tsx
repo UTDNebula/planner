@@ -2,7 +2,8 @@ import { FC } from 'react';
 import * as HoverCard from '@radix-ui/react-hover-card';
 
 interface CourseInfoHoverCardProps {
-  prereqs: string[][];
+  // prereqs: string[][];
+  description: string;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   side?: 'top' | 'left' | 'bottom' | 'right';
@@ -10,7 +11,8 @@ interface CourseInfoHoverCardProps {
 }
 
 export const CourseInfoHoverCard: FC<CourseInfoHoverCardProps> = ({
-  prereqs,
+  // prereqs,
+  description,
   open,
   onOpenChange,
   side = 'bottom',
@@ -22,12 +24,13 @@ export const CourseInfoHoverCard: FC<CourseInfoHoverCardProps> = ({
     <HoverCard.Portal>
       <HoverCard.Content
         side={side}
-        className="z-[999] w-[250px] animate-[slideUpAndFade_0.3s] rounded-md border border-neutral-200 bg-generic-white p-5 shadow-sm"
+        className="z-[999] w-[350px] animate-[slideUpAndFade_0.3s] rounded-md border border-neutral-200 bg-generic-white p-5 shadow-sm"
         sideOffset={5}
       >
         <h3 className="mb-2 text-lg font-semibold">{title}</h3>
+        <p className="text-sm">{description}</p>
 
-        {prereqs[0].length > 0 && (
+        {/* {prereqs[0].length > 0 && (
           <>
             <h3 className="mb-2 text-lg font-medium">Prerequisites</h3>
             <ol className="flex list-disc flex-wrap gap-3">
@@ -62,7 +65,7 @@ export const CourseInfoHoverCard: FC<CourseInfoHoverCardProps> = ({
               ))}
             </ol>
           </>
-        )}
+        )} */}
         <HoverCard.Arrow className="fill-primary" />
       </HoverCard.Content>
     </HoverCard.Portal>

@@ -61,7 +61,7 @@ export const MemoizedSemesterCourseItem = React.memo(
     //   hoverTimer.current = setTimeout(() => setHoverIconOpen(hoverOpen), 500);
     // };
 
-    const { prereqs, title } = useGetCourseInfo(course.code);
+    const { prereqs, title, description } = useGetCourseInfo(course.code);
 
     return (
       <div
@@ -99,6 +99,7 @@ export const MemoizedSemesterCourseItem = React.memo(
 
         <PrereqWarnHoverCard
           prereqs={requirementsData === undefined ? [[], [], []] : requirementsData}
+          description={description ?? ''}
           open={hoverIconOpen && !course.prereqOveridden}
           onOpenChange={(hoverOpen) => {
             console.info('not used');
@@ -205,9 +206,7 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
   });
 
   const { planId } = useSemestersContext();
-  const requirementsData = trpc.validator.prereqValidator.useQuery(planId, {
-    staleTime: 100000000,
-  });
+  const requirementsData = trpc.validator.prereqValidator.useQuery(planId, {});
 
   const isValid: [boolean, boolean, boolean] = [true, true, true];
   const hoverList: [Array<string>, Array<string>, Array<string>] = [[], [], []];
