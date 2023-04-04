@@ -111,7 +111,10 @@ export const validatorRouter = router({
           if (option.type === 'course' || option.type === 'other') {
             // 'other' might be an improperly parsed course
             // if it's not, `course` will be set to undefined so nothing will happen
-            const course = option.type === 'course' ? courseMapWithIdKey.get(option.class_reference) : option.description.match(re)?.[0];
+            const course =
+              option.type === 'course'
+                ? courseMapWithIdKey.get(option.class_reference)
+                : option.description.match(re)?.[0];
             if (course) {
               const data = courseHash.get(course as string);
               if (data === undefined) {
@@ -156,14 +159,17 @@ export const validatorRouter = router({
           if (option.type === 'course' || option.type === 'other') {
             // 'other' might be an improperly parsed course
             // if it's not, `course` will be set to undefined so nothing will happen
-            const course = option.type === 'course' ? courseMapWithIdKey.get(option.class_reference) : option.description.match(re)?.[0];
+            const course =
+              option.type === 'course'
+                ? courseMapWithIdKey.get(option.class_reference)
+                : option.description.match(re)?.[0];
             if (course) {
               const data = courseHash.get(course as string);
               if (data === undefined) {
                 temp[0].push(course as string);
                 continue;
               }
-              if (data === semester) {
+              if (data <= semester) {
                 count++;
               } else {
                 temp[0].push(course as string);
@@ -202,7 +208,10 @@ export const validatorRouter = router({
           if (option.type === 'course' || option.type === 'other') {
             // 'other' might be an improperly parsed course
             // if it's not, `course` will be set to undefined so nothing will happen
-            const course = option.type === 'course' ? courseMapWithIdKey.get(option.class_reference) : option.description.match(re)?.[0];
+            const course =
+              option.type === 'course'
+                ? courseMapWithIdKey.get(option.class_reference)
+                : option.description.match(re)?.[0];
             if (course) {
               const data = courseHash.get(course as string);
               if (data === undefined) {
