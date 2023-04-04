@@ -78,7 +78,7 @@ export const validatorRouter = router({
       const preReqHash = new Map<string, Array<[Array<string>, number]>>();
       const coOrPreReqHash = new Map<string, Array<[Array<string>, number]>>();
       // Regex to parse course from description of improperly parsed course
-      const re = /\b[A-Z]{2} \d{4}\b/;
+      const re = /\b[A-Z]{2,4} \d{4}\b/;
 
       /* Recursive function to check for prereqs.
        *  TODO: Move to a client side function. Possibly a hook.
