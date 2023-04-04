@@ -77,6 +77,9 @@ export const validatorRouter = router({
       const coReqHash = new Map<string, Array<[Array<string>, number]>>();
       const preReqHash = new Map<string, Array<[Array<string>, number]>>();
       const coOrPreReqHash = new Map<string, Array<[Array<string>, number]>>();
+      // Regex to parse course from description of improperly parsed course
+      const re = /\b[A-Z]{2} \d{4}\b/;
+
       /* Recursive function to check for prereqs.
        *  TODO: Move to a client side function. Possibly a hook.
        */
@@ -105,8 +108,10 @@ export const validatorRouter = router({
         }
         const temp: [Array<string>, number] = [[], 0];
         for (const option of requirements.options) {
-          if (option.type === 'course') {
-            const course = courseMapWithIdKey.get(option.class_reference);
+          if (option.type === 'course' || option.type === 'other') {
+            // 'other' might be an improperly parsed course
+            // if it's not, `course` will be set to undefined so nothing will happen
+            const course = option.type === 'course' ? courseMapWithIdKey.get(option.class_reference) : option.description.match(re)?.[0];
             if (course) {
               const data = courseHash.get(course as string);
               if (data === undefined) {
@@ -124,8 +129,6 @@ export const validatorRouter = router({
             } else {
               count++;
             }
-          } else if (option.type === 'other') {
-            // count++;
           }
         }
 
@@ -150,15 +153,17 @@ export const validatorRouter = router({
         }
         const temp: [Array<string>, number] = [[], 0];
         for (const option of requirements.options) {
-          if (option.type === 'course') {
-            const course = courseMapWithIdKey.get(option.class_reference);
+          if (option.type === 'course' || option.type === 'other') {
+            // 'other' might be an improperly parsed course
+            // if it's not, `course` will be set to undefined so nothing will happen
+            const course = option.type === 'course' ? courseMapWithIdKey.get(option.class_reference) : option.description.match(re)?.[0];
             if (course) {
               const data = courseHash.get(course as string);
               if (data === undefined) {
                 temp[0].push(course as string);
                 continue;
               }
-              if (data <= semester) {
+              if (data === semester) {
                 count++;
               } else {
                 temp[0].push(course as string);
@@ -171,8 +176,6 @@ export const validatorRouter = router({
             } else {
               count++;
             }
-          } else if (option.type === 'other') {
-            // count++;
           }
         }
         if (count >= requirements.required) {
@@ -196,8 +199,10 @@ export const validatorRouter = router({
         }
         const temp: [Array<string>, number] = [[], 0];
         for (const option of requirements.options) {
-          if (option.type === 'course') {
-            const course = courseMapWithIdKey.get(option.class_reference);
+          if (option.type === 'course' || option.type === 'other') {
+            // 'other' might be an improperly parsed course
+            // if it's not, `course` will be set to undefined so nothing will happen
+            const course = option.type === 'course' ? courseMapWithIdKey.get(option.class_reference) : option.description.match(re)?.[0];
             if (course) {
               const data = courseHash.get(course as string);
               if (data === undefined) {
@@ -217,8 +222,6 @@ export const validatorRouter = router({
             } else {
               count++;
             }
-          } else if (option.type === 'other') {
-            // count++;
           }
         }
         if (count >= requirements.required) {
