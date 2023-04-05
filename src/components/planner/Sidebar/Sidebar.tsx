@@ -12,6 +12,7 @@ import { ObjectID } from 'bson';
 export interface CourseSelectorContainerProps {
   degreeRequirements: DegreeRequirements;
   courses: string[];
+  transferCredits: string[];
   getSearchedDragId: GetDragIdByCourse;
   getRequirementDragId: GetDragIdByCourse;
 }
@@ -26,12 +27,11 @@ type ArrayElement<ArrayType extends readonly unknown[]> =
 function CourseSelectorContainer({
   degreeRequirements,
   courses,
+  transferCredits,
   getSearchedDragId,
   getRequirementDragId,
 }: CourseSelectorContainerProps) {
   // TODO: Provide UI indicator for errors
-
-  console.log(degreeRequirements);
 
   const { data, isLoading } = trpc.courses.publicGetAllCourses.useQuery();
 
@@ -56,6 +56,9 @@ function CourseSelectorContainer({
   let sum = 0;
   courses.forEach((string) => {
     sum += getSemesterHourFromCourseCode(string) ?? 3;
+  });
+  transferCredits.forEach((credit) => {
+    sum += getSemesterHourFromCourseCode(credit) ?? 3;
   });
 
   const CreditsTaken = ({
@@ -84,15 +87,17 @@ function CourseSelectorContainer({
     <>
       {open ? (
         <div className="z-0 h-screen w-[30%] min-w-[30%] overflow-x-hidden overflow-y-scroll">
-          <div className="flex h-fit min-h-full w-full flex-col gap-y-4 bg-white p-4">
+          <div className="flex h-fit min-h-screen w-full flex-col gap-y-4 bg-white p-4">
             <div className="flex flex-col">
-              <div className="flex flex-row items-center justify-around">
-                <ChevronIcon
-                  onClick={() => setOpen(!open)}
-                  className={`h-4 w-4 cursor-pointer ${open ? '' : 'rotate-180'}`}
-                  strokeWidth={2.5}
-                />
-                <h1 className="pl-2 text-2xl font-medium tracking-tight">Plan Requirements</h1>
+              <div className="flex flex-row items-center justify-between">
+                <div className="flex flex-row items-center justify-center">
+                  <ChevronIcon
+                    onClick={() => setOpen(!open)}
+                    className={`h-4 w-4 cursor-pointer ${open ? '' : 'rotate-180'}`}
+                    strokeWidth={2.5}
+                  />
+                  <h1 className="pl-2 text-2xl font-medium tracking-tight">Plan Requirements</h1>
+                </div>
                 <CreditsTaken
                   taken={sum}
                   min={
@@ -170,6 +175,15 @@ function CourseSelectorContainer({
                 </div>
               </div>
             )}
+            <div className="flex flex-grow items-end justify-end text-sm ">
+              <div>
+                <span className="font-bold">Warning:</span> This is an unofficial tool not
+                affiliated with the university. For official advice, please consult the course
+                catalog and confirm with your department advisors. <br /> <br />
+                Problems with degree or prerequisite validation? Request edits here or send an email
+                to planner@utdnebula.com.
+              </div>
+            </div>
           </div>
         </div>
       ) : (

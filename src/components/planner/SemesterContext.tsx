@@ -168,7 +168,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
 
   const handleDeleteAllSelectedCourses = () => {
     for (const semester of semesters) {
-      for (const { id } of semester.courses) {
+      for (const { id, code } of semester.courses) {
         const courseId = id.toString();
 
         if (selectedCourseIds.has(courseId)) {
@@ -176,6 +176,24 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
             type: 'removeCourseFromSemester',
             courseId,
             semesterId: semester.id.toString(),
+          });
+          addTask({
+            func: ({ semesterId, courseName }) =>
+              toast
+                .promise(
+                  removeCourse.mutateAsync({ planId, semesterId, courseName }),
+                  {
+                    pending: 'Removing course ' + courseName + '...',
+                    success: 'Removed course ' + courseName + '!',
+                    error: 'Error in removing ' + courseName,
+                  },
+                  {
+                    autoClose: 1000,
+                    position: 'bottom-right',
+                  },
+                )
+                .catch((err) => console.error(err)),
+            args: { semesterId: semester.id.toString(), courseName: code },
           });
         }
       }
@@ -383,7 +401,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
   const removeCourse = trpc.plan.removeCourseFromSemester.useMutation({
     async onSuccess() {
       await utils.validator.degreeValidator.invalidate();
-      utils.validator.prereqValidator.invalidate();
+      await utils.validator.prereqValidator.invalidate();
     },
   });
 
