@@ -214,6 +214,7 @@ export default function Planner({
         </section>
         <CourseSelectorContainer
           courses={courseCodes}
+          transferCredits={transferCredits}
           degreeRequirements={degreeRequirements}
           getSearchedDragId={(course) => `course-list-searched-${course.id}`}
           getRequirementDragId={(course) => `course-list-requirement-${course.id}`}

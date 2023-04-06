@@ -15,8 +15,8 @@ import {
 import { GetDragIdByCourseAndReq } from '../types';
 import { RecursiveRequirement } from './RecursiveRequirement';
 import { useSemestersContext } from '../SemesterContext';
-import { JSONCourse } from '@/data/courses.json';
 import * as HoverCard from '@radix-ui/react-hover-card';
+import { JSONCourse } from '@/data/courses.json';
 
 function RequirementContainerHeader({
   name,
@@ -109,20 +109,6 @@ const getRequirementGroup = (
 
   let courses: string[] = [];
   switch (degreeRequirement.matcher) {
-    case 'Or':
-      return {
-        name: degreeRequirement.metadata.name,
-
-        progress: {
-          value: degreeRequirement.filled ? 1 : 0,
-          max: 1,
-          unit: 'req',
-        },
-        description: degreeRequirement.metadata.description ?? '',
-        req: degreeRequirement,
-        getData: () => Promise.resolve(degreeRequirement.requirements),
-        filterFunction: filterFunc,
-      };
     case 'And':
       return {
         name: degreeRequirement.metadata.name,
@@ -130,20 +116,6 @@ const getRequirementGroup = (
         progress: {
           value: degreeRequirement.num_fulfilled_requirements,
           max: degreeRequirement.num_requirements,
-          unit: 'reqs',
-        },
-        description: degreeRequirement.metadata.description ?? '',
-        req: degreeRequirement,
-        getData: () => Promise.resolve(degreeRequirement.requirements),
-        filterFunction: filterFunc,
-      };
-    case 'Select':
-      return {
-        name: degreeRequirement.metadata.name,
-
-        progress: {
-          value: degreeRequirement.fulfilled_count,
-          max: degreeRequirement.required_count,
           unit: 'reqs',
         },
         description: degreeRequirement.metadata.description ?? '',
@@ -272,10 +244,6 @@ export const ProgressComponent = ({
 
 export const displayRequirementProgress = (elm: RequirementGroupTypes) => {
   switch (elm.matcher) {
-    case 'Select':
-      return { value: elm.fulfilled_count, max: elm.required_count };
-    case 'Or':
-      return { value: elm.filled ? 1 : 0, max: 1 };
     case 'And':
       return { value: elm.num_fulfilled_requirements, max: elm.num_requirements };
     case 'CS Guided Electives':
@@ -300,12 +268,13 @@ export default function RequirementsContainer({
   courses,
   getCourseItemDragId,
 }: RequirementsContainerProps) {
+  const [requirementIdx, setRequirementIdx] = React.useState<number>(0);
+
   const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
     staleTime: Infinity,
     cacheTime: Infinity,
     refetchOnWindowFocus: false,
   });
-  const [requirementIdx, setRequirementIdx] = React.useState<number>(0);
 
   /**
    * These hooks manage the carousel state for RequirementsCarousel
@@ -329,10 +298,10 @@ export default function RequirementsContainer({
       carousel={carousel}
       requirementsList={
         <Accordion
-          startOpen={true}
+          startOpen={false}
           header={
-            <div className="mr-2 flex w-full flex-row justify-between gap-2">
-              <div className="my-1 w-52 overflow-hidden text-ellipsis whitespace-nowrap text-start text-xl  font-semibold lg:w-4/5 ">
+            <div className="mr-2 flex w-[calc(100%-2rem)] flex-row justify-between gap-2 ">
+              <div className="my-1 overflow-hidden text-ellipsis whitespace-nowrap text-start text-xl  font-semibold  ">
                 {degreeRequirement.name}
               </div>
 
@@ -367,7 +336,7 @@ export default function RequirementsContainer({
                     key={idx}
                   >
                     <div className="w-[50%] flex-grow justify-start overflow-hidden text-ellipsis whitespace-nowrap text-start font-medium lg:w-4/5">
-                      {elm.metadata ? elm.metadata.name : 'hi'}
+                      {name}
                     </div>
                     <div className="flex items-center">
                       <div className="flex flex-row items-center px-[5px] text-[11px]">
@@ -406,12 +375,13 @@ function RequirementContainer({
   setCarousel,
   courses,
 }: RequirementContainerProps): JSX.Element {
-  // Handles logic for displaying correct requirement group
   const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
     staleTime: Infinity,
     cacheTime: Infinity,
     refetchOnWindowFocus: false,
   });
+
+  // Handles logic for displaying correct requirement group
   const { name, progress, description, getData, filterFunction } = getRequirementGroup(
     degreeRequirement,
     q.data,
@@ -456,7 +426,7 @@ function RequirementContainer({
       <RequirementContainerHeader name={name} progress={progress} setCarousel={setCarousel} />
       <div className="text-[14px]">{description}</div>
 
-      <div className=" flex h-full flex-col gap-y-2 overflow-x-hidden overflow-y-scroll">
+      <div className=" flex h-full flex-col gap-y-2 overflow-x-hidden">
         <RequirementSearchBar updateQuery={updateQuery} />
         {sortedResults.map((req, idx) => {
           return (
