@@ -381,10 +381,6 @@ section:nth-child(odd) {
   margin-top: 3vh;
 }
 
-.team:not(.active) {
-  display: none;
-}
-
 .hidden {
   display: none;
 }
