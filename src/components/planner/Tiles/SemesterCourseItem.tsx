@@ -99,12 +99,16 @@ export const MemoizedSemesterCourseItem = React.memo(
 
         <PrereqWarnHoverCard
           prereqs={requirementsData === undefined ? [[], [], []] : requirementsData}
-          open={hoverIconOpen && !course.prereqOveridden}
+          open={hoverIconOpen}
+          prereqOverriden={course.prereqOveridden}
           onOpenChange={(hoverOpen) => {
             console.info('not used');
           }}
           title={title || ''}
           isValid={isValid}
+          onPrereqOverrideChange={() =>
+            onPrereqOverrideChange && onPrereqOverrideChange(!course.prereqOveridden)
+          }
         >
           <div className="flex w-full flex-row items-center gap-x-3">
             <SemesterCourseItemDropdown
@@ -116,10 +120,6 @@ export const MemoizedSemesterCourseItem = React.memo(
                 setDropdownOpen(open);
               }}
               locked={course.locked}
-              onPrereqOverrideChange={() =>
-                onPrereqOverrideChange && onPrereqOverrideChange(!course.prereqOveridden)
-              }
-              prereqOverriden={course.prereqOveridden}
               semesterLocked={semesterLocked || false}
               toggleLock={() => onLockChange && onLockChange(!course.locked)}
               changeColor={(color) => onColorChange && onColorChange(color)}
@@ -215,14 +215,14 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
   const coreqData = requirementsData.data?.coreq?.get(course.code);
   const coorpreData = requirementsData.data?.coorepre?.get(course.code);
   if (coreqData) {
-    isValid[1] = coreqData.length > 0 ? false : true;
+    isValid[1] = coreqData.length <= 0;
     coreqData.map((data) => {
       const tmp = data[0].join(', ');
       hoverList[1].push(tmp.concat(' (', data[1].toString(), ' required)'));
     });
   }
   if (prereqData) {
-    isValid[0] = prereqData.length > 0 ? false : true;
+    isValid[0] = prereqData.length <= 0;
     prereqData.map((data) => {
       const tmp = data[0].join(', ');
       hoverList[0].push(tmp.concat(' (', data[1].toString(), ' required)'));
@@ -230,7 +230,7 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
   }
 
   if (coorpreData) {
-    isValid[2] = coorpreData.length > 0 ? false : true;
+    isValid[2] = coorpreData.length <= 0;
     coorpreData.map((data) => {
       const tmp = data[0].join(', ');
       hoverList[2].push(tmp.concat(' (', data[1].toString(), ' required)'));
