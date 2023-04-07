@@ -41,6 +41,21 @@ export const MemoizedSemesterTile = React.memo(
       handleCoursePrereqOverride,
     } = useSemestersContext();
 
+    const SemesterCredits = ({ taken }: { taken: number }) => {
+      if (taken <= 19) {
+        return (
+          <div className="flex items-center gap-x-3 rounded-full bg-primary-100 px-3 py-2">
+            <span className="text-xs font-semibold text-primary-500">{taken}/19 Credits Taken</span>
+          </div>
+        );
+      }
+      return (
+        <div className="flex items-center gap-x-3 rounded-full bg-yellow-100 px-3 py-2">
+          <span className="text-xs font-semibold text-yellow-500">{taken}/19 Credits Taken</span>
+        </div>
+      );
+    };
+
     // QUESTION: isValid color?
     return (
       <div
@@ -52,13 +67,19 @@ export const MemoizedSemesterTile = React.memo(
         <span className={`h-2 w-full transition-all ${tagColors[semester.color]}`}></span>
         <div className="flex flex-col gap-y-4 px-4 py-2">
           <article className="w-full">
-            <ChevronIcon
-              className={`${
-                open ? '-rotate-90' : 'rotate-90'
-              } ml-auto h-3 w-3 transform cursor-pointer text-neutral-500 transition-all duration-500`}
-              fontSize="inherit"
-              onClick={() => setOpen(!open)}
-            />
+            <div className={`flex h-3 flex-row items-center justify-center gap-2 align-middle`}>
+              {semester.courses.forEach}
+              <SemesterCredits
+                taken={semester.courses.reduce((taken, current) => taken + (current.hours ?? 3), 0)}
+              />
+              <ChevronIcon
+                className={`${
+                  open ? '-rotate-90' : 'rotate-90'
+                } ml-auto h-3 w-3 transform cursor-pointer text-neutral-500 transition-all duration-500`}
+                fontSize="inherit"
+                onClick={() => setOpen(!open)}
+              />
+            </div>
           </article>
           <div
             className={`flex flex-row items-center justify-between ${

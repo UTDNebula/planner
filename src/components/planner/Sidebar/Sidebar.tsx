@@ -70,9 +70,18 @@ function CourseSelectorContainer({
     min: number;
     unit?: string;
   }) => {
+    if (taken >= min) {
+      return (
+        <div className="flex items-center gap-x-3 rounded-full bg-primary-100 px-3 py-2">
+          <span className="text-xs font-semibold text-primary-800">
+            {taken}/{min} {unit}
+          </span>
+        </div>
+      );
+    }
     return (
-      <div className="flex items-center gap-x-3 rounded-full bg-primary-100 px-3 py-2">
-        <span className="text-xs font-semibold text-primary-800">
+      <div className="flex items-center gap-x-3 rounded-full bg-yellow-100 px-3 py-2">
+        <span className="text-xs font-semibold text-yellow-500">
           {taken}/{min} {unit}
         </span>
       </div>
