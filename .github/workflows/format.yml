@@ -6,6 +6,12 @@ on:
   # but only for the main branch
   pull_request:
     type: [ready_for_review]
+    paths:
+      - "www/**"
+
+defaults:
+  run:
+    working-directory: www
 
 jobs:
   run-linters:

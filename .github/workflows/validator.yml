@@ -2,7 +2,15 @@ name: Build
 
 on:
   push:
+    paths:
+      - "degree-validator/**"
   pull_request:
+    paths:
+      - "degree-validator/**"
+
+defaults:
+  run:
+    working-directory: degree-validator
 
 jobs:
   release:
