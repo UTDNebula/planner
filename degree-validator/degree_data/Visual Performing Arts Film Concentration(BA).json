@@ -1,0 +1,337 @@
+{
+  "abbreviation": "Visual and Performing Arts with Film Concentration (BA)",
+  "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ah/visual-and-performing-arts-film",
+  "minimum_credit_hours": 120,
+  "name": "Bachelor of Arts in Visual and Performing Arts with Film Concentration",
+  "school": "School of Arts, Humanities, and Technology",
+  "year": "2022-2023",
+  "requirements": {
+    "core": "@import ./core.json",
+    "major": [
+      {
+        "matcher": "CourseRequirement",
+        "course": "FILM 2332",
+        "metadata": {
+          "id": "Visual and Performing Arts with Film Concentration (BA)-0"
+        }
+      },
+      {
+        "matcher": "OtherRequirement",
+        "description": "3 semester credit hours of lower-level Visual and Performing Arts Prep Course",
+        "metadata": {
+          "id": "e9ce0d6f-c441-4c77-ab0b-063ec483bf2f"
+        }
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "VPAS 3340",
+        "metadata": {
+          "id": "Visual and Performing Arts with Film Concentration (BA)-1"
+        }
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "VPAS 4389",
+        "metadata": {
+          "id": "Visual and Performing Arts with Film Concentration (BA)-2"
+        }
+      },
+      {
+        "matcher": "OrRequirement",
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "VPAS 4390",
+            "metadata": {
+              "id": "Visual and Performing Arts with Film Concentration (BA)-4"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "VPAS 4V99",
+            "metadata": {
+              "id": "Visual and Performing Arts with Film Concentration (BA)-5"
+            }
+          }
+        ],
+        "metadata": {
+          "id": "Visual and Performing Arts with Film Concentration (BA)-3"
+        }
+      },
+      {
+        "matcher": "OtherRequirement",
+        "description": "3 semester credit hours of upper-level Related Courses from the School of Arts and Humanities (excluding the AHST prefix)",
+        "metadata": {
+          "id": "0ff2d0b1-571f-4cda-ada8-1a95db7b0c36"
+        }
+      },
+      {
+        "matcher": "HoursRequirement",
+        "required_hours": 3,
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "ARTS 3311",
+            "metadata": {
+              "id": "Visual and Performing Arts with Film Concentration (BA)-7"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ARTS 4310",
+            "metadata": {
+              "id": "Visual and Performing Arts with Film Concentration (BA)-8"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "COMM 4370",
+            "metadata": {
+              "id": "Visual and Performing Arts with Film Concentration (BA)-9"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "COMM 4371",
+            "metadata": {
+              "id": "Visual and Performing Arts with Film Concentration (BA)-10"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ENTP 3301",
+            "metadata": {
+              "id": "Visual and Performing Arts with Film Concentration (BA)-11"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ISAH 4V50",
+            "metadata": {
+              "id": "Visual and Performing Arts with Film Concentration (BA)-12"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "VPAS 4310",
+            "metadata": {
+              "id": "Visual and Performing Arts with Film Concentration (BA)-13"
+            }
+          }
+        ],
+        "metadata": {
+          "id": "Visual and Performing Arts with Film Concentration (BA)-6"
+        }
+      },
+      {
+        "matcher": "HoursRequirement",
+        "required_hours": 9,
+        "requirements": [
+          {
+            "matcher": "SomeRequirement",
+            "requirements": [{
+              "matcher": "CourseRequirement",
+              "course": "FILM 3321",
+              "metadata": {
+                "id": "Visual and Performing Arts with Film Concentration (BA)-15"
+              }
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "FILM 3325",
+              "metadata": {
+                "id": "Visual and Performing Arts with Film Concentration (BA)-16"
+              }
+            }],
+            "metadata": {
+              "id": "22c4107e-17ee-4774-9ebc-5c051400092c"
+            }
+          }
+        ],
+        "metadata": {
+          "id": "Visual and Performing Arts with Film Concentration (BA)-14"
+        }
+      },
+      {
+        "matcher": "HoursRequirement",
+        "required_hours": 6,
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "FILM 3321",
+            "metadata": {
+              "id": "Visual and Performing Arts with Film Concentration (BA)-18"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "FILM 3325",
+            "metadata": {
+              "id": "Visual and Performing Arts with Film Concentration (BA)-19"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "FILM 3342",
+            "metadata": {
+              "id": "Visual and Performing Arts with Film Concentration (BA)-20"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "FILM 4V71",
+            "metadata": {
+              "id": "Visual and Performing Arts with Film Concentration (BA)-21"
+            }
+          }
+        ],
+        "metadata": {
+          "id": "Visual and Performing Arts with Film Concentration (BA)-17"
+        }
+      },
+      {
+        "matcher": "HoursRequirement",
+        "required_hours": 6,
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "AHST 3324",
+            "metadata": {
+              "id": "Visual and Performing Arts with Film Concentration (BA)-23"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ATCM 2322",
+            "metadata": {
+              "id": "Visual and Performing Arts with Film Concentration (BA)-24"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ATCM 2321",
+            "metadata": {
+              "id": "Visual and Performing Arts with Film Concentration (BA)-25"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ATCM 3321",
+            "metadata": {
+              "id": "Visual and Performing Arts with Film Concentration (BA)-26"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ATCM 3325",
+            "metadata": {
+              "id": "Visual and Performing Arts with Film Concentration (BA)-27"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ATCM 3331",
+            "metadata": {
+              "id": "Visual and Performing Arts with Film Concentration (BA)-28"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ATCM 4322",
+            "metadata": {
+              "id": "Visual and Performing Arts with Film Concentration (BA)-29"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ATCM 4323",
+            "metadata": {
+              "id": "Visual and Performing Arts with Film Concentration (BA)-30"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ATCM 4325",
+            "metadata": {
+              "id": "Visual and Performing Arts with Film Concentration (BA)-31"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ATCM 4327",
+            "metadata": {
+              "id": "Visual and Performing Arts with Film Concentration (BA)-32"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "BIS 3320",
+            "metadata": {
+              "id": "Visual and Performing Arts with Film Concentration (BA)-33"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "COMM 3352",
+            "metadata": {
+              "id": "Visual and Performing Arts with Film Concentration (BA)-34"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CRWT 3354",
+            "metadata": {
+              "id": "Visual and Performing Arts with Film Concentration (BA)-35"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CRWT 4355",
+            "metadata": {
+              "id": "Visual and Performing Arts with Film Concentration (BA)-36"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "GST 2300",
+            "metadata": {
+              "id": "Visual and Performing Arts with Film Concentration (BA)-37"
+            }
+          }
+        ],
+        "metadata": {
+          "id": "Visual and Performing Arts with Film Concentration (BA)-22"
+        }
+      },
+      {
+        "matcher": "OtherRequirement",
+        "description": "6 semester credit hours of upper-division Visual and Performing Arts electives: Students may select any combination of upper-division courses in Art History, Communication, Dance, Film Studies, Music, Theatre, Visual Art, and/or Visual and Performing Arts.",
+        "metadata": {
+          "id": "a33242cb-a20d-4831-8162-6a46fe61d196"
+        }
+      },
+      {
+        "matcher": "OtherRequirement",
+        "description": "6 semester credit hours of Major Related courses: Students may select any combination of upper-division courses from the School of Arts and Humanities.",
+        "metadata": {
+          "id": "cd45515c-f6be-4cde-a2c3-da3d5244c24f"
+        }
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "ARHM 1100",
+        "metadata": {
+          "id": "Visual and Performing Arts with Film Concentration (BA)-38"
+        }
+      },
+      {
+        "matcher": "FreeElectiveRequirement",
+        "required_hours": 30,
+        "excluded_courses": [],
+        "metadata": {
+          "id": "Visual and Performing Arts with Film Concentration (BA)-39"
+        }
+      }
+    ]
+  }
+}

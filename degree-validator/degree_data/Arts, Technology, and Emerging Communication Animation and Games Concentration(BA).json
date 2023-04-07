@@ -1,0 +1,98 @@
+{
+  "abbreviation": "Arts, Technology, and Emerging Communication Animation and Games Concentration (BA)",
+  "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/atec/arts-and-technology-animation",
+  "minimum_credit_hours": 120,
+  "name": "Bachelor of Arts in Arts, Technology, and Emerging Communication with Animation and Games Concentration (BA)",
+  "school": "School of Arts, Technology, and Emerging Communication",
+  "subtype": "Major",
+  "year": "2022-2023",
+  "requirements": {
+    "core": "@import ./core.json",
+    "major": [
+      {
+        "matcher": "CourseRequirement",
+        "course": "ATCM 2300",
+        "metadata": { "id": "93bdde17-4079-4a19-9891-a0a7ff8ee279" }
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "ATCM 2301",
+        "metadata": { "id": "0dfec53a-0a44-4fcd-a989-8f44becaa186" }
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "ATCM 2302",
+        "metadata": { "id": "dddf48d4-f97f-4fef-b8a4-7c12d6bc605f" }
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "CS 1335",
+        "metadata": { "id": "9bdc6974-a3fa-4e15-b0ee-61616f3099e1" }
+      },
+      {"matcher":"CourseRequirement","course":"ATCM 2303","metadata":{"id":"fa202c73-5489-4164-abb6-1d8cdf0025e2"}},{"matcher":"CourseRequirement","course":"ATCM 2310","metadata":{"id":"0c2dc393-d369-4e2b-a242-8554ecd594d8"}},
+      {
+        "matcher": "OrRequirement",
+        "requirements": [{"matcher":"CourseRequirement","course":"ATCM 2321","metadata":{"id":"e043a122-4c30-4cc4-b453-f8df3dfcef8d"}},{"matcher":"CourseRequirement","course":"ATCM 2330","metadata":{"id":"075b4a32-16c4-411c-8cd6-55ba8a4ff8bd"}},{"matcher":"CourseRequirement","course":"ATCM 2345","metadata":{"id":"0ed46225-3e5a-4c85-9d91-8e059eb513ec"}},{"matcher":"CourseRequirement","course":"ATCM 2350","metadata":{"id":"ca2e2105-8f2b-49bd-a327-d51c2c9208f9"}},{"matcher":"CourseRequirement","course":"ATCM 2355","metadata":{"id":"956567b5-6fe9-4295-a97d-01c3c97972da"}}],
+        "metadata": {
+          "id": "589b9eaf-8bfa-4ba0-ab57-3242b96a0ff8"
+        }
+      },
+      {
+        "matcher": "OrRequirement",
+        "requirements": [{"matcher":"CourseRequirement","course":"ATCM 2315","metadata":{"id":"65941985-3e03-4890-8fb8-e62b7e8e79ab"}},{"matcher":"CourseRequirement","course":"ATCM 2375","metadata":{"id":"de98f84a-682d-44e8-8de3-8d2465785620"}}],
+        "metadata": {
+          "id": "4a5ff970-8eb4-46ac-9400-bfc6fd84c11c"
+        }
+      },
+      {
+        "matcher": "ATECPrescribedElectiveRequirement",
+        "requirement_count": 5,
+        "requirements": [{"matcher":"CourseRequirement","course":"ATCM 3305","metadata":{"id":"a857bb1d-9ad9-4ff3-8993-8cc0bfd11619"}},{"matcher":"CourseRequirement","course":"ATCM 3306","metadata":{"id":"4270ed7d-21fa-48d4-b9b1-19b406f51d20"}},{"matcher":"CourseRequirement","course":"ATCM 3307","metadata":{"id":"d44fc9f7-1d25-461e-aa47-3acad1b77333"}},{"matcher":"CourseRequirement","course":"ATCM 3308","metadata":{"id":"29b09646-7c5d-4a26-ba73-464288c775c7"}},{"matcher":"CourseRequirement","course":"ATCM 3312","metadata":{"id":"7d91b95b-1cfc-4d3c-82e4-62ba8909db31"}},{"matcher":"CourseRequirement","course":"ATCM 3338","metadata":{"id":"ebb4c58e-a4bb-4379-9065-42e06cbab9f8"}},{"matcher":"CourseRequirement","course":"ATCM 3365","metadata":{"id":"f2b2a1cf-148e-44dc-81c8-fcffb599fdf8"}},{"matcher":"CourseRequirement","course":"ATCM 3367","metadata":{"id":"4c1571ad-7969-435b-97bf-11da2123f8f7"}},{"matcher":"CourseRequirement","course":"ATCM 3370","metadata":{"id":"405d34d7-3750-47b2-8f68-d93c4188a764"}},{"matcher":"CourseRequirement","course":"ATCM 4305","metadata":{"id":"cf6751e8-4457-4ff1-a9c0-d7034f75fb5b"}},{"matcher":"CourseRequirement","course":"ATCM 4306","metadata":{"id":"5c1b3de7-2044-4103-b346-d77345aefa34"}},{"matcher":"CourseRequirement","course":"ATCM 4307","metadata":{"id":"03aab884-53c3-4e8b-995e-29f48e7c8532"}},{"matcher":"CourseRequirement","course":"ATCM 4308","metadata":{"id":"4143bd37-4d7c-4f29-99de-08bfa43796ac"}},{"matcher":"CourseRequirement","course":"ATCM 4338","metadata":{"id":"7da67656-dcf0-4120-b2dd-ebf12acc40cd"}},{"matcher":"CourseRequirement","course":"ATCM 4365","metadata":{"id":"babca50d-a27d-4b61-b3ea-bf7257d75351"}},{"matcher":"CourseRequirement","course":"ATCM 4367","metadata":{"id":"d5bb10e0-1afb-4935-aa75-2ae907507ea9"}},{"matcher":"CourseRequirement","course":"ATCM 4370","metadata":{"id":"e6436233-d4ff-4672-bee3-fca7fc78251a"}}],
+        "minimum_hours_in_area": 0,
+        "metadata": {
+          "id": "9a04f0c3-de9e-42ae-9008-28002e1a5f9a"
+        },
+        "required_4000_level_courses": 2
+      },
+      {
+        "matcher": "OrRequirement",
+        "requirements": [{"matcher":"CourseRequirement","course":"ATCM 3315","metadata":{"id":"b8352030-215e-4ca1-b061-6c52e56d9743"}},{"matcher":"CourseRequirement","course":"ATCM 3366","metadata":{"id":"06d174ca-145e-4a8d-afed-9af6da8763f0"}}],
+        "metadata": {
+          "id": "35688c9e-ed26-4f2d-b99e-424096786840"
+        }
+      },
+      {
+        "matcher": "OrRequirement",
+        "requirements": [{"matcher":"CourseRequirement","course":"ATCM 3311","metadata":{"id":"a58e13d8-9e1b-4b97-a28a-741e2d2d607b"}},{"matcher":"CourseRequirement","course":"ATCM 3368","metadata":{"id":"1fc9d543-b2df-4ad1-a8c8-9b2322d3d7bf"}},{"matcher":"CourseRequirement","course":"CS 3360","metadata":{"id":"473f9a14-a4e3-4cf4-8543-e6b0fde94e68"}}],
+        "metadata": {
+          "id": "6f3c2f7a-3a99-4a95-85fa-14378fb23ff6"
+        }
+      },
+      {
+        "matcher": "OrRequirement",
+        "requirements": [{"matcher":"CourseRequirement","course":"ATCM 4397","metadata":{"id":"1ae434fc-2483-4a0f-964f-7d61c51c39cf"}},{"matcher":"CourseRequirement","course":"ATCM 4398","metadata":{"id":"1571ea43-0110-4a99-9885-35f7746b4eb6"}},{"matcher":"CourseRequirement","course":"ATCM 4399","metadata":{"id":"d692dd5e-ee55-492e-8329-bdf17096d131"}}],
+        "metadata": {
+          "id": "3a767ce7-a3af-4d80-85ea-559ac654d037"
+        }
+      },
+      {
+        "matcher": "ATECPrescribedElectiveRequirement",
+        "requirement_count": 5,
+        "requirements": [{"matcher":"CourseRequirement","course":"ATCM 3301","metadata":{"id":"2f556d23-5a3d-46b2-a217-3e0dbd53c71b"}},{"matcher":"CourseRequirement","course":"ATCM 3303","metadata":{"id":"1244950a-5986-43ad-a685-34fb0f022e17"}},{"matcher":"CourseRequirement","course":"ATCM 3305","metadata":{"id":"441f08d4-6988-4b3f-b349-635f733f31ce"}},{"matcher":"CourseRequirement","course":"ATCM 3306","metadata":{"id":"e3de9e85-828a-4d59-b77f-3b33179e9255"}},{"matcher":"CourseRequirement","course":"ATCM 3307","metadata":{"id":"37295e5d-7dd4-4a8d-ad01-a7ec8c278308"}},{"matcher":"CourseRequirement","course":"ATCM 3308","metadata":{"id":"bc6832b4-a8eb-43d7-b748-bb9a967e0164"}},{"matcher":"CourseRequirement","course":"ATCM 3309","metadata":{"id":"1380f62a-d3e0-4617-8adf-2714c7d8765b"}},{"matcher":"CourseRequirement","course":"ATCM 3310","metadata":{"id":"2cc8772c-8489-4029-be5d-199838c060f8"}},{"matcher":"CourseRequirement","course":"ATCM 3311","metadata":{"id":"cceba1f7-10bc-423f-bb1b-f2e329033d93"}},{"matcher":"CourseRequirement","course":"ATCM 3312","metadata":{"id":"3aa54d8d-dc26-48a8-a813-5c66d5ea1c85"}},{"matcher":"CourseRequirement","course":"ATCM 3313","metadata":{"id":"0f842eea-d339-4f5e-a785-e7a476eafb9d"}},{"matcher":"CourseRequirement","course":"ATCM 3315","metadata":{"id":"a67a24f3-aa4b-4274-b368-83da815c7971"}},{"matcher":"CourseRequirement","course":"ATCM 3350","metadata":{"id":"412867b4-d19d-412f-be43-8c75c05069cb"}},{"matcher":"CourseRequirement","course":"ATCM 3365","metadata":{"id":"ffcd234b-1246-46a1-8b66-f14ca550cc72"}},{"matcher":"CourseRequirement","course":"ATCM 3366","metadata":{"id":"ea80f14d-904f-4044-9f72-42f53f9e1042"}},{"matcher":"CourseRequirement","course":"ATCM 3367","metadata":{"id":"bf0c2985-a05c-4b85-8f73-f8a2eac2e8fc"}},{"matcher":"CourseRequirement","course":"ATCM 3368","metadata":{"id":"0aff0ea2-59e0-43df-a4d4-4bf22260b0ec"}},{"matcher":"CourseRequirement","course":"ATCM 3369","metadata":{"id":"53f62866-d044-43e2-b6c2-e24921187325"}},{"matcher":"CourseRequirement","course":"ATCM 3370","metadata":{"id":"5b3add3a-6926-4e20-a0e4-358dad3b54e9"}},{"matcher":"CourseRequirement","course":"ATCM 3371","metadata":{"id":"6ec4eae8-79b6-4368-bbf6-b038196ecfd3"}},{"matcher":"CourseRequirement","course":"ATCM 3372","metadata":{"id":"ce659374-e90c-43c9-90c7-b7d0c9e43d4c"}},{"matcher":"CourseRequirement","course":"ATCM 3338","metadata":{"id":"d4481962-f7e4-4c19-a53d-43d8fbe4a5d2"}},{"matcher":"CourseRequirement","course":"ATCM 4305","metadata":{"id":"ec28f494-04a6-495d-86bc-2834f90c125a"}},{"matcher":"CourseRequirement","course":"ATCM 4306","metadata":{"id":"a43cd38b-17ec-41f1-9a03-2a52d7f453b8"}},{"matcher":"CourseRequirement","course":"ATCM 4307","metadata":{"id":"22481dbe-04ef-431b-a366-979559997625"}},{"matcher":"CourseRequirement","course":"ATCM 4308","metadata":{"id":"baadbda6-27ba-482a-a6c1-8d6353e97c1c"}},{"matcher":"CourseRequirement","course":"ATCM 4309","metadata":{"id":"72d90c8b-f7da-4f65-afc5-5356a4dfd23a"}},{"matcher":"CourseRequirement","course":"ATCM 4310","metadata":{"id":"d7a608a9-912a-4848-bea2-2798f238b9c9"}},{"matcher":"CourseRequirement","course":"ATCM 4312","metadata":{"id":"e4b35c57-39d1-48b1-b549-da09ce9eb191"}},{"matcher":"CourseRequirement","course":"ATCM 4313","metadata":{"id":"602f8f54-c666-4279-9165-5232675e05f2"}},{"matcher":"CourseRequirement","course":"ATCM 4314","metadata":{"id":"d023b4d2-41df-43e2-b160-60dc30a774c4"}},{"matcher":"CourseRequirement","course":"ATCM 4315","metadata":{"id":"fda36072-3859-4647-b057-41a5d374e4ba"}},{"matcher":"CourseRequirement","course":"ATCM 4316","metadata":{"id":"c3df742e-ea81-4df0-8749-4bced829907b"}},{"matcher":"CourseRequirement","course":"ATCM 4317","metadata":{"id":"f15d76fd-9b77-49ec-b0d4-2bf6b7caa45f"}},{"matcher":"CourseRequirement","course":"ATCM 4318","metadata":{"id":"e6487d52-dae3-4fcf-822a-458e93108f92"}},{"matcher":"CourseRequirement","course":"ATCM 4319","metadata":{"id":"899aa734-f741-4c81-8a60-b2d2f02cdbcb"}},{"matcher":"CourseRequirement","course":"ATCM 4338","metadata":{"id":"abd837b7-25a7-418e-8f9f-ac49e57bbeac"}},{"matcher":"CourseRequirement","course":"ATCM 4365","metadata":{"id":"2d2d0df3-b3fd-4a09-92ef-e8c28f894995"}},{"matcher":"CourseRequirement","course":"ATCM 4366","metadata":{"id":"7f77baba-9a46-40a8-b17d-6605a093e1c1"}},{"matcher":"CourseRequirement","course":"ATCM 4367","metadata":{"id":"f1aa7158-d83e-49d5-820c-3287a473d6d6"}},{"matcher":"CourseRequirement","course":"ATCM 4368","metadata":{"id":"6129611e-de65-4d59-9128-23a61827f916"}},{"matcher":"CourseRequirement","course":"ATCM 4370","metadata":{"id":"c31ea433-7497-48ec-bdb2-c45440ff495e"}},{"matcher":"CourseRequirement","course":"ATCM 4373","metadata":{"id":"e2efe261-f4c3-4620-b74d-673101e48389"}},{"matcher":"CourseRequirement","course":"ATCM 4376","metadata":{"id":"e4c3d39d-db3d-48e2-b50f-21049c4c18c9"}},{"matcher":"CourseRequirement","course":"ATCM 4377","metadata":{"id":"2d4a0315-8687-42ba-9951-772fe2bdacdd"}},{"matcher":"CourseRequirement","course":"ATCM 4379","metadata":{"id":"26ad8076-de24-4463-a2a5-8e85023e6552"}},{"matcher":"CourseRequirement","course":"ATCM 4384","metadata":{"id":"5e91bc4a-9ec6-4ffc-890c-bb540d96f100"}},{"matcher":"CourseRequirement","course":"ATCM 4311","metadata":{"id":"e9cf10a8-6ade-4505-a766-b53e5000a7f0"}},{"matcher":"CourseRequirement","course":"ATCM 4374","metadata":{"id":"2cdb3e9b-c536-4164-800c-0a1efc8d52c6"}}],
+        "minimum_hours_in_area": 0,
+        "metadata": {
+          "id": "8b522d01-a02a-4d60-8ee7-e434099f372c"
+        },
+        "required_4000_level_courses": 2
+      },
+      {
+        "matcher": "FreeElectiveRequirement",
+        "excluded_courses": [],
+        "required_hours": 15,
+        "metadata": {
+          "id": "6b2045bd-3cb5-4841-be3b-fb1234d73e8c"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,281 @@
+{
+    "_id": "Degree_Requirement_ObjectID_Here",
+    "subtype": "major",
+    "name": "Bachelor of Arts in Literature",
+    "year": "2022-2023",
+    "abbreviation": "B.A. in Literature",
+    "minimum_credit_hours": 120,
+    "school": "College of Arts and Humanities",
+    "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ah/literature",
+    "requirements": {
+      "type": "collection",
+      "name": "Degree Requirements",
+      "required": 3,
+      "options": [
+        {
+          "type": "collection",
+          "name": "Core Curriculum Requirements",
+          "required": -1,
+          "options": [
+            {
+              "type": "collection",
+              "name": "Communication",
+              "required": 1,
+              "options": [
+                {
+                  "type": "collection",
+                  "name": "Communication: Option 1",
+                  "required": 2,
+                  "options": [
+                    {
+                      "type": "course",
+                      "class_reference": "6241cc61e0a87a87f38b20cd",
+                      "minimum_grade": "D-"
+                    },
+                    {
+                      "type": "collection",
+                      "name": "Communication: Option 1.1",
+                      "required": 1,
+                      "options": [
+                        {
+                          "type": "course",
+                          "class_reference": "62414005e27d0c74c4094473",
+                          "minimum_grade": "D-"
+                        },
+                        {
+                          "type": "course",
+                          "class_reference": "62414011e27d0c74c409449d",
+                          "minimum_grade": "D-"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "core_flag": "010",
+                  "type": "core",
+                  "hours": 6
+                }
+              ]
+            },
+            {
+              "core_flag": "020",
+              "type": "core",
+              "hours": 3
+            },
+            {
+              "core_flag": "030",
+              "type": "core",
+              "hours": 6
+            },
+            {
+              "type": "collection",
+              "name": "Language, Philosophy and Culture",
+              "required": 1,
+              "options": [
+                {
+                  "type": "course",
+                  "class_reference": "62417f837a5c14bdce6aeb91",
+                  "minimum_grade": "D-"
+                },
+                {
+                  "core_flag": "040",
+                  "type": "core",
+                  "hours": 3
+                }
+              ]
+            },
+            {
+              "core_flag": "050",
+              "type": "core",
+              "hours": 3
+            },
+            {
+              "core_flag": "060",
+              "type": "core",
+              "hours": 6
+            },
+            {
+              "core_flag": "070",
+              "type": "core",
+              "hours": 6
+            },
+            {
+              "core_flag": "080",
+              "type": "core",
+              "hours": 3
+            },
+            {
+              "core_flag": "090",
+              "type": "core",
+              "hours": 6
+            }
+          ]
+        },
+        {
+          "type": "collection",
+          "name": "Major Requirements",
+          "required": 3,
+          "options": [
+            {
+              "type": "collection",
+              "name": "Major Preparatory Courses",
+              "required": 2,
+              "options": [
+                {
+                  "type": "course",
+                  "class_reference": "62404af42e493a3184b49fff",
+                  "minimum_grade": "D-"
+                },
+                {
+                  "type": "collection",
+                  "name": "Major Preparatory Courses: Option 1",
+                  "required": 2,
+                  "options": [
+                    {
+                      "type": "course",
+                      "class_reference": "6240a8c7ddc4b627a73c0755",
+                      "minimum_grade": "D-"
+                    },
+                    {
+                      "type": "course",
+                      "class_reference": "62404ab92e493a3184b49ff2",
+                      "minimum_grade": "D-"
+                    },
+                    {
+                      "type": "course",
+                      "class_reference": "624091c65ee50c3313e41345",
+                      "minimum_grade": "D-"
+                    },
+                    {
+                      "type": "course",
+                      "class_reference": "62417f837a5c14bdce6aeb91",
+                      "minimum_grade": "D-"
+                    }
+                  ]
+                }
+              ]
+            },
+  
+            {
+              "type": "collection",
+              "name": "Major Core Courses",
+              "required": 4,
+              "options": [
+                {
+                  "type": "course",
+                  "class_reference": "62417f857a5c14bdce6aeb9b",
+                  "minimum_grade": "D-"
+                },
+                {
+                  "type": "course",
+                  "class_reference": "62417f8b7a5c14bdce6aebb7",
+                  "minimum_grade": "D-"
+                },
+                {
+                  "type": "course",
+                  "class_reference": "62417434e38ffbda9329334a",
+                  "minimum_grade": "D-"
+                },
+                {
+                  "type": "course",
+                  "class_reference": "6240145835f5a269783ffaad",
+                  "minimum_grade": "D-"
+                }
+              ]
+            },
+            {
+              "type": "collection",
+              "name": "Major Distribution and Elective Courses",
+              "required": 4,
+              "options": [
+                {
+                  "type": "collection",
+                  "name": "Major Distribution and Elective Courses: Option 1",
+                  "required": 1,
+                  "options": [
+                    {
+                      "type": "course",
+                      "class_reference": "62410f07e27d0c74c4093e91",
+                      "minimum_grade": "D-"
+                    },
+                    {
+                      "type": "course",
+                      "class_reference": "6240141c35f5a269783ffaa2",
+                      "minimum_grade": "D-"
+                    },
+                    {
+                      "type": "other",
+                      "description": "Research and Writing",
+                      "condition": "3 semester credit hourse from any upper-division creative writing workshop (prefix CRWT)."
+                    }
+                  ]
+                },
+                {
+                  "type": "hours",
+                  "required": 6,
+                  "options": [
+                    {
+                      "type": "course",
+                      "class_reference": "62417432e38ffbda93293336",
+                      "minimum_grade": "D-"
+                    }
+                  ]
+                },
+                {
+                  "type": "hours",
+                  "required": 3,
+                  "options": [
+                    {
+                      "type": "course",
+                      "class_reference": "62400cf32e493a3184b49a69",
+                      "minimum_grade": "D-"
+                    },
+                    {
+                      "type": "course",
+                      "class_reference": "623efca2fe75bccce55a1290",
+                      "minimum_grade": "D-"
+                    }
+                  ]
+                },
+                {
+                  "type": "other",
+                  "description": "Major Distribution and Elective Courses: Option 4",
+                  "condition": "15 semester credit hours from any foreign language electives or upper-division LIT, or CRWT electives."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "collection",
+          "name": "Elective Requirements",
+          "required": 2,
+          "options": [
+            {
+              "type": "other",
+              "description": "upper-division credit hours",
+              "condition": "Students must complete at least 51 semester credit hours of upper-division courses to qualify for graduation."
+            },
+            {
+              "type": "collection",
+              "name": "Incoming Student Requirements",
+              "required": 1,
+              "options": [
+                {
+                  "type": "other",
+                  "description": "Incoming freshmen must enroll and complete requirements of ARHM 1100",
+                  "condition": "Not an incoming freshman"
+                },
+                {
+                  "type": "course",
+                  "class_reference": "62410ef2e27d0c74c4093e85",
+                  "minimum_grade": "D-"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }

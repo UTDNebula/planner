@@ -1,0 +1,486 @@
+{
+  "abbreviation": "Global Business and Human Resource Management(BS)",
+  "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/global-business-human-resource-management",
+  "minimum_credit_hours": 128,
+  "name": "Bachelor of Science in Global Business and Human Resource Management",
+  "school": "Naveen Jindal School of Management",
+  "subtype": "Major",
+  "year": "2022-2023",
+  "requirements": {
+    "core": "@import ./core.json",
+    "major": [
+      {
+        "matcher": "AndRequirement",
+        "metadata": {
+          "name": "Global Business Major Preparatory Courses",
+          "id": "Global Business and Human Resource Management(BS)-0"
+        },
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "ACCT 2301",
+            "metadata": {
+              "id": "Global Business and Human Resource Management(BS)-1"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ACCT 2302",
+            "metadata": {
+              "id": "Global Business and Human Resource Management(BS)-2"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "BLAW 2301",
+            "metadata": {
+              "id": "Global Business and Human Resource Management(BS)-3"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MATH 1325",
+            "metadata": {
+              "id": "Global Business and Human Resource Management(BS)-4"
+            }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "OPRE 3360",
+                "metadata": {
+                  "id": "Global Business and Human Resource Management(BS)-6"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "STAT 3360",
+                "metadata": {
+                  "id": "Global Business and Human Resource Management(BS)-7"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Global Business and Human Resource Management(BS)-5"
+            }
+          }
+        ]
+      },
+      {
+        "matcher": "AndRequirement",
+        "metadata": {
+          "name": "Major Core Courses",
+          "id": "Global Business and Human Resource Management(BS)-8"
+        },
+        "requirements": [
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "BCOM 1300",
+                "metadata": {
+                  "id": "Global Business and Human Resource Management(BS)-10"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "BCOM 3300",
+                "metadata": {
+                  "id": "Global Business and Human Resource Management(BS)-11"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Global Business and Human Resource Management(BS)-9"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "BCOM 4300",
+            "metadata": {
+              "id": "Global Business and Human Resource Management(BS)-12"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "IMS 3310",
+            "metadata": {
+              "id": "Global Business and Human Resource Management(BS)-13"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "FIN 3320",
+            "metadata": {
+              "id": "Global Business and Human Resource Management(BS)-14"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ITSS 3300",
+            "metadata": {
+              "id": "Global Business and Human Resource Management(BS)-15"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "OPRE 3310",
+            "metadata": {
+              "id": "Global Business and Human Resource Management(BS)-16"
+            }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "OBHR 3310",
+                "metadata": {
+                  "id": "Global Business and Human Resource Management(BS)-18"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "OBHR 3330",
+                "metadata": {
+                  "id": "Global Business and Human Resource Management(BS)-19"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Global Business and Human Resource Management(BS)-17"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MKT 3300",
+            "metadata": {
+              "id": "Global Business and Human Resource Management(BS)-20"
+            }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "MKT 4395",
+                "metadata": {
+                  "id": "Global Business and Human Resource Management(BS)-22"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "BPS 4395",
+                "metadata": {
+                  "id": "Global Business and Human Resource Management(BS)-23"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ENTP 4395",
+                "metadata": {
+                  "id": "Global Business and Human Resource Management(BS)-24"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Global Business and Human Resource Management(BS)-21"
+            }
+          }
+        ]
+      },
+      {
+        "matcher": "AndRequirement",
+        "metadata": {
+          "name": "Major Related Courses",
+          "id": "Global Business and Human Resource Management(BS)-25"
+        },
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "IMS 4350",
+            "metadata": {
+              "id": "Global Business and Human Resource Management(BS)-26"
+            }
+          },
+          {
+            "matcher": "SelectRequirement",
+            "required_count": 3,
+            "requirements": [
+              {
+                "matcher": "OrRequirement",
+                "requirements": [
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "IMS 4320",
+                    "metadata": {
+                      "id": "Global Business and Human Resource Management(BS)-29"
+                    }
+                  },
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "MKT 4320",
+                    "metadata": {
+                      "id": "Global Business and Human Resource Management(BS)-30"
+                    }
+                  }
+                ],
+                "metadata": {
+                  "id": "Global Business and Human Resource Management(BS)-28"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 3380",
+                "metadata": {
+                  "id": "Global Business and Human Resource Management(BS)-31"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "IMS 4330",
+                "metadata": {
+                  "id": "Global Business and Human Resource Management(BS)-32"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "IMS 4373",
+                "metadata": {
+                  "id": "Global Business and Human Resource Management(BS)-33"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Global Business and Human Resource Management(BS)-27"
+            }
+          }
+        ]
+      },
+      {
+        "matcher": "SelectRequirement",
+        "metadata": {
+          "name": "International Political Economy (IPEC) Core Courses",
+          "id": "Global Business and Human Resource Management(BS)-34"
+        },
+        "required_count": 7,
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "ECON 3310",
+            "metadata": {
+              "id": "Global Business and Human Resource Management(BS)-35"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ECON 3311",
+            "metadata": {
+              "id": "Global Business and Human Resource Management(BS)-36"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ECON 4360",
+            "metadata": {
+              "id": "Global Business and Human Resource Management(BS)-37"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ECON 4360",
+            "metadata": {
+              "id": "Global Business and Human Resource Management(BS)-38"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "IPEC 4301",
+            "metadata": {
+              "id": "Global Business and Human Resource Management(BS)-39"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "IPEC 4302",
+            "metadata": {
+              "id": "Global Business and Human Resource Management(BS)-40"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "PSCI 4329",
+            "metadata": {
+              "id": "Global Business and Human Resource Management(BS)-41"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "PSCI 4356",
+            "metadata": {
+              "id": "Global Business and Human Resource Management(BS)-42"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "PSCI 4360",
+            "metadata": {
+              "id": "Global Business and Human Resource Management(BS)-43"
+            }
+          }
+        ]
+      },
+      {
+        "matcher": "HoursRequirement",
+        "metadata": {
+          "name": "Foreign Language Requirement",
+          "id": "Global Business and Human Resource Management(BS)-44"
+        },
+        "required_hours": 12,
+        "requirements": []
+      },
+      {
+        "matcher": "AndRequirement",
+        "metadata": {
+          "name": "Upper-Division Major Related Electives",
+          "id": "Global Business and Human Resource Management(BS)-45"
+        },
+        "requirements": [
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "IMS 4V90",
+                "metadata": {
+                  "id": "Global Business and Human Resource Management(BS)-47"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "IMS 4090",
+                "metadata": {
+                  "id": "Global Business and Human Resource Management(BS)-48"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "BA 4090",
+                "metadata": {
+                  "id": "Global Business and Human Resource Management(BS)-49"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Global Business and Human Resource Management(BS)-46"
+            }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "IMS 4335",
+                "metadata": {
+                  "id": "Global Business and Human Resource Management(BS)-51"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ENTP 4340",
+                "metadata": {
+                  "id": "Global Business and Human Resource Management(BS)-52"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MKT 4360",
+                "metadata": {
+                  "id": "Global Business and Human Resource Management(BS)-53"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "BA 4095",
+                "metadata": {
+                  "id": "Global Business and Human Resource Management(BS)-54"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Global Business and Human Resource Management(BS)-50"
+            }
+          },
+          {
+            "matcher": "HoursRequirement",
+            "required_hours": 11,
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "IMS 4V90",
+                "metadata": {
+                  "id": "Global Business and Human Resource Management(BS)-56"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "IMS 4090",
+                "metadata": {
+                  "id": "Global Business and Human Resource Management(BS)-57"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "BA 4090",
+                "metadata": {
+                  "id": "Global Business and Human Resource Management(BS)-58"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "IMS 4335",
+                "metadata": {
+                  "id": "Global Business and Human Resource Management(BS)-59"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ENTP 4340",
+                "metadata": {
+                  "id": "Global Business and Human Resource Management(BS)-60"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MKT 4360",
+                "metadata": {
+                  "id": "Global Business and Human Resource Management(BS)-61"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "BA 4095",
+                "metadata": {
+                  "id": "Global Business and Human Resource Management(BS)-62"
+                }
+              },
+              {
+                "matcher": "PrefixBucketRequirement",
+                "prefix": "IPEC",
+                "metadata": {
+                  "id": "Global Business and Human Resource Management(BS)-63"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Global Business and Human Resource Management(BS)-55"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
