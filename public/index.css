@@ -381,14 +381,6 @@ section:nth-child(odd) {
   margin-top: 3vh;
 }
 
-.hidden {
-  display: none;
-}
-
-.visible {
-  display: grid;
-}
-
 .member img {
   height: 200px;
   border-radius: 10px;
