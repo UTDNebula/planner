@@ -366,6 +366,10 @@ section:nth-child(odd) {
   padding: .5rem 1rem;
 }
 
+#team h2 {
+  margin: 2rem;
+}
+
 .selectedTeam {
   background-color: #3772ff;
   border-color: #3772ff;
