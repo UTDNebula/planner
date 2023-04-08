@@ -1,9 +1,7 @@
 name: Build
 
 on:
-  push:
-    paths:
-      - "degree-validator/**"
+  workflow_dispatch:
   pull_request:
     paths:
       - "degree-validator/**"
