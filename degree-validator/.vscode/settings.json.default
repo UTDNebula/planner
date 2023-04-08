@@ -8,11 +8,10 @@
   "python.analysis.typeCheckingMode": "basic",
   "json.schemas": [
     {
-        "fileMatch": [
-            "/degree_data/**.json"
-        ],
-        "url": ".vscode/major.schema.json"
+      "fileMatch": ["/degree_data/**.json"],
+      "url": ".vscode/major.schema.json"
     }
   ],
-  "python.formatting.provider": "black"
+  "python.formatting.provider": "black",
+  "python.defaultInterpreterPath": "<RUN 'pipenv --py' in the root of this package and copy it here>"
 }
