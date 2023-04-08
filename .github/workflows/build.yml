@@ -5,6 +5,8 @@ on:
   pull_request:
     paths:
       - "www/**"
+    paths-ignore:
+      - "**/README.md"
     branches:
       - "develop"
       - "release/**"

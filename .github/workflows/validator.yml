@@ -5,6 +5,8 @@ on:
   pull_request:
     paths:
       - "degree-validator/**"
+    paths-ignore:
+      - "**/README.md"
 
 defaults:
   run:

@@ -1,0 +1,24 @@
+{
+  "name": "planner",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev:www": "npm run dev --prefix www",
+    "dev:degree-validator": "cd degree-validator ; pipenv run flask --app api run ; cd ..",
+    "dev": "concurrently --kill-others npm:dev:*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UTDNebula/planner.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/UTDNebula/planner/issues"
+  },
+  "homepage": "https://github.com/UTDNebula/planner#readme",
+  "devDependencies": {
+    "concurrently": "^8.0.1"
+  }
+}

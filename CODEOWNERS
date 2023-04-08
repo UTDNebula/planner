@@ -2,4 +2,4 @@
 *   @ZzRanger
 
 # Request all Project Nebula Maintainers to review other pull requests
-src/**/*  @UTDNebula/nebula-planner @UTDNebula/planner
+**/src/**/*  @UTDNebula/nebula-planner @UTDNebula/planner

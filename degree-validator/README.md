@@ -1,5 +1,27 @@
 # Degree Validator
 
+```bash
+cd degree-validator
+```
+
+## How to run
+
+| Steps/Actions                           | Command                          |
+| --------------------------------------- | -------------------------------- |
+| Install pipenv                          | `python -m pip install pipenv `  |
+| Install all dependencies                | `pipenv install --dev`           |
+| Run dev server (shows print statements) | `pipenv run flask --app api run` |
+
+## VSCode
+
+If using VSCode, follow these steps. Install `pipenv` with the commands above first.
+
+1.  Copy `.vscode/settings.json.default` to `.vscode/settings.json` `OS specific command` |
+2.  Run`pipenv --py` and copy the path it outputs
+3.  Paste the path into `.vscode/settings.json` where it says `"<RUN 'pipenv --py' in the root of this package and copy it here>"`
+
+# Degree Validator - [Deprecated]
+
 Degree validation logic for UTD.
 
 <!-- TOC -->

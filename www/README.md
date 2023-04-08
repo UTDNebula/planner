@@ -1,75 +1,7 @@
-# Nebula Web
-
-_Nebula Web is a tool for planning out students' college experience_
-
-[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
-
-## About
-
-### Overview
-
-Nebula Web allows students to plan out including coursework, co-curricular
-activities like studying abroad and research, and extracurricular involvement in
-student organizations. It does this with an intuitive drag-and-drop interface
-that represents various college activities as blocks and displays them in semester
-groups.
-
-### Inspiration
-
-Planning coursework poses a challenge for many.
-
-From choosing the right professors to knowing when to take a class, schedule
-planning is the bane of any college student.
-
-UTD students have access to tools like [UTD Grades](https://utdgrades.com) and
-Rate My Professors to help them pick classes for a specific semester, but
-there hasn't been a solution that allows a student to say, "I want to major in
-CS, minor in psychology, and do a few internships before grad school. Generating a
-plan lets me do all of that with the professors I want."
-
-Until now, that is.
-
-Nebula Web is an integrated solution designed to help students plan out
-their entire undergraduate experience in one place. It allows students to focus
-on ensuring their college experience holistically suits their desires and
-optimize for long-term success.
-
-### Features
-
-- Drag-and-drop interface for planning coursework by semester for any degree plan
-- Sign in to save data across planning sessions
-- Export to file to share your custom plan with someone else
-
-## Contributing
-
-Contributions are welcome!
-
-This project uses the MIT License.
-
-### Process
-
-To get started, see the [contribution guide](./CONTRIBUTING.md). It'll tell you
-everything you need to know.
-
-Additionally, see the Project Nebula-wide contributors [guide](https://about.utdnebula.com/)
-for more info.
-
-Once you're ready to make some changes, see the
-[issues](https://github.com/UTDNebula/planner/issues) for the repository.
-
-If you want to brainstorm, share ideas or ask questions, start a discussion in
-the [Discussions](https://github.com/UTDNebula/planner/discussions) section.
-
 ### Set-up
 
-This project requires a working [Node.js](https://nodejs.org/en/) and NPM
-installation. It also requires local environment variables since it uses MongoDb Atlas, a SMTP server and Discord as authentication provider.
-
-To start, clone the repository, and obtain the required environment keys as explained below.
-
 ```bash
-git clone https://github.com/UTDNebula/planner.git
-cd planner
+cd www
 ```
 
 ---
@@ -169,27 +101,37 @@ cd planner
 Create a file called .env in the root directory and add your personal env keys
 
 ```bash
-# Prisma MongoDB
+# Prisma
 DATABASE_URL=REPLACE_ME
-
+PLATFORM_DATABASE_URL=REPLACE_ME
 # Next Auth
-NEXTAUTH_URL=http://localhost:3000
-NEXTAUTH_SECRET=abc
+NEXTAUTH_URL=REPLACE_ME
+NEXTAUTH_SECRET=REPLACE_ME
+# Google Provider
+GOOGLE_CLIENT_ID=REPLACE_ME
+GOOGLE_CLIENT_SECRET=REPLACE_ME
 # Next Auth Discord Provider
 DISCORD_CLIENT_ID=REPLACE_ME
 DISCORD_CLIENT_SECRET=REPLACE_ME
+#Facebook provider
+FACEBOOK_CLIENT_ID=REPLACE_ME
+FACEBOOK_CLIENT_SECRET=REPLACE_ME
 
 # Email Server
 EMAIL_SERVER_HOST=REPLACE_ME
 EMAIL_SERVER_PORT=REPLACE_ME
 EMAIL_SERVER_USER=REPLACE_ME
 EMAIL_SERVER_PASSWORD=REPLACE_ME
-EMAIL_FROM=noreply@nebulaplanner
+EMAIL_FROM=REPLACE_ME
 
 # DEGREE VALIDATOR
-VALIDATOR=REPLACE_ME
+VALIDATOR=http://localhost:5000
 
 NODE_ENV=development
+
+# Umami: self-hosted analytics service
+NEXT_PUBLIC_UMAMI_URL=REPLACE_ME
+NEXT_PUBLIC_UMAMI_WEBSITE_ID=REPLACE_ME
 ```
 
 1. Make sure to replace the password in the DB Connection string with the password of the **root** user you created while setting up MongoDB.
@@ -203,8 +145,7 @@ NODE_ENV=development
 
 ```bash
 npm install
-npx prisma db push
-npx prisma db seed
+npm run prisma:generate
 npm run dev
 ```
 

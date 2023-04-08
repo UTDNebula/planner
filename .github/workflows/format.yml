@@ -8,6 +8,8 @@ on:
     type: [ready_for_review]
     paths:
       - "www/**"
+    paths-ignore:
+      - "**/README.md"
 
 defaults:
   run:
