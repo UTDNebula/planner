@@ -20,6 +20,7 @@ import { RouterOutputs, trpc } from '@/utils/trpc';
 import { DegreeRequirements } from './types';
 import ChevronIcon from '@/icons/ChevronIcon';
 import useFuse from '../useFuse';
+import AnalyticsWrapper from '@/components/common/AnalyticsWrapper';
 type CourseData = RouterOutputs['courses']['publicGetAllCourses'];
 type ArrayElement<ArrayType extends readonly unknown[]> =
   ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
@@ -121,19 +122,21 @@ function CourseSelectorContainer({
               </h6>
             </div>
             <div className="z-[999] drop-shadow-2xl">
-              <SearchBarTwo
-                onClick={() => setDisplay(true)}
-                updateQuery={(q) => {
-                  updateQuery(q);
-                  setDisplay(true);
-                }}
-                className={`${
-                  displayResults
-                    ? 'rounded-b-none border-b-transparent'
-                    : 'rounded-b-[10px] border-b-inherit'
-                }`}
-                placeholder="Search courses"
-              />
+              <AnalyticsWrapper analyticsClass="umami--click--search-course">
+                <SearchBarTwo
+                  onClick={() => setDisplay(true)}
+                  updateQuery={(q) => {
+                    updateQuery(q);
+                    setDisplay(true);
+                  }}
+                  className={`${
+                    displayResults
+                      ? 'rounded-b-none border-b-transparent'
+                      : 'rounded-b-[10px] border-b-inherit'
+                  }`}
+                  placeholder="Search courses"
+                />
+              </AnalyticsWrapper>
               <div className="relative">
                 <div
                   ref={ref}

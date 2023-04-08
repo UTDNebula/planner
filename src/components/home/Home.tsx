@@ -9,6 +9,7 @@ import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { Steps } from 'intro.js-react';
 import React from 'react';
 import { useRouter } from 'next/router';
+import AnalyticsWrapper from '../common/AnalyticsWrapper';
 
 /**
  * A list of the user's plans
@@ -120,22 +121,26 @@ export default function PlansPage(): JSX.Element {
 
               <DropdownMenu.Portal>
                 <DropdownMenu.Content className="relative top-2 w-min rounded-md border border-neutral-300 bg-generic-white drop-shadow-xl">
-                  <DropdownItem
-                    text="Add Custom Plan"
-                    onClick={() => {
-                      setPlanPage(0);
-                      setOpenTemplateModal(true);
-                    }}
-                  />
+                  <AnalyticsWrapper analyticsClass="umami--click--custom-plan">
+                    <DropdownItem
+                      text="Add Custom Plan"
+                      onClick={() => {
+                        setPlanPage(0);
+                        setOpenTemplateModal(true);
+                      }}
+                    />
+                  </AnalyticsWrapper>
 
                   <DropdownMenu.Separator className="DropdownMenuSeparator h-0.5 bg-black opacity-10" />
-                  <DropdownItem
-                    text="Add Template Plan"
-                    onClick={() => {
-                      setPlanPage(1);
-                      setOpenTemplateModal(true);
-                    }}
-                  />
+                  <AnalyticsWrapper analyticsClass="umami--click--template-plan">
+                    <DropdownItem
+                      text="Add Template Plan"
+                      onClick={() => {
+                        setPlanPage(1);
+                        setOpenTemplateModal(true);
+                      }}
+                    />
+                  </AnalyticsWrapper>
                 </DropdownMenu.Content>
               </DropdownMenu.Portal>
             </DropdownMenu.Root>
