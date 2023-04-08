@@ -1,4 +1,4 @@
-name: Build
+name: Build web app
 
 on:
   workflow_dispatch:
@@ -15,8 +15,8 @@ defaults:
     working-directory: www
 
 jobs:
-  release:
-    name: Test build app
+  build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

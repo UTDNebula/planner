@@ -1,4 +1,4 @@
-name: Lint
+name: Lint web app
 
 on:
   workflow_dispatch:
