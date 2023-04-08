@@ -55,7 +55,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pipenv install
+          pipenv install --dev
 
       - name: Run type checker
         run: |
