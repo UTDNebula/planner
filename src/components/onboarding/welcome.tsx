@@ -120,7 +120,7 @@ export default function Welcome({
       <p className="text-sm text-[16px] font-semibold leading-normal text-[#737373]">
         Tell us your name, major, and school semesters!
       </p>
-      <section className="mt-7 space-y-5">
+      <section className="mt-7">
         <div className="relative mb-4">
           <input
             type="text"
@@ -135,7 +135,7 @@ export default function Welcome({
           ></input>
         </div>
 
-        <div className="relative mb-4">
+        <div className="relative mb-5">
           <AutoCompleteMajor
             className="w-[500px] rounded border outline-none"
             key={0}
@@ -145,6 +145,7 @@ export default function Welcome({
             autoFocus
           ></AutoCompleteMajor>
         </div>
+        <div className="mb-2 font-medium">Starting Semester:</div>
         <div className="flex items-center justify-between">
           <div className="relative mb-4">
             <Select
@@ -232,6 +233,7 @@ export default function Welcome({
             </Select>
           </div>
         </div>
+        <div className="mb-2 font-medium">Ending Semester:</div>
         <div className="flex items-center justify-between">
           <div className="relative mb-4">
             <Select

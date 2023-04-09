@@ -426,7 +426,7 @@ function RequirementContainer({
       <RequirementContainerHeader name={name} progress={progress} setCarousel={setCarousel} />
       <div className="text-[14px]">{description}</div>
 
-      <div className=" flex h-full flex-col gap-y-2 overflow-x-hidden overflow-y-scroll">
+      <div className=" flex h-full flex-col gap-y-2 overflow-x-hidden">
         <RequirementSearchBar updateQuery={updateQuery} />
         {sortedResults.map((req, idx) => {
           return (

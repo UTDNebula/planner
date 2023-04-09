@@ -78,33 +78,26 @@
   </section>
   <section id="team">
     <h2>Meet the team</h2>
-    <ul>
-      <a href="#team" style="cursor: pointer; color: var(--gray)" id="designSelection" onclick="showDesign()"><li>Design</li></a>
-      <a href="#team" style="cursor: pointer; color: var(--gray)" id="engineeringSelection" onclick="showEngineering()"><li>Engineering</li></a>
-      <a href="#team" style="cursor: pointer; color: var(--gray)" id="productSelection" onclick="showProduct()"><li>Product</li></a>
-    </ul>
-    <div id="designTeam" class="team">
+    <div class="team">
+      <div class="member">
+        <img src="./team/Caleb.jpeg" alt="Person">
+        <h4>Caleb Lim</h4>
+        <h5>Project Lead</h5>
+      </div>
       <div class="member">
         <img src="./team/Aanos.jpeg" width="200px" height="200px" alt="Person">
         <h4>Aanos Mahmood</h4>
         <h5>Design Lead</h5>
       </div>
       <div class="member">
+        <img src="./team/stephanie.jpg" alt="Person">
+        <h4>Stephanie Li</h4>
+        <h5>Product Lead</h5>
+      </div>
+      <div class="member">
         <img src="./team/hilary.jpeg" alt="Person">
         <h4>Hilary Nguyen</h4>
-        <h5>Designer</h5>
-      </div>
-      <!-- <div class="member">
-        <img src="./team/Solomon (1).jpeg" width="200px" alt="Person">
-        <h4>Solomon Wakhungu</h4>
-        <h5>Designer</h5>
-      </div> -->
-    </div>
-    <div id="engineeringTeam" class="team">
-      <div class="member">
-        <img src="./team/Caleb.jpeg" alt="Person">
-        <h4>Caleb Lim</h4>
-        <h5>Project Lead</h5>
+        <h5>Designer, Product team</h5>
       </div>
       <div class="member">
         <img src="./team/Aravindan.jpeg" alt="Person">
@@ -141,20 +134,12 @@
         <h4>Peyton Barre</h4>
         <h5>Developer</h5>
       </div>
-    </div>
-    <div id="productTeam" class="team">
-      <div class="member">
-        <img src="./team/stephanie.jpg" alt="Person">
-        <h4>Stephanie Li</h4>
-        <h5>Product Lead</h5>
-      </div>
       <div class="member">
         <img src="./team/hilary.jpeg" alt="Person">
         <h4>Hilary Nguyen</h4>
         <h5>Product team</h5>
       </div>
     </div>
-    
   </section>
   <section id="plan">
     <div>
@@ -192,36 +177,6 @@
   <p>Copyright © 2023. All rights reserved</p>
 </footer>
 <script>
-  function showDesign() {
-    document.getElementById("designTeam").classList.add("active");
-    document.getElementById("engineeringTeam").classList.remove("active");
-    document.getElementById("productTeam").classList.remove("active");
-
-    document.getElementById("designSelection").classList.add("selectedTeam");
-    document.getElementById("engineeringSelection").classList.remove("selectedTeam");
-    document.getElementById("productSelection").classList.remove("selectedTeam");
-  }
-  function showEngineering() {
-    document.getElementById("designTeam").classList.remove("active");
-    document.getElementById("engineeringTeam").classList.add("active");
-    document.getElementById("productTeam").classList.remove("active");
-
-    document.getElementById("designSelection").classList.remove("selectedTeam");
-    document.getElementById("engineeringSelection").classList.add("selectedTeam");
-    document.getElementById("productSelection").classList.remove("selectedTeam");
-  }
-  function showProduct() {
-    document.getElementById("designTeam").classList.remove("active");
-    document.getElementById("engineeringTeam").classList.remove("active");
-    document.getElementById("productTeam").classList.add("active");
-
-    document.getElementById("designSelection").classList.remove("selectedTeam");
-    document.getElementById("engineeringSelection").classList.remove("selectedTeam");
-    document.getElementById("productSelection").classList.add("selectedTeam");
-  }
-
-  showDesign();
-
   document.querySelector("#contactForm").addEventListener("submit", e => {
     e.preventDefault();
     fetch("/api/mail", {

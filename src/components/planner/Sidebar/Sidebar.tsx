@@ -12,6 +12,7 @@ import { ObjectID } from 'bson';
 export interface CourseSelectorContainerProps {
   degreeRequirements: DegreeRequirements;
   courses: string[];
+  transferCredits: string[];
   getSearchedDragId: GetDragIdByCourse;
   getRequirementDragId: GetDragIdByCourse;
 }
@@ -26,12 +27,11 @@ type ArrayElement<ArrayType extends readonly unknown[]> =
 function CourseSelectorContainer({
   degreeRequirements,
   courses,
+  transferCredits,
   getSearchedDragId,
   getRequirementDragId,
 }: CourseSelectorContainerProps) {
   // TODO: Provide UI indicator for errors
-
-  console.log(degreeRequirements);
 
   const { data, isLoading } = trpc.courses.publicGetAllCourses.useQuery();
 
@@ -57,6 +57,9 @@ function CourseSelectorContainer({
   courses.forEach((string) => {
     sum += getSemesterHourFromCourseCode(string) ?? 3;
   });
+  transferCredits.forEach((credit) => {
+    sum += getSemesterHourFromCourseCode(credit) ?? 3;
+  });
 
   const CreditsTaken = ({
     taken,
@@ -67,9 +70,18 @@ function CourseSelectorContainer({
     min: number;
     unit?: string;
   }) => {
+    if (taken >= min) {
+      return (
+        <div className="flex items-center gap-x-3 rounded-full bg-primary-100 px-3 py-2">
+          <span className="text-xs font-semibold text-primary-800">
+            {taken}/{min} {unit}
+          </span>
+        </div>
+      );
+    }
     return (
-      <div className="flex items-center gap-x-3 rounded-full bg-primary-100 px-3 py-2">
-        <span className="text-xs font-semibold text-primary-800">
+      <div className="flex items-center gap-x-3 rounded-full bg-yellow-100 px-3 py-2">
+        <span className="text-xs font-semibold text-yellow-500">
           {taken}/{min} {unit}
         </span>
       </div>
@@ -86,13 +98,15 @@ function CourseSelectorContainer({
         <div className="z-0 h-screen w-[30%] min-w-[30%] overflow-x-hidden overflow-y-scroll">
           <div className="flex h-fit min-h-screen w-full flex-col gap-y-4 bg-white p-4">
             <div className="flex flex-col">
-              <div className="flex flex-row items-center justify-around">
-                <ChevronIcon
-                  onClick={() => setOpen(!open)}
-                  className={`h-4 w-4 cursor-pointer ${open ? '' : 'rotate-180'}`}
-                  strokeWidth={2.5}
-                />
-                <h1 className="pl-2 text-2xl font-medium tracking-tight">Plan Requirements</h1>
+              <div className="flex flex-row items-center justify-between">
+                <div className="flex flex-row items-center justify-center">
+                  <ChevronIcon
+                    onClick={() => setOpen(!open)}
+                    className={`h-4 w-4 cursor-pointer ${open ? '' : 'rotate-180'}`}
+                    strokeWidth={2.5}
+                  />
+                  <h1 className="pl-2 text-2xl font-medium tracking-tight">Plan Requirements</h1>
+                </div>
                 <CreditsTaken
                   taken={sum}
                   min={
