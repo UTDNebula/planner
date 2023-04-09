@@ -5,7 +5,7 @@ interface PrereqHoverCardProps {
   prereqs: [Array<string>, Array<string>, Array<string>];
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  isValid: boolean;
+  isOverriden: boolean;
   title: string;
   side?: 'top' | 'left' | 'bottom' | 'right';
 }
@@ -16,7 +16,7 @@ export const PrereqWarnHoverCard: FC<PrereqHoverCardProps> = ({
   onOpenChange,
   side = 'top',
   title,
-  isValid,
+  isOverriden,
   children,
 }) => (
   <HoverCard.Root open={open} onOpenChange={onOpenChange} openDelay={0}>
@@ -33,44 +33,48 @@ export const PrereqWarnHoverCard: FC<PrereqHoverCardProps> = ({
             All requirements for this course are completed
           </span>
         )} */}
-        {prereqs[0].length > 0 && (
+        {!isOverriden && (
           <>
-            <h3 className="py-2 text-base font-semibold">Prerequisites not met: </h3>
-            <ol className="flex list-disc flex-wrap gap-3">
-              {prereqs[0].map((prereq) => (
-                <li key={prereq} className="ml-4">
-                  {prereq}
-                </li>
-              ))}
-            </ol>
+            {prereqs[0].length > 0 && (
+              <>
+                <h3 className="py-2 text-base font-semibold">Prerequisites not met: </h3>
+                <ol className="flex list-disc flex-wrap gap-3">
+                  {prereqs[0].map((prereq) => (
+                    <li key={prereq} className="ml-4">
+                      {prereq}
+                    </li>
+                  ))}
+                </ol>
+              </>
+            )}
+            {prereqs[1].length > 0 && (
+              <>
+                <h3 className="py-2 text-base font-semibold">Corequisites not met: </h3>
+                <ol className="flex list-disc flex-wrap gap-3">
+                  {prereqs[1].map((prereq) => (
+                    <li key={prereq} className="ml-4">
+                      {prereq}
+                    </li>
+                  ))}
+                </ol>
+              </>
+            )}
+            {prereqs[2].length > 0 && (
+              <>
+                <h3 className="py-2 text-base font-semibold">
+                  Corequisites or Prerequisites not met:{' '}
+                </h3>
+                <ol className="flex list-disc flex-wrap gap-3">
+                  {prereqs[2].map((prereq) => (
+                    <li key={prereq} className="ml-4">
+                      {prereq}
+                    </li>
+                  ))}
+                </ol>
+              </>
+            )}
           </>
         )}
-        {prereqs[1].length > 0 && (
-          <>
-            <h3 className="py-2 text-base font-semibold">Corequisites not met: </h3>
-            <ol className="flex list-disc flex-wrap gap-3">
-              {prereqs[1].map((prereq) => (
-                <li key={prereq} className="ml-4">
-                  {prereq}
-                </li>
-              ))}
-            </ol>
-          </>
-        )}
-        {prereqs[2].length > 0 && (
-          <>
-            <h3 className="py-2 text-base font-semibold">
-              Corequisites or Prerequisites not met:{' '}
-            </h3>
-            <ol className="flex list-disc flex-wrap gap-3">
-              {prereqs[2].map((prereq) => (
-                <li key={prereq} className="ml-4">
-                  {prereq}
-                </li>
-              ))}
-            </ol>
-          </>
-        )}{' '}
         <HoverCard.Arrow className="fill-primary" />
       </HoverCard.Content>
     </HoverCard.Portal>

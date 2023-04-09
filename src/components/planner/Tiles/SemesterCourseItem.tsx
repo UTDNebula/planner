@@ -99,12 +99,12 @@ export const MemoizedSemesterCourseItem = React.memo(
 
         <PrereqWarnHoverCard
           prereqs={requirementsData === undefined ? [[], [], []] : requirementsData}
-          open={hoverIconOpen && !course.prereqOveridden}
+          open={hoverIconOpen}
           onOpenChange={(hoverOpen) => {
             console.info('not used');
           }}
           title={title || ''}
-          isValid={isValid}
+          isOverriden={course.prereqOveridden}
         >
           <div className="flex w-full flex-row items-center gap-x-3">
             <DragIndicatorIcon fontSize="inherit" className="text-[16px] text-neutral-300" />
