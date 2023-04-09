@@ -141,12 +141,14 @@ export const MemoizedSemesterCourseItem = React.memo(
                 if (hoverOpen) {
                   setHoverOpen(false);
                 }
+                if (!open) setHoverEllipse(false);
                 setDropdownOpen(open);
               }}
               locked={course.locked}
               onPrereqOverrideChange={() =>
                 onPrereqOverrideChange && onPrereqOverrideChange(!course.prereqOveridden)
               }
+              isValid={isValid}
               prereqOverriden={course.prereqOveridden}
               semesterLocked={semesterLocked || false}
               toggleLock={() => onLockChange && onLockChange(!course.locked)}
