@@ -70,18 +70,17 @@ function CourseSelectorContainer({
     min: number;
     unit?: string;
   }) => {
-    if (taken >= min) {
-      return (
-        <div className="flex items-center gap-x-3 rounded-full bg-primary-100 px-3 py-2">
-          <span className="text-xs font-semibold text-primary-800">
-            {taken}/{min} {unit}
-          </span>
-        </div>
-      );
-    }
     return (
-      <div className="flex items-center gap-x-3 rounded-full bg-yellow-100 px-3 py-2">
-        <span className="text-xs font-semibold text-yellow-500">
+      <div
+        className={`flex items-center gap-x-3 rounded-full ${
+          taken >= min ? 'bg-primary-100' : 'bg-yellow-100'
+        } px-3 py-2`}
+      >
+        <span
+          className={`text-xs font-semibold ${
+            taken >= min ? 'text-primary-800' : 'text-yellow-500'
+          }`}
+        >
           {taken}/{min} {unit}
         </span>
       </div>
@@ -95,7 +94,10 @@ function CourseSelectorContainer({
   return (
     <>
       {open ? (
-        <div className="z-0 h-screen w-[30%] min-w-[30%] overflow-x-hidden overflow-y-scroll">
+        <div
+          id="tutorial-editor-1"
+          className="z-0 h-screen w-[30%] min-w-[30%] overflow-x-hidden overflow-y-scroll"
+        >
           <div className="flex h-fit min-h-screen w-full flex-col gap-y-4 bg-white p-4">
             <div className="flex flex-col">
               <div className="flex flex-row items-center justify-between">
@@ -107,14 +109,16 @@ function CourseSelectorContainer({
                   />
                   <h1 className="pl-2 text-2xl font-medium tracking-tight">Plan Requirements</h1>
                 </div>
-                <CreditsTaken
-                  taken={sum}
-                  min={
-                    degreeRequirements.requirements.length > 0
-                      ? degreeRequirements.requirements[1].min_hours
-                      : 120
-                  }
-                />
+                <div id="tutorial-editor-2">
+                  <CreditsTaken
+                    taken={sum}
+                    min={
+                      degreeRequirements.requirements.length > 0
+                        ? degreeRequirements.requirements[1].min_hours
+                        : 120
+                    }
+                  />
+                </div>
               </div>
               <h6 className="text-base tracking-tight text-gray-500">
                 Drag courses onto your plan

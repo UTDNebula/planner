@@ -40,7 +40,7 @@ export default function PlansPage(): JSX.Element {
       router.push('/app/onboarding');
       return;
     }
-  }, [userData, router]);
+  }, [userData, router, isLoading]);
 
   const handleCloseHomeOnboarding = () => {
     setShowHomeOnboardingModal(false);
