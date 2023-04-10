@@ -8,6 +8,7 @@
 # testing
 cypress/screenshots
 cypress/videos
+cypress/downloads
 .test.env
 
 # next.js
