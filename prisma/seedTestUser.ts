@@ -1,8 +1,15 @@
-import { Prisma, PrismaClient, Session } from '@prisma/client';
+import { Account, Prisma, PrismaClient, Profile, Session, User } from '@prisma/client';
 
 const TEST_SESSION_TOKEN = 'test-session-token';
 
-export const seedTestUser = async (prisma: PrismaClient) => {
+export interface SeededUserData {
+  user: User;
+  profile: Profile;
+  account: Account;
+  session: Session;
+}
+
+export const seedTestUser = async (prisma: PrismaClient): Promise<SeededUserData> => {
   // Create user
   const user = await prisma.user.create({
     data: {
@@ -10,20 +17,31 @@ export const seedTestUser = async (prisma: PrismaClient) => {
     },
   });
 
-  // Create account
-  const account = await prisma.account.create({
-    data: {
-      type: 'test',
-      provider: 'test',
-      providerAccountId: 'test123',
-      userId: user.id,
-    },
-  });
+  // Create profile
+  const [profile, account, session] = await Promise.all([
+    // Create profile
+    prisma.profile.create({
+      data: {
+        name: 'Test User',
+        startSemester: { semester: 'f', year: 2021 },
+        endSemester: { semester: 's', year: 2026 },
+        userId: user.id,
+      },
+    }),
+    // Create account
+    prisma.account.create({
+      data: {
+        type: 'test',
+        provider: 'test',
+        providerAccountId: 'test123',
+        userId: user.id,
+      },
+    }),
+    // Generate infinite session
+    generateInfiniteSessionToken(prisma, user.id),
+  ]);
 
-  // Generate infinite session
-  const infiniteSession = await generateInfiniteSessionToken(prisma, user.id);
-
-  return { user, account, infiniteSession };
+  return { user, profile, account, session };
 };
 
 const generateInfiniteSessionToken = async (

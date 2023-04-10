@@ -15,6 +15,9 @@ export default defineConfig({
       bundler: 'webpack',
     },
   },
+  env: {
+    SESSION_COOKIE_NAME: 'next-auth.session-token',
+  },
   e2e: {
     baseUrl: 'http://localhost:3000',
     setupNodeEvents(on, config) {
@@ -31,6 +34,13 @@ export default defineConfig({
           // Deleting user causes all other models to cascade
           // This could change in the future
           return prisma.user.deleteMany().then(() => null);
+        },
+        'reset:db': async () => {
+          // See above comments for more info
+          await prisma.user.deleteMany();
+          await prisma.session.deleteMany();
+          await seedTemplates(prisma);
+          return seedTestUser(prisma);
         },
       });
     },

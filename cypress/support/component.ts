@@ -30,6 +30,7 @@ declare global {
     interface Chainable {
       mount: typeof mount;
       dataTestId: typeof cy.get;
+      resetDbAndLogin: () => void;
     }
   }
 }
