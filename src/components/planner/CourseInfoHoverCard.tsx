@@ -11,7 +11,6 @@ interface CourseInfoHoverCardProps {
 }
 
 export const CourseInfoHoverCard: FC<CourseInfoHoverCardProps> = ({
-  // prereqs,
   description,
   open,
   onOpenChange,
@@ -25,10 +24,10 @@ export const CourseInfoHoverCard: FC<CourseInfoHoverCardProps> = ({
       <HoverCard.Content
         onClick={(e) => e.stopPropagation()}
         side={side}
-        className="z-[999] w-[350px] animate-[slideUpAndFade_0.3s] rounded-md border border-neutral-200 bg-generic-white p-5 shadow-sm"
+        className="z-[999] w-[300px] animate-[slideUpAndFade_0.3s] rounded-md border border-neutral-200 bg-generic-white p-6 shadow-sm"
         sideOffset={5}
       >
-        <h3 className="mb-2 text-lg font-semibold">{title}</h3>
+        <h3 className="mb-2 text-base font-semibold">{title}</h3>
         <CourseDescription description={description} />
 
         <HoverCard.Arrow className="fill-primary" />
@@ -48,7 +47,7 @@ const CourseDescription = ({ description }: { description: string }) => {
   const [showMore, setShowMore] = useState(false);
   return (
     <span>
-      <p className="text-sm">
+      <p className="text-xs">
         {!showMore ? `${description.substring(0, 200)}...` : description}
         <button
           className="inline pl-2 font-medium text-primary"

@@ -1,5 +1,5 @@
 import { UniqueIdentifier, useDraggable } from '@dnd-kit/core';
-import React, { ComponentPropsWithoutRef, FC, forwardRef, useState } from 'react';
+import React, { ComponentPropsWithoutRef, FC, forwardRef, useRef, useState } from 'react';
 
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import { DragDataFromSemesterTile, DraggableCourse, Semester } from '../types';
@@ -58,7 +58,7 @@ export const MemoizedSemesterCourseItem = React.memo(
     const [hoverIconOpen, setHoverIconOpen] = useState(false);
 
     const { title, description } = useGetCourseInfo(course.code);
-
+    const hoverTimer = useRef<ReturnType<typeof setTimeout>>();
     return (
       <div
         ref={ref}
@@ -77,10 +77,12 @@ export const MemoizedSemesterCourseItem = React.memo(
           setDropdownOpen(true);
         }}
         onMouseEnter={() => {
-          setHoverOpen(true);
+          clearTimeout(hoverTimer.current);
+          hoverTimer.current = setTimeout(() => setHoverOpen(true), 500);
         }}
         onMouseLeave={() => {
-          setHoverOpen(false);
+          clearTimeout(hoverTimer.current);
+          hoverTimer.current = setTimeout(() => setHoverOpen(false), 800);
         }}
       >
         <div className="h-[50px] w-2">
@@ -150,9 +152,7 @@ export const MemoizedSemesterCourseItem = React.memo(
                     prereqs={requirementsData === undefined ? [[], [], []] : requirementsData}
                     description={description ?? ''}
                     open={hoverIconOpen && !course.prereqOveridden}
-                    onOpenChange={(hoverOpen) => {
-                      console.info('not used');
-                    }}
+                    onOpenChange={emptyFunction}
                     title={title || ''}
                     isValid={isValid}
                   >
