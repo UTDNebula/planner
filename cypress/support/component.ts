@@ -14,7 +14,6 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-import { ArgumentTypes } from '@/types/util-types';
 import './commands';
 
 // Alternatively you can use CommonJS syntax:
