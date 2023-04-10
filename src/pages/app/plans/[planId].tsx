@@ -138,7 +138,7 @@ export default function PlanDetailPage(
   return (
     <>
       <Steps
-        enabled={help}
+        enabled={help && showPlanOnboardingModal}
         steps={steps}
         initialStep={0}
         onExit={handleClosePlanOnboarding}
