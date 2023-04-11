@@ -9,7 +9,6 @@
 cypress/screenshots
 cypress/videos
 cypress/downloads
-.test.env
 
 # next.js
 /.next/
@@ -33,6 +32,7 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 .env
+.env.test
 
 # Vercel
 .vercel

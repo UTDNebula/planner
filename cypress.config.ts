@@ -6,7 +6,7 @@ import { seedTestUser } from 'prisma/seedTestUser';
 
 // Env variables specified in .test.env will override those specified in .env
 // eg. If DATABASE_URL is defined in both, the one in .test.env will be used
-dotenv.config({ path: '.test.env', override: true });
+dotenv.config({ path: '.env.test', override: true });
 
 export default defineConfig({
   component: {
@@ -19,6 +19,8 @@ export default defineConfig({
     SESSION_COOKIE_NAME: 'next-auth.session-token',
   },
   e2e: {
+    viewportHeight: 1080,
+    viewportWidth: 1920,
     baseUrl: 'http://localhost:3000',
     setupNodeEvents(on, config) {
       on('after:run', async () => {
