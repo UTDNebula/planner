@@ -19,19 +19,35 @@ describe('Plan creation flow', () => {
     cy.log('Filling out plan creation form');
     cy.dataTestId('plan-name-input').type(planName);
     cy.dataTestId('major-autocomplete').type('Computer');
-    cy.getDropdownOptions().contains('Computer Science').click();
+    cy.getDropdownOptions()
+      .contains('Computer Science')
+      .then(($el) => {
+        cy.wrap($el.get(0).innerText).as('major');
+        $el.click();
+      });
 
     // Create plan without upload transcript
     cy.log('Creating plan...');
     cy.dataTestId('next-btn').click();
     cy.dataTestId('create-plan-btn').click();
 
+    // Wait and verify redirect to plan
     cy.wait(10000);
     cy.url().should('include', '/app/plans/');
 
+    // Check plan information
     cy.log('Verifying plan information');
-    cy.dataTestId('plan-title')
-      .then(($el) => $el.text())
-      .should('eq', planName);
+    cy.get('@major').then((majorAlias) => {
+      // Check plan title
+      cy.dataTestId('plan-title')
+        .then(($el) => $el.text())
+        .should('eq', planName);
+
+      // Check plan major
+      const major = `${majorAlias}`; // Whack workaround
+      cy.dataTestId('plan-major')
+        .then(($el) => $el.text())
+        .should('eq', major);
+    });
   });
 });
