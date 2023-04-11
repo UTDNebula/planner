@@ -46,11 +46,14 @@ export default function EditableMajorTitle({
             setEditTitle(true);
           }}
         >
-          <span className="text-3xl font-semibold">{title}</span>
+          <span className="text-3xl font-semibold" data-testid="plan-title">
+            {title}
+          </span>
           <PencilIcon className="text-primary-800" />
         </button>
       ) : (
         <input
+          data-testid="plan-title"
           className={`w-full border-2 border-[#F5F5F5] bg-inherit px-2 text-3xl font-semibold hover:ml-[1px] hover:border-[1px] hover:border-primary hover:py-[1px]`}
           value={title}
           autoFocus

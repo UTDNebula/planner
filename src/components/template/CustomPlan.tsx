@@ -224,6 +224,7 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
 
   const pages = [
     <Page
+      data-testid="create-custom-plan-page"
       key="custom-plan-details"
       title="Create a Custom Plan"
       subtitle="Name your plan and choose your major"
@@ -245,12 +246,14 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
             setErrors();
           },
           color: 'primary',
+          'data-testid': 'next-btn',
         },
       ]}
     >
       <p className="text-sm font-semibold">Plan Name</p>
       <div className="flex flex-col gap-2">
         <input
+          data-testid="plan-name-input"
           className="w-full rounded-md border border-neutral-500 py-3 px-4 text-sm text-black/80 placeholder:text-neutral-400"
           placeholder="Name your plan"
           value={name}
@@ -266,6 +269,7 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
       <p className="text-sm font-semibold">Choose your major</p>
       <div className="relative mb-4">
         <AutoCompleteMajor
+          data-testid="major-autocomplete"
           className="w-[500px] rounded border outline-none"
           key={0}
           onValueChange={(value) => setMajor(value)}
@@ -296,6 +300,7 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
           onClick: handleSubmit,
           color: 'primary',
           loading,
+          'data-testid': 'create-plan-btn',
         },
       ]}
     >
@@ -440,5 +445,6 @@ export interface PageProps {
     onClick: () => void;
     color: ButtonProps['color'];
     loading?: boolean;
+    'data-testid'?: string;
   }[];
 }

@@ -14,6 +14,9 @@ export const seedTestUser = async (prisma: PrismaClient): Promise<SeededUserData
   const user = await prisma.user.create({
     data: {
       email: 'test@user.com',
+      onboardingComplete: true,
+      seenHomeOnboardingModal: true,
+      seenPlanOnboardingModal: true,
     },
   });
 

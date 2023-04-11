@@ -31,6 +31,7 @@ declare global {
       mount: typeof mount;
       dataTestId: typeof cy.get;
       resetDbAndLogin: () => void;
+      getDropdownOptions: () => Chainable;
     }
   }
 }

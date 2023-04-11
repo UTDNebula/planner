@@ -1,7 +1,7 @@
 import { SeededUserData } from 'prisma/seedTestUser';
 
 // Utility to select by data-testid
-// Usage: cy.get("some-id", opts) -> cy.get([data-testid=some-id], opts)
+// Usage: cy.dataTestId("some-id", opts) -> cy.get([data-testid=some-id], opts)
 // @ts-ignore
 Cypress.Commands.add('dataTestId', (selector, opts) => {
   const testIdSelector = `[data-testid="${selector}"]`;
@@ -20,4 +20,10 @@ Cypress.Commands.add('resetDbAndLogin', () => {
       secure: false,
     });
   });
+});
+
+// Ultity to select dropdown options from MUI's autocomplete
+// Usage: cy.getDropdownOptions().contains("Whatever the option contains").click()
+Cypress.Commands.add('getDropdownOptions', () => {
+  return cy.get('.MuiAutocomplete-listbox [role="option"]');
 });
