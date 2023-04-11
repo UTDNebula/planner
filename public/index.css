@@ -32,7 +32,7 @@ a {
 .button {
   border: 2px solid var(--light-gray);
   border-radius: 1.5em;
-  padding: .6rem 1.1rem;
+  padding: .5rem 1rem;
   transition: background-color .3s;
 }
 
