@@ -48,9 +48,9 @@ const CourseDescription = ({ description }: { description: string }) => {
   return (
     <span>
       <p className="text-xs">
-        {!showMore ? `${description.substring(0, 200)}...` : description}
+        {!showMore ? `${description.substring(0, 200)}... ` : `${description} `}
         <button
-          className="inline pl-2 font-medium text-primary"
+          className={`${showMore ? '' : 'inline'} font-medium text-primary`}
           onClick={(e) => {
             setShowMore(!showMore);
           }}
