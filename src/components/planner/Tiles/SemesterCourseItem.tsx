@@ -89,7 +89,7 @@ export const MemoizedSemesterCourseItem = React.memo(
           }
         }}
       >
-        <div className="h-[50px] w-2">
+        <div className="h-[50px] min-w-[0.5rem]">
           {course.color && (
             <div
               className={`h-full w-full rounded-l-md transition-all ${tagColors[course.color]} `}
@@ -110,7 +110,7 @@ export const MemoizedSemesterCourseItem = React.memo(
             <DragIndicatorIcon fontSize="inherit" className="text-[16px] text-neutral-300" />
             <Checkbox
               disabled={course.locked}
-              style={{ width: '20px', height: '20px', backgroundColor: 'inherit' }}
+              style={{ minWidth: '20px', height: '20px', backgroundColor: 'inherit' }}
               checked={isSelected}
               onClick={(e) => e.stopPropagation()}
               onCheckedChange={(checked) => {
@@ -123,7 +123,7 @@ export const MemoizedSemesterCourseItem = React.memo(
                 }
               }}
             />
-            <div className="flex flex-col">
+            <div className="flex w-[calc(100%-8rem)] flex-col">
               <span className="content-middle flex items-center whitespace-nowrap text-sm">
                 {course.code}
                 {!isValid && !course.prereqOveridden && (
@@ -133,7 +133,7 @@ export const MemoizedSemesterCourseItem = React.memo(
                 )}
                 {course.locked && <LockIcon className="ml-1" />}
               </span>
-              <span className="w-72 truncate text-sm">{title}</span>
+              <span className="truncate text-sm">{title}</span>
             </div>
             <SemesterCourseItemDropdown
               open={dropdownOpen}
