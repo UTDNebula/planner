@@ -48,17 +48,25 @@ const Toolbar: FC<ToolbarProps> = ({
   const { data: coursesData } = q;
 
   return (
-    <section className="flex w-full flex-col justify-center gap-y-5">
-      <article className="flex justify-between">
-        <div className="flex items-center gap-2 text-primary-900">
-          <button type="button" className="rounded-sm transition-all hover:bg-black/10">
-            <Link href="/app/home">
-              <ArrowBackIcon fontSize="medium" />
-            </Link>
-          </button>
+    <div className=" flex flex-row items-start gap-2 py-1 text-primary-900">
+      <ToolbarWrapper>
+        <button type="button" className="rounded-sm transition-all hover:bg-black/10">
+          <Link href="/app/home">
+            <ArrowBackIcon fontSize="medium" />
+          </Link>
+        </button>
+      </ToolbarWrapper>
+      <div id="tutorial-editor-4" className=" flex flex-col gap-y-[22px]">
+        <ToolbarWrapper>
           <EditableMajorTitle initialTitle={title} planId={planId} />
+        </ToolbarWrapper>
+        <div className="-ml-1 h-fit w-80">
+          <EditableMajor major={major} planId={planId} />
         </div>
-        <div className="flex h-min items-center gap-3">
+      </div>
+      <div className="grow"></div>
+      <article className="flex flex-row gap-3">
+        <ToolbarWrapper>
           <PDFDownloadLink
             document={
               <DegreePlanPDF
@@ -71,19 +79,22 @@ const Toolbar: FC<ToolbarProps> = ({
               />
             }
           >
-            <Button size="medium" icon={<DownloadIcon />}>
+            <Button size="medium" icon={<DownloadIcon />} id="tutorial-editor-7">
               <span className="whitespace-nowrap" id="hello">
                 Export Degree Plan
               </span>
             </Button>
           </PDFDownloadLink>
+        </ToolbarWrapper>
 
+        <ToolbarWrapper>
           <FilterByDropdown>
             <Button
               aria-label="Filter by options"
               size="medium"
               color="border"
               className="hover:bg-primary-100 hover:text-primary-900"
+              id="tutorial-editor-6"
               icon={<SwitchVerticalIcon />}
             >
               <span className="whitespace-nowrap" id="world">
@@ -91,7 +102,9 @@ const Toolbar: FC<ToolbarProps> = ({
               </span>
             </Button>
           </FilterByDropdown>
+        </ToolbarWrapper>
 
+        <ToolbarWrapper>
           <EditSemestersModal
             closeModal={() => setEditSemestersModalOpen(false)}
             planId={planId}
@@ -114,16 +127,17 @@ const Toolbar: FC<ToolbarProps> = ({
             <SettingsIcon
               fill="var(--color-primary-900)"
               className="ml-8 mr-5 h-5 w-5 cursor-pointer"
+              id="tutorial-editor-5"
             />
           </SettingsDropdown>
-        </div>
+        </ToolbarWrapper>
       </article>
-
-      <article className="flex h-10 items-center pl-7">
-        <EditableMajor major={major} planId={planId} />
-      </article>
-    </section>
+    </div>
   );
 };
 
 export default Toolbar;
+
+const ToolbarWrapper: FC = ({ children }) => {
+  return <div className="flex h-8 w-fit items-center justify-center">{children}</div>;
+};

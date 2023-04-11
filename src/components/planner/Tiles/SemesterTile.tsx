@@ -60,7 +60,7 @@ export const MemoizedSemesterTile = React.memo(
     return (
       <div
         ref={ref}
-        className={`flex h-fit select-none flex-col gap-y-2 overflow-hidden rounded-2xl border border-neutral-300 ${
+        className={`tutorial-editor-3 flex h-fit select-none flex-col gap-y-2 overflow-hidden rounded-2xl border border-neutral-300 ${
           semester.locked ? 'bg-neutral-200' : 'bg-white'
         }`}
       >

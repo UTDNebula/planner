@@ -42,6 +42,7 @@ export default function EditableMajorTitle({
       {!editTitle ? (
         <button
           className="flex flex-row items-center gap-x-3"
+          id="tutorial-editor-4"
           onClick={() => {
             setEditTitle(true);
           }}
