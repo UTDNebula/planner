@@ -8,7 +8,7 @@ describe('Plan creation flow', () => {
 
   it('Create blank plan', () => {
     // Open add plan dropdown
-    cy.log('Opening custom plan modal');
+    cy.task('log', 'Opening custom plan modal...');
     cy.dataTestId('add-new-plan-btn').click();
     cy.dataTestId('add-custom-plan-btn').click();
 
@@ -16,7 +16,7 @@ describe('Plan creation flow', () => {
     cy.dataTestId('create-custom-plan-page').then(($el) => Cypress.dom.isVisible($el));
 
     // Fill out plan creation form
-    cy.log('Filling out plan creation form');
+    cy.task('log', 'Filling out plan creation form...');
     cy.dataTestId('plan-name-input').type(planName);
     cy.dataTestId('major-autocomplete').type('Computer');
     cy.getDropdownOptions()
@@ -27,16 +27,16 @@ describe('Plan creation flow', () => {
       });
 
     // Create plan without upload transcript
-    cy.log('Creating plan...');
+    cy.task('log', 'Creating plan...');
     cy.dataTestId('next-btn').click();
     cy.dataTestId('create-plan-btn').click();
 
     // Wait and verify redirect to plan
-    cy.wait(10000);
-    cy.url().should('include', '/app/plans/');
+    cy.task('log', 'Verifying redirect...');
+    cy.url({ timeout: 20000 }).should('include', '/app/plans/');
 
     // Check plan information
-    cy.log('Verifying plan information');
+    cy.task('log', 'Verifying plan information');
     cy.get('@major').then((majorAlias) => {
       // Check plan title
       cy.dataTestId('plan-title')

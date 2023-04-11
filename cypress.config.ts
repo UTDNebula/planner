@@ -44,6 +44,10 @@ export default defineConfig({
           await seedTemplates(prisma);
           return seedTestUser(prisma);
         },
+        log: (msg: string) => {
+          console.log(`---${msg}`);
+          return null;
+        },
       });
     },
   },
