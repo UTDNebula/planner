@@ -76,7 +76,7 @@ export const MemoizedSemesterTile = React.memo(
               }`}
             >
               <span
-                className={`whitespace-nowrap text-sm font-medium md:text-[10px] lg:text-sm ${
+                className={`whitespace-nowrap text-[11px] font-medium lg:text-sm ${
                   taken > 19 ||
                   (semester.code.semester == 'u' && taken > 15) ||
                   (taken < 12 && taken != 0)
