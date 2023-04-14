@@ -15,4 +15,5 @@ export type JSONCourse = {
   prerequisites: RequisiteType;
   subject_prefix: string;
   title: string;
+  description: string;
 };

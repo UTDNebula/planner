@@ -1,7 +1,7 @@
 import { UniqueIdentifier, useDroppable } from '@dnd-kit/core';
-import React, { FC, forwardRef, useState } from 'react';
+import React, { FC, forwardRef, useState, useRef } from 'react';
 
-import { displaySemesterCode } from '@/utils/utilFunctions';
+import { displaySemesterCode, getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
 
 import { DragDataToSemesterTile, GetDragIdByCourseAndSemester, Semester } from '../types';
 import DraggableSemesterCourseItem from './SemesterCourseItem';
@@ -11,6 +11,8 @@ import { useSemestersContext } from '../SemesterContext';
 import LockIcon from '@/icons/LockIcon';
 import UnlockedIcon from '@/icons/UnlockedIcon';
 import { tagColors } from '../utils';
+import CreditsWarnHoverCard from '../CreditsWarnHoverCard';
+import AnalyticsWrapper from '@/components/common/AnalyticsWrapper';
 
 export interface SemesterTileProps {
   semester: Semester;
@@ -27,6 +29,8 @@ export const MemoizedSemesterTile = React.memo(
     ref,
   ) {
     const [open, setOpen] = useState(true);
+    const [hoverOpen, setHoverOpen] = useState(false);
+    const hoverTimer = useRef<ReturnType<typeof setTimeout>>();
 
     const {
       handleSelectCourses,
@@ -42,16 +46,49 @@ export const MemoizedSemesterTile = React.memo(
     } = useSemestersContext();
 
     const SemesterCredits = ({ taken }: { taken: number }) => {
-      if (taken <= 19) {
-        return (
-          <div className="flex items-center gap-x-3 rounded-full bg-primary-100 px-3 py-2">
-            <span className="text-xs font-semibold text-primary-500">{taken}/19 Credits Taken</span>
-          </div>
-        );
-      }
       return (
-        <div className="flex items-center gap-x-3 rounded-full bg-yellow-100 px-3 py-2">
-          <span className="text-xs font-semibold text-yellow-500">{taken}/19 Credits Taken</span>
+        <div
+          className="-mt-3 w-fit"
+          onMouseEnter={() => {
+            hoverTimer.current = setTimeout(() => setHoverOpen(true), 500);
+          }}
+          onMouseLeave={() => {
+            setHoverOpen(false);
+            clearTimeout(hoverTimer.current);
+          }}
+        >
+          <CreditsWarnHoverCard
+            open={
+              hoverOpen &&
+              (taken > 19 ||
+                (semester.code.semester == 'u' && taken > 15) ||
+                (taken < 12 && taken != 0))
+            }
+            onOpenChange={(open) => setHoverOpen(open)}
+            side="top"
+          >
+            <div
+              className={`flex items-center gap-x-3 rounded-full py-1 px-2 ${
+                taken > 19 ||
+                (semester.code.semester == 'u' && taken > 15) ||
+                (taken < 12 && taken != 0)
+                  ? 'bg-yellow-100'
+                  : 'bg-primary-100'
+              }`}
+            >
+              <span
+                className={`whitespace-nowrap text-[11px] font-medium lg:text-sm ${
+                  taken > 19 ||
+                  (semester.code.semester == 'u' && taken > 15) ||
+                  (taken < 12 && taken != 0)
+                    ? 'text-yellow-500'
+                    : 'text-primary-500'
+                }`}
+              >
+                {taken} Credits Taken
+              </span>
+            </div>
+          </CreditsWarnHoverCard>
         </div>
       );
     };
@@ -68,10 +105,6 @@ export const MemoizedSemesterTile = React.memo(
         <div className="flex flex-col gap-y-4 px-4 py-2">
           <article className="w-full">
             <div className={`flex h-3 flex-row items-center justify-center gap-2 align-middle`}>
-              {semester.courses.forEach}
-              <SemesterCredits
-                taken={semester.courses.reduce((taken, current) => taken + (current.hours ?? 3), 0)}
-              />
               <ChevronIcon
                 className={`${
                   open ? '-rotate-90' : 'rotate-90'
@@ -87,12 +120,18 @@ export const MemoizedSemesterTile = React.memo(
             }`}
           >
             <div className={`flex h-10 flex-row items-center justify-center gap-2 align-middle`}>
-              <h3 className={`text-2xl font-semibold tracking-tight`}>
+              <h3
+                className={`whitespace-nowrap text-base font-semibold tracking-tight sm:text-xl [@media(min-width:1700px)]:text-2xl`}
+              >
                 {displaySemesterCode(semester.code)}
               </h3>
-              <button onClick={() => handleSemesterLock(semester.id.toString(), !semester.locked)}>
-                {!semester.locked ? <UnlockedIcon /> : <LockIcon />}
-              </button>
+              <AnalyticsWrapper analyticsClass="umami--click--lock-course">
+                <button
+                  onClick={() => handleSemesterLock(semester.id.toString(), !semester.locked)}
+                >
+                  {!semester.locked ? <UnlockedIcon /> : <LockIcon />}
+                </button>
+              </AnalyticsWrapper>
             </div>
             <SemesterTileDropdown
               locked={semester.locked}
@@ -105,6 +144,14 @@ export const MemoizedSemesterTile = React.memo(
             />
           </div>
 
+          {semester.courses.length > 0 && (
+            <SemesterCredits
+              taken={semester.courses.reduce(
+                (taken, current) => taken + (getSemesterHourFromCourseCode(current.code) ?? 3),
+                0,
+              )}
+            />
+          )}
           <article
             className={`mb-5 flex flex-col gap-y-4 overflow-hidden transition-all duration-700 ${
               open ? 'max-h-[999px]' : 'max-h-0'
