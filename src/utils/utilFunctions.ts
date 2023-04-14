@@ -183,3 +183,10 @@ const regex =
 export const isValidEmail = (email: string) => {
   return regex.test(email);
 };
+
+/**
+ * This function exists if you ever need to mock the following function signature:
+ * () => void
+ */
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+export const emptyFunction = () => {};

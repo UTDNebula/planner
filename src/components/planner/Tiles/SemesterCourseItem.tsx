@@ -1,5 +1,5 @@
 import { UniqueIdentifier, useDraggable } from '@dnd-kit/core';
-import React, { ComponentPropsWithoutRef, FC, forwardRef, useRef, useState } from 'react';
+import React, { ComponentPropsWithoutRef, FC, forwardRef, useState, useRef } from 'react';
 
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import { DragDataFromSemesterTile, DraggableCourse, Semester } from '../types';
@@ -15,6 +15,8 @@ import useGetCourseInfo from '../useGetCourseInfo';
 
 import PrereqWarnHoverCard from '../PrereqWarnHoverCard';
 import FilledWarningIcon from '@/icons/FilledWarningIcon';
+import CourseInfoHoverCard from '../CourseInfoHoverCard';
+import { emptyFunction } from '@/utils/utilFunctions';
 
 export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'> {
   course: DraggableCourse;
@@ -55,12 +57,11 @@ export const MemoizedSemesterCourseItem = React.memo(
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [hoverOpen, setHoverOpen] = useState(false);
     const [hoverEllipse, setHoverEllipse] = useState(false);
-    const [hoverIconOpen, setHoverIconOpen] = useState(false);
-    const openHover = () => !isDragging && !dropdownOpen && setHoverOpen(true);
+    const [prereqWarnOpen, setPrereqWarnOpen] = useState(false);
 
     const hoverTimer = useRef<ReturnType<typeof setTimeout>>();
 
-    const { prereqs, title } = useGetCourseInfo(course.code);
+    const { title, description } = useGetCourseInfo(course.code);
 
     return (
       <div
@@ -75,18 +76,19 @@ export const MemoizedSemesterCourseItem = React.memo(
               : 'bg-inherit'
             : 'bg-[#FFFBEB]'
         } ${semesterLocked || course.locked ? 'text-neutral-400' : 'text-[#1C2A6D]'}`}
-        // onClick={() => setDropdownOpen((prev) => !prev)}
+        onClick={() => {
+          // Don't open if user is hovering over course info
+          setDropdownOpen(true);
+        }}
         onMouseEnter={() => {
-          if (!dropdownOpen) hoverTimer.current = setTimeout(() => setHoverIconOpen(true), 500);
+          if (!dropdownOpen) hoverTimer.current = setTimeout(() => setHoverOpen(true), 500);
           setHoverEllipse(true);
         }}
         onMouseLeave={() => {
           setHoverEllipse(false);
           setHoverOpen(false);
-          setHoverIconOpen(false);
-          if (hoverTimer.current) {
-            clearTimeout(hoverTimer.current);
-          }
+          setPrereqWarnOpen(false);
+          clearTimeout(hoverTimer.current);
         }}
       >
         <div className="h-[50px] min-w-[0.5rem]">
@@ -96,15 +98,12 @@ export const MemoizedSemesterCourseItem = React.memo(
             ></div>
           )}
         </div>
-
-        <PrereqWarnHoverCard
-          prereqs={requirementsData === undefined ? [[], [], []] : requirementsData}
-          open={hoverIconOpen}
-          onOpenChange={(hoverOpen) => {
-            console.info('not used');
-          }}
+        <CourseInfoHoverCard
+          description={description ?? ''}
+          open={hoverOpen && !isDragging && !prereqWarnOpen}
+          onOpenChange={emptyFunction}
+          side="top"
           title={title || ''}
-          isOverriden={course.prereqOveridden}
         >
           <div className="flex w-full flex-row items-center gap-x-3">
             <DragIndicatorIcon fontSize="inherit" className="text-[16px] text-neutral-300" />
@@ -127,9 +126,18 @@ export const MemoizedSemesterCourseItem = React.memo(
               <span className="content-middle flex items-center whitespace-nowrap text-sm">
                 {course.code}
                 {!isValid && !course.prereqOveridden && (
-                  <span className="ml-1 text-[#FBBF24]">
-                    <FilledWarningIcon />
-                  </span>
+                  <PrereqWarnHoverCard
+                    prereqs={requirementsData === undefined ? [[], [], []] : requirementsData}
+                    description={description ?? ''}
+                    open={prereqWarnOpen}
+                    onOpenChange={(hoverOpen) => setPrereqWarnOpen(hoverOpen)}
+                    title={title || ''}
+                    isOverriden={course.prereqOveridden}
+                  >
+                    <span className="text-[#FBBF24]" onMouseLeave={() => setPrereqWarnOpen(false)}>
+                      <FilledWarningIcon />
+                    </span>
+                  </PrereqWarnHoverCard>
                 )}
                 {course.locked && <LockIcon className="ml-1" />}
               </span>
@@ -165,7 +173,7 @@ export const MemoizedSemesterCourseItem = React.memo(
               </div>
             </SemesterCourseItemDropdown>
           </div>
-        </PrereqWarnHoverCard>
+        </CourseInfoHoverCard>
       </div>
     );
   }),
@@ -206,9 +214,7 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
   });
 
   const { planId } = useSemestersContext();
-  const requirementsData = trpc.validator.prereqValidator.useQuery(planId, {
-    staleTime: 100000000,
-  });
+  const requirementsData = trpc.validator.prereqValidator.useQuery(planId, {});
 
   const isValid: [boolean, boolean, boolean] = [true, true, true];
   const hoverList: [Array<string>, Array<string>, Array<string>] = [[], [], []];

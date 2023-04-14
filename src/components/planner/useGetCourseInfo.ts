@@ -5,7 +5,13 @@ import { useMemo } from 'react';
 // Highly inefficient
 const useGetCourseInfo = (
   courseCode: string,
-): { prereqs: string[]; coreqs: string[]; co_or_pre: string[]; title?: string } => {
+): {
+  prereqs: string[];
+  coreqs: string[];
+  co_or_pre: string[];
+  title?: string;
+  description?: string;
+} => {
   const { data } = trpc.courses.publicGetAllCourses.useQuery(undefined, {
     staleTime: Infinity,
     cacheTime: Infinity,
@@ -16,7 +22,16 @@ const useGetCourseInfo = (
     [data, courseCode],
   );
 
-  return { prereqs, coreqs, co_or_pre, title };
+  // Get course description
+  const description = useMemo(() => {
+    const courseInfo = data?.find(
+      (course) => course.subject_prefix + ' ' + course.course_number === courseCode,
+    );
+
+    return courseInfo ? courseInfo.description : '';
+  }, [data, courseCode]);
+
+  return { prereqs, coreqs, co_or_pre, title, description };
 };
 
 export default useGetCourseInfo;
