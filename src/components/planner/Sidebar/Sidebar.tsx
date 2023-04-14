@@ -95,7 +95,10 @@ function CourseSelectorContainer({
   return (
     <>
       {open ? (
-        <div className="z-0 h-screen w-[30%] min-w-[30%] overflow-x-hidden overflow-y-scroll">
+        <div
+          id="tutorial-editor-1"
+          className="z-0 h-screen w-[30%] min-w-[30%] overflow-x-hidden overflow-y-scroll"
+        >
           <div className="flex h-fit min-h-screen w-full flex-col gap-y-4 bg-white p-4">
             <div className="flex flex-col">
               <div className="flex flex-col justify-between xl:flex-row xl:items-center">
@@ -109,14 +112,16 @@ function CourseSelectorContainer({
                     Plan Requirements
                   </h1>
                 </div>
-                <CreditsTaken
-                  taken={sum}
-                  min={
-                    degreeRequirements.requirements.length > 0
-                      ? degreeRequirements.requirements[1].min_hours
-                      : 120
-                  }
-                />
+                <div id="tutorial-editor-2">
+                  <CreditsTaken
+                    taken={sum}
+                    min={
+                      degreeRequirements.requirements.length > 0
+                        ? degreeRequirements.requirements[1].min_hours
+                        : 120
+                    }
+                  />
+                </div>
               </div>
               <h6 className="text-base tracking-tight text-gray-500">
                 Drag courses onto your plan
