@@ -183,14 +183,14 @@ export default function PlansPage(): JSX.Element {
   );
 }
 
-interface ItemProps {
+interface ItemProps extends DropdownMenu.DropdownMenuItemProps {
   text: string;
   onClick: () => void;
 }
-const DropdownItem = ({ text, onClick, ...props }: ItemProps) => (
+const DropdownItem = ({ text, onClick, className = '', ...props }: ItemProps) => (
   <DropdownMenu.Item
     onClick={onClick}
-    className="flex w-full min-w-max cursor-pointer items-center gap-x-3 border-b border-neutral-300 px-2 py-2 text-sm hover:bg-neutral-200"
+    className={`flex w-full min-w-max cursor-pointer items-center gap-x-3 border-b border-neutral-300 px-2 py-2 text-sm hover:bg-neutral-200 ${className}`}
     {...props}
   >
     <span className="h-full w-full">{text}</span>
