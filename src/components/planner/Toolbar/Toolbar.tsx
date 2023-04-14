@@ -15,6 +15,7 @@ import DeletePlanModal from '@/shared-components/DeletePlanModal';
 import { trpc } from '@/utils/trpc';
 import EditableMajorTitle from './EditablePlanTitle';
 import EditableMajor from '../EditableMajor';
+import AnalyticsWrapper from '@/components/common/AnalyticsWrapper';
 
 export interface ToolbarProps {
   planId: string;
@@ -71,25 +72,29 @@ const Toolbar: FC<ToolbarProps> = ({
               />
             }
           >
-            <Button size="medium" icon={<DownloadIcon />}>
-              <span className="whitespace-nowrap" id="hello">
-                Export Degree Plan
-              </span>
-            </Button>
+            <AnalyticsWrapper analyticsClass="umami--click--export-pdf">
+              <Button size="medium" icon={<DownloadIcon />}>
+                <span className="whitespace-nowrap" id="hello">
+                  Export Degree Plan
+                </span>
+              </Button>
+            </AnalyticsWrapper>
           </PDFDownloadLink>
 
           <FilterByDropdown>
-            <Button
-              aria-label="Filter by options"
-              size="medium"
-              color="border"
-              className="hover:bg-primary-100 hover:text-primary-900"
-              icon={<SwitchVerticalIcon />}
-            >
-              <span className="whitespace-nowrap" id="world">
-                Sort By
-              </span>
-            </Button>
+            <AnalyticsWrapper analyticsClass="umami--click--sort-by">
+              <Button
+                aria-label="Filter by options"
+                size="medium"
+                color="border"
+                className="hover:bg-primary-100 hover:text-primary-900"
+                icon={<SwitchVerticalIcon />}
+              >
+                <span className="whitespace-nowrap" id="world">
+                  Sort By
+                </span>
+              </Button>
+            </AnalyticsWrapper>
           </FilterByDropdown>
 
           <EditSemestersModal

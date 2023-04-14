@@ -8,6 +8,7 @@ import { SemesterType } from '@prisma/client';
 import Checkbox from '../../Checkbox';
 import CalendarIcon from '@/icons/CalendarIcon';
 import ClockIcon from '@/icons/ClockIcon';
+import AnalyticsWrapper from '@/components/common/AnalyticsWrapper';
 
 const itemClasses =
   'flex items-center gap-x-3 border-b border-neutral-300 px-3 py-2 hover:bg-neutral-100 cursor-pointer group';
@@ -72,26 +73,28 @@ const FilterByDropdown: FC = ({ children }) => {
               >
                 {Object.entries(tagColors).map(([color, classes]) => (
                   <DropdownMenu.Item key={`${color}-${classes}`}>
-                    <div
-                      className={itemClasses}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        toggleColorFilter(color as keyof typeof tagColors);
-                      }}
-                    >
-                      <Checkbox
-                        className="group-hover:!bg-neutral-100"
-                        checked={filters.some(
-                          (filter) => filter.type === 'color' && filter.color === color,
-                        )}
-                        onClick={(e) => e.stopPropagation()}
-                        onCheckedChange={() => toggleColorFilter(color as keyof typeof tagColors)}
-                      />
-                      <div className={`h-5 w-5 rounded-sm border ${classes}`}></div>
-                      <span>
-                        {color.substring(0, 1).toUpperCase() + color.substring(1) || 'None'}
-                      </span>
-                    </div>
+                    <AnalyticsWrapper analyticsClass="umami--click--filter-by-year">
+                      <div
+                        className={itemClasses}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleColorFilter(color as keyof typeof tagColors);
+                        }}
+                      >
+                        <Checkbox
+                          className="group-hover:!bg-neutral-100"
+                          checked={filters.some(
+                            (filter) => filter.type === 'color' && filter.color === color,
+                          )}
+                          onClick={(e) => e.stopPropagation()}
+                          onCheckedChange={() => toggleColorFilter(color as keyof typeof tagColors)}
+                        />
+                        <div className={`h-5 w-5 rounded-sm border ${classes}`}></div>
+                        <span>
+                          {color.substring(0, 1).toUpperCase() + color.substring(1) || 'None'}
+                        </span>
+                      </div>
+                    </AnalyticsWrapper>
                   </DropdownMenu.Item>
                 ))}
               </DropdownMenu.SubContent>
@@ -125,23 +128,25 @@ const FilterByDropdown: FC = ({ children }) => {
                   .sort()
                   .map((year) => (
                     <DropdownMenu.Item key={year}>
-                      <div
-                        className={itemClasses}
-                        onClick={(e) => {
-                          toggleYearFilter(year);
-                          e.stopPropagation();
-                        }}
-                      >
-                        <Checkbox
-                          className="group-hover:!bg-neutral-100"
-                          onClick={(e) => e.stopPropagation()}
-                          checked={filters.some(
-                            (filter) => filter.type === 'year' && filter.year === year,
-                          )}
-                          onCheckedChange={() => toggleYearFilter(year)}
-                        />
-                        {year}
-                      </div>
+                      <AnalyticsWrapper analyticsClass="umami--click--filter-by-year">
+                        <div
+                          className={itemClasses}
+                          onClick={(e) => {
+                            toggleYearFilter(year);
+                            e.stopPropagation();
+                          }}
+                        >
+                          <Checkbox
+                            className="group-hover:!bg-neutral-100"
+                            onClick={(e) => e.stopPropagation()}
+                            checked={filters.some(
+                              (filter) => filter.type === 'year' && filter.year === year,
+                            )}
+                            onCheckedChange={() => toggleYearFilter(year)}
+                          />
+                          {year}
+                        </div>
+                      </AnalyticsWrapper>
                     </DropdownMenu.Item>
                   ))}
               </DropdownMenu.SubContent>
@@ -173,24 +178,26 @@ const FilterByDropdown: FC = ({ children }) => {
               >
                 {Object.keys(semestersDisplayMap).map((semesterType) => (
                   <DropdownMenu.Item key={semesterType}>
-                    <div
-                      className={itemClasses}
-                      onClick={(e) => {
-                        toggleSemesterFilter(semesterType as SemesterType);
-                        e.stopPropagation();
-                      }}
-                    >
-                      <Checkbox
-                        className="group-hover:!bg-neutral-100"
-                        onClick={(e) => e.stopPropagation()}
-                        checked={filters.some(
-                          (filter) =>
-                            filter.type === 'semester' && semesterType === filter.semester,
-                        )}
-                        onCheckedChange={() => toggleSemesterFilter(semesterType as SemesterType)}
-                      />
-                      {semestersDisplayMap[semesterType as SemesterType] + ' semester'}
-                    </div>
+                    <AnalyticsWrapper analyticsClass="umami--click--filter-by-semester">
+                      <div
+                        className={itemClasses}
+                        onClick={(e) => {
+                          toggleSemesterFilter(semesterType as SemesterType);
+                          e.stopPropagation();
+                        }}
+                      >
+                        <Checkbox
+                          className="group-hover:!bg-neutral-100"
+                          onClick={(e) => e.stopPropagation()}
+                          checked={filters.some(
+                            (filter) =>
+                              filter.type === 'semester' && semesterType === filter.semester,
+                          )}
+                          onCheckedChange={() => toggleSemesterFilter(semesterType as SemesterType)}
+                        />
+                        {semestersDisplayMap[semesterType as SemesterType] + ' semester'}
+                      </div>
+                    </AnalyticsWrapper>
                   </DropdownMenu.Item>
                 ))}
               </DropdownMenu.SubContent>

@@ -12,6 +12,7 @@ import LockIcon from '@/icons/LockIcon';
 import UnlockedIcon from '@/icons/UnlockedIcon';
 import { tagColors } from '../utils';
 import CreditsWarnHoverCard from '../CreditsWarnHoverCard';
+import AnalyticsWrapper from '@/components/common/AnalyticsWrapper';
 
 export interface SemesterTileProps {
   semester: Semester;
@@ -124,9 +125,13 @@ export const MemoizedSemesterTile = React.memo(
               >
                 {displaySemesterCode(semester.code)}
               </h3>
-              <button onClick={() => handleSemesterLock(semester.id.toString(), !semester.locked)}>
-                {!semester.locked ? <UnlockedIcon /> : <LockIcon />}
-              </button>
+              <AnalyticsWrapper analyticsClass="umami--click--lock-course">
+                <button
+                  onClick={() => handleSemesterLock(semester.id.toString(), !semester.locked)}
+                >
+                  {!semester.locked ? <UnlockedIcon /> : <LockIcon />}
+                </button>
+              </AnalyticsWrapper>
             </div>
             <SemesterTileDropdown
               locked={semester.locked}
