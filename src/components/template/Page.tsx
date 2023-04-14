@@ -3,9 +3,16 @@ import Button from '../Button';
 import CloseIcon from '@mui/icons-material/Close';
 import { PageProps } from './CustomPlan';
 
-export function Page({ title, subtitle, children, actions, close }: PropsWithChildren<PageProps>) {
+export function Page({
+  title,
+  subtitle,
+  children,
+  actions,
+  close,
+  ...props
+}: PropsWithChildren<PageProps>) {
   return (
-    <section className="flex flex-col justify-center gap-4 ">
+    <section className="flex flex-col justify-center gap-4" {...props}>
       <div className="flex justify-between">
         <div className="flex flex-col gap-1">
           <h1 className="text-4xl font-semibold tracking-tight">{title}</h1>
@@ -36,8 +43,8 @@ export function Page({ title, subtitle, children, actions, close }: PropsWithChi
       </div>
       <div className="flex flex-col gap-3">{children}</div>
       <div className="flex gap-6 place-self-end font-medium">
-        {actions.map(({ name, onClick, color, loading }, index) => (
-          <Button color={color} onClick={onClick} key={index} isLoading={loading}>
+        {actions.map(({ name, onClick, color, loading, ...props }, index) => (
+          <Button color={color} onClick={onClick} key={index} isLoading={loading} {...props}>
             {name}
           </Button>
         ))}

@@ -111,6 +111,7 @@ export default function PlansPage(): JSX.Element {
               <DropdownMenu.Trigger>
                 <button
                   id="tutorial-2"
+                  data-testid="add-new-plan-btn"
                   className="flex h-12 flex-row items-center gap-4 rounded-md bg-primary p-6 text-white transition-all hover:bg-primary-600 active:bg-primary-600"
                 >
                   <PlusIcon />
@@ -123,6 +124,7 @@ export default function PlansPage(): JSX.Element {
                 <DropdownMenu.Content className="relative top-2 w-min rounded-md border border-neutral-300 bg-generic-white drop-shadow-xl">
                   <AnalyticsWrapper analyticsClass="umami--click--custom-plan">
                     <DropdownItem
+                      data-testid="add-custom-plan-btn"
                       text="Add Custom Plan"
                       onClick={() => {
                         setPlanPage(0);
@@ -132,9 +134,11 @@ export default function PlansPage(): JSX.Element {
                   </AnalyticsWrapper>
 
                   <DropdownMenu.Separator className="DropdownMenuSeparator h-0.5 bg-black opacity-10" />
+
                   <AnalyticsWrapper analyticsClass="umami--click--template-plan">
                     <DropdownItem
                       text="Add Template Plan"
+                      data-testid="add-template-plan-btn"
                       onClick={() => {
                         setPlanPage(1);
                         setOpenTemplateModal(true);
@@ -183,10 +187,11 @@ interface ItemProps {
   text: string;
   onClick: () => void;
 }
-const DropdownItem = ({ text, onClick }: ItemProps) => (
+const DropdownItem = ({ text, onClick, ...props }: ItemProps) => (
   <DropdownMenu.Item
     onClick={onClick}
     className="flex w-full min-w-max cursor-pointer items-center gap-x-3 border-b border-neutral-300 px-2 py-2 text-sm hover:bg-neutral-200"
+    {...props}
   >
     <span className="h-full w-full">{text}</span>
   </DropdownMenu.Item>

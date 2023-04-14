@@ -29,6 +29,9 @@ declare global {
   namespace Cypress {
     interface Chainable {
       mount: typeof mount;
+      dataTestId: typeof cy.get;
+      resetDbAndLogin: () => void;
+      getDropdownOptions: () => Chainable<JQuery<HTMLOptionElement>>;
     }
   }
 }

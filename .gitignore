@@ -6,7 +6,9 @@
 .pnp.js
 
 # testing
-/coverage
+cypress/screenshots
+cypress/videos
+cypress/downloads
 
 # next.js
 /.next/
@@ -30,6 +32,7 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 .env
+.env.test
 
 # Vercel
 .vercel
