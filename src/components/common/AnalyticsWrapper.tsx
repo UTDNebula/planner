@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React from 'react';
 
 export default function AnalyticsWrapper({
   analyticsClass,
@@ -7,5 +7,8 @@ export default function AnalyticsWrapper({
   analyticsClass: string;
   children: React.ReactElement;
 }) {
-  return <div className={`${analyticsClass} h-full w-full`}>{children}</div>;
+  return React.cloneElement(React.Children.only(children), {
+    ...children.props,
+    className: children.props.className ? `${children.props.className} ${analyticsClass}` : null,
+  });
 }
