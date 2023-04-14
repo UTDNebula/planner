@@ -48,6 +48,7 @@ export const MemoizedSemesterTile = React.memo(
     const SemesterCredits = ({ taken }: { taken: number }) => {
       return (
         <div
+          className="-mt-3 w-fit"
           onMouseEnter={() => {
             hoverTimer.current = setTimeout(() => setHoverOpen(true), 500);
           }}
@@ -67,7 +68,7 @@ export const MemoizedSemesterTile = React.memo(
             side="top"
           >
             <div
-              className={`flex items-center gap-x-3 rounded-full px-3 py-2 ${
+              className={`flex items-center gap-x-3 rounded-full py-1 px-2 ${
                 taken > 19 ||
                 (semester.code.semester == 'u' && taken > 15) ||
                 (taken < 12 && taken != 0)
@@ -76,7 +77,7 @@ export const MemoizedSemesterTile = React.memo(
               }`}
             >
               <span
-                className={`text-xs font-semibold ${
+                className={`whitespace-nowrap text-[11px] font-medium lg:text-sm ${
                   taken > 19 ||
                   (semester.code.semester == 'u' && taken > 15) ||
                   (taken < 12 && taken != 0)
@@ -119,14 +120,14 @@ export const MemoizedSemesterTile = React.memo(
             }`}
           >
             <div className={`flex h-10 flex-row items-center justify-center gap-2 align-middle`}>
-              <h3 className={`text-2xl font-semibold tracking-tight`}>
+              <h3
+                className={`whitespace-nowrap text-base font-semibold tracking-tight sm:text-xl [@media(min-width:1700px)]:text-2xl`}
+              >
                 {displaySemesterCode(semester.code)}
               </h3>
               <AnalyticsWrapper analyticsClass="umami--click--lock-course">
                 <button
-                  onClick={() => {
-                    handleSemesterLock(semester.id.toString(), !semester.locked);
-                  }}
+                  onClick={() => handleSemesterLock(semester.id.toString(), !semester.locked)}
                 >
                   {!semester.locked ? <UnlockedIcon /> : <LockIcon />}
                 </button>
@@ -143,6 +144,14 @@ export const MemoizedSemesterTile = React.memo(
             />
           </div>
 
+          {semester.courses.length > 0 && (
+            <SemesterCredits
+              taken={semester.courses.reduce(
+                (taken, current) => taken + (getSemesterHourFromCourseCode(current.code) ?? 3),
+                0,
+              )}
+            />
+          )}
           <article
             className={`mb-5 flex flex-col gap-y-4 overflow-hidden transition-all duration-700 ${
               open ? 'max-h-[999px]' : 'max-h-0'
