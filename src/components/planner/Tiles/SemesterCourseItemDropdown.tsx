@@ -23,6 +23,7 @@ export interface SemesterTileDropdownProps {
   toggleLock: () => void;
   locked: boolean;
   semesterLocked: boolean;
+  isValid: boolean;
   prereqOverriden: boolean;
   onPrereqOverrideChange: () => void;
 }
@@ -36,6 +37,7 @@ const SemesterCourseItemDropdown: FC<SemesterTileDropdownProps> = ({
   children,
   toggleLock,
   locked,
+  isValid,
   prereqOverriden,
   onPrereqOverrideChange,
 }) => {
@@ -64,10 +66,12 @@ const SemesterCourseItemDropdown: FC<SemesterTileDropdownProps> = ({
             <span>Delete</span>
           </DropdownMenu.Item>
 
-          <DropdownMenu.Item className={itemClasses} onClick={onPrereqOverrideChange}>
-            <UnfilledWarningIcon stroke="black" />
-            <span>{prereqOverriden ? 'Show Pre-reqs Warning' : 'Dismiss Pre-reqs Warning'}</span>
-          </DropdownMenu.Item>
+          {!isValid && (
+            <DropdownMenu.Item className={itemClasses} onClick={onPrereqOverrideChange}>
+              <UnfilledWarningIcon stroke="black" />
+              <span>{prereqOverriden ? 'Show Pre-reqs Warning' : 'Dismiss Pre-reqs Warning'}</span>
+            </DropdownMenu.Item>
+          )}
           <DropdownMenu.Item
             className={!semesterLocked ? itemClasses : itemClasses + ' ' + disabledClasses}
             onClick={!semesterLocked ? toggleLock : undefined}

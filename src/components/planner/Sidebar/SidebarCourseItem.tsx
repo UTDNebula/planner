@@ -5,7 +5,7 @@ import { DragDataFromCourseList, DraggableCourse } from '../types';
 
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import CheckIcon from '@mui/icons-material/Check';
-import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
+import { emptyFunction, getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
 import React, { ComponentPropsWithoutRef, forwardRef, useState, useRef, useEffect } from 'react';
 import CourseInfoHoverCard from '../CourseInfoHoverCard';
 import useGetCourseInfo from '../useGetCourseInfo';
@@ -31,7 +31,7 @@ export const SidebarCourseItem = React.memo(
       if (isDragging) clearTimeout(hoverTimer.current);
     }, [isDragging]);
 
-    const { prereqs, coreqs, co_or_pre, title } = useGetCourseInfo(course.code);
+    const { title, description } = useGetCourseInfo(course.code);
 
     return (
       <div
@@ -41,17 +41,19 @@ export const SidebarCourseItem = React.memo(
           course.taken && 'opacity-50'
         } flex h-[40px] flex-row items-center justify-between rounded-md border border-neutral-300 bg-white py-3 px-5 text-[10px] text-[#1C2A6D] drop-shadow-sm`}
         onMouseEnter={() => {
+          clearTimeout(hoverTimer.current);
           hoverTimer.current = setTimeout(() => setHoverOpen(true), 500);
         }}
         onMouseLeave={() => {
-          setHoverOpen(false);
           clearTimeout(hoverTimer.current);
+          hoverTimer.current = setTimeout(() => setHoverOpen(false), 800);
         }}
       >
         <CourseInfoHoverCard
-          prereqs={[prereqs, coreqs, co_or_pre]}
+          description={description ?? ''}
+          // prereqs={[prereqs, coreqs, co_or_pre]}
           open={hoverOpen && !isDragging}
-          onOpenChange={(open) => setHoverOpen(open)}
+          onOpenChange={emptyFunction}
           side="left"
           title={title || ''}
         >

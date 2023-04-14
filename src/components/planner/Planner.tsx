@@ -226,7 +226,7 @@ export default function Planner({
 
 const MasonryColumn: FC<{ column: Semester[] }> = ({ column }) => {
   return (
-    <div className="flex w-full flex-col gap-5">
+    <div className="flex w-[calc(33%-10px)] flex-col gap-5">
       {column.map((semester) => {
         return (
           <DroppableSemesterTile

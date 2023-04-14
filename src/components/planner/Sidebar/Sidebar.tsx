@@ -20,6 +20,7 @@ import { RouterOutputs, trpc } from '@/utils/trpc';
 import { DegreeRequirements } from './types';
 import ChevronIcon from '@/icons/ChevronIcon';
 import useFuse from '../useFuse';
+import AnalyticsWrapper from '@/components/common/AnalyticsWrapper';
 type CourseData = RouterOutputs['courses']['publicGetAllCourses'];
 type ArrayElement<ArrayType extends readonly unknown[]> =
   ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
@@ -72,13 +73,13 @@ function CourseSelectorContainer({
   }) => {
     return (
       <div
-        className={`flex items-center gap-x-3 rounded-full ${
+        className={`ml-[20px] mt-2 flex w-fit items-center gap-x-3 rounded-full ${
           taken >= min ? 'bg-primary-100' : 'bg-yellow-100'
         } px-3 py-2`}
       >
         <span
-          className={`text-xs font-semibold ${
-            taken >= min ? 'text-primary-800' : 'text-yellow-500'
+          className={`whitespace-nowrap font-semibold text-yellow-500 sm:text-[10px] lg:text-xs ${
+            taken >= min ? 'bg-primary-800' : 'text-yellow-500'
           }`}
         >
           {taken}/{min} {unit}
@@ -100,14 +101,16 @@ function CourseSelectorContainer({
         >
           <div className="flex h-fit min-h-screen w-full flex-col gap-y-4 bg-white p-4">
             <div className="flex flex-col">
-              <div className="flex flex-row items-center justify-between">
-                <div className="flex flex-row items-center justify-center">
+              <div className="flex flex-col justify-between xl:flex-row xl:items-center">
+                <div className="flex flex-row items-center xl:justify-center">
                   <ChevronIcon
                     onClick={() => setOpen(!open)}
                     className={`h-4 w-4 cursor-pointer ${open ? '' : 'rotate-180'}`}
                     strokeWidth={2.5}
                   />
-                  <h1 className="pl-2 text-2xl font-medium tracking-tight">Plan Requirements</h1>
+                  <h1 className="whitespace-nowrap pl-2 text-2xl font-medium tracking-tight">
+                    Plan Requirements
+                  </h1>
                 </div>
                 <div id="tutorial-editor-2">
                   <CreditsTaken
@@ -125,19 +128,21 @@ function CourseSelectorContainer({
               </h6>
             </div>
             <div className="z-[999] drop-shadow-2xl">
-              <SearchBarTwo
-                onClick={() => setDisplay(true)}
-                updateQuery={(q) => {
-                  updateQuery(q);
-                  setDisplay(true);
-                }}
-                className={`${
-                  displayResults
-                    ? 'rounded-b-none border-b-transparent'
-                    : 'rounded-b-[10px] border-b-inherit'
-                }`}
-                placeholder="Search courses"
-              />
+              <AnalyticsWrapper analyticsClass="umami--click--search-course">
+                <SearchBarTwo
+                  onClick={() => setDisplay(true)}
+                  updateQuery={(q) => {
+                    updateQuery(q);
+                    setDisplay(true);
+                  }}
+                  className={`${
+                    displayResults
+                      ? 'rounded-b-none border-b-transparent'
+                      : 'rounded-b-[10px] border-b-inherit'
+                  }`}
+                  placeholder="Search courses"
+                />
+              </AnalyticsWrapper>
               <div className="relative">
                 <div
                   ref={ref}
