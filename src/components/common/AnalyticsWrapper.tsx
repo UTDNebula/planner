@@ -1,5 +1,12 @@
 import React from 'react';
 
+/**
+ * Wrapper component that injects ``analyticsClass`` class into its child
+ *
+ * Errors when more than 1 child
+ *
+ * Child component must take ``className`` props
+ */
 export default function AnalyticsWrapper({
   analyticsClass,
   children,
