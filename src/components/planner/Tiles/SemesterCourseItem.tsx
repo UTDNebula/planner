@@ -31,7 +31,6 @@ export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'>
   onColorChange?: (color: keyof typeof tagColors) => void;
   onLockChange?: (lock: boolean) => void;
   onPrereqOverrideChange?: (override: boolean) => void;
-  year: number;
 }
 
 /** UI implementation of a semester course */
@@ -51,7 +50,6 @@ export const MemoizedSemesterCourseItem = React.memo(
       onLockChange,
       onPrereqOverrideChange,
       semesterLocked,
-      year,
       ...props
     },
     ref,
@@ -64,6 +62,9 @@ export const MemoizedSemesterCourseItem = React.memo(
     const hoverTimer = useRef<ReturnType<typeof setTimeout>>();
 
     const { title, description } = useGetCourseInfo(course.code);
+    const { allSemesters } = useSemestersContext();
+    let year = allSemesters[0]['code']['year'];
+    if (allSemesters[0]['code']['semester'] !== 'f') year--;
 
     return (
       <div
@@ -217,9 +218,7 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
     disabled: course.locked || semester.locked,
   });
 
-  const { planId, allSemesters } = useSemestersContext();
-  let year = allSemesters[0]['code']['year'];
-  if (allSemesters[0]['code']['semester'] !== 'f') year--;
+  const { planId } = useSemestersContext();
   const requirementsData = trpc.validator.prereqValidator.useQuery(planId, {});
 
   const isValid: [boolean, boolean, boolean] = [true, true, true];
@@ -270,7 +269,6 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
       isValid={isValid[0] && isValid[1] && isValid[2]} // Show as valid if isValid is undefined
       requirementsData={hoverList}
       onPrereqOverrideChange={onPrereqOverrideChange}
-      year={year}
     />
   );
 };
