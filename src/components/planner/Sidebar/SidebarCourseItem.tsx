@@ -9,6 +9,7 @@ import { emptyFunction, getSemesterHourFromCourseCode } from '@/utils/utilFuncti
 import React, { ComponentPropsWithoutRef, forwardRef, useState, useRef, useEffect } from 'react';
 import CourseInfoHoverCard from '../CourseInfoHoverCard';
 import useGetCourseInfo from '../useGetCourseInfo';
+import { useSemestersContext } from '../SemesterContext';
 
 interface SidebarCourseItemProps extends ComponentPropsWithoutRef<'div'> {
   course: DraggableCourse;
@@ -32,6 +33,9 @@ export const SidebarCourseItem = React.memo(
     }, [isDragging]);
 
     const { title, description } = useGetCourseInfo(course.code);
+    const { allSemesters } = useSemestersContext();
+    let year = allSemesters[0]['code']['year'];
+    if (allSemesters[0]['code']['semester'] !== 'f') year--;
 
     return (
       <div
@@ -57,6 +61,7 @@ export const SidebarCourseItem = React.memo(
           side="left"
           title={title || ''}
           courseCode={course.code}
+          year={year}
         >
           <div className="flex w-full flex-row items-center justify-between">
             <span className="flex w-full flex-row items-center overflow-hidden text-sm text-[#1C2A6D]">

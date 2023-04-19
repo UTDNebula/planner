@@ -10,6 +10,7 @@ interface CourseInfoHoverCardProps {
   side?: 'top' | 'left' | 'bottom' | 'right';
   title: string;
   courseCode: string;
+  year: number;
 }
 
 export const CourseInfoHoverCard: FC<CourseInfoHoverCardProps> = ({
@@ -19,6 +20,7 @@ export const CourseInfoHoverCard: FC<CourseInfoHoverCardProps> = ({
   side = 'bottom',
   title,
   courseCode,
+  year,
   children,
 }) => (
   <HoverCard.Root open={open} onOpenChange={onOpenChange}>
@@ -32,7 +34,7 @@ export const CourseInfoHoverCard: FC<CourseInfoHoverCardProps> = ({
       >
         <h3 className="mb-2 text-base font-semibold">
           <Link
-            href={`https://catalog.utdallas.edu/2022/undergraduate/courses/${courseCode
+            href={`https://catalog.utdallas.edu/${year}/undergraduate/courses/${courseCode
               .replace(' ', '')
               .toLowerCase()}`}
             target="_blank"
