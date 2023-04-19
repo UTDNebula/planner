@@ -104,6 +104,7 @@ export const MemoizedSemesterCourseItem = React.memo(
           onOpenChange={emptyFunction}
           side="top"
           title={title || ''}
+          courseCode={course.code}
         >
           <div className="flex w-full flex-row items-center gap-x-3">
             <DragIndicatorIcon fontSize="inherit" className="text-[16px] text-neutral-300" />

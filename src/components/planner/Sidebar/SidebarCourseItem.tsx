@@ -56,6 +56,7 @@ export const SidebarCourseItem = React.memo(
           onOpenChange={emptyFunction}
           side="left"
           title={title || ''}
+          courseCode={course.code}
         >
           <div className="flex w-full flex-row items-center justify-between">
             <span className="flex w-full flex-row items-center overflow-hidden text-sm text-[#1C2A6D]">

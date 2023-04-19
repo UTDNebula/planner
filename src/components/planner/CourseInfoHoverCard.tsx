@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { FC, useState } from 'react';
 import * as HoverCard from '@radix-ui/react-hover-card';
 
@@ -8,6 +9,7 @@ interface CourseInfoHoverCardProps {
   onOpenChange: (open: boolean) => void;
   side?: 'top' | 'left' | 'bottom' | 'right';
   title: string;
+  courseCode: string;
 }
 
 export const CourseInfoHoverCard: FC<CourseInfoHoverCardProps> = ({
@@ -16,6 +18,7 @@ export const CourseInfoHoverCard: FC<CourseInfoHoverCardProps> = ({
   onOpenChange,
   side = 'bottom',
   title,
+  courseCode,
   children,
 }) => (
   <HoverCard.Root open={open} onOpenChange={onOpenChange}>
@@ -27,7 +30,17 @@ export const CourseInfoHoverCard: FC<CourseInfoHoverCardProps> = ({
         className="z-[999] w-[300px] animate-[slideUpAndFade_0.3s] rounded-md border border-neutral-200 bg-generic-white p-6 shadow-sm"
         sideOffset={5}
       >
-        <h3 className="mb-2 text-base font-semibold">{title}</h3>
+        <h3 className="mb-2 text-base font-semibold">
+          <Link
+            href={`https://catalog.utdallas.edu/2022/undergraduate/courses/${courseCode
+              .replace(' ', '')
+              .toLowerCase()}`}
+            target="_blank"
+            className="underline"
+          >
+            {title}
+          </Link>
+        </h3>
         <CourseDescription description={description} />
 
         <HoverCard.Arrow className="fill-primary" />
