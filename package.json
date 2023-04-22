@@ -36,7 +36,7 @@
     "@radix-ui/react-switch": "1.0.1",
     "@react-pdf/renderer": "^3.0.3",
     "@reduxjs/toolkit": "^1.6.0",
-    "@sentry/nextjs": "^7.45.0",
+    "@sentry/nextjs": "^7.49.0",
     "@tanstack/react-query": "^4.16.1",
     "@tanstack/react-query-devtools": "^4.24.10",
     "@trpc/client": "^10.0.0",
