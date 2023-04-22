@@ -68,7 +68,7 @@ export const MemoizedSemesterTile = React.memo(
             side="top"
           >
             <div
-              className={`flex items-center gap-x-3 rounded-full py-1 px-2 ${
+              className={`flex items-center gap-x-3 rounded-full px-2 py-1 ${
                 taken > 19 ||
                 (semester.code.semester == 'u' && taken > 15) ||
                 (taken < 12 && taken != 0)

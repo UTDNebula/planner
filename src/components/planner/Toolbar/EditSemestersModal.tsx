@@ -73,7 +73,7 @@ const EditSemestersModal: FC<EditSemestersModalProps> = ({
           />
         </div>
       </div>
-      <div className="mt-4 ml-auto flex w-fit gap-x-4">
+      <div className="ml-auto mt-4 flex w-fit gap-x-4">
         <Button
           color="secondary"
           onClick={(e) => {

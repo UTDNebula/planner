@@ -24,5 +24,5 @@ Sentry.init({
   // sessions when an error occurs.
   replaysOnErrorSampleRate: 1.0,
   integrations: [new Sentry.Replay()],
-  environment: process.env.NEXT_PUBLIC_VERCEL_ENV || "development"
+  environment: process.env.NEXT_PUBLIC_VERCEL_ENV || 'development',
 });

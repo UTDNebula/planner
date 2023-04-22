@@ -39,7 +39,7 @@ export const SidebarCourseItem = React.memo(
         {...props}
         className={`cursor-grab ${
           course.taken && 'opacity-50'
-        } flex h-[40px] flex-row items-center justify-between rounded-md border border-neutral-300 bg-white py-3 px-5 text-[10px] text-[#1C2A6D] drop-shadow-sm`}
+        } flex h-[40px] flex-row items-center justify-between rounded-md border border-neutral-300 bg-white px-5 py-3 text-[10px] text-[#1C2A6D] drop-shadow-sm`}
         onMouseEnter={() => {
           clearTimeout(hoverTimer.current);
           hoverTimer.current = setTimeout(() => setHoverOpen(true), 500);

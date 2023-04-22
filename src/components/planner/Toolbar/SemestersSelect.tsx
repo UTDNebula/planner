@@ -43,7 +43,7 @@ const SelectItem: FC<Select.SelectItemProps> = ({ children, ...props }) => {
   return (
     <Select.Item
       onFocus={(e) => e.stopPropagation()}
-      className="border border-b-neutral-100 py-3 px-3 hover:bg-neutral-50"
+      className="border border-b-neutral-100 px-3 py-3 hover:bg-neutral-50"
       style={{ width: 'calc(var(--radix-select-trigger-width) * 0.99)' }}
       {...props}
     >

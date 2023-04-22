@@ -14,7 +14,7 @@ export default function WarningMessageModal(props: WarningMessageModalProps) {
   return (
     <div className="fixed bottom-0 right-0 m-8 flex gap-2 rounded-md bg-yellow-400 transition-transform hover:scale-105">
       {expand ? (
-        <div className="flex items-center justify-between gap-4 py-2 px-4">
+        <div className="flex items-center justify-between gap-4 px-4 py-2">
           <div className="max-w-[200px]">{message}</div>
           <button onClick={() => setWarning(false)}>
             <CloseIcon />
