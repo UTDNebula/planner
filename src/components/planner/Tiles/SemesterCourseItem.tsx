@@ -62,6 +62,9 @@ export const MemoizedSemesterCourseItem = React.memo(
     const hoverTimer = useRef<ReturnType<typeof setTimeout>>();
 
     const { title, description } = useGetCourseInfo(course.code);
+    const { allSemesters } = useSemestersContext();
+    let year = allSemesters[0]['code']['year'];
+    if (allSemesters[0]['code']['semester'] !== 'f') year--;
 
     return (
       <div
@@ -104,6 +107,8 @@ export const MemoizedSemesterCourseItem = React.memo(
           onOpenChange={emptyFunction}
           side="top"
           title={title || ''}
+          courseCode={course.code}
+          year={year}
         >
           <div className="flex w-full flex-row items-center gap-x-3">
             <DragIndicatorIcon fontSize="inherit" className="text-[16px] text-neutral-300" />
