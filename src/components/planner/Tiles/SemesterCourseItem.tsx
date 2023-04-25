@@ -100,7 +100,7 @@ export const MemoizedSemesterCourseItem = React.memo(
         </div>
         <CourseInfoHoverCard
           description={description ?? ''}
-          open={hoverOpen && !isDragging && !prereqWarnOpen}
+          open={Boolean(title) && hoverOpen && !isDragging && !prereqWarnOpen}
           onOpenChange={emptyFunction}
           side="top"
           title={title || ''}
