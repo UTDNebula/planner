@@ -78,8 +78,8 @@ function CourseSelectorContainer({
         } px-3 py-2`}
       >
         <span
-          className={`whitespace-nowrap font-semibold text-yellow-500 sm:text-[10px] lg:text-xs ${
-            taken >= min ? 'bg-primary-800' : 'text-yellow-500'
+          className={`whitespace-nowrap font-semibold sm:text-[10px] lg:text-xs ${
+            taken >= min ? 'text-primary-800' : 'text-yellow-500'
           }`}
         >
           {taken}/{min} {unit}
