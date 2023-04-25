@@ -315,6 +315,7 @@ export const userRouter = router({
         requirements: degreeRequirements,
         endSemester: plan!.endSemester,
         startSemester: plan!.startSemester,
+        transferCredits: plan!.transferCredits,
       };
 
       const plans: Prisma.PlanUpdateManyWithoutUserNestedInput = {
