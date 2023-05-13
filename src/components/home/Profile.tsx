@@ -53,22 +53,22 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
       setEmail(data?.email ?? '');
 
       setFirstSem(
-        displaySemesterCode(data?.profile?.startSemester ?? { semester: 'f', year: 404 }).split(
+        displaySemesterCode(data?.profile?.startSemesterCode ?? { semester: 'f', year: 404 }).split(
           ' ',
         )[0],
       );
       setFirstYear(
-        displaySemesterCode(data?.profile?.startSemester ?? { semester: 'f', year: 404 }).split(
+        displaySemesterCode(data?.profile?.startSemesterCode ?? { semester: 'f', year: 404 }).split(
           ' ',
         )[1],
       );
       setSecondSem(
-        displaySemesterCode(data?.profile?.endSemester ?? { semester: 'f', year: 404 }).split(
+        displaySemesterCode(data?.profile?.endSemesterCode ?? { semester: 'f', year: 404 }).split(
           ' ',
         )[0],
       );
       setSecondYear(
-        displaySemesterCode(data?.profile?.endSemester ?? { semester: 'f', year: 404 }).split(
+        displaySemesterCode(data?.profile?.endSemesterCode ?? { semester: 'f', year: 404 }).split(
           ' ',
         )[1],
       );

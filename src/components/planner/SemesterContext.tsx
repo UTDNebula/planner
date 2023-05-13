@@ -1,7 +1,7 @@
 import { trpc } from '@/utils/trpc';
 import { toast } from 'react-toastify';
 import { createNewYear } from '@/utils/utilFunctions';
-import { ObjectID } from 'bson';
+import { UUID } from 'bson';
 import { createContext, FC, useContext, useEffect, useMemo, useReducer, useState } from 'react';
 import { Plan, Semester, DraggableCourse } from './types';
 import { customCourseSort } from './utils';
@@ -770,14 +770,14 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
 const parsePlanSemestersFromPlan = (plan: Plan): Semester[] => {
   return plan.semesters.map((sem) => ({
     locked: sem.locked,
-    code: sem.code,
-    id: new ObjectID(sem.id),
+    code: sem.semesterCode,
+    id: new UUID(sem.id),
     color: Object.keys(tagColors).includes(sem.color) ? (sem.color as keyof typeof tagColors) : '',
     courses: sem.courses.map(
       (course) =>
         ({
           locked: course.locked,
-          id: new ObjectID(course.id),
+          id: new UUID(course.id),
           color: course.color as keyof typeof tagColors,
           code: course.code,
           prereqOveridden: course.prereqOverriden,

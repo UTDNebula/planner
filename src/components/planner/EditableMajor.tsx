@@ -6,7 +6,15 @@ import EditIcon from '@/icons/EditIcon';
 import { trpc } from '@/utils/trpc';
 import { toast } from 'react-toastify';
 
-const EditableMajor = ({ major: initialMajor, planId }: { major: string; planId: string }) => {
+const EditableMajor = ({
+  major: initialMajor,
+  planId,
+  degreeRequirementsId,
+}: {
+  degreeRequirementsId: string;
+  major: string;
+  planId: string;
+}) => {
   const [editMajor, setEditMajor] = useState(false);
   const [major, setMajor] = useState(initialMajor);
 
@@ -29,6 +37,7 @@ const EditableMajor = ({ major: initialMajor, planId }: { major: string; planId:
       ) : (
         <div className="flex items-center justify-center ">
           <EditMajorAutocomplete
+            degreeRequirementsId={degreeRequirementsId}
             major={major}
             setMajor={setMajor}
             setEditMajor={setEditMajor}
@@ -41,11 +50,13 @@ const EditableMajor = ({ major: initialMajor, planId }: { major: string; planId:
 };
 
 const EditMajorAutocomplete = ({
+  degreeRequirementsId,
   major,
   setMajor,
   setEditMajor,
   planId,
 }: {
+  degreeRequirementsId: string;
   major: string;
   setMajor: (major: string) => void;
   setEditMajor: (a: boolean) => void;
@@ -65,7 +76,7 @@ const EditMajorAutocomplete = ({
     setEditMajor(false);
 
     toast.promise(
-      updatePlanMajor.mutateAsync({ major, planId }),
+      updatePlanMajor.mutateAsync({ major, planId, degreeRequirementsId }),
       {
         pending: 'Updating plan major...',
         success: 'Plan major updated!',

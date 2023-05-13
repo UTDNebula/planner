@@ -18,9 +18,9 @@ import EditableMajor from '../EditableMajor';
 import AnalyticsWrapper from '@/components/common/AnalyticsWrapper';
 
 export interface ToolbarProps {
+  degreeRequirements: { id: string; major: string };
   planId: string;
   title: string;
-  major: string;
   transferCredits: string[];
   studentName: string;
   deletePlan: () => void;
@@ -30,7 +30,7 @@ export interface ToolbarProps {
 const Toolbar: FC<ToolbarProps> = ({
   planId,
   title,
-  major,
+  degreeRequirements: { major, id: degreeRequirementsId },
   transferCredits,
   studentName,
   deletePlan,
@@ -62,7 +62,11 @@ const Toolbar: FC<ToolbarProps> = ({
           <EditableMajorTitle initialTitle={title} planId={planId} />
         </ToolbarWrapper>
         <div className="-ml-1 h-fit w-80">
-          <EditableMajor major={major} planId={planId} />
+          <EditableMajor
+            degreeRequirementsId={degreeRequirementsId}
+            major={major}
+            planId={planId}
+          />
         </div>
       </div>
       <div className="grow"></div>
