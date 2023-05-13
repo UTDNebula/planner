@@ -12,6 +12,23 @@ jobs:
   release:
     name: Test build app
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_DB: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+        ports:
+          - 5432:5432
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -37,8 +54,9 @@ jobs:
           npm run build
         env:
           # Prisma
-          DATABASE_URL: mongodb://localhost:27017/db
-          PLATFORM_DATABASE_URL: mongodb://localhost:27017/platformDB
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/db?schema=public
+          PLATFORM_DATABASE_URL: ${{ secrets.PLATFORM_DATABASE_URL }}
+
           # Next Auth
           NEXTAUTH_URL: http://localhost:3000
           NEXTAUTH_SECRET: abc
