@@ -29,6 +29,11 @@ jobs:
           --health-timeout 5s
           --health-retries 5
 
+    env:
+      # Prisma
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres?schema=public
+      PLATFORM_DATABASE_URL: ${{ secrets.PLATFORM_DATABASE_URL }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -59,10 +64,6 @@ jobs:
           npm run cypress:run
 
         env:
-          # Prisma
-          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres?schema=public
-          PLATFORM_DATABASE_URL: ${{ secrets.PLATFORM_DATABASE_URL }}
-
           # Next Auth
           NEXTAUTH_URL: http://localhost:3000
           NEXTAUTH_SECRET: abc
