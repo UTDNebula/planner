@@ -4,7 +4,7 @@ import ColorSwatchIcon from '@/icons/ColorSwatchIcon';
 import ChevronIcon from '@/icons/ChevronIcon';
 import DeleteIcon from '@/icons/DeleteIcon';
 import { tagColors } from '../utils';
-import { ObjectID } from 'bson';
+import { UUID } from 'bson';
 import LockIcon from '@/icons/LockIcon';
 import UnfilledWarningIcon from '@/icons/UnfilledWarningIcon';
 
@@ -41,7 +41,7 @@ const SemesterCourseItemDropdown: FC<SemesterTileDropdownProps> = ({
   prereqOverriden,
   onPrereqOverrideChange,
 }) => {
-  const id = new ObjectID().toString();
+  const id = new UUID().toString();
   return (
     <DropdownMenu.Root open={open} onOpenChange={onOpenChange}>
       <DropdownMenu.Trigger data-no-dnd="true" asChild>
