@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "prisma:generate": "prisma generate --schema prisma/platform.prisma && prisma generate --schema prisma/schema.prisma",
-    "build": "npm run prisma:generate && prisma db push && prisma db seed && next build",
+    "prisma:push:main": "prisma db push --schema prisma/schema.prisma",
+    "build": "npm run prisma:generate && npm run prisma:push:main && prisma db seed && next build",
     "start": "next start",
     "lint": "eslint --fix .",
     "format": "prettier --write .",

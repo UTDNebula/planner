@@ -54,8 +54,8 @@ jobs:
           npm run build
         env:
           # Prisma
-          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/db?schema=public
-          PLATFORM_DATABASE_URL: ${{ secrets.PLATFORM_DATABASE_URL }}
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres?schema=public
+          PLATFORM_DATABASE_URL: mongodb://localhost:27017/platformDB
 
           # Next Auth
           NEXTAUTH_URL: http://localhost:3000
