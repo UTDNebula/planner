@@ -45,44 +45,46 @@ model Profile {
 }
 
 model Plan {
-  id              String             @id @default(uuid()) @db.Uuid
+  id              String              @id @default(uuid()) @db.Uuid
   name            String
-  createdAt       DateTime           @default(now()) @map("created_at")
-  updatedAt       DateTime           @default(now()) @map("updated_at")
+  createdAt       DateTime            @default(now()) @map("created_at")
+  updatedAt       DateTime            @default(now()) @map("updated_at")
   semesters       Semester[]
   transferCredits String[]
-  user            User?              @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId          String?            @db.Uuid
-  requirements    DegreeRequirements @relation(fields: [requirementsId], references: [id], onDelete: Cascade)
-  requirementsId  String             @unique @db.Uuid
+  user            User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId          String              @db.Uuid
+  requirements    DegreeRequirements?
   startYear       Int
   startSemester   SemesterType
   endYear         Int
   endSemester     SemesterType
 }
 
+// TODO(akevinge): Improve naming.
 model DegreeRequirements {
   id       String   @id @default(uuid()) @db.Uuid
   major    String // Change to String[] in future once modular requirements implemented; empty plan creates "undecided"
   bypasses String[]
-  plan     Plan?
+  plan     Plan?    @relation(fields: [planId], references: [id])
+  planId   String?  @unique @db.Uuid
 }
 
+// TODO(akevinge): Remove.
 model Bypass {
   id          String @id @default(uuid()) @db.Uuid
   courseCode  String
   requirement String
-  hours       String
+  hours       Int
 }
 
 model Course {
-  id              String    @id @default(uuid()) @db.Uuid
+  id              String   @id @default(uuid()) @db.Uuid
   code            String
-  color           String    @default("")
-  semester        Semester? @relation(fields: [semesterId], references: [id], onDelete: Cascade)
-  semesterId      String?   @db.Uuid
-  locked          Boolean   @default(false)
-  prereqOverriden Boolean   @default(false)
+  color           String   @default("")
+  semester        Semester @relation(fields: [semesterId], references: [id], onDelete: Cascade)
+  semesterId      String   @db.Uuid
+  locked          Boolean  @default(false)
+  prereqOverriden Boolean  @default(false)
 
   @@unique([semesterId, code])
 }
@@ -92,18 +94,21 @@ model Semester {
   year     Int
   semester SemesterType
   courses  Course[]
-  plan     Plan?        @relation(fields: [planId], references: [id], onDelete: Cascade)
-  planId   String?      @db.Uuid
+  plan     Plan         @relation(fields: [planId], references: [id], onDelete: Cascade)
+  planId   String       @db.Uuid
   color    String       @default("")
   locked   Boolean      @default(false)
 }
 
+// TODO(akevinge): Improve naming.
 enum SemesterType {
   f
   s
   u
 }
 
+// TODO(akevinge): Add Jira ticket for this, removal involves removing 
+// quite a bit of code.
 model Credit {
   id         String       @id @default(uuid()) @db.Uuid
   courseCode String
@@ -114,6 +119,7 @@ model Credit {
   userId     String       @db.Uuid
 }
 
+// TODO(akevinge): Remove.
 model AcademicDetails {
   id Int @id @default(autoincrement())
 }
@@ -153,12 +159,15 @@ model User {
   seenHomeOnboardingModal Boolean   @default(false)
   seenPlanOnboardingModal Boolean   @default(false)
   credit                  Credit[]
-  accounts                Account[] // Wait can a user have multiple accounts?
+  // Multiple accounts can be created when a user signs in with an OAuth provider
+  // while signed in with another provider. See: https://github.com/nextauthjs/next-auth/discussions/3116#discussioncomment-1622855.
+  accounts                Account[]
   sessions                Session[]
   profile                 Profile?
   plans                   Plan[]
 }
 
+// TODO(akevinge): Remove.
 model VerificationToken {
   id         Int      @id @default(autoincrement())
   identifier String
