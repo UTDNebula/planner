@@ -9,7 +9,7 @@ on:
       - 'master'
 
 jobs:
-  release:
+  integration-tests:
     name: Integration tests
     runs-on: ubuntu-latest
     steps:
@@ -78,6 +78,7 @@ jobs:
           NEXT_PUBLIC_UMAMI_URL: hi
           NEXT_PUBLIC_UMAMI_WEBSITE_ID: bye
 
+  unit-tests:
     name: Unit tests
     runs-on: ubuntu-latest
     steps:
