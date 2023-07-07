@@ -24,7 +24,10 @@ export async function seedTemplates(prisma: PrismaClient) {
   }
 }
 
-function findNewTemplates(existingTemplates: Template[], allTemplates: typeof degreeTemplates) {
+function findNewTemplates(
+  existingTemplates: Template[],
+  allTemplates: Partial<typeof degreeTemplates>,
+) {
   const newTemplates: { id: string; name: string }[] = [];
   const newTemplateSemesters: Prisma.TemplateDataCreateManyInput[] = [];
   const newTemplateItems: Prisma.TemplateItemCreateManyInput[] = [];
@@ -89,3 +92,5 @@ function createTemplateItem(
         templateDataId: templateSemesterId,
       };
 }
+
+export const TEST_ONLY = { findNewTemplates };
