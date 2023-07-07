@@ -200,7 +200,7 @@ export const userRouter = router({
       }
 
       let currSem = startSemester;
-      const semesterData: Prisma.SemesterCreateInput[] = [];
+      const semesterData: Prisma.SemesterCreateWithoutPlanInput[] = [];
 
       // Create semesters and add courses from transcript to each semester
       while (isEarlierSemester(currSem, endSemester) || isSemCodeEqual(currSem, endSemester)) {
@@ -214,7 +214,7 @@ export const userRouter = router({
           }
         }
 
-        const newSem: Prisma.SemesterCreateInput = {
+        const newSem: Prisma.SemesterCreateWithoutPlanInput = {
           semester: currSem.semester,
           year: currSem.year,
           color: '',
@@ -297,7 +297,7 @@ export const userRouter = router({
       };
 
       // Create semesters based on existing plan
-      const semesterData: Prisma.SemesterCreateInput[] = [];
+      const semesterData: Prisma.SemesterCreateWithoutPlanInput[] = [];
 
       // Push existing semester data to new plan
       for (let i = 0; i < plan!.semesters.length; i++) {
@@ -307,7 +307,7 @@ export const userRouter = router({
           }),
         };
 
-        const semData: Prisma.SemesterCreateInput = {
+        const semData: Prisma.SemesterCreateWithoutPlanInput = {
           courses,
           semester: plan!.semesters[i].semester,
           year: plan!.semesters[i].year,
@@ -530,27 +530,27 @@ const addTemplateCoursesToPlan = ({
       type: TemplateDataType;
     }[];
   }[];
-}): Prisma.SemesterCreateInput[] => {
-  const semesterData: Prisma.SemesterCreateInput[] = [];
+}): Prisma.SemesterCreateWithoutPlanInput[] => {
+  const semesterData: Prisma.SemesterCreateWithoutPlanInput[] = [];
 
   // Iterate over each year
   for (let i = 0; i < 4; i++) {
     // Create new semesters for the academic year
-    const fallSem: Prisma.SemesterCreateInput = {
+    const fallSem: Prisma.SemesterCreateWithoutPlanInput = {
       semester: 'f',
       year: startYear + i,
       courses: createCoursesFromTemplate({ items: templateData[i * 2].items }),
       color: '',
     };
 
-    const springSem: Prisma.SemesterCreateInput = {
+    const springSem: Prisma.SemesterCreateWithoutPlanInput = {
       semester: 's',
       year: startYear + i + 1,
       courses: createCoursesFromTemplate({ items: templateData[i * 2 + 1].items }),
       color: '',
     };
 
-    const summerSem: Prisma.SemesterCreateInput = {
+    const summerSem: Prisma.SemesterCreateWithoutPlanInput = {
       semester: 'u',
       year: startYear + i + 1,
       courses: createCoursesFromTemplate({ items: [] }),
