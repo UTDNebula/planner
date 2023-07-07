@@ -1,5 +1,5 @@
 # Request project lead by default
-*   @ZzRanger
+* @syl15
 
 # Request all Project Nebula Maintainers to review other pull requests
-src/**/*  @UTDNebula/nebula-planner @UTDNebula/planner
+src/**/*  @UTDNebula/Planner-Hotfixers @UTDNebula/Planner-Maintainers
