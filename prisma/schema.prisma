@@ -65,7 +65,7 @@ model DegreeRequirements {
   id       String   @id @default(uuid()) @db.Uuid
   major    String // Change to String[] in future once modular requirements implemented; empty plan creates "undecided"
   bypasses String[]
-  plan     Plan     @relation(fields: [planId], references: [id])
+  plan     Plan     @relation(fields: [planId], references: [id], onDelete: Cascade)
   planId   String   @unique @db.Uuid
 }
 
