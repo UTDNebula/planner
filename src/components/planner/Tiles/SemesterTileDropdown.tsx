@@ -6,7 +6,7 @@ import ClipboardListIcon from '@/icons/ClipboardListIcon';
 import ColorSwatchIcon from '@/icons/ColorSwatchIcon';
 import ChevronIcon from '@/icons/ChevronIcon';
 import { tagColors } from '../utils';
-import { UUID } from 'bson';
+import { v4 as uuidv4 } from 'uuid';
 import LockIcon from '@/icons/LockIcon';
 
 const itemClasses =
@@ -31,7 +31,7 @@ const SemesterTileDropdown: FC<SemesterTileDropdownProps> = ({
   locked,
   toggleLock,
 }) => {
-  const id = new UUID().toString();
+  const id = uuidv4();
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>

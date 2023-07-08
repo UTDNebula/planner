@@ -1,7 +1,6 @@
 import { RouterOutputs } from '@/utils/trpc';
 import { UniqueIdentifier } from '@dnd-kit/core';
 import { SemesterCode } from 'prisma/utils';
-import { UUID } from 'bson';
 import { tagColors } from './utils';
 
 export type Plan = NonNullable<RouterOutputs['plan']['getPlanById']>['plan'];
@@ -13,7 +12,7 @@ export type DegreeValidation = NonNullable<
 // Temporary semester type
 // TODO: Remove
 export interface Semester {
-  id: UUID;
+  id: string;
   code: SemesterCode;
   courses: DraggableCourse[];
   color: keyof typeof tagColors;
@@ -27,7 +26,7 @@ export interface Course {
 
 /* Represents a Course inside a Plan */
 export interface DraggableCourse extends Course {
-  id: UUID;
+  id: string;
   validation?: { isValid: boolean; override: boolean };
   status?: 'complete' | 'incomplete'; // TODO: Clean this up later once prereq is done
   taken?: boolean;
