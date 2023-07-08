@@ -1,6 +1,6 @@
 import { SemesterType } from '@prisma/client';
 import { SemesterCode } from 'prisma/utils';
-import { UUID } from 'bson';
+import { v4 as uuidv4 } from 'uuid';
 
 import { Semester } from '@/components/planner/types';
 import { isEarlierSemester } from './plannerUtils';
@@ -22,7 +22,7 @@ export const createNewYear = (semesterCode: SemesterCode): Semester[] => {
         semester: 'f' as SemesterType,
         year: currYear,
       },
-      id: new UUID(),
+      id: uuidv4(),
       courses: [],
       color: '',
       locked: false,
@@ -32,7 +32,7 @@ export const createNewYear = (semesterCode: SemesterCode): Semester[] => {
         semester: 's' as SemesterType,
         year: newYear,
       },
-      id: new UUID(),
+      id: uuidv4(),
       courses: [],
       color: '',
       locked: false,
@@ -42,7 +42,7 @@ export const createNewYear = (semesterCode: SemesterCode): Semester[] => {
         semester: 'u' as SemesterType,
         year: newYear,
       },
-      id: new UUID(),
+      id: uuidv4(),
       courses: [],
       color: '',
       locked: false,
@@ -101,7 +101,7 @@ export function generateSemesters(
   for (let i = 0; i < count; ++i) {
     const code = { year, semester };
     const newSemester = {
-      id: new UUID(),
+      id: uuidv4(),
       title: `${displaySemesterCode({ semester, year })}`,
       code: code,
       courses: [],

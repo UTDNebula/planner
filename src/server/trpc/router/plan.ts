@@ -7,7 +7,7 @@ import { createNewYear, createSemesterCodeRange } from '@/utils/utilFunctions';
 import { protectedProcedure, router } from '../trpc';
 import { Prisma, Semester } from '@prisma/client';
 import { SemesterCode } from 'prisma/utils';
-import { UUID } from 'bson';
+import { v4 as uuidv4 } from 'uuid';
 import { isEarlierSemester } from '@/utils/plannerUtils';
 import { computeSemesterCode } from 'prisma/utils';
 
@@ -138,7 +138,7 @@ export const planRouter = router({
       ).map(({ year, semester }) => ({
         color: '',
         planId,
-        id: new UUID().toString(),
+        id: uuidv4(),
         year,
         semester,
       })) as Semester[];
