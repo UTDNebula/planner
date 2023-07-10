@@ -10,8 +10,10 @@ export async function seedTemplates(prisma: PrismaClient) {
   const existingTemplates = await prisma.template.findMany();
 
   console.log('attempting to find new templates');
-  const { newTemplates, newTemplateSemesters, newTemplateItems } =
-    findNewTemplates(existingTemplates);
+  const { newTemplates, newTemplateSemesters, newTemplateItems } = findNewTemplates(
+    existingTemplates,
+    degreeTemplates,
+  );
   console.log('found new templates: ', newTemplates.map((t) => t.name).join(', '));
 
   console.log('attempting to create new templates');
@@ -22,12 +24,15 @@ export async function seedTemplates(prisma: PrismaClient) {
   }
 }
 
-function findNewTemplates(existingTemplates: Template[]) {
+function findNewTemplates(
+  existingTemplates: Template[],
+  allTemplates: Partial<typeof degreeTemplates>,
+) {
   const newTemplates: { id: string; name: string }[] = [];
   const newTemplateSemesters: Prisma.TemplateDataCreateManyInput[] = [];
   const newTemplateItems: Prisma.TemplateItemCreateManyInput[] = [];
 
-  for (const [templateName, templateData] of Object.entries(degreeTemplates)) {
+  for (const [templateName, templateData] of Object.entries(allTemplates)) {
     // Skip if template is already in database.
     if (existingTemplates.find((t) => t.name === templateName)) {
       console.warn(`template ${templateName} already exists, skipping`);
@@ -87,3 +92,5 @@ function createTemplateItem(
         templateDataId: templateSemesterId,
       };
 }
+
+export const TEST_ONLY = { findNewTemplates };
