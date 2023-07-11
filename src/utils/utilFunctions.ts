@@ -12,7 +12,7 @@ import { tagColors } from '@/components/planner/utils';
  * @param semesterCode
  * @returns
  */
-export const createNewYear = (fallYear: number): Semester[] => {
+export const createYearBasedOnFall = (fallYear: number): Semester[] => {
   const newYear = fallYear + 1;
 
   return [

@@ -1,5 +1,5 @@
 import { describe, expect, test } from '@jest/globals';
-import { createNewYear } from '../../src/utils/utilFunctions';
+import { createYearBasedOnFall } from '../../src/utils/utilFunctions';
 import { Semester } from '@/components/planner/types';
 
 describe('Creates 3 new semesters based on given Fall year', () => {
@@ -35,7 +35,7 @@ describe('Creates 3 new semesters based on given Fall year', () => {
       },
     ];
 
-    const got = createNewYear(inputYear);
+    const got = createYearBasedOnFall(inputYear);
     expect(got).toMatchObject(want);
   });
 });
