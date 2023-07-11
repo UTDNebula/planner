@@ -1,8 +1,6 @@
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
-import { formatDegreeValidationRequest } from '@/utils/plannerUtils';
-
 import { protectedProcedure, router } from '../trpc';
 import { Course, Prisma, Semester } from '@prisma/client';
 import courses, { JSONCourse } from '@data/courses.json';
@@ -368,16 +366,17 @@ export const validatorRouter = router({
       const regex = /([a-z0-9])* ([a-z0-9]){4}$/gi;
       const validTransferCredits = transferCredits.filter((credit) => credit.match(regex) !== null);
 
-      const body = formatDegreeValidationRequest(
-        semestersWithCourses,
-        validTransferCredits,
-        {
-          core: true,
-          majors: [degreeRequirements.major], // TODO: Standardize names
-          minors: [],
+      const body = {
+        courses: [...semestersWithCourses.flatMap((s) => s.courses), ...validTransferCredits],
+        requirements: {
+          majors: {
+            core: true,
+            majors: [degreeRequirements.major],
+            minors: [],
+          },
         },
         bypasses,
-      );
+      };
 
       const validationData = await fetch(`${process.env.VALIDATOR}/test-validate`, {
         method: 'POST',

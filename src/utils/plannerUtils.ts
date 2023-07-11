@@ -2,19 +2,6 @@ import { SemesterCode } from 'prisma/utils';
 
 import { isSemCodeEqual } from './utilFunctions';
 
-export function formatDegreeValidationRequest(
-  semesters: { id: string; courses: string[] }[],
-  transferCredits: string[],
-  requirements = { core: true, majors: ['computer_science'], minors: [] },
-  bypasses: string[] = [],
-) {
-  return {
-    courses: [...semesters.flatMap((s) => s.courses), ...transferCredits],
-    requirements: requirements,
-    bypasses,
-  };
-}
-
 /**
  * Is semesterOne earlier than semesterTwo
  */
