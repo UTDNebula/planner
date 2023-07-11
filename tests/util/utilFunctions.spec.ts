@@ -1,11 +1,10 @@
 import { describe, expect, test } from '@jest/globals';
 import { createNewYear } from '../../src/utils/utilFunctions';
 import { Semester } from '@/components/planner/types';
-import { SemesterCode } from 'prisma/utils';
 
-describe('Creates 3 new semesters based on given fall year', () => {
+describe('Creates 3 new semesters based on given Fall year', () => {
   test('0 year', () => {
-    const inputYear: SemesterCode = { semester: 'u', year: 0 };
+    const inputYear = 0;
     const want: Omit<Semester, 'id'>[] = [
       {
         code: {
