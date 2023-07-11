@@ -1,4 +1,4 @@
-import { describe, expect, test, jest, beforeEach, afterEach } from '@jest/globals';
+import { describe, expect, test, jest, afterEach } from '@jest/globals';
 import {
   createNewSemesterCode,
   createSemesterCodeRange,
