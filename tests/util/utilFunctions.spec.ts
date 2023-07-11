@@ -5,6 +5,7 @@ import {
   createYearBasedOnFall,
   generateSemesters,
   getSemesterHourFromCourseCode,
+  isEarlierSemester,
 } from '../../src/utils/utilFunctions';
 import { Semester } from '@/components/planner/types';
 import { SemesterType } from '@prisma/client';
@@ -261,5 +262,63 @@ describe('createSemesterCodeRange', () => {
       tc.includeStart,
     );
     expect(got).toMatchObject(tc.want);
+  });
+});
+
+describe('isEarlierSemester', () => {
+  const testCases: { desc: string; s1: SemesterCode; s2: SemesterCode; want: boolean }[] = [
+    {
+      desc: 's1 year is earlier than s2 year but same semester',
+      s1: {
+        semester: 'f',
+        year: 1999,
+      },
+      s2: {
+        semester: 'f',
+        year: 2000,
+      },
+      want: true,
+    },
+    {
+      desc: 'in the same year, Spring < Summer',
+      s1: {
+        semester: 's',
+        year: 2000,
+      },
+      s2: {
+        semester: 'u',
+        year: 2000,
+      },
+      want: true,
+    },
+    {
+      desc: 'in the same year, Summer < Fall',
+      s1: {
+        semester: 'u',
+        year: 2000,
+      },
+      s2: {
+        semester: 'f',
+        year: 2000,
+      },
+      want: true,
+    },
+    {
+      desc: 'equal semester and year',
+      s1: {
+        semester: 'f',
+        year: 2000,
+      },
+      s2: {
+        semester: 'f',
+        year: 2000,
+      },
+      want: false,
+    },
+  ];
+
+  test.each(testCases)('$desc', (tc) => {
+    const got = isEarlierSemester(tc.s1, tc.s2);
+    expect(got).toBe(tc.want);
   });
 });
