@@ -192,6 +192,12 @@ export const isEarlierSemester = (semesterOne: SemesterCode, semesterTwo: Semest
   return true;
 };
 
+/**
+ * Returns the starting semester depending on the current date.
+ * * Jan. to May (inclusive): Spring.
+ * * Jane to Aug. (inclusive): Summer.
+ * * Sep. to Dec. (inclusive): Fall.
+ */
 export const getStartingPlanSemester = (): SemesterCode => {
   const d = new Date();
   if (d.getMonth() < 5) {

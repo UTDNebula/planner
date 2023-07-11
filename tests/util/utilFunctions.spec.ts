@@ -1,10 +1,11 @@
-import { describe, expect, test } from '@jest/globals';
+import { describe, expect, test, jest, beforeEach, afterEach } from '@jest/globals';
 import {
   createNewSemesterCode,
   createSemesterCodeRange,
   createYearBasedOnFall,
   generateSemesters,
   getSemesterHourFromCourseCode,
+  getStartingPlanSemester,
   isEarlierSemester,
 } from '../../src/utils/utilFunctions';
 import { Semester } from '@/components/planner/types';
@@ -320,5 +321,39 @@ describe('isEarlierSemester', () => {
   test.each(testCases)('$desc', (tc) => {
     const got = isEarlierSemester(tc.s1, tc.s2);
     expect(got).toBe(tc.want);
+  });
+});
+
+describe('getStartingPlanSemester', () => {
+  afterEach(() => {
+    jest.clearAllTimers();
+  });
+
+  const testCases: {
+    desc: string;
+    fakeDate: Date;
+    want: SemesterCode;
+  }[] = [
+    {
+      desc: 'one second until Jane',
+      fakeDate: new Date('2000-05-31T23:59:59'),
+      want: { year: 2000, semester: 's' },
+    },
+    {
+      desc: 'the second Jane starts',
+      fakeDate: new Date('2000-06-01T00:00:00'),
+      want: { year: 2000, semester: 'u' },
+    },
+    {
+      desc: 'the second Sep. starts',
+      fakeDate: new Date('2000-09-01T00:00:00'),
+      want: { year: 2000, semester: 'f' },
+    },
+  ];
+
+  test.each(testCases)('$desc', (tc) => {
+    jest.useFakeTimers({ now: tc.fakeDate });
+    const got = getStartingPlanSemester();
+    expect(got).toMatchObject(tc.want);
   });
 });
