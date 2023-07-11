@@ -169,28 +169,6 @@ export function isSemCodeEqual(semCodeOne: SemesterCode, semCodeTwo: SemesterCod
   return semCodeOne.semester === semCodeTwo.semester && semCodeOne.year === semCodeTwo.year;
 }
 
-const semesterPrecedence = {
-  f: 0,
-  s: 1,
-  u: 2,
-} as const;
-
-// Returns true if s1 is earlier than s2.
-export const isSemesterEarlier = (s1: SemesterCode, s2: SemesterCode) => {
-  return (
-    s1.year < s2.year ||
-    (s1.year === s2.year && semesterPrecedence[s1.semester] < semesterPrecedence[s2.semester])
-  );
-};
-
-// Returns true if s1 is later than s2.
-export const isSemesterLater = (s1: SemesterCode, s2: SemesterCode) => {
-  return (
-    s1.year > s2.year ||
-    (s1.year === s2.year && semesterPrecedence[s1.semester] > semesterPrecedence[s2.semester])
-  );
-};
-
 const regex =
   /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
