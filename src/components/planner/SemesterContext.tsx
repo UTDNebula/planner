@@ -438,7 +438,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
 
   const handleAddYear = () => {
     const newYear: Semester[] = createNewYear(
-      semesters.length ? semesters[semesters.length - 1].code : { semester: 'u', year: 2022 },
+      semesters.length ? semesters[semesters.length - 1].code.year : 2022,
     );
     const semesterIds = newYear.map((sem) => sem.id);
 

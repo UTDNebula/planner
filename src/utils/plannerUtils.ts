@@ -120,7 +120,7 @@ export function addCreditsToPlan(
   const endSemester = semesters[0] ? semesters[0].code.year : 2022;
 
   for (let year = minYear; year < endSemester; year++) {
-    const newYear = createNewYear({ semester: 'u', year }).map((sem) => {
+    const newYear = createNewYear(year).map((sem) => {
       return { ...sem, courses: [] as string[], id: displaySemesterCode(sem.code) };
     });
 

@@ -2,7 +2,7 @@ import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
 import { Semester as PlanSemester } from '@/components/planner/types';
-import { createNewYear, createSemesterCodeRange } from '@/utils/utilFunctions';
+import { createYearBasedOnFall, createSemesterCodeRange } from '@/utils/utilFunctions';
 
 import { protectedProcedure, router } from '../trpc';
 import { Prisma, Semester } from '@prisma/client';
@@ -208,8 +208,8 @@ export const planRouter = router({
           throw new TRPCError({ code: 'FORBIDDEN' });
         }
 
-        const newYear: PlanSemester[] = createNewYear(
-          computeSemesterCode(plan.semesters[0] ?? { semester: 'u', year: 2022 }),
+        const newYear: PlanSemester[] = createYearBasedOnFall(
+          computeSemesterCode(plan.semesters[0] ?? { semester: 'u', year: 2022 }).year,
         );
 
         await ctx.prisma.plan.update({
