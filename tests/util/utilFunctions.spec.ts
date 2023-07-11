@@ -1,8 +1,11 @@
 import { describe, expect, test } from '@jest/globals';
-import { createYearBasedOnFall } from '../../src/utils/utilFunctions';
+import {
+  createYearBasedOnFall,
+  getSemesterHourFromCourseCode,
+} from '../../src/utils/utilFunctions';
 import { Semester } from '@/components/planner/types';
 
-describe('Creates 3 new semesters based on given Fall year', () => {
+describe('createYearBasedOnFall', () => {
   test('0 year', () => {
     const inputYear = 0;
     const want: Omit<Semester, 'id'>[] = [
@@ -37,5 +40,25 @@ describe('Creates 3 new semesters based on given Fall year', () => {
 
     const got = createYearBasedOnFall(inputYear);
     expect(got).toMatchObject(want);
+  });
+});
+
+describe('getSemesterHourFromCourseCode', () => {
+  const testCases: { desc: string; course: string; wantResult: 3 | null }[] = [
+    {
+      desc: 'passing input',
+      course: 'HIST 1301',
+      wantResult: 3,
+    },
+    {
+      desc: 'malformed course code',
+      course: 'HIST1301',
+      wantResult: null,
+    },
+  ];
+
+  test.each(testCases)('$desc', (tc) => {
+    const got = getSemesterHourFromCourseCode(tc.course);
+    expect(got).toBe(tc.wantResult);
   });
 });
