@@ -77,6 +77,7 @@ export function getSemesterHourFromCourseCode(code: string): number | null {
   return Number(hoursNum.toString()[1]);
 }
 
+// TODO(akevinge): Improve enum naming and remove this.
 export function displaySemesterCode(semesterCode: SemesterCode): string {
   let semesterName;
   if (semesterCode.semester === 'f') {
