@@ -5,7 +5,7 @@ import { DragDataFromCourseList, DraggableCourse } from '../types';
 
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import CheckIcon from '@mui/icons-material/Check';
-import { emptyFunction, getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
+import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
 import React, { ComponentPropsWithoutRef, forwardRef, useState, useRef, useEffect } from 'react';
 import CourseInfoHoverCard from '../CourseInfoHoverCard';
 import useGetCourseInfo from '../useGetCourseInfo';
@@ -57,7 +57,6 @@ export const SidebarCourseItem = React.memo(
           description={description ?? ''}
           // prereqs={[prereqs, coreqs, co_or_pre]}
           open={hoverOpen && !isDragging}
-          onOpenChange={emptyFunction}
           side="left"
           title={title || ''}
           courseCode={course.code}
