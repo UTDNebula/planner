@@ -6,7 +6,7 @@ import { z } from 'zod';
 import { createNewSemesterCode, isSemCodeEqual } from '@/utils/utilFunctions';
 
 import { protectedProcedure, router } from '../trpc';
-import { isEarlierSemester } from '@/utils/plannerUtils';
+import { isEarlierSemester } from '@/utils/utilFunctions';
 import { computeProfileWithSemesterCode } from 'prisma/utils';
 
 export const userRouter = router({

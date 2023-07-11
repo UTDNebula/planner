@@ -12,7 +12,7 @@ import useSearch from '../search/search';
 import AutoCompleteSearchBar from './AutoCompleteSearchBar';
 import Button from '../Button';
 import DropdownSelect from './DropdownSelect';
-import { getStartingPlanSemester } from '@/utils/plannerUtils';
+import { getStartingPlanSemester } from '@/utils/utilFunctions';
 import InfoIcon from '@mui/icons-material/Info';
 
 const Layout: FC = ({ children }) => <section className="flex flex-col gap-10">{children}</section>;

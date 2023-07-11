@@ -8,7 +8,7 @@ import { protectedProcedure, router } from '../trpc';
 import { Prisma, Semester } from '@prisma/client';
 import { SemesterCode } from 'prisma/utils';
 import { UUID } from 'bson';
-import { isEarlierSemester } from '@/utils/plannerUtils';
+import { isEarlierSemester } from '@/utils/utilFunctions';
 import { computeSemesterCode } from 'prisma/utils';
 
 export const planRouter = router({
