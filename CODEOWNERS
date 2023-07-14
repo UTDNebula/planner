@@ -2,4 +2,4 @@
 * @syl15
 
 # Request all Project Nebula Maintainers to review other pull requests
-src/**/*  @UTDNebula/Planner-Hotfixers @UTDNebula/Planner-Maintainers
+src/**/* @UTDNebula/Planner-Maintainers
