@@ -1,4 +1,4 @@
-name: E2E tests
+name: Tests
 
 on:
   workflow_dispatch:
@@ -9,8 +9,8 @@ on:
       - 'master'
 
 jobs:
-  release:
-    name: Cypress tests
+  integration-tests:
+    name: Integration tests
     runs-on: ubuntu-latest
 
     services:
@@ -96,3 +96,23 @@ jobs:
           # UMAMI
           NEXT_PUBLIC_UMAMI_URL: hi
           NEXT_PUBLIC_UMAMI_WEBSITE_ID: bye
+
+  unit-tests:
+    name: Unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: |
+          npm ci
+
+      - name: Run unit tests with Jest
+        run: |
+          npm test -- --silent
