@@ -185,7 +185,10 @@ export default function Planner({
           <Toolbar
             planId={planId}
             title={title}
-            major={degreeRequirementsData?.major ?? 'undecided'}
+            degreeRequirements={{
+              ...degreeRequirementsData,
+              major: degreeRequirementsData?.major ?? 'undecided',
+            }}
             transferCredits={transferCredits}
             studentName={userData?.profile?.name ?? 'Student'}
             deletePlan={() => {

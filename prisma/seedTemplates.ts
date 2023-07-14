@@ -1,67 +1,96 @@
-import { Prisma, PrismaClient } from '@prisma/client';
-import { ObjectID, ObjectId } from 'bson';
+import { Prisma, PrismaClient, Template } from '@prisma/client';
+import { UUID } from 'bson';
 
-import dummyTemplate from '../src/data/degree_template.json';
+import degreeTemplates from '../src/data/degree_template.json';
 
-type RawTemplateData = (string | { options: string })[];
+type UnwrapArray<T> = T extends Array<infer U> ? U : T;
+type TemplateItem = UnwrapArray<UnwrapArray<UnwrapArray<typeof degreeTemplates>['Biology(BS)']>>;
 
-export const seedTemplates = async (prisma: PrismaClient) => {
-  const annoyed = dummyTemplate as unknown as { [key: string]: RawTemplateData[] };
-  const orderedTemplate: { [key: string]: RawTemplateData[] } = Object.keys(dummyTemplate)
-    .sort()
-    .reduce((obj: { [key: string]: RawTemplateData[] }, key) => {
-      obj[key] = annoyed[key];
-      return obj;
-    }, {});
+export async function seedTemplates(prisma: PrismaClient) {
+  const existingTemplates = await prisma.template.findMany();
 
-  const templatesFromDb = await prisma.template.findMany();
-  let templatesToAdd: Array<{ id: string; name: string }> = [];
-  if (templatesFromDb.length !== Object.keys(orderedTemplate).length) {
-    templatesToAdd = Object.keys(orderedTemplate)
-      .filter((item) => !templatesFromDb.some((dbItem) => dbItem.name === item))
-      .map((name) => ({ id: new ObjectId().toString(), name }));
+  console.log('attempting to find new templates');
+  const { newTemplates, newTemplateSemesters, newTemplateItems } = findNewTemplates(
+    existingTemplates,
+    degreeTemplates,
+  );
+  console.log('found new templates: ', newTemplates.map((t) => t.name).join(', '));
+
+  console.log('attempting to create new templates');
+  if (newTemplates.length > 0) {
+    await prisma.template.createMany({ data: newTemplates });
+    await prisma.templateData.createMany({ data: newTemplateSemesters });
+    await prisma.templateItem.createMany({ data: newTemplateItems });
   }
+}
 
-  const templateDataArray: Array<Prisma.TemplateDataCreateManyInput> = [];
+function findNewTemplates(
+  existingTemplates: Template[],
+  allTemplates: Partial<typeof degreeTemplates>,
+) {
+  const newTemplates: { id: string; name: string }[] = [];
+  const newTemplateSemesters: Prisma.TemplateDataCreateManyInput[] = [];
+  const newTemplateItems: Prisma.TemplateItemCreateManyInput[] = [];
 
-  if (templatesToAdd.length > 0) {
-    for (const { id: templateId, name } of templatesToAdd) {
-      const value = orderedTemplate[name];
+  for (const [templateName, templateData] of Object.entries(allTemplates)) {
+    // Skip if template is already in database.
+    if (existingTemplates.find((t) => t.name === templateName)) {
+      console.warn(`template ${templateName} already exists, skipping`);
+      continue;
+    }
 
-      for (let i = 0; i < value.length; i++) {
-        // Create TemplateData ID
-        const id = new ObjectID().toString();
+    // Generate new template.
+    const templateId = new UUID().toString();
+    newTemplates.push({ id: templateId, name: templateName });
 
-        const templateDataItems: Array<Prisma.TemplateItemCreateManyInput> = [];
-        for (let j = 0; j < value[i].length; j++) {
-          if (typeof value[i][j] === 'object') {
-            templateDataItems.push({
-              name: (value[i][j] as { options: string }).options + ' Course',
-              type: 'OPTIONAL',
-              templateDataId: id,
-            });
-          } else {
-            templateDataItems.push({
-              templateDataId: id,
-              name: value[i][j] as string,
-              type: 'CORE',
-            });
-          }
-        }
+    for (const [semesterIndex, templateSemester] of templateData.entries()) {
+      // Generate template semesters.
+      const templateSemesterId = new UUID().toString();
+      newTemplateSemesters.push(
+        createTemplateSemester(semesterIndex + 1, templateSemesterId, templateId),
+      );
 
-        templateDataArray.push({
-          id: id,
-          semester: i + 1,
-          templateId,
-        });
-
-        await prisma.templateItem.createMany({ data: templateDataItems });
+      // Generate template semester items.
+      for (const courseOrOption of templateSemester) {
+        newTemplateItems.push(createTemplateItem(courseOrOption, templateSemesterId));
       }
     }
   }
 
-  if (templatesToAdd.length && templateDataArray) {
-    await prisma.template.createMany({ data: templatesToAdd });
-    await prisma.templateData.createMany({ data: templateDataArray });
-  }
-};
+  return {
+    newTemplates,
+    newTemplateSemesters,
+    newTemplateItems,
+  };
+}
+
+function createTemplateSemester(
+  index: number,
+  semesterTemplateId: string,
+  templateId: string,
+): Prisma.TemplateDataCreateManyInput {
+  return {
+    id: semesterTemplateId,
+    templateId: templateId,
+    semester: index,
+  };
+}
+
+function createTemplateItem(
+  item: TemplateItem,
+  templateSemesterId: string,
+): Prisma.TemplateItemCreateManyInput {
+  return typeof item === 'string'
+    ? {
+        templateDataId: templateSemesterId,
+        name: item,
+        type: 'CORE',
+      }
+    : {
+        name: item.options + ' Course',
+        type: 'OPTIONAL',
+        templateDataId: templateSemesterId,
+      };
+}
+
+export const TEST_ONLY = { findNewTemplates };

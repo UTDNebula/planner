@@ -2,7 +2,7 @@ import { TextField } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import { SelectChangeEvent } from '@mui/material/Select';
-import { SemesterCode } from '@prisma/client';
+import { SemesterCode } from 'prisma/utils';
 import React from 'react';
 
 import DropdownSelect from '@/components/credits/DropdownSelect';
