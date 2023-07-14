@@ -5,8 +5,7 @@ on:
   pull_request:
     branches:
       - 'develop'
-      - 'release/**'
-      - 'master'
+      - 'main'
 
 jobs:
   integration-tests:
