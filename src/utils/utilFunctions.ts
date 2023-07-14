@@ -7,20 +7,19 @@ import { isEarlierSemester } from './plannerUtils';
 import { tagColors } from '@/components/planner/utils';
 
 /**
- * Creates 3 new semesters based on given year in SemesterCode
+ * Creates 3 new semesters based on given Fall year.
  * Ex. 2012 -> Fall 2012, Spring 2013, Summer 2013
  * @param semesterCode
  * @returns
  */
-export const createNewYear = (semesterCode: SemesterCode): Semester[] => {
-  const currYear = semesterCode.year;
-  const newYear = semesterCode.year + 1;
+export const createYearBasedOnFall = (fallYear: number): Semester[] => {
+  const newYear = fallYear + 1;
 
   return [
     {
       code: {
         semester: 'f' as SemesterType,
-        year: currYear,
+        year: fallYear,
       },
       id: new UUID(),
       courses: [],

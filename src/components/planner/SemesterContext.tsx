@@ -1,6 +1,6 @@
 import { trpc } from '@/utils/trpc';
 import { toast } from 'react-toastify';
-import { createNewYear } from '@/utils/utilFunctions';
+import { createYearBasedOnFall } from '@/utils/utilFunctions';
 import { UUID } from 'bson';
 import { createContext, FC, useContext, useEffect, useMemo, useReducer, useState } from 'react';
 import { Plan, Semester, DraggableCourse } from './types';
@@ -437,8 +437,8 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
   };
 
   const handleAddYear = () => {
-    const newYear: Semester[] = createNewYear(
-      semesters.length ? semesters[semesters.length - 1].code : { semester: 'u', year: 2022 },
+    const newYear: Semester[] = createYearBasedOnFall(
+      semesters.length ? semesters[semesters.length - 1].code.year : 2022,
     );
     const semesterIds = newYear.map((sem) => sem.id);
 
