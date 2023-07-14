@@ -1,4 +1,4 @@
-import { UUID } from 'bson';
+import { ObjectID } from 'bson';
 import React, { useMemo } from 'react';
 import DraggableSidebarCourseItem from './SidebarCourseItem';
 import { CourseRequirement, RequirementTypes } from './types';
@@ -166,7 +166,7 @@ function CourseRequirementComponent({
   courses: string[];
   validCourses: { [key: string]: number };
 }) {
-  const id = useMemo(() => new UUID(), []);
+  const id = useMemo(() => new ObjectID(), []);
   const courseQuery = trpc.courses.publicGetAllCourses.useQuery(undefined, {
     staleTime: Infinity,
     cacheTime: Infinity,

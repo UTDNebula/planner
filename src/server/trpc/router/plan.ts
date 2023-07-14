@@ -5,11 +5,9 @@ import { Semester as PlanSemester } from '@/components/planner/types';
 import { createNewYear, createSemesterCodeRange } from '@/utils/utilFunctions';
 
 import { protectedProcedure, router } from '../trpc';
-import { Prisma, Semester } from '@prisma/client';
-import { SemesterCode } from 'prisma/utils';
-import { UUID } from 'bson';
+import { Prisma, SemesterCode, Semester } from '@prisma/client';
+import { ObjectId } from 'bson';
 import { isEarlierSemester } from '@/utils/plannerUtils';
-import { computeSemesterCode } from 'prisma/utils';
 
 export const planRouter = router({
   // Protected route: route uses session user id to find user plans
@@ -54,7 +52,7 @@ export const planRouter = router({
     // Make sure semesters are in right orer
     if (planData && planData.semesters) {
       planData.semesters = planData.semesters.sort((a, b) =>
-        isEarlierSemester(computeSemesterCode(a), computeSemesterCode(b)) ? -1 : 1,
+        isEarlierSemester(a.code, b.code) ? -1 : 1,
       );
     }
 
@@ -69,7 +67,7 @@ export const planRouter = router({
       throw new TRPCError({ code: 'FORBIDDEN' });
     }
 
-    return { plan: { ...planData, semesters: planData.semesters.map(computeSemesterCode) } };
+    return { plan: planData };
   }),
   // Protected route: route uses session user id
   deletePlanById: protectedProcedure.input(z.string().min(1)).mutation(async ({ ctx, input }) => {
@@ -135,12 +133,11 @@ export const planRouter = router({
         newEndSemester as SemesterCode,
         true,
         true,
-      ).map(({ year, semester }) => ({
+      ).map((semesterCode) => ({
+        code: semesterCode,
         color: '',
         planId,
-        id: new UUID().toString(),
-        year,
-        semester,
+        id: new ObjectId().toString(),
       })) as Semester[];
 
       await ctx.prisma.semester.deleteMany({ where: { planId } });
@@ -209,7 +206,7 @@ export const planRouter = router({
         }
 
         const newYear: PlanSemester[] = createNewYear(
-          computeSemesterCode(plan.semesters[0] ?? { semester: 'u', year: 2022 }),
+          plan.semesters[0] ? plan.semesters[0].code : { semester: 'u', year: 2022 },
         );
 
         await ctx.prisma.plan.update({
@@ -220,11 +217,9 @@ export const planRouter = router({
             semesters: {
               createMany: {
                 data: newYear.map((semester, idx) => {
-                  // !TODO change this wtf
                   return {
+                    ...semester,
                     courses: undefined,
-                    semester: semester.code.semester,
-                    year: semester.code.year,
                     id: semesterIds[idx].toString(),
                   };
                 }),
@@ -254,7 +249,12 @@ export const planRouter = router({
           },
           data: {
             courses: {
-              create: { code: courseName, color: '' },
+              create: [
+                {
+                  code: courseName,
+                  color: '',
+                },
+              ],
             },
           },
         });
@@ -498,15 +498,20 @@ export const planRouter = router({
       try {
         const { planId, requirement } = input;
 
-        const degreeRequirements = await ctx.prisma.degreeRequirements.findFirstOrThrow({
+        const degreeRequirements = await ctx.prisma.degreeRequirements.findUnique({
           where: {
-            plan: { userId: ctx.session.user.id, id: planId },
+            plan: { userId: ctx.session.user.id },
+            planId,
           },
           select: {
             bypasses: true,
             id: true,
           },
         });
+
+        if (!degreeRequirements) {
+          throw 'No degree requirements';
+        }
 
         const bypasses = [...degreeRequirements.bypasses, requirement];
 
@@ -533,15 +538,20 @@ export const planRouter = router({
       try {
         const { planId, requirement } = input;
 
-        const degreeRequirements = await ctx.prisma.degreeRequirements.findFirstOrThrow({
+        const degreeRequirements = await ctx.prisma.degreeRequirements.findUnique({
           where: {
-            plan: { userId: ctx.session.user.id, id: planId },
+            plan: { userId: ctx.session.user.id },
+            planId,
           },
           select: {
             bypasses: true,
             id: true,
           },
         });
+
+        if (!degreeRequirements) {
+          throw 'No degree requirements';
+        }
 
         // Create NewBypass if it doesn't exist
         if (degreeRequirements.bypasses === null) {
@@ -571,7 +581,8 @@ export const planRouter = router({
 
         const degreeRequirements = await ctx.prisma.degreeRequirements.findFirst({
           where: {
-            plan: { userId: ctx.session.user.id, id: planId },
+            plan: { userId: ctx.session.user.id },
+            planId,
           },
           select: {
             major: true,
@@ -608,21 +619,14 @@ export const planRouter = router({
     }),
   // Protected route: route uses session user id
   updatePlanMajor: protectedProcedure
-    .input(
-      z.object({
-        degreeRequirementsId: z.string().min(1),
-        planId: z.string().min(1),
-        major: z.string().min(1),
-      }),
-    )
+    .input(z.object({ planId: z.string(), major: z.string().min(1) }))
     .mutation(async ({ ctx, input }) => {
       try {
-        const { planId, major, degreeRequirementsId } = input;
-
+        const { planId, major } = input;
         await ctx.prisma.degreeRequirements.update({
           where: {
-            id: degreeRequirementsId,
-            plan: { userId: ctx.session.user.id, id: planId },
+            plan: { userId: ctx.session.user.id },
+            planId,
           },
           data: {
             major,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { SemesterCode } from 'prisma/utils';
+import { SemesterCode } from '@prisma/client';
 import { MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import EmojiIcons from '@/icons/EmojiIcon';
 import AutoCompleteMajor from '@/components/AutoCompleteMajor';

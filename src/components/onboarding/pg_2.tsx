@@ -1,6 +1,6 @@
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import { FormControl, Switch } from '@mui/material';
-import { SemesterCode } from 'prisma/utils';
+import { SemesterCode } from '@prisma/client';
 import React, { useMemo, useState } from 'react';
 import AutoCompleteSearchBar from '@/components/onboarding/AutoCompleteSearchBarOnboarding';
 import Button from '@/components/Button';

@@ -1,6 +1,5 @@
 import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
-import { Prisma } from '@prisma/client';
-import { SemesterCode } from 'prisma/utils';
+import { Prisma, SemesterCode } from '@prisma/client';
 import { Document, Font, Page, StyleSheet, View } from '@react-pdf/renderer';
 import React, { FC } from 'react';
 

@@ -9,7 +9,6 @@
 cypress/screenshots
 cypress/videos
 cypress/downloads
-coverage/
 
 # next.js
 /.next/

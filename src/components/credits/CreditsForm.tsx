@@ -2,7 +2,7 @@ import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import { SemesterCode } from 'prisma/utils';
+import { SemesterCode } from '@prisma/client';
 import { FC, useMemo, useState } from 'react';
 
 import { trpc } from '@/utils/trpc';
@@ -26,7 +26,7 @@ const CreditsForm: FC = () => {
   const semesters = useMemo(
     () =>
       createSemesterCodeRange(
-        user.data?.profile?.startSemesterCode ?? { semester: 'f', year: 2022 },
+        user.data?.profile?.startSemester ?? { semester: 'f', year: 2022 },
         getStartingPlanSemester(),
         true,
       ),
