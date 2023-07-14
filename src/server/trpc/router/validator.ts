@@ -335,7 +335,7 @@ export const validatorRouter = router({
       // Get degree requirements
       const degreeRequirements = await ctx.prisma.degreeRequirements.findFirst({
         where: {
-          planId: planData.id,
+          plan: { id: planData.id },
         },
       });
 

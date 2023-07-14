@@ -1,5 +1,5 @@
 import { Prisma, PrismaClient, Template } from '@prisma/client';
-import { ObjectID } from 'bson';
+import { UUID } from 'bson';
 
 import degreeTemplates from '../src/data/degree_template.json';
 
@@ -40,12 +40,12 @@ function findNewTemplates(
     }
 
     // Generate new template.
-    const templateId = new ObjectID().toString();
+    const templateId = new UUID().toString();
     newTemplates.push({ id: templateId, name: templateName });
 
     for (const [semesterIndex, templateSemester] of templateData.entries()) {
       // Generate template semesters.
-      const templateSemesterId = new ObjectID().toString();
+      const templateSemesterId = new UUID().toString();
       newTemplateSemesters.push(
         createTemplateSemester(semesterIndex + 1, templateSemesterId, templateId),
       );

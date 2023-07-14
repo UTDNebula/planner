@@ -12,6 +12,28 @@ jobs:
   integration-tests:
     name: Integration tests
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_DB: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+        ports:
+          - 5432:5432
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      # Prisma
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres?schema=public
+      PLATFORM_DATABASE_URL: ${{ secrets.PLATFORM_DATABASE_URL }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -32,19 +54,16 @@ jobs:
         run: |
           npm ci
 
-      - name: Prisma generate
+      - name: Prisma generate and push
         run: |
-          npm run prisma:generate
+          npm run prisma:generate &&
+          npx prisma db push
 
       - name: Run Cypress e2e tests
         run: |
           npm run cypress:run
 
         env:
-          # Prisma
-          DATABASE_URL: mongodb://localhost:27017/testing
-          PLATFORM_DATABASE_URL: ${{ secrets.PLATFORM_DATABASE_URL }}
-
           # Next Auth
           NEXTAUTH_URL: http://localhost:3000
           NEXTAUTH_SECRET: abc
