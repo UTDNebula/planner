@@ -2,164 +2,175 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["extendedWhereUnique"]
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model TemplateData {
-  id         String         @id @default(auto()) @map("_id") @db.ObjectId
+  id         String         @id @default(uuid()) @db.Uuid
   semester   Int
   items      TemplateItem[]
   template   Template       @relation(fields: [templateId], references: [id], onDelete: Cascade)
-  templateId String         @db.ObjectId
+  templateId String         @db.Uuid
 }
 
 model TemplateItem {
-  id             String           @id @default(auto()) @map("_id") @db.ObjectId
+  id             String           @id @default(uuid()) @db.Uuid
   name           String
   type           TemplateDataType @default(CORE)
   templateData   TemplateData     @relation(fields: [templateDataId], references: [id], onDelete: Cascade)
-  templateDataId String           @db.ObjectId
+  templateDataId String           @db.Uuid
 }
 
 model Template {
-  id           String         @id @default(auto()) @map("_id") @db.ObjectId
+  id           String         @id @default(uuid()) @db.Uuid
   name         String?
   templateData TemplateData[]
 }
 
 model Profile {
-  id            String       @id @default(auto()) @map("_id") @db.ObjectId
+  id            String       @id @default(uuid()) @db.Uuid
   name          String
-  startSemester SemesterCode
-  endSemester   SemesterCode
+  startYear     Int
+  startSemester SemesterType
+  endYear       Int
+  endSemester   SemesterType
   user          User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId        String       @unique @db.ObjectId
+  userId        String       @unique @db.Uuid
 }
 
 model Plan {
-  id              String              @id @default(auto()) @map("_id") @db.ObjectId
+  id              String              @id @default(uuid()) @db.Uuid
   name            String
   createdAt       DateTime            @default(now()) @map("created_at")
   updatedAt       DateTime            @default(now()) @map("updated_at")
   semesters       Semester[]
   transferCredits String[]
-  User            User?               @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId          String?             @db.ObjectId
+  user            User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId          String              @db.Uuid
   requirements    DegreeRequirements?
-  startSemester   SemesterCode
-  endSemester     SemesterCode
+  startYear       Int
+  startSemester   SemesterType
+  endYear         Int
+  endSemester     SemesterType
 }
 
+// TODO(akevinge): Improve naming.
 model DegreeRequirements {
-  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  id       String   @id @default(uuid()) @db.Uuid
   major    String // Change to String[] in future once modular requirements implemented; empty plan creates "undecided"
   bypasses String[]
-  plan     Plan?    @relation(fields: [planId], references: [id], onDelete: Cascade)
-  planId   String   @unique @db.ObjectId
+  plan     Plan     @relation(fields: [planId], references: [id], onDelete: Cascade)
+  planId   String   @unique @db.Uuid
 }
 
+// TODO(akevinge): Remove.
 model Bypass {
-  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  id          String @id @default(uuid()) @db.Uuid
   courseCode  String
   requirement String
   hours       Int
 }
 
 model Course {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  code       String
-  color      String    @default("")
-  semester   Semester? @relation(fields: [semesterId], references: [id], onDelete: Cascade)
-  semesterId String?   @db.ObjectId
-  locked     Boolean   @default(false)
-  prereqOverriden Boolean @default(false)
-  
+  id              String   @id @default(uuid()) @db.Uuid
+  code            String
+  color           String   @default("")
+  semester        Semester @relation(fields: [semesterId], references: [id], onDelete: Cascade)
+  semesterId      String   @db.Uuid
+  locked          Boolean  @default(false)
+  prereqOverriden Boolean  @default(false)
+
   @@unique([semesterId, code])
 }
 
 model Semester {
-  id      String       @id @default(auto()) @map("_id") @db.ObjectId
-  code    SemesterCode
-  courses Course[]
-  plan    Plan?        @relation(fields: [planId], references: [id], onDelete: Cascade)
-  planId  String?      @db.ObjectId
-  color   String       @default("")
-  locked  Boolean      @default(false)
-}
-
-type SemesterCode {
-  semester SemesterType
+  id       String       @id @default(uuid()) @db.Uuid
   year     Int
+  semester SemesterType
+  courses  Course[]
+  plan     Plan         @relation(fields: [planId], references: [id], onDelete: Cascade)
+  planId   String       @db.Uuid
+  color    String       @default("")
+  locked   Boolean      @default(false)
 }
 
+// TODO(akevinge): Improve naming.
 enum SemesterType {
   f
   s
   u
 }
 
+// TODO(akevinge): Add Jira ticket for this, removal involves removing 
+// quite a bit of code.
 model Credit {
-  id           String       @id @default(auto()) @map("_id") @db.ObjectId
-  courseCode   String
-  semesterCode SemesterCode
-  transfer     Boolean
-  userId       String       @db.ObjectId
-  user         User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id         String       @id @default(uuid()) @db.Uuid
+  courseCode String
+  year       Int
+  semester   SemesterType
+  transfer   Boolean
+  user       User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String       @db.Uuid
 }
 
+// TODO(akevinge): Remove.
 model AcademicDetails {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
+  id Int @id @default(autoincrement())
 }
 
 // Necessary for Next auth
 model Account {
-  id                String  @id @default(auto()) @map("_id") @db.ObjectId
-  userId            String  @db.ObjectId
+  id                String  @id @default(uuid()) @db.Uuid
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? // @db.Text
-  access_token      String? // @db.Text
+  refresh_token     String?
+  access_token      String?
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? // @db.Text
+  id_token          String?
   session_state     String?
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId            String  @db.Uuid
 
   @@unique([provider, providerAccountId])
 }
 
 model Session {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  id           String   @id @default(uuid()) @db.Uuid
   sessionToken String   @unique
-  userId       String   @db.ObjectId
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String   @db.Uuid
 }
 
 model User {
-  id                      String    @id @default(auto()) @map("_id") @db.ObjectId
+  id                      String    @id @default(uuid()) @db.Uuid
   email                   String?   @unique
   emailVerified           DateTime?
   onboardingComplete      Boolean   @default(false)
   seenHomeOnboardingModal Boolean   @default(false)
   seenPlanOnboardingModal Boolean   @default(false)
   credit                  Credit[]
-  accounts                Account[] // Wait can a user have multiple accounts?
+  // Multiple accounts can be created when a user signs in with an OAuth provider
+  // while signed in with another provider. See: https://github.com/nextauthjs/next-auth/discussions/3116#discussioncomment-1622855.
+  accounts                Account[]
   sessions                Session[]
   profile                 Profile?
   plans                   Plan[]
 }
 
+// VerificationToken is used by Auth.js (NextAuth) for passwordless sign via email.
+// See: https://authjs.dev/reference/adapters#verification-token
 model VerificationToken {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  id         Int      @id @default(autoincrement())
   identifier String
   token      String   @unique
   expires    DateTime
