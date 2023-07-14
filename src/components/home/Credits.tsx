@@ -11,7 +11,8 @@ import Button from '../Button';
 import CreditsForm from '../credits/CreditsForm';
 import CreditsTable from '../credits/CreditsTable';
 import courseCode from '@/data/courseCode.json';
-import { SemesterType, SemesterCode } from '@prisma/client';
+import { SemesterType } from '@prisma/client';
+import { SemesterCode } from 'prisma/utils';
 import { trpc } from '@/utils/trpc';
 import { Credit } from '../credits/types';
 

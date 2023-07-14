@@ -12,16 +12,26 @@ jobs:
   release:
     name: Test build app
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_DB: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+        ports:
+          - 5432:5432
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
-      - name: Start MongoDB
-        uses: supercharge/mongodb-github-action@1.8.0
-        with:
-          mongodb-replica-set: test-rs
-          mongodb-version: '6.0'
-          mongodb-port: 27017
 
       - name: Setup Node.js
         uses: actions/setup-node@v2
@@ -37,8 +47,9 @@ jobs:
           npm run build
         env:
           # Prisma
-          DATABASE_URL: mongodb://localhost:27017/db
-          PLATFORM_DATABASE_URL: mongodb://localhost:27017/platformDB
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres?schema=public
+          PLATFORM_DATABASE_URL: mongodb://localhost:27017/platformDB # This is a dead connection URL - build does not need live DB.
+
           # Next Auth
           NEXTAUTH_URL: http://localhost:3000
           NEXTAUTH_SECRET: abc

@@ -26,8 +26,10 @@ export const seedTestUser = async (prisma: PrismaClient): Promise<SeededUserData
     prisma.profile.create({
       data: {
         name: 'Test User',
-        startSemester: { semester: 'f', year: 2021 },
-        endSemester: { semester: 's', year: 2026 },
+        startYear: 2021,
+        startSemester: 's',
+        endYear: 2026,
+        endSemester: 'f',
         userId: user.id,
       },
     }),
