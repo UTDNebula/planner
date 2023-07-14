@@ -167,7 +167,8 @@ model User {
   plans                   Plan[]
 }
 
-// TODO(akevinge): Remove.
+// VerificationToken is used by Auth.js (NextAuth) for passwordless sign via email.
+// See: https://authjs.dev/reference/adapters#verification-token
 model VerificationToken {
   id         Int      @id @default(autoincrement())
   identifier String
