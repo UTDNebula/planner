@@ -16,7 +16,6 @@ import useGetCourseInfo from '../useGetCourseInfo';
 import PrereqWarnHoverCard from '../PrereqWarnHoverCard';
 import FilledWarningIcon from '@/icons/FilledWarningIcon';
 import CourseInfoHoverCard from '../CourseInfoHoverCard';
-import { emptyFunction } from '@/utils/utilFunctions';
 
 export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'> {
   course: DraggableCourse;
@@ -62,6 +61,9 @@ export const MemoizedSemesterCourseItem = React.memo(
     const hoverTimer = useRef<ReturnType<typeof setTimeout>>();
 
     const { title, description } = useGetCourseInfo(course.code);
+    const { allSemesters } = useSemestersContext();
+    let year = allSemesters[0]['code']['year'];
+    if (allSemesters[0]['code']['semester'] !== 'f') year--;
 
     return (
       <div
@@ -100,10 +102,11 @@ export const MemoizedSemesterCourseItem = React.memo(
         </div>
         <CourseInfoHoverCard
           description={description ?? ''}
-          open={hoverOpen && !isDragging && !prereqWarnOpen}
-          onOpenChange={emptyFunction}
+          open={Boolean(title) && hoverOpen && !isDragging && !prereqWarnOpen}
           side="top"
           title={title || ''}
+          courseCode={course.code}
+          year={year}
         >
           <div className="flex w-full flex-row items-center gap-x-3">
             <DragIndicatorIcon fontSize="inherit" className="text-[16px] text-neutral-300" />

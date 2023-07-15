@@ -1,6 +1,6 @@
-# Nebula Web
+# Nebula Planner
 
-_Nebula Web is a tool for planning out students' college experience_
+_Nebula Planner is a tool for planning out students' college experience_
 
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
@@ -8,7 +8,7 @@ _Nebula Web is a tool for planning out students' college experience_
 
 ### Overview
 
-Nebula Web allows students to plan out including coursework, co-curricular
+Nebula Planner allows students to plan out including coursework, co-curricular
 activities like studying abroad and research, and extracurricular involvement in
 student organizations. It does this with an intuitive drag-and-drop interface
 that represents various college activities as blocks and displays them in semester
@@ -29,7 +29,7 @@ plan lets me do all of that with the professors I want."
 
 Until now, that is.
 
-Nebula Web is an integrated solution designed to help students plan out
+Nebula Planner is an integrated solution designed to help students plan out
 their entire undergraduate experience in one place. It allows students to focus
 on ensuring their college experience holistically suits their desires and
 optimize for long-term success.
@@ -218,5 +218,5 @@ This project is maintained by Nebula Labs, which is an open-source initiative to
 any questions about this project or Project Nebula, join the Nebula Labs [discord](https://discord.gg/wcHs2PPXeM).
 
 For more formal inquiries, send us a message at core-maintainers@utdnebula.com
-with "[nebula-web]" in the title. Please be as detailed as possible so we can
+with "[nebula-planner]" in the title. Please be as detailed as possible so we can
 best assist you.

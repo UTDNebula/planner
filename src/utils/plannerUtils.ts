@@ -1,6 +1,6 @@
-import { SemesterCode } from '@prisma/client';
+import { SemesterCode } from 'prisma/utils';
 
-import { createNewYear, displaySemesterCode, isSemCodeEqual } from './utilFunctions';
+import { createYearBasedOnFall, displaySemesterCode, isSemCodeEqual } from './utilFunctions';
 
 export interface RecentSemester {
   year: number;
@@ -80,7 +80,7 @@ export function reorderList<T>(list: T[], startIndex: number, endIndex: number) 
 }
 
 export function formatDegreeValidationRequest(
-  semesters: { code: SemesterCode; id: string; courses: string[] }[],
+  semesters: { id: string; courses: string[] }[],
   transferCredits: string[],
   requirements = { core: true, majors: ['computer_science'], minors: [] },
   bypasses: string[] = [],
@@ -120,7 +120,7 @@ export function addCreditsToPlan(
   const endSemester = semesters[0] ? semesters[0].code.year : 2022;
 
   for (let year = minYear; year < endSemester; year++) {
-    const newYear = createNewYear({ semester: 'u', year }).map((sem) => {
+    const newYear = createYearBasedOnFall(year).map((sem) => {
       return { ...sem, courses: [] as string[], id: displaySemesterCode(sem.code) };
     });
 

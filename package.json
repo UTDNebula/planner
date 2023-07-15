@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "prisma:generate": "prisma generate --schema prisma/platform.prisma && prisma generate --schema prisma/schema.prisma",
-    "build": "npm run prisma:generate && prisma db push && prisma db seed && next build",
+    "prisma:push:main": "prisma db push --schema prisma/schema.prisma",
+    "build": "npm run prisma:generate && npm run prisma:push:main && prisma db seed && next build",
     "start": "next start",
     "lint": "eslint --fix .",
     "format": "prettier --write .",
@@ -13,15 +14,14 @@
     "analyze": "cross-env ANALYZE=true npm run build",
     "dev:gitpod": "NEXTAUTH_URL=$(gp url 3000)/ npm run dev",
     "cypress:open": "NODE_ENV=test start-server-and-test dev http://localhost:3000 \"cypress open --browser chrome --e2e\"",
-    "cypress:run": "NODE_ENV=test start-server-and-test dev http://localhost:3000 \"cypress run --browser chrome --config video=false --e2e\""
+    "cypress:run": "NODE_ENV=test start-server-and-test dev http://localhost:3000 \"cypress run --browser chrome --config video=false --e2e\"",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest"
   },
   "prisma": {
     "seed": "ts-node --transpile-only --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.0.6",
-    "@emotion/react": "^11.7.1",
-    "@emotion/styled": "^11.6.0",
     "@mui/icons-material": "^5.3.1",
     "@mui/lab": "^5.0.0-alpha.67",
     "@mui/material": "^5.4.0",
@@ -75,6 +75,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",
+    "@jest/globals": "^29.6.1",
     "@types/node": "^17.0.14",
     "@types/nprogress": "^0.2.0",
     "@types/react": "^17.0.39",
@@ -91,6 +92,7 @@
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
+    "jest": "^29.6.1",
     "postcss": "^8.4.6",
     "prettier": "^2.3.2",
     "prettier-plugin-tailwindcss": "^0.2.2",
@@ -98,6 +100,7 @@
     "react-styleguidist": "^13.0.0",
     "start-server-and-test": "^2.0.0",
     "tailwindcss": "^3.0.18",
+    "ts-jest": "^29.1.1",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.2"
   },

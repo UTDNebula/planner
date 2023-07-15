@@ -1,21 +1,25 @@
 import { z } from 'zod';
 
 import { protectedProcedure, router } from '../trpc';
+import { computeSemesterCode } from 'prisma/utils';
 
 export const creditsRouter = router({
   getCredits: protectedProcedure.query(async ({ ctx }) => {
     const userId = ctx.session.user.id;
-    return await ctx.prisma.credit.findMany({
-      where: {
-        userId,
-      },
-      select: {
-        id: true,
-        courseCode: true,
-        semesterCode: true,
-        transfer: true,
-      },
-    });
+    return await ctx.prisma.credit
+      .findMany({
+        where: {
+          userId,
+        },
+        select: {
+          id: true,
+          courseCode: true,
+          semester: true,
+          year: true,
+          transfer: true,
+        },
+      })
+      .then((credits) => credits.map(computeSemesterCode));
   }),
   addCredit: protectedProcedure
     .input(
@@ -33,7 +37,8 @@ export const creditsRouter = router({
           data: {
             userId,
             courseCode,
-            semesterCode: { semester: semesterCode.semester, year: semesterCode.year },
+            semester: semesterCode.semester,
+            year: semesterCode.year,
             transfer,
           },
         });
@@ -59,7 +64,8 @@ export const creditsRouter = router({
           data: input.map(({ courseCode, semesterCode, transfer }) => ({
             userId,
             courseCode,
-            semesterCode: { semester: semesterCode.semester, year: semesterCode.year },
+            semester: semesterCode.semester,
+            year: semesterCode.year,
             transfer,
           })),
         });
@@ -84,7 +90,8 @@ export const creditsRouter = router({
           where: {
             userId,
             courseCode,
-            semesterCode: { semester: semesterCode.semester, year: semesterCode.year },
+            semester: semesterCode.semester,
+            year: semesterCode.year,
           },
         });
 

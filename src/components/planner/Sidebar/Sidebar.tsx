@@ -7,7 +7,7 @@ import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
 
 import { Course, DraggableCourse, GetDragIdByCourse } from '../types';
 import DraggableCourseList from './DraggableCourseList';
-import { ObjectID } from 'bson';
+import { UUID } from 'bson';
 
 export interface CourseSelectorContainerProps {
   degreeRequirements: DegreeRequirements;
@@ -48,7 +48,7 @@ function CourseSelectorContainer({
     return results.map((result) => {
       return {
         ...result,
-        id: new ObjectID(),
+        id: new UUID(),
         status: courses.includes(result.code) ? 'complete' : undefined,
       };
     }) as DraggableCourse[];
@@ -78,8 +78,8 @@ function CourseSelectorContainer({
         } px-3 py-2`}
       >
         <span
-          className={`whitespace-nowrap font-semibold text-yellow-500 sm:text-[10px] lg:text-xs ${
-            taken >= min ? 'bg-primary-800' : 'text-yellow-500'
+          className={`whitespace-nowrap font-semibold sm:text-[10px] lg:text-xs ${
+            taken >= min ? 'text-primary-800' : 'text-yellow-500'
           }`}
         >
           {taken}/{min} {unit}

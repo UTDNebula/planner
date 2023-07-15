@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import * as Select from '@radix-ui/react-select';
 import ChevronIcon from '@/icons/ChevronIcon';
-import { SemesterCode } from '@prisma/client';
+import { SemesterCode } from 'prisma/utils';
 import { displaySemesterCode } from '@/utils/utilFunctions';
 
 const SemestersSelect: FC<
