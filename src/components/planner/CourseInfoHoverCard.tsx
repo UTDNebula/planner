@@ -6,7 +6,7 @@ interface CourseInfoHoverCardProps {
   // prereqs: string[][];
   description: string;
   open: boolean;
-  onOpenChange: (open: boolean) => void;
+  onOpenChange?: (open: boolean) => void;
   side?: 'top' | 'left' | 'bottom' | 'right';
   title: string;
   courseCode: string;

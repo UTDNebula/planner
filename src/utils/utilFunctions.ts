@@ -77,6 +77,7 @@ export function getSemesterHourFromCourseCode(code: string): number | null {
   return Number(hoursNum.toString()[1]);
 }
 
+// TODO(akevinge): Improve enum naming and remove this.
 export function displaySemesterCode(semesterCode: SemesterCode): string {
   let semesterName;
   if (semesterCode.semester === 'f') {
@@ -88,6 +89,9 @@ export function displaySemesterCode(semesterCode: SemesterCode): string {
   return `${semesterName} ${semesterCode.year}`;
 }
 
+/**
+ * Generates ``count`` number of semesters starting from ``startYear`` and ``startSemester`` (inclusive).
+ */
 export function generateSemesters(
   count: number,
   startYear: number,
@@ -121,6 +125,9 @@ export function generateSemesters(
   return result;
 }
 
+/**
+ * Generates semester following the given one.
+ */
 export function createNewSemesterCode(pastSemesterCode: SemesterCode): SemesterCode {
   if (pastSemesterCode.semester === 'f') {
     return { semester: 's', year: pastSemesterCode.year + 1 };
@@ -130,6 +137,10 @@ export function createNewSemesterCode(pastSemesterCode: SemesterCode): SemesterC
     return { semester: 'f', year: pastSemesterCode.year };
   }
 }
+
+/**
+ * Generates an array of semesters given the ``startSemester`` and ``endSemester``.
+ */
 export function createSemesterCodeRange(
   startSemester: SemesterCode,
   endSemester: SemesterCode,
@@ -151,31 +162,12 @@ export function createSemesterCodeRange(
   return semesterCodes;
 }
 
+/**
+ * Returns true if two semesters are equal (i.e. year and semester type).
+ */
 export function isSemCodeEqual(semCodeOne: SemesterCode, semCodeTwo: SemesterCode) {
   return semCodeOne.semester === semCodeTwo.semester && semCodeOne.year === semCodeTwo.year;
 }
-
-const semesterPrecedence = {
-  f: 0,
-  s: 1,
-  u: 2,
-} as const;
-
-// Returns true if s1 is earlier than s2
-export const isSemesterEarlier = (s1: SemesterCode, s2: SemesterCode) => {
-  return (
-    s1.year < s2.year ||
-    (s1.year === s2.year && semesterPrecedence[s1.semester] < semesterPrecedence[s2.semester])
-  );
-};
-
-// Returns true if s1 is later than s2
-export const isSemesterLater = (s1: SemesterCode, s2: SemesterCode) => {
-  return (
-    s1.year > s2.year ||
-    (s1.year === s2.year && semesterPrecedence[s1.semester] > semesterPrecedence[s2.semester])
-  );
-};
 
 const regex =
   /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -183,10 +175,3 @@ const regex =
 export const isValidEmail = (email: string) => {
   return regex.test(email);
 };
-
-/**
- * This function exists if you ever need to mock the following function signature:
- * () => void
- */
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-export const emptyFunction = () => {};
