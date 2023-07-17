@@ -117,7 +117,7 @@ export default function Welcome({
           Create An Account
         </h1>
       </div>
-      <p className="text-sm text-[16px] font-semibold leading-normal text-[#737373]">
+      <p className="text-[16px] text-sm font-semibold leading-normal text-[#737373]">
         Tell us your name, major, and school semesters!
       </p>
       <section className="mt-7">

@@ -86,7 +86,7 @@ export default function AuthPage({
               Create An Account
             </h1>
           </div>
-          <p className="text-sm text-[16px] font-medium leading-normal text-[#737373]">
+          <p className="text-[16px] text-sm font-medium leading-normal text-[#737373]">
             Welcome to Nebula Planner! To get started, please sign up below.
           </p>
           <section className="mt-7 space-y-5">

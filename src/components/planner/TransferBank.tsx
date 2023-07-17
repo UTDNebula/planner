@@ -9,7 +9,7 @@ const TransferBank: FC<TransferBankProps> = ({ transferCredits }) => {
   const [open, setOpen] = useState(true);
 
   return (
-    <section className="w-full rounded-2xl border border-neutral-200 bg-generic-white py-3 px-5 shadow-sm">
+    <section className="w-full rounded-2xl border border-neutral-200 bg-generic-white px-5 py-3 shadow-sm">
       <article className="flex items-center justify-between">
         <h5 className="text-xl font-semibold text-primary-900">Transfer Credits</h5>
         <ChevronIcon

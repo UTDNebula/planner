@@ -38,7 +38,7 @@ export default function PlanCard({ id, name, major }: PlanCardProps) {
       <div className="relative w-full rounded-2xl border-b-[12px] border-[#A3A3A3] border-b-primary bg-white text-[#1C2A6D] transition-all hover:scale-110 hover:border-b-[0px] hover:bg-primary hover:text-white">
         <button
           onClick={handlePlanClick}
-          className="flex h-[180px] w-full flex-col py-6 px-8 text-left"
+          className="flex h-[180px] w-full flex-col px-8 py-6 text-left"
         >
           <div className="flex w-full flex-row items-center justify-between">
             <h4 className="overflow-hidden text-ellipsis whitespace-nowrap text-[15px] font-normal ">

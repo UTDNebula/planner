@@ -113,7 +113,7 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
       <p className="text-sm font-semibold">Plan Name</p>
       <div className="flex flex-col gap-2">
         <input
-          className="w-full rounded-md border border-neutral-500 py-3 px-4 text-sm text-black/80 placeholder:text-neutral-400"
+          className="w-full rounded-md border border-neutral-500 px-4 py-3 text-sm text-black/80 placeholder:text-neutral-400"
           placeholder="Name your plan"
           value={name}
           onChange={(e) => setName(e.target.value)}
