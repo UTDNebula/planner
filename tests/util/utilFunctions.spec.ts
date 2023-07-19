@@ -1,10 +1,12 @@
-import { describe, expect, test } from '@jest/globals';
+import { describe, expect, test, jest, afterEach } from '@jest/globals';
 import {
   createNewSemesterCode,
   createSemesterCodeRange,
   createYearBasedOnFall,
   generateSemesters,
   getSemesterHourFromCourseCode,
+  getStartingPlanSemester,
+  isEarlierSemester,
 } from '../../src/utils/utilFunctions';
 import { Semester } from '@/components/planner/types';
 import { SemesterType } from '@prisma/client';
@@ -260,6 +262,98 @@ describe('createSemesterCodeRange', () => {
       tc.includeEnd,
       tc.includeStart,
     );
+    expect(got).toMatchObject(tc.want);
+  });
+});
+
+describe('isEarlierSemester', () => {
+  const testCases: { desc: string; s1: SemesterCode; s2: SemesterCode; want: boolean }[] = [
+    {
+      desc: 's1 year is earlier than s2 year but same semester',
+      s1: {
+        semester: 'f',
+        year: 1999,
+      },
+      s2: {
+        semester: 'f',
+        year: 2000,
+      },
+      want: true,
+    },
+    {
+      desc: 'in the same year, Spring < Summer',
+      s1: {
+        semester: 's',
+        year: 2000,
+      },
+      s2: {
+        semester: 'u',
+        year: 2000,
+      },
+      want: true,
+    },
+    {
+      desc: 'in the same year, Summer < Fall',
+      s1: {
+        semester: 'u',
+        year: 2000,
+      },
+      s2: {
+        semester: 'f',
+        year: 2000,
+      },
+      want: true,
+    },
+    {
+      desc: 'equal semester and year',
+      s1: {
+        semester: 'f',
+        year: 2000,
+      },
+      s2: {
+        semester: 'f',
+        year: 2000,
+      },
+      want: false,
+    },
+  ];
+
+  test.each(testCases)('$desc', (tc) => {
+    const got = isEarlierSemester(tc.s1, tc.s2);
+    expect(got).toBe(tc.want);
+  });
+});
+
+describe('getStartingPlanSemester', () => {
+  afterEach(() => {
+    jest.clearAllTimers();
+  });
+
+  const testCases: {
+    desc: string;
+    fakeDate: Date;
+    want: SemesterCode;
+  }[] = [
+    {
+      desc: 'one second until Jane',
+      fakeDate: new Date('2000-05-31T23:59:59'),
+      want: { year: 2000, semester: 's' },
+    },
+    {
+      desc: 'the second Jane starts',
+      fakeDate: new Date('2000-06-01T00:00:00'),
+      want: { year: 2000, semester: 'u' },
+    },
+    {
+      desc: 'the second Sep. starts',
+      fakeDate: new Date('2000-09-01T00:00:00'),
+      want: { year: 2000, semester: 'f' },
+    },
+  ];
+
+  test.each(testCases)('$desc', (tc) => {
+    jest.useFakeTimers({ now: tc.fakeDate });
+    const got = getStartingPlanSemester();
     expect(got).toMatchObject(tc.want);
   });
 });
