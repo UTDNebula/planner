@@ -1,9 +1,9 @@
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
-import { SemesterCode } from 'prisma/utils';
 import { FC, useMemo, useState } from 'react';
 
 import { trpc } from '@/utils/trpc';
 import { displaySemesterCode } from '@/utils/utilFunctions';
+import { SemesterCode } from 'prisma/utils';
 
 import DataGrid from './DataGrid';
 import SearchBar from './SearchBar';

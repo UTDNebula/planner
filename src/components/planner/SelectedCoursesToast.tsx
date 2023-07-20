@@ -1,7 +1,9 @@
-import CursorClickIcon from '@/icons/CursorClickIcon';
-import DeleteIcon from '@/icons/DeleteIcon';
 import { AnimatePresence, motion } from 'framer-motion';
 import { FC } from 'react';
+
+import CursorClickIcon from '@/icons/CursorClickIcon';
+import DeleteIcon from '@/icons/DeleteIcon';
+
 import Button from '../Button';
 import Checkbox from '../Checkbox';
 

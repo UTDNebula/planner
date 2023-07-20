@@ -1,19 +1,22 @@
+import InfoIcon from '@mui/icons-material/Info';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import { SemesterCode } from 'prisma/utils';
 import { FC, useMemo, useState } from 'react';
 
 import { trpc } from '@/utils/trpc';
-import { createSemesterCodeRange, displaySemesterCode } from '@/utils/utilFunctions';
+import {
+  createSemesterCodeRange,
+  displaySemesterCode,
+  getStartingPlanSemester,
+} from '@/utils/utilFunctions';
+import { SemesterCode } from 'prisma/utils';
 
-import useSearch from '../search/search';
 import AutoCompleteSearchBar from './AutoCompleteSearchBar';
-import Button from '../Button';
 import DropdownSelect from './DropdownSelect';
-import { getStartingPlanSemester } from '@/utils/utilFunctions';
-import InfoIcon from '@mui/icons-material/Info';
+import Button from '../Button';
+import useSearch from '../search/search';
 
 const Layout: FC = ({ children }) => <section className="flex flex-col gap-10">{children}</section>;
 

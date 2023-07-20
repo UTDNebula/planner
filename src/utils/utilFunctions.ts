@@ -1,9 +1,9 @@
 import { SemesterType } from '@prisma/client';
-import { SemesterCode } from 'prisma/utils';
 import { v4 as uuidv4 } from 'uuid';
 
 import { Semester } from '@/components/planner/types';
 import { tagColors } from '@/components/planner/utils';
+import { SemesterCode } from 'prisma/utils';
 
 /**
  * Creates 3 new semesters based on given Fall year.

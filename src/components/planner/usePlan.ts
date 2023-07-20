@@ -1,5 +1,7 @@
-import { trpc } from '@/utils/trpc';
 import { useRouter } from 'next/router';
+
+import { trpc } from '@/utils/trpc';
+
 import { DegreeValidation, Plan } from './types';
 
 export interface usePlanProps {

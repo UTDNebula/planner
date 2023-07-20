@@ -1,9 +1,11 @@
-import React from 'react';
-import { SemesterCode } from 'prisma/utils';
 import { MenuItem, Select, SelectChangeEvent } from '@mui/material';
-import EmojiIcons from '@/icons/EmojiIcon';
+import React from 'react';
+
 import AutoCompleteMajor from '@/components/AutoCompleteMajor';
+import EmojiIcons from '@/icons/EmojiIcon';
 import majorsList from '@data/majors.json';
+import { SemesterCode } from 'prisma/utils';
+
 import useSearch from '../search/search';
 
 export type WelcomeTypes = {

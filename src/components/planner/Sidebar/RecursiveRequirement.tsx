@@ -1,9 +1,11 @@
-import { v4 as uuidv4 } from 'uuid';
 import React, { useMemo } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+
+import { trpc } from '@/utils/trpc';
+
+import Accordion from './Accordion';
 import DraggableSidebarCourseItem from './SidebarCourseItem';
 import { CourseRequirement, RequirementTypes } from './types';
-import Accordion from './Accordion';
-import { trpc } from '@/utils/trpc';
 
 /**
  * Group of requirements that's recursive?

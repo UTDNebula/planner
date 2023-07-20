@@ -1,22 +1,22 @@
 import { SemesterType } from '@prisma/client';
-import { SemesterCode } from 'prisma/utils';
 import { createProxySSGHelpers } from '@trpc/react-query/ssg';
-import { type RouterInputs } from '@utils/trpc';
 import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import { getServerSession } from 'next-auth/next';
 import React, { useEffect, useState } from 'react';
 import superjson from 'superjson';
 
+import Button from '@/components/Button';
 import { Credit } from '@/components/credits/types';
 import Welcome, { WelcomeTypes } from '@/components/onboarding/welcome';
 import { createContextInner } from '@/server/trpc/context';
 import { appRouter } from '@/server/trpc/router/_app';
 import { trpc } from '@/utils/trpc';
 import { generateSemesters } from '@/utils/utilFunctions';
+import { type RouterInputs } from '@utils/trpc';
+import { SemesterCode } from 'prisma/utils';
 
 import { authOptions } from '../api/auth/[...nextauth]';
-import Button from '@/components/Button';
 
 /**
  * The first onboarding page for the application.

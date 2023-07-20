@@ -1,13 +1,15 @@
-import { FC } from 'react';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import DotsHorizontalIcon from '@/icons/DotsHorizontalIcon';
+import { FC } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+
 import ArchiveIcon from '@/icons/ArchiveIcon';
+import ChevronIcon from '@/icons/ChevronIcon';
 import ClipboardListIcon from '@/icons/ClipboardListIcon';
 import ColorSwatchIcon from '@/icons/ColorSwatchIcon';
-import ChevronIcon from '@/icons/ChevronIcon';
-import { tagColors } from '../utils';
-import { v4 as uuidv4 } from 'uuid';
+import DotsHorizontalIcon from '@/icons/DotsHorizontalIcon';
 import LockIcon from '@/icons/LockIcon';
+
+import { tagColors } from '../utils';
 
 const itemClasses =
   'flex items-center gap-x-3 border-b border-neutral-300 px-2 py-2 hover:bg-neutral-200 cursor-pointer text-sm';

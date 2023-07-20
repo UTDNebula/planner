@@ -1,4 +1,9 @@
 import { describe, expect, test, jest, afterEach } from '@jest/globals';
+import { SemesterType } from '@prisma/client';
+
+import { Semester } from '@/components/planner/types';
+import { SemesterCode } from 'prisma/utils';
+
 import {
   createNewSemesterCode,
   createSemesterCodeRange,
@@ -8,9 +13,6 @@ import {
   getStartingPlanSemester,
   isEarlierSemester,
 } from '../../src/utils/utilFunctions';
-import { Semester } from '@/components/planner/types';
-import { SemesterType } from '@prisma/client';
-import { SemesterCode } from 'prisma/utils';
 
 describe('createYearBasedOnFall', () => {
   test('0 year', () => {

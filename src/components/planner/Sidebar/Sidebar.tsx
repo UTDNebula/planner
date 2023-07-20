@@ -1,13 +1,16 @@
 import * as Dialog from '@radix-ui/react-dialog';
-import { SearchBarTwo } from '@components/credits/SearchBar';
 import React, { useRef, useState } from 'react';
-
-import RequirementsContainer from '@/components/planner/Sidebar/RequirementsContainer';
-import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
-
-import { Course, DraggableCourse, GetDragIdByCourse } from '../types';
-import DraggableCourseList from './DraggableCourseList';
 import { v4 as uuidv4 } from 'uuid';
+
+import AnalyticsWrapper from '@/components/common/AnalyticsWrapper';
+import RequirementsContainer from '@/components/planner/Sidebar/RequirementsContainer';
+import ChevronIcon from '@/icons/ChevronIcon';
+import { RouterOutputs, trpc } from '@/utils/trpc';
+import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
+import { SearchBarTwo } from '@components/credits/SearchBar';
+
+import DraggableCourseList from './DraggableCourseList';
+
 
 export interface CourseSelectorContainerProps {
   degreeRequirements: DegreeRequirements;
@@ -16,11 +19,9 @@ export interface CourseSelectorContainerProps {
   getSearchedDragId: GetDragIdByCourse;
   getRequirementDragId: GetDragIdByCourse;
 }
-import { RouterOutputs, trpc } from '@/utils/trpc';
 import { DegreeRequirements } from './types';
-import ChevronIcon from '@/icons/ChevronIcon';
+import { Course, DraggableCourse, GetDragIdByCourse } from '../types';
 import useFuse from '../useFuse';
-import AnalyticsWrapper from '@/components/common/AnalyticsWrapper';
 type CourseData = RouterOutputs['courses']['publicGetAllCourses'];
 type ArrayElement<ArrayType extends readonly unknown[]> =
   ArrayType extends readonly (infer ElementType)[] ? ElementType : never;

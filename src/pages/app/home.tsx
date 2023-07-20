@@ -1,10 +1,11 @@
-import { createContextInner } from '@server/trpc/context';
 import { createProxySSGHelpers } from '@trpc/react-query/ssg';
 import { GetServerSidePropsContext } from 'next';
 import { getServerSession } from 'next-auth';
 import superjson from 'superjson';
 
 import { appRouter } from '@/server/trpc/router/_app';
+import { createContextInner } from '@server/trpc/context';
+
 
 import Home from '../../components/home/Home';
 import { authOptions } from '../api/auth/[...nextauth]';

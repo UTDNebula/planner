@@ -1,10 +1,11 @@
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { useEffect, useState } from 'react';
-import majorsList from '@data/majors.json';
+import { toast } from 'react-toastify';
+
 import EditIcon from '@/icons/EditIcon';
 import { trpc } from '@/utils/trpc';
-import { toast } from 'react-toastify';
+import majorsList from '@data/majors.json';
 
 const EditableMajor = ({
   major: initialMajor,

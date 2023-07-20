@@ -1,10 +1,13 @@
+import { FC, useState } from 'react';
+
 import Modal from '@/components/Modal';
 import { trpc } from '@/utils/trpc';
 import { displaySemesterCode, generateSemesters } from '@/utils/utilFunctions';
 import { SemesterCode } from 'prisma/utils';
-import { FC, useState } from 'react';
-import Button from '../../Button';
+
 import SemestersSelect from './SemestersSelect';
+import Button from '../../Button';
+
 
 export interface EditSemestersModalProps {
   planId: string;

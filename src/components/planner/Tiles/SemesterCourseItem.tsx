@@ -1,21 +1,22 @@
 import { UniqueIdentifier, useDraggable } from '@dnd-kit/core';
+import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import React, { ComponentPropsWithoutRef, FC, forwardRef, useState, useRef } from 'react';
 
-import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
-import { DragDataFromSemesterTile, DraggableCourse, Semester } from '../types';
-import DotsHorizontalIcon from '@/icons/DotsHorizontalIcon';
-import LockIcon from '@/icons/LockIcon';
 import Checkbox from '@/components/Checkbox';
-import SemesterCourseItemDropdown from './SemesterCourseItemDropdown';
-import { tagColors } from '../utils';
-import { useSemestersContext } from '../SemesterContext';
+import DotsHorizontalIcon from '@/icons/DotsHorizontalIcon';
+import FilledWarningIcon from '@/icons/FilledWarningIcon';
+import LockIcon from '@/icons/LockIcon';
 import { trpc } from '@/utils/trpc';
 
-import useGetCourseInfo from '../useGetCourseInfo';
-
-import PrereqWarnHoverCard from '../PrereqWarnHoverCard';
-import FilledWarningIcon from '@/icons/FilledWarningIcon';
+import SemesterCourseItemDropdown from './SemesterCourseItemDropdown';
 import CourseInfoHoverCard from '../CourseInfoHoverCard';
+import PrereqWarnHoverCard from '../PrereqWarnHoverCard';
+import { useSemestersContext } from '../SemesterContext';
+import { DragDataFromSemesterTile, DraggableCourse, Semester } from '../types';
+import useGetCourseInfo from '../useGetCourseInfo';
+import { tagColors } from '../utils';
+
+
 
 export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'> {
   course: DraggableCourse;

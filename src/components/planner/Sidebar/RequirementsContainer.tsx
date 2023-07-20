@@ -1,10 +1,15 @@
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import * as HoverCard from '@radix-ui/react-hover-card';
 import React, { useState } from 'react';
 
-import Accordion from './Accordion';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import RequirementsCarousel from './RequirementsCarousel';
 import useSearch from '@/components/search/search';
+import { JSONCourse } from '@/data/courses.json';
 import { trpc } from '@/utils/trpc';
+
+
+import Accordion from './Accordion';
+import { RecursiveRequirement } from './RecursiveRequirement';
+import RequirementsCarousel from './RequirementsCarousel';
 import RequirementSearchBar from './RequirementSearchBar';
 import {
   RequirementGroupTypes,
@@ -12,11 +17,8 @@ import {
   CourseRequirement,
   DegreeRequirement,
 } from './types';
-import { GetDragIdByCourseAndReq } from '../types';
-import { RecursiveRequirement } from './RecursiveRequirement';
 import { useSemestersContext } from '../SemesterContext';
-import * as HoverCard from '@radix-ui/react-hover-card';
-import { JSONCourse } from '@/data/courses.json';
+import { GetDragIdByCourseAndReq } from '../types';
 
 function RequirementContainerHeader({
   name,

@@ -1,14 +1,16 @@
-import { FC, useMemo } from 'react';
-import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import ColorSwatchIcon from '@/icons/ColorSwatchIcon';
-import ChevronIcon from '@/icons/ChevronIcon';
-import { tagColors } from '../utils';
-import { useSemestersContext } from '../SemesterContext';
 import { SemesterType } from '@prisma/client';
-import Checkbox from '../../Checkbox';
-import CalendarIcon from '@/icons/CalendarIcon';
-import ClockIcon from '@/icons/ClockIcon';
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import { FC, useMemo } from 'react';
+
 import AnalyticsWrapper from '@/components/common/AnalyticsWrapper';
+import CalendarIcon from '@/icons/CalendarIcon';
+import ChevronIcon from '@/icons/ChevronIcon';
+import ClockIcon from '@/icons/ClockIcon';
+import ColorSwatchIcon from '@/icons/ColorSwatchIcon';
+
+import Checkbox from '../../Checkbox';
+import { useSemestersContext } from '../SemesterContext';
+import { tagColors } from '../utils';
 
 const itemClasses =
   'flex items-center gap-x-3 border-b border-neutral-300 px-3 py-2 hover:bg-neutral-100 cursor-pointer group';

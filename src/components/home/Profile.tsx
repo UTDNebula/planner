@@ -1,17 +1,19 @@
 import { TextField } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import { purple } from '@mui/material/colors';
+import FormControl from '@mui/material/FormControl';
+import FormHelperText from '@mui/material/FormHelperText';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { signOut } from 'next-auth/react';
 import { useEffect, useMemo, useState } from 'react';
+import { toast } from 'react-toastify';
+
 import { trpc } from '@/utils/trpc';
 import { displaySemesterCode } from '@/utils/utilFunctions';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
+
 import Button from '../Button';
-import { toast } from 'react-toastify';
-import FormHelperText from '@mui/material/FormHelperText';
-import { signOut } from 'next-auth/react';
 
 type ProfilePageProps = {
   isDesktop: boolean;

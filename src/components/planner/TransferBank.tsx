@@ -1,5 +1,6 @@
-import ChevronIcon from '@/icons/ChevronIcon';
 import { FC, useState } from 'react';
+
+import ChevronIcon from '@/icons/ChevronIcon';
 
 interface TransferBankProps {
   transferCredits: string[];

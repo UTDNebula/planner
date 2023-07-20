@@ -4,20 +4,21 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../styles/introjs.css';
 
 import { createTheme, StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { Analytics } from '@vercel/analytics/react';
 import { AnimateSharedLayout } from 'framer-motion';
 import { type AppType, AppProps } from 'next/app';
 // import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import { ToastContainer } from 'react-toastify';
+import { Router } from 'next/router';
 import { type Session } from 'next-auth';
 import { SessionProvider, useSession } from 'next-auth/react';
+import NProgress from 'nprogress'; //nprogress module
 import { FC, useEffect, useState } from 'react';
+import { ToastContainer } from 'react-toastify';
 
 import Layout from '@/components/home/Layout';
-import NProgress from 'nprogress'; //nprogress module
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import 'nprogress/nprogress.css'; //styles of nprogress
-import { Analytics } from '@vercel/analytics/react';
 
 // Binding events
 NProgress.configure({ showSpinner: false });
@@ -51,10 +52,10 @@ const theme = createTheme({
   },
 });
 
-import type { NextComponentType } from 'next'; //Import Component type
-import { Router } from 'next/router';
 import { env } from '@/env/client.mjs';
 import ScreenSizeWarnModal from '@/shared-components/ScreenSizeWarnModal';
+
+import type { NextComponentType } from 'next'; //Import Component type
 
 //Add custom appProp type then use union to add it
 type CustomAppProps = AppProps & {

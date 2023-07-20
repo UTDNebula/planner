@@ -1,16 +1,16 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { signOut } from 'next-auth/react';
 import { useEffect, useMemo, useState } from 'react';
 
 import ChevronIcon from '@/icons/ChevronIcon';
-import HomeIcon from '@/icons/HomeIcon';
-import LogoutIcon from '@/icons/LogoutIcon';
-import ProfileIcon from '@/icons/ProfileIcon';
-import { useRouter } from 'next/router';
-import LogoIcon from '@/icons/LogoIcon';
 import ContactIcon from '@/icons/ContactIcon';
 import FeedbackIcon from '@/icons/FeedbackIcon';
 import GlobalIcon from '@/icons/GlobalIcon';
+import HomeIcon from '@/icons/HomeIcon';
+import LogoIcon from '@/icons/LogoIcon';
+import LogoutIcon from '@/icons/LogoutIcon';
+import ProfileIcon from '@/icons/ProfileIcon';
 
 export default function Sidebar({ isMobile }: { isMobile: boolean }): JSX.Element {
   const [open, setOpen] = useState(!isMobile);
