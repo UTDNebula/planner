@@ -29,4 +29,10 @@ const nextConfig = withBundleAnalyzer({
   },
 });
 
-module.exports = withSentryConfig(nextConfig, { silent: true }, { hideSourcemaps: false });
+module.exports = withSentryConfig(
+  nextConfig,
+  { silent: true },
+  // tunnelRoute set to bypass adblockers.
+  // See: https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/#configure-tunneling-to-avoid-ad-blockers.
+  { hideSourcemaps: false, tunnelRoute: '/sentry-tunnel' },
+);
