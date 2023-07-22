@@ -15,7 +15,7 @@
     "analyze": "cross-env ANALYZE=true npm run build",
     "dev:gitpod": "NEXTAUTH_URL=$(gp url 3000)/ npm run dev",
     "cypress:open": "NODE_ENV=test start-server-and-test dev http://localhost:3000 \"cypress open --browser chrome --e2e\"",
-    "cypress:run": "NODE_ENV=test start-server-and-test dev http://localhost:3000 \"cypress run --browser chrome --config video=false --e2e\"",
+    "cypress:run": "NODE_ENV=test start-server-and-test start http://127.0.0.1:3000 \"cypress run --browser chrome --config video=false --e2e\"",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest"
   },
   "prisma": {

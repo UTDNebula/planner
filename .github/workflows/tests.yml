@@ -54,12 +54,10 @@ jobs:
         run: |
           npm ci
 
-      - name: Prisma generate and push
-        run: |
-          npm run prisma:generate &&
-          npm run prisma:migrate:deploy
+      - name: Run build pipeline
+        run: npm run build
 
-      - name: Run Cypress e2e tests
+      - name: Start server and run e2e tests
         run: |
           npm run cypress:run
 
