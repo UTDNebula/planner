@@ -82,11 +82,11 @@ export default function AuthPage({
         <section className="w-full min-w-[300px] max-w-xl p-5 sm:w-2/3">
           <div className="flex flex-wrap items-center">
             <div>{EmojiIcon['waveEmoji']}</div>
-            <h1 className="-mt-2 ml-2 text-[36px] text-2xl font-bold leading-normal tracking-tight lg:text-3xl">
+            <h1 className="-mt-2 ml-2 text-2xl text-[36px] font-bold leading-normal tracking-tight lg:text-3xl">
               Welcome Back!
             </h1>
           </div>
-          <p className="text-sm text-[16px] font-medium leading-normal text-[#737373]">
+          <p className="text-[16px] text-sm font-medium leading-normal text-[#737373]">
             Sign in to continue using Nebula Planner
           </p>
           <section className="mt-7 space-y-5 ">

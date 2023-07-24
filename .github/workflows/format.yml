@@ -2,10 +2,8 @@ name: Lint
 
 on:
   workflow_dispatch:
-  # Trigger the workflow on push or pull request,
-  # but only for the main branch
   pull_request:
-    type: [ready_for_review]
+    types: [ready_for_review]
 
 jobs:
   run-linters:

@@ -61,7 +61,7 @@ export default function Sidebar({ isMobile }: { isMobile: boolean }): JSX.Elemen
         } flex h-screen max-h-screen flex-col border-r-[1px] border-r-[#e0e0e0] bg-white  transition-all`}
       >
         {!isMobile && (
-          <div className="relative mt-6 mb-[70px] flex h-fit w-full items-center justify-center">
+          <div className="relative mb-[70px] mt-6 flex h-fit w-full items-center justify-center">
             {open && (
               <Link key={'/app/home'} href={'/app/home'}>
                 <LogoIcon />

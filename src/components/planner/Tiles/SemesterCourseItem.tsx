@@ -16,7 +16,6 @@ import useGetCourseInfo from '../useGetCourseInfo';
 import PrereqWarnHoverCard from '../PrereqWarnHoverCard';
 import FilledWarningIcon from '@/icons/FilledWarningIcon';
 import CourseInfoHoverCard from '../CourseInfoHoverCard';
-import { emptyFunction } from '@/utils/utilFunctions';
 
 export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'> {
   course: DraggableCourse;
@@ -104,7 +103,6 @@ export const MemoizedSemesterCourseItem = React.memo(
         <CourseInfoHoverCard
           description={description ?? ''}
           open={Boolean(title) && hoverOpen && !isDragging && !prereqWarnOpen}
-          onOpenChange={emptyFunction}
           side="top"
           title={title || ''}
           courseCode={course.code}

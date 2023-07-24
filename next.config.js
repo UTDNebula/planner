@@ -1,4 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
+const { withSentryConfig } = require('@sentry/nextjs');
+
+/* eslint-disable @typescript-eslint/no-var-requires */
 
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
@@ -26,4 +29,10 @@ const nextConfig = withBundleAnalyzer({
   },
 });
 
-module.exports = nextConfig;
+module.exports = withSentryConfig(
+  nextConfig,
+  { silent: true },
+  // tunnelRoute set to bypass adblockers.
+  // See: https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/#configure-tunneling-to-avoid-ad-blockers.
+  { hideSourcemaps: false, tunnelRoute: '/sentry-tunnel' },
+);

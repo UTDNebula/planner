@@ -10,7 +10,7 @@ import { Credit } from '@/components/credits/types';
 import useSearch from '@/components/search/search';
 import { createSemesterCodeRange, displaySemesterCode } from '@/utils/utilFunctions';
 import { trpc } from '@/utils/trpc';
-import { getStartingPlanSemester } from '@/utils/plannerUtils';
+import { getStartingPlanSemester } from '@/utils/utilFunctions';
 import BuddyIcon from '@/icons/BuddyIcon';
 
 // Array of values to choose from for form

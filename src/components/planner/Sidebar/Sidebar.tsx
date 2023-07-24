@@ -7,7 +7,7 @@ import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
 
 import { Course, DraggableCourse, GetDragIdByCourse } from '../types';
 import DraggableCourseList from './DraggableCourseList';
-import { UUID } from 'bson';
+import { v4 as uuidv4 } from 'uuid';
 
 export interface CourseSelectorContainerProps {
   degreeRequirements: DegreeRequirements;
@@ -48,7 +48,7 @@ function CourseSelectorContainer({
     return results.map((result) => {
       return {
         ...result,
-        id: new UUID(),
+        id: uuidv4(),
         status: courses.includes(result.code) ? 'complete' : undefined,
       };
     }) as DraggableCourse[];

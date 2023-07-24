@@ -26,7 +26,7 @@ const EditableMajor = ({
     <>
       {!editMajor ? (
         <button
-          className="flex items-center gap-x-3 rounded-2xl bg-primary-100 py-2 px-3 tracking-tight"
+          className="flex items-center gap-x-3 rounded-2xl bg-primary-100 px-3 py-2 tracking-tight"
           onClick={() => setEditMajor(true)}
         >
           <span className="text-lg font-semibold text-primary-800" data-testid="plan-major">

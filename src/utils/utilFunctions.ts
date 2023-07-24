@@ -1,28 +1,26 @@
 import { SemesterType } from '@prisma/client';
 import { SemesterCode } from 'prisma/utils';
-import { UUID } from 'bson';
+import { v4 as uuidv4 } from 'uuid';
 
 import { Semester } from '@/components/planner/types';
-import { isEarlierSemester } from './plannerUtils';
 import { tagColors } from '@/components/planner/utils';
 
 /**
- * Creates 3 new semesters based on given year in SemesterCode
+ * Creates 3 new semesters based on given Fall year.
  * Ex. 2012 -> Fall 2012, Spring 2013, Summer 2013
  * @param semesterCode
  * @returns
  */
-export const createNewYear = (semesterCode: SemesterCode): Semester[] => {
-  const currYear = semesterCode.year;
-  const newYear = semesterCode.year + 1;
+export const createYearBasedOnFall = (fallYear: number): Semester[] => {
+  const newYear = fallYear + 1;
 
   return [
     {
       code: {
         semester: 'f' as SemesterType,
-        year: currYear,
+        year: fallYear,
       },
-      id: new UUID(),
+      id: uuidv4(),
       courses: [],
       color: '',
       locked: false,
@@ -32,7 +30,7 @@ export const createNewYear = (semesterCode: SemesterCode): Semester[] => {
         semester: 's' as SemesterType,
         year: newYear,
       },
-      id: new UUID(),
+      id: uuidv4(),
       courses: [],
       color: '',
       locked: false,
@@ -42,7 +40,7 @@ export const createNewYear = (semesterCode: SemesterCode): Semester[] => {
         semester: 'u' as SemesterType,
         year: newYear,
       },
-      id: new UUID(),
+      id: uuidv4(),
       courses: [],
       color: '',
       locked: false,
@@ -78,6 +76,7 @@ export function getSemesterHourFromCourseCode(code: string): number | null {
   return Number(hoursNum.toString()[1]);
 }
 
+// TODO(akevinge): Improve enum naming and remove this.
 export function displaySemesterCode(semesterCode: SemesterCode): string {
   let semesterName;
   if (semesterCode.semester === 'f') {
@@ -89,6 +88,9 @@ export function displaySemesterCode(semesterCode: SemesterCode): string {
   return `${semesterName} ${semesterCode.year}`;
 }
 
+/**
+ * Generates ``count`` number of semesters starting from ``startYear`` and ``startSemester`` (inclusive).
+ */
 export function generateSemesters(
   count: number,
   startYear: number,
@@ -101,7 +103,7 @@ export function generateSemesters(
   for (let i = 0; i < count; ++i) {
     const code = { year, semester };
     const newSemester = {
-      id: new UUID(),
+      id: uuidv4(),
       title: `${displaySemesterCode({ semester, year })}`,
       code: code,
       courses: [],
@@ -122,6 +124,9 @@ export function generateSemesters(
   return result;
 }
 
+/**
+ * Generates semester following the given one.
+ */
 export function createNewSemesterCode(pastSemesterCode: SemesterCode): SemesterCode {
   if (pastSemesterCode.semester === 'f') {
     return { semester: 's', year: pastSemesterCode.year + 1 };
@@ -131,6 +136,10 @@ export function createNewSemesterCode(pastSemesterCode: SemesterCode): SemesterC
     return { semester: 'f', year: pastSemesterCode.year };
   }
 }
+
+/**
+ * Generates an array of semesters given the ``startSemester`` and ``endSemester``.
+ */
 export function createSemesterCodeRange(
   startSemester: SemesterCode,
   endSemester: SemesterCode,
@@ -152,31 +161,12 @@ export function createSemesterCodeRange(
   return semesterCodes;
 }
 
+/**
+ * Returns true if two semesters are equal (i.e. year and semester type).
+ */
 export function isSemCodeEqual(semCodeOne: SemesterCode, semCodeTwo: SemesterCode) {
   return semCodeOne.semester === semCodeTwo.semester && semCodeOne.year === semCodeTwo.year;
 }
-
-const semesterPrecedence = {
-  f: 0,
-  s: 1,
-  u: 2,
-} as const;
-
-// Returns true if s1 is earlier than s2
-export const isSemesterEarlier = (s1: SemesterCode, s2: SemesterCode) => {
-  return (
-    s1.year < s2.year ||
-    (s1.year === s2.year && semesterPrecedence[s1.semester] < semesterPrecedence[s2.semester])
-  );
-};
-
-// Returns true if s1 is later than s2
-export const isSemesterLater = (s1: SemesterCode, s2: SemesterCode) => {
-  return (
-    s1.year > s2.year ||
-    (s1.year === s2.year && semesterPrecedence[s1.semester] > semesterPrecedence[s2.semester])
-  );
-};
 
 const regex =
   /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -186,8 +176,35 @@ export const isValidEmail = (email: string) => {
 };
 
 /**
- * This function exists if you ever need to mock the following function signature:
- * () => void
+ * Is semesterOne earlier than semesterTwo
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-export const emptyFunction = () => {};
+export const isEarlierSemester = (semesterOne: SemesterCode, semesterTwo: SemesterCode) => {
+  if (isSemCodeEqual(semesterOne, semesterTwo)) {
+    return false;
+  } else if (semesterOne.year > semesterTwo.year) {
+    return false;
+  } else if (
+    semesterOne.year === semesterTwo.year &&
+    (semesterOne.semester === 'f' || (semesterOne.semester === 'u' && semesterTwo.semester === 's'))
+  ) {
+    return false;
+  }
+  return true;
+};
+
+/**
+ * Returns the starting semester depending on the current date.
+ * * Jan. to May (inclusive): Spring.
+ * * Jane to Aug. (inclusive): Summer.
+ * * Sep. to Dec. (inclusive): Fall.
+ */
+export const getStartingPlanSemester = (): SemesterCode => {
+  const d = new Date();
+  if (d.getMonth() < 5) {
+    return { year: d.getFullYear(), semester: 's' };
+  } else if (d.getMonth() > 7) {
+    return { year: d.getFullYear(), semester: 'f' };
+  } else {
+    return { year: d.getFullYear(), semester: 'u' };
+  }
+};

@@ -5,7 +5,7 @@ import { DragDataFromCourseList, DraggableCourse } from '../types';
 
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import CheckIcon from '@mui/icons-material/Check';
-import { emptyFunction, getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
+import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
 import React, { ComponentPropsWithoutRef, forwardRef, useState, useRef, useEffect } from 'react';
 import CourseInfoHoverCard from '../CourseInfoHoverCard';
 import useGetCourseInfo from '../useGetCourseInfo';
@@ -43,7 +43,7 @@ export const SidebarCourseItem = React.memo(
         {...props}
         className={`cursor-grab ${
           course.taken && 'opacity-50'
-        } flex h-[40px] flex-row items-center justify-between rounded-md border border-neutral-300 bg-white py-3 px-5 text-[10px] text-[#1C2A6D] drop-shadow-sm`}
+        } flex h-[40px] flex-row items-center justify-between rounded-md border border-neutral-300 bg-white px-5 py-3 text-[10px] text-[#1C2A6D] drop-shadow-sm`}
         onMouseEnter={() => {
           clearTimeout(hoverTimer.current);
           hoverTimer.current = setTimeout(() => setHoverOpen(true), 500);
@@ -57,7 +57,6 @@ export const SidebarCourseItem = React.memo(
           description={description ?? ''}
           // prereqs={[prereqs, coreqs, co_or_pre]}
           open={hoverOpen && !isDragging}
-          onOpenChange={emptyFunction}
           side="left"
           title={title || ''}
           courseCode={course.code}

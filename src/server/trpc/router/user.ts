@@ -1,12 +1,12 @@
 import { Prisma, SemesterType, TemplateDataType } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
-import { UUID } from 'bson';
+import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 
 import { createNewSemesterCode, isSemCodeEqual } from '@/utils/utilFunctions';
 
 import { protectedProcedure, router } from '../trpc';
-import { isEarlierSemester } from '@/utils/plannerUtils';
+import { isEarlierSemester } from '@/utils/utilFunctions';
 import { computeProfileWithSemesterCode } from 'prisma/utils';
 
 export const userRouter = router({
@@ -136,7 +136,7 @@ export const userRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       const userId = ctx.session.user.id;
-      const planId = new UUID().toString();
+      const planId = uuidv4();
 
       const { name, major, takenCourses, transferCredits } = input;
       const bypasses: string[] = [];
@@ -272,7 +272,7 @@ export const userRouter = router({
     .input(z.object({ id: z.string(), major: z.string() }))
     .mutation(async ({ ctx, input }) => {
       const userId = ctx.session.user.id;
-      const planId = new UUID().toString();
+      const planId = uuidv4();
 
       const { id, major } = input;
       // fetch plan from database with id

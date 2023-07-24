@@ -5,8 +5,7 @@ on:
   pull_request:
     branches:
       - 'develop'
-      - 'release/**'
-      - 'master'
+      - 'main'
 
 jobs:
   integration-tests:
@@ -57,7 +56,7 @@ jobs:
       - name: Prisma generate and push
         run: |
           npm run prisma:generate &&
-          npx prisma db push
+          npm run prisma:migrate:deploy
 
       - name: Run Cypress e2e tests
         run: |
