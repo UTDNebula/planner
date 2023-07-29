@@ -4,6 +4,8 @@ on:
   pull_request:
     branches:
       - "develop"
+  workflow_dispatch:
+    
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
@@ -16,15 +18,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Inject slug/short variables
-        uses: rlespinasse/github-slug-action@v4
-
       - name: Neon Database Create Branch Action
         uses: neondatabase/create-branch-action@v3
         id: create_branch
         with:
           project_id: ${{ secrets.NEON_PROJECT_ID }}
-          branch_name: ${{env.GITHUB_HEAD_REF_SLUG_URL}}
+          branch_name: ${{ github.event.pull_request.head.ref || github.head_ref }}
           api_key: ${{ secrets.NEON_API_KEY }}
           username: ${{ secrets.PG_USERNAME }}
           password: ${{ secrets.PG_PASSWORD }}
