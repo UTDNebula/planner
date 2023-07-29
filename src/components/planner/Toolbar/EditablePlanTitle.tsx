@@ -1,7 +1,8 @@
-import PencilIcon from '@/icons/PencilIcon';
-import { trpc } from '@/utils/trpc';
 import React from 'react';
 import { toast } from 'react-toastify';
+
+import PencilIcon from '@/icons/PencilIcon';
+import { trpc } from '@/utils/trpc';
 
 export default function EditableMajorTitle({
   initialTitle,

@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+
 import { seedTemplates } from './seedTemplates';
 
 const prisma = new PrismaClient();

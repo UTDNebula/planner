@@ -1,7 +1,8 @@
 import { z } from 'zod';
 
-import { protectedProcedure, router } from '../trpc';
 import { computeSemesterCode } from 'prisma/utils';
+
+import { protectedProcedure, router } from '../trpc';
 
 export const creditsRouter = router({
   getCredits: protectedProcedure.query(async ({ ctx }) => {

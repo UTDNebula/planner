@@ -1,4 +1,5 @@
 import React, { Children, FC } from 'react';
+
 import Spinner from './Spinner';
 
 const colorClasses = {

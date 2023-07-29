@@ -1,13 +1,15 @@
-import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
 import { Prisma } from '@prisma/client';
-import { SemesterCode } from 'prisma/utils';
 import { Document, Font, Page, StyleSheet, View } from '@react-pdf/renderer';
 import React, { FC } from 'react';
 
-import { Semester } from '../types';
-import { customCourseSort } from '../utils';
+import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
+import { SemesterCode } from 'prisma/utils';
+
 import AcademicYearTable, { DEFAULT_COURSE_CREDIT_HOUR } from './AcademicYearTable';
 import Header from './Header';
+import { Semester } from '../types';
+import { customCourseSort } from '../utils';
+
 
 Font.register({
   family: 'Inter',

@@ -1,6 +1,8 @@
-import Modal, { ModalProps } from '@/components/Modal';
 import { FC } from 'react';
 import { createPortal } from 'react-dom';
+
+import Modal, { ModalProps } from '@/components/Modal';
+
 import Button from '../components/Button';
 
 export interface DeleteModalProps extends ModalProps {

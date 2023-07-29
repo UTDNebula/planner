@@ -1,15 +1,15 @@
 import { UniqueIdentifier, useDraggable } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities';
-
-import { DragDataFromCourseList, DraggableCourse } from '../types';
-
-import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import CheckIcon from '@mui/icons-material/Check';
-import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
+import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import React, { ComponentPropsWithoutRef, forwardRef, useState, useRef, useEffect } from 'react';
+
+import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
+
 import CourseInfoHoverCard from '../CourseInfoHoverCard';
-import useGetCourseInfo from '../useGetCourseInfo';
 import { useSemestersContext } from '../SemesterContext';
+import { DragDataFromCourseList, DraggableCourse } from '../types';
+import useGetCourseInfo from '../useGetCourseInfo';
 
 interface SidebarCourseItemProps extends ComponentPropsWithoutRef<'div'> {
   course: DraggableCourse;

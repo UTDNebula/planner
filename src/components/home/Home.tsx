@@ -1,15 +1,15 @@
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import { Steps } from 'intro.js-react';
+import { useRouter } from 'next/router';
+import React, { useState } from 'react';
+
 import ChevronIcon from '@/icons/ChevronIcon';
 import PlusIcon from '@/icons/PlusIcon';
 import { trpc } from '@utils/trpc';
-import { useState } from 'react';
 
+import AnalyticsWrapper from '../common/AnalyticsWrapper';
 import PlanCard from '../landing/PlanCard';
 import TemplateModal from '../template/Modal';
-import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import { Steps } from 'intro.js-react';
-import React from 'react';
-import { useRouter } from 'next/router';
-import AnalyticsWrapper from '../common/AnalyticsWrapper';
 
 /**
  * A list of the user's plans

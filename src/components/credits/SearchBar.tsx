@@ -1,7 +1,8 @@
-import SearchCourseIcon from '@/icons/SearchCourseIcon';
 import { Search as SearchIcon } from '@mui/icons-material';
 import { IconButton, InputBase } from '@mui/material';
 import React, { useState } from 'react';
+
+import SearchCourseIcon from '@/icons/SearchCourseIcon';
 
 interface SearchBarProps extends React.ComponentPropsWithoutRef<'div'> {
   updateQuery: (query: string) => void;

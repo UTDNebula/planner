@@ -1,5 +1,5 @@
-import { FC } from 'react';
 import * as HoverCard from '@radix-ui/react-hover-card';
+import { FC } from 'react';
 
 interface PrereqHoverCardProps {
   prereqs: [Array<string>, Array<string>, Array<string>];

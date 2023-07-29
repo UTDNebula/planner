@@ -1,5 +1,6 @@
-import type { MouseEvent } from 'react';
 import { MouseSensor } from '@dnd-kit/core';
+
+import type { MouseEvent } from 'react';
 
 export default class PlannerMouseSensor extends MouseSensor {
   static activators = [

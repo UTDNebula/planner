@@ -1,6 +1,8 @@
-import { RouterOutputs } from '@/utils/trpc';
 import { UniqueIdentifier } from '@dnd-kit/core';
+
+import { RouterOutputs } from '@/utils/trpc';
 import { SemesterCode } from 'prisma/utils';
+
 import { tagColors } from './utils';
 
 export type Plan = NonNullable<RouterOutputs['plan']['getPlanById']>['plan'];

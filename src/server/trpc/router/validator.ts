@@ -1,9 +1,10 @@
+import { Course, Prisma, Semester } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
-import { protectedProcedure, router } from '../trpc';
-import { Course, Prisma, Semester } from '@prisma/client';
 import courses, { JSONCourse } from '@data/courses.json';
+
+import { protectedProcedure, router } from '../trpc';
 
 type PlanData = {
   id: string;

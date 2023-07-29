@@ -1,5 +1,6 @@
-import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
 import { View, Text } from '@react-pdf/renderer';
+
+import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
 
 export const DEFAULT_COURSE_CREDIT_HOUR = 3;
 

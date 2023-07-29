@@ -1,15 +1,15 @@
-import { createContextInner } from '@server/trpc/context';
 import { createProxySSGHelpers } from '@trpc/react-query/ssg';
 import { GetServerSidePropsContext } from 'next';
+import dynamic from 'next/dynamic';
 import { getServerSession } from 'next-auth';
 import * as React from 'react';
 import superjson from 'superjson';
 
 // import Credits from '@/components/home/Credits';
 import { appRouter } from '@/server/trpc/router/_app';
+import { createContextInner } from '@server/trpc/context';
 
 import { authOptions } from '../api/auth/[...nextauth]';
-import dynamic from 'next/dynamic';
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const session = await getServerSession(context.req, context.res, authOptions);
   const ssg = createProxySSGHelpers({

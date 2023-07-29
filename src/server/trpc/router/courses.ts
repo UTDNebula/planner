@@ -1,7 +1,9 @@
 import { Prisma } from '@prisma/client';
-import { router, publicProcedure } from '../trpc';
 
 import courses, { JSONCourse } from '@data/courses.json';
+
+import { router, publicProcedure } from '../trpc';
+
 
 export const coursesRouter = router({
   publicGetAllCourses: publicProcedure.query(async ({ ctx }) => {

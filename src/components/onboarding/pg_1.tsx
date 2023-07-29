@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
-import Button from '@/components/Button';
 import AddIcon from '@mui/icons-material/Add';
-import { UploadTranscriptDialog } from '../home/Credits';
+import React, { useState } from 'react';
+
+import Button from '@/components/Button';
 import BuddyIcon from '@/icons/BuddyIcon';
+
+import { UploadTranscriptDialog } from '../home/Credits';
 
 // Array of values to choose from for form
 

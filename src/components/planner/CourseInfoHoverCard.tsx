@@ -1,6 +1,6 @@
+import * as HoverCard from '@radix-ui/react-hover-card';
 import Link from 'next/link';
 import { FC, useState } from 'react';
-import * as HoverCard from '@radix-ui/react-hover-card';
 
 interface CourseInfoHoverCardProps {
   // prereqs: string[][];

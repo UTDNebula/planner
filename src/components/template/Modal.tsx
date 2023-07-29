@@ -1,4 +1,5 @@
 import dynamic from 'next/dynamic';
+
 import TemplateView from './TemplateView';
 
 interface TemplateModalProps {

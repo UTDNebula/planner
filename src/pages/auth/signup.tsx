@@ -1,16 +1,17 @@
 import { InferGetServerSidePropsType } from 'next';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { getProviders, signIn, useSession } from 'next-auth/react';
 import { useState, useEffect, useRef, useMemo } from 'react';
+
+import Button from '@/components/Button';
+import useSearch from '@/components/search/search';
+import AuthIcons from '@/icons/AuthIcons';
 import EmojiIcon from '@/icons/EmojiIcon';
+import { trpc } from '@/utils/trpc';
+import { isValidEmail } from '@/utils/utilFunctions';
 import majorsList from '@data/majors.json';
 
-import { useRouter } from 'next/router';
-import AuthIcons from '@/icons/AuthIcons';
-import Link from 'next/link';
-import useSearch from '@/components/search/search';
-import { trpc } from '@/utils/trpc';
-import Button from '@/components/Button';
-import { isValidEmail } from '@/utils/utilFunctions';
 
 // Time elapsed after typing email to display error
 const EMAIL_VALIDATION_ERROR_TIMEOUT_MS = 600;

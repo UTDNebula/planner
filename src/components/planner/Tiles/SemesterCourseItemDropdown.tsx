@@ -1,12 +1,14 @@
-import { FC } from 'react';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import ColorSwatchIcon from '@/icons/ColorSwatchIcon';
-import ChevronIcon from '@/icons/ChevronIcon';
-import DeleteIcon from '@/icons/DeleteIcon';
-import { tagColors } from '../utils';
+import { FC } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+
+import ChevronIcon from '@/icons/ChevronIcon';
+import ColorSwatchIcon from '@/icons/ColorSwatchIcon';
+import DeleteIcon from '@/icons/DeleteIcon';
 import LockIcon from '@/icons/LockIcon';
 import UnfilledWarningIcon from '@/icons/UnfilledWarningIcon';
+
+import { tagColors } from '../utils';
 
 const itemClasses =
   'flex items-center gap-x-3 border-b border-neutral-300 px-2 py-2 hover:bg-neutral-200 cursor-pointer text-sm';

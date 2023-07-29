@@ -1,10 +1,13 @@
-import { trpc } from '@/utils/trpc';
 import router from 'next/router';
 import { useState } from 'react'; //nprogress module
+import React from 'react';
+
 import AutoCompleteMajor from '@/components/AutoCompleteMajor';
+import { trpc } from '@/utils/trpc';
+
 import { Page } from './Page';
 import useSearch from '../search/search';
-import React from 'react';
+
 
 export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
   const utils = trpc.useContext();
