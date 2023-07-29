@@ -5,9 +5,9 @@ env:
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
 on:
-  push:
-    branches:
-      - 'develop'
+  pull_request:
+    types:
+      - closed
   workflow_dispatch:
 
 jobs:
@@ -16,10 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Inject slug/short variables
-        uses: rlespinasse/github-slug-action@v4
+        uses: actions/checkout@v3
       
       - name: Search branch by name
         id: get_branch_id
@@ -31,7 +28,7 @@ jobs:
             --header "Content-Type: application/json" \
             --header "Authorization: Bearer ${{ secrets.NEON_API_KEY }}" \
             | jq -r .branches \
-            | jq -c '.[] | select(.name | contains("'${{env.GITHUB_BASE_REF_SLUG_URL}}'")) .id' \
+            | jq -c '.[] | select(.name | contains("'${{ github.event.pull_request.head.ref || github.head_ref }}'")) .id' \
             | jq -r \
             ) \
             
