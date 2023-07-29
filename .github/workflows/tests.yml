@@ -28,6 +28,44 @@ jobs:
           --health-timeout 5s
           --health-retries 5
 
+    env:
+      # Prisma
+      DIRECT_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres?schema=public
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres?schema=public
+      PLATFORM_DATABASE_URL: ${{ secrets.PLATFORM_DATABASE_URL }}
+
+      # Next Auth
+      NEXTAUTH_URL: http://localhost:3000
+      NEXTAUTH_SECRET: abc
+
+      # Next Auth Discord Provider
+      DISCORD_CLIENT_ID: 123
+      DISCORD_CLIENT_SECRET: abc
+
+      # Next Auth Google Provider
+      GOOGLE_CLIENT_ID: 123
+      GOOGLE_CLIENT_SECRET: abc
+
+      # Next Auth Facebook provider
+      FACEBOOK_CLIENT_ID: 123
+      FACEBOOK_CLIENT_SECRET: abc
+
+      # Email Server
+      EMAIL_SERVER_HOST: host
+      EMAIL_SERVER_PORT: 1234
+      EMAIL_SERVER_USER: user
+      EMAIL_SERVER_PASSWORD: pass
+      EMAIL_FROM: noreply@example.com
+
+      # DEGREE VALIDATOR
+      VALIDATOR: ${{ secrets.VALIDATOR }}
+
+      NODE_ENV: test
+
+      # UMAMI
+      NEXT_PUBLIC_UMAMI_URL: hi
+      NEXT_PUBLIC_UMAMI_WEBSITE_ID: bye
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -50,43 +88,6 @@ jobs:
 
       - name: Run build pipeline
         run: npm run build
-        env:
-          # Prisma
-          DIRECT_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres?schema=public
-          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres?schema=public
-          PLATFORM_DATABASE_URL: ${{ secrets.PLATFORM_DATABASE_URL }}
-
-          # Next Auth
-          NEXTAUTH_URL: http://localhost:3000
-          NEXTAUTH_SECRET: abc
-
-          # Next Auth Discord Provider
-          DISCORD_CLIENT_ID: 123
-          DISCORD_CLIENT_SECRET: abc
-
-          # Next Auth Google Provider
-          GOOGLE_CLIENT_ID: 123
-          GOOGLE_CLIENT_SECRET: abc
-
-          # Next Auth Facebook provider
-          FACEBOOK_CLIENT_ID: 123
-          FACEBOOK_CLIENT_SECRET: abc
-
-          # Email Server
-          EMAIL_SERVER_HOST: host
-          EMAIL_SERVER_PORT: 1234
-          EMAIL_SERVER_USER: user
-          EMAIL_SERVER_PASSWORD: pass
-          EMAIL_FROM: noreply@example.com
-
-          # DEGREE VALIDATOR
-          VALIDATOR: ${{ secrets.VALIDATOR }}
-
-          NODE_ENV: test
-
-          # UMAMI
-          NEXT_PUBLIC_UMAMI_URL: hi
-          NEXT_PUBLIC_UMAMI_WEBSITE_ID: bye
 
       - name: Start server and run e2e tests
         run: |
