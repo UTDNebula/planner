@@ -40,7 +40,7 @@ jobs:
         run: |
           echo DATABASE_URL=${{ steps.create_branch.outputs.db_url_with_pooler}}/neondb >> .env
           echo DIRECT_DATABASE_URL=${{ steps.create_branch.outputs.db_url}}/neondb >> .env
-          echo VERCEL_URL="https://planner-git-$GITHUB_REF_SLUG-utdnebula.vercel.app" >> .env
+          echo VERCEL_URL="https://planner-git-$GITHUB_HEAD_REF_SLUG_URL-utdnebula.vercel.app" >> .env
           npm install prisma@^4.12.0
           npm run prisma:generate
           npm run prisma:migrate:deploy
