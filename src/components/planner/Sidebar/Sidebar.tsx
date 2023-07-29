@@ -4,13 +4,12 @@ import { v4 as uuidv4 } from 'uuid';
 
 import AnalyticsWrapper from '@/components/common/AnalyticsWrapper';
 import RequirementsContainer from '@/components/planner/Sidebar/RequirementsContainer';
+import SearchBar from '@/components/planner/Sidebar/SearchBar';
 import ChevronIcon from '@/icons/ChevronIcon';
 import { RouterOutputs, trpc } from '@/utils/trpc';
 import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
-import { SearchBarTwo } from '@components/credits/SearchBar';
 
 import DraggableCourseList from './DraggableCourseList';
-
 
 export interface CourseSelectorContainerProps {
   degreeRequirements: DegreeRequirements;
@@ -130,7 +129,7 @@ function CourseSelectorContainer({
             </div>
             <div className="z-[999] drop-shadow-2xl">
               <AnalyticsWrapper analyticsClass="umami--click--search-course">
-                <SearchBarTwo
+                <SearchBar
                   onClick={() => setDisplay(true)}
                   updateQuery={(q) => {
                     updateQuery(q);
