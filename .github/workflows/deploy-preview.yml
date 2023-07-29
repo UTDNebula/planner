@@ -43,6 +43,42 @@ jobs:
 
       - name: Build Project Artifacts
         run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          # Prisma
+          PLATFORM_DATABASE_URL: mongodb://localhost:27017/platformDB # This is a dead connection URL - build does not need live DB.
+
+          # Next Auth
+          NEXTAUTH_URL: http://localhost:3000
+          NEXTAUTH_SECRET: abc
+
+          # Next Auth Discord Provider
+          DISCORD_CLIENT_ID: 123
+          DISCORD_CLIENT_SECRET: abc
+
+          # Next Auth Google Provider
+          GOOGLE_CLIENT_ID: 123
+          GOOGLE_CLIENT_SECRET: abc
+
+          # Next Auth Facebook provider
+          FACEBOOK_CLIENT_ID: 123
+          FACEBOOK_CLIENT_SECRET: abc
+
+          # Email Server
+          EMAIL_SERVER_HOST: host
+          EMAIL_SERVER_PORT: 1234
+          EMAIL_SERVER_USER: user
+          EMAIL_SERVER_PASSWORD: pass
+          EMAIL_FROM: noreply@example.com
+
+          # DEGREE VALIDATOR
+          VALIDATOR: ${{secrets.VALIDATOR}}
+
+          NODE_ENV: production
+          VERCEL_ENV: preview
+
+          # UMAMI
+          NEXT_PUBLIC_UMAMI_URL: hi
+          NEXT_PUBLIC_UMAMI_WEBSITE_ID: bye
 
       - name: Deploy Preview to Vercel
         id: deploy
