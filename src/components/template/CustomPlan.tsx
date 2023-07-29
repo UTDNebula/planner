@@ -2,7 +2,6 @@ import { SemesterType } from '@prisma/client';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 
-
 import AutoCompleteMajor from '@/components/AutoCompleteMajor';
 import courseCode from '@/data/courseCode.json';
 import { UnwrapArray } from '@/types/util-types';
@@ -13,9 +12,7 @@ import { SemesterCode } from 'prisma/utils';
 import { Page } from './Page';
 import { ButtonProps } from '../Button';
 import ErrorMessage from '../common/ErrorMessage';
-import { Credit } from '../credits/types';
 import useSearch from '../search/search';
-
 
 import type { PDFDocumentProxy } from 'pdfjs-dist';
 
@@ -74,6 +71,16 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
     }
   }
 
+  type Credit = {
+    transfer: boolean;
+    courseCode: string;
+    semesterCode: {
+      year: number;
+      semester: SemesterType;
+    };
+  };
+
+  // TODO(https://nebula-labs.atlassian.net/browse/NP-85): Refactor parseTranscript.
   const parseTranscript = async (file: File) => {
     const pdf = await import('pdfjs-dist');
     // TODO: How to use local import for this?
