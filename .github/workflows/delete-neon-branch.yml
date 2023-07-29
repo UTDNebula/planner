@@ -1,4 +1,4 @@
-name: Deploy Production
+name: Delete Neon Branch
 
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
@@ -7,23 +7,17 @@ env:
 on:
   push:
     branches:
-      - 'main'
       - 'develop'
   workflow_dispatch:
-  pull_request:
 
 jobs:
-  deploy-production:
+  delete-neon-branch:
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      # - name: Get last commit SHA
-      #   id: get_sha
-      #   run: |
-      #     echo sha="${{ github.event.before }}" | cut -c1-8 >> $GITHUB_OUTPUT
       - name: Get PR number
         id: get_pull_request_sha
         run: |
@@ -46,14 +40,6 @@ jobs:
             ) \
             
           echo "branch_id=${branch_id}" >> $GITHUB_OUTPUT
-
-
-      - name: Install Vercel CLI
-        run: npm install --global vercel@latest
-
-      # - name: Deploy Production to Vercel
-      #   id: deploy
-      #   run: vercel deploy --prod --public --yes --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Delete Neon Branch
         uses: neondatabase/delete-branch-action@v2
