@@ -19,27 +19,28 @@ import {
   Active,
   Over,
 } from '@dnd-kit/core';
+import Router from 'next/router';
 import React, { useMemo, useState, useRef, FC, useEffect } from 'react';
 
+import { trpc } from '@/utils/trpc';
+
+import PlannerMouseSensor from './PlannerMouseSensor';
+import SelectedCoursesToast from './SelectedCoursesToast';
+import { useSemestersContext } from './SemesterContext';
 import CourseSelectorContainer from './Sidebar/Sidebar';
 import { SidebarCourseItem } from './Sidebar/SidebarCourseItem';
+import { DegreeRequirements } from './Sidebar/types';
 import { SemesterCourseItem } from './Tiles/SemesterCourseItem';
 import DroppableSemesterTile from './Tiles/SemesterTile';
+import Toolbar from './Toolbar/Toolbar';
+import TransferBank from './TransferBank';
+
 import type {
   ActiveDragData,
   DragEventDestinationData,
   DragEventOriginData,
   Semester,
 } from './types';
-import { DegreeRequirements } from './Sidebar/types';
-
-import Toolbar from './Toolbar/Toolbar';
-import { useSemestersContext } from './SemesterContext';
-import SelectedCoursesToast from './SelectedCoursesToast';
-import TransferBank from './TransferBank';
-import PlannerMouseSensor from './PlannerMouseSensor';
-import { trpc } from '@/utils/trpc';
-import Router from 'next/router';
 
 /** PlannerTool Props */
 export interface PlannerProps {

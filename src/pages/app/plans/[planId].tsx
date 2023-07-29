@@ -1,16 +1,16 @@
 import { createProxySSGHelpers } from '@trpc/react-query/ssg';
+import { Steps } from 'intro.js-react';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next/types';
 import { getServerSession } from 'next-auth';
+import { useEffect, useState } from 'react';
 import superjson from 'superjson';
 
 import Planner from '@/components/planner/Planner';
+import { SemestersContextProvider } from '@/components/planner/SemesterContext';
+import usePlan from '@/components/planner/usePlan';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { createContextInner } from '@/server/trpc/context';
 import { appRouter } from '@/server/trpc/router/_app';
-import usePlan from '@/components/planner/usePlan';
-import { SemestersContextProvider } from '@/components/planner/SemesterContext';
-import { Steps } from 'intro.js-react';
-import { useEffect, useState } from 'react';
 import { trpc } from '@/utils/trpc';
 
 /**

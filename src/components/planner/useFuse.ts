@@ -1,5 +1,5 @@
-import { useState, useMemo } from 'react';
 import Fuse from 'fuse.js';
+import { useState, useMemo } from 'react';
 
 interface IUseSearchProps<T> {
   dataSet: T[];

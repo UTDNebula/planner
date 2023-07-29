@@ -3,17 +3,18 @@ import Close from '@mui/icons-material/Close';
 import { CircularProgress, Dialog } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Modal from '@mui/material/Modal';
+import { SemesterType } from '@prisma/client';
 import Head from 'next/head';
 import { useState } from 'react';
 
-import ErrorMessage from '../common/ErrorMessage';
+import courseCode from '@/data/courseCode.json';
+import { trpc } from '@/utils/trpc';
+import { SemesterCode } from 'prisma/utils';
+
 import Button from '../Button';
+import ErrorMessage from '../common/ErrorMessage';
 import CreditsForm from '../credits/CreditsForm';
 import CreditsTable from '../credits/CreditsTable';
-import courseCode from '@/data/courseCode.json';
-import { SemesterType } from '@prisma/client';
-import { SemesterCode } from 'prisma/utils';
-import { trpc } from '@/utils/trpc';
 import { Credit } from '../credits/types';
 
 /**

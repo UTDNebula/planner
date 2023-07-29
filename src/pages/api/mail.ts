@@ -1,6 +1,8 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
 import nodemailer from 'nodemailer';
+
 import { env } from '@/env/server.mjs';
+
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 function escapeHtml(unsafe: string) {
   return unsafe

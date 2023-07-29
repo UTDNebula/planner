@@ -1,5 +1,6 @@
-import { RouterOutputs, trpc } from '@/utils/trpc';
 import { useMemo } from 'react';
+
+import { RouterOutputs, trpc } from '@/utils/trpc';
 
 // TODO: Change implementation
 // Highly inefficient

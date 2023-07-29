@@ -1,13 +1,13 @@
 import { InferGetServerSidePropsType } from 'next';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { getProviders, signIn, useSession } from 'next-auth/react';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import EmojiIcon from '@/icons/EmojiIcon';
-
-import { useRouter } from 'next/router';
-import AuthIcons from '@/icons/AuthIcons';
-import Link from 'next/link';
 import { toast } from 'react-toastify';
+
 import Button from '@/components/Button';
+import AuthIcons from '@/icons/AuthIcons';
+import EmojiIcon from '@/icons/EmojiIcon';
 import { trpc } from '@/utils/trpc';
 import { isValidEmail } from '@/utils/utilFunctions';
 

@@ -1,6 +1,7 @@
-import { env } from '@/env/client.mjs';
 import axios from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
+
+import { env } from '@/env/client.mjs';
 
 const scriptName = 'test';
 const endpointName = 'endpoint-name';

@@ -1,5 +1,6 @@
-import { FC } from 'react';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import { FC } from 'react';
+
 import DeleteIcon from '@/icons/DeleteIcon';
 import DuplicateIcon from '@/icons/DuplicateIcon';
 

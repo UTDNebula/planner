@@ -47,6 +47,7 @@ jobs:
         env:
           # Prisma
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres?schema=public
+          DIRECT_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres?schema=public
           PLATFORM_DATABASE_URL: mongodb://localhost:27017/platformDB # This is a dead connection URL - build does not need live DB.
 
           # Next Auth

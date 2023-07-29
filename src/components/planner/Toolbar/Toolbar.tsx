@@ -1,21 +1,24 @@
-import DownloadIcon from '@/icons/DownloadIcon';
-import { FC, useState } from 'react';
-import Button from '../../Button';
-import SwitchVerticalIcon from '@/icons/SwitchVerticalIcon';
-import { PDFDownloadLink } from '@react-pdf/renderer';
-import { useSemestersContext } from '../SemesterContext';
-import FilterByDropdown from './FilterByDropdown';
-import DegreePlanPDF from '../DegreePlanPDF/DegreePlanPDF';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 import Link from 'next/link';
+import { FC, useState } from 'react';
+
+import AnalyticsWrapper from '@/components/common/AnalyticsWrapper';
+import DownloadIcon from '@/icons/DownloadIcon';
 import SettingsIcon from '@/icons/SettingsIcon';
-import SettingsDropdown from './SettingsDropdown';
-import EditSemestersModal from './EditSemestersModal';
+import SwitchVerticalIcon from '@/icons/SwitchVerticalIcon';
 import DeletePlanModal from '@/shared-components/DeletePlanModal';
 import { trpc } from '@/utils/trpc';
+
 import EditableMajorTitle from './EditablePlanTitle';
+import EditSemestersModal from './EditSemestersModal';
+import FilterByDropdown from './FilterByDropdown';
+import SettingsDropdown from './SettingsDropdown';
+import Button from '../../Button';
+import DegreePlanPDF from '../DegreePlanPDF/DegreePlanPDF';
 import EditableMajor from '../EditableMajor';
-import AnalyticsWrapper from '@/components/common/AnalyticsWrapper';
+import { useSemestersContext } from '../SemesterContext';
+
 
 export interface ToolbarProps {
   degreeRequirements: { id: string; major: string };

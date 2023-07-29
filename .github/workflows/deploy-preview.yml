@@ -1,0 +1,48 @@
+name: Deploy Preview
+
+on: 
+  pull_request:
+    branches:
+      - "develop"
+  workflow_dispatch:
+    
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+jobs:
+  deploy-preview:
+    permissions: write-all
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Neon Database Create Branch Action
+        uses: neondatabase/create-branch-action@v3
+        id: create_branch
+        with:
+          project_id: ${{ secrets.NEON_PROJECT_ID }}
+          branch_name: ${{ github.event.pull_request.head.ref || github.head_ref }}
+          api_key: ${{ secrets.NEON_API_KEY }}
+          username: ${{ secrets.PG_USERNAME }}
+          password: ${{ secrets.PG_PASSWORD }}
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Deploy Preview to Vercel
+        id: deploy
+        run: |
+          echo preview_url=$(vercel deploy \
+          --env DATABASE_URL=${{ steps.create_branch.outputs.db_url_with_pooler}}/neondb \
+          --build-env DIRECT_DATABASE_URL=${{ steps.create_branch.outputs.db_url}}/neondb \
+          --public --yes --token=${{ secrets.VERCEL_TOKEN }}) \
+          >> $GITHUB_OUTPUT
+
+      - name: Comment on Pull Request
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: |
+            Vercel Preview URL :rocket: : ${{ steps.deploy.outputs.preview_url }}
+            Neon branch :elephant: : https://console.neon.tech/app/projects/${{ secrets.NEON_PROJECT_ID }}/branches/${{ steps.create_branch.outputs.branch_id }}

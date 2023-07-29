@@ -1,22 +1,22 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
-  // Specifies the ESLint parser
   parserOptions: {
     ecmaVersion: 2020,
-    // Allows for the parsing of modern ECMAScript features
+    // Allows for the parsing of modern ECMAScript features.
     sourceType: 'module',
-    // Allows for the use of imports
+    // Allows for the use of imports.
     ecmaFeatures: {
-      jsx: true, // Allows for the parsing of JSX
+      jsx: true, // Allows for the parsing of JSX.
     },
-    // project: ['./tsconfig.json'],
   },
 
-  plugins: ['simple-import-sort', 'unused-imports'],
+  plugins: ['unused-imports'],
   extends: [
     'plugin:react-hooks/recommended',
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
     'prettier',
   ],
   rules: {
@@ -24,9 +24,30 @@ module.exports = {
     // e.g. '@typescript-eslint/explicit-function-return-type': 'off',
     'react/prop-types': 'warn',
     'react/jsx-key': 'warn',
-    'simple-import-sort/imports': process.env.NODE_ENV === 'test' ? 'error' : 'off',
-    'simple-import-sort/exports': process.env.NODE_ENV === 'test' ? 'error' : 'off',
     'react/react-in-jsx-scope': 'off',
+    // Configuration for import. See: https://github.com/import-js/eslint-plugin-import/tree/main.
+    'import/order': [
+      'warn',
+      {
+        groups: [
+          'builtin',
+          'external',
+          'internal',
+          ['parent', 'sibling'],
+          'index',
+          'object',
+          'type',
+        ],
+        alphabetize: {
+          order: 'asc',
+          caseInsensitive: true,
+        },
+        'newlines-between': 'always',
+      },
+    ],
+    'import/no-named-as-default': 'off',
+    // Configuration for unused-imports. See: https://github.com/sweepline/eslint-plugin-unused-imports#usage.
+    '@typescript-eslint/no-unused-vars': 'off',
     'unused-imports/no-unused-imports': process.env.NODE_ENV === 'test' ? 'error' : 'warn',
     'unused-imports/no-unused-vars': [
       'warn',
@@ -40,7 +61,11 @@ module.exports = {
   },
   settings: {
     react: {
-      version: 'detect', // Tells eslint-plugin-react to automatically detect the version of React to use
+      version: 'detect', // Tells eslint-plugin-react to automatically detect the version of React to use.
+    },
+    'import/resolver': {
+      typescript: true,
+      node: true,
     },
   },
 };

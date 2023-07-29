@@ -1,4 +1,5 @@
 import React from 'react';
+
 import ChevronIcon from '@/icons/ChevronIcon';
 export default function Accordion({
   header,

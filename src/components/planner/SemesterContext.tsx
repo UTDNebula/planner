@@ -1,12 +1,13 @@
-import { trpc } from '@/utils/trpc';
-import { toast } from 'react-toastify';
-import { createYearBasedOnFall } from '@/utils/utilFunctions';
-import { createContext, FC, useContext, useEffect, useMemo, useReducer, useState } from 'react';
-import { Plan, Semester, DraggableCourse } from './types';
-import { customCourseSort } from './utils';
-import { useTaskQueue } from '@/utils/useTaskQueue';
-import { tagColors } from './utils';
 import { SemesterType } from '@prisma/client';
+import { createContext, FC, useContext, useEffect, useMemo, useReducer, useState } from 'react';
+import { toast } from 'react-toastify';
+
+import { trpc } from '@/utils/trpc';
+import { useTaskQueue } from '@/utils/useTaskQueue';
+import { createYearBasedOnFall } from '@/utils/utilFunctions';
+
+import { Plan, Semester, DraggableCourse } from './types';
+import { customCourseSort, tagColors } from './utils';
 
 export interface SemestersContextState {
   planId: string;

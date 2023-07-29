@@ -1,18 +1,19 @@
 import { UniqueIdentifier, useDroppable } from '@dnd-kit/core';
 import React, { FC, forwardRef, useState, useRef } from 'react';
 
-import { displaySemesterCode, getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
-
-import { DragDataToSemesterTile, GetDragIdByCourseAndSemester, Semester } from '../types';
-import DraggableSemesterCourseItem from './SemesterCourseItem';
+import AnalyticsWrapper from '@/components/common/AnalyticsWrapper';
 import ChevronIcon from '@/icons/ChevronIcon';
-import SemesterTileDropdown from './SemesterTileDropdown';
-import { useSemestersContext } from '../SemesterContext';
 import LockIcon from '@/icons/LockIcon';
 import UnlockedIcon from '@/icons/UnlockedIcon';
-import { tagColors } from '../utils';
+import { displaySemesterCode, getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
+
+import DraggableSemesterCourseItem from './SemesterCourseItem';
+import SemesterTileDropdown from './SemesterTileDropdown';
 import CreditsWarnHoverCard from '../CreditsWarnHoverCard';
-import AnalyticsWrapper from '@/components/common/AnalyticsWrapper';
+import { useSemestersContext } from '../SemesterContext';
+import { DragDataToSemesterTile, GetDragIdByCourseAndSemester, Semester } from '../types';
+import { tagColors } from '../utils';
+
 
 export interface SemesterTileProps {
   semester: Semester;

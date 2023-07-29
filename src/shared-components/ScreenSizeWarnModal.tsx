@@ -1,6 +1,7 @@
+import { FC } from 'react';
+
 import Modal, { ModalProps } from '@/components/Modal';
 import UnfilledWarningIcon from '@/icons/UnfilledWarningIcon';
-import { FC } from 'react';
 
 const ScreenSizeWarnModal: FC<ModalProps> = (props) => (
   <Modal {...props}>

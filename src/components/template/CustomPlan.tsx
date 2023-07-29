@@ -1,20 +1,23 @@
-import { useEffect, useRef, useState } from 'react';
-import majorsList from '@data/majors.json';
-import { RouterInputs, trpc } from '@/utils/trpc';
-import { ButtonProps } from '../Button';
-
+import { SemesterType } from '@prisma/client';
 import { useRouter } from 'next/router';
+import { useEffect, useRef, useState } from 'react';
+
 
 import AutoCompleteMajor from '@/components/AutoCompleteMajor';
-import ErrorMessage from '../common/ErrorMessage';
 import courseCode from '@/data/courseCode.json';
-import { SemesterType } from '@prisma/client';
-import { SemesterCode } from 'prisma/utils';
-import { Credit } from '../credits/types';
 import { UnwrapArray } from '@/types/util-types';
-import type { PDFDocumentProxy } from 'pdfjs-dist';
+import { RouterInputs, trpc } from '@/utils/trpc';
+import majorsList from '@data/majors.json';
+import { SemesterCode } from 'prisma/utils';
+
 import { Page } from './Page';
+import { ButtonProps } from '../Button';
+import ErrorMessage from '../common/ErrorMessage';
+import { Credit } from '../credits/types';
 import useSearch from '../search/search';
+
+
+import type { PDFDocumentProxy } from 'pdfjs-dist';
 
 const majors = majorsList as string[];
 

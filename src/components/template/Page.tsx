@@ -1,7 +1,9 @@
-import { PropsWithChildren } from 'react';
-import Button from '../Button';
 import CloseIcon from '@mui/icons-material/Close';
+import { PropsWithChildren } from 'react';
+
 import { PageProps } from './CustomPlan';
+import Button from '../Button';
+
 
 export function Page({
   title,

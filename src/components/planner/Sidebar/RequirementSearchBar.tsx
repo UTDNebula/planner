@@ -1,5 +1,6 @@
-import FilterIcon from '@/icons/FilterIcon';
 import React, { useState } from 'react';
+
+import FilterIcon from '@/icons/FilterIcon';
 
 /**
  * A search bar that allows for filtering of queries.
