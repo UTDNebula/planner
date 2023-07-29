@@ -27,7 +27,7 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
     data: templatesData,
     isLoading,
     isError,
-  } = trpc.template.getAllTemplates.useQuery(undefined, {
+  } = trpc.template.publicGetAllTemplates.useQuery(undefined, {
     staleTime: Infinity,
     cacheTime: Infinity,
   });
@@ -58,13 +58,6 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
   if (!templatesData) {
     return <div>Loading...</div>;
   }
-
-  const orderedTemplate = templatesData.sort((a, b) => {
-    if (a.name! < b.name!) {
-      return -1;
-    }
-    return 1;
-  });
 
   const handleTemplateCreation = async (name: string, major: string) => {
     setLoading(true);
