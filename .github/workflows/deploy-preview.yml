@@ -33,17 +33,21 @@ jobs:
       - name: Pull Vercel Environment Information
         run: vercel --scope utdnebula pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }} && mv .vercel/.env.preview.local .env
 
+      - name: Inject slug/short variables
+        uses: rlespinasse/github-slug-action@v4
+      
       - name: Run Prisma Migrate
         run: |
           echo DATABASE_URL=${{ steps.create_branch.outputs.db_url_with_pooler}}/neondb >> .env
           echo DIRECT_DATABASE_URL=${{ steps.create_branch.outputs.db_url}}/neondb >> .env
+          echo VERCEL_URL="https://planner-git-$GITHUB_REF_SLUG-utdnebula.vercel.app" >> .env
           npm install prisma@^4.12.0
           npm run prisma:generate
           npm run prisma:migrate:deploy
 
 
       - name: Build Project Artifacts
-        run: vercel --scope utdnebula build --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel --scope utdnebula build --token=${{ secrets.VERCEL_TOKEN }} 
 
       - name: Deploy Preview to Vercel
         id: deploy
