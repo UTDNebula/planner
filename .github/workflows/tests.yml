@@ -28,12 +28,6 @@ jobs:
           --health-timeout 5s
           --health-retries 5
 
-    env:
-      # Prisma
-      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres?schema=public
-      DIRECT_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres?schema=public
-      PLATFORM_DATABASE_URL: ${{ secrets.PLATFORM_DATABASE_URL }}
-
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -56,12 +50,12 @@ jobs:
 
       - name: Run build pipeline
         run: npm run build
-
-      - name: Start server and run e2e tests
-        run: |
-          npm run cypress:run
-
         env:
+          # Prisma
+          DIRECT_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres?schema=public
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres?schema=public
+          PLATFORM_DATABASE_URL: ${{ secrets.PLATFORM_DATABASE_URL }}
+
           # Next Auth
           NEXTAUTH_URL: http://localhost:3000
           NEXTAUTH_SECRET: abc
@@ -89,11 +83,14 @@ jobs:
           VALIDATOR: ${{ secrets.VALIDATOR }}
 
           NODE_ENV: test
-          VERCEL_ENV: preview
 
           # UMAMI
           NEXT_PUBLIC_UMAMI_URL: hi
           NEXT_PUBLIC_UMAMI_WEBSITE_ID: bye
+
+      - name: Start server and run e2e tests
+        run: |
+          npm run cypress:run
 
   unit-tests:
     name: Unit tests
