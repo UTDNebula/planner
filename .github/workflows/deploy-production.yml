@@ -10,6 +10,7 @@ on:
       - 'main'
       - 'develop'
   workflow_dispatch:
+  pull_request:
 
 jobs:
   deploy-production:
@@ -44,9 +45,9 @@ jobs:
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
 
-      - name: Deploy Production to Vercel
-        id: deploy
-        run: vercel deploy --prod --public --yes --token=${{ secrets.VERCEL_TOKEN }}
+      # - name: Deploy Production to Vercel
+      #   id: deploy
+      #   run: vercel deploy --prod --public --yes --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Delete Neon Branch
         uses: neondatabase/delete-branch-action@v2
