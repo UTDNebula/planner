@@ -1,6 +1,9 @@
 name: Deploy Preview
 
 on: [pull_request]
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
 jobs:
   deploy-preview:
@@ -30,31 +33,14 @@ jobs:
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
 
-      # - name: Pull Vercel Environment Information
-      #   run: vercel --scope utdnebula pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }} && mv .vercel/.env.preview.local .env
-
-      # - name: Inject slug/short variables
-      #   uses: rlespinasse/github-slug-action@v4
-      
-      # - name: Run Prisma Migrate
-      #   run: |
-      #     echo DATABASE_URL=${{ steps.create_branch.outputs.db_url_with_pooler}}/neondb >> .env
-      #     echo DIRECT_DATABASE_URL=${{ steps.create_branch.outputs.db_url}}/neondb >> .env
-      #     echo VERCEL_URL="https://planner-git-$GITHUB_HEAD_REF_SLUG_URL-utdnebula.vercel.app" >> .env
-      #     npm install prisma@^4.12.0
-      #     npm run prisma:generate
-      #     npm run prisma:migrate:deploy
-
-
-      # - name: Build Project Artifacts
-      #   run: vercel --scope utdnebula build --token=${{ secrets.VERCEL_TOKEN }} 
-
-      # - name: Deploy Preview to Vercel
-      #   id: deploy
-      #   run: echo preview_url=$(vercel --scope utdnebula deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}) >> $GITHUB_OUTPUT
       - name: Deploy Preview to Vercel
         id: deploy
-        run: echo preview_url=$(vercel --scope utdnebula deploy --env DATABASE_URL=${{ steps.create_branch.outputs.db_url_with_pooler}}/neondb --build-env DIRECT_DATABASE_URL=${{ steps.create_branch.outputs.db_url}}/neondb --public --yes --token=${{ secrets.VERCEL_TOKEN }}) >> $GITHUB_OUTPUT
+        run: |
+          echo preview_url=$(vercel deploy \
+          --env DATABASE_URL=${{ steps.create_branch.outputs.db_url_with_pooler}}/neondb \
+          --build-env DIRECT_DATABASE_URL=${{ steps.create_branch.outputs.db_url}}/neondb \
+          --public --yes --token=${{ secrets.VERCEL_TOKEN }}) \
+          >> $GITHUB_OUTPUT
 
       - name: Comment on Pull Request
         uses: thollander/actions-comment-pull-request@v2
