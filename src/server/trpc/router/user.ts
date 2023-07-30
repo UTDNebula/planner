@@ -3,7 +3,7 @@ import { TRPCError } from '@trpc/server';
 import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 
-import { createNewSemesterCode, isSemCodeEqual , isEarlierSemester } from '@/utils/utilFunctions';
+import { createNewSemesterCode, isSemCodeEqual, isEarlierSemester } from '@/utils/utilFunctions';
 import { computeProfileWithSemesterCode } from 'prisma/utils';
 
 import { protectedProcedure, router } from '../trpc';

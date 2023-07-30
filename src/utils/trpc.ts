@@ -1,4 +1,4 @@
-import { httpBatchLink, loggerLink } from '@trpc/client';
+import { httpBatchLink, httpLink, loggerLink, splitLink } from '@trpc/client';
 import { createTRPCNext } from '@trpc/next';
 import { type inferRouterInputs, type inferRouterOutputs } from '@trpc/server';
 import superjson from 'superjson';
@@ -13,6 +13,8 @@ export const getBaseUrl = () => {
   return `http://localhost:${process.env.PORT ?? 3000}`;
 };
 
+const trpcEndpointURL = `${getBaseUrl()}/api/trpc`;
+
 export const trpc = createTRPCNext<AppRouter>({
   config() {
     return {
@@ -23,8 +25,22 @@ export const trpc = createTRPCNext<AppRouter>({
             process.env.NODE_ENV === 'development' ||
             (opts.direction === 'down' && opts.result instanceof Error),
         }),
+        splitLink({
+          condition(op) {
+            // check for context property `cache`
+            return op.path.startsWith('public');
+          },
+          // when condition is true, use normal request
+          true: httpLink({
+            url: trpcEndpointURL,
+          }),
+          // when condition is false, use batching
+          false: httpBatchLink({
+            url: trpcEndpointURL,
+          }),
+        }),
         httpBatchLink({
-          url: `${getBaseUrl()}/api/trpc`,
+          url: trpcEndpointURL,
         }),
       ],
     };

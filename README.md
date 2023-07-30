@@ -2,8 +2,6 @@
 
 _Nebula Planner is a tool for planning out students' college experience_
 
-[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
-
 ## About
 
 ### Overview
@@ -63,7 +61,7 @@ the [Discussions](https://github.com/UTDNebula/planner/discussions) section.
 ### Set-up
 
 This project requires a working [Node.js](https://nodejs.org/en/) and NPM
-installation. It also requires local environment variables since it uses MongoDb Atlas, a SMTP server and Discord as authentication provider.
+installation. It also requires local environment variables since it uses [Neon](https://neon.tech) (hosted PostgresDB service), a SMTP server and Discord as authentication provider.
 
 To start, clone the repository, and obtain the required environment keys as explained below.
 
@@ -72,43 +70,26 @@ git clone https://github.com/UTDNebula/planner.git
 cd planner
 ```
 
+#### Adding environment variables
+
+Copy the contents of the `.env.example` file at the root of the repo to a new file called `.env`.
+
 ---
 
-#### Setting up MongoDB
+#### Setting up Neon
 
-1. [Go to Database Deployments | Cloud: MongoDB Cloud](https://cloud.mongodb.com/v2)
+Neon is a hosting service for PostgresDB.
 
-2. Create account and complete signup.
+1. Install the [Neon CLI](https://neon.tech/docs/reference/cli-install).
+2. Run `neonctl auth` and follow the on-screen prompts to login or create an account.
+3. Run `neonctl projects create --name planner-dev` to create a Neon project for Planner.
+4. Copy the string listed under 'Connection Uri' (ex: `postgres://my-user:my-password@my-project-id.us-east-2.aws.neon.tech/neondb`) and update the `DATABASE_URL` and `DIRECT_DATABASE_URL` variables in your .env file, as shown below.
 
-3. Click on Build a Database
-   ![Step 2 screenshot](https://images.tango.us/workflows/b5af1e64-4847-4e00-bd27-0b6d9addee9d/steps/e46f00cc-a7e6-44df-a975-d1308ce27d21/868855e1-d27a-42b1-ae73-e2df861d53cc.png?crop=focalpoint&fit=crop&fp-x=0.5559&fp-y=0.6245&fp-z=2.3907&w=1200&mark-w=0.2&mark-pad=0&mark64=aHR0cHM6Ly9pbWFnZXMudGFuZ28udXMvc3RhdGljL21hZGUtd2l0aC10YW5nby13YXRlcm1hcmsucG5n&ar=1860%3A972)
-
-4. Click on CREATE FREE…
-   ![Step 3 screenshot](https://images.tango.us/workflows/b5af1e64-4847-4e00-bd27-0b6d9addee9d/steps/3de573c4-ee12-41e3-8ccd-784420b5286b/bdacfc5a-342e-4f66-8ed2-38e467253b3a.png?crop=focalpoint&fit=crop&fp-x=0.7094&fp-y=0.8261&fp-z=2.7474&w=1200&mark-w=0.2&mark-pad=0&mark64=aHR0cHM6Ly9pbWFnZXMudGFuZ28udXMvc3RhdGljL21hZGUtd2l0aC10YW5nby13YXRlcm1hcmsucG5n&ar=1860%3A972)
-
-5. Click on Create Cluster
-   ![Step 4 screenshot](https://images.tango.us/workflows/b5af1e64-4847-4e00-bd27-0b6d9addee9d/steps/53579562-a199-4508-96e9-61d5c2c2f758/6eb1b480-d8ec-486d-bd0b-064a578317ba.png?crop=focalpoint&fit=crop&fp-x=0.7172&fp-y=0.9506&fp-z=2.9808&w=1200&mark-w=0.2&mark-pad=0&mark64=aHR0cHM6Ly9pbWFnZXMudGFuZ28udXMvc3RhdGljL21hZGUtd2l0aC10YW5nby13YXRlcm1hcmsucG5n&ar=1860%3A972)
-
-6. Click on Create User
-   ![Step 10 screenshot](https://images.tango.us/workflows/b5af1e64-4847-4e00-bd27-0b6d9addee9d/steps/49dd7274-2d03-4cc7-aec8-59be74519cce/f8f56d7a-9dc3-43c7-af95-2d87e4903f4d.png?crop=focalpoint&fit=crop&fp-x=0.2116&fp-y=0.7803&fp-z=2.7393&w=1200&mark-w=0.2&mark-pad=0&mark64=aHR0cHM6Ly9pbWFnZXMudGFuZ28udXMvc3RhdGljL21hZGUtd2l0aC10YW5nby13YXRlcm1hcmsucG5n&ar=1860%3A972)
-
-7. Click on Add My Current IP Address
-   ![Step 12 screenshot](https://images.tango.us/workflows/b5af1e64-4847-4e00-bd27-0b6d9addee9d/steps/88f95e29-ebf6-42f3-93b2-b0ca22d32f8c/d81ee178-9d01-461f-a3e1-3329d9a1e3f3.png?crop=focalpoint&fit=crop&fp-x=0.5005&fp-y=0.6610&fp-z=2.3485&w=1200&mark-w=0.2&mark-pad=0&mark64=aHR0cHM6Ly9pbWFnZXMudGFuZ28udXMvc3RhdGljL21hZGUtd2l0aC10YW5nby13YXRlcm1hcmsucG5n&ar=1860%3A972)
-
-8. Click on Finish and Close
-   ![Step 13 screenshot](https://images.tango.us/workflows/b5af1e64-4847-4e00-bd27-0b6d9addee9d/steps/e9106766-dd60-4218-a90d-4eb3487932ba/3bb27c5e-41fb-4e5a-9e30-32b731a22f57.png?crop=focalpoint&fit=crop&fp-x=0.6153&fp-y=0.7948&fp-z=2.6160&w=1200&mark-w=0.2&mark-pad=0&mark64=aHR0cHM6Ly9pbWFnZXMudGFuZ28udXMvc3RhdGljL21hZGUtd2l0aC10YW5nby13YXRlcm1hcmsucG5n&ar=1860%3A972)
-
-9. Click on dialog
-   ![Step 14 screenshot](https://images.tango.us/workflows/b5af1e64-4847-4e00-bd27-0b6d9addee9d/steps/0a59513c-1754-48ae-8849-c96f545deb05/8c3037a1-a0c9-4dee-bbb1-7133481aed63.png?crop=focalpoint&fit=crop&fp-x=0.6344&fp-y=0.5592&fp-z=2.5978&w=1200&mark-w=0.2&mark-pad=0&mark64=aHR0cHM6Ly9pbWFnZXMudGFuZ28udXMvc3RhdGljL21hZGUtd2l0aC10YW5nby13YXRlcm1hcmsucG5n&ar=1860%3A972)
-
-10. Click on Connect
-    ![Step 15 screenshot](https://images.tango.us/workflows/b5af1e64-4847-4e00-bd27-0b6d9addee9d/steps/38b72ad8-c8aa-4cb9-afad-2cc2fcd87836/3a054d4a-f2ac-433d-82b6-5b76ca052743.png?crop=focalpoint&fit=crop&fp-x=0.2540&fp-y=0.3945&fp-z=2.8484&w=1200&mark-w=0.2&mark-pad=0&mark64=aHR0cHM6Ly9pbWFnZXMudGFuZ28udXMvc3RhdGljL21hZGUtd2l0aC10YW5nby13YXRlcm1hcmsucG5n&ar=1860%3A972)
-
-11. Click on Connect your application…
-    ![Step 16 screenshot](https://images.tango.us/workflows/b5af1e64-4847-4e00-bd27-0b6d9addee9d/steps/483c8b5e-99ea-48c9-9e30-e18b2e18fd6b/a8e1082f-751f-425c-aec8-2be6b05eb5a7.png?crop=focalpoint&fit=crop&fp-x=0.5003&fp-y=0.5031&fp-z=1.3372&w=1200&mark-w=0.2&mark-pad=0&mark64=aHR0cHM6Ly9pbWFnZXMudGFuZ28udXMvc3RhdGljL21hZGUtd2l0aC10YW5nby13YXRlcm1hcmsucG5n&ar=1860%3A972)
-
-12. Copy the generated connection string
-    ![Step 17 screenshot](https://images.tango.us/workflows/b5af1e64-4847-4e00-bd27-0b6d9addee9d/steps/935c3c08-b60a-48fa-b3ae-bf2f12c37744/2007b63a-8bfc-4c0b-b9fc-695b1083c75e.png?crop=focalpoint&fit=crop&fp-x=0.7349&fp-y=0.5154&fp-z=3.1395&w=1200&mark-w=0.2&mark-pad=0&mark64=aHR0cHM6Ly9pbWFnZXMudGFuZ28udXMvc3RhdGljL21hZGUtd2l0aC10YW5nby13YXRlcm1hcmsucG5n&ar=1860%3A972)
+```bash
+# Prisma
+DATABASE_URL="<your connection uri here>"
+DIRECT_DATABASE_URL="<your connection uri here>"
+```
 
 ---
 
@@ -164,58 +145,23 @@ cd planner
 
 ---
 
-#### Adding environment variables
-
-Create a file called .env in the root directory and add your personal env keys
-
-```bash
-# Prisma MongoDB
-DATABASE_URL=REPLACE_ME
-
-# Next Auth
-NEXTAUTH_URL=http://localhost:3000
-NEXTAUTH_SECRET=abc
-# Next Auth Discord Provider
-DISCORD_CLIENT_ID=REPLACE_ME
-DISCORD_CLIENT_SECRET=REPLACE_ME
-
-# Email Server
-EMAIL_SERVER_HOST=REPLACE_ME
-EMAIL_SERVER_PORT=REPLACE_ME
-EMAIL_SERVER_USER=REPLACE_ME
-EMAIL_SERVER_PASSWORD=REPLACE_ME
-EMAIL_FROM=noreply@nebulaplanner
-
-# DEGREE VALIDATOR
-VALIDATOR=REPLACE_ME
-
-NODE_ENV=development
-```
-
-1. Make sure to replace the password in the DB Connection string with the password of the **root** user you created while setting up MongoDB.
-2. Replace the **?** in the MongoDB connection string with its equivalent urlEncode value, i.e., **%3F**.
-
-![MongoDB Connection String](https://storage.googleapis.com/cp_bucket_test/MongoDBurlEncode.gif)
-
----
-
 #### Installing dependencies and seeding the database
 
 ```bash
 npm install
-npx prisma db push
-npx prisma db seed
+npm run build
 npm run dev
 ```
 
 This will generate the DB schema, seed the DB and run a local development server on [`localhost:3000`](https://localhost:3000) by default.
 
-Check out this [blog](https://btt.skgr.xyz/blog/nebula-planner-tech-stack) to learn about the stack we are using and a basic overview of the codebase.
+<!-- TODO(@jasonappah): Copy this over to Confluence, link here. Would probably be worth revisiting/possibly rewriting other docs in this repo as well -->
+<!-- Check out this [blog](https://btt.skgr.xyz/blog/nebula-planner-tech-stack) to learn about the stack we are using and a basic overview of the codebase. -->
 
 ### Contact
 
 This project is maintained by Nebula Labs, which is an open-source initiative to build projects that improve student life at UTD. If you have
-any questions about this project or Project Nebula, join the Nebula Labs [discord](https://discord.gg/wcHs2PPXeM).
+any questions about this project or Nebula Labs, join the Nebula Labs [discord](https://discord.gg/wcHs2PPXeM).
 
 For more formal inquiries, send us a message at core-maintainers@utdnebula.com
 with "[nebula-planner]" in the title. Please be as detailed as possible so we can

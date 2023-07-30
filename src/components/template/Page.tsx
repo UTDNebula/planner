@@ -4,7 +4,6 @@ import { PropsWithChildren } from 'react';
 import { PageProps } from './CustomPlan';
 import Button from '../Button';
 
-
 export function Page({
   title,
   subtitle,

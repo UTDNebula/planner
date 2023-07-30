@@ -19,7 +19,6 @@ import DegreePlanPDF from '../DegreePlanPDF/DegreePlanPDF';
 import EditableMajor from '../EditableMajor';
 import { useSemestersContext } from '../SemesterContext';
 
-
 export interface ToolbarProps {
   degreeRequirements: { id: string; major: string };
   planId: string;

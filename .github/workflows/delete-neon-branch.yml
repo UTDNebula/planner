@@ -15,9 +15,6 @@ jobs:
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      
       - name: Search branch by name
         id: get_branch_id
         # list all branches and filter by name
@@ -29,9 +26,7 @@ jobs:
             --header "Authorization: Bearer ${{ secrets.NEON_API_KEY }}" \
             | jq -r .branches \
             | jq -c '.[] | select(.name | contains("'${{ github.event.pull_request.head.ref || github.head_ref }}'")) .id' \
-            | jq -r \
-            ) \
-            
+            | jq -r)
           echo "branch_id=${branch_id}" >> $GITHUB_OUTPUT
 
       - name: Delete Neon Branch

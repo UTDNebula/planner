@@ -6,7 +6,6 @@ import useSearch from '@/components/search/search';
 import { JSONCourse } from '@/data/courses.json';
 import { trpc } from '@/utils/trpc';
 
-
 import Accordion from './Accordion';
 import { RecursiveRequirement } from './RecursiveRequirement';
 import RequirementsCarousel from './RequirementsCarousel';

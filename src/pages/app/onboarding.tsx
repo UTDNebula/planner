@@ -1,5 +1,5 @@
 import { SemesterType } from '@prisma/client';
-import { createProxySSGHelpers } from '@trpc/react-query/ssg';
+import { createServerSideHelpers } from '@trpc/react-query/server';
 import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import { getServerSession } from 'next-auth/next';
@@ -153,7 +153,7 @@ export default function OnboardingPage() {
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const session = await getServerSession(context.req, context.res, authOptions);
-  const ssg = createProxySSGHelpers({
+  const ssg = createServerSideHelpers({
     router: appRouter,
     ctx: await createContextInner({ session }),
     transformer: superjson,
