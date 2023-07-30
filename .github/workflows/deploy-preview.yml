@@ -38,7 +38,7 @@ jobs:
             --env DATABASE_URL="${{ steps.create_branch.outputs.db_url_with_pooler}}/neondb?pgbouncer=true&connect_timeout=15&pool_timeout=15" \
             --build-env DIRECT_DATABASE_URL="${{ steps.create_branch.outputs.db_url}}/neondb?connect_timeout=10" \
             --public --yes --token=${{ secrets.VERCEL_TOKEN }})
-          echo $preview_url >> $GITHUB_OUTPUT
+          echo preview_url=$preview_url >> $GITHUB_OUTPUT
 
       - name: Comment on Pull Request
         uses: thollander/actions-comment-pull-request@v2
