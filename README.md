@@ -81,8 +81,7 @@ Copy the contents of the `.env.example` file at the root of the repo to a new fi
 Neon is a hosting service for PostgresDB.
 
 1. Install the [Neon CLI](https://neon.tech/docs/reference/cli-install).
-
-2. Run `neon auth` to login, and follow the on-screen prompts to login or create an account.
+2. Run `neonctl auth` and follow the on-screen prompts to login or create an account.
 3. Run `neonctl projects create --name planner-dev` to create a Neon project for Planner.
 4. Copy the string listed under 'Connection Uri' (ex: `postgres://my-user:my-password@my-project-id.us-east-2.aws.neon.tech/neondb`) and update the `DATABASE_URL` and `DIRECT_DATABASE_URL` variables in your .env file, as shown below.
 
