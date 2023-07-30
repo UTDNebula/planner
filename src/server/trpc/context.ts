@@ -9,7 +9,8 @@ type CreateInnerContextOptions = {
   session: Session | null;
 };
 
-export type Context = inferAsyncReturnType<typeof createContextInner> & Partial<CreateNextContextOptions>;
+export type Context = inferAsyncReturnType<typeof createContextInner> &
+  Partial<CreateNextContextOptions>;
 
 /** Use this helper for:
  * - testing, so we dont have to mock Next.js' req/res
@@ -39,6 +40,8 @@ export const createContext = async (opts: CreateNextContextOptions): Promise<Con
   });
 
   return {
-    ...contextInner, req, res,
-  } ;
+    ...contextInner,
+    req,
+    res,
+  };
 };

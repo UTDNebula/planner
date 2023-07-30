@@ -8,7 +8,6 @@ import { SemesterCode } from 'prisma/utils';
 import SemestersSelect from './SemestersSelect';
 import Button from '../../Button';
 
-
 export interface EditSemestersModalProps {
   planId: string;
   startSemester: SemesterCode;

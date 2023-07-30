@@ -13,7 +13,7 @@ export const getBaseUrl = () => {
   return `http://localhost:${process.env.PORT ?? 3000}`;
 };
 
-const trpcEndpointURL = `${getBaseUrl()}/api/trpc`
+const trpcEndpointURL = `${getBaseUrl()}/api/trpc`;
 
 export const trpc = createTRPCNext<AppRouter>({
   config() {
@@ -28,7 +28,7 @@ export const trpc = createTRPCNext<AppRouter>({
         splitLink({
           condition(op) {
             // check for context property `cache`
-            return op.path.startsWith("public");
+            return op.path.startsWith('public');
           },
           // when condition is true, use normal request
           true: httpLink({

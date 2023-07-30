@@ -10,7 +10,6 @@ import Header from './Header';
 import { Semester } from '../types';
 import { customCourseSort } from '../utils';
 
-
 Font.register({
   family: 'Inter',
   fonts: [

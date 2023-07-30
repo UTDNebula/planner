@@ -146,7 +146,6 @@ DIRECT_DATABASE_URL="<your connection uri here>"
 
 ---
 
-
 #### Installing dependencies and seeding the database
 
 ```bash

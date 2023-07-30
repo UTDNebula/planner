@@ -3,7 +3,6 @@ name: Check Formatting
 on:
   workflow_dispatch:
   pull_request:
-    types: [ready_for_review]
 
 jobs:
   eslint:
@@ -24,3 +23,6 @@ jobs:
 
       - name: Run ESLint
         run: npm run lint:check
+
+      - name: Run Prettier
+        run: npm run format:check

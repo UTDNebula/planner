@@ -8,7 +8,6 @@ import { appRouter } from '@/server/trpc/router/_app';
 import { createContextInner } from '@server/trpc/context';
 import { trpc } from '@utils/trpc';
 
-
 import { authOptions } from '../api/auth/[...nextauth]';
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const session = await getServerSession(context.req, context.res, authOptions);

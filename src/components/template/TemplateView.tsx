@@ -8,7 +8,6 @@ import { trpc } from '@/utils/trpc';
 import { Page } from './Page';
 import useSearch from '../search/search';
 
-
 export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
   const utils = trpc.useContext();
 
