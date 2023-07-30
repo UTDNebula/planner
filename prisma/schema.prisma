@@ -109,18 +109,6 @@ enum SemesterType {
   u
 }
 
-// TODO(akevinge): Add Jira ticket for this, removal involves removing 
-// quite a bit of code.
-model Credit {
-  id         String       @id @default(uuid()) @db.Uuid
-  courseCode String
-  year       Int
-  semester   SemesterType
-  transfer   Boolean
-  user       User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId     String       @db.Uuid
-}
-
 // TODO(akevinge): Remove.
 model AcademicDetails {
   id Int @id @default(autoincrement())
@@ -160,7 +148,6 @@ model User {
   onboardingComplete      Boolean   @default(false)
   seenHomeOnboardingModal Boolean   @default(false)
   seenPlanOnboardingModal Boolean   @default(false)
-  credit                  Credit[]
   // Multiple accounts can be created when a user signs in with an OAuth provider
   // while signed in with another provider. See: https://github.com/nextauthjs/next-auth/discussions/3116#discussioncomment-1622855.
   accounts                Account[]
