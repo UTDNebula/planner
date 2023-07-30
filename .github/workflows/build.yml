@@ -8,7 +8,7 @@ on:
       - 'main'
 
 jobs:
-  release:
+  build:
     name: Test build app
     runs-on: ubuntu-latest
 
