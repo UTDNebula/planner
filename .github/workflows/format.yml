@@ -1,4 +1,4 @@
-name: Lint
+name: Check Formatting
 
 on:
   workflow_dispatch:
@@ -6,8 +6,8 @@ on:
     types: [ready_for_review]
 
 jobs:
-  run-linters:
-    name: Run linters
+  eslint:
+    name: Run ESLint + Prettier
     runs-on: ubuntu-latest
 
     steps:
@@ -22,5 +22,5 @@ jobs:
       - name: Install Node.js Dependencies
         run: npm ci
 
-      - name: Run Prettier
-        run: npm run format:check
+      - name: Run ESLint
+        run: npm run lint:check
