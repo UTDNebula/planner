@@ -35,7 +35,7 @@ jobs:
         id: deploy
         run: |
           echo preview_url=$(vercel deploy \
-          --env DATABASE_URL=${{ steps.create_branch.outputs.db_url_with_pooler}}/neondb \
+          --env DATABASE_URL=${{ steps.create_branch.outputs.db_url_with_pooler}}/neondb?pgbouncer=true \
           --build-env DIRECT_DATABASE_URL=${{ steps.create_branch.outputs.db_url}}/neondb \
           --public --yes --token=${{ secrets.VERCEL_TOKEN }}) \
           >> $GITHUB_OUTPUT
