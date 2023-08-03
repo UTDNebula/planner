@@ -2,19 +2,26 @@ name: Build
 
 on:
   push:
+    paths:
+      - 'validator/**'
   pull_request:
+    paths:
+      - 'validator/**'
 
 jobs:
   release:
     name: Test app
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: validator
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - uses: actions/setup-python@v4
         with:
-          python-version: "3.10"
+          python-version: '3.10'
 
       - name: Install dependencies
         run: |
