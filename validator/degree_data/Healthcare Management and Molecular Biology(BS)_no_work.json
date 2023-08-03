@@ -1,0 +1,710 @@
+{
+  "abbreviation": "Healthcare Management and Molecular Biology(BS)",
+  "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/healthcare-management-molecular-biology",
+  "minimum_credit_hours": 152,
+  "name": "Bachelor of Science in Healthcare Management and Molecular Biology",
+  "school": "Naveen Jindal School of Management",
+  "subtype": "Major",
+  "year": "2022-2023",
+  "requirements": {
+    "core": "@import ./core.json",
+    "major": [
+      {
+        "matcher": "AndRequirement",
+        "metadata": {
+          "name": "Biology Major Preparatory Courses",
+          "id": "Healthcare Management and Molecular Biology(BS)-0"
+        },
+        "requirements": [
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "CHEM 1111",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-2"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "CHEM 1115",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-3"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Healthcare Management and Molecular Biology(BS)-1"
+            }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "CHEM 1112",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-5"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "CHEM 1116",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-6"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Healthcare Management and Molecular Biology(BS)-4"
+            }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "CHEM 1311",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-8"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "CHEM 1315",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-9"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Healthcare Management and Molecular Biology(BS)-7"
+            }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "CHEM 1312",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-11"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "CHEM 1316",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-12"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Healthcare Management and Molecular Biology(BS)-10"
+            }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "CHEM 2323",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-14"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "CHEM 2327",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-15"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Healthcare Management and Molecular Biology(BS)-13"
+            }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "CHEM 2325",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-17"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "CHEM 2328",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-18"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Healthcare Management and Molecular Biology(BS)-16"
+            }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "CHEM 2233",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-20"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "CHEM 2237",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-21"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Healthcare Management and Molecular Biology(BS)-19"
+            }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "MATH 2417",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-23"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MATH 2413",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-24"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Healthcare Management and Molecular Biology(BS)-22"
+            }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "MATH 2419",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-26"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MATH 2414",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-27"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Healthcare Management and Molecular Biology(BS)-25"
+            }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "AndRequirement",
+                "requirements": [
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "PHYS 2325",
+                    "metadata": {
+                      "id": "Healthcare Management and Molecular Biology(BS)-30"
+                    }
+                  },
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "PHYS 2125",
+                    "metadata": {
+                      "id": "Healthcare Management and Molecular Biology(BS)-31"
+                    }
+                  }
+                ],
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-29"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "PHYS 2421",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-32"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Healthcare Management and Molecular Biology(BS)-28"
+            }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "PHYS 2326",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-34"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "PHYS 2422",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-35"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Healthcare Management and Molecular Biology(BS)-33"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "PHYS 2126",
+            "metadata": {
+              "id": "Healthcare Management and Molecular Biology(BS)-36"
+            }
+          }
+        ]
+      },
+      {
+        "matcher": "AndRequirement",
+        "metadata": {
+          "name": "Biology Core Courses",
+          "id": "Healthcare Management and Molecular Biology(BS)-37"
+        },
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "BIOL 2111",
+            "metadata": {
+              "id": "Healthcare Management and Molecular Biology(BS)-38"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "BIOL 2112",
+            "metadata": {
+              "id": "Healthcare Management and Molecular Biology(BS)-39"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "BIOL 2281",
+            "metadata": {
+              "id": "Healthcare Management and Molecular Biology(BS)-40"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "BIOL 2311",
+            "metadata": {
+              "id": "Healthcare Management and Molecular Biology(BS)-41"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "BIOL 2312",
+            "metadata": {
+              "id": "Healthcare Management and Molecular Biology(BS)-42"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "BIOL 3101",
+            "metadata": {
+              "id": "Healthcare Management and Molecular Biology(BS)-43"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "BIOL 3102",
+            "metadata": {
+              "id": "Healthcare Management and Molecular Biology(BS)-44"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "BIOL 3161",
+            "metadata": {
+              "id": "Healthcare Management and Molecular Biology(BS)-45"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "BIOL 3162",
+            "metadata": {
+              "id": "Healthcare Management and Molecular Biology(BS)-46"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "BIOL 3301",
+            "metadata": {
+              "id": "Healthcare Management and Molecular Biology(BS)-47"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "BIOL 3302",
+            "metadata": {
+              "id": "Healthcare Management and Molecular Biology(BS)-48"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "BIOL 3361",
+            "metadata": {
+              "id": "Healthcare Management and Molecular Biology(BS)-49"
+            }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "BIOL 3362",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-51"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "BIOL 3335",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-52"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Healthcare Management and Molecular Biology(BS)-50"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "BIOL 3380",
+            "metadata": {
+              "id": "Healthcare Management and Molecular Biology(BS)-53"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "BIOL 4461",
+            "metadata": {
+              "id": "Healthcare Management and Molecular Biology(BS)-54"
+            }
+          }
+        ]
+      },
+      {
+        "matcher": "AndRequirement",
+        "metadata": {
+          "name": "Business Major Preparatory Courses",
+          "id": "Healthcare Management and Molecular Biology(BS)-55"
+        },
+        "requirements": []
+      },
+      {
+        "matcher": "AndRequirement",
+        "metadata": {
+          "name": "Business Core Courses",
+          "id": "Healthcare Management and Molecular Biology(BS)-68"
+        },
+        "requirements": [
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "BCOM 1300",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-70"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "BCOM 3300",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-71"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Healthcare Management and Molecular Biology(BS)-69"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "BCOM 4300",
+            "metadata": {
+              "id": "Healthcare Management and Molecular Biology(BS)-72"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "IMS 3310",
+            "metadata": {
+              "id": "Healthcare Management and Molecular Biology(BS)-73"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "FIN 3320",
+            "metadata": {
+              "id": "Healthcare Management and Molecular Biology(BS)-74"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "OPRE 3310",
+            "metadata": {
+              "id": "Healthcare Management and Molecular Biology(BS)-75"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ITSS 3300",
+            "metadata": {
+              "id": "Healthcare Management and Molecular Biology(BS)-76"
+            }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "OBHR 3330",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-78"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "OBHR 3310",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-79"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Healthcare Management and Molecular Biology(BS)-77"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MKT 3300",
+            "metadata": {
+              "id": "Healthcare Management and Molecular Biology(BS)-80"
+            }
+          }
+        ]
+      },
+      {
+        "matcher": "AndRequirement",
+        "metadata": {
+          "name": "Elective Requirements",
+          "id": "Healthcare Management and Molecular Biology(BS)-81"
+        },
+        "requirements": [
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "HMGT 4090",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-83"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "BA 4090",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-84"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Healthcare Management and Molecular Biology(BS)-82"
+            }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "IMS 4335",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-86"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ENTP 4340",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-87"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MKT 4360",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-88"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "BA 4095",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-89"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Healthcare Management and Molecular Biology(BS)-85"
+            }
+          },
+          {
+            "matcher": "HoursRequirement",
+            "required_hours": 18,
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "HMGT 3301",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-91"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "HMGT 3310",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-92"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "HMGT 3311",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-93"
+                }
+              },
+              {
+                "matcher": "OrRequirement",
+                "requirements": [
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "HMGT 3320",
+                    "metadata": {
+                      "id": "Healthcare Management and Molecular Biology(BS)-95"
+                    }
+                  },
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "ECON 3330",
+                    "metadata": {
+                      "id": "Healthcare Management and Molecular Biology(BS)-96"
+                    }
+                  }
+                ],
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-94"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "HMGT 4321",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-97"
+                }
+              },
+              {
+                "matcher": "OrRequirement",
+                "requirements": [
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "HMGT 4395",
+                    "metadata": {
+                      "id": "Healthcare Management and Molecular Biology(BS)-99"
+                    }
+                  },
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "BPS 4395",
+                    "metadata": {
+                      "id": "Healthcare Management and Molecular Biology(BS)-100"
+                    }
+                  },
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "ENTP 4395",
+                    "metadata": {
+                      "id": "Healthcare Management and Molecular Biology(BS)-101"
+                    }
+                  }
+                ],
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-98"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Healthcare Management and Molecular Biology(BS)-90"
+            }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "BIOL 4380",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-103"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "BIOL 3V96",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-104"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "BIOL 4391",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-105"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "BIOL 4399",
+                "metadata": {
+                  "id": "Healthcare Management and Molecular Biology(BS)-106"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Healthcare Management and Molecular Biology(BS)-102"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

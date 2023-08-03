@@ -1,0 +1,146 @@
+{
+    "abbreviation": "Literature with Spanish Concentration (BA)",
+    "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ah/literature-spanish",
+    "minimum_credit_hours": 120,
+    "name": "Bachelor of Arts in Literature with Spanish Concentration",
+    "school": "School of Arts and Humanities",
+    "subtype": "Major",
+    "year": "2022-2023",
+    "requirements": {
+      "core": "@import ./core.json",
+      "major": [
+        {
+          "matcher": "CourseRequirement",
+          "course": "LIT 2350",
+          "metadata": { "id": "d127bd1c-198b-41e5-9ce2-30859a16eb74" }
+        },
+        {
+          "matcher": "HoursRequirement",
+          "required_hours": 6,
+          "requirements": [
+            {
+              "matcher": "CourseRequirement",
+              "course": "LIT 2320",
+              "metadata": { "id": "5bd74a04-74b9-4a2d-8e3e-246709f5a83b" }
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "LIT 2321",
+              "metadata": { "id": "d45c59ac-d442-4e54-9652-8833f3fa5466" }
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "LIT 2322",
+              "metadata": { "id": "27edcb39-d248-4f2e-8011-a7b118152da2" }
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "LIT 2331",
+              "metadata": { "id": "b86351e6-3dec-4967-9ca6-611479c7f4cb" }
+            }
+          ],
+          "metadata": {
+            "id": "be7d2724-c04f-46b4-a765-491b47dd9af9"
+          }
+        },
+        {
+          "matcher": "HoursRequirement",
+          "required_hours": 12,
+          "requirements": [
+            {"matcher":"CourseRequirement","course":"LIT 3300","metadata":{"id":"0c77c5c9-f956-487b-93a6-ab1ebf5a8550"}},{"matcher":"CourseRequirement","course":"LIT 3339","metadata":{"id":"985a9ea3-fe8c-41b8-9356-601a7b109f04"}},{"matcher":"CourseRequirement","course":"LIT 4329","metadata":{"id":"84615b45-fb62-4303-a9aa-3e94d903cb83"}},{"matcher":"CourseRequirement","course":"ISAH 4V50","metadata":{"id":"5c5237e0-7d1d-4b28-be0f-e5b58ccef1e5"}}
+          ],
+          "metadata": {
+            "id": "9cd2f699-212c-4bd4-bd08-66bbb7fbf6b5"
+          }
+        },
+        {
+          "matcher": "HoursRequirement",
+          "required_hours": 3,
+          "requirements": [
+            {
+              "matcher": "CourseRequirement",
+              "course": "ARHM 3342",
+              "metadata": { "id": "ac6bbaa8-4a14-4ca8-9bc1-bd07a13dc7d4" }
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "LIT 3338",
+              "metadata": { "id": "b9627a7a-a6c6-4534-998a-0ce55d8095a0" }
+            },
+            {
+              "matcher": "PrefixBucketRequirement",
+              "prefix": "CRWT 3",
+              "metadata": {
+                "id": "6567a3e7-58b9-4fc5-8dd8-6892f0b6725e"
+              }
+            },
+            {
+              "matcher": "PrefixBucketRequirement",
+              "prefix": "CRWT 4",
+              "metadata": {
+                "id": "6567a3e7-58b9-4fc5-8dd8-6892f0b6725e"
+              }
+            }
+          ],
+          "metadata": {
+            "id": "9b5e13cf-4ba9-4dcb-aa03-567c6a4582c3"
+          }
+        },
+        {
+          "matcher": "HoursRequirement",
+          "required_hours": 6,
+          "requirements": [
+            {
+              "matcher": "CourseRequirement",
+              "course": "LIT 3319",
+              "metadata": { "id": "722d29d1-ef53-4b2b-aaef-48a68765955e" }
+            }
+          ],
+          "metadata": {
+            "id": "f2b510ed-d080-455d-9b4f-9bd47247e5f3"
+          }
+        },
+        {
+          "matcher": "HoursRequirement",
+          "required_hours": 3,
+          "requirements": [
+            {
+              "matcher": "CourseRequirement",
+              "course": "CRWT 3330",
+              "metadata": { "id": "98d6b739-4e33-4466-8789-ee108de0f3b2" }
+            },
+            {
+              "matcher": "CourseRequirement",
+              "course": "LIT 3337",
+              "metadata": { "id": "f2ddcd98-de09-4898-8a7f-1258bc62cb36" }
+            }
+          ],
+          "metadata": {
+            "id": "d5f58057-44da-455a-92e7-e1c3885517b7"
+          }
+        },
+        {
+          "matcher": "OtherRequirement",
+          "description": "Select 15 semester credit hours of SPAN electives (at least 6 semester credit hours must be at the upper-level). Students who do not place into SPAN 1312 will also need to complete SPAN 1311.",
+          "metadata": {
+            "id": "e9132a2a-4747-4ffa-afcb-f35bafd10312"
+          }
+        },
+        {
+          "matcher": "CourseRequirement",
+          "course": "ARHM 1100",
+          "metadata": {
+            "id": "Visual and Performing Arts with Art History Concentration (BA)-15"
+          }
+        },
+        {
+            "matcher": "FreeElectiveRequirement",
+            "required_hours": 33,
+            "excluded_courses": [],
+            "metadata": {
+              "id": "e86dd7bf-76a7-4a73-85b9-83a585f279df"
+            }
+          }
+      ]
+    }
+}
