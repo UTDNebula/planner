@@ -1,9 +1,7 @@
 name: Build Validator
 
 on:
-  push:
-    paths:
-      - 'validator/**'
+  workflow_dispatch:
   pull_request:
     paths:
       - 'validator/**'
