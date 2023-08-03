@@ -270,9 +270,7 @@
             "prefix_groups": [
               {
                 "matcher": "SomeRequirement",
-                "requirements": [
-                  { "matcher": "PrefixBucketRequirement", "prefix": "MKT" }
-                ]
+                "requirements": [{ "matcher": "PrefixBucketRequirement", "prefix": "MKT" }]
               },
               {
                 "matcher": "SomeRequirement",
@@ -287,9 +285,7 @@
               },
               {
                 "matcher": "SomeRequirement",
-                "requirements": [
-                  { "matcher": "PrefixBucketRequirement", "prefix": "ITSS" }
-                ]
+                "requirements": [{ "matcher": "PrefixBucketRequirement", "prefix": "ITSS" }]
               },
               {
                 "matcher": "SomeRequirement",
@@ -304,9 +300,7 @@
               },
               {
                 "matcher": "SomeRequirement",
-                "requirements": [
-                  { "matcher": "PrefixBucketRequirement", "prefix": "OPRE" }
-                ]
+                "requirements": [{ "matcher": "PrefixBucketRequirement", "prefix": "OPRE" }]
               }
             ],
             "required_count": 3,

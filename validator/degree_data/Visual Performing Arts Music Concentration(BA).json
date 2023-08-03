@@ -58,20 +58,20 @@
           "id": "b257f32a-da43-41ed-be36-c41ea9aeef9e"
         }
       },
-{
-  "matcher": "OtherRequirement",
-  "description": "8 semester credit hours of MUSI ensemble participation. Placement by audition",
-  "metadata": {
-    "id": "0f85c796-5ee8-4df9-99b7-10caca8b2c8b"
-  }
-},
-{
-  "matcher": "OtherRequirement",
-  "description": "15 semester credit hours of upper-level MUSI Electives",
-  "metadata": {
-    "id": "86b9c3bc-26ca-49cb-a471-fa36f89d2b1c"
-  }
-},
+      {
+        "matcher": "OtherRequirement",
+        "description": "8 semester credit hours of MUSI ensemble participation. Placement by audition",
+        "metadata": {
+          "id": "0f85c796-5ee8-4df9-99b7-10caca8b2c8b"
+        }
+      },
+      {
+        "matcher": "OtherRequirement",
+        "description": "15 semester credit hours of upper-level MUSI Electives",
+        "metadata": {
+          "id": "86b9c3bc-26ca-49cb-a471-fa36f89d2b1c"
+        }
+      },
       {
         "matcher": "CourseRequirement",
         "course": "VPAS 3340",

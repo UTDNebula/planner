@@ -14,4 +14,3 @@ tasks:
 ports:
   - port: 5000
     visibility: public
-

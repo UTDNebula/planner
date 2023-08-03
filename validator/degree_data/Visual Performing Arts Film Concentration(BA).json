@@ -129,20 +129,22 @@
         "requirements": [
           {
             "matcher": "SomeRequirement",
-            "requirements": [{
-              "matcher": "CourseRequirement",
-              "course": "FILM 3321",
-              "metadata": {
-                "id": "Visual and Performing Arts with Film Concentration (BA)-15"
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "FILM 3321",
+                "metadata": {
+                  "id": "Visual and Performing Arts with Film Concentration (BA)-15"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FILM 3325",
+                "metadata": {
+                  "id": "Visual and Performing Arts with Film Concentration (BA)-16"
+                }
               }
-            },
-            {
-              "matcher": "CourseRequirement",
-              "course": "FILM 3325",
-              "metadata": {
-                "id": "Visual and Performing Arts with Film Concentration (BA)-16"
-              }
-            }],
+            ],
             "metadata": {
               "id": "22c4107e-17ee-4774-9ebc-5c051400092c"
             }

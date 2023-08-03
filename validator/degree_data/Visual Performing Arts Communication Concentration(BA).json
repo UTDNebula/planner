@@ -320,13 +320,15 @@
       {
         "matcher": "HoursRequirement",
         "required_hours": 9,
-        "requirements": [{
-          "matcher": "PrefixBucketRequirement",
-          "prefix": "COMM",
-          "metadata": {
-            "id": "Visual and Performing Arts with Communication Concentration (BA)-42"
+        "requirements": [
+          {
+            "matcher": "PrefixBucketRequirement",
+            "prefix": "COMM",
+            "metadata": {
+              "id": "Visual and Performing Arts with Communication Concentration (BA)-42"
+            }
           }
-        }],
+        ],
         "metadata": {
           "id": "6553dec8-9b57-4f77-ab43-0737ab163c8d"
         }

@@ -4,17 +4,17 @@ Degree validation logic for UTD.
 
 <!-- TOC -->
 
-* [Degree Validator](#degree-validator)
-    * [Getting Started](#getting-started)
-    * [File Index](#file-index)
-    * [Requirement design and limitations](#requirement-design-and-limitations)
-        * [Representing requirements](#representing-requirements)
-            * [Representing electives as requirements](#representing-electives-as-requirements)
-        * [Requirement groups](#requirement-groups)
-        * [Manual assignments (Bypasses)](#manual-assignments--bypasses-)
-    * [Max flow design and limitations](#max-flow-design-and-limitations)
-        * [Course Splitting](#course-splitting)
-        * [Fractional hours](#fractional-hours)
+- [Degree Validator](#degree-validator)
+  - [Getting Started](#getting-started)
+  - [File Index](#file-index)
+  - [Requirement design and limitations](#requirement-design-and-limitations)
+    - [Representing requirements](#representing-requirements)
+      - [Representing electives as requirements](#representing-electives-as-requirements)
+    - [Requirement groups](#requirement-groups)
+    - [Manual assignments (Bypasses)](#manual-assignments--bypasses-)
+  - [Max flow design and limitations](#max-flow-design-and-limitations)
+    - [Course Splitting](#course-splitting)
+    - [Fractional hours](#fractional-hours)
 
 <!-- TOC -->
 
@@ -25,7 +25,7 @@ Developed using Python 3.10, on MacOS. `annotations` import probably no longer n
 Redis is used as a shared, persistent storage solution for Flask-Limiter ratelimiting.
 
 | Steps/Actions                           | Command                                                                                                                    |
-|-----------------------------------------|----------------------------------------------------------------------------------------------------------------------------|
+| --------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
 | Install Redis                           | `brew install redis`                                                                                                       |
 | Create Python virtual environment       | `python3 -m virtualenv venv && source venv/bin/activate`                                                                   |
 | Install Python module dependencies      | `pip install -r requirements.txt`                                                                                          |
@@ -117,7 +117,7 @@ post-processing steps:
 > It is probably good design to add a lot of warnings when users want to bypass. For example, we might want to warn
 > users if they are manually assigning a course that doesn't satisfy the requirement's Matcher. Or, if they try to
 > assign more hours than are available in a course. Or if they try to assign more hours than are needed by a
-> requirement.   
+> requirement.  
 > For now, no warnings have been implemented. If users try to over-assign, the algorithm allows them to do so and
 > should not crash.
 
@@ -165,4 +165,4 @@ integer flows).
 The fix is to multiply every capacity by some granularity factor, turning all fractions into integers. The current
 granularity factor is 100, meaning any hour assignment with 2 or fewer decimal places is supported.
 
-In very preliminary tests, this works well and very quickly, without degrading course splitting performance. 
+In very preliminary tests, this works well and very quickly, without degrading course splitting performance.

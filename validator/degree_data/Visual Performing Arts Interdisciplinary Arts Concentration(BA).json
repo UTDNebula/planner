@@ -9,7 +9,6 @@
   "requirements": {
     "core": "@import ./core.json",
     "major": [
-
       {
         "matcher": "OtherRequirement",
         "description": "Discipline I Prep Course: 15 semester credit hours of lower-division AHST, ARTS, COMM, FILM, DANC, MUSI, or THEA courses.",
@@ -71,7 +70,41 @@
         "matcher": "HoursRequirement",
         "required_hours": 3,
         "requirements": [
-          {"matcher":"CourseRequirement","course":"VPAS 4310","metadata":{"id":"f6a5c266-f737-4e56-a4e3-0e8bd400435f"}},{"matcher":"CourseRequirement","course":"ARTS 3311","metadata":{"id":"73bfaecd-4ff8-4d21-af50-6b52a2a6990f"}},{"matcher":"CourseRequirement","course":"ARTS 4310","metadata":{"id":"238f32b6-552a-4edd-b13c-512fc0a2e449"}},{"matcher":"CourseRequirement","course":"COMM 4370","metadata":{"id":"c4160033-f843-4705-af24-6e701c4ec3a8"}},{"matcher":"CourseRequirement","course":"COMM 4371","metadata":{"id":"53a923d1-0a86-4c15-bc92-c9e51410547e"}},{"matcher":"CourseRequirement","course":"ENTP 3301","metadata":{"id":"7156634f-3a25-49ea-af76-e8d49e0829c8"}},{"matcher":"CourseRequirement","course":"ISAH 4V50","metadata":{"id":"2d540f59-d3b1-47c1-9940-421fb52bc180"}}
+          {
+            "matcher": "CourseRequirement",
+            "course": "VPAS 4310",
+            "metadata": { "id": "f6a5c266-f737-4e56-a4e3-0e8bd400435f" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ARTS 3311",
+            "metadata": { "id": "73bfaecd-4ff8-4d21-af50-6b52a2a6990f" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ARTS 4310",
+            "metadata": { "id": "238f32b6-552a-4edd-b13c-512fc0a2e449" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "COMM 4370",
+            "metadata": { "id": "c4160033-f843-4705-af24-6e701c4ec3a8" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "COMM 4371",
+            "metadata": { "id": "53a923d1-0a86-4c15-bc92-c9e51410547e" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ENTP 3301",
+            "metadata": { "id": "7156634f-3a25-49ea-af76-e8d49e0829c8" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ISAH 4V50",
+            "metadata": { "id": "2d540f59-d3b1-47c1-9940-421fb52bc180" }
+          }
         ],
         "metadata": {
           "id": "Visual and Performing Arts with Interdisciplinary Arts Concentration (BA)-6"
