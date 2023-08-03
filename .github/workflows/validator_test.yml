@@ -1,4 +1,4 @@
-name: Build
+name: Build Validator
 
 on:
   push:
@@ -10,7 +10,7 @@ on:
 
 jobs:
   release:
-    name: Test app
+    name: Test validator
     runs-on: ubuntu-latest
     defaults:
       run:
