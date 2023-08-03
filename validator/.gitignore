@@ -9,3 +9,7 @@ venv/
 scratch
 pyvenv.cfg
 .env
+
+# Generated JSON schema.
+# TODO(akevinge): what is this?
+.vscode/major.schema.json
