@@ -1,2 +1,5 @@
 validator/
 tests/
+cypress/
+.github/
+.vscode/
