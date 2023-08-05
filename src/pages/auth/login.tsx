@@ -17,9 +17,18 @@ const EMAIL_VALIDATION_ERROR_TIMEOUT_MS = 600;
 /**
  * A page that presents a sign-in/sign-up box to the user.
  */
-export default function AuthPage({
+export default function LoginPage({
   providers,
 }: InferGetServerSidePropsType<typeof getStaticProps>): JSX.Element {
+  return <AuthPage providers={providers} />;
+}
+
+export function AuthPage(props: {
+  providers: Awaited<ReturnType<typeof getProviders>>;
+  signUp?: boolean;
+}): JSX.Element {
+  const { providers } = props;
+  const signUp = props.signUp ?? false;
   const [email, setEmail] = useState('');
 
   // Lets just handle auth redirect on client side
@@ -81,13 +90,15 @@ export default function AuthPage({
       {status !== 'loading' && (
         <section className="w-full min-w-[300px] max-w-xl p-5 sm:w-2/3">
           <div className="flex flex-wrap items-center">
-            <div>{EmojiIcon['waveEmoji']}</div>
+            <div>{signUp ? EmojiIcon['sparkle'] : EmojiIcon['waveEmoji']}</div>
             <h1 className="-mt-2 ml-2 text-2xl text-[36px] font-bold leading-normal tracking-tight lg:text-3xl">
-              Welcome Back!
+              {signUp ? 'Create An Account' : 'Welcome Back!'}
             </h1>
           </div>
           <p className="text-[16px] text-sm font-medium leading-normal text-[#737373]">
-            Sign in to continue using Nebula Planner
+            {signUp
+              ? 'Welcome to Nebula Planner! To get started, please sign up below.'
+              : 'Sign in to continue using Nebula Planner'}
           </p>
           <section className="mt-7 space-y-5 ">
             <div className="relative mb-4">
@@ -128,7 +139,7 @@ export default function AuthPage({
               <div className="relative flex items-center py-5">
                 <div className="flex-grow border-t border-gray-400"></div>
                 <span className="mx-4 flex-shrink font-medium text-gray-400">
-                  or log in using other accounts
+                  or {signUp ? 'sign up' : 'log in'} using other accounts
                 </span>
                 <div className="flex-grow border-t border-gray-400"></div>
               </div>
@@ -152,9 +163,12 @@ export default function AuthPage({
             </div>
             <div className="flex place-content-center">
               <h4 className="text-base font-normal text-[#A3A3A3] sm:text-lg">
-                Don&apos;t have an account?{' '}
-                <Link className="font-semibold text-[#4F46E5] hover:underline" href="/auth/signup">
-                  Sign up
+                {signUp ? 'Already' : "Don't"} have an account?{' '}
+                <Link
+                  className="font-semibold text-[#4F46E5] hover:underline"
+                  href={signUp ? '/auth/login' : '/auth/signup'}
+                >
+                  {signUp ? 'Sign in' : 'Sign up'}
                 </Link>
               </h4>
             </div>

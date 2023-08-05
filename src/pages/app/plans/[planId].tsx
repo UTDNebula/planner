@@ -1,4 +1,4 @@
-import { createProxySSGHelpers } from '@trpc/react-query/ssg';
+import { createServerSideHelpers } from '@trpc/react-query/server';
 import { Steps } from 'intro.js-react';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next/types';
 import { getServerSession } from 'next-auth';
@@ -163,7 +163,7 @@ export default function PlanDetailPage(
 
 export async function getServerSideProps(context: GetServerSidePropsContext<{ planId: string }>) {
   const session = await getServerSession(context.req, context.res, authOptions);
-  const ssg = createProxySSGHelpers({
+  const ssg = createServerSideHelpers({
     router: appRouter,
     ctx: await createContextInner({ session }),
     transformer: superjson,

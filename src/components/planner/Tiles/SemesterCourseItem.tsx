@@ -16,8 +16,6 @@ import { DragDataFromSemesterTile, DraggableCourse, Semester } from '../types';
 import useGetCourseInfo from '../useGetCourseInfo';
 import { tagColors } from '../utils';
 
-
-
 export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'> {
   course: DraggableCourse;
   semesterLocked?: boolean;

@@ -1,6 +1,6 @@
 import { Font, StyleSheet, Text, View } from '@react-pdf/renderer';
 
-Font.register({ family: 'Roboto', src: 'Inter var' });
+Font.register({ family: 'Inter', src: 'Inter var' });
 
 const styles = StyleSheet.create({
   titleContainer: {},

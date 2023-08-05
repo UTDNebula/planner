@@ -1,0 +1,174 @@
+{
+  "courses": [
+    {
+      "name": "ECS 1100",
+      "level": 1,
+      "hours": 1,
+      "department": "ECS"
+    },
+    {
+      "name": "CS 4341",
+      "level": 4,
+      "hours": 3,
+      "department": "CS"
+    },
+    {
+      "name": "CS 4384",
+      "level": 4,
+      "hours": 3,
+      "department": "CS"
+    },
+    {
+      "name": "CS 3377",
+      "level": 3,
+      "hours": 3,
+      "department": "CS"
+    },
+    {
+      "name": "ECS 3390",
+      "level": 3,
+      "hours": 3,
+      "department": "ECS"
+    },
+    {
+      "name": "CS 6378",
+      "level": 6,
+      "hours": 3,
+      "department": "CS"
+    },
+    {
+      "name": "UNIV 1010",
+      "level": 1,
+      "hours": 0,
+      "department": "UNIV"
+    },
+    {
+      "name": "CS 4348",
+      "level": 4,
+      "hours": 3,
+      "department": "CS"
+    },
+    {
+      "name": "CS 2336",
+      "level": 2,
+      "hours": 3,
+      "department": "CS"
+    },
+    {
+      "name": "CS 4390",
+      "level": 4,
+      "hours": 3,
+      "department": "CS"
+    },
+    {
+      "name": "CS 1200",
+      "level": 1,
+      "hours": 2,
+      "department": "CS"
+    },
+    {
+      "name": "CS 4V98",
+      "level": 4,
+      "hours": 3,
+      "department": "CS"
+    },
+    {
+      "name": "CS 4485",
+      "level": 4,
+      "hours": 4,
+      "department": "CS"
+    },
+    {
+      "name": "CS 4349",
+      "level": 4,
+      "hours": 3,
+      "department": "CS"
+    },
+    {
+      "name": "CS 6360",
+      "level": 6,
+      "hours": 3,
+      "department": "CS"
+    },
+    {
+      "name": "CS 2340",
+      "level": 2,
+      "hours": 3,
+      "department": "CS"
+    },
+    {
+      "name": "CS 3345",
+      "level": 3,
+      "hours": 3,
+      "department": "CS"
+    },
+    {
+      "name": "CS 4337",
+      "level": 4,
+      "hours": 3,
+      "department": "CS"
+    },
+    {
+      "name": "CS 3162",
+      "level": 3,
+      "hours": 1,
+      "department": "CS"
+    },
+    {
+      "name": "CS 3354",
+      "level": 3,
+      "hours": 3,
+      "department": "CS"
+    },
+    {
+      "name": "CS 4141",
+      "level": 4,
+      "hours": 1,
+      "department": "CS"
+    },
+    {
+      "name": "AHST 2331",
+      "level": 2,
+      "hours": 3,
+      "department": "AHST"
+    },
+    {
+      "name": "AMS 2341",
+      "level": 2,
+      "hours": 3,
+      "department": "AMS"
+    },
+    {
+      "name": "CS 3341",
+      "level": 3,
+      "hours": 3,
+      "department": "CS"
+    },
+    {
+      "name": "CS 3305",
+      "level": 3,
+      "hours": 3,
+      "department": "CS"
+    },
+    {
+      "name": "CS 4365",
+      "level": 4,
+      "hours": 3,
+      "department": "CS"
+    },
+    {
+      "name": "CS 4375",
+      "level": 4,
+      "hours": 3,
+      "department": "CS"
+    }
+  ],
+  "bypasses": [
+    {
+      "course": "CS 6360",
+      "requirement": "Major Core Courses",
+      "hours": 3
+    }
+  ],
+  "degree": "computer_science_bs"
+}

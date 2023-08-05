@@ -45,7 +45,6 @@ yarn-error.log*
 # Don't want IDE/code editor files in this repository
 # See docs/ide-config.md for more information.
 .idea
-.vscode
 .vs/
 
 prisma/generated

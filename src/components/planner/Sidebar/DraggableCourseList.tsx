@@ -4,7 +4,6 @@ import React from 'react';
 import DraggableSidebarCourseItem from './SidebarCourseItem';
 import { DraggableCourse } from '../types';
 
-
 export interface DraggableCourseListProps {
   courses: DraggableCourse[];
   getDragId: (course: DraggableCourse) => UniqueIdentifier;

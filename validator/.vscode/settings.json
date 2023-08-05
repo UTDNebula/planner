@@ -1,0 +1,18 @@
+{
+  "python.linting.mypyEnabled": true,
+  "python.linting.enabled": true,
+  "python.linting.ignorePatterns": ["core/*.py", "tests/*.py"],
+  "python.testing.pytestArgs": ["major"],
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestEnabled": true,
+  "python.analysis.typeCheckingMode": "basic",
+  "json.schemas": [
+    {
+        "fileMatch": [
+            "/degree_data/**.json"
+        ],
+        "url": ".vscode/major.schema.json"
+    }
+  ],
+  "python.formatting.provider": "black"
+}

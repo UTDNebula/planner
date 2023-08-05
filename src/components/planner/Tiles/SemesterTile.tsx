@@ -14,7 +14,6 @@ import { useSemestersContext } from '../SemesterContext';
 import { DragDataToSemesterTile, GetDragIdByCourseAndSemester, Semester } from '../types';
 import { tagColors } from '../utils';
 
-
 export interface SemesterTileProps {
   semester: Semester;
   getDragId: GetDragIdByCourseAndSemester;

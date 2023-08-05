@@ -1,0 +1,223 @@
+{
+  "abbreviation": "Visual and Performing Arts with Dance Concentration (BA)",
+  "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ah/visual-and-performing-arts-dance",
+  "minimum_credit_hours": 120,
+  "name": "Bachelor of Arts in Visual and Performing Arts with Dance Concentration",
+  "school": "School of Arts, Humanities, and Technology",
+  "subtype": "Major",
+  "year": "2022-2023",
+  "requirements": {
+    "core": "@import ./core.json",
+    "major": [
+      {
+        "matcher": "CourseRequirement",
+        "course": "DANC 1310",
+        "metadata": {
+          "id": "Visual and Performing Arts with Dance Concentration (BA)-0"
+        }
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "DANC 1305",
+        "metadata": {
+          "id": "Visual and Performing Arts with Dance Concentration (BA)-1"
+        }
+      },
+      {
+        "matcher": "OtherRequirement",
+        "description": "3 semester credit hours from a DANC studio",
+        "metadata": {
+          "id": "5d273cbb-647c-44d1-ad17-495dd9cc7f22"
+        }
+      },
+      {
+        "matcher": "OtherRequirement",
+        "description": "3 semester credit hours from a DANC/THEA/MUSI studio ensemble course",
+        "metadata": {
+          "id": "b2ac2e7d-6314-4f0d-9217-64d87636c6b0"
+        }
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "VPAS 3340",
+        "metadata": {
+          "id": "Visual and Performing Arts with Dance Concentration (BA)-2"
+        }
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "VPAS 4389",
+        "metadata": {
+          "id": "Visual and Performing Arts with Dance Concentration (BA)-3"
+        }
+      },
+      {
+        "matcher": "OrRequirement",
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "VPAS 4390",
+            "metadata": {
+              "id": "Visual and Performing Arts with Dance Concentration (BA)-5"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "VPAS 4V99",
+            "metadata": {
+              "id": "Visual and Performing Arts with Dance Concentration (BA)-6"
+            }
+          }
+        ],
+        "metadata": {
+          "id": "Visual and Performing Arts with Dance Concentration (BA)-4"
+        }
+      },
+      {
+        "matcher": "OtherRequirement",
+        "description": "3 semester credit hours of upper-level Related Courses from the School of Arts and Humanities (excluding the DANC prefix)",
+        "metadata": {
+          "id": "f9b4b7c6-eba5-492f-881e-9fb202fc0eab"
+        }
+      },
+      {
+        "matcher": "HoursRequirement",
+        "required_hours": 3,
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "ARTS 3311",
+            "metadata": {
+              "id": "Visual and Performing Arts with Dance Concentration (BA)-8"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ARTS 4310",
+            "metadata": {
+              "id": "Visual and Performing Arts with Dance Concentration (BA)-9"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "COMM 4370",
+            "metadata": {
+              "id": "Visual and Performing Arts with Dance Concentration (BA)-10"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "COMM 4371",
+            "metadata": {
+              "id": "Visual and Performing Arts with Dance Concentration (BA)-11"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ENTP 3301",
+            "metadata": {
+              "id": "Visual and Performing Arts with Dance Concentration (BA)-12"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ISAH 4V50",
+            "metadata": {
+              "id": "Visual and Performing Arts with Dance Concentration (BA)-13"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "VPAS 4310",
+            "metadata": {
+              "id": "Visual and Performing Arts with Dance Concentration (BA)-14"
+            }
+          }
+        ],
+        "metadata": {
+          "id": "Visual and Performing Arts with Dance Concentration (BA)-7"
+        }
+      },
+      {
+        "matcher": "OrRequirement",
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "DANC 3340",
+            "metadata": {
+              "id": "Visual and Performing Arts with Dance Concentration (BA)-16"
+            }
+          },
+          {
+            "matcher": "OtherRequirement",
+            "description": "Upper-Level Visual and Performing Arts Historical Context course",
+            "metadata": {
+              "id": "c1a4e865-9ddc-4a32-ae83-d34aec63a190"
+            }
+          }
+        ],
+        "metadata": {
+          "id": "Visual and Performing Arts with Dance Concentration (BA)-15"
+        }
+      },
+      {
+        "matcher": "OtherRequirement",
+        "description": "12 semester credit hours of 3000/4000-level Dance Studio and Ensemble courses",
+        "metadata": {
+          "id": "5a5874fa-f93b-4677-94aa-b84439a3cab1"
+        }
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "DANC 3347",
+        "metadata": {
+          "id": "Visual and Performing Arts with Dance Concentration (BA)-17"
+        }
+      },
+      {
+        "matcher": "OrRequirement",
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "DANC 3345",
+            "metadata": {
+              "id": "Visual and Performing Arts with Dance Concentration (BA)-19"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "DANC 4317",
+            "metadata": {
+              "id": "Visual and Performing Arts with Dance Concentration (BA)-20"
+            }
+          }
+        ],
+        "metadata": {
+          "id": "Visual and Performing Arts with Dance Concentration (BA)-18"
+        }
+      },
+      {
+        "matcher": "OtherRequirement",
+        "description": "3 semester credit hours of upper-division Visual and Performing Arts elective",
+        "metadata": {
+          "id": "8ea0d952-6db7-427a-b610-f7dd9d8b6902"
+        }
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "ARHM 1100",
+        "metadata": {
+          "id": "Visual and Performing Arts with Dance Concentration (BA)-21"
+        }
+      },
+      {
+        "matcher": "FreeElectiveRequirement",
+        "required_hours": 33,
+        "excluded_courses": [],
+        "metadata": {
+          "id": "Visual and Performing Arts with Dance Concentration (BA)-22"
+        }
+      }
+    ]
+  }
+}

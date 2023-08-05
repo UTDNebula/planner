@@ -4,7 +4,6 @@ import courses, { JSONCourse } from '@data/courses.json';
 
 import { router, publicProcedure } from '../trpc';
 
-
 export const coursesRouter = router({
   publicGetAllCourses: publicProcedure.query(async ({ ctx }) => {
     return courses as JSONCourse[];

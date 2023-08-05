@@ -1,5 +1,5 @@
 import { SemesterType } from '@prisma/client';
-import { createProxySSGHelpers } from '@trpc/react-query/ssg';
+import { createServerSideHelpers } from '@trpc/react-query/server';
 import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import { getServerSession } from 'next-auth/next';
@@ -7,7 +7,6 @@ import React, { useEffect, useState } from 'react';
 import superjson from 'superjson';
 
 import Button from '@/components/Button';
-import { Credit } from '@/components/credits/types';
 import Welcome, { WelcomeTypes } from '@/components/onboarding/welcome';
 import { createContextInner } from '@/server/trpc/context';
 import { appRouter } from '@/server/trpc/router/_app';
@@ -30,7 +29,6 @@ export interface OnboardingData {
   name: string;
   startSemester: SemesterCode;
   endSemester: SemesterCode;
-  credits: Credit[];
 }
 
 const startSemesters = generateSemesters(12, new Date().getFullYear() - 6, SemesterType.f, false)
@@ -47,7 +45,6 @@ const initialOnboardingData: OnboardingData = {
   name: '',
   startSemester: startSemesters[1], // TODO: Create util function for this in the future
   endSemester: endSemesters[6],
-  credits: [],
 };
 
 export default function OnboardingPage() {
@@ -156,7 +153,7 @@ export default function OnboardingPage() {
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const session = await getServerSession(context.req, context.res, authOptions);
-  const ssg = createProxySSGHelpers({
+  const ssg = createServerSideHelpers({
     router: appRouter,
     ctx: await createContextInner({ session }),
     transformer: superjson,
