@@ -57,7 +57,7 @@ def add_ids(requirement_data) -> None:
 # ]
 # Get the list of all files and directories
 path = "degree_data"
-# dir_list = os.listdir(path)
+dir_list = os.listdir(f"../{path}")
 
 for dir in dir_list:
     try:

@@ -48,6 +48,8 @@ def primitive_to_schema(primitive: Any | None) -> dict[str, Any]:
         return {"type": "string"}
     elif primitive == bool:
         return {"type": "boolean"}
+    elif primitive == list[str]:
+        return {"type": "array"}
     else:
         raise Exception("Unknown primitive", primitive)
 
@@ -91,8 +93,7 @@ for req_name in REQUIREMENTS_MAP:
     req = REQUIREMENTS_MAP[req_name]
     requirement_schema_props: dict[str, Any] = {"matcher": {"const": req_name}}
 
-    for prop_name in req.JSON.__annotations__:
-        prop_type = req.JSON.__annotations__[prop_name]
+    for prop_name, prop_type in req.JSON.__annotations__.items():
         if isinstance(prop_type, ForwardRef):
             s = (
                 forward_ref_to_schema(prop_type)
@@ -104,9 +105,9 @@ for req_name in REQUIREMENTS_MAP:
             try:
                 s = primitive_to_schema(prop_type)
                 requirement_schema_props[prop_name] = s
-            except:
+            except Exception as e:
                 raise Exception(
-                    "Failed to convert", prop_type, "to schema for", req, prop_name
+                    f"Failed to convert {prop_type} to schema for {req}::{prop_name}. err: {e}"
                 )
     requirement_schema_props.setdefault("metadata", metadata_schema)
     requirement_schemas.append(requirement_schema_props)
