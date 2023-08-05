@@ -115,6 +115,7 @@
         "requirements": [
           {
             "matcher": "OrRequirement",
+            "metadata": { "id": "Psychology(BS)-19" },
             "requirements": [
               {
                 "matcher": "CourseRequirement",
@@ -161,33 +162,23 @@
                 "course": "PSY 4V99",
                 "metadata": { "id": "Psychology(BS)-28" }
               }
-            ],
-            "metadata": { "id": "Psychology(BS)-19" }
+            ]
           },
           {
-            "matcher": "CSGuidedElectiveRequirement",
+            "matcher": "PsychologyPrefixesOrCourses",
             "required_hours": 9,
-            "also_fulfills": [
-              { "matcher": "CourseRequirement", "course": "SPAU 3301" },
-              { "matcher": "CourseRequirement", "course": "SPAU 3303" },
-              { "matcher": "CourseRequirement", "course": "SPAU 3304" },
-              { "matcher": "CourseRequirement", "course": "SPAU 3340" },
-              { "matcher": "CourseRequirement", "course": "SPAU 3343" },
-              { "matcher": "CourseRequirement", "course": "SPAU 3344" },
-              { "matcher": "CourseRequirement", "course": "SPAU 3345" },
-              { "matcher": "CourseRequirement", "course": "SPAU 4308" }
+            "accepted_courses": [
+              "SPAU 3301",
+              "SPAU 3303",
+              "SPAU 3304",
+              "SPAU 3340",
+              "SPAU 3343",
+              "SPAU 3344",
+              "SPAU 3345",
+              "SPAU 4308"
             ],
-            "starts_with": [
-              "PSY 33",
-              "PSY 43",
-              "CGS 33",
-              "CGS 43",
-              "CLDP 33",
-              "CLDP 43",
-              "NSC 33",
-              "NSC 43"
-            ],
-            "metadata": { "id": "Psychology(BS)-29" }
+            "metadata": { "id": "Psychology(BS)-29" },
+            "accepted_prefixes": ["PSY", "CGS", "CLDP", "NSC"]
           }
         ]
       },

@@ -20,7 +20,14 @@ def test_degrees(file: DirEntry[str]) -> None:
     requirements = data["requirements"]["major"]
 
     for requirement in requirements:
+        if not "matcher" in requirement:
+            pytest.fail(f"'matcher' not in {requirement}")
+
+        if not requirement["matcher"] in REQUIREMENTS_MAP:
+            pytest.fail(f"{requirement['matcher']} not in {REQUIREMENTS_MAP}")
+
         REQUIREMENTS_MAP[requirement["matcher"]].from_json(requirement)
+
 
 @pytest.mark.parametrize(
     "file", DEGREE_DATA_FILES, ids=lambda file: "file={}".format(file)
@@ -44,8 +51,10 @@ def test_degrees_include_first_year_seminar(file: DirEntry[str]) -> None:
         return
     degree_includes_first_year_seminar = False
     for course in first_year_seminar_courses[school]:
-        degree_includes_first_year_seminar = degree_includes_first_year_seminar or (course in f)
-    
+        degree_includes_first_year_seminar = degree_includes_first_year_seminar or (
+            course in f
+        )
+
     assert degree_includes_first_year_seminar
 
 
@@ -63,11 +72,13 @@ def test_req_metadata(file: DirEntry[str]) -> None:
         if "requirements" in requirement:
             for req in requirement["requirements"]:
                 check_metadata(req)
-        
+
     for requirement in requirements:
         check_metadata(requirement)
 
+
 schema = json.loads(open(".vscode/major.schema.json", "r").read())
+
 
 @pytest.mark.parametrize(
     "file", DEGREE_DATA_FILES, ids=lambda file: "file={}".format(file)
