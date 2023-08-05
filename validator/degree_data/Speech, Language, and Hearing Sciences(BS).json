@@ -131,11 +131,19 @@
             }
           },
           {
-            "matcher": "CSGuidedElectiveRequirement",
+            "matcher": "HoursRequirement",
             "required_hours": 3,
-            "starts_with": "SPAU",
+            "requirements": [
+              {
+                "matcher": "PrefixBucketRequirement",
+                "prefix": "SPAU",
+                "metadata": {
+                  "id": "b1d8b401-87f1-41b8-8555-5312ff312848"
+                }
+              }
+            ],
             "metadata": {
-              "id": "Speech, Language, and Hearing Sciences(BS)-19"
+              "id": "c0da5286-1846-4eed-af45-72dc5cbc6305"
             }
           }
         ]
