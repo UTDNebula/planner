@@ -1,0 +1,14 @@
+{
+  "folders": [
+    { "path": "../", "name": "root" },
+    {
+      "path": "../validator",
+      "name": "validator"
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "validator/": true
+    }
+  }
+}

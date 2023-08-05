@@ -8,6 +8,8 @@ on:
   pull_request:
     types:
       - closed
+    paths-ignore:
+      - 'validator/**'
   workflow_dispatch:
 
 jobs:

@@ -4,6 +4,8 @@ on:
   pull_request:
     branches:
       - 'develop'
+    paths-ignore:
+      - 'validator/**'
   workflow_dispatch:
 
 env:

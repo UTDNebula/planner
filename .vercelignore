@@ -1,0 +1,6 @@
+validator/
+tests/
+cypress/
+cypress.config.ts
+.github/
+.vscode/

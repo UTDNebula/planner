@@ -1,0 +1,193 @@
+{
+  "abbreviation": "Visual and Performing Arts with Music Concentration (BA)",
+  "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ah/visual-and-performing-arts-music",
+  "minimum_credit_hours": 120,
+  "name": "Bachelor of Arts in Visual and Performing Arts with Music Concentration",
+  "school": "School of Arts, Humanities, and Technology",
+  "subtype": "Major",
+  "year": "2022-2023",
+  "requirements": {
+    "core": "@import ./core.json",
+    "major": [
+      {
+        "matcher": "CourseRequirement",
+        "course": "MUSI 2328",
+        "metadata": {
+          "id": "Visual and Performing Arts with Music Concentration (BA)-0"
+        }
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "MUSI 2329",
+        "metadata": {
+          "id": "Visual and Performing Arts with Music Concentration (BA)-1"
+        }
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "MUSI 2330",
+        "metadata": {
+          "id": "Visual and Performing Arts with Music Concentration (BA)-2"
+        }
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "MUSI 2322",
+        "metadata": {
+          "id": "Visual and Performing Arts with Music Concentration (BA)-3"
+        }
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "MUSI 3330",
+        "metadata": {
+          "id": "Visual and Performing Arts with Music Concentration (BA)-4"
+        }
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "MUSI 3328",
+        "metadata": {
+          "id": "Visual and Performing Arts with Music Concentration (BA)-5"
+        }
+      },
+      {
+        "matcher": "OtherRequirement",
+        "description": "12 semester credit hours of Applied Music courses in primary instrument or voice (at least 8 semester credit hours must be upper-level)",
+        "metadata": {
+          "id": "b257f32a-da43-41ed-be36-c41ea9aeef9e"
+        }
+      },
+      {
+        "matcher": "OtherRequirement",
+        "description": "8 semester credit hours of MUSI ensemble participation. Placement by audition",
+        "metadata": {
+          "id": "0f85c796-5ee8-4df9-99b7-10caca8b2c8b"
+        }
+      },
+      {
+        "matcher": "OtherRequirement",
+        "description": "15 semester credit hours of upper-level MUSI Electives",
+        "metadata": {
+          "id": "86b9c3bc-26ca-49cb-a471-fa36f89d2b1c"
+        }
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "VPAS 3340",
+        "metadata": {
+          "id": "Visual and Performing Arts with Music Concentration (BA)-6"
+        }
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "VPAS 4389",
+        "metadata": {
+          "id": "Visual and Performing Arts with Music Concentration (BA)-7"
+        }
+      },
+      {
+        "matcher": "OrRequirement",
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "VPAS 4390",
+            "metadata": {
+              "id": "Visual and Performing Arts with Music Concentration (BA)-9"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "VPAS 4V99",
+            "metadata": {
+              "id": "Visual and Performing Arts with Music Concentration (BA)-10"
+            }
+          }
+        ],
+        "metadata": {
+          "id": "Visual and Performing Arts with Music Concentration (BA)-8"
+        }
+      },
+      {
+        "matcher": "OtherRequirement",
+        "description": "3 semester credit hours of upper-level Related Courses from the School of Arts and Humanities (excluding the MUSI prefix)",
+        "metadata": {
+          "id": "80dbd6e3-28a9-4f1f-9bf3-181ba89cd0d5"
+        }
+      },
+      {
+        "matcher": "HoursRequirement",
+        "required_hours": 3,
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "ARTS 3311",
+            "metadata": {
+              "id": "Visual and Performing Arts with Music Concentration (BA)-12"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ARTS 4310",
+            "metadata": {
+              "id": "Visual and Performing Arts with Music Concentration (BA)-13"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "COMM 4370",
+            "metadata": {
+              "id": "Visual and Performing Arts with Music Concentration (BA)-14"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "COMM 4371",
+            "metadata": {
+              "id": "Visual and Performing Arts with Music Concentration (BA)-15"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ENTP 3301",
+            "metadata": {
+              "id": "Visual and Performing Arts with Music Concentration (BA)-16"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ISAH 4V50",
+            "metadata": {
+              "id": "Visual and Performing Arts with Music Concentration (BA)-17"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "VPAS 4310",
+            "metadata": {
+              "id": "Visual and Performing Arts with Music Concentration (BA)-18"
+            }
+          }
+        ],
+        "metadata": {
+          "id": "Visual and Performing Arts with Music Concentration (BA)-11"
+        }
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "ARHM 1100",
+        "metadata": {
+          "id": "Visual and Performing Arts with Music Concentration (BA)-19"
+        }
+      },
+      {
+        "matcher": "FreeElectiveRequirement",
+        "required_hours": 13,
+        "excluded_courses": [],
+        "metadata": {
+          "id": "Visual and Performing Arts with Music Concentration (BA)-20"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,587 @@
+{
+  "abbreviation": "Business Administration(BS) Energy Management Concentration",
+  "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/business-administration",
+  "minimum_credit_hours": 120,
+  "name": "Bachelor of Science in Business Administration Energy Management Concentration",
+  "school": "Naveen Jindal School of Management",
+  "subtype": "Major",
+  "year": "2022-2023",
+  "requirements": {
+    "core": "@import ./core.json",
+    "major": [
+      {
+        "matcher": "AndRequirement",
+        "metadata": {
+          "id": "Business Administration(BS) Energy Management Concentration-0",
+          "name": "Major Preparatory Courses"
+        },
+        "requirements": [
+          {
+            "course": "ACCT 2301",
+            "matcher": "CourseRequirement",
+            "metadata": {
+              "id": "Business Administration(BS) Energy Management Concentration-1"
+            }
+          },
+          {
+            "course": "ACCT 2302",
+            "matcher": "CourseRequirement",
+            "metadata": {
+              "id": "Business Administration(BS) Energy Management Concentration-2"
+            }
+          },
+          {
+            "course": "BLAW 2301",
+            "matcher": "CourseRequirement",
+            "metadata": {
+              "id": "Business Administration(BS) Energy Management Concentration-3"
+            }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "course": "MATH 1325",
+                "matcher": "CourseRequirement",
+                "metadata": {
+                  "id": "Business Administration(BS) Energy Management Concentration-5"
+                }
+              },
+              {
+                "course": "MATH 2413",
+                "matcher": "CourseRequirement",
+                "metadata": {
+                  "id": "Business Administration(BS) Energy Management Concentration-6"
+                }
+              },
+              {
+                "course": "MATH 2417",
+                "matcher": "CourseRequirement",
+                "metadata": {
+                  "id": "Business Administration(BS) Energy Management Concentration-7"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Business Administration(BS) Energy Management Concentration-4"
+            }
+          },
+          {
+            "matcher": "OrRequirement",
+            "metadata": {
+              "id": "Business Administration(BS) Energy Management Concentration-8"
+            },
+            "requirements": [
+              {
+                "course": "OPRE 3360",
+                "matcher": "CourseRequirement",
+                "metadata": {
+                  "id": "Business Administration(BS) Energy Management Concentration-9"
+                }
+              },
+              {
+                "course": "STAT 3360",
+                "matcher": "CourseRequirement",
+                "metadata": {
+                  "id": "Business Administration(BS) Energy Management Concentration-10"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": "SelectRequirement",
+            "metadata": {
+              "id": "Business Administration(BS) Energy Management Concentration-11"
+            },
+            "required_count": 2,
+            "requirements": [
+              {
+                "course": "BA 1310",
+                "matcher": "CourseRequirement",
+                "metadata": {
+                  "id": "Business Administration(BS) Energy Management Concentration-12"
+                }
+              },
+              {
+                "course": "BA 1320",
+                "matcher": "CourseRequirement",
+                "metadata": {
+                  "id": "Business Administration(BS) Energy Management Concentration-13"
+                }
+              },
+              {
+                "course": "ECON 2301",
+                "matcher": "CourseRequirement",
+                "metadata": {
+                  "id": "Business Administration(BS) Energy Management Concentration-14"
+                }
+              },
+              {
+                "course": "ECON 2302",
+                "matcher": "CourseRequirement",
+                "metadata": {
+                  "id": "Business Administration(BS) Energy Management Concentration-15"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "matcher": "AndRequirement",
+        "metadata": {
+          "id": "Business Administration(BS) Energy Management Concentration-16",
+          "name": "Major Core Courses"
+        },
+        "requirements": [
+          {
+            "matcher": "OrRequirement",
+            "metadata": {
+              "id": "Business Administration(BS) Energy Management Concentration-17"
+            },
+            "requirements": [
+              {
+                "course": "BCOM 1300",
+                "matcher": "CourseRequirement",
+                "metadata": {
+                  "id": "Business Administration(BS) Energy Management Concentration-18"
+                }
+              },
+              {
+                "course": "BCOM 3300",
+                "matcher": "CourseRequirement",
+                "metadata": {
+                  "id": "Business Administration(BS) Energy Management Concentration-19"
+                }
+              }
+            ]
+          },
+          {
+            "course": "BCOM 4300",
+            "matcher": "CourseRequirement",
+            "metadata": {
+              "id": "Business Administration(BS) Energy Management Concentration-20"
+            }
+          },
+          {
+            "course": "BA 3300",
+            "matcher": "CourseRequirement",
+            "metadata": {
+              "id": "Business Administration(BS) Energy Management Concentration-21"
+            }
+          },
+          {
+            "course": "IMS 3310",
+            "matcher": "CourseRequirement",
+            "metadata": {
+              "id": "Business Administration(BS) Energy Management Concentration-22"
+            }
+          },
+          {
+            "course": "FIN 3320",
+            "matcher": "CourseRequirement",
+            "metadata": {
+              "id": "Business Administration(BS) Energy Management Concentration-23"
+            }
+          },
+          {
+            "course": "ITSS 3300",
+            "matcher": "CourseRequirement",
+            "metadata": {
+              "id": "Business Administration(BS) Energy Management Concentration-24"
+            }
+          },
+          {
+            "course": "OPRE 3310",
+            "matcher": "CourseRequirement",
+            "metadata": {
+              "id": "Business Administration(BS) Energy Management Concentration-25"
+            }
+          },
+          {
+            "course": "OPRE 3330",
+            "matcher": "CourseRequirement",
+            "metadata": {
+              "id": "Business Administration(BS) Energy Management Concentration-26"
+            }
+          },
+          {
+            "matcher": "OrRequirement",
+            "metadata": {
+              "id": "Business Administration(BS) Energy Management Concentration-27"
+            },
+            "requirements": [
+              {
+                "course": "OBHR 3310",
+                "matcher": "CourseRequirement",
+                "metadata": {
+                  "id": "Business Administration(BS) Energy Management Concentration-28"
+                }
+              },
+              {
+                "course": "OBHR 3330",
+                "matcher": "CourseRequirement",
+                "metadata": {
+                  "id": "Business Administration(BS) Energy Management Concentration-29"
+                }
+              }
+            ]
+          },
+          {
+            "course": "MKT 3300",
+            "matcher": "CourseRequirement",
+            "metadata": {
+              "id": "Business Administration(BS) Energy Management Concentration-30"
+            }
+          },
+          {
+            "matcher": "OrRequirement",
+            "metadata": {
+              "id": "Business Administration(BS) Energy Management Concentration-31"
+            },
+            "requirements": [
+              {
+                "course": "BPS 4305",
+                "matcher": "CourseRequirement",
+                "metadata": {
+                  "id": "Business Administration(BS) Energy Management Concentration-32"
+                }
+              },
+              {
+                "course": "ENTP 3320",
+                "matcher": "CourseRequirement",
+                "metadata": {
+                  "id": "Business Administration(BS) Energy Management Concentration-33"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": "OrRequirement",
+            "metadata": {
+              "id": "Business Administration(BS) Energy Management Concentration-34"
+            },
+            "requirements": [
+              {
+                "course": "BPS 4395",
+                "matcher": "CourseRequirement",
+                "metadata": {
+                  "id": "Business Administration(BS) Energy Management Concentration-35"
+                }
+              },
+              {
+                "course": "ENTP 4395",
+                "matcher": "CourseRequirement",
+                "metadata": {
+                  "id": "Business Administration(BS) Energy Management Concentration-36"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": "OrRequirement",
+            "metadata": {
+              "id": "Business Administration(BS) Energy Management Concentration-37"
+            },
+            "requirements": [
+              {
+                "course": "IMS 4335",
+                "matcher": "CourseRequirement",
+                "metadata": {
+                  "id": "Business Administration(BS) Energy Management Concentration-38"
+                }
+              },
+              {
+                "course": "ENTP 4340",
+                "matcher": "CourseRequirement",
+                "metadata": {
+                  "id": "Business Administration(BS) Energy Management Concentration-39"
+                }
+              },
+              {
+                "course": "MKT 4360",
+                "matcher": "CourseRequirement",
+                "metadata": {
+                  "id": "Business Administration(BS) Energy Management Concentration-40"
+                }
+              },
+              {
+                "course": "BA 4095",
+                "matcher": "CourseRequirement",
+                "metadata": {
+                  "id": "Business Administration(BS) Energy Management Concentration-41"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "matcher": "AndRequirement",
+        "metadata": {
+          "name": "Major Related Courses",
+          "id": "Business Administration(BS) Energy Management Concentration-42"
+        },
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "ENGY 3301",
+            "metadata": {
+              "id": "Business Administration(BS) Energy Management Concentration-43"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ENGY 3302",
+            "metadata": {
+              "id": "Business Administration(BS) Energy Management Concentration-44"
+            }
+          },
+          {
+            "matcher": "SelectRequirement",
+            "required_count": 2,
+            "requirements": [
+              {
+                "matcher": "OrRequirement",
+                "requirements": [
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "ENGY 3340",
+                    "metadata": {
+                      "id": "Business Administration(BS) Energy Management Concentration-47"
+                    }
+                  },
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "BLAW 4301",
+                    "metadata": {
+                      "id": "Business Administration(BS) Energy Management Concentration-48"
+                    }
+                  }
+                ],
+                "metadata": {
+                  "id": "Business Administration(BS) Energy Management Concentration-46"
+                }
+              },
+              {
+                "matcher": "OrRequirement",
+                "requirements": [
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "FIN 4313",
+                    "metadata": {
+                      "id": "Business Administration(BS) Energy Management Concentration-50"
+                    }
+                  },
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "ENGY 4313",
+                    "metadata": {
+                      "id": "Business Administration(BS) Energy Management Concentration-51"
+                    }
+                  }
+                ],
+                "metadata": {
+                  "id": "Business Administration(BS) Energy Management Concentration-49"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MECO 4342",
+                "metadata": {
+                  "id": "Business Administration(BS) Energy Management Concentration-52"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Business Administration(BS) Energy Management Concentration-45"
+            }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "BA 4V90",
+                "metadata": {
+                  "id": "Business Administration(BS) Energy Management Concentration-54"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "BA 4090",
+                "metadata": {
+                  "id": "Business Administration(BS) Energy Management Concentration-55"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Business Administration(BS) Energy Management Concentration-53"
+            }
+          },
+          {
+            "matcher": "HoursRequirement",
+            "required_hours": 12,
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "BA 4V90",
+                "metadata": {
+                  "id": "Business Administration(BS) Energy Management Concentration-57"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "BA 4090",
+                "metadata": {
+                  "id": "Business Administration(BS) Energy Management Concentration-58"
+                }
+              },
+              {
+                "matcher": "OrRequirement",
+                "requirements": [
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "ENGY 3340",
+                    "metadata": {
+                      "id": "Business Administration(BS) Energy Management Concentration-60"
+                    }
+                  },
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "BLAW 4301",
+                    "metadata": {
+                      "id": "Business Administration(BS) Energy Management Concentration-61"
+                    }
+                  }
+                ],
+                "metadata": {
+                  "id": "Business Administration(BS) Energy Management Concentration-59"
+                }
+              },
+              {
+                "matcher": "OrRequirement",
+                "requirements": [
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "FIN 4313",
+                    "metadata": {
+                      "id": "Business Administration(BS) Energy Management Concentration-63"
+                    }
+                  },
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "ENGY 4313",
+                    "metadata": {
+                      "id": "Business Administration(BS) Energy Management Concentration-64"
+                    }
+                  }
+                ],
+                "metadata": {
+                  "id": "Business Administration(BS) Energy Management Concentration-62"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MECO 4342",
+                "metadata": {
+                  "id": "Business Administration(BS) Energy Management Concentration-65"
+                }
+              },
+              {
+                "matcher": "OrRequirement",
+                "requirements": [
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "MECO 3330",
+                    "metadata": {
+                      "id": "Business Administration(BS) Energy Management Concentration-67"
+                    }
+                  },
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "ENGY 3330",
+                    "metadata": {
+                      "id": "Business Administration(BS) Energy Management Concentration-68"
+                    }
+                  }
+                ],
+                "metadata": {
+                  "id": "Business Administration(BS) Energy Management Concentration-66"
+                }
+              },
+              {
+                "matcher": "OrRequirement",
+                "requirements": [
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "MECO 4300",
+                    "metadata": {
+                      "id": "Business Administration(BS) Energy Management Concentration-70"
+                    }
+                  },
+                  {
+                    "matcher": "CourseRequirement",
+                    "course": "ENGY 4300",
+                    "metadata": {
+                      "id": "Business Administration(BS) Energy Management Concentration-71"
+                    }
+                  }
+                ],
+                "metadata": {
+                  "id": "Business Administration(BS) Energy Management Concentration-69"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "OPRE 4330",
+                "metadata": {
+                  "id": "Business Administration(BS) Energy Management Concentration-72"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 4340",
+                "metadata": {
+                  "id": "Business Administration(BS) Energy Management Concentration-73"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "FIN 4345",
+                "metadata": {
+                  "id": "Business Administration(BS) Energy Management Concentration-74"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "NATS 2333",
+                "metadata": {
+                  "id": "Business Administration(BS) Energy Management Concentration-75"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "GEOS 1303",
+                "metadata": {
+                  "id": "Business Administration(BS) Energy Management Concentration-76"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Business Administration(BS) Energy Management Concentration-56"
+            }
+          }
+        ]
+      },
+      {
+        "matcher": "FreeElectiveRequirement",
+        "required_hours": 6,
+        "excluded_courses": [],
+        "metadata": {
+          "id": "Business Administration(BS) Energy Management Concentration-77"
+        }
+      }
+    ]
+  }
+}

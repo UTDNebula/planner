@@ -1,0 +1,324 @@
+{
+  "abbreviation": "Visual and Performing Arts with Photo-Video-Digital Concentration (BA)",
+  "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ah/visual-and-performing-arts-photo-video-digital",
+  "minimum_credit_hours": 120,
+  "name": "Bachelor of Arts in Visual and Performing Arts with Photo-Video-Digital Concentration",
+  "school": "School of Arts, Humanities, and Technology",
+  "subtype": "Major",
+  "year": "2022-2023",
+  "requirements": {
+    "core": "@import ./core.json",
+    "major": [
+      {
+        "matcher": "CourseRequirement",
+        "course": "ARTS 2380",
+        "metadata": { "id": "3a14e050-b67c-4e2d-9535-cdda646d3ef3" }
+      },
+      {
+        "matcher": "HoursRequirement",
+        "required_hours": 3,
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "AHST 1303",
+            "metadata": { "id": "c1dbdf05-1be2-4665-a6af-966c292fb978" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "AHST 1304",
+            "metadata": { "id": "e9160627-ee49-4ab4-863d-3ba3f885e4e2" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "AHST 2331",
+            "metadata": { "id": "8677690d-0297-48de-9dfa-86c332342ddc" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "FILM 2332",
+            "metadata": { "id": "44bde8ba-5e2e-4d26-aff8-aba6630e2c6a" }
+          }
+        ],
+        "metadata": {
+          "id": "d1d23add-6edc-4b60-9ab4-7b6ff5f38b74"
+        }
+      },
+      {
+        "matcher": "HoursRequirement",
+        "required_hours": 9,
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "ARTS 1316",
+            "metadata": { "id": "7e84cfff-e5f6-4009-8df4-22f592ca8e96" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ARTS 2315",
+            "metadata": { "id": "ffe5c226-7ead-4b2c-a57c-be56948454b4" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ARTS 2316",
+            "metadata": { "id": "adaf0c7f-01b8-4157-a315-c0074dc20e31" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ARTS 2350",
+            "metadata": { "id": "ad67ce13-e769-46ec-bb57-14b16e5c84d7" }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ARTS 2381",
+            "metadata": { "id": "5d2add7f-d353-474a-a9f5-eb513971bf9b" }
+          }
+        ],
+        "metadata": {
+          "id": "ebbaa99f-90d4-44ac-96a1-738ef8ed2f22"
+        }
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "VPAS 3340",
+        "metadata": {
+          "id": "Visual and Performing Arts with Photo-Video-Digital Concentration (BA)-0"
+        }
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "VPAS 4389",
+        "metadata": {
+          "id": "Visual and Performing Arts with Photo-Video-Digital Concentration (BA)-1"
+        }
+      },
+      {
+        "matcher": "OrRequirement",
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "VPAS 4390",
+            "metadata": {
+              "id": "Visual and Performing Arts with Photo-Video-Digital Concentration (BA)-3"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "VPAS 4V99",
+            "metadata": {
+              "id": "Visual and Performing Arts with Photo-Video-Digital Concentration (BA)-4"
+            }
+          }
+        ],
+        "metadata": {
+          "id": "Visual and Performing Arts with Photo-Video-Digital Concentration (BA)-2"
+        }
+      },
+      {
+        "matcher": "OtherRequirement",
+        "description": "3 semester credit hours of upper-level Related Courses from the School of Arts and Humanities (excluding the ARTS prefix)",
+        "metadata": {
+          "id": "32cd2fb0-4ffa-43e0-a4fb-b5708b0f9874"
+        }
+      },
+      {
+        "matcher": "HoursRequirement",
+        "required_hours": 3,
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "ARTS 3311",
+            "metadata": {
+              "id": "Visual and Performing Arts with Photo-Video-Digital Concentration (BA)-6"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ARTS 4310",
+            "metadata": {
+              "id": "Visual and Performing Arts with Photo-Video-Digital Concentration (BA)-7"
+            }
+          }
+        ],
+        "metadata": {
+          "id": "Visual and Performing Arts with Photo-Video-Digital Concentration (BA)-5"
+        }
+      },
+      {
+        "matcher": "HoursRequirement",
+        "required_hours": 3,
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "AHST 3318",
+            "metadata": {
+              "id": "Visual and Performing Arts with Photo-Video-Digital Concentration (BA)-14"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "AHST 3319",
+            "metadata": {
+              "id": "Visual and Performing Arts with Photo-Video-Digital Concentration (BA)-15"
+            }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "AHST 3324",
+                "metadata": {
+                  "id": "Visual and Performing Arts with Photo-Video-Digital Concentration (BA)-16"
+                }
+              },
+              {
+                "matcher": "PrefixBucketRequirement",
+                "prefix": "FILM 3",
+                "metadata": {
+                  "id": "259c203a-a4ea-4b52-bb95-61f725bca8f0"
+                }
+              },
+              {
+                "matcher": "PrefixBucketRequirement",
+                "prefix": "FILM 4",
+                "metadata": {
+                  "id": "0341b5f1-bccc-4b91-9667-da077f2b9159"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "56df9843-3297-49ba-a216-8381075b9e41"
+            }
+          }
+        ],
+        "metadata": {
+          "id": "Visual and Performing Arts with Photo-Video-Digital Concentration (BA)-13"
+        }
+      },
+      {
+        "matcher": "OtherRequirement",
+        "description": "Select any 3 semester credit hours of upper-level AHST or FILM courses",
+        "metadata": {
+          "id": "aea5d237-8416-44bb-93f7-9090f2ee3383"
+        }
+      },
+      {
+        "matcher": "HoursRequirement",
+        "required_hours": 9,
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "ARTS 3371",
+            "metadata": {
+              "id": "Visual and Performing Arts with Photo-Video-Digital Concentration (BA)-18"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ARTS 3372",
+            "metadata": {
+              "id": "Visual and Performing Arts with Photo-Video-Digital Concentration (BA)-19"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ARTS 3376",
+            "metadata": {
+              "id": "Visual and Performing Arts with Photo-Video-Digital Concentration (BA)-20"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ARTS 3377",
+            "metadata": {
+              "id": "Visual and Performing Arts with Photo-Video-Digital Concentration (BA)-21"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ARTS 3379",
+            "metadata": {
+              "id": "Visual and Performing Arts with Photo-Video-Digital Concentration (BA)-22"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ARTS 3381",
+            "metadata": {
+              "id": "Visual and Performing Arts with Photo-Video-Digital Concentration (BA)-23"
+            }
+          }
+        ],
+        "metadata": {
+          "id": "Visual and Performing Arts with Photo-Video-Digital Concentration (BA)-17"
+        }
+      },
+      {
+        "matcher": "HoursRequirement",
+        "required_hours": 3,
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "ARTS 4308",
+            "metadata": {
+              "id": "Visual and Performing Arts with Photo-Video-Digital Concentration (BA)-25"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ARTS 4368",
+            "metadata": {
+              "id": "Visual and Performing Arts with Photo-Video-Digital Concentration (BA)-26"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ARTS 4372",
+            "metadata": {
+              "id": "Visual and Performing Arts with Photo-Video-Digital Concentration (BA)-27"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ARTS 4V71",
+            "metadata": {
+              "id": "Visual and Performing Arts with Photo-Video-Digital Concentration (BA)-28"
+            }
+          }
+        ],
+        "metadata": {
+          "id": "Visual and Performing Arts with Photo-Video-Digital Concentration (BA)-24"
+        }
+      },
+      {
+        "matcher": "OtherRequirement",
+        "description": "Select any 3 semester credit hours from any 4000 level ARTS studio course",
+        "metadata": {
+          "id": "0d399b67-8a65-47b0-808d-7e92b4d6bb83"
+        }
+      },
+      {
+        "matcher": "OtherRequirement",
+        "description": "Select any 6 semester credit hours upper level VPA courses from the following prefixes: AHST, ARTS, COMM, DANC, FILM, MUSI, THEA",
+        "metadata": {
+          "id": "189fb207-8e41-4626-be32-95491fc8feae"
+        }
+      },
+      {
+        "matcher": "CourseRequirement",
+        "course": "ARHM 1100",
+        "metadata": {
+          "id": "Visual and Performing Arts with Photo-Video-Digital Concentration (BA)-29"
+        }
+      },
+      {
+        "matcher": "FreeElectiveRequirement",
+        "required_hours": 24,
+        "excluded_courses": [],
+        "metadata": {
+          "id": "Visual and Performing Arts with Photo-Video-Digital Concentration (BA)-30"
+        }
+      }
+    ]
+  }
+}
