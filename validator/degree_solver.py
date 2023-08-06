@@ -1,9 +1,11 @@
 from __future__ import annotations
 from enum import Enum
-import json
+from copy import deepcopy
 from pydantic import Json
 
 from typing import Any
+
+import major.requirements.shared
 from core.solver import AssignmentStore, GraduationRequirementsSolver
 from major.requirements import AbstractRequirement
 from dataclasses import dataclass
@@ -172,12 +174,19 @@ class DegreeRequirementsSolver:
             self.solved_core = core_solver.solve(
                 [course for course in self.courses], []
             )  # Convert to list
+        # Set of the core courses that are fulfilled, so they won't be considered as free electives
+        core_courses = set()
+        for req_fill in self.solved_core.reqs_to_courses.values():
+            for course in req_fill.keys():
+                core_courses.add(course.name)
         # Run for major
         for degree_req in self.degree_requirements:
             for course in self.courses:
+                # Make sure it's not a core course
+                if course in core_courses:
+                    continue
                 for requirement in degree_req.requirements:
-                    fulfilled = requirement.attempt_fulfill(course)
-                    if fulfilled:
+                    if requirement.attempt_fulfill(course):
                         break
 
             # Handle requirements bypasses for major
