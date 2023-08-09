@@ -4,7 +4,6 @@ from pydantic import Json
 
 from typing import Any
 
-import major.requirements.shared
 from core.solver import AssignmentStore, GraduationRequirementsSolver
 from major.requirements import AbstractRequirement
 from dataclasses import dataclass
