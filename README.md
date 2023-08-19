@@ -1,6 +1,6 @@
 # Nebula Planner
 
-Nebula Planner is a tool for planning out 4yr degree plans for UTD students.
+Nebula Planner is a degree planning tool for UTD students.
 
 ### Features
 

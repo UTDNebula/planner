@@ -11,8 +11,8 @@ on their degree plans. Consequently, validation of major requirements
 tends to be a minefield of edge cases.
 
 Validation was originally written with core and major combined (only supporting Bio and CS degrees), but it was quickly discovered that many of the unique twists
-in major requirements were unable to be modeled with max-flow problem - and if
-they were, it introduce too many complications.
+in major requirements were unable to be modeled with the max-flow problem - and if
+they were, it introduced too many complications.
 
 As a result, validation was split into core and major; core validation still using
 max-flow and major using a greedy algorithm. Because many majors include a free elective requirement (which is basically a catch-all), major validation relies on the output of core validation.
