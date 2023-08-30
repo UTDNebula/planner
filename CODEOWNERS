@@ -1,5 +1,14 @@
-# Request project lead by default
-* @akevinge
+# Request lead for file changes in root and workflows.
+/* @akevinge
+/.github/**/* @akevinge
 
-# Request all Project Nebula Maintainers to review other pull requests
-src/**/* @UTDNebula/Planner-Maintainers
+# Request Planner PR Reviewers team for changes in to the following root directories.
+/.vscode/ @UTDNebula/pr-reviewers
+/cypress/ @UTDNebula/pr-reviewers
+/docs/ @UTDNebula/pr-reviewers
+/prisma/ @UTDNebula/pr-reviewers
+/public/ @UTDNebula/pr-reviewers
+/src/ @UTDNebula/pr-reviewers
+/tests/ @UTDNebula/pr-reviewers
+/validator/ @UTDNebula/pr-reviewers
+
