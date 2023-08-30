@@ -1,6 +1,6 @@
 # Validator
 
-The internals/algorithms of the Planner Validator.
+The internals/algorithms of the Planner Validator. 
 
 ## Overall Design
 
