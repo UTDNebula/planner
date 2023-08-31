@@ -1,7 +1,7 @@
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { PDFDownloadLink } from '@react-pdf/renderer';
+import { usePDF } from '@react-pdf/renderer';
 import Link from 'next/link';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 import AnalyticsWrapper from '@/components/common/AnalyticsWrapper';
 import DownloadIcon from '@/icons/DownloadIcon';
@@ -50,8 +50,22 @@ const Toolbar: FC<ToolbarProps> = ({
 
   const { data: coursesData } = q;
 
+  const [{ loading, error, url }, update] = usePDF({
+    document: (
+      <DegreePlanPDF
+        studentName={studentName}
+        planTitle={title}
+        major={major}
+        semesters={semesters}
+        transferCredits={transferCredits}
+        coursesData={coursesData ?? []}
+      />
+    ),
+  });
+
+  useEffect(() => update(), [update, studentName, title, semesters, transferCredits, coursesData]);
   return (
-    <div className=" flex flex-row items-start gap-2 py-1 text-primary-900">
+    <div className="flex flex-row items-start gap-2 py-1 text-primary-900">
       <ToolbarWrapper>
         <button type="button" className="rounded-sm transition-all hover:bg-black/10">
           <Link href="/app/home">
@@ -74,26 +88,25 @@ const Toolbar: FC<ToolbarProps> = ({
       <div className="grow"></div>
       <article className="flex flex-row gap-3">
         <ToolbarWrapper>
-          <PDFDownloadLink
-            document={
-              <DegreePlanPDF
-                studentName={studentName}
-                planTitle={title}
-                major={major}
-                semesters={semesters}
-                transferCredits={transferCredits}
-                coursesData={coursesData ?? []}
-              />
-            }
-          >
-            <AnalyticsWrapper analyticsClass="umami--click--export-pdf">
-              <Button size="medium" icon={<DownloadIcon />} id="tutorial-editor-7">
-                <span className="whitespace-nowrap" id="hello">
-                  Export Degree Plan
-                </span>
+          <AnalyticsWrapper analyticsClass="umami--click--export-pdf">
+            <a
+              href={url || '#'}
+              download={`${title} - ${new Date()
+                .toLocaleString()
+                .replaceAll('/', '_')}.pdf`}
+            >
+              <Button
+                size="medium"
+                isLoading={loading}
+                disabled={!!error}
+                icon={<DownloadIcon />}
+                id="tutorial-editor-7"
+                className="whitespace-nowrap"
+              >
+                Export Degree Plan
               </Button>
-            </AnalyticsWrapper>
-          </PDFDownloadLink>
+            </a>
+          </AnalyticsWrapper>
         </ToolbarWrapper>
 
         <ToolbarWrapper>
