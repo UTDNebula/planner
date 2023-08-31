@@ -15,6 +15,7 @@ type PlanData = {
 export const validatorRouter = router({
   // Protected route: ensures session user is same as plan owner
   prereqValidator: protectedProcedure.input(z.string().min(1)).query(async ({ ctx, input }) => {
+    console.log(process.env.VALIDATOR)
     try {
       // Fetch current plan
       const planData = await ctx.prisma.plan.findUnique({
@@ -299,6 +300,7 @@ export const validatorRouter = router({
   }),
   // Protected route: ensures session user is same as plan owner
   degreeValidator: protectedProcedure.input(z.string().min(1)).query(async ({ ctx, input }) => {
+    console.log(process.env.VALIDATOR)
     try {
       // Fetch current plan
       const planData = await ctx.prisma.plan.findUnique({
@@ -392,7 +394,7 @@ export const validatorRouter = router({
         return rawData;
       });
 
-      return { plan: planData, validation: validationData, bypasses };
+      return { plan: planData, validation: validationData, bypasses, url: process.env.VALIDATOR };
     } catch (error) {
       console.error(error);
     }
