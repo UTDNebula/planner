@@ -9,7 +9,7 @@ on:
     types:
       - closed
     paths-ignore:
-      - 'validator/**'
+      - '*.md'
   workflow_dispatch:
 
 jobs:

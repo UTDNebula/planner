@@ -7,7 +7,7 @@ on:
       - 'develop'
       - 'main'
     paths-ignore:
-      - 'validator/**'
+      - '*.md'
 
 jobs:
   integration-tests:
