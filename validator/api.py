@@ -9,7 +9,6 @@ from flask_cors import CORS
 
 from core import GraduationRequirementsSolver, SingleAssignment
 from degree_solver import BypassInput, DegreeRequirementsInput, DegreeRequirementsSolver
-from major.solver import MajorRequirementsSolver
 
 from course import Course
 

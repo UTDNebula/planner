@@ -4,7 +4,7 @@ from pydantic import Json
 
 from typing import Any
 
-from core.solver import AssignmentStore, GraduationRequirementsSolver
+import core
 from major.requirements import AbstractRequirement
 from dataclasses import dataclass
 
@@ -131,11 +131,11 @@ class DegreeRequirementsSolver:
         self.courses = set(courses)
         self.degree_requirements = self.load_requirements(requirements)
         self.validate_core = requirements.core
-        self.solved_core = AssignmentStore()
+        self.solved_core = core.store.AssignmentStore()
         self.bypasses = bypasses
 
-    def load_core(self) -> GraduationRequirementsSolver:
-        core_solver = GraduationRequirementsSolver()
+    def load_core(self) -> core.solver.GraduationRequirementsSolver:
+        core_solver = core.solver.GraduationRequirementsSolver()
         filename = "./core/requirements/core.req"
         core_solver.load_requirements_from_file(filename)
         return core_solver
