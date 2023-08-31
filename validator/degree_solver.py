@@ -226,7 +226,7 @@ class DegreeRequirementsSolver:
         degree_reqs.append(
             json.loads(
                 DegreeRequirement(
-                    "Core Curriculum",
+                    "Core Curriculum Testing 123",
                     DegreeRequirementType.core,
                     core_reqs,
                     42,  # Core Curriculum takes 42 credit hours

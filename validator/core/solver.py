@@ -59,6 +59,7 @@ class AssignmentStore:
     def to_json(self):
         return {
             req.name: {
+                "msg": "Testing 123",
                 "courses": list_matcher_requirements(req.course_matcher),
                 "hours": req.hours,
                 "filled": self._get_req_hours_filled(req) >= req.hours,

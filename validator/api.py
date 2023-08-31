@@ -75,7 +75,7 @@ CORS(app)
 def root_() -> Response:
     return make_response(
         {
-            "message": "UTD Degree Validator API is online.",
+            "message": "UTD Degree Validator API is online. Testing 123",
         },
         200,
     )
@@ -84,7 +84,7 @@ def root_() -> Response:
 @app.route("/list-degree-plans", methods=["GET"])
 def list_degree_plans() -> Response:
     return make_response(
-        {"message": f"Supported degree plans.", "degree_plans": DEGREE_PLANS}, 200
+        {"message": f"Supported degree plans. Testing 123", "degree_plans": DEGREE_PLANS}, 200
     )
 
 
@@ -103,7 +103,7 @@ def get_degree_requirements() -> Response:
 
         return make_response(
             {
-                "message": f"Degree requirements and their required hours for {j['degree']}",
+                "message": f"Degree requirements and their required hours for {j['degree']} Testing 123",
                 "requirements": reqs_to_hours,
             },
             200,
@@ -112,7 +112,7 @@ def get_degree_requirements() -> Response:
     except APIError as e:
         return make_response(
             {
-                "message": "Error in get-degree-requirements",
+                "message": "Error in get-degree-requirements Testing 123",
                 "error": str(e),
             },
             e.http_response_code,
@@ -120,7 +120,7 @@ def get_degree_requirements() -> Response:
     except Exception as e:
         return make_response(
             {
-                "message": "Error in get-degree-requirements",
+                "message": "Error in get-degree-requirements Testing 123",
                 "error": str(e),
             },
             500,
@@ -148,7 +148,7 @@ def validate_degree_plan() -> Response:
     except APIError as e:
         return make_response(
             {
-                "message": "Error in validate-degree-plan",
+                "message": "Error in validate-degree-plan Testing 123",
                 "error": str(e),
             },
             e.http_response_code,
@@ -156,7 +156,7 @@ def validate_degree_plan() -> Response:
     except Exception as e:
         return make_response(
             {
-                "message": "Error in validate-degree-plan",
+                "message": "Error in validate-degree-plan Testing 123",
                 "error": str(e),
             },
             500,
@@ -189,7 +189,7 @@ def test_validate() -> Response:
     except APIError as e:
         return make_response(
             {
-                "message": "Error in validate-degree-plan",
+                "message": "Error in validate-degree-plan Testing 123",
                 "error": str(e),
             },
             e.http_response_code,
@@ -197,7 +197,7 @@ def test_validate() -> Response:
     except Exception as e:
         return make_response(
             {
-                "message": "Error in validate-degree-plan",
+                "message": "Error in validate-degree-plan Testing 123",
                 "error": str(e),
             },
             500,
