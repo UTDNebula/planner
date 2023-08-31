@@ -108,8 +108,4 @@ module.exports = {
       sans: ['Inter var', ...defaultTheme.fontFamily.sans],
     },
   },
-  plugins: [require('daisyui')],
-  daisyui: {
-    themes: false,
-  },
 };

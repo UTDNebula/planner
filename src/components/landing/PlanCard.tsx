@@ -46,33 +46,26 @@ export default function PlanCard({ id, name, major }: PlanCardProps) {
             <h4 className="overflow-hidden text-ellipsis whitespace-nowrap text-[15px] font-normal ">
               {major}
             </h4>
-            <div
-              className="dropdown h-fit w-fit"
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
+            <PlanCardDropdown
+              deletePlan={() => setOpenDeleteModal(true)}
+              duplicatePlan={() => duplicatePlan.mutateAsync({ id, major })}
             >
-              <PlanCardDropdown
-                deletePlan={() => setOpenDeleteModal(true)}
-                duplicatePlan={() => duplicatePlan.mutateAsync({ id, major })}
+              <button
+                aria-label="Customise options"
+                className="h-10 w-10 self-stretch rounded-full hover:bg-neutral-200 hover:text-black"
               >
-                <button
-                  aria-label="Customise options"
-                  className="h-10 w-10 self-stretch rounded-full hover:bg-neutral-200 hover:text-black"
-                >
-                  <DotsHorizontalIcon className="m-auto rotate-90" />
-                </button>
-              </PlanCardDropdown>
-              <DeletePlanModal
-                open={openDeleteModal}
-                onClose={() => setOpenDeleteModal(false)}
-                deletePlan={() => {
-                  setDeleting(true);
-                  deletePlan.mutateAsync(id);
-                }}
-                deleteLoading={deleting}
-              />
-            </div>
+                <DotsHorizontalIcon className="m-auto rotate-90" />
+              </button>
+            </PlanCardDropdown>
+            <DeletePlanModal
+              open={openDeleteModal}
+              onClose={() => setOpenDeleteModal(false)}
+              deletePlan={() => {
+                setDeleting(true);
+                deletePlan.mutateAsync(id);
+              }}
+              deleteLoading={deleting}
+            />
           </div>
           <div className="flex flex-grow items-center text-xl font-semibold">{name}</div>
         </button>
