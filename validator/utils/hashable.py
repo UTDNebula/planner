@@ -3,7 +3,7 @@ from abc import ABC
 
 
 class NameDefinedClass(ABC):
-    """Interface for classes defined by a single string"""
+    """Interface for classes hashable by a single string."""
 
     name: str
 
