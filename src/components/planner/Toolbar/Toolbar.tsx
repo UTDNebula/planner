@@ -91,9 +91,7 @@ const Toolbar: FC<ToolbarProps> = ({
           <AnalyticsWrapper analyticsClass="umami--click--export-pdf">
             <a
               href={url || '#'}
-              download={`${title} - ${new Date()
-                .toLocaleString()
-                .replaceAll('/', '_')}.pdf`}
+              download={`${title} - ${new Date().toLocaleString().replaceAll('/', '_')}.pdf`}
             >
               <Button
                 size="medium"

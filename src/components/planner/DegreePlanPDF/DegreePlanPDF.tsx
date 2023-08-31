@@ -185,7 +185,7 @@ const DegreePlanPDF: FC<DegreePlanPDFProps> = ({
               }}
               src="https://planner.utdnebula.com"
             >
-            Nebula Planner 
+              Nebula Planner
             </Link>{' '}
             on {new Date().toLocaleString()}.
           </Text>
