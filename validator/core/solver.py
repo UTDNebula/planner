@@ -17,6 +17,7 @@ import os
 from dotenv import load_dotenv
 
 from course import Course
+from core.requirement import Requirement
 
 load_dotenv()
 

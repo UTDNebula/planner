@@ -10,21 +10,12 @@ from utils import hashable
 ParseException = Exception
 
 
-class Requirement(hashable.NameDefinedClass):
-    def __init__(self, name: str, hours: float, course_matcher: Matcher):
-        self.name = name
-        self.hours = hours
-        self.course_matcher = course_matcher
-
-    def match(self, course):
-        return self.course_matcher.match(course)
-
 
 class Matcher(ABC):
     """Abstract class for matcher"""
 
     @abstractmethod
-    def match(self, course: Course):
+    def match(self, course: Course) -> bool:
         pass
 
     class Builder:
