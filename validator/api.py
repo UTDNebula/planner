@@ -7,9 +7,11 @@ from flask import Flask, Response, request, make_response
 # from flask_limiter.util import get_remote_address
 from flask_cors import CORS
 
-from core import GraduationRequirementsSolver, Course, SingleAssignment
+from core import GraduationRequirementsSolver, SingleAssignment
 from degree_solver import BypassInput, DegreeRequirementsInput, DegreeRequirementsSolver
 from major.solver import MajorRequirementsSolver
+
+from course import Course
 
 
 class APIError(Exception):

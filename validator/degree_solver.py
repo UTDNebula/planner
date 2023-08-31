@@ -15,6 +15,7 @@ from major.requirements.shared import (
     CourseRequirement,
     HoursRequirement,
 )
+from course import Course
 
 
 @dataclass
@@ -170,13 +171,14 @@ class DegreeRequirementsSolver:
         if self.validate_core:
             core_solver = self.load_core()
             self.solved_core = core_solver.solve(
-                [course for course in self.courses], []
+                [Course.from_name(course) for course in self.courses], []
             )  # Convert to list
         # Set of the core courses that are fulfilled, so they won't be considered as free electives
         used_core_courses = set()
         for req_fill in self.solved_core.reqs_to_courses.values():
             for course in req_fill.keys():
                 used_core_courses.add(course.name)
+
         # Run for major
         for degree_req in self.degree_requirements:
             for course in self.courses:

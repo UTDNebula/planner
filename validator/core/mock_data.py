@@ -1,4 +1,5 @@
 from core.utils import *
+from course import Course
 
 
 class MockData:

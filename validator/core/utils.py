@@ -3,86 +3,14 @@ import re
 from abc import ABC, abstractmethod
 from typing import NamedTuple, TypedDict
 
+from course import Course
+from utils import hashable
+
 # TODO: actually implement this exception to give good error messages
 ParseException = Exception
 
 
-class NameDefinedClass(ABC):
-    """Interface for classes defined by a single string"""
-
-    name: str
-
-    def __eq__(self, other: NameDefinedClass):
-        return self.name == other.name
-
-    def __lt__(self, other):
-        return self.name < other.name
-
-    def __hash__(self):
-        return hash(self.name)
-
-    def __str__(self):
-        return self.name
-
-
-class Course(NameDefinedClass):
-    def __init__(
-        self, name: str, level: int = 0, hours: float = 0, department: str = "UNK"
-    ):
-        # Validate args
-        if type(name) != str:
-            raise ParseException("Course name must be a string")
-        if type(level) != int or not 0 <= level <= 9:
-            raise ParseException("Course level must be a single-digit integer")
-        if type(hours) not in (int, float):
-            raise ParseException("Course hours must be a float")
-        if type(department) != str:
-            raise ParseException("Course department must be a string")
-
-        # Save to class
-        self.name = name
-        self.level = level
-        self.hours = hours
-        self.department = department
-
-    def to_json(self):
-        return {
-            "name": self.name,
-            "level": self.level,
-            "hours": self.hours,
-            "department": self.department,
-        }
-
-    @classmethod
-    def from_name(cls, name):
-        """Parse course properties from just the name. Mostly for testing/mock data"""
-        department, course_num = name.split()
-        level = int(course_num[0])
-        hr_str = course_num[1]
-        if hr_str == "V":
-            hours = 3
-        else:
-            hours = int(hr_str)
-        return cls(name, level, hours, department)
-
-    class JSON(TypedDict):
-        name: str
-        level: int
-        hours: float
-        department: str
-
-    @classmethod
-    def from_json(cls, d: JSON) -> Course:
-        """Retrieve course properties from json dictionary"""
-        name = d["name"]
-        level = d["level"]
-        hours = d["hours"]
-        department = d["department"]
-
-        return cls(name, level, hours, department)
-
-
-class Requirement(NameDefinedClass):
+class Requirement(hashable.NameDefinedClass):
     def __init__(self, name: str, hours: float, course_matcher: Matcher):
         self.name = name
         self.hours = hours
