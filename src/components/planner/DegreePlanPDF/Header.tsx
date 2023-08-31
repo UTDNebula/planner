@@ -1,21 +1,4 @@
-import { Font, StyleSheet, Text, View } from '@react-pdf/renderer';
-
-Font.register({ family: 'Inter', src: 'Inter var' });
-
-const styles = StyleSheet.create({
-  titleContainer: {},
-  planTitle: {
-    color: 'black',
-    fontSize: 22,
-    textAlign: 'center',
-  },
-  planMajor: {
-    color: 'black',
-    fontSize: 18,
-    textAlign: 'center',
-    paddingTop: 6,
-  },
-});
+import { Text, View } from '@react-pdf/renderer';
 
 interface PlanHeaderProp {
   degreePlanTitle: string;
