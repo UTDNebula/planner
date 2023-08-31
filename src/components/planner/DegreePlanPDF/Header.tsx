@@ -12,7 +12,6 @@ const PlanHeader = ({ studentName, degreePlanTitle, major }: PlanHeaderProp) => 
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      marginTop: 20,
       marginBottom: '20px',
     }}
   >
