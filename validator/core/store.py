@@ -1,51 +1,64 @@
 from __future__ import annotations
 from collections import defaultdict, Counter
 
+from typing import TypedDict
+
 from core.requirement import Requirement
 from course import Course
 import core.utils as core_utils
 
 
+class AssignmentStoreJSON(TypedDict):
+    courses: list[str]
+    hours: float
+    filled: bool
+    valid_courses: dict[str, float]
+
+
 class AssignmentStore:
     """A mapping of requirements to courses that fulfill them, and the hours used. This is used to map the output of the solver."""
 
-    def __init__(self):
-        # req -> course -> hours
-        self.reqs_to_courses: dict[Requirement, dict[Course, float]] = defaultdict(
-            Counter
-        )
+    # req -> course -> hours
+    # reqs_to_courses: dict[Requirement, dict[Course, float]]
+    reqs_to_courses: dict[Requirement, dict[Course, float]]
 
-    def assert_requirement(self, requirement: Requirement):
+    def __init__(self) -> None:
+        self.reqs_to_courses = defaultdict(dict)
+
+    def assert_requirement(self, requirement: Requirement) -> None:
         """Initialize requirement in store if not already initialized"""
         _ = self.reqs_to_courses[requirement]
 
     def add(
-        self, course: Course, requirement: Requirement, hours: float, overwrite=False
-    ):
+        self,
+        course: Course,
+        requirement: Requirement,
+        hours: float,
+        overwrite: bool = False,
+    ) -> None:
         if overwrite:
             self.reqs_to_courses[requirement][course] = hours
         else:
             self.reqs_to_courses[requirement][course] += hours
 
-    def update(self, other: AssignmentStore):
+    def update(self, other: AssignmentStore) -> None:
         """Merge another AssignmentStore into this one"""
         for req, req_fills in other.reqs_to_courses.items():
             # Note: abuses Counter's .update() which adds instead of replacing
             self.reqs_to_courses[req].update(req_fills)
 
-    def get_unfilled_reqs(self):
-        unfilled_reqs = []
-        for req, req_fills in self.reqs_to_courses.items():
+    def get_unfilled_reqs(self) -> list[tuple[Requirement, int]]:
+        unfilled_reqs: list[tuple[Requirement, int]] = []
+        for req, _ in self.reqs_to_courses.items():
             hours_filled = self._get_req_hours_filled(req)
             if hours_filled < req.hours:
                 unfilled_reqs.append((req, hours_filled))
         return unfilled_reqs
 
-    def can_graduate(self):
-        print([req[0] for req in self.get_unfilled_reqs()], "R")
+    def can_graduate(self) -> bool:
         return len(self.get_unfilled_reqs()) == 0
 
-    def to_json(self):
+    def to_json(self) -> dict[str, AssignmentStoreJSON]:
         return {
             req.name: {
                 "courses": core_utils.list_matcher_requirements(req.course_matcher),
@@ -56,13 +69,13 @@ class AssignmentStore:
             for req, req_fills in self.reqs_to_courses.items()
         }
 
-    def _get_req_hours_filled(self, req: Requirement):
+    def _get_req_hours_filled(self, req: Requirement) -> int:
         """Returns sum of hours filled for a requirement"""
         req_fills = self.reqs_to_courses[req]
-        return sum(list(zip(*req_fills.items()))[1]) if req_fills else 0  # type: ignore
+        return sum(list(zip(*req_fills.items()))[1]) if req_fills else 0
 
-    def __str__(self):
-        str_bldr = []
+    def __str__(self) -> str:
+        str_bldr: list[str] = []
         for req, req_fills in self.reqs_to_courses.items():
             hours_filled = self._get_req_hours_filled(req)
             str_bldr.append(f"{req.name} ({hours_filled}/{req.hours} hrs filled)\n")
