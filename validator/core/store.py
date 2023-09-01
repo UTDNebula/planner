@@ -5,7 +5,7 @@ from typing import TypedDict
 
 from core.requirement import Requirement
 from course import Course
-import core.utils as core_utils
+from core import matchers
 
 
 class AssignmentStoreJSON(TypedDict):
@@ -60,7 +60,7 @@ class AssignmentStore:
     def to_json(self) -> dict[str, AssignmentStoreJSON]:
         return {
             req.name: {
-                "courses": core_utils.list_matcher_requirements(req.course_matcher),
+                "courses": matchers.list_matcher_requirements(req.course_matcher),
                 "hours": req.hours,
                 "filled": self._get_req_hours_filled(req) >= req.hours,
                 "valid_courses": {c.name: hours for c, hours in req_fills.items()},

@@ -1,5 +1,5 @@
 from core.requirement import Requirement
-from core.utils import Matcher
+from core.matchers import Matcher
 
 from dataclasses import dataclass
 

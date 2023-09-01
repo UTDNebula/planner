@@ -1,6 +1,6 @@
 from typing import Any
 
-from core.utils import *
+from core.matchers import *
 from course import Course
 from core.requirement import Requirement
 

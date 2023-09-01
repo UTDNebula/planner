@@ -1,5 +1,5 @@
 from utils import hashable
-import core.utils as core_utils
+from core import matchers
 
 from course import Course
 
@@ -7,7 +7,7 @@ from course import Course
 class Requirement(hashable.NameDefinedClass):
     """Requirement represents a graduation requirement (specified via REQUIRED in .req files) and is used to create edges on the graph."""
 
-    def __init__(self, name: str, hours: float, course_matcher: core_utils.Matcher):
+    def __init__(self, name: str, hours: float, course_matcher: matchers.Matcher):
         self.name = name
         self.hours = hours
         self.course_matcher = course_matcher

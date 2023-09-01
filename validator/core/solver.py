@@ -2,7 +2,7 @@ from __future__ import annotations
 from collections import defaultdict
 import numpy as np
 from ortools.graph.python import max_flow
-from .utils import *
+from core import matchers
 from dotenv import load_dotenv
 
 from course import Course
@@ -23,7 +23,7 @@ class GraduationRequirementsSolver:
         self.input = input
 
     def solve(
-        self, courses: list[Course], bypasses: list[SingleAssignment]
+        self, courses: list[Course], bypasses: list[matchers.SingleAssignment]
     ) -> AssignmentStore:
         # Pre-process bypasses into an assignment, and validate them
         bypass_assignments = AssignmentStore()
