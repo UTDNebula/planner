@@ -19,11 +19,10 @@ class AssignmentStore:
     """A mapping of requirements to courses that fulfill them, and the hours used. This is used to map the output of the solver."""
 
     # req -> course -> hours
-    # reqs_to_courses: dict[Requirement, dict[Course, float]]
-    reqs_to_courses: dict[Requirement, dict[Course, float]]
+    reqs_to_courses: dict[Requirement, Counter[Course]]
 
     def __init__(self) -> None:
-        self.reqs_to_courses = defaultdict(dict)
+        self.reqs_to_courses = defaultdict(Counter)
 
     def assert_requirement(self, requirement: Requirement) -> None:
         """Initialize requirement in store if not already initialized"""
@@ -37,9 +36,9 @@ class AssignmentStore:
         overwrite: bool = False,
     ) -> None:
         if overwrite:
-            self.reqs_to_courses[requirement][course] = hours
+            self.reqs_to_courses[requirement][course] = hours  # type: ignore
         else:
-            self.reqs_to_courses[requirement][course] += hours
+            self.reqs_to_courses[requirement][course] += hours  # type: ignore
 
     def update(self, other: AssignmentStore) -> None:
         """Merge another AssignmentStore into this one"""
