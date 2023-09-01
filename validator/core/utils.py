@@ -6,11 +6,11 @@ from typing import NamedTuple, TypedDict, TypeGuard, Pattern, Union
 from course import Course
 
 
-class ParseException(Exception):
+class MatcherParseException(Exception):
     """Exception raised when a matcher fails to parse arguments"""
 
 
-class BuildException(Exception):
+class MatcherBuildException(Exception):
     """Exception raised when a matcher fails to build. Usually occurs when matcher is given invalid arguments."""
 
 
@@ -38,7 +38,7 @@ class Matcher(ABC):
                 "Department",
                 "Any",
             ):
-                raise ParseException(
+                raise MatcherParseException(
                     f"'{matcher_type}' is not a supported Matcher type"
                 )
             self.matcher_type = matcher_type
@@ -46,7 +46,7 @@ class Matcher(ABC):
 
         def _assert_single_arg(self) -> None:
             if len(self.args) != 0:
-                raise ParseException(
+                raise MatcherParseException(
                     f"'{self.matcher_type}' matcher only takes one argument"
                 )
 
@@ -54,27 +54,27 @@ class Matcher(ABC):
             match self.matcher_type:
                 case "And" | "Or":
                     if not issubclass(type(arg), Matcher):
-                        raise ParseException(
+                        raise MatcherParseException(
                             f"Invalid argument passed into '{self.matcher_type}' matcher. Expected Matcher, got {type(arg)}."
                         )
                     self.args.append(arg)
                 case "Not":
                     self._assert_single_arg()
                     if not issubclass(type(arg), Matcher):
-                        raise ParseException(
+                        raise MatcherParseException(
                             f"Invalid argument passed into '{self.matcher_type}' matcher. Expected Matcher, got {type(arg)}."
                         )
 
                     self.args.append(arg)
                 case "NameList":
                     if not isinstance(arg, str):
-                        raise ParseException(
+                        raise MatcherParseException(
                             f"Invalid argument passed into '{self.matcher_type}' matcher. Expected string, got {type(arg)}."
                         )
 
                     m = re.match(r"(.*)(\d[\dVv]\d\d)", arg)
                     if not m:
-                        raise ParseException(
+                        raise MatcherParseException(
                             f"Unable to parse course name passed into '{self.matcher_type}' matcher"
                         )
                     course_str = m.group(1) + " " + m.group(2).replace("v", "V")
@@ -82,31 +82,31 @@ class Matcher(ABC):
                 case "Regex":
                     self._assert_single_arg()
                     if not isinstance(arg, str):
-                        raise ParseException(
+                        raise MatcherParseException(
                             f"Invalid argument passed into '{self.matcher_type}' matcher. Expected string, got {type(arg)}."
                         )
                     try:
                         r = re.compile(arg)
                     except re.error as e:
-                        raise ParseException(
+                        raise MatcherParseException(
                             f"Unable to compile regex passed into '{self.matcher_type}' matcher: {e}"
                         )
                     self.args.append(r)
                 case "Level":
                     if type(arg) != str or not arg.isdigit() or not 0 <= int(arg) <= 9:
-                        raise ParseException(
+                        raise MatcherParseException(
                             f"Invalid argument passed into '{self.matcher_type}' matcher"
                         )
                     self.args.append(int(arg))
                 case "Department":
                     self._assert_single_arg()
                     if not isinstance(arg, str):
-                        raise ParseException(
+                        raise MatcherParseException(
                             f"Invalid argument passed into '{self.matcher_type}' matcher. Expected string, got {type(arg)}."
                         )
                     self.args.append(arg)
                 case "Any":
-                    raise ParseException(
+                    raise MatcherParseException(
                         f"'{self.matcher_type}' matcher does not take arguments"
                     )
                 case _:
@@ -125,55 +125,55 @@ class Matcher(ABC):
             match self.matcher_type:
                 case "And":
                     if not self._is_matcher_list(self.args):
-                        raise BuildException(
+                        raise MatcherBuildException(
                             f"'{self.matcher_type}' matcher requires a list of matchers, instead got: {self.args}."
                         )
                     return AndMatcher(*self.args)
                 case "Or":
                     if not self._is_matcher_list(self.args):
-                        raise BuildException(
+                        raise MatcherBuildException(
                             f"'{self.matcher_type}' matcher requires a list of matchers, instead got: {self.args}."
                         )
                     return OrMatcher(*self.args)
                 case "Not":
                     if len(self.args) == 0:
-                        raise BuildException(
+                        raise MatcherBuildException(
                             f"'{self.matcher_type}' matcher requires a single matcher, but no arguments were found."
                         )
                     if not isinstance(self.args[0], Matcher):
-                        raise BuildException(
+                        raise MatcherBuildException(
                             f"'{self.matcher_type}' matcher requires a single matcher, instead got: {self.args[0]}."
                         )
                     return NotMatcher(self.args[0])
                 case "NameList":
                     if not self._is_str_list(self.args):
-                        raise BuildException(
+                        raise MatcherBuildException(
                             f"'{self.matcher_type}' matcher requires a list of strings, instead got: {self.args}."
                         )
                     return NameListMatcher(*self.args)
                 case "Regex":
                     if len(self.args) == 0:
-                        raise BuildException(
+                        raise MatcherBuildException(
                             f"'{self.matcher_type}' matcher requires a single pattern, but no arguments were found."
                         )
                     if not isinstance(self.args[0], Pattern):
-                        raise BuildException(
+                        raise MatcherBuildException(
                             f"'{self.matcher_type}' matcher requires a single pattern, instead got: {self.args[0]}."
                         )
                     return RegexMatcher(self.args[0])
                 case "Level":
                     if not self._is_int_list(self.args):
-                        raise BuildException(
+                        raise MatcherBuildException(
                             f"'{self.matcher_type}' matcher requires a list of integers, instead got: {self.args}."
                         )
                     return LevelMatcher(*self.args)
                 case "Department":
                     if len(self.args) == 0:
-                        raise BuildException(
+                        raise MatcherBuildException(
                             f"'{self.matcher_type}' matcher requires a string argument, but no arguments were found."
                         )
                     if not isinstance(self.args[0], str):
-                        raise BuildException(
+                        raise MatcherBuildException(
                             f"'{self.matcher_type}' matcher requires a string argument, instead got: {self.args[0]}."
                         )
                     return DepartmentMatcher(self.args[0])
