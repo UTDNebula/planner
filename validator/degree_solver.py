@@ -137,7 +137,7 @@ class DegreeRequirementsSolver:
     def load_core(self) -> core.solver.GraduationRequirementsSolver:
         filename = "./core/requirements/core.req"
         file = open(filename, "r")
-        output = core.Parser(file.read()).parse()
+        output = core.parser.Parser(file.read()).parse()
         solver_input = core.input.SolverInput(
             {r.name: r for r in output.requirements.values()},
             output.requirement_groups,
