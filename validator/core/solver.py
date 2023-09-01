@@ -4,20 +4,16 @@ import numpy as np
 from ortools.graph.python import max_flow
 from .mock_data import MockData
 from .models import (
-    CollectionRequirement,
     CoreRequirement,
-    CourseRequirement,
     Degree,
-    RequirementTypes,
 )
 from .utils import *
-from typing import List
 from dotenv import load_dotenv
 
 from course import Course
 from core.requirement import Requirement
 from core.store import AssignmentStore
-from core.parser import Parser
+from core.input import SolverInput
 
 load_dotenv()
 
@@ -25,17 +21,10 @@ load_dotenv()
 class GraduationRequirementsSolver:
     GRANULARITY_FACTOR = 100
 
-    def __init__(self):
-        self.requirements_dict: dict[str, Requirement] = {}
-        self.groups: list[list[Requirement]] = []
+    input: SolverInput
 
-    def validate(self):
-        """Ensures that all REQUIRE are used in GROUP"""
-        # TODO: ensure no duplicates
-        requirements_names = set(self.requirements_dict.keys())
-        groups_names = set(req.name for group in self.groups for req in group)
-
-        return requirements_names == groups_names
+    def __init__(self, input: SolverInput):
+        self.input = input
 
     def _core_requirement_to_matcher(self, option: CoreRequirement):
         matcher: Matcher
@@ -63,32 +52,7 @@ class GraduationRequirementsSolver:
         return matcher
 
     def load_requirements_from_degree(self, degree: Degree):
-        minimum_cumulative_hours = Requirement(
-            "Minimum Cumulative Hours", degree.minimum_credit_hours, AnyMatcher()
-        )
-        self.requirements_dict[minimum_cumulative_hours.name] = minimum_cumulative_hours
-        self.groups.append([minimum_cumulative_hours])
-
-        for o in degree.requirements.options:
-            if o.type == RequirementTypes.collection:
-                # TODO: I'm assuming that every top level requirement is a collection, need to handle other requirement types too (I think only core and course requirements need to be handled)
-                matcher, hours = self._collection_requirement_to_matcher(o)
-                requirement = Requirement(o.name, hours, matcher)
-                self.requirements_dict[o.name] = requirement
-                self.groups.append([requirement])
-        self.validate()
-
-    def load_requirements_from_file(self, filename: str) -> None:
-        req_file = open(filename, "r")
-        output = Parser(req_file.read()).parse()
-        self.groups = output.requirement_groups
-        req_file.close()
-
-        # Store requirements keyed by requirement name, rather than the key in file
-        self.requirements_dict = {r.name: r for r in output.requirements.values()}
-
-        # Ensure requirements are valid
-        self.validate()
+        raise NotImplemented
 
     def solve(self, courses: list[Course], bypasses: list[SingleAssignment]):
         # Pre-process bypasses into an assignment, and validate them
@@ -99,22 +63,24 @@ class GraduationRequirementsSolver:
                 raise KeyError(
                     f"Could not find course name {course_name} specified in bypass"
                 )
-            if req_name not in self.requirements_dict:
+            if req_name not in self.input.requirements:
                 raise KeyError(
                     f"Could not find requirement name {req_name} specified in bypass"
                 )
             course = courses_dict[course_name]
-            req = self.requirements_dict[req_name]
+            req = self.input.requirements[req_name]
             bypass_assignments.add(course, req, hours)
 
         # Initialize assignment store with all requirements
         all_assignments = AssignmentStore()
-        for req in self.requirements_dict.values():
+        for req in self.input.requirements.values():
             all_assignments.assert_requirement(req)
 
         # Run max flow on all groups and aggregate results
-        for i, reqs in enumerate(self.groups, start=1):
-            print(f"\nRunning on requirement group {i}/{len(self.groups)}...")
+        for i, reqs in enumerate(self.input.requirement_groups, start=1):
+            print(
+                f"\nRunning on requirement group {i}/{len(self.input.requirement_groups)}..."
+            )
             group_assignments = GraduationRequirementsSolver._solve_group(
                 courses, reqs, bypass_assignments
             )

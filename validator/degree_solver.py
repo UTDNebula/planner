@@ -135,9 +135,16 @@ class DegreeRequirementsSolver:
         self.bypasses = bypasses
 
     def load_core(self) -> core.solver.GraduationRequirementsSolver:
-        core_solver = core.solver.GraduationRequirementsSolver()
         filename = "./core/requirements/core.req"
-        core_solver.load_requirements_from_file(filename)
+        file = open(filename, "r")
+        output = core.Parser(file.read()).parse()
+        solver_input = core.input.SolverInput(
+            {r.name: r for r in output.requirements.values()},
+            output.requirement_groups,
+        )
+        file.close()
+
+        core_solver = core.solver.GraduationRequirementsSolver(solver_input)
         return core_solver
 
     def load_requirements(
