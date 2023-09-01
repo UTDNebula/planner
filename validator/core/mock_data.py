@@ -1,12 +1,15 @@
+from typing import Any
+
 from core.utils import *
 from course import Course
+from core.requirement import Requirement
 
 
 class MockData:
     @staticmethod
     def input_to_api_json(
         degree: str, courses: list[Course], bypasses: list[SingleAssignment]
-    ):
+    ) -> dict[str, Any]:
         return {
             "degree": degree,
             "courses": [c.to_json() for c in courses],
@@ -14,7 +17,7 @@ class MockData:
         }
 
     @staticmethod
-    def get_unrealistic_courses_1():
+    def get_unrealistic_courses_1() -> tuple[list[Course], list[SingleAssignment]]:
         course_names = [
             "RHET 1302",
             "ECS 3390",
@@ -130,7 +133,7 @@ class MockData:
         return courses, bypasses
 
     @staticmethod
-    def get_real_courses_ezhang():
+    def get_real_courses_ezhang() -> tuple[list[Course], list[SingleAssignment]]:
         course_names = [
             "CS 1200",
             "CS 2336",
@@ -167,7 +170,7 @@ class MockData:
         return courses, bypasses
 
     @staticmethod
-    def get_real_courses_sguan():
+    def get_real_courses_sguan() -> tuple[list[Course], list[SingleAssignment]]:
         course_names = [
             "CHEM 1405",
             "CS 1336",
@@ -227,7 +230,9 @@ class MockData:
         return courses, bypasses
 
     @staticmethod
-    def get_real_courses_missing_physics():
+    def get_real_courses_missing_physics() -> (
+        tuple[list[Course], list[SingleAssignment]]
+    ):
         course_names = [
             "UNIV 1010",
             "RHET 1302",
@@ -280,7 +285,7 @@ class MockData:
         return courses, []
 
     @staticmethod
-    def get_mock_courses():
+    def get_mock_courses() -> list[str]:
         NOT_GRADUATEABLE_COURSES = [
             "ATCM 2340",
             "COMM 1311",
@@ -336,7 +341,7 @@ class MockData:
         return NOT_GRADUATEABLE_COURSES
 
     @staticmethod
-    def get_cs_reqs():
+    def get_cs_reqs() -> list[tuple[str, list[Requirement]]]:
         print("WARNING: using outdated hard-coded constraints!")
         computer_science_preparatory_courses_matcher = OrMatcher(
             NameListMatcher(
@@ -714,7 +719,7 @@ class MockData:
         ]
 
     @staticmethod
-    def core_090_matcher():
+    def core_090_matcher() -> NameListMatcher:
         core_090 = [
             "ARAB1311",
             "ARAB1312",
@@ -850,7 +855,7 @@ class MockData:
         return core_090_matcher
 
     @staticmethod
-    def core_010_matcher():
+    def core_010_matcher() -> NameListMatcher:
         core_010 = [
             "ATCM2340",
             "COMM1311",
@@ -863,7 +868,7 @@ class MockData:
         return core_010_matcher
 
     @staticmethod
-    def core_020_matcher():
+    def core_020_matcher() -> NameListMatcher:
         core_020 = [
             "MATH1306",
             "MATH1314",
@@ -884,7 +889,7 @@ class MockData:
         return core_020_matcher
 
     @staticmethod
-    def core_030_matcher():
+    def core_030_matcher() -> NameListMatcher:
         core_030 = [
             "BIOL1300",
             "BIOL1318",
@@ -926,7 +931,7 @@ class MockData:
         return core_030_matcher
 
     @staticmethod
-    def core_040_matcher():
+    def core_040_matcher() -> NameListMatcher:
         core_040 = [
             "AMS2300",
             "AMS2341",
@@ -953,7 +958,7 @@ class MockData:
         return core_040_matcher
 
     @staticmethod
-    def core_050_matcher():
+    def core_050_matcher() -> NameListMatcher:
         core_050 = [
             "AHST1303",
             "AHST1304",
@@ -972,7 +977,7 @@ class MockData:
         return core_050_matcher
 
     @staticmethod
-    def core_060_matcher():
+    def core_060_matcher() -> NameListMatcher:
         core_060 = [
             "HIST1301",
             "HIST1302",
@@ -985,13 +990,13 @@ class MockData:
         return core_060_matcher
 
     @staticmethod
-    def core_070_matcher():
+    def core_070_matcher() -> NameListMatcher:
         core_070 = ["GOVT2107", "GOVT2305", "GOVT2306"]
         core_070_matcher = NameListMatcher(*core_070)
         return core_070_matcher
 
     @staticmethod
-    def core_080_matcher():
+    def core_080_matcher() -> NameListMatcher:
         core_080 = [
             "BA1310",
             "BA1320",

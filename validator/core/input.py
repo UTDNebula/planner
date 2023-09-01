@@ -14,12 +14,12 @@ class SolverInput:
         self,
         requirements: dict[str, Requirement],
         requirement_groups: list[list[Requirement]],
-    ):
+    ) -> None:
         self.requirements = requirements
         self.requirement_groups = requirement_groups
         self._validate()
 
-    def _validate(self):
+    def _validate(self) -> None:
         """Ensures that all REQUIRE are used in GROUP"""
         # TODO: ensure no duplicates
         requirements_names = set(self.requirements.keys())

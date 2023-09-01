@@ -2,11 +2,6 @@ from __future__ import annotations
 from collections import defaultdict
 import numpy as np
 from ortools.graph.python import max_flow
-from .mock_data import MockData
-from .models import (
-    CoreRequirement,
-    Degree,
-)
 from .utils import *
 from dotenv import load_dotenv
 
@@ -14,6 +9,7 @@ from course import Course
 from core.requirement import Requirement
 from core.store import AssignmentStore
 from core.input import SolverInput
+
 
 load_dotenv()
 
@@ -26,35 +22,9 @@ class GraduationRequirementsSolver:
     def __init__(self, input: SolverInput):
         self.input = input
 
-    def _core_requirement_to_matcher(self, option: CoreRequirement):
-        matcher: Matcher
-        match option.core_flag:
-            case "090":
-                matcher = MockData.core_090_matcher()
-            case "080":
-                matcher = MockData.core_080_matcher()
-            case "070":
-                matcher = MockData.core_070_matcher()
-            case "060":
-                matcher = MockData.core_060_matcher()
-            case "050":
-                matcher = MockData.core_050_matcher()
-            case "040":
-                matcher = MockData.core_040_matcher()
-            case "030":
-                matcher = MockData.core_030_matcher()
-            case "020":
-                matcher = MockData.core_020_matcher()
-            case "010":
-                matcher = MockData.core_010_matcher()
-            case _:
-                matcher = AnyMatcher()
-        return matcher
-
-    def load_requirements_from_degree(self, degree: Degree):
-        raise NotImplemented
-
-    def solve(self, courses: list[Course], bypasses: list[SingleAssignment]):
+    def solve(
+        self, courses: list[Course], bypasses: list[SingleAssignment]
+    ) -> AssignmentStore:
         # Pre-process bypasses into an assignment, and validate them
         bypass_assignments = AssignmentStore()
         courses_dict: dict[str, Course] = {course.name: course for course in courses}
@@ -97,14 +67,14 @@ class GraduationRequirementsSolver:
     ) -> AssignmentStore:
         """Build and solve a max flow problem"""
         # Determine pre-assigned hours after applying bypasses. Remaining hours are assignable
-        bypassed_hrs = defaultdict(float)
+        bypassed_hrs: dict[Course | Requirement, float] = defaultdict(float)
         for req in reqs:
             if req in bypasses.reqs_to_courses:
                 for course, hours in bypasses.reqs_to_courses[req].items():
                     bypassed_hrs[course] += hours
                     bypassed_hrs[req] += hours
 
-        def get_adjusted_hours(entity: Course | Requirement):
+        def get_adjusted_hours(entity: Course | Requirement) -> int:
             remaining = entity.hours - bypassed_hrs[entity]
             granulated = int(
                 GraduationRequirementsSolver.GRANULARITY_FACTOR * remaining

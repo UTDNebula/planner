@@ -38,9 +38,7 @@ class Parser:
             self.requirement_groups,
         )
 
-    def _parse(
-        self,
-    ):
+    def _parse(self) -> None:
         for line_num, line in enumerate(self.contents.splitlines(), start=1):
             line = line.strip()
 
@@ -68,7 +66,7 @@ class Parser:
                         f"Line {line_num}: Unknown command {command}."
                     )
 
-    def _parse_define(self, line_num: int, args: str):
+    def _parse_define(self, line_num: int, args: str) -> None:
         """Parse a DEFINE command.
 
         The DEFINE command is in the format: DEFINE KEY MATCHER.
@@ -82,7 +80,7 @@ class Parser:
         expanded_value = self._expand_definitions(kv_pair[1])
         self.definitions[kv_pair[0]] = expanded_value
 
-    def _parse_require(self, line_num: int, args: str):
+    def _parse_require(self, line_num: int, args: str) -> None:
         """Parse a REQUIRE command.
 
         The REQUIRE command is in the format: REQUIRE NAME REQ_KEY REQ_HOURS MATCHER.
@@ -132,7 +130,7 @@ class Parser:
         requirement = Requirement(req_name, req_hours, matcher)
         self.requirements[req_key] = requirement
 
-    def _parse_group(self, line_num: int, args: str):
+    def _parse_group(self, line_num: int, args: str) -> None:
         """Parse a GROUP command.
 
         The GROUP command is in the format: GROUP REQ_KEY [REQ_KEY..]
@@ -156,9 +154,9 @@ class Parser:
     @staticmethod
     def _parse_matcher_str(line: int, matcher_str: str) -> Matcher:
         """Function to parse a matcher string to a Matcher object tree"""
-        stack: list[Matcher | Matcher.Builder | list] = []
+        stack: list[Matcher | Matcher.Builder | list[str]] = []
 
-        def process_end_of_arg():
+        def process_end_of_arg() -> None:
             # Pop off the arg (must be Matcher or list)
             if not stack or type(stack[-1]) == Matcher.Builder:
                 raise ParserException(
@@ -167,13 +165,13 @@ class Parser:
 
             arg = stack.pop()
             if type(arg) == list:  # Build un-combined string to string
-                arg = "".join(arg)
+                arg = "".join(arg)  # type: ignore
             # Add arg to builder
             if not stack or type(stack[-1]) != Matcher.Builder:
                 raise ParserException(
                     f"Line {line}: Unexpected comma or close parentheses."
                 )
-            stack[-1].add_arg(arg)
+            stack[-1].add_arg(arg)  # type: ignore
 
         for i, c in enumerate(matcher_str):
             # End of matcher type: Create builder
