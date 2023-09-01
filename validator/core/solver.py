@@ -17,6 +17,7 @@ from dotenv import load_dotenv
 from course import Course
 from core.requirement import Requirement
 from core.store import AssignmentStore
+from core.parser import Parser
 
 load_dotenv()
 
@@ -61,44 +62,6 @@ class GraduationRequirementsSolver:
                 matcher = AnyMatcher()
         return matcher
 
-    def _course_requirements_to_name_list_matcher(
-        self, courses: List[CourseRequirement]
-    ):
-        matcher = Matcher.Builder("NameList")
-        # for reference in courses:
-        #     course_data = requests.get(headers={"X-Api-Key": os.environ["NEBULA_API_KEY"]}, url=f"https://api.utdnebula.com/course/{reference.course_id}").json()
-        #     matcher.add_arg(course_data.data.name)
-        return matcher.build()
-
-    def _collection_requirement_to_matcher(self, o: CollectionRequirement):
-        # TODO: revisit matcher selection logic, this is hacky at best
-        builder: Matcher.Builder = Matcher.Builder(
-            "Or"
-            if o.required == 1 and len(o.options) == 2
-            else "And"
-            if o.required == len(o.options)
-            else "And"
-        )
-        total_hrs = 0
-        # TODO: correctly tabulate total hours considering required number of options
-        course_reqs: List[CourseRequirement] = []
-        for option in o.options:
-            hours = 0
-            if option.type == RequirementTypes.core:
-                matcher: Matcher = self._core_requirement_to_matcher(option)
-                hours += option.hours
-                builder.add_arg(matcher)
-            elif option.type == RequirementTypes.collection:
-                matcher, hrs = self._collection_requirement_to_matcher(option)
-                total_hrs += hrs
-                builder.add_arg(matcher)
-            elif option.type == RequirementTypes.course:
-                course_reqs.append(option)
-            total_hrs += hours
-        if len(course_reqs) > 0:
-            builder.add_arg(self._course_requirements_to_name_list_matcher(course_reqs))
-        return builder.build(), total_hrs
-
     def load_requirements_from_degree(self, degree: Degree):
         minimum_cumulative_hours = Requirement(
             "Minimum Cumulative Hours", degree.minimum_credit_hours, AnyMatcher()
@@ -117,74 +80,12 @@ class GraduationRequirementsSolver:
 
     def load_requirements_from_file(self, filename: str) -> None:
         req_file = open(filename, "r")
-
-        defines = {}
-        requirements = {}
-        for i, line in enumerate(req_file, start=1):
-            line = line.strip()
-
-            # Skip comments
-            if line.startswith("#") or not line:
-                continue
-
-            # Process commands
-            command: str
-            args: str
-            command, args = line.split(maxsplit=1)
-            match command:
-                case "DEFINE":
-                    k, v = args.split(maxsplit=1)
-                    # Unpack defines before adding, to prevent ever having to unpack multiple layers
-                    v = GraduationRequirementsSolver._unpack_defines(defines, v)
-                    defines[k] = v
-
-                case "REQUIRE":
-                    # Split the requirement name with the rest of the args
-                    if args[0] == '"':
-                        # Handle req names wrapped in quotes (because they might have spaces)
-                        end_quote_idx = args.index('"', 1)
-                        if end_quote_idx == -1:
-                            raise ParseException(
-                                "REQUIRE name contains start quote but no end quote found"
-                            )
-                        req_name, args = (
-                            args[1:end_quote_idx],
-                            args[end_quote_idx + 1 :].strip(),
-                        )
-                    else:
-                        req_name, args = args.split(maxsplit=1)
-
-                    # Parse all components
-                    req_key, req_hrs, matcher_str = args.split(maxsplit=2)
-                    # ASSUMPTION: No FP hour requirements
-                    req_hrs = int(req_hrs)
-                    matcher_str = GraduationRequirementsSolver._unpack_defines(
-                        defines, matcher_str
-                    )
-                    matcher = GraduationRequirementsSolver._parse_matcher_str(
-                        matcher_str
-                    )
-                    # Build and store requirement
-                    requirement = Requirement(req_name, req_hrs, matcher)
-                    requirements[req_key] = requirement
-
-                case "GROUP":
-                    group_reqs: list[Requirement] = []
-                    for req_key in args.split():
-                        if req_key not in requirements:
-                            raise ParseException(
-                                f"Unknown Requirement key {req_key} encountered"
-                            )
-                        group_reqs.append(requirements[req_key])
-                    self.groups.append(group_reqs)
-
-                case _:
-                    raise ParseException(f'"{command}" is not a supported command')
-
+        output = Parser(req_file.read()).parse()
+        self.groups = output.requirement_groups
         req_file.close()
 
         # Store requirements keyed by requirement name, rather than the key in file
-        self.requirements_dict = {r.name: r for r in requirements.values()}
+        self.requirements_dict = {r.name: r for r in output.requirements.values()}
 
         # Ensure requirements are valid
         self.validate()
@@ -295,56 +196,3 @@ class GraduationRequirementsSolver:
 
         # Return solution graph
         return group_assignments
-
-    @staticmethod
-    def _unpack_defines(defines: dict[str, str], s: str):
-        for k, v in defines.items():
-            s = s.replace(k, v)
-        return s
-
-    @staticmethod
-    def _parse_matcher_str(matcher_str: str) -> Matcher:
-        """Function to parse a matcher string to a Matcher object tree"""
-        stack: list[Matcher | Matcher.Builder | list] = []
-
-        def process_end_of_arg():
-            # Pop off the arg (must be Matcher or list)
-            if not stack or type(stack[-1]) == Matcher.Builder:
-                raise ParseException("Unexpected comma or close parentheses")
-            arg = stack.pop()
-            if type(arg) == list:  # Build un-combined string to string
-                arg = "".join(arg)
-            # Add arg to builder
-            if not stack or type(stack[-1]) != Matcher.Builder:
-                raise ParseException("Unexpected comma or close parentheses")
-            stack[-1].add_arg(arg)
-
-        for i, c in enumerate(matcher_str):
-            # End of matcher type: Create builder
-            if c == "(":
-                if not stack or type(stack[-1]) != list:
-                    raise ParseException("Unexpected open parentheses")
-                if len(stack) >= 2 and type(stack[-2]) != Matcher.Builder:
-                    raise ParseException("Unexpected new matcher")
-                stack[-1] = Matcher.Builder("".join(stack[-1]))
-
-            # End of arg: Create builder
-            elif c == ",":
-                process_end_of_arg()
-
-            # End of matcher arg(s)
-            elif c == ")":
-                # If the previous element is a builder with no args, don't try to process arg
-                if not stack or type(stack[-1]) != Matcher.Builder or stack[-1].args:
-                    process_end_of_arg()
-                stack[-1] = stack[-1].build()
-
-            # Build string, which might be part of matcher type or arg
-            else:
-                if not stack or type(stack[-1]) != list:
-                    stack.append([])
-                stack[-1].append(c)
-
-        if len(stack) != 1 or not issubclass(type(stack[0]), Matcher):
-            raise ParseException("Unable to parse malformed matcher string")
-        return stack[0]
