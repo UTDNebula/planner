@@ -187,7 +187,7 @@ class AndMatcher(Matcher):
     def __init__(self, *matchers: Matcher):
         self.matchers = matchers
 
-    def match(self, course):
+    def match(self, course: Course) -> bool:
         return all(m.match(course) for m in self.matchers)
 
 
@@ -195,7 +195,7 @@ class OrMatcher(Matcher):
     def __init__(self, *matchers: Matcher):
         self.matchers = matchers
 
-    def match(self, course):
+    def match(self, course: Course) -> bool:
         return any(m.match(course) for m in self.matchers)
 
 
@@ -203,7 +203,7 @@ class NotMatcher(Matcher):
     def __init__(self, matcher: Matcher):
         self.matcher = matcher
 
-    def match(self, course):
+    def match(self, course: Course) -> bool:
         return not self.matcher.match(course)
 
 
@@ -211,15 +211,15 @@ class NameListMatcher(Matcher):
     def __init__(self, *name_list: str):
         self.name_list = name_list
 
-    def match(self, course):
+    def match(self, course: Course) -> bool:
         return course.name in self.name_list
 
 
 class RegexMatcher(Matcher):
-    def __init__(self, pattern: re.Pattern):
+    def __init__(self, pattern: re.Pattern[str]):
         self.pattern = pattern
 
-    def match(self, course):
+    def match(self, course: Course) -> bool:
         return self.pattern.match(course.name) is not None
 
 
@@ -227,7 +227,7 @@ class LevelMatcher(Matcher):
     def __init__(self, *levels: int):
         self.levels = levels
 
-    def match(self, course):
+    def match(self, course: Course) -> bool:
         return course.level in self.levels
 
 
@@ -235,14 +235,19 @@ class DepartmentMatcher(Matcher):
     def __init__(self, department: str):
         self.department = department
 
-    def match(self, course):
+    def match(self, course: Course) -> bool:
         return course.department == self.department
 
 
 class AnyMatcher(Matcher):
-    def match(self, course):
-        _ = course  # just to get linter to stop complaining
+    def match(self, _: Course) -> bool:
         return True
+
+
+class SingleAssignmentJSON(TypedDict):
+    course: str
+    requirement: str
+    hours: float
 
 
 class SingleAssignment(NamedTuple):
@@ -250,20 +255,15 @@ class SingleAssignment(NamedTuple):
     requirement: str
     hours: float
 
-    def to_json(self):
+    def to_json(self) -> SingleAssignmentJSON:
         return {
             "course": self.course,
             "requirement": self.requirement,
             "hours": self.hours,
         }
 
-    class JSON(TypedDict):
-        course: str
-        requirement: str
-        hours: float
-
     @classmethod
-    def from_json(cls, d: JSON) -> SingleAssignment:
+    def from_json(cls, d: SingleAssignmentJSON) -> SingleAssignment:
         course = d["course"]
         requirement = d["requirement"]
         hours = d["hours"]
