@@ -11,7 +11,6 @@ class APIError(Exception):
         super().__init__(self.message)
 
 
-# Instantiate flask app and ratelimiter
 app = Flask(__name__)
 CORS(app)
 
@@ -38,8 +37,6 @@ def test_validate() -> Response:
         requirements = DegreeRequirementsInput(rawReqs["majors"], rawReqs["minors"], [])
         rawBypasses = j["bypasses"]
         bypasses = BypassInput([], {rawReqs["majors"][0]: [i for i in rawBypasses]})
-        # bypasses = [SingleAssignment.from_json(b) for b in j["bypasses"]]
-        # bypasses = BypassInput([], {})
 
         print(bypasses)
         solver = DegreeRequirementsSolver(courses, requirements, bypasses)
