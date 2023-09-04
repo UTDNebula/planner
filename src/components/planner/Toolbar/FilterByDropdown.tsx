@@ -75,7 +75,7 @@ const FilterByDropdown: FC = ({ children }) => {
               >
                 {Object.entries(tagColors).map(([color, classes]) => (
                   <DropdownMenu.Item key={`${color}-${classes}`}>
-                    <AnalyticsWrapper analyticsClass="umami--click--filter-by-year">
+                    <AnalyticsWrapper analyticsClass="umami--click--filter-by-color">
                       <div
                         className={itemClasses}
                         onClick={(e) => {
