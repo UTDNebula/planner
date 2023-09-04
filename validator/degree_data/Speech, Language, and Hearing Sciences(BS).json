@@ -1,5 +1,4 @@
 {
-  "abbreviation": "Speech, Language, and Hearing Sciences(BS)",
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/bbs/speech-language-and-hearing-sciences",
   "minimum_credit_hours": 120,
   "name": "Bachelor of Science in Speech, Language, and Hearing Sciences",
@@ -19,12 +18,16 @@
           {
             "matcher": "CourseRequirement",
             "course": "PSY 2301",
-            "metadata": { "id": "Speech, Language, and Hearing Sciences(BS)-1" }
+            "metadata": {
+              "id": "Speech, Language, and Hearing Sciences(BS)-1"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BBSU 1100",
-            "metadata": { "id": "Speech, Language, and Hearing Sciences(BS)-2" }
+            "metadata": {
+              "id": "Speech, Language, and Hearing Sciences(BS)-2"
+            }
           }
         ]
       },
@@ -38,32 +41,44 @@
           {
             "matcher": "CourseRequirement",
             "course": "SPAU 3301",
-            "metadata": { "id": "Speech, Language, and Hearing Sciences(BS)-4" }
+            "metadata": {
+              "id": "Speech, Language, and Hearing Sciences(BS)-4"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "SPAU 3303",
-            "metadata": { "id": "Speech, Language, and Hearing Sciences(BS)-5" }
+            "metadata": {
+              "id": "Speech, Language, and Hearing Sciences(BS)-5"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "SPAU 3304",
-            "metadata": { "id": "Speech, Language, and Hearing Sciences(BS)-6" }
+            "metadata": {
+              "id": "Speech, Language, and Hearing Sciences(BS)-6"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "SPAU 3340",
-            "metadata": { "id": "Speech, Language, and Hearing Sciences(BS)-7" }
+            "metadata": {
+              "id": "Speech, Language, and Hearing Sciences(BS)-7"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "SPAU 3341",
-            "metadata": { "id": "Speech, Language, and Hearing Sciences(BS)-8" }
+            "metadata": {
+              "id": "Speech, Language, and Hearing Sciences(BS)-8"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "SPAU 3343",
-            "metadata": { "id": "Speech, Language, and Hearing Sciences(BS)-9" }
+            "metadata": {
+              "id": "Speech, Language, and Hearing Sciences(BS)-9"
+            }
           },
           {
             "matcher": "CourseRequirement",
@@ -158,5 +173,7 @@
         "required_hours": 42
       }
     ]
-  }
+  },
+  "display_name": "Speech, Language, and Hearing Sciences(BS)",
+  "uuid": "78dab794-7dd0-45d8-abd4-d2e4591c28a6"
 }

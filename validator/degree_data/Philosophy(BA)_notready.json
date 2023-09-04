@@ -1,5 +1,4 @@
 {
-  "abbreviation": "Philosophy(BA)",
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ah/philosophy",
   "minimum_credit_hours": 120,
   "name": "Bachelor of Arts in Philosophy",
@@ -12,7 +11,9 @@
       {
         "matcher": "CourseRequirement",
         "course": "PHIL 2303",
-        "metadata": { "id": "42ba2a1c-2227-4d77-a8ee-7dc912f66b45" }
+        "metadata": {
+          "id": "42ba2a1c-2227-4d77-a8ee-7dc912f66b45"
+        }
       },
       {
         "matcher": "OrRequirement",
@@ -20,17 +21,23 @@
           {
             "matcher": "CourseRequirement",
             "course": "PHIL 1301",
-            "metadata": { "id": "6e896c26-e985-4af7-85a4-cedff4cb8826" }
+            "metadata": {
+              "id": "6e896c26-e985-4af7-85a4-cedff4cb8826"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "PHIL 1305",
-            "metadata": { "id": "c99a2dce-a143-4c31-93f2-bb88d8f14212" }
+            "metadata": {
+              "id": "c99a2dce-a143-4c31-93f2-bb88d8f14212"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "PHIL 1306",
-            "metadata": { "id": "5aa7491f-2172-47fd-aff2-cc0d4ed8fd56" }
+            "metadata": {
+              "id": "5aa7491f-2172-47fd-aff2-cc0d4ed8fd56"
+            }
           }
         ],
         "metadata": {
@@ -44,12 +51,16 @@
           {
             "matcher": "CourseRequirement",
             "course": "PHIL 3321",
-            "metadata": { "id": "28ffc397-dfb8-4beb-817a-3fa0ab82e0cb" }
+            "metadata": {
+              "id": "28ffc397-dfb8-4beb-817a-3fa0ab82e0cb"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "PHIL 4328",
-            "metadata": { "id": "06edec17-4bc3-45a9-8081-63d01f9d2f7e" }
+            "metadata": {
+              "id": "06edec17-4bc3-45a9-8081-63d01f9d2f7e"
+            }
           }
         ],
         "metadata": {
@@ -63,7 +74,9 @@
           {
             "matcher": "CourseRequirement",
             "course": "PHIL 3324",
-            "metadata": { "id": "a1ae03e1-4b85-4bbb-a14e-36b6e26e86fa" }
+            "metadata": {
+              "id": "a1ae03e1-4b85-4bbb-a14e-36b6e26e86fa"
+            }
           },
           {
             "matcher": "OrRequirement",
@@ -71,12 +84,16 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "PHIL 2317",
-                "metadata": { "id": "0e662ab6-980e-47e3-96ac-d124d2f24fcc" }
+                "metadata": {
+                  "id": "0e662ab6-980e-47e3-96ac-d124d2f24fcc"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "PHIL 3323",
-                "metadata": { "id": "c756a639-1057-42af-8bbb-b913e53e2f11" }
+                "metadata": {
+                  "id": "c756a639-1057-42af-8bbb-b913e53e2f11"
+                }
               }
             ],
             "metadata": {
@@ -89,12 +106,16 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "PHIL 2316",
-                "metadata": { "id": "9228387b-2816-42a1-a8e7-ab82a2dacef7" }
+                "metadata": {
+                  "id": "9228387b-2816-42a1-a8e7-ab82a2dacef7"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "PHIL 3322",
-                "metadata": { "id": "7634f901-db78-4ac8-865c-936f9a934af4" }
+                "metadata": {
+                  "id": "7634f901-db78-4ac8-865c-936f9a934af4"
+                }
               }
             ],
             "metadata": {
@@ -108,27 +129,37 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "PHIL 3373",
-                "metadata": { "id": "dd333366-e037-4093-9192-1658247a2c16" }
+                "metadata": {
+                  "id": "dd333366-e037-4093-9192-1658247a2c16"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "PHIL 4308",
-                "metadata": { "id": "47f6692c-8234-4101-a4c1-afd5ca434104" }
+                "metadata": {
+                  "id": "47f6692c-8234-4101-a4c1-afd5ca434104"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "PHIL 3328",
-                "metadata": { "id": "13ccd9ed-ec5c-42e1-8479-881e289ae634" }
+                "metadata": {
+                  "id": "13ccd9ed-ec5c-42e1-8479-881e289ae634"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "PHIL 4321",
-                "metadata": { "id": "312263f2-c41a-4255-93f9-960738115aea" }
+                "metadata": {
+                  "id": "312263f2-c41a-4255-93f9-960738115aea"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "PHIL 4344",
-                "metadata": { "id": "da540479-95c3-4543-bb9f-a07fe897fc04" }
+                "metadata": {
+                  "id": "da540479-95c3-4543-bb9f-a07fe897fc04"
+                }
               }
             ],
             "metadata": {
@@ -142,32 +173,44 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "PHIL 3375",
-                "metadata": { "id": "3a8eae07-cadc-47e6-bb1d-720296a80039" }
+                "metadata": {
+                  "id": "3a8eae07-cadc-47e6-bb1d-720296a80039"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "PHIL 3320",
-                "metadata": { "id": "88902c6b-232e-45a4-bedb-9efac9c6086b" }
+                "metadata": {
+                  "id": "88902c6b-232e-45a4-bedb-9efac9c6086b"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "PHIL 3338",
-                "metadata": { "id": "694cd100-8b4f-4b2a-9e59-905651507e9e" }
+                "metadata": {
+                  "id": "694cd100-8b4f-4b2a-9e59-905651507e9e"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "PHIL 4323",
-                "metadata": { "id": "5358e540-d637-4645-bfe1-bbc91915509a" }
+                "metadata": {
+                  "id": "5358e540-d637-4645-bfe1-bbc91915509a"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "PHIL 4324",
-                "metadata": { "id": "4c74e8f1-c943-4c8a-a3a3-d571d1d54d9b" }
+                "metadata": {
+                  "id": "4c74e8f1-c943-4c8a-a3a3-d571d1d54d9b"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "PHIL 4325",
-                "metadata": { "id": "2a417a16-30f5-4e30-b71a-58e8d7a754fc" }
+                "metadata": {
+                  "id": "2a417a16-30f5-4e30-b71a-58e8d7a754fc"
+                }
               }
             ],
             "metadata": {
@@ -216,29 +259,38 @@
           {
             "matcher": "CourseRequirement",
             "course": "ARHM 3100",
-            "metadata": { "id": "f5ae6d5e-5f5e-45ee-b90c-de0d8b0795c3" }
+            "metadata": {
+              "id": "f5ae6d5e-5f5e-45ee-b90c-de0d8b0795c3"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ARHM 3342",
-            "metadata": { "id": "805187d9-5867-44ba-b69c-af08b7b91b11" }
+            "metadata": {
+              "id": "805187d9-5867-44ba-b69c-af08b7b91b11"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ATCM 3300",
-            "metadata": { "id": "06c7a375-6c39-4d54-994d-4d8897ffa637" }
+            "metadata": {
+              "id": "06c7a375-6c39-4d54-994d-4d8897ffa637"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ATCM 4384",
-            "metadata": { "id": "9a75fbaa-bbd3-4060-b622-3da932dbb011" }
+            "metadata": {
+              "id": "9a75fbaa-bbd3-4060-b622-3da932dbb011"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CGS 2301",
-            "metadata": { "id": "068b7e67-8c9e-4276-88d3-4b4326f333ec" }
+            "metadata": {
+              "id": "068b7e67-8c9e-4276-88d3-4b4326f333ec"
+            }
           },
-
           {
             "matcher": "OrRequirement",
             "requirements": [
@@ -308,137 +360,191 @@
           {
             "matcher": "CourseRequirement",
             "course": "COMM 3351",
-            "metadata": { "id": "512c1028-f336-41ff-89da-5e89c7684fb5" }
+            "metadata": {
+              "id": "512c1028-f336-41ff-89da-5e89c7684fb5"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "COMM 3352",
-            "metadata": { "id": "b738315e-2891-4911-9081-920e94a5d2a3" }
+            "metadata": {
+              "id": "b738315e-2891-4911-9081-920e94a5d2a3"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "COMM 4360",
-            "metadata": { "id": "a392b5ef-3db1-490b-ac2b-cb5f9fe9e5f8" }
+            "metadata": {
+              "id": "a392b5ef-3db1-490b-ac2b-cb5f9fe9e5f8"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ECON 4301",
-            "metadata": { "id": "e5d5648a-c00a-4642-a872-b1d9233cab43" }
+            "metadata": {
+              "id": "e5d5648a-c00a-4642-a872-b1d9233cab43"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ECON 4381",
-            "metadata": { "id": "8108428d-11c0-4388-bb45-e68e5de40380" }
+            "metadata": {
+              "id": "8108428d-11c0-4388-bb45-e68e5de40380"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "GST 2300",
-            "metadata": { "id": "9e243493-51ce-4b2c-a65c-721b1eac43da" }
+            "metadata": {
+              "id": "9e243493-51ce-4b2c-a65c-721b1eac43da"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "HIST 3302",
-            "metadata": { "id": "47aa04dd-df4d-4bd4-9f93-06897597867a" }
+            "metadata": {
+              "id": "47aa04dd-df4d-4bd4-9f93-06897597867a"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "HIST 3376",
-            "metadata": { "id": "9cdae51b-cfdd-4b3f-8099-835c450c5bbc" }
+            "metadata": {
+              "id": "9cdae51b-cfdd-4b3f-8099-835c450c5bbc"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "HIST 3377",
-            "metadata": { "id": "66992b35-0248-4a4c-99d5-0f8bcd397057" }
+            "metadata": {
+              "id": "66992b35-0248-4a4c-99d5-0f8bcd397057"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "HIST 4380",
-            "metadata": { "id": "051cab05-a738-4cde-aae2-9bb13441ae3d" }
+            "metadata": {
+              "id": "051cab05-a738-4cde-aae2-9bb13441ae3d"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "IPEC 4305",
-            "metadata": { "id": "24ccb7b9-12f1-4b5d-8a70-199dd8c5296b" }
+            "metadata": {
+              "id": "24ccb7b9-12f1-4b5d-8a70-199dd8c5296b"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "LIT 3316",
-            "metadata": { "id": "2510b818-bccb-45bc-acc6-20d884f5dcaf" }
+            "metadata": {
+              "id": "2510b818-bccb-45bc-acc6-20d884f5dcaf"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "LIT 3317",
-            "metadata": { "id": "e2e45a6b-a432-40ca-8b53-b7abfeeccbfa" }
+            "metadata": {
+              "id": "e2e45a6b-a432-40ca-8b53-b7abfeeccbfa"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "LIT 3330",
-            "metadata": { "id": "3d0da1b1-fa95-45f0-87f7-96ab76bfaf59" }
+            "metadata": {
+              "id": "3d0da1b1-fa95-45f0-87f7-96ab76bfaf59"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "OBHR 4310",
-            "metadata": { "id": "bdfbbf42-b7b6-40f6-b135-79b558790194" }
+            "metadata": {
+              "id": "bdfbbf42-b7b6-40f6-b135-79b558790194"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "PSCI 3301",
-            "metadata": { "id": "cfeebc69-584f-4328-9c8f-43d86f047776" }
+            "metadata": {
+              "id": "cfeebc69-584f-4328-9c8f-43d86f047776"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "PSCI 3303",
-            "metadata": { "id": "c4ad7bed-174f-4c63-9bdc-d2e1daa775cc" }
+            "metadata": {
+              "id": "c4ad7bed-174f-4c63-9bdc-d2e1daa775cc"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "PSCI 3306",
-            "metadata": { "id": "f1a6eb5a-56ae-45ae-ab21-b6dfc94e3985" }
+            "metadata": {
+              "id": "f1a6eb5a-56ae-45ae-ab21-b6dfc94e3985"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "PSCI 4328",
-            "metadata": { "id": "02949856-7e3b-49e3-bccc-95c7cebb3589" }
+            "metadata": {
+              "id": "02949856-7e3b-49e3-bccc-95c7cebb3589"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "PSCI 4334",
-            "metadata": { "id": "c9fbdac3-14c0-4204-b0d4-9baee4e21a4d" }
+            "metadata": {
+              "id": "c9fbdac3-14c0-4204-b0d4-9baee4e21a4d"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "PSCI 4357",
-            "metadata": { "id": "d2bb2978-a598-404a-a267-227ff2d2a4f9" }
+            "metadata": {
+              "id": "d2bb2978-a598-404a-a267-227ff2d2a4f9"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "PSY 3324",
-            "metadata": { "id": "e04021b9-b084-452e-80fe-bca78c23a050" }
+            "metadata": {
+              "id": "e04021b9-b084-452e-80fe-bca78c23a050"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "PSY 3331",
-            "metadata": { "id": "9cbda369-6e9e-4d7b-b54e-50d61c648f36" }
+            "metadata": {
+              "id": "9cbda369-6e9e-4d7b-b54e-50d61c648f36"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "PSY 4325",
-            "metadata": { "id": "46c48482-94fa-4d93-a9a8-764a2deaae47" }
+            "metadata": {
+              "id": "46c48482-94fa-4d93-a9a8-764a2deaae47"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "SOC 2305",
-            "metadata": { "id": "430b30bb-590d-4799-ace1-8dd3c8219d76" }
+            "metadata": {
+              "id": "430b30bb-590d-4799-ace1-8dd3c8219d76"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "SOC 2320",
-            "metadata": { "id": "51c4267d-966e-4c6c-abe7-f2884d69c261" }
+            "metadata": {
+              "id": "51c4267d-966e-4c6c-abe7-f2884d69c261"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "SOC 3303",
-            "metadata": { "id": "8d46a7b9-977d-42e0-b3e3-ec4bf0101ea7" }
+            "metadata": {
+              "id": "8d46a7b9-977d-42e0-b3e3-ec4bf0101ea7"
+            }
           }
         ],
         "metadata": {
@@ -461,5 +567,7 @@
         }
       }
     ]
-  }
+  },
+  "display_name": "Philosophy(BA)",
+  "uuid": "96d47613-622d-452e-8868-5e5257d2d74b"
 }

@@ -1,5 +1,4 @@
 {
-  "abbreviation": "Visual and Performing Arts with Music Concentration (BA)",
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ah/visual-and-performing-arts-music",
   "minimum_credit_hours": 120,
   "name": "Bachelor of Arts in Visual and Performing Arts with Music Concentration",
@@ -189,5 +188,7 @@
         }
       }
     ]
-  }
+  },
+  "display_name": "Visual and Performing Arts with Music Concentration(BA)",
+  "uuid": "afcfff81-d8e9-42bd-9e90-1b3a3c4925a5"
 }

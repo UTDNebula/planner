@@ -1,5 +1,4 @@
 {
-  "abbreviation": "History (BA)",
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ah/history",
   "minimum_credit_hours": 120,
   "name": "Bachelor of Arts in History",
@@ -291,5 +290,7 @@
         }
       }
     ]
-  }
+  },
+  "display_name": "History(BA)",
+  "uuid": "0adc65e7-0221-46cd-8b14-d92a490b2ad8"
 }

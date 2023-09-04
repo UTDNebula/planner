@@ -1,5 +1,4 @@
 {
-  "abbreviation": "Latin American Studies (BA)",
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ah/latin-american-studies",
   "minimum_credit_hours": 120,
   "name": "Bachelor of Arts in Latin American Studies (BA)",
@@ -16,7 +15,9 @@
           {
             "matcher": "CourseRequirement",
             "course": "HIST 2350",
-            "metadata": { "id": "2eae106a-ee88-4cca-aaa4-c30518dca8ab" }
+            "metadata": {
+              "id": "2eae106a-ee88-4cca-aaa4-c30518dca8ab"
+            }
           },
           {
             "matcher": "HoursRequirement",
@@ -25,17 +26,23 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "LIT 2350",
-                "metadata": { "id": "465afc76-1205-4754-ad37-21e5c10423c3" }
+                "metadata": {
+                  "id": "465afc76-1205-4754-ad37-21e5c10423c3"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "HIST 3301",
-                "metadata": { "id": "f7838cb2-d2f8-4ada-9dbf-65ddbfe9d886" }
+                "metadata": {
+                  "id": "f7838cb2-d2f8-4ada-9dbf-65ddbfe9d886"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "GEOG 2303",
-                "metadata": { "id": "6475146e-126c-4020-bf4b-84c91abe6d4f" }
+                "metadata": {
+                  "id": "6475146e-126c-4020-bf4b-84c91abe6d4f"
+                }
               }
             ],
             "metadata": {
@@ -61,7 +68,9 @@
           {
             "matcher": "CourseRequirement",
             "course": "LATS 3301",
-            "metadata": { "id": "a0207a8b-4681-468e-b922-c1a49458dae5" }
+            "metadata": {
+              "id": "a0207a8b-4681-468e-b922-c1a49458dae5"
+            }
           },
           {
             "matcher": "HoursRequirement",
@@ -70,12 +79,16 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "HIST 3398",
-                "metadata": { "id": "d076d94d-f034-4c87-9358-f0f7d6c0858c" }
+                "metadata": {
+                  "id": "d076d94d-f034-4c87-9358-f0f7d6c0858c"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "HIST 3399",
-                "metadata": { "id": "3f20d9b4-8684-43fe-b09c-209f6f476a25" }
+                "metadata": {
+                  "id": "3f20d9b4-8684-43fe-b09c-209f6f476a25"
+                }
               }
             ],
             "metadata": {
@@ -98,32 +111,44 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "HIST 3391",
-                "metadata": { "id": "d20bec81-1c5a-4f1f-ab62-3e1b263db15c" }
+                "metadata": {
+                  "id": "d20bec81-1c5a-4f1f-ab62-3e1b263db15c"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "HIST 3398",
-                "metadata": { "id": "5cdcc0fe-232d-4158-aa66-e873db370f73" }
+                "metadata": {
+                  "id": "5cdcc0fe-232d-4158-aa66-e873db370f73"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "HIST 3399",
-                "metadata": { "id": "226e034a-5e27-4801-9be6-64abc8d49709" }
+                "metadata": {
+                  "id": "226e034a-5e27-4801-9be6-64abc8d49709"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "HIST 4369",
-                "metadata": { "id": "2c2aa11c-9b33-4433-a43e-28a728a453f5" }
+                "metadata": {
+                  "id": "2c2aa11c-9b33-4433-a43e-28a728a453f5"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "HIST 4359",
-                "metadata": { "id": "1ffbefc8-7303-44e6-ae8c-e91abf340803" }
+                "metadata": {
+                  "id": "1ffbefc8-7303-44e6-ae8c-e91abf340803"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "HIST 3397",
-                "metadata": { "id": "c1fe3375-613b-4818-9ec0-5d7219e82ec5" }
+                "metadata": {
+                  "id": "c1fe3375-613b-4818-9ec0-5d7219e82ec5"
+                }
               }
             ],
             "metadata": {
@@ -136,32 +161,44 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "CRIM 3319",
-                "metadata": { "id": "8078d8e1-856c-4561-92ba-8af060863e67" }
+                "metadata": {
+                  "id": "8078d8e1-856c-4561-92ba-8af060863e67"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "GEOG 2302",
-                "metadata": { "id": "2ea04ad3-0f56-4e11-b0f5-8d892c128a8d" }
+                "metadata": {
+                  "id": "2ea04ad3-0f56-4e11-b0f5-8d892c128a8d"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "GEOG 3304",
-                "metadata": { "id": "03d68751-e15a-4db0-ac22-ffc795d1a664" }
+                "metadata": {
+                  "id": "03d68751-e15a-4db0-ac22-ffc795d1a664"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "GEOG 3359",
-                "metadata": { "id": "56c741f2-eced-48b1-b9d9-dcd54294c8df" }
+                "metadata": {
+                  "id": "56c741f2-eced-48b1-b9d9-dcd54294c8df"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "GEOS 2321",
-                "metadata": { "id": "6c90ac01-abc2-4139-8b0c-addc80fb4829" }
+                "metadata": {
+                  "id": "6c90ac01-abc2-4139-8b0c-addc80fb4829"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "PSCI 4348",
-                "metadata": { "id": "96880964-57d8-47b7-80ed-409a541c5905" }
+                "metadata": {
+                  "id": "96880964-57d8-47b7-80ed-409a541c5905"
+                }
               }
             ],
             "metadata": {
@@ -174,22 +211,30 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "LATS 3301",
-                "metadata": { "id": "931555e1-2ade-4146-8d1b-dacf26a46a9e" }
+                "metadata": {
+                  "id": "931555e1-2ade-4146-8d1b-dacf26a46a9e"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "LATS 3302",
-                "metadata": { "id": "b59b66c9-556a-4d6d-93ff-3b9714ad68e3" }
+                "metadata": {
+                  "id": "b59b66c9-556a-4d6d-93ff-3b9714ad68e3"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "LATS 3303",
-                "metadata": { "id": "7ceb698c-6d36-4c19-bfd0-79c12a97df1b" }
+                "metadata": {
+                  "id": "7ceb698c-6d36-4c19-bfd0-79c12a97df1b"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "LATS 4329",
-                "metadata": { "id": "47790616-c876-493b-ad5e-9465ccc84d98" }
+                "metadata": {
+                  "id": "47790616-c876-493b-ad5e-9465ccc84d98"
+                }
               },
               {
                 "matcher": "PrefixBucketRequirement",
@@ -247,5 +292,7 @@
         }
       }
     ]
-  }
+  },
+  "display_name": "Latin American Studies(BA)",
+  "uuid": "85ceb223-419b-4d24-8e3a-32f28702b87d"
 }

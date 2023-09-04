@@ -1,5 +1,4 @@
 {
-  "abbreviation": "Business Administration(BS)",
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/business-administration",
   "minimum_credit_hours": 120,
   "name": "Bachelor of Science in Business Administration",
@@ -19,17 +18,23 @@
           {
             "course": "ACCT 2301",
             "matcher": "CourseRequirement",
-            "metadata": { "id": "Business Administration(BS)-1" }
+            "metadata": {
+              "id": "Business Administration(BS)-1"
+            }
           },
           {
             "course": "ACCT 2302",
             "matcher": "CourseRequirement",
-            "metadata": { "id": "Business Administration(BS)-2" }
+            "metadata": {
+              "id": "Business Administration(BS)-2"
+            }
           },
           {
             "course": "BLAW 2301",
             "matcher": "CourseRequirement",
-            "metadata": { "id": "Business Administration(BS)-3" }
+            "metadata": {
+              "id": "Business Administration(BS)-3"
+            }
           },
           {
             "matcher": "OrRequirement",
@@ -37,61 +42,85 @@
               {
                 "course": "MATH 1325",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": "Business Administration(BS)-5" }
+                "metadata": {
+                  "id": "Business Administration(BS)-5"
+                }
               },
               {
                 "course": "MATH 2413",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": "Business Administration(BS)-6" }
+                "metadata": {
+                  "id": "Business Administration(BS)-6"
+                }
               },
               {
                 "course": "MATH 2417",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": "Business Administration(BS)-7" }
+                "metadata": {
+                  "id": "Business Administration(BS)-7"
+                }
               }
             ],
-            "metadata": { "id": "Business Administration(BS)-4" }
+            "metadata": {
+              "id": "Business Administration(BS)-4"
+            }
           },
           {
             "matcher": "OrRequirement",
-            "metadata": { "id": "Business Administration(BS)-8" },
+            "metadata": {
+              "id": "Business Administration(BS)-8"
+            },
             "requirements": [
               {
                 "course": "OPRE 3360",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": "Business Administration(BS)-9" }
+                "metadata": {
+                  "id": "Business Administration(BS)-9"
+                }
               },
               {
                 "course": "STAT 3360",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": "Business Administration(BS)-10" }
+                "metadata": {
+                  "id": "Business Administration(BS)-10"
+                }
               }
             ]
           },
           {
             "matcher": "SelectRequirement",
-            "metadata": { "id": "Business Administration(BS)-11" },
+            "metadata": {
+              "id": "Business Administration(BS)-11"
+            },
             "required_count": 2,
             "requirements": [
               {
                 "course": "BA 1310",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": "Business Administration(BS)-12" }
+                "metadata": {
+                  "id": "Business Administration(BS)-12"
+                }
               },
               {
                 "course": "BA 1320",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": "Business Administration(BS)-13" }
+                "metadata": {
+                  "id": "Business Administration(BS)-13"
+                }
               },
               {
                 "course": "ECON 2301",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": "Business Administration(BS)-14" }
+                "metadata": {
+                  "id": "Business Administration(BS)-14"
+                }
               },
               {
                 "course": "ECON 2302",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": "Business Administration(BS)-15" }
+                "metadata": {
+                  "id": "Business Administration(BS)-15"
+                }
               }
             ]
           }
@@ -106,131 +135,181 @@
         "requirements": [
           {
             "matcher": "OrRequirement",
-            "metadata": { "id": "Business Administration(BS)-17" },
+            "metadata": {
+              "id": "Business Administration(BS)-17"
+            },
             "requirements": [
               {
                 "course": "BCOM 1300",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": "Business Administration(BS)-18" }
+                "metadata": {
+                  "id": "Business Administration(BS)-18"
+                }
               },
               {
                 "course": "BCOM 3300",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": "Business Administration(BS)-19" }
+                "metadata": {
+                  "id": "Business Administration(BS)-19"
+                }
               }
             ]
           },
           {
             "course": "BCOM 4300",
             "matcher": "CourseRequirement",
-            "metadata": { "id": "Business Administration(BS)-20" }
+            "metadata": {
+              "id": "Business Administration(BS)-20"
+            }
           },
           {
             "course": "BA 3300",
             "matcher": "CourseRequirement",
-            "metadata": { "id": "Business Administration(BS)-21" }
+            "metadata": {
+              "id": "Business Administration(BS)-21"
+            }
           },
           {
             "course": "IMS 3310",
             "matcher": "CourseRequirement",
-            "metadata": { "id": "Business Administration(BS)-22" }
+            "metadata": {
+              "id": "Business Administration(BS)-22"
+            }
           },
           {
             "course": "FIN 3320",
             "matcher": "CourseRequirement",
-            "metadata": { "id": "Business Administration(BS)-23" }
+            "metadata": {
+              "id": "Business Administration(BS)-23"
+            }
           },
           {
             "course": "ITSS 3300",
             "matcher": "CourseRequirement",
-            "metadata": { "id": "Business Administration(BS)-24" }
+            "metadata": {
+              "id": "Business Administration(BS)-24"
+            }
           },
           {
             "course": "OPRE 3310",
             "matcher": "CourseRequirement",
-            "metadata": { "id": "Business Administration(BS)-25" }
+            "metadata": {
+              "id": "Business Administration(BS)-25"
+            }
           },
           {
             "course": "OPRE 3330",
             "matcher": "CourseRequirement",
-            "metadata": { "id": "Business Administration(BS)-26" }
+            "metadata": {
+              "id": "Business Administration(BS)-26"
+            }
           },
           {
             "matcher": "OrRequirement",
-            "metadata": { "id": "Business Administration(BS)-27" },
+            "metadata": {
+              "id": "Business Administration(BS)-27"
+            },
             "requirements": [
               {
                 "course": "OBHR 3310",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": "Business Administration(BS)-28" }
+                "metadata": {
+                  "id": "Business Administration(BS)-28"
+                }
               },
               {
                 "course": "OBHR 3330",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": "Business Administration(BS)-29" }
+                "metadata": {
+                  "id": "Business Administration(BS)-29"
+                }
               }
             ]
           },
           {
             "course": "MKT 3300",
             "matcher": "CourseRequirement",
-            "metadata": { "id": "Business Administration(BS)-30" }
+            "metadata": {
+              "id": "Business Administration(BS)-30"
+            }
           },
           {
             "matcher": "OrRequirement",
-            "metadata": { "id": "Business Administration(BS)-31" },
+            "metadata": {
+              "id": "Business Administration(BS)-31"
+            },
             "requirements": [
               {
                 "course": "BPS 4305",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": "Business Administration(BS)-32" }
+                "metadata": {
+                  "id": "Business Administration(BS)-32"
+                }
               },
               {
                 "course": "ENTP 3320",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": "Business Administration(BS)-33" }
+                "metadata": {
+                  "id": "Business Administration(BS)-33"
+                }
               }
             ]
           },
           {
             "matcher": "OrRequirement",
-            "metadata": { "id": "Business Administration(BS)-34" },
+            "metadata": {
+              "id": "Business Administration(BS)-34"
+            },
             "requirements": [
               {
                 "course": "BPS 4395",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": "Business Administration(BS)-35" }
+                "metadata": {
+                  "id": "Business Administration(BS)-35"
+                }
               },
               {
                 "course": "ENTP 4395",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": "Business Administration(BS)-36" }
+                "metadata": {
+                  "id": "Business Administration(BS)-36"
+                }
               }
             ]
           },
           {
             "matcher": "OrRequirement",
-            "metadata": { "id": "Business Administration(BS)-37" },
+            "metadata": {
+              "id": "Business Administration(BS)-37"
+            },
             "requirements": [
               {
                 "course": "IMS 4335",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": "Business Administration(BS)-38" }
+                "metadata": {
+                  "id": "Business Administration(BS)-38"
+                }
               },
               {
                 "course": "ENTP 4340",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": "Business Administration(BS)-39" }
+                "metadata": {
+                  "id": "Business Administration(BS)-39"
+                }
               },
               {
                 "course": "MKT 4360",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": "Business Administration(BS)-40" }
+                "metadata": {
+                  "id": "Business Administration(BS)-40"
+                }
               },
               {
                 "course": "BA 4095",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": "Business Administration(BS)-41" }
+                "metadata": {
+                  "id": "Business Administration(BS)-41"
+                }
               }
             ]
           }
@@ -246,61 +325,122 @@
           {
             "course": "ENTP 3301",
             "matcher": "CourseRequirement",
-            "metadata": { "id": "Business Administration(BS)-43" }
+            "metadata": {
+              "id": "Business Administration(BS)-43"
+            }
           },
           {
             "matcher": "OrRequirement",
-            "metadata": { "id": "Business Administration(BS)-44" },
+            "metadata": {
+              "id": "Business Administration(BS)-44"
+            },
             "requirements": [
               {
                 "course": "BA 4V90",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": "Business Administration(BS)-45" }
+                "metadata": {
+                  "id": "Business Administration(BS)-45"
+                }
               },
               {
                 "course": "BA 4090",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": "Business Administration(BS)-46" }
+                "metadata": {
+                  "id": "Business Administration(BS)-46"
+                }
               }
             ]
           },
           {
             "matcher": "BAGuidedElectiveRequirement",
-            "metadata": { "id": "Business Administration(BS)-47" },
+            "metadata": {
+              "id": "Business Administration(BS)-47"
+            },
             "prefix_groups": [
               {
                 "matcher": "SomeRequirement",
-                "requirements": [{ "matcher": "PrefixBucketRequirement", "prefix": "MKT" }]
-              },
-              {
-                "matcher": "SomeRequirement",
                 "requirements": [
-                  { "matcher": "PrefixBucketRequirement", "prefix": "ACCT" },
-                  { "matcher": "PrefixBucketRequirement", "prefix": "ENGY" },
-                  { "matcher": "PrefixBucketRequirement", "prefix": "FIN" },
-                  { "matcher": "PrefixBucketRequirement", "prefix": "MECO" },
-                  { "matcher": "PrefixBucketRequirement", "prefix": "REAL" },
-                  { "matcher": "PrefixBucketRequirement", "prefix": "RMIS" }
+                  {
+                    "matcher": "PrefixBucketRequirement",
+                    "prefix": "MKT"
+                  }
                 ]
               },
               {
                 "matcher": "SomeRequirement",
-                "requirements": [{ "matcher": "PrefixBucketRequirement", "prefix": "ITSS" }]
-              },
-              {
-                "matcher": "SomeRequirement",
                 "requirements": [
-                  { "matcher": "PrefixBucketRequirement", "prefix": "BA" },
-                  { "matcher": "PrefixBucketRequirement", "prefix": "BCOM" },
-                  { "matcher": "PrefixBucketRequirement", "prefix": "BPS" },
-                  { "matcher": "PrefixBucketRequirement", "prefix": "BLAW" },
-                  { "matcher": "PrefixBucketRequirement", "prefix": "HMGT" },
-                  { "matcher": "PrefixBucketRequirement", "prefix": "IMS" }
+                  {
+                    "matcher": "PrefixBucketRequirement",
+                    "prefix": "ACCT"
+                  },
+                  {
+                    "matcher": "PrefixBucketRequirement",
+                    "prefix": "ENGY"
+                  },
+                  {
+                    "matcher": "PrefixBucketRequirement",
+                    "prefix": "FIN"
+                  },
+                  {
+                    "matcher": "PrefixBucketRequirement",
+                    "prefix": "MECO"
+                  },
+                  {
+                    "matcher": "PrefixBucketRequirement",
+                    "prefix": "REAL"
+                  },
+                  {
+                    "matcher": "PrefixBucketRequirement",
+                    "prefix": "RMIS"
+                  }
                 ]
               },
               {
                 "matcher": "SomeRequirement",
-                "requirements": [{ "matcher": "PrefixBucketRequirement", "prefix": "OPRE" }]
+                "requirements": [
+                  {
+                    "matcher": "PrefixBucketRequirement",
+                    "prefix": "ITSS"
+                  }
+                ]
+              },
+              {
+                "matcher": "SomeRequirement",
+                "requirements": [
+                  {
+                    "matcher": "PrefixBucketRequirement",
+                    "prefix": "BA"
+                  },
+                  {
+                    "matcher": "PrefixBucketRequirement",
+                    "prefix": "BCOM"
+                  },
+                  {
+                    "matcher": "PrefixBucketRequirement",
+                    "prefix": "BPS"
+                  },
+                  {
+                    "matcher": "PrefixBucketRequirement",
+                    "prefix": "BLAW"
+                  },
+                  {
+                    "matcher": "PrefixBucketRequirement",
+                    "prefix": "HMGT"
+                  },
+                  {
+                    "matcher": "PrefixBucketRequirement",
+                    "prefix": "IMS"
+                  }
+                ]
+              },
+              {
+                "matcher": "SomeRequirement",
+                "requirements": [
+                  {
+                    "matcher": "PrefixBucketRequirement",
+                    "prefix": "OPRE"
+                  }
+                ]
               }
             ],
             "required_count": 3,
@@ -318,5 +458,7 @@
         "required_hours": 12
       }
     ]
-  }
+  },
+  "display_name": "Business Administration(BS)",
+  "uuid": "e81e8aac-45f8-43c3-b964-89dad82da582"
 }

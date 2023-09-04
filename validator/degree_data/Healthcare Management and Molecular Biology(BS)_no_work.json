@@ -1,5 +1,4 @@
 {
-  "abbreviation": "Healthcare Management and Molecular Biology(BS)",
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/healthcare-management-molecular-biology",
   "minimum_credit_hours": 152,
   "name": "Bachelor of Science in Healthcare Management and Molecular Biology",
@@ -706,5 +705,7 @@
         ]
       }
     ]
-  }
+  },
+  "display_name": "Healthcare Management and Molecular Biology(BS)",
+  "uuid": "569fe09c-ce2a-4d09-a398-ec5812c19c48"
 }

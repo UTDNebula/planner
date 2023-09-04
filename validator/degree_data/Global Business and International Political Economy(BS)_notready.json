@@ -1,5 +1,4 @@
 {
-  "abbreviation": "Global Business and Human Resource Management(BS)",
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/global-business-human-resource-management",
   "minimum_credit_hours": 128,
   "name": "Bachelor of Science in Global Business and Human Resource Management",
@@ -482,5 +481,7 @@
         ]
       }
     ]
-  }
+  },
+  "display_name": "Global Business and Human Resource Management(BS)",
+  "uuid": "3a78fd51-a617-4770-b50d-e2dc011b1d6a"
 }

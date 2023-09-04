@@ -1,5 +1,4 @@
 {
-  "abbreviation": "Psychology(BS)",
   "catalog_uri": "https://catalog.utdallas.edu/2021/undergraduate/programs/bbs/psychology",
   "minimum_credit_hours": 120,
   "name": "Bachelor of Science in Psychology",
@@ -19,31 +18,43 @@
           {
             "matcher": "CourseRequirement",
             "course": "BBSU 1100",
-            "metadata": { "id": "Psychology(BS)-1" }
+            "metadata": {
+              "id": "Psychology(BS)-1"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "PSY 2301",
-            "metadata": { "id": "Psychology(BS)-2" }
+            "metadata": {
+              "id": "Psychology(BS)-2"
+            }
           },
           {
             "matcher": "OrRequirement",
-            "metadata": { "id": "Psychology(BS)-3" },
+            "metadata": {
+              "id": "Psychology(BS)-3"
+            },
             "requirements": [
               {
                 "matcher": "CourseRequirement",
                 "course": "PSY 2317",
-                "metadata": { "id": "Psychology(BS)-4" }
+                "metadata": {
+                  "id": "Psychology(BS)-4"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "STAT 1342",
-                "metadata": { "id": "Psychology(BS)-5" }
+                "metadata": {
+                  "id": "Psychology(BS)-5"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "STAT 2332",
-                "metadata": { "id": "Psychology(BS)-6" }
+                "metadata": {
+                  "id": "Psychology(BS)-6"
+                }
               }
             ]
           }
@@ -51,17 +62,24 @@
       },
       {
         "matcher": "AndRequirement",
-        "metadata": { "id": "Psychology(BS)-7", "name": "Major Core Courses" },
+        "metadata": {
+          "id": "Psychology(BS)-7",
+          "name": "Major Core Courses"
+        },
         "requirements": [
           {
             "matcher": "CourseRequirement",
             "course": "NSC 3361",
-            "metadata": { "id": "Psychology(BS)-8" }
+            "metadata": {
+              "id": "Psychology(BS)-8"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "PSY 3360",
-            "metadata": { "id": "Psychology(BS)-9" }
+            "metadata": {
+              "id": "Psychology(BS)-9"
+            }
           },
           {
             "matcher": "OrRequirement",
@@ -69,40 +87,56 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "PSY 3361",
-                "metadata": { "id": "Psychology(BS)-11" }
+                "metadata": {
+                  "id": "Psychology(BS)-11"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "PSY 4359",
-                "metadata": { "id": "Psychology(BS)-12" }
+                "metadata": {
+                  "id": "Psychology(BS)-12"
+                }
               }
             ],
-            "metadata": { "id": "Psychology(BS)-10" }
+            "metadata": {
+              "id": "Psychology(BS)-10"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "PSY 3392",
-            "metadata": { "id": "Psychology(BS)-13" }
+            "metadata": {
+              "id": "Psychology(BS)-13"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "PSY 3393",
-            "metadata": { "id": "Psychology(BS)-14" }
+            "metadata": {
+              "id": "Psychology(BS)-14"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "PSY 3331",
-            "metadata": { "id": "Psychology(BS)-15" }
+            "metadata": {
+              "id": "Psychology(BS)-15"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "PSY 3310",
-            "metadata": { "id": "Psychology(BS)-16" }
+            "metadata": {
+              "id": "Psychology(BS)-16"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "PSY 4343",
-            "metadata": { "id": "Psychology(BS)-17" }
+            "metadata": {
+              "id": "Psychology(BS)-17"
+            }
           }
         ]
       },
@@ -115,52 +149,72 @@
         "requirements": [
           {
             "matcher": "OrRequirement",
-            "metadata": { "id": "Psychology(BS)-19" },
+            "metadata": {
+              "id": "Psychology(BS)-19"
+            },
             "requirements": [
               {
                 "matcher": "CourseRequirement",
                 "course": "BBSU 3310",
-                "metadata": { "id": "Psychology(BS)-20" }
+                "metadata": {
+                  "id": "Psychology(BS)-20"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "PSY 4390",
-                "metadata": { "id": "Psychology(BS)-21" }
+                "metadata": {
+                  "id": "Psychology(BS)-21"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "PSY 4391",
-                "metadata": { "id": "Psychology(BS)-22" }
+                "metadata": {
+                  "id": "Psychology(BS)-22"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "PSY 4394",
-                "metadata": { "id": "Psychology(BS)-23" }
+                "metadata": {
+                  "id": "Psychology(BS)-23"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "PSY 4395",
-                "metadata": { "id": "Psychology(BS)-24" }
+                "metadata": {
+                  "id": "Psychology(BS)-24"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "PSY 4V96",
-                "metadata": { "id": "Psychology(BS)-25" }
+                "metadata": {
+                  "id": "Psychology(BS)-25"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "PSY 4397",
-                "metadata": { "id": "Psychology(BS)-26" }
+                "metadata": {
+                  "id": "Psychology(BS)-26"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "PSY 4V98",
-                "metadata": { "id": "Psychology(BS)-27" }
+                "metadata": {
+                  "id": "Psychology(BS)-27"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "PSY 4V99",
-                "metadata": { "id": "Psychology(BS)-28" }
+                "metadata": {
+                  "id": "Psychology(BS)-28"
+                }
               }
             ]
           },
@@ -177,17 +231,29 @@
               "SPAU 3345",
               "SPAU 4308"
             ],
-            "metadata": { "id": "Psychology(BS)-29" },
-            "accepted_prefixes": ["PSY", "CGS", "CLDP", "NSC"]
+            "metadata": {
+              "id": "Psychology(BS)-29"
+            },
+            "accepted_prefixes": [
+              "PSY",
+              "CGS",
+              "CLDP",
+              "NSC"
+            ]
           }
         ]
       },
       {
         "excluded_courses": [],
         "matcher": "FreeElectiveRequirement",
-        "metadata": { "id": "Psychology(BS)-30", "name": "Free Electives" },
+        "metadata": {
+          "id": "Psychology(BS)-30",
+          "name": "Free Electives"
+        },
         "required_hours": 42
       }
     ]
-  }
+  },
+  "display_name": "Psychology(BS)",
+  "uuid": "85364956-357b-4c3c-a4a3-2c2a980c6074"
 }

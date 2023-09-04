@@ -1,5 +1,4 @@
 {
-  "abbreviation": "Business Administration(BS) Sales Concentration",
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/business-administration",
   "minimum_credit_hours": 120,
   "name": "Bachelor of Science in Business Administration Sales Concentration",
@@ -609,5 +608,7 @@
         }
       }
     ]
-  }
+  },
+  "display_name": "Business Administration(BS) Sales Concentration",
+  "uuid": "497e317c-1748-48f8-959a-52b15891a301"
 }

@@ -1,5 +1,4 @@
 {
-  "abbreviation": "Literature with Creative Writing Concentration (BA)",
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ah/literature-creative-writing",
   "minimum_credit_hours": 120,
   "name": "Bachelor of Arts in Literature with Creative Writing Concentration",
@@ -12,7 +11,9 @@
       {
         "matcher": "CourseRequirement",
         "course": "LIT 2350",
-        "metadata": { "id": "d127bd1c-198b-41e5-9ce2-30859a16eb74" }
+        "metadata": {
+          "id": "d127bd1c-198b-41e5-9ce2-30859a16eb74"
+        }
       },
       {
         "matcher": "HoursRequirement",
@@ -21,22 +22,30 @@
           {
             "matcher": "CourseRequirement",
             "course": "LIT 2320",
-            "metadata": { "id": "5bd74a04-74b9-4a2d-8e3e-246709f5a83b" }
+            "metadata": {
+              "id": "5bd74a04-74b9-4a2d-8e3e-246709f5a83b"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "LIT 2321",
-            "metadata": { "id": "d45c59ac-d442-4e54-9652-8833f3fa5466" }
+            "metadata": {
+              "id": "d45c59ac-d442-4e54-9652-8833f3fa5466"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "LIT 2322",
-            "metadata": { "id": "27edcb39-d248-4f2e-8011-a7b118152da2" }
+            "metadata": {
+              "id": "27edcb39-d248-4f2e-8011-a7b118152da2"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "LIT 2331",
-            "metadata": { "id": "b86351e6-3dec-4967-9ca6-611479c7f4cb" }
+            "metadata": {
+              "id": "b86351e6-3dec-4967-9ca6-611479c7f4cb"
+            }
           }
         ],
         "metadata": {
@@ -46,7 +55,9 @@
       {
         "matcher": "CourseRequirement",
         "course": "CRWT 2301",
-        "metadata": { "id": "d2b57a43-399e-428c-bec3-32b7c48258f1" }
+        "metadata": {
+          "id": "d2b57a43-399e-428c-bec3-32b7c48258f1"
+        }
       },
       {
         "matcher": "HoursRequirement",
@@ -55,22 +66,30 @@
           {
             "matcher": "CourseRequirement",
             "course": "LIT 3300",
-            "metadata": { "id": "2eae70a5-b922-402c-9aab-d5522d1263c6" }
+            "metadata": {
+              "id": "2eae70a5-b922-402c-9aab-d5522d1263c6"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "LIT 3339",
-            "metadata": { "id": "23fa76f0-f282-40ab-9e5b-c67a52afa9e5" }
+            "metadata": {
+              "id": "23fa76f0-f282-40ab-9e5b-c67a52afa9e5"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "LIT 4329",
-            "metadata": { "id": "55611dec-f78a-4d19-b7c2-a17b399f324c" }
+            "metadata": {
+              "id": "55611dec-f78a-4d19-b7c2-a17b399f324c"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "LIT 4390",
-            "metadata": { "id": "cce65cd2-ad5f-4678-86c4-ebaf2ec08f5f" }
+            "metadata": {
+              "id": "cce65cd2-ad5f-4678-86c4-ebaf2ec08f5f"
+            }
           }
         ],
         "metadata": {
@@ -84,12 +103,16 @@
           {
             "matcher": "CourseRequirement",
             "course": "ARHM 3342",
-            "metadata": { "id": "ac6bbaa8-4a14-4ca8-9bc1-bd07a13dc7d4" }
+            "metadata": {
+              "id": "ac6bbaa8-4a14-4ca8-9bc1-bd07a13dc7d4"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "LIT 3338",
-            "metadata": { "id": "b9627a7a-a6c6-4534-998a-0ce55d8095a0" }
+            "metadata": {
+              "id": "b9627a7a-a6c6-4534-998a-0ce55d8095a0"
+            }
           },
           {
             "matcher": "PrefixBucketRequirement",
@@ -117,7 +140,9 @@
           {
             "matcher": "CourseRequirement",
             "course": "LIT 3319",
-            "metadata": { "id": "722d29d1-ef53-4b2b-aaef-48a68765955e" }
+            "metadata": {
+              "id": "722d29d1-ef53-4b2b-aaef-48a68765955e"
+            }
           }
         ],
         "metadata": {
@@ -131,12 +156,16 @@
           {
             "matcher": "CourseRequirement",
             "course": "CRWT 3330",
-            "metadata": { "id": "98d6b739-4e33-4466-8789-ee108de0f3b2" }
+            "metadata": {
+              "id": "98d6b739-4e33-4466-8789-ee108de0f3b2"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "LIT 3337",
-            "metadata": { "id": "f2ddcd98-de09-4898-8a7f-1258bc62cb36" }
+            "metadata": {
+              "id": "f2ddcd98-de09-4898-8a7f-1258bc62cb36"
+            }
           }
         ],
         "metadata": {
@@ -173,5 +202,7 @@
         }
       }
     ]
-  }
+  },
+  "display_name": "Literature with Creative Writing Concentration(BA)",
+  "uuid": "8983c6c8-18cf-453f-aa60-a278f8e99820"
 }

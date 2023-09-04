@@ -1,5 +1,4 @@
 {
-  "abbreviation": "Business Analytics(BS)",
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/business-analytics",
   "minimum_credit_hours": 120,
   "name": "Bachelor of Science in Business Analytics",
@@ -18,57 +17,79 @@
           {
             "matcher": "CourseRequirement",
             "course": "ACCT 2301",
-            "metadata": { "id": "Business Analytics(BS)-1" }
+            "metadata": {
+              "id": "Business Analytics(BS)-1"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ACCT 2302",
-            "metadata": { "id": "Business Analytics(BS)-2" }
+            "metadata": {
+              "id": "Business Analytics(BS)-2"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BLAW 2301",
-            "metadata": { "id": "Business Analytics(BS)-3" }
+            "metadata": {
+              "id": "Business Analytics(BS)-3"
+            }
           },
           {
             "matcher": "OrRequirement",
-            "metadata": { "id": "Business Analytics(BS)-4" },
+            "metadata": {
+              "id": "Business Analytics(BS)-4"
+            },
             "requirements": [
               {
                 "course": "MATH 1325",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": "Business Analytics(BS)-5" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-5"
+                }
               },
               {
                 "course": "MATH 2413",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": "Business Analytics(BS)-6" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-6"
+                }
               },
               {
                 "course": "MATH 2417",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": "Business Analytics(BS)-7" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-7"
+                }
               }
             ]
           },
           {
             "matcher": "OrRequirement",
-            "metadata": { "id": "Business Analytics(BS)-8" },
+            "metadata": {
+              "id": "Business Analytics(BS)-8"
+            },
             "requirements": [
               {
                 "course": "MATH 1326",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": "Business Analytics(BS)-9" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-9"
+                }
               },
               {
                 "course": "MATH 2414",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": "Business Analytics(BS)-10" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-10"
+                }
               },
               {
                 "course": "MATH 2419",
                 "matcher": "CourseRequirement",
-                "metadata": { "id": "Business Analytics(BS)-11" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-11"
+                }
               }
             ]
           },
@@ -78,15 +99,21 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "OPRE 3333",
-                "metadata": { "id": "Business Analytics(BS)-13" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-13"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MATH 2333",
-                "metadata": { "id": "Business Analytics(BS)-14" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-14"
+                }
               }
             ],
-            "metadata": { "id": "Business Analytics(BS)-12" }
+            "metadata": {
+              "id": "Business Analytics(BS)-12"
+            }
           },
           {
             "matcher": "OrRequirement",
@@ -94,20 +121,28 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "OPRE 3360",
-                "metadata": { "id": "Business Analytics(BS)-16" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-16"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "STAT 3360",
-                "metadata": { "id": "Business Analytics(BS)-17" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-17"
+                }
               }
             ],
-            "metadata": { "id": "Business Analytics(BS)-15" }
+            "metadata": {
+              "id": "Business Analytics(BS)-15"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ITSS 3311",
-            "metadata": { "id": "Business Analytics(BS)-18" }
+            "metadata": {
+              "id": "Business Analytics(BS)-18"
+            }
           },
           {
             "matcher": "SelectRequirement",
@@ -116,25 +151,35 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "BA 1310",
-                "metadata": { "id": "Business Analytics(BS)-20" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-20"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BA 1320",
-                "metadata": { "id": "Business Analytics(BS)-21" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-21"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ECON 2301",
-                "metadata": { "id": "Business Analytics(BS)-22" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-22"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ECON 2302",
-                "metadata": { "id": "Business Analytics(BS)-23" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-23"
+                }
               }
             ],
-            "metadata": { "id": "Business Analytics(BS)-19" }
+            "metadata": {
+              "id": "Business Analytics(BS)-19"
+            }
           }
         ]
       },
@@ -151,40 +196,56 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "BCOM 1300",
-                "metadata": { "id": "Business Analytics(BS)-26" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-26"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BCOM 3300",
-                "metadata": { "id": "Business Analytics(BS)-27" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-27"
+                }
               }
             ],
-            "metadata": { "id": "Business Analytics(BS)-25" }
+            "metadata": {
+              "id": "Business Analytics(BS)-25"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BCOM 4300",
-            "metadata": { "id": "Business Analytics(BS)-28" }
+            "metadata": {
+              "id": "Business Analytics(BS)-28"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "IMS 3310",
-            "metadata": { "id": "Business Analytics(BS)-29" }
+            "metadata": {
+              "id": "Business Analytics(BS)-29"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "FIN 3320",
-            "metadata": { "id": "Business Analytics(BS)-30" }
+            "metadata": {
+              "id": "Business Analytics(BS)-30"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ITSS 3300",
-            "metadata": { "id": "Business Analytics(BS)-31" }
+            "metadata": {
+              "id": "Business Analytics(BS)-31"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "OPRE 3310",
-            "metadata": { "id": "Business Analytics(BS)-32" }
+            "metadata": {
+              "id": "Business Analytics(BS)-32"
+            }
           },
           {
             "matcher": "OrRequirement",
@@ -192,20 +253,28 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "OBHR 3310",
-                "metadata": { "id": "Business Analytics(BS)-34" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-34"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "OBHR 3330",
-                "metadata": { "id": "Business Analytics(BS)-35" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-35"
+                }
               }
             ],
-            "metadata": { "id": "Business Analytics(BS)-33" }
+            "metadata": {
+              "id": "Business Analytics(BS)-33"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MKT 3300",
-            "metadata": { "id": "Business Analytics(BS)-36" }
+            "metadata": {
+              "id": "Business Analytics(BS)-36"
+            }
           },
           {
             "matcher": "OrRequirement",
@@ -213,25 +282,35 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 4335",
-                "metadata": { "id": "Business Analytics(BS)-38" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-38"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ENTP 4340",
-                "metadata": { "id": "Business Analytics(BS)-39" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-39"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 4360",
-                "metadata": { "id": "Business Analytics(BS)-40" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-40"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BA 4095",
-                "metadata": { "id": "Business Analytics(BS)-41" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-41"
+                }
               }
             ],
-            "metadata": { "id": "Business Analytics(BS)-37" }
+            "metadata": {
+              "id": "Business Analytics(BS)-37"
+            }
           }
         ]
       },
@@ -245,47 +324,65 @@
           {
             "matcher": "CourseRequirement",
             "course": "ITSS 4300",
-            "metadata": { "id": "Business Analytics(BS)-43" }
+            "metadata": {
+              "id": "Business Analytics(BS)-43"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ITSS 4351",
-            "metadata": { "id": "Business Analytics(BS)-44" }
+            "metadata": {
+              "id": "Business Analytics(BS)-44"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ITSS 4352",
-            "metadata": { "id": "Business Analytics(BS)-45" }
+            "metadata": {
+              "id": "Business Analytics(BS)-45"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ITSS 4353",
-            "metadata": { "id": "Business Analytics(BS)-46" }
+            "metadata": {
+              "id": "Business Analytics(BS)-46"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ITSS 4354",
-            "metadata": { "id": "Business Analytics(BS)-47" }
+            "metadata": {
+              "id": "Business Analytics(BS)-47"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ITSS 4355",
-            "metadata": { "id": "Business Analytics(BS)-48" }
+            "metadata": {
+              "id": "Business Analytics(BS)-48"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ITSS 4380",
-            "metadata": { "id": "Business Analytics(BS)-49" }
+            "metadata": {
+              "id": "Business Analytics(BS)-49"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ITSS 4381",
-            "metadata": { "id": "Business Analytics(BS)-50" }
+            "metadata": {
+              "id": "Business Analytics(BS)-50"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BUAN 4395",
-            "metadata": { "id": "Business Analytics(BS)-51" }
+            "metadata": {
+              "id": "Business Analytics(BS)-51"
+            }
           },
           {
             "matcher": "OrRequirement",
@@ -293,15 +390,21 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "BUAN 4090",
-                "metadata": { "id": "Business Analytics(BS)-53" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-53"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BA 4090",
-                "metadata": { "id": "Business Analytics(BS)-54" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-54"
+                }
               }
             ],
-            "metadata": { "id": "Business Analytics(BS)-52" }
+            "metadata": {
+              "id": "Business Analytics(BS)-52"
+            }
           }
         ]
       },
@@ -319,25 +422,35 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 4330",
-                "metadata": { "id": "Business Analytics(BS)-57" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-57"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 4331",
-                "metadata": { "id": "Business Analytics(BS)-58" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-58"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 4334",
-                "metadata": { "id": "Business Analytics(BS)-59" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-59"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 4337",
-                "metadata": { "id": "Business Analytics(BS)-60" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-60"
+                }
               }
             ],
-            "metadata": { "id": "Business Analytics(BS)-56" }
+            "metadata": {
+              "id": "Business Analytics(BS)-56"
+            }
           },
           {
             "matcher": "HoursRequirement",
@@ -346,30 +459,42 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "OPRE 3320",
-                "metadata": { "id": "Business Analytics(BS)-62" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-62"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "OPRE 4320",
-                "metadata": { "id": "Business Analytics(BS)-63" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-63"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "OPRE 4330",
-                "metadata": { "id": "Business Analytics(BS)-64" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-64"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "OPRE 4350",
-                "metadata": { "id": "Business Analytics(BS)-65" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-65"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "OPRE 4357",
-                "metadata": { "id": "Business Analytics(BS)-66" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-66"
+                }
               }
             ],
-            "metadata": { "id": "Business Analytics(BS)-61" }
+            "metadata": {
+              "id": "Business Analytics(BS)-61"
+            }
           },
           {
             "matcher": "HoursRequirement",
@@ -378,25 +503,35 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 3370",
-                "metadata": { "id": "Business Analytics(BS)-68" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-68"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 3390",
-                "metadata": { "id": "Business Analytics(BS)-69" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-69"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4338",
-                "metadata": { "id": "Business Analytics(BS)-70" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-70"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 4345",
-                "metadata": { "id": "Business Analytics(BS)-71" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-71"
+                }
               }
             ],
-            "metadata": { "id": "Business Analytics(BS)-67" }
+            "metadata": {
+              "id": "Business Analytics(BS)-67"
+            }
           },
           {
             "matcher": "HoursRequirement",
@@ -405,30 +540,42 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "ITSS 4330",
-                "metadata": { "id": "Business Analytics(BS)-73" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-73"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ITSS 4340",
-                "metadata": { "id": "Business Analytics(BS)-74" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-74"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ITSS 4344",
-                "metadata": { "id": "Business Analytics(BS)-75" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-75"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ITSS 4356",
-                "metadata": { "id": "Business Analytics(BS)-76" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-76"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ITSS 4360",
-                "metadata": { "id": "Business Analytics(BS)-77" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-77"
+                }
               }
             ],
-            "metadata": { "id": "Business Analytics(BS)-72" }
+            "metadata": {
+              "id": "Business Analytics(BS)-72"
+            }
           },
           {
             "matcher": "HoursRequirement",
@@ -437,27 +584,37 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "ITSS 4356",
-                "metadata": { "id": "Business Analytics(BS)-79" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-79"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ITSS 4382",
-                "metadata": { "id": "Business Analytics(BS)-80" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-80"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ITSS 4383",
-                "metadata": { "id": "Business Analytics(BS)-81" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-81"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MECO 4352",
-                "metadata": { "id": "Business Analytics(BS)-82" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-82"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MECO 4370",
-                "metadata": { "id": "Business Analytics(BS)-83" }
+                "metadata": {
+                  "id": "Business Analytics(BS)-83"
+                }
               }
             ],
             "metadata": {
@@ -467,5 +624,7 @@
         ]
       }
     ]
-  }
+  },
+  "display_name": "Business Analytics(BS)",
+  "uuid": "f7dbaf9d-3f1b-4663-a926-2bd622baa160"
 }

@@ -1,5 +1,4 @@
 {
-  "abbreviation": "Business Administration(BS) Business Economics Concentration",
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/business-administration",
   "minimum_credit_hours": 120,
   "name": "Bachelor of Science in Business Administration Business Economics Concentration",
@@ -463,5 +462,7 @@
         }
       }
     ]
-  }
+  },
+  "display_name": "Business Administration(BS) Business Economics Concentration",
+  "uuid": "eda11f07-bf89-45c1-9fed-5035d9a6b432"
 }

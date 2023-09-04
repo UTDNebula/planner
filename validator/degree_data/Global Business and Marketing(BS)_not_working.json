@@ -1,5 +1,4 @@
 {
-  "abbreviation": "Global Business and Marketing(BS)",
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/global-business-marketing",
   "minimum_credit_hours": 128,
   "name": "Bachelor of Science in Global Business and Marketing",
@@ -19,17 +18,23 @@
           {
             "matcher": "CourseRequirement",
             "course": "ACCT 2301",
-            "metadata": { "id": "Global Business and Marketing(BS)-1" }
+            "metadata": {
+              "id": "Global Business and Marketing(BS)-1"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ACCT 2302",
-            "metadata": { "id": "Global Business and Marketing(BS)-2" }
+            "metadata": {
+              "id": "Global Business and Marketing(BS)-2"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BLAW 2301",
-            "metadata": { "id": "Global Business and Marketing(BS)-3" }
+            "metadata": {
+              "id": "Global Business and Marketing(BS)-3"
+            }
           },
           {
             "matcher": "OrRequirement",
@@ -37,20 +42,28 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "MATH 1325",
-                "metadata": { "id": "Global Business and Marketing(BS)-5" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-5"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MATH 2413",
-                "metadata": { "id": "Global Business and Marketing(BS)-6" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-6"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MATH 2417",
-                "metadata": { "id": "Global Business and Marketing(BS)-7" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-7"
+                }
               }
             ],
-            "metadata": { "id": "Global Business and Marketing(BS)-4" }
+            "metadata": {
+              "id": "Global Business and Marketing(BS)-4"
+            }
           },
           {
             "matcher": "OrRequirement",
@@ -58,15 +71,21 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "OPRE 3360",
-                "metadata": { "id": "Global Business and Marketing(BS)-9" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-9"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "STAT 3360",
-                "metadata": { "id": "Global Business and Marketing(BS)-10" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-10"
+                }
               }
             ],
-            "metadata": { "id": "Global Business and Marketing(BS)-8" }
+            "metadata": {
+              "id": "Global Business and Marketing(BS)-8"
+            }
           },
           {
             "matcher": "SelectRequirement",
@@ -75,25 +94,35 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "BA 1310",
-                "metadata": { "id": "Global Business and Marketing(BS)-12" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-12"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BA 1320",
-                "metadata": { "id": "Global Business and Marketing(BS)-13" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-13"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ECON 2301",
-                "metadata": { "id": "Global Business and Marketing(BS)-14" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-14"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ECON 2302",
-                "metadata": { "id": "Global Business and Marketing(BS)-15" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-15"
+                }
               }
             ],
-            "metadata": { "id": "Global Business and Marketing(BS)-11" }
+            "metadata": {
+              "id": "Global Business and Marketing(BS)-11"
+            }
           }
         ]
       },
@@ -110,40 +139,56 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "BCOM 1300",
-                "metadata": { "id": "Global Business and Marketing(BS)-18" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-18"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BCOM 3300",
-                "metadata": { "id": "Global Business and Marketing(BS)-19" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-19"
+                }
               }
             ],
-            "metadata": { "id": "Global Business and Marketing(BS)-17" }
+            "metadata": {
+              "id": "Global Business and Marketing(BS)-17"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BCOM 4300",
-            "metadata": { "id": "Global Business and Marketing(BS)-20" }
+            "metadata": {
+              "id": "Global Business and Marketing(BS)-20"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "IMS 3310",
-            "metadata": { "id": "Global Business and Marketing(BS)-21" }
+            "metadata": {
+              "id": "Global Business and Marketing(BS)-21"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "FIN 3320",
-            "metadata": { "id": "Global Business and Marketing(BS)-22" }
+            "metadata": {
+              "id": "Global Business and Marketing(BS)-22"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ITSS 3300",
-            "metadata": { "id": "Global Business and Marketing(BS)-23" }
+            "metadata": {
+              "id": "Global Business and Marketing(BS)-23"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "OPRE 3310",
-            "metadata": { "id": "Global Business and Marketing(BS)-24" }
+            "metadata": {
+              "id": "Global Business and Marketing(BS)-24"
+            }
           },
           {
             "matcher": "OrRequirement",
@@ -151,20 +196,28 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "OBHR 3310",
-                "metadata": { "id": "Global Business and Marketing(BS)-26" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-26"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "OBHR 3330",
-                "metadata": { "id": "Global Business and Marketing(BS)-27" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-27"
+                }
               }
             ],
-            "metadata": { "id": "Global Business and Marketing(BS)-25" }
+            "metadata": {
+              "id": "Global Business and Marketing(BS)-25"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MKT 3300",
-            "metadata": { "id": "Global Business and Marketing(BS)-28" }
+            "metadata": {
+              "id": "Global Business and Marketing(BS)-28"
+            }
           }
         ]
       },
@@ -181,15 +234,21 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 4320",
-                "metadata": { "id": "Global Business and Marketing(BS)-31" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-31"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 4320",
-                "metadata": { "id": "Global Business and Marketing(BS)-32" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-32"
+                }
               }
             ],
-            "metadata": { "id": "Global Business and Marketing(BS)-30" }
+            "metadata": {
+              "id": "Global Business and Marketing(BS)-30"
+            }
           },
           {
             "matcher": "OrRequirement",
@@ -197,20 +256,28 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 4395",
-                "metadata": { "id": "Global Business and Marketing(BS)-34" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-34"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BPS 4395",
-                "metadata": { "id": "Global Business and Marketing(BS)-35" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-35"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ENTP 4395",
-                "metadata": { "id": "Global Business and Marketing(BS)-36" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-36"
+                }
               }
             ],
-            "metadata": { "id": "Global Business and Marketing(BS)-33" }
+            "metadata": {
+              "id": "Global Business and Marketing(BS)-33"
+            }
           },
           {
             "matcher": "OrRequirement",
@@ -218,20 +285,28 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 4310",
-                "metadata": { "id": "Global Business and Marketing(BS)-38" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-38"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 4340",
-                "metadata": { "id": "Global Business and Marketing(BS)-39" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-39"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 4V94",
-                "metadata": { "id": "Global Business and Marketing(BS)-40" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-40"
+                }
               }
             ],
-            "metadata": { "id": "Global Business and Marketing(BS)-37" }
+            "metadata": {
+              "id": "Global Business and Marketing(BS)-37"
+            }
           }
         ]
       },
@@ -249,35 +324,49 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 4338",
-                "metadata": { "id": "Global Business and Marketing(BS)-43" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-43"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 4334",
-                "metadata": { "id": "Global Business and Marketing(BS)-44" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-44"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 4V90",
-                "metadata": { "id": "Global Business and Marketing(BS)-45" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-45"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 4331",
-                "metadata": { "id": "Global Business and Marketing(BS)-46" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-46"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 4336",
-                "metadata": { "id": "Global Business and Marketing(BS)-47" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-47"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 4339",
-                "metadata": { "id": "Global Business and Marketing(BS)-48" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-48"
+                }
               }
             ],
-            "metadata": { "id": "Global Business and Marketing(BS)-42" }
+            "metadata": {
+              "id": "Global Business and Marketing(BS)-42"
+            }
           },
           {
             "matcher": "HoursRequirement",
@@ -286,30 +375,42 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 4336",
-                "metadata": { "id": "Global Business and Marketing(BS)-50" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-50"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 4V93",
-                "metadata": { "id": "Global Business and Marketing(BS)-51" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-51"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 4337",
-                "metadata": { "id": "Global Business and Marketing(BS)-52" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-52"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 4341",
-                "metadata": { "id": "Global Business and Marketing(BS)-53" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-53"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 4V90",
-                "metadata": { "id": "Global Business and Marketing(BS)-54" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-54"
+                }
               }
             ],
-            "metadata": { "id": "Global Business and Marketing(BS)-49" }
+            "metadata": {
+              "id": "Global Business and Marketing(BS)-49"
+            }
           },
           {
             "matcher": "HoursRequirement",
@@ -318,35 +419,49 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 3320",
-                "metadata": { "id": "Global Business and Marketing(BS)-56" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-56"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 4370",
-                "metadata": { "id": "Global Business and Marketing(BS)-57" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-57"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 4340",
-                "metadata": { "id": "Global Business and Marketing(BS)-58" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-58"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 4350",
-                "metadata": { "id": "Global Business and Marketing(BS)-59" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-59"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 4360",
-                "metadata": { "id": "Global Business and Marketing(BS)-60" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-60"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 4V90",
-                "metadata": { "id": "Global Business and Marketing(BS)-61" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-61"
+                }
               }
             ],
-            "metadata": { "id": "Global Business and Marketing(BS)-55" }
+            "metadata": {
+              "id": "Global Business and Marketing(BS)-55"
+            }
           }
         ]
       },
@@ -363,20 +478,28 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 4V90",
-                "metadata": { "id": "Global Business and Marketing(BS)-64" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-64"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 4090",
-                "metadata": { "id": "Global Business and Marketing(BS)-65" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-65"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BA 4090",
-                "metadata": { "id": "Global Business and Marketing(BS)-66" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-66"
+                }
               }
             ],
-            "metadata": { "id": "Global Business and Marketing(BS)-63" }
+            "metadata": {
+              "id": "Global Business and Marketing(BS)-63"
+            }
           },
           {
             "matcher": "OrRequirement",
@@ -384,25 +507,35 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 4335",
-                "metadata": { "id": "Global Business and Marketing(BS)-68" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-68"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ENTP 4340",
-                "metadata": { "id": "Global Business and Marketing(BS)-69" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-69"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MKT 4360",
-                "metadata": { "id": "Global Business and Marketing(BS)-70" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-70"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BA 4095",
-                "metadata": { "id": "Global Business and Marketing(BS)-71" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-71"
+                }
               }
             ],
-            "metadata": { "id": "Global Business and Marketing(BS)-67" }
+            "metadata": {
+              "id": "Global Business and Marketing(BS)-67"
+            }
           },
           {
             "matcher": "HoursRequirement",
@@ -411,123 +544,173 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 4V90",
-                "metadata": { "id": "Global Business and Marketing(BS)-73" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-73"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 4090",
-                "metadata": { "id": "Global Business and Marketing(BS)-74" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-74"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "BA 4090",
-                "metadata": { "id": "Global Business and Marketing(BS)-75" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-75"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 4310",
-                "metadata": { "id": "Global Business and Marketing(BS)-76" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-76"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ENTP 4311",
-                "metadata": { "id": "Global Business and Marketing(BS)-77" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-77"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "FIN 3350",
-                "metadata": { "id": "Global Business and Marketing(BS)-78" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-78"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "OBHR 4310",
-                "metadata": { "id": "Global Business and Marketing(BS)-79" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-79"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "OBHR 4352",
-                "metadata": { "id": "Global Business and Marketing(BS)-80" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-80"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "OPRE 3320",
-                "metadata": { "id": "Global Business and Marketing(BS)-81" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-81"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "GEOG 3370",
-                "metadata": { "id": "Global Business and Marketing(BS)-82" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-82"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ECON 4360",
-                "metadata": { "id": "Global Business and Marketing(BS)-83" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-83"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 3091",
-                "metadata": { "id": "Global Business and Marketing(BS)-84" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-84"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 3092",
-                "metadata": { "id": "Global Business and Marketing(BS)-85" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-85"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 3093",
-                "metadata": { "id": "Global Business and Marketing(BS)-86" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-86"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 3094",
-                "metadata": { "id": "Global Business and Marketing(BS)-87" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-87"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 3095",
-                "metadata": { "id": "Global Business and Marketing(BS)-88" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-88"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 3096",
-                "metadata": { "id": "Global Business and Marketing(BS)-89" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-89"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 3V91",
-                "metadata": { "id": "Global Business and Marketing(BS)-90" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-90"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 3V92",
-                "metadata": { "id": "Global Business and Marketing(BS)-91" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-91"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 3V93",
-                "metadata": { "id": "Global Business and Marketing(BS)-92" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-92"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 3V94",
-                "metadata": { "id": "Global Business and Marketing(BS)-93" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-93"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 3V95",
-                "metadata": { "id": "Global Business and Marketing(BS)-94" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-94"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "IMS 3V96",
-                "metadata": { "id": "Global Business and Marketing(BS)-95" }
+                "metadata": {
+                  "id": "Global Business and Marketing(BS)-95"
+                }
               }
             ],
-            "metadata": { "id": "Global Business and Marketing(BS)-72" }
+            "metadata": {
+              "id": "Global Business and Marketing(BS)-72"
+            }
           }
         ]
       }
     ]
-  }
+  },
+  "display_name": "Global Business and Marketing(BS)",
+  "uuid": "29bd2df1-d27f-4d49-bfe7-51dac5ad6ad3"
 }
