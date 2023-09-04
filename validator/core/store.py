@@ -10,9 +10,9 @@ from core import matchers
 
 class AssignmentStoreJSON(TypedDict):
     courses: list[str]
-    hours: float
+    hours: int
     filled: bool
-    valid_courses: dict[str, float]
+    valid_courses: dict[str, int]
 
 
 class AssignmentStore:
@@ -32,13 +32,13 @@ class AssignmentStore:
         self,
         course: Course,
         requirement: Requirement,
-        hours: float,
+        hours: int,
         overwrite: bool = False,
     ) -> None:
         if overwrite:
-            self.reqs_to_courses[requirement][course] = hours  # type: ignore
+            self.reqs_to_courses[requirement][course] = hours
         else:
-            self.reqs_to_courses[requirement][course] += hours  # type: ignore
+            self.reqs_to_courses[requirement][course] += hours
 
     def update(self, other: AssignmentStore) -> None:
         """Merge another AssignmentStore into this one"""

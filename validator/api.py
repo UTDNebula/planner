@@ -35,9 +35,7 @@ def test_validate() -> Response:
 
         courses: list[str] = j["courses"]
         rawReqs = j["requirements"]
-        requirements = DegreeRequirementsInput(
-            rawReqs["core"], rawReqs["majors"], rawReqs["minors"], []
-        )
+        requirements = DegreeRequirementsInput(rawReqs["majors"], rawReqs["minors"], [])
         rawBypasses = j["bypasses"]
         bypasses = BypassInput([], {rawReqs["majors"][0]: [i for i in rawBypasses]})
         # bypasses = [SingleAssignment.from_json(b) for b in j["bypasses"]]

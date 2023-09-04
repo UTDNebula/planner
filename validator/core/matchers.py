@@ -247,13 +247,13 @@ class AnyMatcher(Matcher):
 class SingleAssignmentJSON(TypedDict):
     course: str
     requirement: str
-    hours: float
+    hours: int
 
 
 class SingleAssignment(NamedTuple):
     course: str
     requirement: str
-    hours: float
+    hours: int
 
     def to_json(self) -> SingleAssignmentJSON:
         return {
