@@ -1,5 +1,7 @@
 from __future__ import annotations
 from enum import Enum
+from glob import glob
+
 from pydantic import Json
 
 from typing import Any
@@ -147,19 +149,31 @@ class DegreeRequirementsSolver:
         # Logic for adding majors
         for input_req in degree_requirements_input.majors:
             # Get major data from json
-            data = json.loads(open(f"degree_data/{input_req}.json", "r").read())
-            requirements_data = data["requirements"]["major"]
+            # Read all JSON files to find which one we need
+            for fname in glob("degree_data/*.json"):
+                with open(fname, "r") as f:
+                    data = json.load(f)
+                    # If this JSON file matches the one we're looking for
+                    if data["display_name"] == input_req:
+                        requirements_data = data["requirements"]["major"]
 
-            major_req = DegreeRequirement(
-                input_req, DegreeRequirementType.major, [], data["minimum_credit_hours"]
-            )
+                        major_req = DegreeRequirement(
+                            input_req,
+                            DegreeRequirementType.major,
+                            [],
+                            data["minimum_credit_hours"],
+                        )
 
-            # Add requirements
-            for req_data in requirements_data:
-                major_req.requirements.append(
-                    REQUIREMENTS_MAP[req_data["matcher"]].from_json(req_data)
-                )
-            degree_requirements.append(major_req)
+                        # Add requirements
+                        for req_data in requirements_data:
+                            major_req.requirements.append(
+                                REQUIREMENTS_MAP[req_data["matcher"]].from_json(
+                                    req_data
+                                )
+                            )
+                        degree_requirements.append(major_req)
+                        # We don't need to check the other JSON files
+                        break
 
         # TODO: Logic for adding minors & other
 
