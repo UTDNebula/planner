@@ -233,7 +233,7 @@
             "metadata": { "id": "41" }
           }
         ],
-        "matcher": "CSGuidedElectiveRequirement",
+        "matcher": "y2022CSGuidedElectiveRequirement",
         "metadata": {
           "id": "Computer Science(BS)-37",
           "name": "CS Guided Electives"

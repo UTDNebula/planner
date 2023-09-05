@@ -71,13 +71,13 @@
     "body": "{\n  \"matcher\": \"OtherRequirement\",\n  \"description\": \"\",\n  \"metadata\": {\n    \"id\": \"$UUID\"\n  }\n}",
     "scope": "json"
   },
-  "CSGuidedElectiveRequirement": {
+  "y2022CSGuidedElectiveRequirement": {
     "prefix": [
       "csger",
-      "CSGuidedElectiveRequirement"
+      "y2022CSGuidedElectiveRequirement"
     ],
-    "description": "Empty body of CSGuidedElectiveRequirement",
-    "body": "{\n  \"matcher\": \"CSGuidedElectiveRequirement\",\n  \"required_count\": 0,\n  \"starts_with\": \"\",\n  \"also_fulfills\": [],\n  \"metadata\": {\n    \"id\": \"$UUID\"\n  }\n}",
+    "description": "Empty body of y2022CSGuidedElectiveRequirement",
+    "body": "{\n  \"matcher\": \"y2022CSGuidedElectiveRequirement\",\n  \"required_count\": 0,\n  \"starts_with\": \"\",\n  \"also_fulfills\": [],\n  \"metadata\": {\n    \"id\": \"$UUID\"\n  }\n}",
     "scope": "json"
   },
   "BAGuidedElectiveRequirement": {
