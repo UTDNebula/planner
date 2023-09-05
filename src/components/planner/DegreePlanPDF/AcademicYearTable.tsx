@@ -32,6 +32,7 @@ export default function AcademicYearTable({
     });
   return (
     <View
+      wrap={false}
       style={{
         width: '100%',
         display: 'flex',
