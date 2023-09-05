@@ -1,6 +1,5 @@
 [tool.mypy]
 strict = true
-# exclude = "(venv|core)"
 exclude = "venv"
 follow_imports = "skip"
 disallow_untyped_decorators = false

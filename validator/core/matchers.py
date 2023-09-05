@@ -1,3 +1,5 @@
+"""Course to requirement matchers."""
+
 from __future__ import annotations
 import re
 from abc import ABC, abstractmethod
@@ -15,7 +17,7 @@ class MatcherBuildException(Exception):
 
 
 class Matcher(ABC):
-    """Abstract class for matcher"""
+    """A matcher is used to determine if a course would fulfill a requirement."""
 
     @abstractmethod
     def match(self, course: Course) -> bool:

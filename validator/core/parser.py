@@ -1,3 +1,5 @@
+""" Parser for *.req files."""
+
 from core.requirement import Requirement
 from core.matchers import Matcher
 
@@ -6,7 +8,18 @@ from dataclasses import dataclass
 
 @dataclass
 class ParserOutput:
-    """ParserOutput is a class that contains the output of the parser."""
+    """ParserOutput is a class that contains the output of the parser.
+
+    Note:
+        Requirement key is not the same as the requirement name. Requirement key
+        is used in *.req files and by the parser to reference requirements, while requirement name
+        is a UI friendly name.
+
+    Args:
+        requirements (dict[str, Requirement]): A dictionary of requirements by requirement key.
+        requirement_groups (list[list[Requirement]]): A list of requirement groups,
+            where each requirement group is a list of requirements.
+    """
 
     requirements: dict[str, Requirement]
     requirement_groups: list[list[Requirement]]
@@ -17,7 +30,7 @@ class ParserException(Exception):
 
 
 class Parser:
-    """Parser is a class that parses a degree requirements file and returns a ValidationInput object."""
+    """Parser is a class that parses a degree requirements file and returns a ParserOutput object."""
 
     contents: str
     definitions: dict[str, str]
@@ -31,7 +44,7 @@ class Parser:
         self.requirement_groups = []
 
     def parse(self) -> ParserOutput:
-        """Parse the file and return a ValidationInput object."""
+        """Parse the file and return a ParserOutput object."""
         self._parse()
         return ParserOutput(
             self.requirements,
@@ -39,6 +52,15 @@ class Parser:
         )
 
     def _parse(self) -> None:
+        """Parse the file.
+
+        Evaluates each line separately as a "command". Commands are in the format COMMAND [ARGS..].
+
+        Commands include:
+        - DEFINE KEY MATCHER
+        - REQUIRE NAME REQ_KEY REQ_HOURS MATCHER
+        - GROUP REQ_KEY [REQ_KEY..]
+        """
         for line_num, line in enumerate(self.contents.splitlines(), start=1):
             line = line.strip()
 
@@ -126,7 +148,7 @@ class Parser:
         # Attempt to parse matcher string.
         matcher = Parser._parse_matcher_str(line_num, matcher_str)
 
-        # Build and save requirement.
+        # Build and save requirement by key.
         requirement = Requirement(req_name, req_hours, matcher)
         self.requirements[req_key] = requirement
 
@@ -173,7 +195,7 @@ class Parser:
                 )
             stack[-1].add_arg(arg)  # type: ignore
 
-        for i, c in enumerate(matcher_str):
+        for c in matcher_str:
             # End of matcher type: Create builder
             if c == "(":
                 if not stack or type(stack[-1]) != list:
