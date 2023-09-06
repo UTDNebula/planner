@@ -45,6 +45,7 @@ export default function Welcome({
   const [major, setMajor] = React.useState('');
 
   const { results, updateQuery } = useSearch({
+    constraints: [0, 900],
     getData: async () => (majors ? majors.map((major) => ({ filMajor: `${major}` })) : []),
     initialQuery: '',
     filterFn: (major, query) => major.filMajor.toLowerCase().includes(query.toLowerCase()),
