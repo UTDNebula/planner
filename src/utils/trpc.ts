@@ -26,6 +26,8 @@ export const trpc = createTRPCNext<AppRouter>({
             (opts.direction === 'down' && opts.result instanceof Error),
         }),
         splitLink({
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           condition(op) {
             // If request path includes 'public' or skipBatch is true, use normal request.
             // Otherwise, batch requests.

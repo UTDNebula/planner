@@ -1,15 +1,20 @@
 import * as Dialog from '@radix-ui/react-dialog';
-import React, { useRef, useState } from 'react';
+import { useRef, useState, useMemo, memo } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
+import Button from '@/components/Button';
 import AnalyticsWrapper from '@/components/common/AnalyticsWrapper';
 import RequirementsContainer from '@/components/planner/Sidebar/RequirementsContainer';
 import SearchBar from '@/components/planner/Sidebar/SearchBar';
+import Spinner from '@/components/Spinner';
 import ChevronIcon from '@/icons/ChevronIcon';
-import { RouterOutputs, trpc } from '@/utils/trpc';
+import { trpc } from '@/utils/trpc';
 import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
 
 import DraggableCourseList from './DraggableCourseList';
+import { DegreeRequirement } from './types';
+import { Course, DraggableCourse, GetDragIdByCourse } from '../types';
+import useFuse from '../useFuse';
 
 export interface CourseSelectorContainerProps {
   planId: string;
@@ -18,14 +23,6 @@ export interface CourseSelectorContainerProps {
   getSearchedDragId: GetDragIdByCourse;
   getRequirementDragId: GetDragIdByCourse;
 }
-import { DegreeRequirement, DegreeRequirements } from './types';
-import { Course, DraggableCourse, GetDragIdByCourse } from '../types';
-import useFuse from '../useFuse';
-import Spinner from '@/components/Spinner';
-import Button from '@/components/Button';
-type CourseData = RouterOutputs['courses']['publicGetAllCourses'];
-type ArrayElement<ArrayType extends readonly unknown[]> =
-  ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
 
 function CourseSelectorContainer({
   planId,
@@ -61,7 +58,7 @@ function CourseSelectorContainer({
     threshold: 0.2,
   });
 
-  const courseResults = React.useMemo(() => {
+  const courseResults = useMemo(() => {
     return results.map((result) => {
       return {
         ...result,
@@ -248,4 +245,4 @@ function CourseSelectorContainer({
   );
 }
 
-export default React.memo(CourseSelectorContainer);
+export default memo(CourseSelectorContainer);

@@ -146,7 +146,6 @@ export default function Planner({
   };
 
   const ref = useRef<HTMLDivElement>(null);
-  const [columnCount, setColumns] = useState(3);
   // TODO: Use resizeobserver to change column count based on screen size
 
   return (
