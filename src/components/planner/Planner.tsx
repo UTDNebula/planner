@@ -29,7 +29,6 @@ import SelectedCoursesToast from './SelectedCoursesToast';
 import { useSemestersContext } from './SemesterContext';
 import CourseSelectorContainer from './Sidebar/Sidebar';
 import { SidebarCourseItem } from './Sidebar/SidebarCourseItem';
-import { DegreeRequirements } from './Sidebar/types';
 import { SemesterCourseItem } from './Tiles/SemesterCourseItem';
 import DroppableSemesterTile from './Tiles/SemesterTile';
 import Toolbar from './Toolbar/Toolbar';
@@ -44,7 +43,6 @@ import type {
 
 /** PlannerTool Props */
 export interface PlannerProps {
-  degreeRequirements: DegreeRequirements;
   degreeRequirementsData: { id: string; major: string };
   prereqData?: Map<string, boolean>;
   transferCredits: Array<string>;
@@ -54,7 +52,6 @@ export interface PlannerProps {
 
 /** Controlled wrapper around course list and semester tiles */
 export default function Planner({
-  degreeRequirements,
   degreeRequirementsData,
   transferCredits,
 }: PlannerProps): JSX.Element {
@@ -217,9 +214,9 @@ export default function Planner({
           </article>
         </section>
         <CourseSelectorContainer
+          planId={planId}
           courses={courseCodes}
           transferCredits={transferCredits}
-          degreeRequirements={degreeRequirements}
           getSearchedDragId={(course) => `course-list-searched-${course.id}`}
           getRequirementDragId={(course) => `course-list-requirement-${course.id}`}
         />

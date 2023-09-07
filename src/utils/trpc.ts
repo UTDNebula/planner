@@ -27,8 +27,9 @@ export const trpc = createTRPCNext<AppRouter>({
         }),
         splitLink({
           condition(op) {
-            // check for context property `cache`
-            return op.path.startsWith('public');
+            // If request path includes 'public' or skipBatch is true, use normal request.
+            // Otherwise, batch requests.
+            return op.path.includes('public') || op.context.skipBatch;
           },
           // when condition is true, use normal request
           true: httpLink({

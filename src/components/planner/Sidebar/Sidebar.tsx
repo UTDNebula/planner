@@ -12,27 +12,44 @@ import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
 import DraggableCourseList from './DraggableCourseList';
 
 export interface CourseSelectorContainerProps {
-  degreeRequirements: DegreeRequirements;
+  planId: string;
   courses: string[];
   transferCredits: string[];
   getSearchedDragId: GetDragIdByCourse;
   getRequirementDragId: GetDragIdByCourse;
 }
-import { DegreeRequirements } from './types';
+import { DegreeRequirement, DegreeRequirements } from './types';
 import { Course, DraggableCourse, GetDragIdByCourse } from '../types';
 import useFuse from '../useFuse';
+import Spinner from '@/components/Spinner';
+import Button from '@/components/Button';
 type CourseData = RouterOutputs['courses']['publicGetAllCourses'];
 type ArrayElement<ArrayType extends readonly unknown[]> =
   ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
 
 function CourseSelectorContainer({
-  degreeRequirements,
+  planId,
   courses,
   transferCredits,
   getSearchedDragId,
   getRequirementDragId,
 }: CourseSelectorContainerProps) {
-  // TODO: Provide UI indicator for errors
+  const {
+    data: validationData,
+    error,
+    isLoading: isValidationLoading,
+  } = trpc.validator.degreeValidator.useQuery(planId, {
+    // TODO: Fix validator retries.
+    // Validator kept retrying when the "REPORT ERROR" button was clicked on. At some point it should stop retrying.
+    retry: false,
+    trpc: {
+      context: {
+        // Isolate the validation request from others. Validator is an external service so its reliability
+        // should not affect other requets.
+        skipBatch: true,
+      },
+    },
+  });
 
   const { data, isLoading } = trpc.courses.publicGetAllCourses.useQuery();
 
@@ -92,6 +109,7 @@ function CourseSelectorContainer({
 
   const [displayResults, setDisplay] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+
   return (
     <>
       {open ? (
@@ -113,14 +131,16 @@ function CourseSelectorContainer({
                   </h1>
                 </div>
                 <div id="tutorial-editor-2">
-                  <CreditsTaken
-                    taken={sum}
-                    min={
-                      degreeRequirements.requirements.length > 0
-                        ? degreeRequirements.requirements[1].min_hours
-                        : 120
-                    }
-                  />
+                  {validationData && !isValidationLoading && (
+                    <CreditsTaken
+                      taken={sum}
+                      min={
+                        validationData.validation.requirements.length > 0
+                          ? validationData.validation.requirements[1].min_hours
+                          : 120
+                      }
+                    />
+                  )}
                 </div>
               </div>
               <h6 className="text-base tracking-tight text-gray-500">
@@ -176,23 +196,34 @@ function CourseSelectorContainer({
               )}
             </Dialog.Root>
 
-            {degreeRequirements.requirements.length > 0 ? (
-              degreeRequirements.requirements.map((req, idx) => (
+            {isValidationLoading && (
+              <div className="flex flex-grow items-center justify-center">
+                <Spinner size="large" />
+              </div>
+            )}
+
+            {!isValidationLoading && error?.data?.code === 'INTERNAL_SERVER_ERROR' && (
+              <div className="flex h-[30vh] w-full text-base leading-5 text-[#A3A3A3]">
+                <div className="mx-12 mt-44 flex w-full flex-col items-center justify-center gap-4 text-center leading-6">
+                  It seems like a screw has gone loose!
+                  <a href="https://airtable.com/shrFg9MPi9BGguwPU">
+                    <Button>REPORT ERROR</Button>
+                  </a>
+                </div>
+              </div>
+            )}
+
+            {!isValidationLoading &&
+              validationData &&
+              validationData.validation.requirements.length > 0 &&
+              validationData.validation.requirements.map((req: DegreeRequirement, idx: number) => (
                 <RequirementsContainer
                   key={idx}
                   degreeRequirement={req}
                   courses={courses}
                   getCourseItemDragId={getRequirementDragId}
                 />
-              ))
-            ) : (
-              <div className="flex h-[30vh] flex-grow text-base leading-5 text-[#A3A3A3]">
-                <div className="mx-12 mt-44 items-center justify-center text-center leading-6">
-                  Our engineer team is working hard to add course progress to your major. Thanks for
-                  your understanding and stay tuned!
-                </div>
-              </div>
-            )}
+              ))}
             <div className="flex flex-grow items-end justify-end text-sm ">
               <div>
                 <span className="font-bold">Warning:</span> This is an unofficial tool not
