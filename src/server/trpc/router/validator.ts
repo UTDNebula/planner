@@ -370,6 +370,7 @@ export const validatorRouter = router({
       const body = {
         courses: [...semestersWithCourses.flatMap((s) => s.courses), ...validTransferCredits],
         requirements: {
+          core: true,
           majors: [degreeRequirements.major],
           minors: [],
         },

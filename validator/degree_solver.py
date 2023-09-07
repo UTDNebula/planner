@@ -4,7 +4,7 @@ from pydantic import Json
 
 from typing import Any
 
-import core
+from core.solver import AssignmentStore, GraduationRequirementsSolver
 from major.requirements import AbstractRequirement
 from dataclasses import dataclass
 
@@ -15,7 +15,6 @@ from major.requirements.shared import (
     CourseRequirement,
     HoursRequirement,
 )
-from course import Course
 
 
 @dataclass
@@ -73,6 +72,7 @@ class DegreeRequirementsInput:
     Computer Science, and History requirements.
     """
 
+    core: bool
     majors: list[str]  # TODO: Change to Enum in the future
     minors: list[str]  # TODO: Change to Enum in the future
     other: list[str]  # TODO: Change to Enum in the future
@@ -120,12 +120,6 @@ class DegreeRequirementsSolverOutput:
     requirements: list[DegreeRequirementOutput]
 
 
-class DegreeRequirementsSolverException(Exception):
-    """Exception raised for errors in the DegreeRequirementsSolver."""
-
-    pass
-
-
 class DegreeRequirementsSolver:
     def __init__(
         self,
@@ -135,25 +129,16 @@ class DegreeRequirementsSolver:
     ) -> None:
         self.courses = set(courses)
         self.degree_requirements = self.load_requirements(requirements)
-        self.solved_core: core.store.AssignmentStore | None = None
+        self.validate_core = requirements.core
+        self.solved_core = AssignmentStore()
         self.bypasses = bypasses
 
-    # TODO(NP-99): SolverInput should only be loaded once, then deepcopied.
-    def load_core(self) -> core.solver.GraduationRequirementsSolver:
+    def load_core(self) -> GraduationRequirementsSolver:
+        core_solver = GraduationRequirementsSolver()
         filename = "./core/requirements/core.req"
-        file = open(filename, "r")
-        output = core.parser.Parser(file.read()).parse()
-        solver_input = core.input.SolverInput(
-            {
-                r.name: r for r in output.requirements.values()
-            },  # The parser output uses requirement keys as keys. The solver needs the key to be the name.
-            output.requirement_groups,
-        )
-        file.close()
+        core_solver.load_requirements_from_file(filename)
+        return core_solver
 
-        return core.solver.GraduationRequirementsSolver(solver_input)
-
-    # TODO(NP-99): Requirements should only be loaded once, then deepcopied.
     def load_requirements(
         self, degree_requirements_input: DegreeRequirementsInput
     ) -> list[DegreeRequirement]:
@@ -182,16 +167,16 @@ class DegreeRequirementsSolver:
 
     def solve(self) -> DegreeRequirementsSolver:
         # Run for core
-        core_solver = self.load_core()
-        self.solved_core = core_solver.solve(
-            [Course.from_name(course) for course in self.courses], []
-        )
+        if self.validate_core:
+            core_solver = self.load_core()
+            self.solved_core = core_solver.solve(
+                [course for course in self.courses], []
+            )  # Convert to list
         # Set of the core courses that are fulfilled, so they won't be considered as free electives
         used_core_courses = set()
-        if self.solved_core is not None:
-            for req_fill in self.solved_core.reqs_to_courses.values():
-                used_core_courses.update([course.name for course in req_fill.keys()])
-
+        for req_fill in self.solved_core.reqs_to_courses.values():
+            for course in req_fill.keys():
+                used_core_courses.add(course.name)
         # Run for major
         for degree_req in self.degree_requirements:
             for course in self.courses:
@@ -218,11 +203,6 @@ class DegreeRequirementsSolver:
         # TODO: Maybe change logic in future
         # Run core on demand if needed
 
-        if self.solved_core is None:
-            raise DegreeRequirementsSolverException(
-                "Core should always be solved before calling can_graduate()."
-            )
-
         return (
             all(
                 (
@@ -239,11 +219,6 @@ class DegreeRequirementsSolver:
         )
 
     def to_json(cls) -> Json[Any]:
-        if cls.solved_core is None:
-            raise DegreeRequirementsSolverException(
-                "Core should always be solved before calling to_json()."
-            )
-
         degree_reqs = []
         # Add core first
         core_reqs = format_core_reqs(cls.solved_core.to_json())
@@ -274,9 +249,7 @@ class DegreeRequirementsSolver:
         return "\n".join(str(req) for req in self.degree_requirements)
 
 
-def format_core_reqs(
-    reqs: dict[str, core.store.AssignmentStoreJSON]
-) -> list[AbstractRequirement]:
+def format_core_reqs(reqs: dict[str, dict[str, Any]]) -> list[AbstractRequirement]:
     core_reqs = []
     for req_name, req_info in reqs.items():
         # Create set for all valid courses

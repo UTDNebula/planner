@@ -16,10 +16,7 @@ class AbstractRequirement(ABC):
     """
 
     @abstractmethod
-    def attempt_fulfill(
-        self,
-        course: str,
-    ) -> bool:
+    def attempt_fulfill(self, course: str) -> bool:
         pass
 
     @abstractmethod

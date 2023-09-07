@@ -1,13 +1,12 @@
 [tool.mypy]
 strict = true
-exclude = "venv"
+exclude = "(venv|core)"
 follow_imports = "skip"
 disallow_untyped_decorators = false
-implicit_reexport = true            # don't require us to explicitly write name of every requirement class
+implicit_reexport = true # don't require us to explicitly write name of every requirement class
 
 [tool.pytest.ini_options]
-pythonpath = [".", "major"]
-
-[[tool.mypy.overrides]]
-module = "ortools.graph.python"
-ignore_missing_imports = true
+pythonpath = [
+  ".",
+  "major",
+]
