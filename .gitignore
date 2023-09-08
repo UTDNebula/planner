@@ -38,6 +38,9 @@ yarn-error.log*
 # Vercel
 .vercel
 
+# virtual environments
+.venv/
+
 .eslintcache
 .firebaserc
 *.cache
