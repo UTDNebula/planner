@@ -25,8 +25,10 @@ for fname in glob("validator/degree_data/*.json"):
         json.dump(data, f, indent=2)
         degree_files.add(Path(new_name).stem)
 
+"""
 with open("src/data/majors.json", "r") as f:
     data = json.load(f)
     degree_names = set(data)
 
 print("\n".join(degree_files.difference(degree_names)))
+"""
