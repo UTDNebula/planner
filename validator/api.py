@@ -1,4 +1,6 @@
+import json
 from collections import defaultdict
+from glob import glob
 from typing import Any
 
 from flask import Flask, Response, request, make_response
@@ -78,6 +80,18 @@ def root_() -> Response:
             "message": "UTD Degree Validator API is online.",
         },
         200,
+    )
+
+
+@app.route("/get-degree-plans", methods=["GET"])
+def get_degree_plans() -> Response:
+    plans = []
+    for fname in glob("./degree_data/*.json"):
+        with open(fname, "r") as f:
+            data = json.load(f)
+            plans.append({"display_name": data["display_name"], "uuid": data["uuid"]})
+    return make_response(
+        {"message": f"Supported degree plans.", "degree_plans": plans}, 200
     )
 
 

@@ -5,7 +5,6 @@ import { toast } from 'react-toastify';
 
 import EditIcon from '@/icons/EditIcon';
 import { trpc } from '@/utils/trpc';
-import majorsList from '@data/majors.json';
 
 const EditableMajor = ({
   major: initialMajor,
@@ -63,7 +62,17 @@ const EditMajorAutocomplete = ({
   setEditMajor: (a: boolean) => void;
   planId: string;
 }) => {
-  const majors = majorsList as string[];
+  const [majors, setMajors] = useState<string[]>([]);
+
+  fetch(`${process.env.NEXT_PUBLIC_VALIDATOR}/get-degree-plans`, {
+    method: 'GET',
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      setMajors(
+        data['degree_plans'].map((degree: { display_name: string }) => degree['display_name']),
+      );
+    });
 
   const utils = trpc.useContext();
 

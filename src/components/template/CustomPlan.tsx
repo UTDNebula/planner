@@ -6,7 +6,6 @@ import AutoCompleteMajor from '@/components/AutoCompleteMajor';
 import courseCode from '@/data/courseCode.json';
 import { UnwrapArray } from '@/types/util-types';
 import { RouterInputs, trpc } from '@/utils/trpc';
-import majorsList from '@data/majors.json';
 import { SemesterCode } from 'prisma/utils';
 
 import { Page } from './Page';
@@ -16,13 +15,12 @@ import useSearch from '../search/search';
 
 import type { PDFDocumentProxy } from 'pdfjs-dist';
 
-const majors = majorsList as string[];
-
 type TakenCourse = UnwrapArray<RouterInputs['user']['createUserPlan']['takenCourses']>;
 
 export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
   const [name, setName] = useState('');
   const [major, setMajor] = useState<string | null>(null);
+  const [majors, setMajors] = useState<string[]>([]);
   const [transferCredits, setTransferCredits] = useState<string[]>([]);
   const [takenCourses, setTakenCourses] = useState<TakenCourse[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -39,6 +37,20 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
 
   const router = useRouter();
   const utils = trpc.useContext();
+
+  fetch(`${process.env.NEXT_PUBLIC_VALIDATOR}/get-degree-plans`, {
+    method: 'GET',
+  })
+    .then((res) => {
+      console.log('res:', res);
+      return res;
+    })
+    .then((res) => res.json())
+    .then((data) => {
+      setMajors(
+        data['degree_plans'].map((degree: { display_name: string }) => degree['display_name']),
+      );
+    });
 
   const createUserPlan = trpc.user.createUserPlan.useMutation({
     async onSuccess() {

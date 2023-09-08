@@ -377,7 +377,7 @@ export const validatorRouter = router({
         bypasses,
       };
 
-      const validationData = await fetch(`${process.env.VALIDATOR}/test-validate`, {
+      const validationData = await fetch(`${process.env.NEXT_PUBLIC_VALIDATOR}/test-validate`, {
         method: 'POST',
         body: JSON.stringify(body),
         headers: {

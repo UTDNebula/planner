@@ -3,7 +3,6 @@ import React from 'react';
 
 import AutoCompleteMajor from '@/components/AutoCompleteMajor';
 import EmojiIcons from '@/icons/EmojiIcon';
-import majorsList from '@data/majors.json';
 import { SemesterCode } from 'prisma/utils';
 
 import useSearch from '../search/search';
@@ -27,7 +26,6 @@ export default function Welcome({
   handleValidate,
   semesterOptions,
 }: WelcomeData): JSX.Element {
-  const majors = majorsList as string[];
   const { name, startSemester, endSemester }: WelcomeTypes = data;
 
   const setName = (event: SelectChangeEvent<string>) => {
@@ -43,6 +41,17 @@ export default function Welcome({
   };
 
   const [major, setMajor] = React.useState('');
+  const [majors, setMajors] = React.useState<string[]>([]);
+
+  fetch(`${process.env.NEXT_PUBLIC_VALIDATOR}/get-degree-plans`, {
+    method: 'GET',
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      setMajors(
+        data['degree_plans'].map((degree: { display_name: string }) => degree['display_name']),
+      );
+    });
 
   const { results, updateQuery } = useSearch({
     getData: async () => (majors ? majors.map((major) => ({ filMajor: `${major}` })) : []),
