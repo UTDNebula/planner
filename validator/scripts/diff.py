@@ -1,4 +1,7 @@
 import requests
+import json
+import re
+import os
 from bs4 import BeautifulSoup
 
 course_prefixes = ["ACCT","ACTS","AHST","AMS","ARAB","ARHM","ARTS","ATCM","BA","BBSU","BCOM","BIOL","BIS","BLAW","BMEN","BPS","CE","CGS",
@@ -20,10 +23,9 @@ def get_req_content(url):
 #Should this detect CORE changes and, if so, should I flag each major for core changes?
 
 #Modify the tolernance to ignore fluff (grammar changes, footnote numbering, etc)
-
 #Determine what the cause of the diff is:
-    #Course number change
-    #Degree credit hour changes
+    #Course number change [*]
+    #Degree credit hour changes [ ]
 #Send the probable diff cause to the ticket send based on the problems and where they are
     
 def extract_courses(webData):
@@ -39,18 +41,14 @@ def extract_courses(webData):
     return courses
 
 if __name__ == "__main__":
-    old=get_req_content("https://catalog.utdallas.edu/2022/undergraduate/programs/ecs/computer-science")
-    new=get_req_content("https://catalog.utdallas.edu/2023/undergraduate/programs/ecs/computer-science")
-    print((new-old).union(old-new))
-    # oldURL = "https://catalog.utdallas.edu/2022/undergraduate/programs/ecs/computer-science"
-    # newURL = "https://catalog.utdallas.edu/2021/undergraduate/programs/ecs/computer-science"
-
-    # oldURL_HTML = get_req_content(oldURL)
-    # newURL_HTML = get_req_content(newURL)
-
-    # if oldURL_HTML and newURL_HTML:
-    #     coursesDelta = oldCourses - newCourses
-    #     lines = diff.split('\n')
-    #     with open("./output.txt","w") as file:
-    #         for line in lines:
-    #             file.write(line + '\n')
+    for majorReqJson in os.scandir('validator/degree_data'):
+        data = json.loads(open(f"validator/degree_data/" + majorReqJson.name, "r").read())
+        catalog_uri=data["catalog_uri"]
+        yearRegex = r'/(\d{4})/'
+        match = int(re.search(yearRegex, catalog_uri).group(1))+1
+        print(data["catalog_uri"])
+        print(re.sub(yearRegex, f'/{match}/', data["catalog_uri"]))
+        old=get_req_content(data["catalog_uri"])
+        new=get_req_content(re.sub(yearRegex, f'/{match}/', data["catalog_uri"]))
+        print((new-old).union(old-new))
+        
