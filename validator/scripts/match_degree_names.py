@@ -15,8 +15,12 @@ for fname in glob("validator/degree_data/*.json"):
         if "abbreviation" in data:
             data["display_name"] = re.sub(r"\1(", data["abbreviation"])
             del data["abbreviation"]
-        if "uuid" not in data:
-            data["uuid"] = str(uuid.uuid4())
+        if "id" not in data:
+            data["id"] = str(uuid.uuid4())
+        if "uuid" in data:
+            del data["uuid"]
+        if "name" in data:
+            del data["name"]
     # Delete the old file
     os.remove(fname)
     # Write to the new file using the new naming convention

@@ -1,7 +1,6 @@
 {
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ecs/computer-engineering",
   "minimum_credit_hours": 126,
-  "name": "Bachelor of Science in Computer Engineering",
   "school": "Erik Jonsson School of Engineering and Computer Science",
   "subtype": "Major",
   "year": "2022-2023",
@@ -562,5 +561,5 @@
     ]
   },
   "display_name": "Computer Engineering(BS)",
-  "uuid": "3e45f6c9-80a6-4ad0-bd92-0502b95dd634"
+  "id": "8cd1b5e5-e906-4eb2-a2d0-11e121713799"
 }

@@ -1,7 +1,6 @@
 {
   "catalog_uri": "https://catalog.utdallas.edu/2021/undergraduate/programs/bbs/psychology",
   "minimum_credit_hours": 120,
-  "name": "Bachelor of Science in Psychology",
   "school": "School of Behavioral and Brain Sciences",
   "subtype": "Major",
   "year": "2022-2023",
@@ -255,5 +254,5 @@
     ]
   },
   "display_name": "Psychology(BS)",
-  "uuid": "85364956-357b-4c3c-a4a3-2c2a980c6074"
+  "id": "386e4335-9f14-4219-a8ea-c4a84c994f75"
 }

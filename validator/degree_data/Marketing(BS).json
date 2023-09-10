@@ -1,7 +1,6 @@
 {
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/marketing",
   "minimum_credit_hours": 120,
-  "name": "Bachelor of Science in Marketing",
   "school": "Naveen Jindal School of Management",
   "subtype": "Major",
   "year": "2022-2023",
@@ -557,5 +556,5 @@
     ]
   },
   "display_name": "Marketing(BS)",
-  "uuid": "af7d9c49-1bd0-496e-ae00-02391e40bfbe"
+  "id": "e7ba4ce4-dcbc-44f1-9382-e106d38fc311"
 }

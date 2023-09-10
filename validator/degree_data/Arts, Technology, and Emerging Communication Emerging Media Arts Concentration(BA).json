@@ -1,7 +1,6 @@
 {
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/atec/arts-and-technology-emerging-media-arts",
   "minimum_credit_hours": 120,
-  "name": "Bachelor of Arts in Arts, Technology, and Emerging Communication with Emerging Media Arts (BA)",
   "school": "School of Arts, Technology, and Emerging Communication",
   "subtype": "Major",
   "year": "2022-2023",
@@ -472,5 +471,5 @@
     ]
   },
   "display_name": "Arts, Technology, and Emerging Communication Emerging Media Arts Concentration(BA)",
-  "uuid": "82db563e-6320-4270-8f5e-265045e3f045"
+  "id": "4a78b160-81e1-46fb-9897-899da21f6016"
 }

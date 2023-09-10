@@ -1,7 +1,6 @@
 {
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ecs/computer-science",
   "minimum_credit_hours": 124,
-  "name": "Bachelor of Science in Computer Science",
   "school": "Erik Jonsson School of Engineering and Computer Science",
   "subtype": "Major",
   "year": "2022-2023",
@@ -366,5 +365,5 @@
     ]
   },
   "display_name": "Computer Science(BS)",
-  "uuid": "53d7ff67-3590-4607-b657-85a50d653cd6"
+  "id": "700d442b-d433-4851-94c1-55f7681fc98e"
 }

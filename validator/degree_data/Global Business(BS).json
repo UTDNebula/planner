@@ -1,7 +1,6 @@
 {
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/global-business",
   "minimum_credit_hours": 120,
-  "name": "Bachelor of Science in Global Business",
   "school": "Naveen Jindal School of Management",
   "subtype": "Major",
   "year": "2022-2023",
@@ -1171,5 +1170,5 @@
     ]
   },
   "display_name": "Global Business(BS)",
-  "uuid": "a8be5c80-aa50-413a-ab25-68b708756565"
+  "id": "e2a06098-9169-457d-b1e4-bc726295f777"
 }

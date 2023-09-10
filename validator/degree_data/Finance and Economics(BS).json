@@ -1,7 +1,6 @@
 {
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/finance",
   "minimum_credit_hours": 128,
-  "name": "Bachelor of Science in Finance and Economics",
   "school": "Naveen Jindal School of Management",
   "subtype": "Major",
   "year": "2022-2023",
@@ -702,5 +701,5 @@
     ]
   },
   "display_name": "Finance and Economics(BS)",
-  "uuid": "abe6f4cb-ea54-4df2-9273-ce8bb714991c"
+  "id": "67125309-9578-4c3e-a7fe-dbcc054873a3"
 }

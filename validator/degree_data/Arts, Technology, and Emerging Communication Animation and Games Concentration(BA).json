@@ -1,7 +1,6 @@
 {
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/atec/arts-and-technology-animation",
   "minimum_credit_hours": 120,
-  "name": "Bachelor of Arts in Arts, Technology, and Emerging Communication with Animation and Games Concentration (BA)",
   "school": "School of Arts, Technology, and Emerging Communication",
   "subtype": "Major",
   "year": "2022-2023",
@@ -690,5 +689,5 @@
     ]
   },
   "display_name": "Arts, Technology, and Emerging Communication Animation and Games Concentration(BA)",
-  "uuid": "3f705203-c97e-4fe3-a861-dd5d61a951df"
+  "id": "3d0c9344-ad01-4f31-8aa0-e285bad768a4"
 }

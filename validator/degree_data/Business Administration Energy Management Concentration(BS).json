@@ -1,7 +1,6 @@
 {
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/business-administration",
   "minimum_credit_hours": 120,
-  "name": "Bachelor of Science in Business Administration Energy Management Concentration",
   "school": "Naveen Jindal School of Management",
   "subtype": "Major",
   "year": "2022-2023",
@@ -584,5 +583,5 @@
     ]
   },
   "display_name": "Business Administration(BS) Energy Management Concentration",
-  "uuid": "3f1b4da4-2d66-4cad-96d3-b1631962af97"
+  "id": "21dc5715-5b1b-4c02-99ce-32eb8bc90325"
 }

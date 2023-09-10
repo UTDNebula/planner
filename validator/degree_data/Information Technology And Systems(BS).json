@@ -1,7 +1,6 @@
 {
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/information-technology-systems",
   "minimum_credit_hours": 120,
-  "name": "Bachelor of Science in Information Technology and Systems",
   "school": "Naveen Jindal School of Management",
   "subtype": "Major",
   "year": "2022-2023",
@@ -641,5 +640,5 @@
     ]
   },
   "display_name": "Information Technology and Systems(BS)",
-  "uuid": "4c11cfef-4c5d-4e06-b997-8b3415165cf2"
+  "id": "1b43a1ff-ea55-42c5-b702-b75b489e5cfb"
 }

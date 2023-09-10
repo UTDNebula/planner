@@ -1,7 +1,6 @@
 {
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ah/literature-spanish",
   "minimum_credit_hours": 120,
-  "name": "Bachelor of Arts in Literature with Spanish Concentration",
   "school": "School of Arts and Humanities",
   "subtype": "Major",
   "year": "2022-2023",
@@ -190,5 +189,5 @@
     ]
   },
   "display_name": "Literature with Spanish Concentration(BA)",
-  "uuid": "aeebdf04-98ef-4d6b-9713-cd5f42927205"
+  "id": "ebfad274-8ba1-4e7e-ae4d-4543deb8a661"
 }

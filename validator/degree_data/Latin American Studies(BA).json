@@ -1,7 +1,6 @@
 {
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ah/latin-american-studies",
   "minimum_credit_hours": 120,
-  "name": "Bachelor of Arts in Latin American Studies (BA)",
   "school": "School of Arts and Humanities",
   "subtype": "Major",
   "year": "2022-2023",
@@ -294,5 +293,5 @@
     ]
   },
   "display_name": "Latin American Studies(BA)",
-  "uuid": "85ceb223-419b-4d24-8e3a-32f28702b87d"
+  "id": "94c9d9d6-ac7d-48f7-97de-265d988d5813"
 }

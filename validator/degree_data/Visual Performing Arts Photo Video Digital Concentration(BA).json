@@ -1,7 +1,6 @@
 {
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ah/visual-and-performing-arts-photo-video-digital",
   "minimum_credit_hours": 120,
-  "name": "Bachelor of Arts in Visual and Performing Arts with Photo-Video-Digital Concentration",
   "school": "School of Arts, Humanities, and Technology",
   "subtype": "Major",
   "year": "2022-2023",
@@ -341,5 +340,5 @@
     ]
   },
   "display_name": "Visual and Performing Arts with Photo-Video-Digital Concentration(BA)",
-  "uuid": "76362932-5782-4d08-ac0a-a6fb450652c6"
+  "id": "1b1cf724-d5ba-44fa-b996-65fb3d916f3d"
 }

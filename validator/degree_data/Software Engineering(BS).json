@@ -1,7 +1,6 @@
 {
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ecs/software-engineering",
   "minimum_credit_hours": 123,
-  "name": "Bachelor of Science in Software Engineering",
   "school": "Erik Jonsson School of Engineering and Computer Science",
   "subtype": "Major",
   "year": "2022-2023",
@@ -590,5 +589,5 @@
     ]
   },
   "display_name": "Software Engineering(BS)",
-  "uuid": "58de303f-a1ee-4276-93b4-ab4ca83bcbac"
+  "id": "7e1787a6-6481-4ee6-a8ed-ef17318adcee"
 }

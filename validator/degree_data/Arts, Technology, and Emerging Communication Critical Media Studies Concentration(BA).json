@@ -1,7 +1,6 @@
 {
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/atec/arts-and-technology-critical-media-studies",
   "minimum_credit_hours": 120,
-  "name": "Bachelor of Arts in Arts, Technology, and Emerging Communication with Critical Media Studies (BA)",
   "school": "School of Arts, Technology, and Emerging Communication",
   "subtype": "Major",
   "year": "2022-2023",
@@ -255,5 +254,5 @@
     ]
   },
   "display_name": "Arts, Technology, and Emerging Communication Critical Media Studies Concentration(BA)",
-  "uuid": "9542b34c-59d3-435e-952f-cbe166cb0069"
+  "id": "03f013f4-0f6e-45bf-ab48-0274bebc7f95"
 }

@@ -1,7 +1,6 @@
 {
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/global-business-supply-chain-management",
   "minimum_credit_hours": 128,
-  "name": "Bachelor of Science in Global Business and Supply Chain Management",
   "school": "Naveen Jindal School of Management",
   "subtype": "Major",
   "year": "2022-2023",
@@ -769,5 +768,5 @@
     ]
   },
   "display_name": "Global Business and Supply Chain Management(BS)",
-  "uuid": "36cd8daf-9634-46df-bcdc-0604ec34d03a"
+  "id": "eedd5d31-35a9-42da-9f3c-f06216f71373"
 }

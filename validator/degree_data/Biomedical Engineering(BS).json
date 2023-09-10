@@ -1,7 +1,6 @@
 {
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ecs/biomedical-engineering",
   "minimum_credit_hours": 128,
-  "name": "Bachelor of Science in Biomedical Engineering",
   "school": "Erik Jonsson School of Engineering and Computer Science",
   "subtype": "Major",
   "year": "2022-2023",
@@ -336,5 +335,5 @@
     ]
   },
   "display_name": "Biomedical Engineering(BS)",
-  "uuid": "986f06d7-c27e-47ba-bf68-cc414533da2c"
+  "id": "7bce7ed7-fd5d-4ec0-baf0-cf5d5b92fd4e"
 }

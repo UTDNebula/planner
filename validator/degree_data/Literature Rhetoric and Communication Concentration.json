@@ -1,7 +1,6 @@
 {
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ah/literature-rhetoric-and-communication",
   "minimum_credit_hours": 120,
-  "name": "Bachelor of Arts in Literature with Rhetoric and Communication Concentration",
   "school": "School of Arts and Humanities",
   "subtype": "Major",
   "year": "2022-2023",
@@ -264,5 +263,5 @@
     ]
   },
   "display_name": "Literature with Rhetoric and Communication Concentration(BA)",
-  "uuid": "13c482be-f3e2-4040-8a04-9caa1338195f"
+  "id": "1a6c7984-cff5-4945-93b0-ece18543e189"
 }

@@ -1,7 +1,6 @@
 {
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ecs/electrical-engineering",
   "minimum_credit_hours": 128,
-  "name": "Bachelor of Science in Electrical Engineering",
   "school": "Erik Jonsson School of Engineering and Computer Science",
   "subtype": "Major",
   "year": "2022-2023",
@@ -569,5 +568,5 @@
     ]
   },
   "display_name": "Electrical Engineering(BSEE)",
-  "uuid": "35e4e1d1-2758-4f56-a244-224b8390951e"
+  "id": "2abe1b82-15a2-4854-8875-8b4c5a812610"
 }

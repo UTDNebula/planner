@@ -1,7 +1,6 @@
 {
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/nsm/data-science",
   "minimum_credit_hours": 120,
-  "name": "Bachelor of Science in Data Science",
   "school": "School of Natural Sciences and Mathematics",
   "subtype": "Major",
   "year": "2022-2023",
@@ -309,5 +308,5 @@
     ]
   },
   "display_name": "Data Science(BS)",
-  "uuid": "2acaa861-8af6-4c31-8a62-47c5852c94b8"
+  "id": "4565eb96-e3e2-46e9-bd65-5323544d5c90"
 }

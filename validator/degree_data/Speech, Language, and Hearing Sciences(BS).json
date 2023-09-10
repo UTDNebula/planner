@@ -1,7 +1,6 @@
 {
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/bbs/speech-language-and-hearing-sciences",
   "minimum_credit_hours": 120,
-  "name": "Bachelor of Science in Speech, Language, and Hearing Sciences",
   "school": "School of Behavioral and Brain Sciences",
   "subtype": "Major",
   "year": "2022-2023",
@@ -175,5 +174,5 @@
     ]
   },
   "display_name": "Speech, Language, and Hearing Sciences(BS)",
-  "uuid": "78dab794-7dd0-45d8-abd4-d2e4591c28a6"
+  "id": "4e3584c3-ac66-4f1e-8ee9-a90789ce54ef"
 }

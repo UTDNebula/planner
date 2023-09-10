@@ -89,7 +89,7 @@ def get_degree_plans() -> Response:
     for fname in glob("./degree_data/*.json"):
         with open(fname, "r") as f:
             data = json.load(f)
-            plans.append({"display_name": data["display_name"], "uuid": data["uuid"]})
+            plans.append({"display_name": data["display_name"], "id": data["id"]})
     return make_response(
         {"message": f"Supported degree plans.", "degree_plans": plans}, 200
     )

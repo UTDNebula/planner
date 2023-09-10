@@ -1,7 +1,6 @@
 {
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/global-business-human-resource-management",
   "minimum_credit_hours": 128,
-  "name": "Bachelor of Science in Global Business and Human Resource Management",
   "school": "Naveen Jindal School of Management",
   "subtype": "Major",
   "year": "2022-2023",
@@ -725,5 +724,5 @@
     ]
   },
   "display_name": "Global Business and Human Resource Management(BS)",
-  "uuid": "2384c37d-a8b1-4310-99cc-8161dcbec07b"
+  "id": "b4cdd83a-daff-4c1b-b07a-541cfa6c4730"
 }

@@ -1,7 +1,6 @@
 {
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ah/literature-creative-writing",
   "minimum_credit_hours": 120,
-  "name": "Bachelor of Arts in Literature with Creative Writing Concentration",
   "school": "School of Arts and Humanities",
   "subtype": "Major",
   "year": "2022-2023",
@@ -204,5 +203,5 @@
     ]
   },
   "display_name": "Literature with Creative Writing Concentration(BA)",
-  "uuid": "8983c6c8-18cf-453f-aa60-a278f8e99820"
+  "id": "88631086-43f5-46e9-a2fc-8468c35f633b"
 }
