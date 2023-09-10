@@ -7,7 +7,7 @@ import AnalyticsWrapper from '@/components/common/AnalyticsWrapper';
 import DownloadIcon from '@/icons/DownloadIcon';
 import SettingsIcon from '@/icons/SettingsIcon';
 import SwitchVerticalIcon from '@/icons/SwitchVerticalIcon';
-import DeletePlanModal from '@/shared-components/DeletePlanModal';
+import DeletePlanModal from '@/shared/DeletePlanModal';
 import { trpc } from '@/utils/trpc';
 
 import EditableMajorTitle from './EditablePlanTitle';
