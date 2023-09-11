@@ -1,4 +1,4 @@
-import React from 'react';
+import { cloneElement, Children } from 'react';
 
 /**
  * Wrapper component that injects ``analyticsClass`` class into its child
@@ -14,8 +14,10 @@ export default function AnalyticsWrapper({
   analyticsClass: string;
   children: React.ReactElement;
 }) {
-  return React.cloneElement(React.Children.only(children), {
+  return cloneElement(Children.only(children), {
     ...children.props,
-    className: children.props.className ? `${children.props.className} ${analyticsClass}` : null,
+    className: children.props.className
+      ? `${children.props.className} ${analyticsClass}`
+      : analyticsClass,
   });
 }

@@ -60,7 +60,7 @@ jobs:
       EMAIL_FROM: noreply@example.com
 
       # DEGREE VALIDATOR
-      NEXT_PUBLIC_VALIDATOR: ${{ secrets.NEXT_PUBLIC_VALIDATOR }}
+      NEXT_PUBLIC_VALIDATOR: http://localhost:5000
 
       NODE_ENV: test
 
@@ -71,6 +71,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: Setup Python3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Start validator server
+        working-directory: validator
+        run: |
+          pip install -r requirements.txt
+          flask --app api run &
 
       - name: Start MongoDB
         uses: supercharge/mongodb-github-action@1.8.0
