@@ -59,9 +59,10 @@ def createTicket(issueJson, jira_connection):
     ]
 
 #TODO: Move API Token
+JIRA_API_KEY='f'
 if __name__ == "__main__":
     jira_connection = JIRA(
-        basic_auth=('planner@utdnebula.com', 'ATATT3xFfGF0DqfwHfkFQTDWilvknP5l5hoj9f93hDUvSz4acuuWudOkn9eDJlfizqwcA9RtUbIX40cCh56B3v9DNJ9rqC_uUGilca77qbvDhNiQyAU9k7gHPb8YI7sDfH0L5fnZnzM49Nvy2k_Fr39qjEf_sPagX326pXIGVGnSX3uVL_5qSUU=62CF953E'),
+        basic_auth=('planner@utdnebula.com', JIRA_API_KEY),
         server="https://nebula-labs.atlassian.net"
     )
     for majorReqJson in os.scandir('validator/degree_data'):
