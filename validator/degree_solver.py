@@ -19,6 +19,15 @@ from major.requirements.shared import (
 )
 
 
+# Read all degree plan JSON files and store their contents in a hashmap
+# This is so that we can avoid reading all the files each time we want to get the data for a certain course
+degree_plans = {}
+for fname in glob("degree_data/*.json"):
+    with open(fname, "r") as f:
+        data = json.load(f)
+        degree_plans[data["display_name"]] = data
+
+
 @dataclass
 class Bypass:
     """Sometimes, we may want to manually assign a course to a requirement.
@@ -149,31 +158,26 @@ class DegreeRequirementsSolver:
         # Logic for adding majors
         for input_req in degree_requirements_input.majors:
             # Get major data from json
-            # Read all JSON files to find which one we need
-            for fname in glob("degree_data/*.json"):
-                with open(fname, "r") as f:
-                    data = json.load(f)
-                    # If this JSON file matches the one we're looking for
-                    if data["display_name"] == input_req:
-                        requirements_data = data["requirements"]["major"]
+            if input_req not in degree_plans:
+                print("Error: degree plan not found!")
+                return []
+            requirements_data = degree_plans[input_req]["requirements"]["major"]
 
-                        major_req = DegreeRequirement(
-                            input_req,
-                            DegreeRequirementType.major,
-                            [],
-                            data["minimum_credit_hours"],
-                        )
+            major_req = DegreeRequirement(
+                input_req,
+                DegreeRequirementType.major,
+                [],
+                data["minimum_credit_hours"],
+            )
 
-                        # Add requirements
-                        for req_data in requirements_data:
-                            major_req.requirements.append(
-                                REQUIREMENTS_MAP[req_data["matcher"]].from_json(
-                                    req_data
-                                )
-                            )
-                        degree_requirements.append(major_req)
-                        # We don't need to check the other JSON files
-                        break
+            # Add requirements
+            for req_data in requirements_data:
+                major_req.requirements.append(
+                    REQUIREMENTS_MAP[req_data["matcher"]].from_json(req_data)
+                )
+            degree_requirements.append(major_req)
+            # We don't need to check the other JSON files
+            break
 
         # TODO: Logic for adding minors & other
 

@@ -38,6 +38,13 @@ for degree_plan in set(DEGREE_PLANS):
     solvers[degree_plan].load_requirements_from_file(filename)
 
 
+plans = []
+for fname in glob("./degree_data/*.json"):
+    with open(fname, "r") as f:
+        data = json.load(f)
+        plans.append({"display_name": data["display_name"], "id": data["id"]})
+
+
 # def _ratelimit_callback(request_limit: RequestLimit):
 #     print(f"RATELIMIT_BREACH key({request_limit.key})")
 #     return make_response({
@@ -85,11 +92,6 @@ def root_() -> Response:
 
 @app.route("/get-degree-plans", methods=["GET"])
 def get_degree_plans() -> Response:
-    plans = []
-    for fname in glob("./degree_data/*.json"):
-        with open(fname, "r") as f:
-            data = json.load(f)
-            plans.append({"display_name": data["display_name"], "id": data["id"]})
     return make_response(
         {"message": f"Supported degree plans.", "degree_plans": plans}, 200
     )

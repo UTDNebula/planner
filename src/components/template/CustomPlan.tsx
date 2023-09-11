@@ -15,6 +15,7 @@ import useSearch from '../search/search';
 
 import type { PDFDocumentProxy } from 'pdfjs-dist';
 import useMajors from '@/shared/useMajors';
+import Link from 'next/link';
 
 type TakenCourse = UnwrapArray<RouterInputs['user']['createUserPlan']['takenCourses']>;
 
@@ -28,7 +29,7 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
 
   const [planNameError, setPlanNameError] = useState(false);
   const [majorError, setMajorError] = useState(false);
-  const majors = useMajors();
+  const { majors, err } = useMajors();
   const setErrors = () => {
     setPlanNameError(name === '');
     setMajorError(major === null);
@@ -421,6 +422,18 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
       {error && ErrorMessage(error)}
     </Page>,
   ];
+
+  if (err) {
+    return (
+      <>
+        Oops, we ran into an error! Please let us know on our{' '}
+        <Link href="https://discord.gg/anrh9B2Z3w" className="underline">
+          discord
+        </Link>{' '}
+        to get it fixed as soon as possible.
+      </>
+    );
+  }
 
   return (
     <>

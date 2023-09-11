@@ -7,6 +7,7 @@ import { SemesterCode } from 'prisma/utils';
 
 import useSearch from '../search/search';
 import useMajors from '@/shared/useMajors';
+import Link from 'next/link';
 
 export type WelcomeTypes = {
   name: string;
@@ -42,7 +43,7 @@ export default function Welcome({
   };
 
   const [major, setMajor] = React.useState('');
-  const majors = useMajors();
+  const { majors, err } = useMajors();
 
   const { results, updateQuery } = useSearch({
     getData: async () => (majors ? majors.map((major) => ({ filMajor: `${major}` })) : []),
@@ -110,6 +111,18 @@ export default function Welcome({
   React.useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  if (err) {
+    return (
+      <>
+        Oops, we ran into an error! Please let us know on our{' '}
+        <Link href="https://discord.gg/anrh9B2Z3w" className="underline">
+          discord
+        </Link>{' '}
+        to get it fixed as soon as possible.
+      </>
+    );
+  }
 
   return (
     <div>

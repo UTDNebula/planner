@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import EditIcon from '@/icons/EditIcon';
 import { trpc } from '@/utils/trpc';
 import useMajors from '@/shared/useMajors';
+import Link from 'next/link';
 
 const EditableMajor = ({
   major: initialMajor,
@@ -63,7 +64,7 @@ const EditMajorAutocomplete = ({
   setEditMajor: (a: boolean) => void;
   planId: string;
 }) => {
-  const majors = useMajors();
+  const { majors, err } = useMajors();
 
   const utils = trpc.useContext();
 
@@ -88,6 +89,18 @@ const EditMajorAutocomplete = ({
       },
     );
   };
+
+  if (err) {
+    return (
+      <>
+        Oops, we ran into an error! Please let us know on our{' '}
+        <Link href="https://discord.gg/anrh9B2Z3w" className="underline">
+          discord
+        </Link>{' '}
+        to get it fixed as soon as possible.
+      </>
+    );
+  }
 
   return (
     <Autocomplete
