@@ -60,7 +60,7 @@ jobs:
       EMAIL_FROM: noreply@example.com
 
       # DEGREE VALIDATOR
-      VALIDATOR: ${{ secrets.VALIDATOR }}
+      NEXT_PUBLIC_VALIDATOR: ${{ secrets.NEXT_PUBLIC_VALIDATOR }}
 
       NODE_ENV: test
 

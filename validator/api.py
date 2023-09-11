@@ -92,6 +92,8 @@ def root_() -> Response:
 
 @app.route("/get-degree-plans", methods=["GET"])
 def get_degree_plans() -> Response:
+    # Returns a list of degree plans that validator supports. This is just a list of the display names of all the JSON
+    # plans we have.
     return make_response(
         {"message": f"Supported degree plans.", "degree_plans": plans}, 200
     )
