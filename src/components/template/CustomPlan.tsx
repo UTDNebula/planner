@@ -14,13 +14,13 @@ import ErrorMessage from '../common/ErrorMessage';
 import useSearch from '../search/search';
 
 import type { PDFDocumentProxy } from 'pdfjs-dist';
+import useMajors from '@/shared/useMajors';
 
 type TakenCourse = UnwrapArray<RouterInputs['user']['createUserPlan']['takenCourses']>;
 
 export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
   const [name, setName] = useState('');
   const [major, setMajor] = useState<string | null>(null);
-  const [majors, setMajors] = useState<string[]>([]);
   const [transferCredits, setTransferCredits] = useState<string[]>([]);
   const [takenCourses, setTakenCourses] = useState<TakenCourse[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -28,6 +28,7 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
 
   const [planNameError, setPlanNameError] = useState(false);
   const [majorError, setMajorError] = useState(false);
+  const majors = useMajors();
   const setErrors = () => {
     setPlanNameError(name === '');
     setMajorError(major === null);
@@ -37,20 +38,6 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
 
   const router = useRouter();
   const utils = trpc.useContext();
-
-  fetch(`${process.env.NEXT_PUBLIC_VALIDATOR}/get-degree-plans`, {
-    method: 'GET',
-  })
-    .then((res) => {
-      console.log('res:', res);
-      return res;
-    })
-    .then((res) => res.json())
-    .then((data) => {
-      setMajors(
-        data['degree_plans'].map((degree: { display_name: string }) => degree['display_name']),
-      );
-    });
 
   const createUserPlan = trpc.user.createUserPlan.useMutation({
     async onSuccess() {
