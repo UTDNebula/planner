@@ -47,14 +47,14 @@ function CourseSelectorContainer({
       },
     },
   });
-  console.log("courses", courses)
+  console.log('courses', courses);
   const totalCreditHours = useMemo(() => {
-    let count = 0
+    let count = 0;
     for (const course of courses) {
-      count += getSemesterHourFromCourseCode(course) || 0
+      count += getSemesterHourFromCourseCode(course) || 0;
     }
-    return count
-  }, [])
+    return count;
+  }, []);
   const { data, isLoading } = trpc.courses.publicGetAllCourses.useQuery();
 
   const { results, updateQuery } = useFuse<Course>({
@@ -145,7 +145,7 @@ function CourseSelectorContainer({
                       }
                     />
                   )}
-                  <p>{Math.round(totalCreditHours/18)} Semesters to Graduate</p>
+                  <p>{Math.round(totalCreditHours / 18)} Semesters to Graduate</p>
                 </div>
               </div>
               <h6 className="text-base tracking-tight text-gray-500">
