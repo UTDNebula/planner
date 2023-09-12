@@ -5,6 +5,14 @@ import os
 from bs4 import BeautifulSoup
 from jira import JIRA
 
+#Should this detect CORE changes and, if so, should I flag each major for core changes?
+
+#Modify the tolernance to ignore fluff (grammar changes, footnote numbering, etc)
+#Determine what the cause of the diff is:
+    #Course number change [*]
+    #Major/Concentration deleted [*]
+    #Degree credit hour changes [ ]
+
 course_prefixes = ["ACCT","ACTS","AHST","AMS","ARAB","ARHM","ARTS","ATCM","BA","BBSU","BCOM","BIOL","BIS","BLAW","BMEN","BPS","CE","CGS",
                    "CHEM","CHIN","CLDP","COMM","CRIM","CRWT","CS","DANC","ECON","ECS","ECSC","ED","EE","ENGR","ENGY","ENTP","ENVR","EPCS",
                    "EPPS","FILM","FIN","FREN","GEOG","GEOS","GERM","GISC","GOVT","GST","HIST","HLTH","HMGT","HONS","HUMA","IMS","IPEC","ISAE",
@@ -19,22 +27,6 @@ def get_req_content(url):
         return extract_courses(response.text)
     else:
         return set()
-    
-#Should this detect CORE changes and, if so, should I flag each major for core changes?
-
-#Modify the tolernance to ignore fluff (grammar changes, footnote numbering, etc)
-#Determine what the cause of the diff is:
-    #Course number change [*]
-    #Degree credit hour changes [ ]
-#Send the probable diff cause to the ticket send based on the problems and where they are
-    
-#They straight up remove majors sometimes (mostly ATEC majors lol)
-# https://catalog.utdallas.edu/2023/undergraduate/programs/atec/arts-and-technology-animation
-# https://catalog.utdallas.edu/2022/undergraduate/programs/atec/arts-and-technology-animation
-
-#Almost like every major has a diff
-
-#Business Admin is a pain in the ass with all of the concentrations
 
 def extract_courses(webData):
     bs = BeautifulSoup(webData)
@@ -48,21 +40,31 @@ def extract_courses(webData):
                 courses.add(course_name)
     return courses
 
-def createTicket(issueJson, jira_connection):
-    issue_list = [
-        {
-        'project': {'key': 'NP'},
-        'summary': 'Version inconsistencies between years',
-        'description': 'The updated major requirements page has changed course names and/or requirements, course(s) changed include: ',
-        'issuetype': {'name':'Task'}
-        }
-    ]
+def createTicket(issueType, jira_connection, coursesImpacted):
+    description = ""
+    if issueType == 'R':
+        print("R issue type")
+        #TODO: Let description say course/concentration removed
+    elif issueType == 'C':
+        print("C issue type")
+        #TODO: Let description say course was renamed/added/removed
+    issue = jira_connection.create_issue(
+        project='NP',
+        summary='Course requirement version changes',
+        #Let the description include the URI, try to add description formatting
+        description=description,
+        issuetype={'name': 'Task'}
+    )
+    #NEED EDIT PERMISSIONS to change assignee information
+    #WHO do I assign them to?
+    issue.update(assignee={'name': 'Kevin Ge'})
 
 #TODO: Move API Token
-JIRA_API_KEY='f'
+# C issue type = Course renamed/added/removed
+# R issue type = Major/concentration removed
 if __name__ == "__main__":
     jira_connection = JIRA(
-        basic_auth=('planner@utdnebula.com', JIRA_API_KEY),
+        basic_auth=('planner@utdnebula.com', 'CHANGE ME'),
         server="https://nebula-labs.atlassian.net"
     )
     for majorReqJson in os.scandir('validator/degree_data'):
@@ -73,8 +75,7 @@ if __name__ == "__main__":
         old=get_req_content(data["catalog_uri"])
         new=get_req_content(re.sub(yearRegex, f'/{ str(match) }/', data["catalog_uri"]))
         if len(new) == 0:
-            print("Major/Concentration removed: " + re.sub(yearRegex, f'/{ str(match) }/', data["catalog_uri"]))
+            createTicket('R', jira_connection, re.sub(yearRegex, f'/{ str(match) }/', data["catalog_uri"]))
         else:
-            print("Course(s) changed: " + data["catalog_uri"])
-            print((new-old).union(old-new))
+            createTicket('C', jira_connection, (new-old).union(old-new))
         
