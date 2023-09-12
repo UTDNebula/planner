@@ -1,5 +1,7 @@
 from __future__ import annotations
 from enum import Enum
+from glob import glob
+
 from pydantic import Json
 
 from typing import Any
@@ -16,6 +18,15 @@ from major.requirements.shared import (
     HoursRequirement,
 )
 from course import Course
+
+
+# Read all degree plan JSON files and store their contents in a hashmap
+# This is so that we can avoid reading all the files each time we want to get the data for a certain course
+degree_plans = {}
+for fname in glob("degree_data/*.json"):
+    with open(fname, "r") as f:
+        data = json.load(f)
+        degree_plans[data["display_name"]] = data
 
 
 @dataclass
@@ -162,11 +173,16 @@ class DegreeRequirementsSolver:
         # Logic for adding majors
         for input_req in degree_requirements_input.majors:
             # Get major data from json
-            data = json.loads(open(f"degree_data/{input_req}.json", "r").read())
-            requirements_data = data["requirements"]["major"]
+            if input_req not in degree_plans:
+                print("Error: degree plan not found!")
+                return []
+            requirements_data = degree_plans[input_req]["requirements"]["major"]
 
             major_req = DegreeRequirement(
-                input_req, DegreeRequirementType.major, [], data["minimum_credit_hours"]
+                input_req,
+                DegreeRequirementType.major,
+                [],
+                data["minimum_credit_hours"],
             )
 
             # Add requirements
@@ -175,6 +191,8 @@ class DegreeRequirementsSolver:
                     REQUIREMENTS_MAP[req_data["matcher"]].from_json(req_data)
                 )
             degree_requirements.append(major_req)
+            # We don't need to check the other JSON files
+            break
 
         # TODO: Logic for adding minors & other
 

@@ -1,8 +1,6 @@
 {
-  "abbreviation": "Business Administration(BS) Risk Management and Insurance Concentration",
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/business-administration",
   "minimum_credit_hours": 120,
-  "name": "Bachelor of Science in Business Administration Risk Management and Insurance Concentration",
   "school": "Naveen Jindal School of Management",
   "subtype": "Major",
   "year": "2022-2023",
@@ -604,5 +602,7 @@
         }
       }
     ]
-  }
+  },
+  "display_name": "Business Administration(BS) Risk Management and Insurance Concentration",
+  "id": "b19ff186-24fb-47f8-ba8b-adf29328b808"
 }
