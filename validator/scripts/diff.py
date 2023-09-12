@@ -40,24 +40,23 @@ def extract_courses(webData):
                 courses.add(course_name)
     return courses
 
-def createTicket(issueType, jira_connection, coursesImpacted):
+def createTicket(issueType, jira_connection, URI, coursesImpacted):
     description = ""
     if issueType == 'R':
-        print("R issue type")
-        #TODO: Let description say course/concentration removed
+        description += "The following major/concentration has been removed:\n"
     elif issueType == 'C':
-        print("C issue type")
-        #TODO: Let description say course was renamed/added/removed
-    issue = jira_connection.create_issue(
-        project='NP',
-        summary='Course requirement version changes',
-        #Let the description include the URI, try to add description formatting
-        description=description,
-        issuetype={'name': 'Task'}
-    )
-    #NEED EDIT PERMISSIONS to change assignee information
-    #WHO do I assign them to?
-    issue.update(assignee={'name': 'Kevin Ge'})
+        description += "The following course(s) have been renamed/added/removed:\n"
+        description += str(coursesImpacted) + "\n"
+    description += "URI: " + URI + "\n"
+    description += "Major: " + URI.split("/")[-1] + "\n"
+    # issue = jira_connection.create_issue(
+    #     project='NP',
+    #     summary='Course requirement version changes',
+    #     #Let the description include the URI, try to add description formatting
+    #     description=description,
+    #     issuetype={'name': 'Task'}
+    # )
+    # issue.update(assignee={'name': 'Kevin Ge'})
 
 #TODO: Move API Token
 # C issue type = Course renamed/added/removed
@@ -75,7 +74,7 @@ if __name__ == "__main__":
         old=get_req_content(data["catalog_uri"])
         new=get_req_content(re.sub(yearRegex, f'/{ str(match) }/', data["catalog_uri"]))
         if len(new) == 0:
-            createTicket('R', jira_connection, re.sub(yearRegex, f'/{ str(match) }/', data["catalog_uri"]))
+            createTicket('R', jira_connection, re.sub(yearRegex, f'/{ str(match) }/', data["catalog_uri"]), set())
         else:
-            createTicket('C', jira_connection, (new-old).union(old-new))
+            createTicket('C', jira_connection, re.sub(yearRegex, f'/{ str(match) }/', data["catalog_uri"]), (new-old).union(old-new))
         
