@@ -1,8 +1,6 @@
 {
-  "abbreviation": "Visual and Performing Arts with Film Concentration (BA)",
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ah/visual-and-performing-arts-film",
   "minimum_credit_hours": 120,
-  "name": "Bachelor of Arts in Visual and Performing Arts with Film Concentration",
   "school": "School of Arts, Humanities, and Technology",
   "year": "2022-2023",
   "requirements": {
@@ -335,5 +333,7 @@
         }
       }
     ]
-  }
+  },
+  "display_name": "Visual and Performing Arts with Film Concentration(BA)",
+  "id": "8dbe0f05-4418-4e9c-9aca-7fb43da79d6e"
 }

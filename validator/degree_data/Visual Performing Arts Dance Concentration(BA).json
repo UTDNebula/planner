@@ -1,8 +1,6 @@
 {
-  "abbreviation": "Visual and Performing Arts with Dance Concentration (BA)",
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ah/visual-and-performing-arts-dance",
   "minimum_credit_hours": 120,
-  "name": "Bachelor of Arts in Visual and Performing Arts with Dance Concentration",
   "school": "School of Arts, Humanities, and Technology",
   "subtype": "Major",
   "year": "2022-2023",
@@ -219,5 +217,7 @@
         }
       }
     ]
-  }
+  },
+  "display_name": "Visual and Performing Arts with Dance Concentration(BA)",
+  "id": "190eb0af-1013-4401-87c3-a14129a9e46e"
 }

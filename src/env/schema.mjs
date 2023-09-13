@@ -31,7 +31,6 @@ export const serverSchema = z.object({
   EMAIL_SERVER_USER: z.string(),
   EMAIL_SERVER_PASSWORD: z.string(),
   EMAIL_FROM: z.string(),
-  VALIDATOR: z.string(),
 });
 
 /**
@@ -42,6 +41,7 @@ export const serverSchema = z.object({
 export const clientSchema = z.object({
   NEXT_PUBLIC_UMAMI_URL: z.string(),
   NEXT_PUBLIC_UMAMI_WEBSITE_ID: z.string(),
+  NEXT_PUBLIC_VALIDATOR: z.string(),
   // NEXT_PUBLIC_BAR: z.string(),
 });
 
@@ -52,7 +52,8 @@ export const clientSchema = z.object({
  * @type {{ [k in keyof z.infer<typeof clientSchema>]: z.infer<typeof clientSchema>[k] | undefined }}
  */
 export const clientEnv = {
-  NEXT_PUBLIC_UMAMI_WEBSITE_ID: process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID,
   NEXT_PUBLIC_UMAMI_URL: process.env.NEXT_PUBLIC_UMAMI_URL,
+  NEXT_PUBLIC_UMAMI_WEBSITE_ID: process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID,
+  NEXT_PUBLIC_VALIDATOR: process.env.NEXT_PUBLIC_VALIDATOR,
   // NEXT_PUBLIC_BAR: process.env.NEXT_PUBLIC_BAR,
 };
