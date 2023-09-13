@@ -1,8 +1,6 @@
 {
-  "abbreviation": "Data Science (BS)",
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/nsm/data-science",
   "minimum_credit_hours": 120,
-  "name": "Bachelor of Science in Data Science",
   "school": "School of Natural Sciences and Mathematics",
   "subtype": "Major",
   "year": "2022-2023",
@@ -19,22 +17,30 @@
           {
             "matcher": "CourseRequirement",
             "course": "CS 1136",
-            "metadata": { "id": "Data Science (BS)-1" }
+            "metadata": {
+              "id": "Data Science (BS)-1"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CS 1336",
-            "metadata": { "id": "Data Science (BS)-2" }
+            "metadata": {
+              "id": "Data Science (BS)-2"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CS 1337",
-            "metadata": { "id": "Data Science (BS)-3" }
+            "metadata": {
+              "id": "Data Science (BS)-3"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CS 2336",
-            "metadata": { "id": "Data Science (BS)-4" }
+            "metadata": {
+              "id": "Data Science (BS)-4"
+            }
           },
           {
             "matcher": "OrRequirement",
@@ -42,30 +48,42 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "MATH 3315",
-                "metadata": { "id": "Data Science (BS)-6" }
+                "metadata": {
+                  "id": "Data Science (BS)-6"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "CS 2305",
-                "metadata": { "id": "Data Science (BS)-7" }
+                "metadata": {
+                  "id": "Data Science (BS)-7"
+                }
               }
             ],
-            "metadata": { "id": "Data Science (BS)-5" }
+            "metadata": {
+              "id": "Data Science (BS)-5"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MATH 2417",
-            "metadata": { "id": "Data Science (BS)-8" }
+            "metadata": {
+              "id": "Data Science (BS)-8"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MATH 2418",
-            "metadata": { "id": "Data Science (BS)-9" }
+            "metadata": {
+              "id": "Data Science (BS)-9"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MATH 2419",
-            "metadata": { "id": "Data Science (BS)-10" }
+            "metadata": {
+              "id": "Data Science (BS)-10"
+            }
           },
           {
             "matcher": "OrRequirement",
@@ -76,15 +94,21 @@
                   {
                     "matcher": "CourseRequirement",
                     "course": "PHYS 2325",
-                    "metadata": { "id": "Data Science (BS)-13" }
+                    "metadata": {
+                      "id": "Data Science (BS)-13"
+                    }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "PHYS 2125",
-                    "metadata": { "id": "Data Science (BS)-14" }
+                    "metadata": {
+                      "id": "Data Science (BS)-14"
+                    }
                   }
                 ],
-                "metadata": { "id": "Data Science (BS)-12" }
+                "metadata": {
+                  "id": "Data Science (BS)-12"
+                }
               },
               {
                 "matcher": "AndRequirement",
@@ -92,13 +116,19 @@
                   {
                     "matcher": "CourseRequirement",
                     "course": "PHYS 2421",
-                    "metadata": { "id": "Data Science (BS)-16" }
+                    "metadata": {
+                      "id": "Data Science (BS)-16"
+                    }
                   }
                 ],
-                "metadata": { "id": "Data Science (BS)-15" }
+                "metadata": {
+                  "id": "Data Science (BS)-15"
+                }
               }
             ],
-            "metadata": { "id": "Data Science (BS)-11" }
+            "metadata": {
+              "id": "Data Science (BS)-11"
+            }
           },
           {
             "matcher": "OrRequirement",
@@ -106,20 +136,28 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "PHYS 2326",
-                "metadata": { "id": "Data Science (BS)-18" }
+                "metadata": {
+                  "id": "Data Science (BS)-18"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "PHYS 2422",
-                "metadata": { "id": "Data Science (BS)-19" }
+                "metadata": {
+                  "id": "Data Science (BS)-19"
+                }
               }
             ],
-            "metadata": { "id": "Data Science (BS)-17" }
+            "metadata": {
+              "id": "Data Science (BS)-17"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "PHYS 2126",
-            "metadata": { "id": "Data Science (BS)-20" }
+            "metadata": {
+              "id": "Data Science (BS)-20"
+            }
           }
         ]
       },
@@ -133,72 +171,100 @@
           {
             "matcher": "CourseRequirement",
             "course": "CS 3345",
-            "metadata": { "id": "Data Science (BS)-22" }
+            "metadata": {
+              "id": "Data Science (BS)-22"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CS 4347",
-            "metadata": { "id": "Data Science (BS)-23" }
+            "metadata": {
+              "id": "Data Science (BS)-23"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CS 4371",
-            "metadata": { "id": "Data Science (BS)-24" }
+            "metadata": {
+              "id": "Data Science (BS)-24"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CS 4372",
-            "metadata": { "id": "Data Science (BS)-25" }
+            "metadata": {
+              "id": "Data Science (BS)-25"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CS 4375",
-            "metadata": { "id": "Data Science (BS)-26" }
+            "metadata": {
+              "id": "Data Science (BS)-26"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MATH 3310",
-            "metadata": { "id": "Data Science (BS)-27" }
+            "metadata": {
+              "id": "Data Science (BS)-27"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MATH 3351",
-            "metadata": { "id": "Data Science (BS)-28" }
+            "metadata": {
+              "id": "Data Science (BS)-28"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MATH 4301",
-            "metadata": { "id": "Data Science (BS)-29" }
+            "metadata": {
+              "id": "Data Science (BS)-29"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "STAT 3355",
-            "metadata": { "id": "Data Science (BS)-30" }
+            "metadata": {
+              "id": "Data Science (BS)-30"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "STAT 4351",
-            "metadata": { "id": "Data Science (BS)-31" }
+            "metadata": {
+              "id": "Data Science (BS)-31"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "STAT 4352",
-            "metadata": { "id": "Data Science (BS)-32" }
+            "metadata": {
+              "id": "Data Science (BS)-32"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "STAT 4354",
-            "metadata": { "id": "Data Science (BS)-33" }
+            "metadata": {
+              "id": "Data Science (BS)-33"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "STAT 4355",
-            "metadata": { "id": "Data Science (BS)-34" }
+            "metadata": {
+              "id": "Data Science (BS)-34"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "STAT 4360",
-            "metadata": { "id": "Data Science (BS)-35" }
+            "metadata": {
+              "id": "Data Science (BS)-35"
+            }
           },
           {
             "matcher": "OrRequirement",
@@ -206,20 +272,28 @@
               {
                 "matcher": "CourseRequirement",
                 "course": "STAT 4475",
-                "metadata": { "id": "Data Science (BS)-37" }
+                "metadata": {
+                  "id": "Data Science (BS)-37"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "CS 4475",
-                "metadata": { "id": "Data Science (BS)-38" }
+                "metadata": {
+                  "id": "Data Science (BS)-38"
+                }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MATH 4475",
-                "metadata": { "id": "Data Science (BS)-39" }
+                "metadata": {
+                  "id": "Data Science (BS)-39"
+                }
               }
             ],
-            "metadata": { "id": "Data Science (BS)-36" }
+            "metadata": {
+              "id": "Data Science (BS)-36"
+            }
           }
         ]
       },
@@ -227,8 +301,12 @@
         "matcher": "FreeElectiveRequirement",
         "required_hours": 14,
         "excluded_courses": [],
-        "metadata": { "id": "Data Science (BS)-40" }
+        "metadata": {
+          "id": "Data Science (BS)-40"
+        }
       }
     ]
-  }
+  },
+  "display_name": "Data Science(BS)",
+  "id": "4565eb96-e3e2-46e9-bd65-5323544d5c90"
 }
