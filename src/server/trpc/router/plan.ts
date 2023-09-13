@@ -297,11 +297,11 @@ export const planRouter = router({
       const semester = await ctx.prisma.semester.findUnique({
         where: {
           id: semesterId,
-          plan: { userId: ctx.session.user.id }
+          plan: { userId: ctx.session.user.id },
         },
         include: {
-          courses: true
-        }
+          courses: true,
+        },
       });
       if (!semester) {
         throw new TRPCError({
@@ -309,11 +309,10 @@ export const planRouter = router({
           message: 'Semester does not exist',
         });
       }
-      const unlockedCourses = semester?.courses.filter(course => !course.locked)
+      const unlockedCourses = semester?.courses.filter((course) => !course.locked);
       await ctx.prisma.course
         .deleteMany({
-          where: { semesterId,
-          id: { in: unlockedCourses.map(course => course.id)}}
+          where: { semesterId, id: { in: unlockedCourses.map((course) => course.id) } },
         })
         .catch((err) => {
           if (err instanceof Prisma.PrismaClientKnownRequestError) {
