@@ -27,6 +27,7 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
   const [takenCourses, setTakenCourses] = useState<TakenCourse[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File | undefined>();
+  const [isDisabled, setIsDisabled] = useState(true);
 
   const [planNameError, setPlanNameError] = useState(false);
   const [majorError, setMajorError] = useState(false);
@@ -178,6 +179,7 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
         .filter((credit) => !credit.transfer)
         .map((credit) => ({ courseCode: credit.courseCode, semesterCode: credit.semesterCode })),
     );
+    setIsDisabled(false);
   };
 
   const dropRef = useRef<HTMLButtonElement>(null);
@@ -296,7 +298,7 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
     <Page
       key="custom-plan-transcript"
       title="Upload Transcript"
-      subtitle="Upload your transcript to add previously taken courses to your plan (optional)"
+      subtitle="Upload your transcript to add previously taken courses to your plan (required)"
       close={onDismiss}
       actions={[
         {
@@ -309,9 +311,10 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
         {
           name: 'Create Plan',
           onClick: handleSubmit,
-          color: 'primary',
+          color: file ? 'primary' : 'secondary',
           loading,
           'data-testid': 'create-plan-btn',
+          disabled: isDisabled,
         },
       ]}
     >
@@ -457,5 +460,6 @@ export interface PageProps {
     color: ButtonProps['color'];
     loading?: boolean;
     'data-testid'?: string;
+    disabled?: boolean;
   }[];
 }
