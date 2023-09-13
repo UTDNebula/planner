@@ -3,6 +3,7 @@ import json
 import re
 import os
 from bs4 import BeautifulSoup
+from dotenv import load_dotenv
 from jira import JIRA
 
 #Should this detect CORE changes and, if so, should I flag each major for core changes?
@@ -13,6 +14,8 @@ from jira import JIRA
     #Major/Concentration deleted [*]
     #Degree credit hour changes [ ]
 
+load_dotenv()
+jira_api_key = os.getenv('JIRA_API_KEY')
 course_prefixes = ["ACCT","ACTS","AHST","AMS","ARAB","ARHM","ARTS","ATCM","BA","BBSU","BCOM","BIOL","BIS","BLAW","BMEN","BPS","CE","CGS",
                    "CHEM","CHIN","CLDP","COMM","CRIM","CRWT","CS","DANC","ECON","ECS","ECSC","ED","EE","ENGR","ENGY","ENTP","ENVR","EPCS",
                    "EPPS","FILM","FIN","FREN","GEOG","GEOS","GERM","GISC","GOVT","GST","HIST","HLTH","HMGT","HONS","HUMA","IMS","IPEC","ISAE",
@@ -20,7 +23,7 @@ course_prefixes = ["ACCT","ACTS","AHST","AMS","ARAB","ARHM","ARTS","ATCM","BA","
                    "OBHR","OPRE","PA","PHIL","PHIN","PHYS","PPOL","PSCI","PSY","REAL","RELS","RHET","RMIS","SE","SOC","SPAN","SPAU","STAT","THEA",
                    "UNIV","VIET","VPAS"]
 
-
+#Extracts html from url and sends it to course extractor
 def get_req_content(url):
     response = requests.get(url)
     if(response.status_code == 200):
@@ -28,6 +31,7 @@ def get_req_content(url):
     else:
         return set()
 
+#Extracts the courses from each major and sends them to a set
 def extract_courses(webData):
     bs = BeautifulSoup(webData)
     courses = set()
@@ -40,6 +44,9 @@ def extract_courses(webData):
                 courses.add(course_name)
     return courses
 
+#Creates a ticket based on issue type, including URI and impacted courses in ticket
+# C issue type = Course renamed/added/removed
+# R issue type = Major/concentration removed
 def createTicket(issueType, jira_connection, URI, coursesImpacted):
     description = ""
     if issueType == 'R':
@@ -49,21 +56,19 @@ def createTicket(issueType, jira_connection, URI, coursesImpacted):
         description += str(coursesImpacted) + "\n"
     description += "URI: " + URI + "\n"
     description += "Major: " + URI.split("/")[-1] + "\n"
-    # issue = jira_connection.create_issue(
-    #     project='NP',
-    #     summary='Course requirement version changes',
-    #     #Let the description include the URI, try to add description formatting
-    #     description=description,
-    #     issuetype={'name': 'Task'}
-    # )
-    # issue.update(assignee={'name': 'Kevin Ge'})
+    issue = jira_connection.create_issue(
+        project='NP',
+        summary='Course requirement version changes',
+        description=description,
+        issuetype={'name': 'Task'}
+    )
+    #DANGER only uncomment when pushing
+    #jira_connection.create_issue(fields=issue)
 
-#TODO: Move API Token
-# C issue type = Course renamed/added/removed
-# R issue type = Major/concentration removed
+#Establishes JIRA connection and ierates through each major for versioning issues
 if __name__ == "__main__":
     jira_connection = JIRA(
-        basic_auth=('planner@utdnebula.com', 'CHANGE ME'),
+        basic_auth=('planner@utdnebula.com', 'f'),
         server="https://nebula-labs.atlassian.net"
     )
     for majorReqJson in os.scandir('validator/degree_data'):

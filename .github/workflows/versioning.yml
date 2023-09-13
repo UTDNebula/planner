@@ -1,6 +1,9 @@
+name: Scheduled Versioning
+
 on:
+  workflow_dispatch:
   schedule:
-    - cron : '* * 15 8 *'
+    - cron : '0 0 15 8 *'
 
 jobs:
   build:
