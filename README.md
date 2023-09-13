@@ -68,7 +68,11 @@ npm install
     npx prisma migrate dev
     ```
 
-5.  Setting up an auth provider. You need at least one of these to log in. We recommend you only add Discord for convenience.
+5.  Request `PLATFORM_DATABASE_URL` from someone on the team.
+
+6.  Set `NEXTAUTH_URL` to `http://localhost:3000` and `NEXTAUTH_SECRET=abc123`
+
+7.  Setting up an auth provider. You need at least one of these to log in. We recommend you only add Discord for convenience.
 
       <details>
       <summary>
@@ -136,12 +140,13 @@ npm install
 
     </details>
 
-6.  Run and configure validator
+8.  Run and configure validator
 
     ```bash
     cd validator
     python3.10 -m venv venv # Create virtual environment
     source venv/bin/activate # Use virtual enviornment
+    pip install -r requirements.txt # Install dependencies
     flask --app api run
     ```
 
@@ -152,7 +157,7 @@ npm install
     VALIDATOR=http://localhost:5000
     ```
 
-7.  Generate `Prisma` client and run web server:
+9.  Generate `Prisma` client and run web server:
 
     ```bash
     npm run prisma:generate
