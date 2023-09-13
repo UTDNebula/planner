@@ -269,7 +269,9 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
 
         case 'deleteAllCoursesFromSemester':
           return state.map((semester) =>
-            semester.id.toString() === action.semesterId ? { ...semester, courses: [] } : semester,
+            semester.id.toString() === action.semesterId
+              ? { ...semester, courses: semester.courses.filter((course) => course.locked) }
+              : semester,
           );
         case 'changeCourseColor':
           return state.map((semester) => {
@@ -426,10 +428,13 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
   const semesterColorChange = trpc.plan.changeSemesterColor.useMutation();
 
   const handleDeleteAllCoursesFromSemester = (semester: Semester) => {
+    console.log('semester test: ', semester.courses);
+    console.log('deletion here hdl');
+    const unlockedCourses = semester.courses.filter((course) => !course.locked);
+    console.log('unlocked courses: ', unlockedCourses);
+
     handleDeselectCourses(semester.courses.map((course) => course.id.toString()));
-
     dispatchSemesters({ type: 'deleteAllCoursesFromSemester', semesterId: semester.id.toString() });
-
     addTask({
       func: ({ semesterId }) => deleteAllCourses.mutateAsync({ semesterId }),
       args: { semesterId: semester.id.toString() },
