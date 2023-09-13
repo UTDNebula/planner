@@ -15,7 +15,6 @@ import TemplateModal from '../template/Modal';
  * A list of the user's plans
  */
 export default function PlansPage(): JSX.Element {
-  const [startNew, setStartNew] = useState(false);
   const [openTemplateModal, setOpenTemplateModal] = useState(false);
   const userPlanQuery = trpc.plan.getUserPlans.useQuery(undefined, {
     staleTime: Infinity,
@@ -130,7 +129,6 @@ export default function PlansPage(): JSX.Element {
                       onClick={() => {
                         setPlanPage(0);
                         setOpenTemplateModal(true);
-                        setStartNew(true);
                       }}
                     />
                   </AnalyticsWrapper>
