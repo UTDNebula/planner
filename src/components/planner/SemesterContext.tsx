@@ -428,11 +428,6 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
   const semesterColorChange = trpc.plan.changeSemesterColor.useMutation();
 
   const handleDeleteAllCoursesFromSemester = (semester: Semester) => {
-    console.log('semester test: ', semester.courses);
-    console.log('deletion here hdl');
-    const unlockedCourses = semester.courses.filter((course) => !course.locked);
-    console.log('unlocked courses: ', unlockedCourses);
-
     handleDeselectCourses(semester.courses.map((course) => course.id.toString()));
     dispatchSemesters({ type: 'deleteAllCoursesFromSemester', semesterId: semester.id.toString() });
     addTask({
