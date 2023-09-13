@@ -52,7 +52,7 @@ const theme = createTheme({
 });
 
 import { env } from '@/env/client.mjs';
-import ScreenSizeWarnModal from '@/shared-components/ScreenSizeWarnModal';
+import ScreenSizeWarnModal from '@/shared/ScreenSizeWarnModal';
 
 import type { NextComponentType } from 'next'; //Import Component type
 

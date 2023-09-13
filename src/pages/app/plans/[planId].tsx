@@ -23,7 +23,6 @@ export default function PlanDetailPage(
 
   const {
     plan,
-    validation,
     degreeRequirements: degreeRequirementsData,
     bypasses,
     isPlanLoading,
@@ -148,7 +147,6 @@ export default function PlanDetailPage(
         {plan && (
           <SemestersContextProvider planId={planId} plan={plan} bypasses={bypasses ?? []}>
             <Planner
-              degreeRequirements={validation}
               degreeRequirementsData={
                 degreeRequirementsData ?? { id: 'loading', major: 'undecided' }
               }
@@ -173,7 +171,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext<{ pl
 
   await Promise.all([
     ssg.validator.prereqValidator.prefetch(planId),
-    ssg.validator.degreeValidator.prefetch(planId),
     ssg.plan.getPlanById.prefetch(planId),
     ssg.plan.getDegreeRequirements.prefetch({ planId }),
   ]);

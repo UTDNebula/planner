@@ -5,7 +5,7 @@ on:
     branches:
       - 'develop'
     paths-ignore:
-      - 'validator/**'
+      - '*.md'
   workflow_dispatch:
 
 env:

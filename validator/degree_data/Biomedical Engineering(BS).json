@@ -1,8 +1,6 @@
 {
-  "abbreviation": "Biomedical Engineering (BS)",
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ecs/biomedical-engineering",
   "minimum_credit_hours": 128,
-  "name": "Bachelor of Science in Biomedical Engineering",
   "school": "Erik Jonsson School of Engineering and Computer Science",
   "subtype": "Major",
   "year": "2022-2023",
@@ -19,57 +17,79 @@
           {
             "matcher": "CourseRequirement",
             "course": "CHEM 1311",
-            "metadata": { "id": "Biomedical Engineering (BS)-1" }
+            "metadata": {
+              "id": "Biomedical Engineering (BS)-1"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CHEM 1111",
-            "metadata": { "id": "Biomedical Engineering (BS)-2" }
+            "metadata": {
+              "id": "Biomedical Engineering (BS)-2"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CHEM 1312",
-            "metadata": { "id": "Biomedical Engineering (BS)-3" }
+            "metadata": {
+              "id": "Biomedical Engineering (BS)-3"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CHEM 2324",
-            "metadata": { "id": "Biomedical Engineering (BS)-4" }
+            "metadata": {
+              "id": "Biomedical Engineering (BS)-4"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BIOL 2311",
-            "metadata": { "id": "Biomedical Engineering (BS)-5" }
+            "metadata": {
+              "id": "Biomedical Engineering (BS)-5"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BIOL 2111",
-            "metadata": { "id": "Biomedical Engineering (BS)-6" }
+            "metadata": {
+              "id": "Biomedical Engineering (BS)-6"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BIOL 2281",
-            "metadata": { "id": "Biomedical Engineering (BS)-7" }
+            "metadata": {
+              "id": "Biomedical Engineering (BS)-7"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "PHYS 2125",
-            "metadata": { "id": "Biomedical Engineering (BS)-8" }
+            "metadata": {
+              "id": "Biomedical Engineering (BS)-8"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "PHYS 2126",
-            "metadata": { "id": "Biomedical Engineering (BS)-9" }
+            "metadata": {
+              "id": "Biomedical Engineering (BS)-9"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "PHYS 2325",
-            "metadata": { "id": "Biomedical Engineering (BS)-10" }
+            "metadata": {
+              "id": "Biomedical Engineering (BS)-10"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "PHYS 2326",
-            "metadata": { "id": "Biomedical Engineering (BS)-11" }
+            "metadata": {
+              "id": "Biomedical Engineering (BS)-11"
+            }
           },
           {
             "matcher": "OrRequirement",
@@ -80,20 +100,28 @@
                   {
                     "matcher": "CourseRequirement",
                     "course": "MATH 2413",
-                    "metadata": { "id": "Biomedical Engineering (BS)-14" }
+                    "metadata": {
+                      "id": "Biomedical Engineering (BS)-14"
+                    }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "MATH 2414",
-                    "metadata": { "id": "Biomedical Engineering (BS)-15" }
+                    "metadata": {
+                      "id": "Biomedical Engineering (BS)-15"
+                    }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "MATH 2415",
-                    "metadata": { "id": "Biomedical Engineering (BS)-16" }
+                    "metadata": {
+                      "id": "Biomedical Engineering (BS)-16"
+                    }
                   }
                 ],
-                "metadata": { "id": "Biomedical Engineering (BS)-13" }
+                "metadata": {
+                  "id": "Biomedical Engineering (BS)-13"
+                }
               },
               {
                 "matcher": "AndRequirement",
@@ -101,23 +129,33 @@
                   {
                     "matcher": "CourseRequirement",
                     "course": "MATH 2417",
-                    "metadata": { "id": "Biomedical Engineering (BS)-18" }
+                    "metadata": {
+                      "id": "Biomedical Engineering (BS)-18"
+                    }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "MATH 2419",
-                    "metadata": { "id": "Biomedical Engineering (BS)-19" }
+                    "metadata": {
+                      "id": "Biomedical Engineering (BS)-19"
+                    }
                   }
                 ],
-                "metadata": { "id": "Biomedical Engineering (BS)-17" }
+                "metadata": {
+                  "id": "Biomedical Engineering (BS)-17"
+                }
               }
             ],
-            "metadata": { "id": "Biomedical Engineering (BS)-12" }
+            "metadata": {
+              "id": "Biomedical Engineering (BS)-12"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MATH 2420",
-            "metadata": { "id": "Biomedical Engineering (BS)-20" }
+            "metadata": {
+              "id": "Biomedical Engineering (BS)-20"
+            }
           }
         ]
       },
@@ -131,27 +169,37 @@
           {
             "matcher": "CourseRequirement",
             "course": "ECS 1100",
-            "metadata": { "id": "Biomedical Engineering (BS)-22" }
+            "metadata": {
+              "id": "Biomedical Engineering (BS)-22"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ECS 3390",
-            "metadata": { "id": "Biomedical Engineering (BS)-23" }
+            "metadata": {
+              "id": "Biomedical Engineering (BS)-23"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ENGR 2300",
-            "metadata": { "id": "Biomedical Engineering (BS)-24" }
+            "metadata": {
+              "id": "Biomedical Engineering (BS)-24"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ENGR 3300",
-            "metadata": { "id": "Biomedical Engineering (BS)-25" }
+            "metadata": {
+              "id": "Biomedical Engineering (BS)-25"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ENGR 3341",
-            "metadata": { "id": "Biomedical Engineering (BS)-26" }
+            "metadata": {
+              "id": "Biomedical Engineering (BS)-26"
+            }
           }
         ]
       },
@@ -165,82 +213,114 @@
           {
             "matcher": "CourseRequirement",
             "course": "BMEN 1100",
-            "metadata": { "id": "Biomedical Engineering (BS)-28" }
+            "metadata": {
+              "id": "Biomedical Engineering (BS)-28"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BMEN 1208",
-            "metadata": { "id": "Biomedical Engineering (BS)-29" }
+            "metadata": {
+              "id": "Biomedical Engineering (BS)-29"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BMEN 1300",
-            "metadata": { "id": "Biomedical Engineering (BS)-30" }
+            "metadata": {
+              "id": "Biomedical Engineering (BS)-30"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BMEN 2320",
-            "metadata": { "id": "Biomedical Engineering (BS)-31" }
+            "metadata": {
+              "id": "Biomedical Engineering (BS)-31"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BMEN 3200",
-            "metadata": { "id": "Biomedical Engineering (BS)-32" }
+            "metadata": {
+              "id": "Biomedical Engineering (BS)-32"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BMEN 3220",
-            "metadata": { "id": "Biomedical Engineering (BS)-33" }
+            "metadata": {
+              "id": "Biomedical Engineering (BS)-33"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BMEN 3302",
-            "metadata": { "id": "Biomedical Engineering (BS)-34" }
+            "metadata": {
+              "id": "Biomedical Engineering (BS)-34"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BMEN 3320",
-            "metadata": { "id": "Biomedical Engineering (BS)-35" }
+            "metadata": {
+              "id": "Biomedical Engineering (BS)-35"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BMEN 3331",
-            "metadata": { "id": "Biomedical Engineering (BS)-36" }
+            "metadata": {
+              "id": "Biomedical Engineering (BS)-36"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BMEN 3332",
-            "metadata": { "id": "Biomedical Engineering (BS)-37" }
+            "metadata": {
+              "id": "Biomedical Engineering (BS)-37"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BMEN 3315",
-            "metadata": { "id": "Biomedical Engineering (BS)-38" }
+            "metadata": {
+              "id": "Biomedical Engineering (BS)-38"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BMEN 3399",
-            "metadata": { "id": "Biomedical Engineering (BS)-39" }
+            "metadata": {
+              "id": "Biomedical Engineering (BS)-39"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BMEN 4310",
-            "metadata": { "id": "Biomedical Engineering (BS)-40" }
+            "metadata": {
+              "id": "Biomedical Engineering (BS)-40"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BMEN 4360",
-            "metadata": { "id": "Biomedical Engineering (BS)-41" }
+            "metadata": {
+              "id": "Biomedical Engineering (BS)-41"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BMEN 4388",
-            "metadata": { "id": "Biomedical Engineering (BS)-42" }
+            "metadata": {
+              "id": "Biomedical Engineering (BS)-42"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "BMEN 4389",
-            "metadata": { "id": "Biomedical Engineering (BS)-43" }
+            "metadata": {
+              "id": "Biomedical Engineering (BS)-43"
+            }
           }
         ]
       },
@@ -248,8 +328,12 @@
         "matcher": "FreeElectiveRequirement",
         "required_hours": 12,
         "excluded_courses": [],
-        "metadata": { "id": "Biomedical Engineering (BS)-44" }
+        "metadata": {
+          "id": "Biomedical Engineering (BS)-44"
+        }
       }
     ]
-  }
+  },
+  "display_name": "Biomedical Engineering(BS)",
+  "id": "7bce7ed7-fd5d-4ec0-baf0-cf5d5b92fd4e"
 }
