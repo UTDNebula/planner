@@ -391,8 +391,7 @@ export const validatorRouter = router({
       })
       .catch((err) => {
         const errorMessage = `Validator error: ${err.message}`;
-        console.error(err);
-        console.error(errorMessage);
+        console.error('Validator error', err);
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
           cause: err,
