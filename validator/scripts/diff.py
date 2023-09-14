@@ -76,7 +76,7 @@ if __name__ == "__main__":
         server="https://nebula-labs.atlassian.net"
     )
     for majorReqJson in os.scandir(major_json_path):
-        data = json.loads(open(f"validator/degree_data/" + majorReqJson.name, "r").read())
+        data = json.loads(open(f"/home/runner/work/planner/planner/validator/degree_data/" + majorReqJson.name, "r").read())
         catalog_uri=data["catalog_uri"]
         yearRegex = r'/(\d{4})/'
         result = re.search(yearRegex, catalog_uri)
