@@ -75,7 +75,7 @@ if __name__ == "__main__":
         basic_auth=('planner@utdnebula.com', jira_api_key),
         server="https://nebula-labs.atlassian.net"
     )
-    for majorReqJson in os.listdir(major_json_path):
+    for majorReqJson in os.scandir(major_json_path):
         data = json.loads(open(f"validator/degree_data/" + majorReqJson.name, "r").read())
         catalog_uri=data["catalog_uri"]
         yearRegex = r'/(\d{4})/'
