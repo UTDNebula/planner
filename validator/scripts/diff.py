@@ -28,7 +28,7 @@ course_prefixes = ["ACCT","ACTS","AHST","AMS","ARAB","ARHM","ARTS","ATCM","BA","
                    "ISAH","ISEC","ISIS","ISNS","ITSS","JAPN","KORE","LANG","LATS","LIT","MATH","MECH","MECO","MKT","MSEN","MUSI","NATS","NSC",
                    "OBHR","OPRE","PA","PHIL","PHIN","PHYS","PPOL","PSCI","PSY","REAL","RELS","RHET","RMIS","SE","SOC","SPAN","SPAU","STAT","THEA",
                    "UNIV","VIET","VPAS"]
-major_json_path = "/home/runner/work/planner/validator/degree_data"
+major_json_path = "/home/runner/work/planner/planner/validator/degree_data"
 #Extracts html from url and sends it to course extractor
 def get_req_content(url: str) -> set[str]:
     response = requests.get(url)
