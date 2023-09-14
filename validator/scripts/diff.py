@@ -80,8 +80,10 @@ if __name__ == "__main__":
         data = json.loads(open(f"validator/degree_data/" + majorReqJson.name, "r").read())
         catalog_uri=data["catalog_uri"]
         yearRegex = r'/(\d{4})/'
-        match = str(int(re.search(yearRegex, catalog_uri).group(1))+1)
-        assert match is not None
+        result = re.search(yearRegex, catalog_uri)
+        if result is None:
+            result = "404"
+        match = str(int(result.group(1))+1)
         old=get_req_content(data["catalog_uri"])
         new=get_req_content(re.sub(yearRegex, f'/{ str(match) }/', data["catalog_uri"]))
         if len(new) == 0:
