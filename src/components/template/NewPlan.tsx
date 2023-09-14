@@ -2,20 +2,21 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 import AutoCompleteMajor from '@/components/AutoCompleteMajor';
+
 import { trpc } from '@/utils/trpc';
-import majorsList from '@data/majors.json';
+
+import useMajors from '@/shared/useMajors';
 
 import { Page } from './Page';
 import { ButtonProps } from '../Button';
 import useSearch from '../search/search';
-
-const majors = majorsList as string[];
 
 export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
   const [name, setName] = useState('');
   const [major, setMajor] = useState<string | null>(null);
   const [planNameError, setPlanNameError] = useState(false);
   const [majorError, setMajorError] = useState(false);
+  const { majors, err } = useMajors();
   const setErrors = () => {
     setPlanNameError(name === '');
     setMajorError(major === null);

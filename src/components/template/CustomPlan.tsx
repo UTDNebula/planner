@@ -311,7 +311,7 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
         {
           name: 'Create Plan',
           onClick: handleSubmit,
-          color: file ? 'primary' : 'secondary',
+          color: 'primary',
           loading,
           'data-testid': 'create-plan-btn',
           disabled: isDisabled,
