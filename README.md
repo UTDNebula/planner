@@ -27,7 +27,7 @@ To be able to start development on Planner make sure that you have the following
 
 - [Node.js v16 or above](https://nodejs.org/en)
 - [Git](https://git-scm.com/downloads)
-- [Python3.10](https://www.python.org/downloads)
+- [Python3.11](https://www.python.org/downloads)
 </details>
 
 <details>
@@ -144,7 +144,7 @@ npm install
 
     ```bash
     cd validator
-    python3.10 -m venv venv # Create virtual environment
+    python3.11 -m venv venv # Create virtual environment
     source venv/bin/activate # Use virtual enviornment
     pip install -r requirements.txt # Install dependencies
     flask --app api run
