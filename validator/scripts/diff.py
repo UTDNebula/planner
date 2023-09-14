@@ -39,7 +39,7 @@ def get_req_content(url: str) -> set[str]:
 
 #Extracts the courses from each major and sends them to a set
 def extract_courses(webData: str) -> set[str]:
-    bs = BeautifulSoup(webData)
+    bs = BeautifulSoup(webData, features="html.parser")
     courses = set()
     course_elements = bs.find_all('a', href=True)
 
@@ -81,13 +81,13 @@ if __name__ == "__main__":
         catalog_uri=data["catalog_uri"]
         yearRegex = r'/(\d{4})/'
         result = re.search(yearRegex, catalog_uri)
-        if result is None:
-            result = "404"
-        match = str(int(result.group(1))+1)
-        old=get_req_content(data["catalog_uri"])
-        new=get_req_content(re.sub(yearRegex, f'/{ str(match) }/', data["catalog_uri"]))
-        if len(new) == 0:
-            createTicket('R', jira_connection, re.sub(yearRegex, f'/{ match }/', data["catalog_uri"]), set())
-        else:
-            createTicket('C', jira_connection, re.sub(yearRegex, f'/{ match }/', data["catalog_uri"]), (new-old).union(old-new))
-        
+        if result:
+            match = str(int(result.group(1))+1)
+            print(match)
+            old=get_req_content(data["catalog_uri"])
+            new=get_req_content(re.sub(yearRegex, f'/{ str(match) }/', data["catalog_uri"]))
+            if len(new) == 0:
+                createTicket('R', jira_connection, re.sub(yearRegex, f'/{ match }/', data["catalog_uri"]), set())
+            else:
+                createTicket('C', jira_connection, re.sub(yearRegex, f'/{ match }/', data["catalog_uri"]), (new-old).union(old-new))
+            
