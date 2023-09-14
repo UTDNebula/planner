@@ -53,6 +53,6 @@ describe('Plan creation flow', () => {
     cy.get('#tutorial-editor-1 svg.animate-spin').should('not.exist', { timeout: 10000 });
     cy.get('#tutorial-editor-1')
       .contains('It seems like a screw has gone loose!', { timeout: 0 })
-      .should('be.empty');
+      .should('not.exist');
   });
 });
