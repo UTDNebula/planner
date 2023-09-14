@@ -30,7 +30,7 @@ course_prefixes = ["ACCT","ACTS","AHST","AMS","ARAB","ARHM","ARTS","ATCM","BA","
                    "UNIV","VIET","VPAS"]
 
 #Extracts html from url and sends it to course extractor
-def get_req_content(url: str) -> set:
+def get_req_content(url: str) -> set[str]:
     response = requests.get(url)
     if(response.status_code == 200):
         return extract_courses(response.text)
@@ -39,7 +39,7 @@ def get_req_content(url: str) -> set:
 
 #Extracts the courses from each major and sends them to a set
 def extract_courses(webData: str) -> set:
-    bs = BeautifulSoup(webData)
+    bs = BeautifulSoup(webData)[str]
     courses = set()
     course_elements = bs.find_all('a', href=True)
 
