@@ -38,8 +38,8 @@ def get_req_content(url: str) -> set[str]:
         return set()
 
 #Extracts the courses from each major and sends them to a set
-def extract_courses(webData: str) -> set:
-    bs = BeautifulSoup(webData)[str]
+def extract_courses(webData: str) -> set[str]:
+    bs = BeautifulSoup(webData)
     courses = set()
     course_elements = bs.find_all('a', href=True)
 
@@ -62,12 +62,12 @@ def createTicket(issueType: str, jira_connection: JIRA, URI: str, coursesImpacte
         description += str(coursesImpacted) + "\n"
     description += "URI: " + URI + "\n"
     description += "Major: " + URI.split("/")[-1] + "\n"
-    jira_connection.create_issue(
-        project='NP',
-        summary='Course requirement version changes',
-        description=description,
-        issuetype={'name': 'Task'}
-    )
+    # jira_connection.create_issue(
+    #     project='NP',
+    #     summary='Course requirement version changes',
+    #     description=description,
+    #     issuetype={'name': 'Task'}
+    # )
 
 #Establishes JIRA connection and ierates through each major for versioning issues
 if __name__ == "__main__":
