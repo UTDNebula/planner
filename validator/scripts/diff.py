@@ -53,7 +53,7 @@ def extract_courses(webData: str) -> set[str]:
 #Creates a ticket based on issue type, including URI and impacted courses in ticket
 # C issue type = Course renamed/added/removed
 # R issue type = Major/concentration removed
-def createTicket(issueType: str, jira_connection: JIRA, URI: str, coursesImpacted: set) -> None:
+def createTicket(issueType: str, jira_connection: JIRA, URI: str, coursesImpacted: set[str]) -> None:
     description = ""
     if issueType == 'R':
         description += "The following major/concentration has been removed:\n"
@@ -80,11 +80,13 @@ if __name__ == "__main__":
         data = json.loads(open(f"validator/degree_data/" + majorReqJson.name, "r").read())
         catalog_uri=data["catalog_uri"]
         yearRegex = r'/(\d{4})/'
-        match = int(re.search(yearRegex, catalog_uri).group(1))+1
+        match = ""
+        if re.search(yearRegex, catalog_uri).group(1) is not None:
+            match += str(int(re.search(yearRegex, catalog_uri).group(1))+1)
         old=get_req_content(data["catalog_uri"])
         new=get_req_content(re.sub(yearRegex, f'/{ str(match) }/', data["catalog_uri"]))
         if len(new) == 0:
-            createTicket('R', jira_connection, re.sub(yearRegex, f'/{ str(match) }/', data["catalog_uri"]), set())
+            createTicket('R', jira_connection, re.sub(yearRegex, f'/{ match }/', data["catalog_uri"]), set())
         else:
-            createTicket('C', jira_connection, re.sub(yearRegex, f'/{ str(match) }/', data["catalog_uri"]), (new-old).union(old-new))
+            createTicket('C', jira_connection, re.sub(yearRegex, f'/{ match }/', data["catalog_uri"]), (new-old).union(old-new))
         
