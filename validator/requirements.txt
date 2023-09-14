@@ -1,6 +1,7 @@
 absl-py==1.2.0
 async-timeout==4.0.2
 attrs==22.2.0
+beautifulsoup4==4.12.0
 black==23.1.0
 certifi==2023.7.22
 charset-normalizer==2.1.1
@@ -17,6 +18,7 @@ idna==3.4
 iniconfig==2.0.0
 itsdangerous==2.1.2
 Jinja2==3.1.2
+jira==3.5.2
 jsonschema==4.17.3
 limits==2.8.0
 MarkupSafe==2.1.1
@@ -43,8 +45,10 @@ ruamel.yaml==0.17.21
 ruamel.yaml.clib==0.2.7
 six==1.16.0
 tomli==2.0.1
+types-beautifulsoup4==4.12.0.6
 types-Flask-Cors==3.0.10.2
 types-jsonschema==4.17.0.6
+types-requests==2.31.0.2
 typing_extensions==4.4.0
 urllib3==1.26.13
 Werkzeug==2.2.3
