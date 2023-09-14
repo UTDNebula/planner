@@ -30,7 +30,7 @@ course_prefixes = ["ACCT","ACTS","AHST","AMS","ARAB","ARHM","ARTS","ATCM","BA","
                    "UNIV","VIET","VPAS"]
 
 #Extracts html from url and sends it to course extractor
-def get_req_content(url):
+def get_req_content(url: str) -> set:
     response = requests.get(url)
     if(response.status_code == 200):
         return extract_courses(response.text)
@@ -38,7 +38,7 @@ def get_req_content(url):
         return set()
 
 #Extracts the courses from each major and sends them to a set
-def extract_courses(webData):
+def extract_courses(webData: str) -> set:
     bs = BeautifulSoup(webData)
     courses = set()
     course_elements = bs.find_all('a', href=True)
@@ -53,7 +53,7 @@ def extract_courses(webData):
 #Creates a ticket based on issue type, including URI and impacted courses in ticket
 # C issue type = Course renamed/added/removed
 # R issue type = Major/concentration removed
-def createTicket(issueType, jira_connection, URI, coursesImpacted):
+def createTicket(issueType: str, jira_connection: JIRA, URI: str, coursesImpacted: set) -> None:
     description = ""
     if issueType == 'R':
         description += "The following major/concentration has been removed:\n"
@@ -62,22 +62,21 @@ def createTicket(issueType, jira_connection, URI, coursesImpacted):
         description += str(coursesImpacted) + "\n"
     description += "URI: " + URI + "\n"
     description += "Major: " + URI.split("/")[-1] + "\n"
-    issue = jira_connection.create_issue(
+    jira_connection.create_issue(
         project='NP',
         summary='Course requirement version changes',
         description=description,
         issuetype={'name': 'Task'}
     )
-    #DANGER only uncomment when pushing
-    #jira_connection.create_issue(fields=issue)
 
 #Establishes JIRA connection and ierates through each major for versioning issues
 if __name__ == "__main__":
     jira_connection = JIRA(
-        basic_auth=('planner@utdnebula.com', 'f'),
+        basic_auth=('planner@utdnebula.com', jira_api_key),
         server="https://nebula-labs.atlassian.net"
     )
-    for majorReqJson in os.scandir('validator/degree_data'):
+    print(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))+'\degree_data')
+    for majorReqJson in os.scandir(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))+'\degree_data'):
         data = json.loads(open(f"validator/degree_data/" + majorReqJson.name, "r").read())
         catalog_uri=data["catalog_uri"]
         yearRegex = r'/(\d{4})/'
