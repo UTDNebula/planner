@@ -292,28 +292,28 @@ export const planRouter = router({
     }),
   // Protected route: route uses session user id
   deleteAllCoursesFromSemester: protectedProcedure
-  .input(z.object({ semesterId: z.string() }))
-  .mutation(async ({ ctx, input: { semesterId } }) => {
-    const semester = await ctx.prisma.semester.findUnique({
-      where: {
-        id: semesterId,
-        plan: { userId: ctx.session.user.id },
-      },
-      include: {
-        courses: true,
-      },
-    });
-    if (!semester) {
-      throw new TRPCError({
-        code: 'NOT_FOUND',
-        message: 'Semester does not exist',
+    .input(z.object({ semesterId: z.string() }))
+    .mutation(async ({ ctx, input: { semesterId } }) => {
+      const semester = await ctx.prisma.semester.findUnique({
+        where: {
+          id: semesterId,
+          plan: { userId: ctx.session.user.id },
+        },
+        include: {
+          courses: true,
+        },
       });
-    }
-    const unlockedCourses = semester?.courses.filter((course) => !course.locked);
-    await ctx.prisma.course
-      .deleteMany({
-        where: { semesterId, id: { in: unlockedCourses.map((course) => course.id) } },
-      })
+      if (!semester) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Semester does not exist',
+        });
+      }
+      const unlockedCourses = semester?.courses.filter((course) => !course.locked);
+      await ctx.prisma.course
+        .deleteMany({
+          where: { semesterId, id: { in: unlockedCourses.map((course) => course.id) } },
+        })
         .catch((err) => {
           if (err instanceof Prisma.PrismaClientKnownRequestError) {
             if (err.code === 'P2025') {
