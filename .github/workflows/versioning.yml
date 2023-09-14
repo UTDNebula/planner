@@ -3,15 +3,13 @@ name: Scheduled Versioning
 on:
   workflow_dispatch:
   schedule:
-    - cron : '0 0 15 8 *'
+    - cron: '0 0 15 8 *'
 
 jobs:
-  build:
+  versioning:
     name: Versioning System
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: 'validator/scripts/**'
+        
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -24,5 +22,6 @@ jobs:
       run: |
         pip3 install -r requirements.txt
 
-    - name: execute versioning script
+    - name: Execute versioning script
+      working-directory: ./validator/scripts
       run: python diff.py

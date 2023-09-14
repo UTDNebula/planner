@@ -6,6 +6,12 @@ from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 from jira import JIRA
 
+"""This script looks through all major/concentration
+json files to find if any requirements have changed
+over the year. If so, it raises a JIRA ticket with 
+requirement change information
+"""
+
 #Should this detect CORE changes and, if so, should I flag each major for core changes?
 
 #Modify the tolernance to ignore fluff (grammar changes, footnote numbering, etc)
