@@ -19,7 +19,7 @@ REQUIREMENTS_MAP: dict[str, Type[AbstractRequirement]] = {
     "PrefixBucketRequirement": PrefixBucketRequirement,
     "OtherRequirement": OtherRequirement,
     # Computer Science Edge Cases
-    "y2022CSGuidedElectiveRequirement": computer_science.y2022MajorGuidedElectiveRequirement,
+    "CSGuidedElectiveRequirement": computer_science.MajorGuidedElectiveRequirement,
     # Business Administration Edge Cases
     "BAGuidedElectiveRequirement": business_administration.BusinessAdministrationElectiveRequirement,
     "SomeRequirement": business_administration.SomeRequirement,
