@@ -28,7 +28,7 @@ course_prefixes = ["ACCT","ACTS","AHST","AMS","ARAB","ARHM","ARTS","ATCM","BA","
                    "ISAH","ISEC","ISIS","ISNS","ITSS","JAPN","KORE","LANG","LATS","LIT","MATH","MECH","MECO","MKT","MSEN","MUSI","NATS","NSC",
                    "OBHR","OPRE","PA","PHIL","PHIN","PHYS","PPOL","PSCI","PSY","REAL","RELS","RHET","RMIS","SE","SOC","SPAN","SPAU","STAT","THEA",
                    "UNIV","VIET","VPAS"]
-
+major_json_path = "/home/runner/work/planner/validator/degree_data"
 #Extracts html from url and sends it to course extractor
 def get_req_content(url: str) -> set[str]:
     response = requests.get(url)
@@ -75,8 +75,7 @@ if __name__ == "__main__":
         basic_auth=('planner@utdnebula.com', jira_api_key),
         server="https://nebula-labs.atlassian.net"
     )
-    print(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))+'\degree_data')
-    for majorReqJson in os.scandir(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))+'\degree_data'):
+    for majorReqJson in os.listdir(major_json_path):
         data = json.loads(open(f"validator/degree_data/" + majorReqJson.name, "r").read())
         catalog_uri=data["catalog_uri"]
         yearRegex = r'/(\d{4})/'
