@@ -62,12 +62,12 @@ def createTicket(issueType: str, jira_connection: JIRA, URI: str, coursesImpacte
         description += str(coursesImpacted) + "\n"
     description += "URI: " + URI + "\n"
     description += "Major: " + URI.split("/")[-1] + "\n"
-    # jira_connection.create_issue(
-    #     project='NP',
-    #     summary='Course requirement version changes',
-    #     description=description,
-    #     issuetype={'name': 'Task'}
-    # )
+    jira_connection.create_issue(
+        project='NP',
+        summary='Course requirement version changes',
+        description=description,
+        issuetype={'name': 'Task'}
+    )
 
 #Establishes JIRA connection and ierates through each major for versioning issues
 if __name__ == "__main__":
@@ -82,7 +82,6 @@ if __name__ == "__main__":
         result = re.search(yearRegex, catalog_uri)
         if result:
             match = str(int(result.group(1))+1)
-            print(match)
             old=get_req_content(data["catalog_uri"])
             new=get_req_content(re.sub(yearRegex, f'/{ str(match) }/', data["catalog_uri"]))
             if len(new) == 0:
