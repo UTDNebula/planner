@@ -137,7 +137,7 @@ export default function PlansPage(): JSX.Element {
 
                   <AnalyticsWrapper analyticsClass="umami--click--custom-plan">
                     <DropdownItem
-                      data-testid="add-custom-plan-btn"
+                      data-testid="add-transcript-plan-btn"
                       text="From Transcript"
                       onClick={() => {
                         setPlanPage(1);
