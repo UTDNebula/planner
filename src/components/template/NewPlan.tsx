@@ -56,7 +56,7 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
   // TODO(https://nebula-labs.atlassian.net/browse/NP-85): Refactor parseTranscript.
   return (
     <Page
-      data-testid="create-custom-plan-page"
+      data-testid="create-blank-plan-page"
       key="custom-plan-details"
       title="Create a New Plan"
       subtitle="Name your plan and choose your major"

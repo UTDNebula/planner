@@ -82,6 +82,7 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
   };
   return (
     <Page
+      data-testid="create-template-plan-page"
       title="Select a Degree Template"
       subtitle="Find a degree template to start planning."
       close={onDismiss}
@@ -102,12 +103,14 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
           },
           color: 'primary',
           loading,
+          'data-testid': 'create-plan-btn',
         },
       ]}
     >
       <p className="text-sm font-semibold">Plan Name</p>
       <div className="flex flex-col gap-2">
         <input
+          data-testid="plan-name-input"
           className="w-full rounded-md border border-neutral-500 px-4 py-3 text-sm text-black/80 placeholder:text-neutral-400"
           placeholder="Name your plan"
           value={name}
@@ -121,6 +124,7 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
       <p className="text-sm font-semibold">Search degree template</p>
       <div className="relative mb-4">
         <AutoCompleteMajor
+          data-testid="major-autocomplete"
           className="w-[500px] rounded border outline-none"
           key={0}
           onValueChange={(value) => setMajor(value)}

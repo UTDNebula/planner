@@ -124,7 +124,7 @@ export default function PlansPage(): JSX.Element {
                 <DropdownMenu.Content className="relative top-2 w-min rounded-md border border-neutral-300 bg-generic-white drop-shadow-xl">
                   <AnalyticsWrapper analyticsClass="umami--click--custom-plan">
                     <DropdownItem
-                      data-testid="add-custom-plan-btn"
+                      data-testid="add-blank-plan-btn"
                       text="Start New"
                       onClick={() => {
                         setPlanPage(0);
@@ -137,7 +137,7 @@ export default function PlansPage(): JSX.Element {
 
                   <AnalyticsWrapper analyticsClass="umami--click--custom-plan">
                     <DropdownItem
-                      data-testid="add-transcript-plan-btn"
+                      data-testid="add-custom-plan-btn"
                       text="From Transcript"
                       onClick={() => {
                         setPlanPage(1);

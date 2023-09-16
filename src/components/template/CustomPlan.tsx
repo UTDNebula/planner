@@ -323,6 +323,7 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
           ref={dropRef}
           className="group flex flex-col items-center justify-center gap-0.5 rounded-md border border-neutral-200 bg-inherit py-10 transition-colors"
           onClick={() => fileInputRef.current && fileInputRef.current.click()}
+          data-testid="upload-transcript-btn"
         >
           <svg
             className="py-1 text-[#4B4EFC]"
