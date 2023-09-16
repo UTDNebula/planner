@@ -12,6 +12,7 @@ describe('Plan creation flow', () => {
     cy.dataTestId('add-new-plan-btn').click();
     cy.dataTestId('add-custom-plan-btn').click();
     cy.dataTestId('add-transcript-plan-btn').click();
+    cy.dataTestId('add-template-plan-btn').click();
 
     // Modal should be visible
     cy.dataTestId('create-custom-plan-page').then(($el) => Cypress.dom.isVisible($el));
