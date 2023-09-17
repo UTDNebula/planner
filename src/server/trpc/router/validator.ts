@@ -375,7 +375,7 @@ export const validatorRouter = router({
       bypasses,
     };
 
-    const validationData = await fetch(`${process.env.VALIDATOR}/test-validate`, {
+    const validationData = await fetch(`${process.env.NEXT_PUBLIC_VALIDATOR}/test-validate`, {
       method: 'POST',
       body: JSON.stringify(body),
       headers: {
@@ -391,7 +391,7 @@ export const validatorRouter = router({
       })
       .catch((err) => {
         const errorMessage = `Validator error: ${err.message}`;
-        console.error(errorMessage);
+        console.error('Validator error', err);
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
           cause: err,

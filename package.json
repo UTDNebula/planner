@@ -76,7 +76,7 @@
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "autoprefixer": "^10.4.2",
     "cross-env": "^7.0.3",
-    "cypress": "^12.4.1",
+    "cypress": "^13.0.0",
     "dotenv": "^16.0.3",
     "eslint-config-next": "^12.3.4",
     "eslint-config-prettier": "^8.3.0",

@@ -269,7 +269,9 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
 
         case 'deleteAllCoursesFromSemester':
           return state.map((semester) =>
-            semester.id.toString() === action.semesterId ? { ...semester, courses: [] } : semester,
+            semester.id.toString() === action.semesterId
+              ? { ...semester, courses: semester.courses.filter((course) => course.locked) }
+              : semester,
           );
         case 'changeCourseColor':
           return state.map((semester) => {
