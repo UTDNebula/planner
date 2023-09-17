@@ -1,5 +1,5 @@
 describe('Plan creation flow', () => {
-  before('Setup', () => {
+  beforeEach('Setup', () => {
     cy.resetDbAndLogin();
     cy.visit('/app/home');
   });
@@ -28,7 +28,6 @@ describe('Plan creation flow', () => {
 
     // Create plan without upload transcript
     cy.task('log', 'Creating plan...');
-    // cy.dataTestId('next-btn').click();
     cy.dataTestId('create-plan-btn').click();
 
     // Wait and verify redirect to plan
@@ -50,15 +49,6 @@ describe('Plan creation flow', () => {
         .should('eq', major);
     });
   });
-});
-
-describe('Plan creation flow', () => {
-  before('Setup', () => {
-    cy.resetDbAndLogin();
-    cy.visit('/app/home');
-  });
-
-  const planName = "Mr. Bob's Plan";
 
   it('Create custom plan', () => {
     // Open add plan dropdown
@@ -80,10 +70,9 @@ describe('Plan creation flow', () => {
         $el.click();
       });
 
-    // Create plan without upload transcript
+    // Create plan with uploading transcript
     cy.task('log', 'Creating plan...');
     cy.dataTestId('next-btn').click();
-    // cy.dataTestId('create-plan-btn').click();
     cy.dataTestId('upload-transcript-btn').click();
 
     cy.get('input[type=file]').selectFile('cypress/data/dummytranscript.pdf', { force: true });
@@ -108,15 +97,6 @@ describe('Plan creation flow', () => {
         .should('eq', major);
     });
   });
-});
-
-describe('Plan creation flow', () => {
-  before('Setup', () => {
-    cy.resetDbAndLogin();
-    cy.visit('/app/home');
-  });
-
-  const planName = "Mr. Bob's Plan";
 
   it('Create template plan', () => {
     // Open add plan dropdown
@@ -138,9 +118,8 @@ describe('Plan creation flow', () => {
         $el.click();
       });
 
-    // Create plan without upload transcript
+    // Create template plan without upload transcript
     cy.task('log', 'Creating plan...');
-    // cy.dataTestId('next-btn').click();
     cy.dataTestId('create-plan-btn').click();
 
     // Wait and verify redirect to plan
