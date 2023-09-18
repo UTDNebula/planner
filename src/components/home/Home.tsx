@@ -31,7 +31,7 @@ export default function PlansPage(): JSX.Element {
   });
 
   const { data } = userPlanQuery;
-  const [planPage, setPlanPage] = useState<0 | 1>(1);
+  const [planPage, setPlanPage] = useState<0 | 1 | 2>(1);
   const router = useRouter();
 
   const [showHomeOnboardingModal, setShowHomeOnboardingModal] = useState(false);
@@ -124,8 +124,8 @@ export default function PlansPage(): JSX.Element {
                 <DropdownMenu.Content className="relative top-2 w-min rounded-md border border-neutral-300 bg-generic-white drop-shadow-xl">
                   <AnalyticsWrapper analyticsClass="umami--click--custom-plan">
                     <DropdownItem
-                      data-testid="add-custom-plan-btn"
-                      text="Add Custom Plan"
+                      data-testid="add-blank-plan-btn"
+                      text="Start New"
                       onClick={() => {
                         setPlanPage(0);
                         setOpenTemplateModal(true);
@@ -135,12 +135,25 @@ export default function PlansPage(): JSX.Element {
 
                   <DropdownMenu.Separator className="DropdownMenuSeparator h-0.5 bg-black opacity-10" />
 
-                  <AnalyticsWrapper analyticsClass="umami--click--template-plan">
+                  <AnalyticsWrapper analyticsClass="umami--click--custom-plan">
                     <DropdownItem
-                      text="Add Template Plan"
-                      data-testid="add-template-plan-btn"
+                      data-testid="add-custom-plan-btn"
+                      text="From Transcript"
                       onClick={() => {
                         setPlanPage(1);
+                        setOpenTemplateModal(true);
+                      }}
+                    />
+                  </AnalyticsWrapper>
+
+                  <DropdownMenu.Separator className="DropdownMenuSeparator h-0.5 bg-black opacity-10" />
+
+                  <AnalyticsWrapper analyticsClass="umami--click--template-plan">
+                    <DropdownItem
+                      text="From Template"
+                      data-testid="add-template-plan-btn"
+                      onClick={() => {
+                        setPlanPage(2);
                         setOpenTemplateModal(true);
                       }}
                     />
@@ -193,6 +206,6 @@ const DropdownItem = ({ text, onClick, className = '', ...props }: ItemProps) =>
     className={`flex w-full min-w-max cursor-pointer items-center gap-x-3 border-b border-neutral-300 px-2 py-2 text-sm hover:bg-neutral-200 ${className}`}
     {...props}
   >
-    <span className="h-full w-full">{text}</span>
+    <span className="flex h-full w-full justify-center px-5 py-1">{text}</span>
   </DropdownMenu.Item>
 );
