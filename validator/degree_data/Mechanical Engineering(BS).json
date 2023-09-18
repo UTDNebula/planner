@@ -1,8 +1,6 @@
 {
-  "abbreviation": "Electrical Engineering (BSEE)",
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ecs/electrical-engineering",
   "minimum_credit_hours": 128,
-  "name": "Bachelor of Science in Electrical Engineering",
   "school": "Erik Jonsson School of Engineering and Computer Science",
   "subtype": "Major",
   "year": "2022-2023",
@@ -19,92 +17,128 @@
           {
             "matcher": "CourseRequirement",
             "course": "CHEM 1111",
-            "metadata": { "id": "Electrical Engineering (BSEE)-1" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-1"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CHEM 1311",
-            "metadata": { "id": "Electrical Engineering (BSEE)-2" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-2"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CS 1325",
-            "metadata": { "id": "Electrical Engineering (BSEE)-3" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-3"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ECS 1100",
-            "metadata": { "id": "Electrical Engineering (BSEE)-4" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-4"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MATH 2417",
-            "metadata": { "id": "Electrical Engineering (BSEE)-5" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-5"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MATH 2419",
-            "metadata": { "id": "Electrical Engineering (BSEE)-6" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-6"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MATH 2420",
-            "metadata": { "id": "Electrical Engineering (BSEE)-7" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-7"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECH 1100",
-            "metadata": { "id": "Electrical Engineering (BSEE)-8" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-8"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECH 1208",
-            "metadata": { "id": "Electrical Engineering (BSEE)-9" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-9"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECH 2120",
-            "metadata": { "id": "Electrical Engineering (BSEE)-10" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-10"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ENGR 2300",
-            "metadata": { "id": "Electrical Engineering (BSEE)-11" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-11"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECH 2310",
-            "metadata": { "id": "Electrical Engineering (BSEE)-12" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-12"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECH 2320",
-            "metadata": { "id": "Electrical Engineering (BSEE)-13" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-13"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECH 2330",
-            "metadata": { "id": "Electrical Engineering (BSEE)-14" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-14"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "PHYS 2125",
-            "metadata": { "id": "Electrical Engineering (BSEE)-15" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-15"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "PHYS 2126",
-            "metadata": { "id": "Electrical Engineering (BSEE)-16" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-16"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "PHYS 2325",
-            "metadata": { "id": "Electrical Engineering (BSEE)-17" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-17"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "PHYS 2326",
-            "metadata": { "id": "Electrical Engineering (BSEE)-18" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-18"
+            }
           }
         ]
       },
@@ -118,92 +152,128 @@
           {
             "matcher": "CourseRequirement",
             "course": "ECS 3390",
-            "metadata": { "id": "Electrical Engineering (BSEE)-20" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-20"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECH 3105",
-            "metadata": { "id": "Electrical Engineering (BSEE)-21" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-21"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECH 3115",
-            "metadata": { "id": "Electrical Engineering (BSEE)-22" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-22"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECH 3120",
-            "metadata": { "id": "Electrical Engineering (BSEE)-23" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-23"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECH 3150",
-            "metadata": { "id": "Electrical Engineering (BSEE)-24" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-24"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ENGR 3300",
-            "metadata": { "id": "Electrical Engineering (BSEE)-25" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-25"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECH 3305",
-            "metadata": { "id": "Electrical Engineering (BSEE)-26" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-26"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECH 3310",
-            "metadata": { "id": "Electrical Engineering (BSEE)-27" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-27"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECH 3315",
-            "metadata": { "id": "Electrical Engineering (BSEE)-28" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-28"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECH 3320",
-            "metadata": { "id": "Electrical Engineering (BSEE)-29" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-29"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECH 3340",
-            "metadata": { "id": "Electrical Engineering (BSEE)-30" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-30"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ENGR 3341",
-            "metadata": { "id": "Electrical Engineering (BSEE)-31" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-31"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECH 3350",
-            "metadata": { "id": "Electrical Engineering (BSEE)-32" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-32"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECH 3351",
-            "metadata": { "id": "Electrical Engineering (BSEE)-33" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-33"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECH 4110",
-            "metadata": { "id": "Electrical Engineering (BSEE)-34" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-34"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECH 4310",
-            "metadata": { "id": "Electrical Engineering (BSEE)-35" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-35"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECH 4381",
-            "metadata": { "id": "Electrical Engineering (BSEE)-36" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-36"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECH 4382",
-            "metadata": { "id": "Electrical Engineering (BSEE)-37" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-37"
+            }
           }
         ]
       },
@@ -218,97 +288,135 @@
           {
             "matcher": "CourseRequirement",
             "course": "MECH 2340",
-            "metadata": { "id": "Electrical Engineering (BSEE)-39" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-39"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECH 3360",
-            "metadata": { "id": "Electrical Engineering (BSEE)-40" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-40"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECH 3370",
-            "metadata": { "id": "Electrical Engineering (BSEE)-41" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-41"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECH 3380",
-            "metadata": { "id": "Electrical Engineering (BSEE)-42" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-42"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECH 3381",
-            "metadata": { "id": "Electrical Engineering (BSEE)-43" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-43"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECH 3V95",
-            "metadata": { "id": "Electrical Engineering (BSEE)-44" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-44"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECH 4301",
-            "metadata": { "id": "Electrical Engineering (BSEE)-45" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-45"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECH 4320",
-            "metadata": { "id": "Electrical Engineering (BSEE)-46" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-46"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECH 4330",
-            "metadata": { "id": "Electrical Engineering (BSEE)-47" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-47"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECH 4340",
-            "metadata": { "id": "Electrical Engineering (BSEE)-48" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-48"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECH 4342",
-            "metadata": { "id": "Electrical Engineering (BSEE)-49" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-49"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECH 4360",
-            "metadata": { "id": "Electrical Engineering (BSEE)-50" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-50"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECH 4365",
-            "metadata": { "id": "Electrical Engineering (BSEE)-51" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-51"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECH 4370",
-            "metadata": { "id": "Electrical Engineering (BSEE)-52" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-52"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECH 4380",
-            "metadata": { "id": "Electrical Engineering (BSEE)-53" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-53"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECH 4V95",
-            "metadata": { "id": "Electrical Engineering (BSEE)-54" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-54"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ENTP 3301",
-            "metadata": { "id": "Electrical Engineering (BSEE)-55" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-55"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECH 4399",
-            "metadata": { "id": "Electrical Engineering (BSEE)-56" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-56"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MECH 4V98",
-            "metadata": { "id": "Electrical Engineering (BSEE)-57" }
+            "metadata": {
+              "id": "Electrical Engineering (BSEE)-57"
+            }
           }
         ]
       },
@@ -316,8 +424,12 @@
         "matcher": "FreeElectiveRequirement",
         "required_hours": 3,
         "excluded_courses": [],
-        "metadata": { "id": "Electrical Engineering (BSEE)-58" }
+        "metadata": {
+          "id": "Electrical Engineering (BSEE)-58"
+        }
       }
     ]
-  }
+  },
+  "display_name": "Electrical Engineering(BSEE)",
+  "id": "4f4397fa-05b0-46a1-b529-e3ed64e9cec3"
 }

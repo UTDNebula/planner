@@ -1,5 +1,4 @@
-import { Prisma } from '@prisma/client';
-import { Document, Font, Page, StyleSheet, View } from '@react-pdf/renderer';
+import { Document, Font, Link, Page, StyleSheet, View, Text } from '@react-pdf/renderer';
 import React, { FC } from 'react';
 
 import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
@@ -9,6 +8,8 @@ import AcademicYearTable, { DEFAULT_COURSE_CREDIT_HOUR } from './AcademicYearTab
 import Header from './Header';
 import { Semester } from '../types';
 import { customCourseSort } from '../utils';
+
+import type { Prisma } from '@prisma/client';
 
 Font.register({
   family: 'Inter',
@@ -32,6 +33,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     fontFamily: 'Inter',
     color: '#090B2C',
+    paddingTop: 20,
   },
   section: {
     margin: 10,
@@ -100,8 +102,8 @@ const DegreePlanPDF: FC<DegreePlanPDFProps> = ({
   }
 
   return (
-    <Document>
-      <Page size="A4" style={styles.page} wrap={false}>
+    <Document title={planTitle}>
+      <Page size="A4" style={styles.page} wrap={true}>
         <View style={styles.section}>
           <Header studentName={studentName} degreePlanTitle={planTitle} major={major}></Header>
 
@@ -167,6 +169,26 @@ const DegreePlanPDF: FC<DegreePlanPDFProps> = ({
               />
             );
           })}
+        </View>
+        <View style={styles.section} fixed>
+          <Text
+            style={{
+              fontSize: '9.5px',
+            }}
+          >
+            Created with{' '}
+            <Link
+              style={{
+                color: '#6466f1',
+                fontWeight: 'semibold',
+                textDecoration: 'none',
+              }}
+              src="https://planner.utdnebula.com"
+            >
+              Nebula Planner
+            </Link>{' '}
+            on {new Date().toLocaleString()}.
+          </Text>
         </View>
       </Page>
     </Document>

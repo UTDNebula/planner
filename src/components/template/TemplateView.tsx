@@ -121,7 +121,7 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
       <p className="text-sm font-semibold">Search degree template</p>
       <div className="relative mb-4">
         <AutoCompleteMajor
-          className="w-[500px] rounded border outline-none"
+          className="w-[500px] outline-none"
           key={0}
           onValueChange={(value) => setMajor(value)}
           onInputChange={(query: string) => updateQuery(query)}

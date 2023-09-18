@@ -3,10 +3,11 @@ import React from 'react';
 
 import AutoCompleteMajor from '@/components/AutoCompleteMajor';
 import EmojiIcons from '@/icons/EmojiIcon';
-import majorsList from '@data/majors.json';
 import { SemesterCode } from 'prisma/utils';
 
 import useSearch from '../search/search';
+import useMajors from '@/shared/useMajors';
+import Link from 'next/link';
 
 export type WelcomeTypes = {
   name: string;
@@ -27,7 +28,6 @@ export default function Welcome({
   handleValidate,
   semesterOptions,
 }: WelcomeData): JSX.Element {
-  const majors = majorsList as string[];
   const { name, startSemester, endSemester }: WelcomeTypes = data;
 
   const setName = (event: SelectChangeEvent<string>) => {
@@ -43,8 +43,10 @@ export default function Welcome({
   };
 
   const [major, setMajor] = React.useState('');
+  const { majors, err } = useMajors();
 
   const { results, updateQuery } = useSearch({
+    constraints: [0, 900], // used a random large number, since i dont know exactly how many majors there are
     getData: async () => (majors ? majors.map((major) => ({ filMajor: `${major}` })) : []),
     initialQuery: '',
     filterFn: (major, query) => major.filMajor.toLowerCase().includes(query.toLowerCase()),
@@ -110,6 +112,18 @@ export default function Welcome({
   React.useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  if (err) {
+    return (
+      <>
+        Oops, we ran into an error! Please let us know on our{' '}
+        <Link href="https://discord.gg/anrh9B2Z3w" className="underline">
+          discord
+        </Link>{' '}
+        to get it fixed as soon as possible.
+      </>
+    );
+  }
 
   return (
     <div>

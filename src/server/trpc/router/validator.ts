@@ -299,103 +299,107 @@ export const validatorRouter = router({
   }),
   // Protected route: ensures session user is same as plan owner
   degreeValidator: protectedProcedure.input(z.string().min(1)).query(async ({ ctx, input }) => {
-    try {
-      // Fetch current plan
-      const planData = await ctx.prisma.plan.findUnique({
-        where: {
-          id: input,
-        },
-        select: {
-          name: true,
-          id: true,
-          userId: true,
-          semesters: {
-            include: {
-              courses: true,
-            },
+    // Fetch current plan
+    const planData = await ctx.prisma.plan.findUnique({
+      where: {
+        id: input,
+      },
+      select: {
+        name: true,
+        id: true,
+        userId: true,
+        semesters: {
+          include: {
+            courses: true,
           },
-          transferCredits: true,
         },
+        transferCredits: true,
+      },
+    });
+
+    if (!planData) {
+      throw new TRPCError({
+        code: 'NOT_FOUND',
+        message: 'Plan not found',
       });
-
-      if (!planData) {
-        throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: 'Plan not found',
-        });
-      }
-
-      if (ctx.session.user.id !== planData.userId) {
-        throw new TRPCError({ code: 'FORBIDDEN' });
-      }
-
-      const { semesters, transferCredits } = planData;
-
-      // Get degree requirements
-      const degreeRequirements = await ctx.prisma.degreeRequirements.findFirst({
-        where: {
-          plan: { id: planData.id },
-        },
-      });
-
-      // Get bypasses
-      const bypasses = degreeRequirements?.bypasses ?? [];
-
-      // Remove invalidCourses
-      const removeInvalidCoursesFromSemesters = () => {
-        return semesters.map((sem) => {
-          const courses = sem.courses
-            .reduce((acc, curr) => [...acc, curr.code], [] as string[])
-            .filter((c) => {
-              const [possiblePrefix, possibleCode] = c.split(' ');
-              if (Number.isNaN(Number(possibleCode)) || !Number.isNaN(Number(possiblePrefix))) {
-                return false;
-              }
-              return true;
-            });
-          return { ...sem, courses };
-        });
-      };
-
-      const semestersWithCourses = removeInvalidCoursesFromSemesters();
-
-      if (!degreeRequirements?.major || degreeRequirements.major === 'undecided') {
-        return { plan: planData, validation: [], bypasses: [] };
-      }
-
-      // TODO: will we always ignore odd credits such as 'PSY 1---'?
-      const regex = /([a-z0-9])* ([a-z0-9]){4}$/gi;
-      const validTransferCredits = transferCredits.filter((credit) => credit.match(regex) !== null);
-
-      const body = {
-        courses: [...semestersWithCourses.flatMap((s) => s.courses), ...validTransferCredits],
-        requirements: {
-          core: true,
-          majors: [degreeRequirements.major],
-          minors: [],
-        },
-        bypasses,
-      };
-
-      const validationData = await fetch(`${process.env.VALIDATOR}/test-validate`, {
-        method: 'POST',
-        body: JSON.stringify(body),
-        headers: {
-          'content-type': 'application/json',
-        },
-      }).then(async (res) => {
-        // Throw error if bad
-        if (res.status !== 200) {
-          return { can_graduate: false, requirements: [] };
-        }
-        const rawData = await res.json();
-        return rawData;
-      });
-
-      return { plan: planData, validation: validationData, bypasses };
-    } catch (error) {
-      console.error(error);
     }
+
+    if (ctx.session.user.id !== planData.userId) {
+      throw new TRPCError({ code: 'FORBIDDEN' });
+    }
+
+    const { semesters, transferCredits } = planData;
+
+    // Get degree requirements
+    const degreeRequirements = await ctx.prisma.degreeRequirements.findFirst({
+      where: {
+        plan: { id: planData.id },
+      },
+    });
+
+    // Get bypasses
+    const bypasses = degreeRequirements?.bypasses ?? [];
+
+    // Remove invalidCourses
+    const removeInvalidCoursesFromSemesters = () => {
+      return semesters.map((sem) => {
+        const courses = sem.courses
+          .reduce((acc, curr) => [...acc, curr.code], [] as string[])
+          .filter((c) => {
+            const [possiblePrefix, possibleCode] = c.split(' ');
+            if (Number.isNaN(Number(possibleCode)) || !Number.isNaN(Number(possiblePrefix))) {
+              return false;
+            }
+            return true;
+          });
+        return { ...sem, courses };
+      });
+    };
+
+    const semestersWithCourses = removeInvalidCoursesFromSemesters();
+
+    if (!degreeRequirements?.major || degreeRequirements.major === 'undecided') {
+      return { plan: planData, validation: [], bypasses: [] };
+    }
+
+    // TODO: will we always ignore odd credits such as 'PSY 1---'?
+    const regex = /([a-z0-9])* ([a-z0-9]){4}$/gi;
+    const validTransferCredits = transferCredits.filter((credit) => credit.match(regex) !== null);
+
+    const body = {
+      courses: [...semestersWithCourses.flatMap((s) => s.courses), ...validTransferCredits],
+      requirements: {
+        majors: [degreeRequirements.major],
+        minors: [],
+      },
+      bypasses,
+    };
+
+    const validationData = await fetch(`${process.env.NEXT_PUBLIC_VALIDATOR}/test-validate`, {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: {
+        'content-type': 'application/json',
+      },
+    })
+      .then(async (res) => {
+        if (!res.ok) {
+          const errorMsg = await res.json();
+          throw new Error(`validator fetch failed with status ${res.status}: ${errorMsg.error}.`);
+        }
+        return res.json();
+      })
+      .catch((err) => {
+        const errorMessage = `Validator error: ${err.message}`;
+        console.error('Validator error', err);
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          cause: err,
+          message: errorMessage,
+        });
+      });
+
+    return { plan: planData, validation: validationData, bypasses };
   }),
 });
 
