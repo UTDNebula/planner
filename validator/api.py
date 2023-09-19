@@ -83,5 +83,5 @@ def test_validate() -> Response:
 
 
 @app.route("/health")
-def health():
+def health() -> Response:
     return make_response({"ok": True}, 200)
