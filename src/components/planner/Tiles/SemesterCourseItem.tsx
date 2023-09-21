@@ -132,7 +132,7 @@ export const MemoizedSemesterCourseItem = React.memo(
             <div className="flex w-[calc(100%-8rem)] flex-col">
               <span className="content-middle flex items-center whitespace-nowrap text-sm">
                 {course.code}
-                {!isValid && !course.prereqOveridden && (
+                {!isValid && !course.prereqOveridden && !course.locked && (
                   <PrereqWarnHoverCard
                     prereqs={requirementsData === undefined ? [[], [], []] : requirementsData}
                     description={description ?? ''}
@@ -142,7 +142,7 @@ export const MemoizedSemesterCourseItem = React.memo(
                     isOverriden={course.prereqOveridden}
                   >
                     <span className="text-[#FBBF24]" onMouseLeave={() => setPrereqWarnOpen(false)}>
-                      <FilledWarningIcon />
+                      {!semesterLocked && <FilledWarningIcon />}
                     </span>
                   </PrereqWarnHoverCard>
                 )}
