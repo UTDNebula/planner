@@ -846,9 +846,11 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
     courseName: string,
     semesterId: string,
   ) => {
-    const oldColor = semesters
-      .find((sem) => sem.id === semesterId)!
-      .courses!.find((crs) => crs.code === courseName).color;
+    const semester = semesters.find((sem) => sem.id === semesterId);
+    if (!semester) return;
+    const course = semester.courses.find((crs) => crs.code === courseName);
+    if (!course) return;
+    const oldColor = course.color;
     dispatchSemesters({ type: 'changeCourseColor', courseCode: courseName, semesterId, color });
     addTask({
       args: { color, courseName, semesterId },
@@ -874,7 +876,9 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
   };
 
   const handleSemesterColorChange = (color: keyof typeof tagColors, semesterId: string) => {
-    const oldColor = semesters.find((sem) => sem.id === semesterId)!.color;
+    const semester = semesters.find((sem) => sem.id === semesterId);
+    if (!semester) return;
+    const oldColor = semester.color;
     dispatchSemesters({ type: 'changeSemesterColor', semesterId, color });
     addTask({
       args: { color, semesterId },
