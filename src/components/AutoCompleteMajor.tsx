@@ -1,4 +1,5 @@
 import Autocomplete from '@mui/material/Autocomplete';
+import Select from 'react-select';
 import Popper from '@mui/material/Popper';
 import TextField from '@mui/material/TextField';
 import { FC, useCallback, useRef } from 'react';
@@ -22,7 +23,11 @@ const AutoCompleteMajor: FC<AutoCompleteMajorProps & React.ComponentPropsWithout
   ...props
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-
+  // react-select requires options to be an object, so we convert it
+  const convertedOptions: any[] = [];
+  options.forEach(function (element) {
+    convertedOptions.push({ label: element, value: element });
+  });
   const CustomPopper = useCallback(
     (props) => {
       if (!containerRef.current) {
@@ -48,34 +53,14 @@ const AutoCompleteMajor: FC<AutoCompleteMajorProps & React.ComponentPropsWithout
   return (
     <div {...props}>
       <div ref={containerRef} className="absolute -bottom-3 left-0 h-full w-full "></div>
-      <Autocomplete
-        freeSolo
-        disableClearable
-        onChange={(_, value) => onValueChange(value ?? '')}
-        onInputChange={(_, query) => {
+      <Select
+        isSearchable={true}
+        isClearable={false}
+        onChange={(value) => onValueChange(value.value ?? '')}
+        onInputChange={(query) => {
           onInputChange(query);
         }}
-        options={options}
-        fullWidth
-        PopperComponent={CustomPopper}
-        renderInput={(params) => {
-          return (
-            <TextField
-              {...params}
-              variant="standard"
-              className="h-11 appearance-none rounded border border-[#6366F1] bg-[#F5F5F5] pl-4 text-[14px] font-semibold text-black outline-none"
-              inputProps={{
-                style: { fontSize: 14, marginTop: 8 },
-                ...params.inputProps,
-              }}
-              placeholder={placeholder}
-              InputProps={{
-                ...params.InputProps,
-                disableUnderline: true,
-              }}
-            />
-          );
-        }}
+        options={convertedOptions}
       />
     </div>
   );
