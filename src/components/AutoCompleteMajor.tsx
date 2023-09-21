@@ -1,7 +1,4 @@
-import Autocomplete from '@mui/material/Autocomplete';
 import Select from 'react-select';
-import Popper from '@mui/material/Popper';
-import TextField from '@mui/material/TextField';
 import { FC, useCallback, useRef } from 'react';
 
 interface AutoCompleteMajorProps extends React.ComponentPropsWithoutRef<'div'> {
@@ -28,27 +25,6 @@ const AutoCompleteMajor: FC<AutoCompleteMajorProps & React.ComponentPropsWithout
   options.forEach(function (element) {
     convertedOptions.push({ label: element, value: element });
   });
-  const CustomPopper = useCallback(
-    (props) => {
-      if (!containerRef.current) {
-        return <div></div>;
-      }
-      const { width } = containerRef.current.getBoundingClientRect();
-      return (
-        <Popper
-          {...props}
-          placement="bottom"
-          anchorEl={containerRef.current}
-          className="z-[9999] overflow-hidden rounded-[10px] text-sm shadow-lg"
-          style={{
-            width: width,
-            border: options.length > 0 ? '1px solid #EDEFF7' : 'none',
-          }}
-        />
-      );
-    },
-    [containerRef, options.length],
-  );
 
   return (
     <div {...props}>
