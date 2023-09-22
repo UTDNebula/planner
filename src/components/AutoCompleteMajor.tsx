@@ -1,5 +1,5 @@
 import Select from 'react-select';
-import { FC, useCallback, useRef } from 'react';
+import { FC, useRef } from 'react';
 
 interface AutoCompleteMajorProps extends React.ComponentPropsWithoutRef<'div'> {
   onValueChange: (value: string) => void;
