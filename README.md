@@ -27,7 +27,7 @@ To be able to start development on Planner make sure that you have the following
 
 - [Node.js v16 or above](https://nodejs.org/en)
 - [Git](https://git-scm.com/downloads)
-- [Python3.10](https://www.python.org/downloads)
+- [Python3.11](https://www.python.org/downloads)
 </details>
 
 <details>
@@ -68,7 +68,11 @@ npm install
     npx prisma migrate dev
     ```
 
-5.  Setting up an auth provider. You need at least one of these to log in. We recommend you only add Discord for convenience.
+5.  Request `PLATFORM_DATABASE_URL` from someone on the team.
+
+6.  Set `NEXTAUTH_URL` to `http://localhost:3000` and `NEXTAUTH_SECRET=abc123`
+
+7.  Setting up an auth provider. You need at least one of these to log in. We recommend you only add Discord for convenience.
 
       <details>
       <summary>
@@ -136,12 +140,13 @@ npm install
 
     </details>
 
-6.  Run and configure validator
+8.  Run and configure validator
 
     ```bash
     cd validator
-    python3.10 -m venv venv # Create virtual environment
+    python3.11 -m venv venv # Create virtual environment
     source venv/bin/activate # Use virtual enviornment
+    pip install -r requirements.txt # Install dependencies
     flask --app api run
     ```
 
@@ -152,7 +157,7 @@ npm install
     VALIDATOR=http://localhost:5000
     ```
 
-7.  Generate `Prisma` client and run web server:
+9.  Generate `Prisma` client and run web server:
 
     ```bash
     npm run prisma:generate

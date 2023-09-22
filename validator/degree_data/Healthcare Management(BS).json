@@ -1,8 +1,6 @@
 {
-  "abbreviation": "Healthcare Management(BS)",
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/healthcare-management",
   "minimum_credit_hours": 120,
-  "name": "Bachelor of Science in Healthcare Management",
   "school": "Naveen Jindal School of Management",
   "subtype": "Major",
   "year": "2022-2023",
@@ -622,5 +620,7 @@
         }
       }
     ]
-  }
+  },
+  "display_name": "Healthcare Management(BS)",
+  "id": "780c1312-8ab6-4482-81f3-3ec2bf1781be"
 }

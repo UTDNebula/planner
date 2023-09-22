@@ -76,7 +76,7 @@ jobs:
           EMAIL_FROM: noreply@example.com
 
           # DEGREE VALIDATOR
-          VALIDATOR: http://localhost:5000
+          NEXT_PUBLIC_VALIDATOR: http://localhost:5000
 
           NODE_ENV: production
           VERCEL_ENV: preview

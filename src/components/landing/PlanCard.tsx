@@ -5,7 +5,7 @@ import DotsHorizontalIcon from '@/icons/DotsHorizontalIcon';
 import { trpc } from '@/utils/trpc';
 
 import PlanCardDropdown from './PlanCardDropdown';
-import DeletePlanModal from '../../shared-components/DeletePlanModal';
+import DeletePlanModal from '@/shared/DeletePlanModal';
 
 export type PlanCardProps = {
   id: string;
