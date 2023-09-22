@@ -1,8 +1,6 @@
 {
-  "abbreviation": "Arts, Technology, and Emerging Communication Critical Media Studies Concentration (BA)",
   "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/atec/arts-and-technology-critical-media-studies",
   "minimum_credit_hours": 120,
-  "name": "Bachelor of Arts in Arts, Technology, and Emerging Communication with Critical Media Studies (BA)",
   "school": "School of Arts, Technology, and Emerging Communication",
   "subtype": "Major",
   "year": "2022-2023",
@@ -12,77 +10,107 @@
       {
         "matcher": "CourseRequirement",
         "course": "ATCM 2300",
-        "metadata": { "id": "93bdde17-4079-4a19-9891-a0a7ff8ee279" }
+        "metadata": {
+          "id": "93bdde17-4079-4a19-9891-a0a7ff8ee279"
+        }
       },
       {
         "matcher": "CourseRequirement",
         "course": "ATCM 2301",
-        "metadata": { "id": "0dfec53a-0a44-4fcd-a989-8f44becaa186" }
+        "metadata": {
+          "id": "0dfec53a-0a44-4fcd-a989-8f44becaa186"
+        }
       },
       {
         "matcher": "CourseRequirement",
         "course": "ATCM 2302",
-        "metadata": { "id": "dddf48d4-f97f-4fef-b8a4-7c12d6bc605f" }
+        "metadata": {
+          "id": "dddf48d4-f97f-4fef-b8a4-7c12d6bc605f"
+        }
       },
       {
         "matcher": "CourseRequirement",
         "course": "CS 1335",
-        "metadata": { "id": "9bdc6974-a3fa-4e15-b0ee-61616f3099e1" }
+        "metadata": {
+          "id": "9bdc6974-a3fa-4e15-b0ee-61616f3099e1"
+        }
       },
       {
         "matcher": "CourseRequirement",
         "course": "ATCM 2320",
-        "metadata": { "id": "566ad3b6-ad67-437c-8605-55555d5c54bc" }
+        "metadata": {
+          "id": "566ad3b6-ad67-437c-8605-55555d5c54bc"
+        }
       },
       {
         "matcher": "CourseRequirement",
         "course": "ATCM 2321",
-        "metadata": { "id": "0a1a71aa-8cef-4ad6-81f1-aea2cebf6757" }
+        "metadata": {
+          "id": "0a1a71aa-8cef-4ad6-81f1-aea2cebf6757"
+        }
       },
       {
         "matcher": "CourseRequirement",
         "course": "ATCM 2322",
-        "metadata": { "id": "4c97a2d7-85d4-4368-aa8f-0a8742582a44" }
+        "metadata": {
+          "id": "4c97a2d7-85d4-4368-aa8f-0a8742582a44"
+        }
       },
       {
         "matcher": "CourseRequirement",
         "course": "ATCM 2330",
-        "metadata": { "id": "c4d26175-2be1-47f8-860f-7f0eed8aa454" }
+        "metadata": {
+          "id": "c4d26175-2be1-47f8-860f-7f0eed8aa454"
+        }
       },
       {
         "matcher": "CourseRequirement",
         "course": "ATCM 3320",
-        "metadata": { "id": "e88c0922-8cf4-424d-a46d-34996c97ab3d" }
+        "metadata": {
+          "id": "e88c0922-8cf4-424d-a46d-34996c97ab3d"
+        }
       },
       {
         "matcher": "CourseRequirement",
         "course": "ATCM 3321",
-        "metadata": { "id": "38bf24ce-0b93-4a9e-8ef2-1d1bb52f658f" }
+        "metadata": {
+          "id": "38bf24ce-0b93-4a9e-8ef2-1d1bb52f658f"
+        }
       },
       {
         "matcher": "CourseRequirement",
         "course": "ATCM 3325",
-        "metadata": { "id": "d23d0b83-14da-4b76-9a1b-d0660c9e479d" }
+        "metadata": {
+          "id": "d23d0b83-14da-4b76-9a1b-d0660c9e479d"
+        }
       },
       {
         "matcher": "CourseRequirement",
         "course": "ATCM 3331",
-        "metadata": { "id": "d13b2bfc-7182-4e0c-8b7e-e4a45dce5288" }
+        "metadata": {
+          "id": "d13b2bfc-7182-4e0c-8b7e-e4a45dce5288"
+        }
       },
       {
         "matcher": "CourseRequirement",
         "course": "ATCM 4320",
-        "metadata": { "id": "c6994f9f-12ec-427e-a94e-0fbfd7123f80" }
+        "metadata": {
+          "id": "c6994f9f-12ec-427e-a94e-0fbfd7123f80"
+        }
       },
       {
         "matcher": "CourseRequirement",
         "course": "ATCM 4326",
-        "metadata": { "id": "3fca7809-9136-4857-872b-81ae4c924a9a" }
+        "metadata": {
+          "id": "3fca7809-9136-4857-872b-81ae4c924a9a"
+        }
       },
       {
         "matcher": "CourseRequirement",
         "course": "ATCM 4330",
-        "metadata": { "id": "39ba6614-d9d3-476c-8511-a192195b0f4d" }
+        "metadata": {
+          "id": "39ba6614-d9d3-476c-8511-a192195b0f4d"
+        }
       },
       {
         "matcher": "OrRequirement",
@@ -90,17 +118,23 @@
           {
             "matcher": "CourseRequirement",
             "course": "ATCM 4397",
-            "metadata": { "id": "1ae434fc-2483-4a0f-964f-7d61c51c39cf" }
+            "metadata": {
+              "id": "1ae434fc-2483-4a0f-964f-7d61c51c39cf"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ATCM 4398",
-            "metadata": { "id": "1571ea43-0110-4a99-9885-35f7746b4eb6" }
+            "metadata": {
+              "id": "1571ea43-0110-4a99-9885-35f7746b4eb6"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ATCM 4399",
-            "metadata": { "id": "d692dd5e-ee55-492e-8329-bdf17096d131" }
+            "metadata": {
+              "id": "d692dd5e-ee55-492e-8329-bdf17096d131"
+            }
           }
         ],
         "metadata": {
@@ -114,67 +148,93 @@
           {
             "matcher": "CourseRequirement",
             "course": "ATCM 3300",
-            "metadata": { "id": "06fc0e2b-4863-49ce-8b04-7c4c50fc3bdf" }
+            "metadata": {
+              "id": "06fc0e2b-4863-49ce-8b04-7c4c50fc3bdf"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ATCM 3315",
-            "metadata": { "id": "6fd082bd-170d-4061-9ed3-2fe1e4bd6dcf" }
+            "metadata": {
+              "id": "6fd082bd-170d-4061-9ed3-2fe1e4bd6dcf"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ATCM 3323",
-            "metadata": { "id": "21e73bd2-c6af-4094-9b68-9d356a5e4d1e" }
+            "metadata": {
+              "id": "21e73bd2-c6af-4094-9b68-9d356a5e4d1e"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ATCM 3366",
-            "metadata": { "id": "2cb2451d-716e-4923-b5f0-329e40503f52" }
+            "metadata": {
+              "id": "2cb2451d-716e-4923-b5f0-329e40503f52"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ATCM 4322",
-            "metadata": { "id": "be3172b6-6a2e-48bc-b364-9f4780963b56" }
+            "metadata": {
+              "id": "be3172b6-6a2e-48bc-b364-9f4780963b56"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ATCM 4323",
-            "metadata": { "id": "9419e25b-4407-4cbb-92bc-37539d4cdd0a" }
+            "metadata": {
+              "id": "9419e25b-4407-4cbb-92bc-37539d4cdd0a"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ATCM 4325",
-            "metadata": { "id": "d56fcedb-b70b-4543-a03b-1373718fbe75" }
+            "metadata": {
+              "id": "d56fcedb-b70b-4543-a03b-1373718fbe75"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ATCM 4327",
-            "metadata": { "id": "d2b8bc70-e58a-44aa-b306-fde0b759a9a6" }
+            "metadata": {
+              "id": "d2b8bc70-e58a-44aa-b306-fde0b759a9a6"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ATCM 4332",
-            "metadata": { "id": "12eb6753-a3b9-40a1-bd4f-dea9a2768c41" }
+            "metadata": {
+              "id": "12eb6753-a3b9-40a1-bd4f-dea9a2768c41"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ATCM 4333",
-            "metadata": { "id": "4475cf74-7b56-46f7-83a7-9b3b05ef082f" }
+            "metadata": {
+              "id": "4475cf74-7b56-46f7-83a7-9b3b05ef082f"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ATCM 4334",
-            "metadata": { "id": "558cced4-4d96-4c88-ab1c-9d607b73bece" }
+            "metadata": {
+              "id": "558cced4-4d96-4c88-ab1c-9d607b73bece"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ATCM 4366",
-            "metadata": { "id": "2e2365f9-8653-4b43-ab2f-5c9e466960e5" }
+            "metadata": {
+              "id": "2e2365f9-8653-4b43-ab2f-5c9e466960e5"
+            }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ATCM 4384",
-            "metadata": { "id": "c2558e3e-1246-4719-b2e3-9e5073c557d0" }
+            "metadata": {
+              "id": "c2558e3e-1246-4719-b2e3-9e5073c557d0"
+            }
           }
         ],
         "minimum_hours_in_area": 0,
@@ -192,5 +252,7 @@
         }
       }
     ]
-  }
+  },
+  "display_name": "Arts, Technology, and Emerging Communication Critical Media Studies Concentration(BA)",
+  "id": "03f013f4-0f6e-45bf-ab48-0274bebc7f95"
 }

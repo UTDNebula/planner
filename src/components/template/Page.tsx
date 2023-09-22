@@ -44,8 +44,15 @@ export function Page({
       </div>
       <div className="flex flex-col gap-3">{children}</div>
       <div className="flex gap-6 place-self-end font-medium">
-        {actions.map(({ name, onClick, color, loading, ...props }, index) => (
-          <Button color={color} onClick={onClick} key={index} isLoading={loading} {...props}>
+        {actions.map(({ name, onClick, color, loading, disabled, ...props }, index) => (
+          <Button
+            color={color}
+            onClick={onClick}
+            key={index}
+            isLoading={loading}
+            disabled={disabled}
+            {...props}
+          >
             {name}
           </Button>
         ))}

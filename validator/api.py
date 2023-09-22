@@ -1,3 +1,5 @@
+import json
+from glob import glob
 from flask import Flask, Response, request, make_response
 from flask_cors import CORS
 
@@ -11,6 +13,15 @@ class APIError(Exception):
         super().__init__(self.message)
 
 
+# Load the list of degree plans that we support along with their json data
+plans = []
+for fname in glob("./degree_data/*.json"):
+    with open(fname, "r") as f:
+        data = json.load(f)
+        plans.append({"display_name": data["display_name"], "id": data["id"]})
+
+
+# Instantiate flask app and ratelimiter
 app = Flask(__name__)
 CORS(app)
 
@@ -22,6 +33,15 @@ def root_() -> Response:
             "message": "UTD Degree Validator API is online.",
         },
         200,
+    )
+
+
+@app.route("/get-degree-plans", methods=["GET"])
+def get_degree_plans() -> Response:
+    # Returns a list of degree plans that validator supports. This is just a list of the display names of all the JSON
+    # plans we have.
+    return make_response(
+        {"message": f"Supported degree plans.", "degree_plans": plans}, 200
     )
 
 
@@ -60,3 +80,8 @@ def test_validate() -> Response:
             },
             500,
         )
+
+
+@app.route("/health")
+def health() -> Response:
+    return make_response({"ok": True}, 200)

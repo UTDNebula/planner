@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 
 import { trpc } from '@/utils/trpc';
 
-import { DegreeValidation, Plan } from './types';
+import { Plan } from './types';
 
 export interface usePlanProps {
   planId: string;
@@ -10,7 +10,6 @@ export interface usePlanProps {
 
 export interface usePlanReturn {
   plan?: Plan;
-  validation?: DegreeValidation;
   degreeRequirements?: { id: string; major: string };
   prereqData?: Map<string, boolean>;
   bypasses?: string[];
@@ -22,8 +21,6 @@ export interface usePlanReturn {
 const usePlan = ({ planId }: usePlanProps): usePlanReturn => {
   const utils = trpc.useContext();
   const router = useRouter();
-  const { data: degreeValidationData, isLoading: validationLoading } =
-    trpc.validator.degreeValidator.useQuery(planId);
 
   const degreeRequirementsQuery = trpc.plan.getDegreeRequirements.useQuery({ planId });
 
@@ -55,10 +52,9 @@ const usePlan = ({ planId }: usePlanProps): usePlanReturn => {
 
   return {
     plan: planQuery.data?.plan,
-    validation: degreeValidationData?.validation,
     degreeRequirements: degreeRequirementsQuery?.data,
-    bypasses: degreeValidationData?.bypasses,
-    isPlanLoading: planQuery.isLoading || validationLoading || degreeRequirementsQuery.isLoading,
+    bypasses: [],
+    isPlanLoading: planQuery.isLoading || degreeRequirementsQuery.isLoading,
 
     handlePlanDelete,
   };

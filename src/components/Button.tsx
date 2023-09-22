@@ -32,6 +32,7 @@ export interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
   font?: keyof typeof fontClasses;
   icon?: React.ReactNode;
   isLoading?: boolean;
+  disabled?: boolean;
 }
 
 const Button: FC<ButtonProps> = ({
