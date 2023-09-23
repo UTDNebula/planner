@@ -56,6 +56,7 @@ const AutoCompleteMajor: FC<AutoCompleteMajorProps & React.ComponentPropsWithout
           onInputChange(query);
         }}
         options={options}
+        sx={{ border: '1px solid var(--color-neutral-500)', borderRadius: '0.375rem' }}
         fullWidth
         PopperComponent={CustomPopper}
         renderInput={(params) => {
@@ -63,7 +64,7 @@ const AutoCompleteMajor: FC<AutoCompleteMajorProps & React.ComponentPropsWithout
             <TextField
               {...params}
               variant="standard"
-              className="h-11 appearance-none rounded border border-[#6366F1] bg-[#F5F5F5] pl-4 text-[14px] font-semibold text-black outline-none"
+              className="h-11 appearance-none pl-4 text-[14px] font-semibold text-black outline-none"
               inputProps={{
                 style: { fontSize: 14, marginTop: 8 },
                 ...params.inputProps,

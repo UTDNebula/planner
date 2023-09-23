@@ -49,6 +49,7 @@ yarn-error.log*
 # See docs/ide-config.md for more information.
 .idea
 .vs/
+.editorconfig
 
 prisma/generated
 
