@@ -47,14 +47,16 @@ def htmldiff(previousYearURL: str, currentYearURL: str, oldCourses: set[str], ne
     oldCourses.update(extract_courses(oldContent))
     newCourses.update(extract_courses(newContent))
     
-    bsOld = BeautifulSoup(oldContent, features="lxml").find('div', attrs = {'id':'bukku-page'}).get_text().split('\n')
+    bsOld = BeautifulSoup(oldContent, features="lxml").find('div', attrs = {'id':'bukku-page'})
     bsNew = BeautifulSoup(newContent, features="lxml").find('div', attrs = {'id':'bukku-page'})
 
     if bsNew is None:
         return ""
-    bsNew = bsNew.get_text().split('\n')
 
-    diff = difflib.ndiff(bsOld, bsNew)
+    bsOldLines = bsOld.get_text().split('\n')
+    bsNewLines = bsNew.get_text().split('\n')
+
+    diff = difflib.ndiff(bsOldLines, bsNewLines)
     diffString = "```"
     for line in diff:
         diffString+=line+'\n'
@@ -94,8 +96,8 @@ if __name__ == "__main__":
             match = str(int(result.group(1))+1)
             previousYearURL = data["catalog_uri"]
             currentYearURL = re.sub(yearRegex, f'/{ str(match) }/', data["catalog_uri"])
-            oldCourses = set()
-            newCourses = set()
+            oldCourses: set[str] = set()
+            newCourses: set[str] = set()
             pageDiff = htmldiff(previousYearURL, currentYearURL, oldCourses, newCourses)
             if len(newCourses) == 0:
                 createTicket('R', jira_connection, re.sub(yearRegex, f'/{ match }/', data["catalog_uri"]), set(), pageDiff)
