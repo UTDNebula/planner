@@ -50,7 +50,7 @@ def htmldiff(previousYearURL: str, currentYearURL: str, oldCourses: set[str], ne
     bsOld = BeautifulSoup(oldContent, features="lxml").find('div', attrs = {'id':'bukku-page'})
     bsNew = BeautifulSoup(newContent, features="lxml").find('div', attrs = {'id':'bukku-page'})
 
-    if bsNew is None:
+    if bsNew is None or bsOld is None:
         return ""
 
     bsOldLines = bsOld.get_text().split('\n')
