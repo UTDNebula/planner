@@ -1,16 +1,18 @@
 import dynamic from 'next/dynamic';
 
+import NewPlan from './NewPlan';
 import TemplateView from './TemplateView';
 
 interface TemplateModalProps {
   setOpenTemplateModal: (flag: boolean) => void;
-  page: 0 | 1;
+  page: 0 | 1 | 2;
 }
 export default function TemplateModal({ setOpenTemplateModal, page }: TemplateModalProps) {
   const CustomPlan = dynamic(() => import('@/components/template/CustomPlan'), { ssr: false });
   const modalScreens = [
-    <CustomPlan key={0} onDismiss={() => setOpenTemplateModal(false)} />,
-    <TemplateView key={1} onDismiss={() => setOpenTemplateModal(false)} />,
+    <NewPlan key={0} onDismiss={() => setOpenTemplateModal(false)} />,
+    <CustomPlan key={1} onDismiss={() => setOpenTemplateModal(false)} />,
+    <TemplateView key={2} onDismiss={() => setOpenTemplateModal(false)} />,
   ];
   return (
     <div

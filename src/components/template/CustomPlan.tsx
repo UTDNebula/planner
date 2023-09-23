@@ -26,6 +26,7 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
   const [takenCourses, setTakenCourses] = useState<TakenCourse[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File | undefined>();
+  const [isDisabled, setIsDisabled] = useState(true);
 
   const [planNameError, setPlanNameError] = useState(false);
   const [majorError, setMajorError] = useState(false);
@@ -178,6 +179,7 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
         .filter((credit) => !credit.transfer)
         .map((credit) => ({ courseCode: credit.courseCode, semesterCode: credit.semesterCode })),
     );
+    setIsDisabled(false);
   };
 
   const dropRef = useRef<HTMLButtonElement>(null);
@@ -281,7 +283,7 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
       <div className="relative mb-4">
         <AutoCompleteMajor
           data-testid="major-autocomplete"
-          className="w-[500px] rounded border outline-none"
+          className="w-[500px] outline-none"
           key={0}
           onValueChange={(value) => setMajor(value)}
           onInputChange={(query: string) => updateQuery(query)}
@@ -296,7 +298,7 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
     <Page
       key="custom-plan-transcript"
       title="Upload Transcript"
-      subtitle="Upload your transcript to add previously taken courses to your plan (optional)"
+      subtitle="Upload your transcript to add previously taken courses to your plan (required)"
       close={onDismiss}
       actions={[
         {
@@ -312,6 +314,7 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
           color: 'primary',
           loading,
           'data-testid': 'create-plan-btn',
+          disabled: isDisabled,
         },
       ]}
     >
@@ -320,6 +323,7 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
           ref={dropRef}
           className="group flex flex-col items-center justify-center gap-0.5 rounded-md border border-neutral-200 bg-inherit py-10 transition-colors"
           onClick={() => fileInputRef.current && fileInputRef.current.click()}
+          data-testid="upload-transcript-btn"
         >
           <svg
             className="py-1 text-[#4B4EFC]"
@@ -469,5 +473,6 @@ export interface PageProps {
     color: ButtonProps['color'];
     loading?: boolean;
     'data-testid'?: string;
+    disabled?: boolean;
   }[];
 }
