@@ -290,6 +290,23 @@ export const planRouter = router({
         return false;
       }
     }),
+  massDeleteCourses: protectedProcedure
+    .input(z.object({ courseIds: z.array(z.string()) }))
+    .mutation(async ({ ctx, input }) => {
+      try {
+        await ctx.prisma.course.deleteMany({
+          where: {
+            id: { in: input.courseIds },
+          },
+        });
+      } catch (error) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          cause: error,
+          message: 'Faild to mass delete courses: ' + error,
+        });
+      }
+    }),
   // Protected route: route uses session user id
   deleteAllCoursesFromSemester: protectedProcedure
     .input(z.object({ semesterId: z.string() }))

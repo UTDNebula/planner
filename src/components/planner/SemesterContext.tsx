@@ -1,5 +1,14 @@
 import { SemesterType } from '@prisma/client';
-import { createContext, FC, useContext, useEffect, useMemo, useReducer, useState } from 'react';
+import {
+  createContext,
+  FC,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer,
+  useState,
+} from 'react';
 import { toast } from 'react-toastify';
 
 import { trpc } from '@/utils/trpc';
@@ -97,6 +106,7 @@ export type SemestersReducerAction =
     }
   | { type: 'removeYear' }
   | { type: 'removeCourseFromSemester'; semesterId: string; courseId: string }
+  | { type: 'massDeleteCoursesFromSemester'; courseIds: string[] }
   | {
       type: 'moveCourseFromSemesterToSemester';
       originSemesterId: string;
@@ -166,42 +176,6 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
     });
   };
 
-  const handleDeleteAllSelectedCourses = () => {
-    for (const semester of semesters) {
-      for (const { id, code } of semester.courses) {
-        const courseId = id.toString();
-
-        if (selectedCourseIds.has(courseId)) {
-          dispatchSemesters({
-            type: 'removeCourseFromSemester',
-            courseId,
-            semesterId: semester.id.toString(),
-          });
-          addTask({
-            func: ({ semesterId, courseName }) =>
-              toast
-                .promise(
-                  removeCourse.mutateAsync({ planId, semesterId, courseName }),
-                  {
-                    pending: 'Removing course ' + courseName + '...',
-                    success: 'Removed course ' + courseName + '!',
-                    error: 'Error in removing ' + courseName,
-                  },
-                  {
-                    autoClose: 1000,
-                    position: 'bottom-right',
-                  },
-                )
-                .catch((err) => console.error(err)),
-            args: { semesterId: semester.id.toString(), courseName: code },
-          });
-        }
-      }
-    }
-
-    setSelectedCourseIds(new Set());
-  };
-
   const courseIsSelected = (courseId: string): boolean => selectedCourseIds.has(courseId);
 
   const handleDeselectAllCourses = () => setSelectedCourseIds(new Set());
@@ -240,6 +214,16 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
                   ),
                 }
               : semester;
+          });
+
+        case 'massDeleteCoursesFromSemester':
+          return state.map((semester) => {
+            return {
+              ...semester,
+              courses: semester.courses.filter(
+                (course) => !action.courseIds.includes(course.id.toString()),
+              ),
+            };
           });
 
         case 'moveCourseFromSemesterToSemester':
@@ -407,6 +391,13 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
     },
   });
 
+  const massDeleteCourses = trpc.plan.massDeleteCourses.useMutation({
+    async onSuccess() {
+      await utils.validator.degreeValidator.invalidate();
+      await utils.validator.prereqValidator.invalidate();
+    },
+  });
+
   const moveCourse = trpc.plan.moveCourseFromSemester.useMutation({
     async onSuccess() {
       utils.validator.prereqValidator.invalidate();
@@ -426,6 +417,33 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
   const colorChange = trpc.plan.changeCourseColor.useMutation();
 
   const semesterColorChange = trpc.plan.changeSemesterColor.useMutation();
+
+  const handleDeleteAllSelectedCourses = useCallback(() => {
+    const coursesToDelete = [...selectedCourseIds];
+
+    dispatchSemesters({
+      type: 'massDeleteCoursesFromSemester',
+      courseIds: coursesToDelete,
+    });
+    setSelectedCourseIds(new Set());
+
+    addTask({
+      func: ({ courseIds }) =>
+        toast.promise(
+          massDeleteCourses.mutateAsync({ courseIds }),
+          {
+            pending: 'Removing selected courses',
+            success: 'Removed course selected courses!',
+            error: 'Error in removing selected courses',
+          },
+          {
+            autoClose: 1000,
+            position: 'bottom-right',
+          },
+        ),
+      args: { courseIds: coursesToDelete },
+    });
+  }, [selectedCourseIds, addTask, massDeleteCourses]);
 
   const handleDeleteAllCoursesFromSemester = (semester: Semester) => {
     handleDeselectCourses(semester.courses.map((course) => course.id.toString()));
