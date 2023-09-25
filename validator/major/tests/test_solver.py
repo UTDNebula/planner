@@ -1,7 +1,9 @@
-from major.solver import MajorRequirementsSolver
-from major.requirements import AbstractRequirement, loader
+from collections import Counter
 import json
 import copy
+
+from major.solver import MajorRequirementsSolver
+from major.requirements import AbstractRequirement, loader
 
 LOADER = loader.Loader()
 
@@ -83,6 +85,10 @@ def test_computer_science_solver() -> None:
         "CS 4334",
         # Free Electives
         "ABC 9999",
+        "ABd 9999",
+        "ABt 9999",
+        "ABy 9999",
+        "AB1 9999",
         "DEF 9199",
     ]
 
@@ -97,14 +103,14 @@ def test_computer_science_solver() -> None:
         )
 
     solver = MajorRequirementsSolver(
-        MISSING_FREE_ELECTIVES, copy.deepcopy(requirements)
+        MISSING_FREE_ELECTIVES, copy.deepcopy(requirements), Counter()
     ).solve()
     print(str(solver))
 
     assert solver.can_graduate() == False
 
     solver = MajorRequirementsSolver(
-        GRADUATEABLE_COURSES, copy.deepcopy(requirements)
+        GRADUATEABLE_COURSES, copy.deepcopy(requirements), Counter()
     ).solve()
     print(str(solver))
 
@@ -191,14 +197,14 @@ def test_accounting_solver() -> None:
         )
 
     solver = MajorRequirementsSolver(
-        MISSING_FREE_ELECTIVES, copy.deepcopy(requirements)
+        MISSING_FREE_ELECTIVES, copy.deepcopy(requirements), Counter()
     ).solve()
     print(str(solver))
 
     assert solver.can_graduate() == False
 
     solver = MajorRequirementsSolver(
-        GRADUATEABLE_COURSES, copy.deepcopy(requirements)
+        GRADUATEABLE_COURSES, copy.deepcopy(requirements), Counter()
     ).solve()
     print(str(solver))
 
@@ -300,13 +306,13 @@ def test_software_engineering_solver() -> None:
         )
 
     solver = MajorRequirementsSolver(
-        MISSING_GUIDED_ELECTIVE, copy.deepcopy(requirements)
+        MISSING_GUIDED_ELECTIVE, copy.deepcopy(requirements), Counter()
     ).solve()
 
     assert solver.can_graduate() == False
 
     solver = MajorRequirementsSolver(
-        GRADUATEABLE_COURSES, copy.deepcopy(requirements)
+        GRADUATEABLE_COURSES, copy.deepcopy(requirements), Counter()
     ).solve()
 
     assert solver.can_graduate()
