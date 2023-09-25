@@ -95,7 +95,7 @@ const Toolbar: FC<ToolbarProps> = ({
             >
               <Button
                 size="medium"
-                isLoading={loading}
+                isLoading={false}
                 disabled={!!error}
                 icon={<DownloadIcon />}
                 id="tutorial-editor-7"

@@ -15,6 +15,8 @@ import { useSemestersContext } from '../SemesterContext';
 import { DragDataFromSemesterTile, DraggableCourse, Semester } from '../types';
 import useGetCourseInfo from '../useGetCourseInfo';
 import { tagColors } from '../utils';
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'> {
   course: DraggableCourse;
@@ -147,7 +149,7 @@ export const MemoizedSemesterCourseItem = React.memo(
                   </PrereqWarnHoverCard>
                 )}
               </span>
-              <span className="truncate text-sm">{title}</span>
+              <span className="truncate text-sm">{title || (course.code[0] == '0' ? '' : <Skeleton />)}</span>
             </div>
             {!semesterLocked && (
               <SemesterCourseItemDropdown
