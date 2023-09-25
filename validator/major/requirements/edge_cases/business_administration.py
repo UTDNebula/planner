@@ -2,13 +2,13 @@ from __future__ import annotations
 import json
 
 from pydantic import Json
-from major.requirements import AbstractRequirement, map
+from major.requirements import AbstractRequirement
 
-from functools import reduce
 from typing import Any, TypedDict
 from major.requirements.shared import OrRequirement
 
 import utils
+from major.requirements import loader
 
 """
 Note: assuming BA 4V90 & BA 4090 cover one of the groups
@@ -146,9 +146,7 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
 
         requirements: list[AbstractRequirement] = []
         for requirement_data in json["prefix_groups"]:
-            requirement = map.REQUIREMENTS_MAP[requirement_data["matcher"]].from_json(
-                requirement_data
-            )
+            requirement = loader.Loader().requirement_from_json(requirement_data)
             requirements.append(requirement)
 
         return cls(

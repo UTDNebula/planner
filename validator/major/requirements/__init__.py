@@ -1,3 +1,3 @@
 from .base import AbstractRequirement
 from .shared import *
-from .map import *
+from .loader import *

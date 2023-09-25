@@ -1,7 +1,6 @@
 from pydantic import Json
 from typing import Any, TypedDict
 from major.requirements import base
-from major.requirements.base import AbstractRequirement
 import utils
 import json
 

@@ -2,12 +2,13 @@ from __future__ import annotations
 import json
 
 from pydantic import Json
-from major.requirements import AbstractRequirement, map
+from major.requirements import AbstractRequirement
 
 from functools import reduce
 from typing import Any, TypedDict
 
 import utils
+from major.requirements import loader
 
 
 class MajorGuidedElectiveRequirement(AbstractRequirement):
@@ -57,7 +58,6 @@ class MajorGuidedElectiveRequirement(AbstractRequirement):
             for requirement in self.also_fulfills:
                 if requirement.attempt_fulfill(course):
                     return True
-                    self.valid_courses.append(course)
 
             return False
 
@@ -112,9 +112,7 @@ class MajorGuidedElectiveRequirement(AbstractRequirement):
 
         also_fulfills: list[AbstractRequirement] = []
         for requirement in json["also_fulfills"]:
-            also_fulfills.append(
-                map.REQUIREMENTS_MAP[requirement["matcher"]].from_json(requirement)
-            )
+            also_fulfills.append(loader.Loader().requirement_from_json(requirement))
 
         return cls(
             json["required_count"], json["starts_with"], also_fulfills, json["metadata"]

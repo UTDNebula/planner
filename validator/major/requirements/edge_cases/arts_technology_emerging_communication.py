@@ -1,7 +1,8 @@
 import json
-from typing import Any, TypedDict
+from typing import Any
 
 from pydantic import Json
+from major.requirements import loader
 from major.requirements.base import AbstractRequirement
 from major.requirements.shared import MultiGroupElectiveRequirement
 import utils
@@ -45,13 +46,9 @@ class ATECPrescribedElectiveRequirement(MultiGroupElectiveRequirement):
 
     @classmethod
     def from_json(cls, json: JSON) -> MultiGroupElectiveRequirement:  # type: ignore[override]
-        from ..map import REQUIREMENTS_MAP
-
         requirements: list[AbstractRequirement] = []
         for requirement_data in json["requirements"]:
-            requirement = REQUIREMENTS_MAP[requirement_data["matcher"]].from_json(
-                requirement_data
-            )
+            requirement = loader.Loader().requirement_from_json(requirement_data)
             requirements.append(requirement)
 
         return cls(
