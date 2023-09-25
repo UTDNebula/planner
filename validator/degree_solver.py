@@ -10,7 +10,7 @@ import core
 from major.requirements import AbstractRequirement
 from dataclasses import dataclass
 
-from major.requirements.map import REQUIREMENTS_MAP
+from major.requirements import loader
 import json
 
 from major.requirements.shared import (
@@ -188,7 +188,7 @@ class DegreeRequirementsSolver:
             # Add requirements
             for req_data in requirements_data:
                 major_req.requirements.append(
-                    REQUIREMENTS_MAP[req_data["matcher"]].from_json(req_data)
+                    loader.Loader().requirement_from_json(req_data)
                 )
             degree_requirements.append(major_req)
             # We don't need to check the other JSON files
@@ -214,7 +214,11 @@ class DegreeRequirementsSolver:
         for degree_req in self.degree_requirements:
             for course in self.courses:
                 # Make sure it's not a core course
-                if course in used_core_courses:
+                if (
+                    course in used_core_courses
+                    and not type(degree_req.requirements)
+                    == loader.Loader().REQUIREMENTS_MAP["FreeElectiveRequirement"]
+                ):
                     continue
                 for requirement in degree_req.requirements:
                     if requirement.attempt_fulfill(course):
