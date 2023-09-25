@@ -1,6 +1,6 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { useRef, useState, useMemo, memo } from 'react';
-import Skeleton from 'react-loading-skeleton'
+import Skeleton from 'react-loading-skeleton';
 import { v4 as uuidv4 } from 'uuid';
 
 import AccordionSkeleton from './AccordionSkeleton';
@@ -99,7 +99,11 @@ function CourseSelectorContainer({
             taken >= min ? 'text-primary-800' : 'text-yellow-500'
           }`}
         >
-          {taken != -1 ? taken + '/' + min + ' ' + unit : <Skeleton inline={true} width={100} className={`flex-1`} />}
+          {taken != -1 ? (
+            taken + '/' + min + ' ' + unit
+          ) : (
+            <Skeleton inline={true} width={100} className={`flex-1`} />
+          )}
         </span>
       </div>
     );
@@ -131,7 +135,7 @@ function CourseSelectorContainer({
                   </h1>
                 </div>
                 <div id="tutorial-editor-2">
-                  {( validationData ? 
+                  {validationData ? (
                     <CreditsTaken
                       taken={sum}
                       min={
@@ -139,7 +143,9 @@ function CourseSelectorContainer({
                           ? validationData.validation.requirements[1].min_hours
                           : 120
                       }
-                    /> : <CreditsTaken taken={-1} min={-1} />
+                    />
+                  ) : (
+                    <CreditsTaken taken={-1} min={-1} />
                   )}
                 </div>
               </div>
@@ -179,12 +185,9 @@ function CourseSelectorContainer({
                     className="z-[999]"
                     onOpenAutoFocus={(e) => e.preventDefault()}
                   >
-                      <div className="w-full border-[2px] border-[#EDEFF7] bg-white p-4 drop-shadow-2xl">
-                        <DraggableCourseList
-                          courses={courseResults}
-                          getDragId={getSearchedDragId}
-                        />
-                      </div>
+                    <div className="w-full border-[2px] border-[#EDEFF7] bg-white p-4 drop-shadow-2xl">
+                      <DraggableCourseList courses={courseResults} getDragId={getSearchedDragId} />
+                    </div>
                   </Dialog.Content>
                 </Dialog.Portal>
               )}
@@ -201,8 +204,7 @@ function CourseSelectorContainer({
               </div>
             )}
 
-            {
-              validationData &&
+            {validationData &&
               validationData.validation.requirements.length > 0 &&
               validationData.validation.requirements.map((req: DegreeRequirement, idx: number) => (
                 <RequirementsContainer
@@ -212,9 +214,7 @@ function CourseSelectorContainer({
                   getCourseItemDragId={getRequirementDragId}
                 />
               ))}
-            { !validationData &&
-              <AccordionSkeleton />
-            }
+            {!validationData && <AccordionSkeleton />}
             <div className="flex flex-grow items-end justify-end text-sm ">
               <div>
                 <span className="font-bold">Warning:</span> This is an unofficial tool not
