@@ -20,12 +20,11 @@ const AutoCompleteMajor: FC<AutoCompleteMajorProps & React.ComponentPropsWithout
   ...props
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  console.log('options: ', options);
   // react-select requires options to be an object, so we convert it
-  const convertedOptions: any[] = [];
-  options.forEach(function (element) {
-    convertedOptions.push({ label: element, value: element });
-  });
-
+  const convertedOptions: any[] = options.map((e) => ({ label: e, value: e }));
+  console.log('converted: ', convertedOptions);
+  console.log('placeholder: ', placeholder);
   return (
     <div {...props}>
       <div ref={containerRef} className="absolute -bottom-3 left-0 h-full w-full "></div>
@@ -37,6 +36,7 @@ const AutoCompleteMajor: FC<AutoCompleteMajorProps & React.ComponentPropsWithout
           onInputChange(query);
         }}
         options={convertedOptions}
+        placeholder={placeholder}
       />
     </div>
   );
