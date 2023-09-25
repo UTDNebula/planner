@@ -20,6 +20,7 @@ from major.requirements.shared import (
 )
 from course import Course
 
+LOADER = loader.Loader()
 
 # Read all degree plan JSON files and store their contents in a hashmap
 # This is so that we can avoid reading all the files each time we want to get the data for a certain course
@@ -188,9 +189,7 @@ class DegreeRequirementsSolver:
 
             # Add requirements
             for req_data in requirements_data:
-                major_req.requirements.append(
-                    loader.Loader().requirement_from_json(req_data)
-                )
+                major_req.requirements.append(LOADER.requirement_from_json(req_data))
             degree_requirements.append(major_req)
             # We don't need to check the other JSON files
             break

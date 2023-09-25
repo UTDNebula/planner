@@ -1,7 +1,9 @@
 from major.solver import MajorRequirementsSolver
-from major.requirements import AbstractRequirement, REQUIREMENTS_MAP
+from major.requirements import AbstractRequirement, loader
 import json
 import copy
+
+LOADER = loader.Loader()
 
 
 def test_computer_science_solver() -> None:
@@ -89,9 +91,10 @@ def test_computer_science_solver() -> None:
     requirements_data = data["requirements"]["major"]
 
     requirements: list[AbstractRequirement] = []
-
     for req_data in requirements_data:
-        requirements.append(REQUIREMENTS_MAP[req_data["matcher"]].from_json(req_data))
+        requirements.append(
+            LOADER.REQUIREMENTS_MAP[req_data["matcher"]].from_json(req_data)
+        )
 
     solver = MajorRequirementsSolver(
         MISSING_FREE_ELECTIVES, copy.deepcopy(requirements)
@@ -183,7 +186,9 @@ def test_accounting_solver() -> None:
     requirements: list[AbstractRequirement] = []
 
     for req_data in requirements_data:
-        requirements.append(REQUIREMENTS_MAP[req_data["matcher"]].from_json(req_data))
+        requirements.append(
+            LOADER.REQUIREMENTS_MAP[req_data["matcher"]].from_json(req_data)
+        )
 
     solver = MajorRequirementsSolver(
         MISSING_FREE_ELECTIVES, copy.deepcopy(requirements)
@@ -290,7 +295,9 @@ def test_software_engineering_solver() -> None:
     requirements: list[AbstractRequirement] = []
 
     for req_data in requirements_data:
-        requirements.append(REQUIREMENTS_MAP[req_data["matcher"]].from_json(req_data))
+        requirements.append(
+            LOADER.REQUIREMENTS_MAP[req_data["matcher"]].from_json(req_data)
+        )
 
     solver = MajorRequirementsSolver(
         MISSING_GUIDED_ELECTIVE, copy.deepcopy(requirements)

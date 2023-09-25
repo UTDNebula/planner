@@ -1,4 +1,4 @@
-from typing import Type, Literal, get_args, Mapping, TypeGuard
+from typing import Type, Literal, get_args, Mapping, TypeGuard, Any
 
 RequirementNameT = Literal[
     "CourseRequirement",
@@ -55,7 +55,7 @@ class Loader:
             "PsychologyPrefixesOrCourses": psychology.PsychologyPrefixesOrCourses,
         }
 
-    def requirement_from_json(self, json: Mapping) -> AbstractRequirement:
+    def requirement_from_json(self, json: Mapping[str, Any]) -> AbstractRequirement:
         if not "matcher" in json:
             raise ValueError(f"Invalid requirement: {json}, missing 'matcher' key.")
         if not self._is_valid_requirement(json["matcher"]):

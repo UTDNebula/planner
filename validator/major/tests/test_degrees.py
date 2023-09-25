@@ -1,7 +1,7 @@
 from typing import Any
 
 from jsonschema import Draft7Validator, validate
-from major.requirements import REQUIREMENTS_MAP
+from major.requirements import loader
 import json
 from os import DirEntry, scandir
 import pytest
@@ -18,15 +18,18 @@ def test_degrees(file: DirEntry[str]) -> None:
     data = json.loads(open(file, "r").read())
 
     requirements = data["requirements"]["major"]
+    req_loader = loader.Loader()
 
     for requirement in requirements:
         if not "matcher" in requirement:
             pytest.fail(f"'matcher' not in {requirement}")
 
-        if not requirement["matcher"] in REQUIREMENTS_MAP:
-            pytest.fail(f"{requirement['matcher']} not in {REQUIREMENTS_MAP}")
+        if not requirement["matcher"] in req_loader.REQUIREMENTS_MAP:
+            pytest.fail(
+                f"{requirement['matcher']} not in {req_loader.REQUIREMENTS_MAP}"
+            )
 
-        REQUIREMENTS_MAP[requirement["matcher"]].from_json(requirement)
+        req_loader.REQUIREMENTS_MAP[requirement["matcher"]].from_json(requirement)
 
 
 @pytest.mark.parametrize(
