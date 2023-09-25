@@ -1,12 +1,7 @@
 import { UniqueIdentifier, useDraggable } from '@dnd-kit/core';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import React, { ComponentPropsWithoutRef, FC, forwardRef, useState, useRef } from 'react';
-
-import Checkbox from '@/components/Checkbox';
-import DotsHorizontalIcon from '@/icons/DotsHorizontalIcon';
-import FilledWarningIcon from '@/icons/FilledWarningIcon';
-import LockIcon from '@/icons/LockIcon';
-import { trpc } from '@/utils/trpc';
+import Skeleton from 'react-loading-skeleton';
 
 import SemesterCourseItemDropdown from './SemesterCourseItemDropdown';
 import CourseInfoHoverCard from '../CourseInfoHoverCard';
@@ -15,6 +10,14 @@ import { useSemestersContext } from '../SemesterContext';
 import { DragDataFromSemesterTile, DraggableCourse, Semester } from '../types';
 import useGetCourseInfo from '../useGetCourseInfo';
 import { tagColors } from '../utils';
+
+import Checkbox from '@/components/Checkbox';
+import DotsHorizontalIcon from '@/icons/DotsHorizontalIcon';
+import FilledWarningIcon from '@/icons/FilledWarningIcon';
+import LockIcon from '@/icons/LockIcon';
+import { trpc } from '@/utils/trpc';
+
+import 'react-loading-skeleton/dist/skeleton.css';
 
 export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'> {
   course: DraggableCourse;
@@ -147,7 +150,9 @@ export const MemoizedSemesterCourseItem = React.memo(
                   </PrereqWarnHoverCard>
                 )}
               </span>
-              <span className="truncate text-sm">{title}</span>
+              <span className="truncate text-sm">
+                {title || (course.code[0] == '0' ? '' : <Skeleton />)}
+              </span>
             </div>
             {!semesterLocked && (
               <SemesterCourseItemDropdown
