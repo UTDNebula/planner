@@ -1,13 +1,14 @@
 from __future__ import annotations
 from enum import Enum
 from glob import glob
+from collections import Counter
 
 from pydantic import Json
 
 from typing import Any
 
 import core
-from major.requirements import AbstractRequirement
+from major.requirements import AbstractRequirement, FreeElectiveRequirement
 from dataclasses import dataclass
 
 from major.requirements import loader
@@ -144,7 +145,7 @@ class DegreeRequirementsSolver:
         requirements: DegreeRequirementsInput,
         bypasses: BypassInput,
     ) -> None:
-        self.courses = set(courses)
+        self.courses = set([Course.from_name(course) for course in courses])
         self.degree_requirements = self.load_requirements(requirements)
         self.solved_core: core.store.AssignmentStore | None = None
         self.bypasses = bypasses
@@ -201,27 +202,28 @@ class DegreeRequirementsSolver:
     def solve(self) -> DegreeRequirementsSolver:
         # Run for core
         core_solver = self.load_core()
-        self.solved_core = core_solver.solve(
-            [Course.from_name(course) for course in self.courses], []
-        )
-        # Set of the core courses that are fulfilled, so they won't be considered as free electives
-        used_core_courses = set()
+        self.solved_core = core_solver.solve(list(self.courses), [])
+
+        # Counter of the core courses and their used hours, so they won't be considered as free electives.
+        used_core_courses: Counter[Course] = Counter()
         if self.solved_core is not None:
             for req_fill in self.solved_core.reqs_to_courses.values():
-                used_core_courses.update([course.name for course in req_fill.keys()])
+                used_core_courses.update(req_fill)
 
         # Run for major
         for degree_req in self.degree_requirements:
             for course in self.courses:
-                # Make sure it's not a core course
-                if (
-                    course in used_core_courses
-                    and not type(degree_req.requirements)
-                    == loader.Loader().REQUIREMENTS_MAP["FreeElectiveRequirement"]
-                ):
-                    continue
                 for requirement in degree_req.requirements:
-                    if requirement.attempt_fulfill(course):
+                    # Free elective requirements are special, since they can take left over hours from core courses.
+                    if type(requirement) == FreeElectiveRequirement:
+                        if requirement.attempt_fulfill(
+                            course.name,
+                            available_hours=(
+                                int(course.hours) - used_core_courses[course]
+                            ),
+                        ):
+                            break
+                    elif requirement.attempt_fulfill(course.name):
                         break
 
             # Handle requirements bypasses for major

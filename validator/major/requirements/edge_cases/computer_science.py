@@ -46,7 +46,7 @@ class MajorGuidedElectiveRequirement(AbstractRequirement):
         self.metadata = metadata
         self.override_filled = False
 
-    def attempt_fulfill(self, course: str) -> bool:
+    def attempt_fulfill(self, course: str, _: int = 0) -> bool:
         if self.is_fulfilled():
             return False
 

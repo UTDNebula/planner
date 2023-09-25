@@ -18,6 +18,7 @@ class AbstractRequirement(ABC):
     def attempt_fulfill(
         self,
         course: str,
+        available_hours: int = 0,
     ) -> bool:
         pass
 

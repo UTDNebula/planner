@@ -84,7 +84,7 @@ class ATECPrescribedElectiveRequirement(MultiGroupElectiveRequirement):
             }
         )
 
-    def attempt_fulfill(self, course: str) -> bool:
+    def attempt_fulfill(self, course: str, _: int = 0) -> bool:
         fulfilled = super().attempt_fulfill(course)
         if fulfilled:
             if utils.get_level_from_course(course) == 4:

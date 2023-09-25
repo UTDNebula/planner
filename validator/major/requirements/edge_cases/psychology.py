@@ -24,7 +24,7 @@ class PsychologyPrefixesOrCourses(base.AbstractRequirement):
         self.accepted_courses = accepted_courses
         self.metadata = metadata
 
-    def attempt_fulfill(self, course: str) -> bool:
+    def attempt_fulfill(self, course: str, _: int = 0) -> bool:
         if self.is_fulfilled():
             return False
 

@@ -25,7 +25,7 @@ class CourseRequirement(AbstractRequirement):
         self.metadata = metadata
         self.filled = filled
 
-    def attempt_fulfill(self, course: str) -> bool:
+    def attempt_fulfill(self, course: str, _: int = 0) -> bool:
         # fail duplicate attempt to fulfill
         if self.is_fulfilled():
             return False
@@ -80,7 +80,7 @@ class AndRequirement(AbstractRequirement):
         self.metadata = metadata
         self.override_filled = False
 
-    def attempt_fulfill(self, course: str) -> bool:
+    def attempt_fulfill(self, course: str, _: int = 0) -> bool:
         if self.is_fulfilled():
             return False
 
@@ -154,7 +154,7 @@ class OrRequirement(AbstractRequirement):
         self.metadata = metadata
         self.override_filled = False  # use this as override fill
 
-    def attempt_fulfill(self, course: str) -> bool:
+    def attempt_fulfill(self, course: str, _: int = 0) -> bool:
         if self.is_fulfilled():
             return False
 
@@ -236,7 +236,7 @@ class SelectRequirement(AbstractRequirement):
         self.metadata = metadata
         self.override_filled = False
 
-    def attempt_fulfill(self, course: str) -> bool:
+    def attempt_fulfill(self, course: str, _: int = 0) -> bool:
         if self.is_fulfilled():
             return False
 
@@ -336,7 +336,7 @@ class HoursRequirement(AbstractRequirement):
         self.metadata: dict[str, Any] = metadata
         self.override_filled = False
 
-    def attempt_fulfill(self, course: str) -> bool:
+    def attempt_fulfill(self, course: str, _: int = 0) -> bool:
         if self.is_fulfilled():
             return False
 
@@ -443,7 +443,7 @@ class OtherRequirement(AbstractRequirement):
     def is_fulfilled(self) -> bool:
         return self.override_filled
 
-    def attempt_fulfill(self, course: str) -> bool:
+    def attempt_fulfill(self, course: str, _: int = 0) -> bool:
         return False
 
     def override_fill(self, index: str) -> bool:
@@ -509,14 +509,13 @@ class FreeElectiveRequirement(AbstractRequirement):
         self.metadata = metadata
         self.override_filled = False
 
-    def attempt_fulfill(self, course: str) -> bool:
+    def attempt_fulfill(self, course: str, available_hours: int = 0) -> bool:
         if self.is_fulfilled():
             return False
 
-        if not course in self.excluded_courses:
-            course_hrs = utils.get_hours_from_course(course)
-            self.fulfilled_hours += course_hrs
-            self.valid_courses[course] = course_hrs
+        if not course in self.excluded_courses and available_hours > 0:
+            self.fulfilled_hours += available_hours
+            self.valid_courses[course] = available_hours
             return True
 
         return False
@@ -594,7 +593,7 @@ class PrefixBucketRequirement(AbstractRequirement):
 
     # NOTE: This allows courses to satisfy the requirement even after it's filled,
     # as it doesn't check for whether or not the requirement has been filled
-    def attempt_fulfill(self, course: str) -> bool:
+    def attempt_fulfill(self, course: str, _: int = 0) -> bool:
         if course.startswith(self.prefix):
             self.filled = True
             self.valid_courses[course] = utils.get_hours_from_course(course)
@@ -667,7 +666,7 @@ class MajorGuidedElectiveRequirement(AbstractRequirement):
         self.metadata = metadata
         self.override_filled = False
 
-    def attempt_fulfill(self, course: str) -> bool:
+    def attempt_fulfill(self, course: str, _: int = 0) -> bool:
         if self.is_fulfilled():
             return False
 
@@ -845,7 +844,7 @@ class MultiGroupElectiveRequirement(AbstractRequirement):
             }
         )
 
-    def attempt_fulfill(self, course: str) -> bool:
+    def attempt_fulfill(self, course: str, _: int = 0) -> bool:
         if self.is_fulfilled():
             return False
 

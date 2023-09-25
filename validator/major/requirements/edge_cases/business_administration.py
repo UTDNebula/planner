@@ -21,7 +21,7 @@ class SomeRequirement(OrRequirement):
     NOTE: Allows attempt_filled to work even if is_fulfilled() is true
     """
 
-    def attempt_fulfill(self, course: str) -> bool:
+    def attempt_fulfill(self, course: str, _: int = 0) -> bool:
         for requirement in self.requirements:
             if requirement.attempt_fulfill(course):
                 return True
@@ -66,7 +66,7 @@ class BusinessAdministrationElectiveRequirement(AbstractRequirement):
         self.metadata = metadata
         self.override_filled = False
 
-    def attempt_fulfill(self, course: str) -> bool:
+    def attempt_fulfill(self, course: str, _: int = 0) -> bool:
         if self.is_fulfilled():
             return False
 
