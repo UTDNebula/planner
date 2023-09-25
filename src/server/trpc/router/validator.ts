@@ -1,8 +1,8 @@
 import { Course, Prisma, Semester } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
-import { env } from '@/env/server.mjs';
 
+import { env } from '@/env/server.mjs';
 import courses, { JSONCourse } from '@data/courses.json';
 
 import { protectedProcedure, router } from '../trpc';
