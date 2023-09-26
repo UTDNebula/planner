@@ -1,5 +1,6 @@
 import Select from 'react-select';
 import { FC, useRef } from 'react';
+import useMajors from '@/shared/useMajors';
 
 interface AutoCompleteMajorProps extends React.ComponentPropsWithoutRef<'div'> {
   onValueChange: (value: string) => void;
@@ -19,19 +20,19 @@ const AutoCompleteMajor: FC<AutoCompleteMajorProps & React.ComponentPropsWithout
   defaultValue = '',
   ...props
 }) => {
+  const { majors, err } = useMajors();
   const containerRef = useRef<HTMLDivElement>(null);
-  console.log('options: ', options);
+  console.log('majors: ', majors);
   // react-select requires options to be an object, so we convert it
-  const convertedOptions: any[] = options.map((e) => ({ label: e, value: e }));
+  const convertedOptions: any[] = majors.map((e) => ({ label: e, value: e }));
   console.log('converted: ', convertedOptions);
-  console.log('placeholder: ', placeholder);
   return (
     <div {...props}>
       <div ref={containerRef} className="absolute -bottom-3 left-0 h-full w-full "></div>
       <Select
         isSearchable={true}
         isClearable={false}
-        onChange={(value) => onValueChange(value.value ?? '')}
+        onChange={(selection) => onValueChange(selection.value ?? '')}
         onInputChange={(query) => {
           onInputChange(query);
         }}
