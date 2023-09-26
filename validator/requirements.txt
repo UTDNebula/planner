@@ -21,6 +21,7 @@ Jinja2==3.1.2
 jira==3.5.2
 jsonschema==4.17.3
 limits==2.8.0
+lxml==4.9.3
 MarkupSafe==2.1.1
 mypy==1.0.0
 mypy-extensions==0.4.3
