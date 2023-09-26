@@ -373,46 +373,6 @@ export const planRouter = router({
         console.error(error);
       }
     }),
-  // Unprotected route
-  validateDegreePlan: protectedProcedure
-    .input(
-      z.object({
-        courses: z.array(
-          z.object({
-            name: z.string(),
-            department: z.string(),
-            level: z.number(),
-            hours: z.number(),
-          }),
-        ),
-        bypasses: z.array(
-          z.object({
-            course: z.string(),
-            requirement: z.string(),
-            hours: z.number(),
-          }),
-        ),
-        degree: z.string(),
-      }),
-    )
-    .query(async ({ ctx, input }) => {
-      try {
-        return await fetch('http://0.0.0.0:5001/test-validate', {
-          method: 'POST',
-          body: JSON.stringify(input),
-          headers: {
-            'content-type': 'application/json',
-          },
-        }).then(async (res) => {
-          const rawData = await res.json();
-
-          return rawData;
-          // Transform data
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    }),
   // Protected route: route uses session user id
   changeSemesterColor: protectedProcedure
     .input(
