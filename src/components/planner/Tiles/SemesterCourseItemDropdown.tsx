@@ -1,5 +1,5 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import { FC } from 'react';
+import { FC, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import ChevronIcon from '@/icons/ChevronIcon';
@@ -16,6 +16,8 @@ const itemClasses =
 const contentClasses = 'w-64 rounded-md border border-neutral-300 bg-generic-white';
 
 const disabledClasses = 'text-black/25 cursor-default';
+
+const DROPDOWN_OPEN_DELAY_MS = 600;
 
 export interface SemesterTileDropdownProps {
   deleteCourse: () => void;
@@ -43,10 +45,23 @@ const SemesterCourseItemDropdown: FC<SemesterTileDropdownProps> = ({
   prereqOverriden,
   onPrereqOverrideChange,
 }) => {
-  const id = uuidv4();
+  const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   return (
     <DropdownMenu.Root open={open} onOpenChange={onOpenChange}>
-      <DropdownMenu.Trigger data-no-dnd="true" asChild>
+      <DropdownMenu.Trigger
+        onPointerOver={() => {
+          hoverTimer.current = setTimeout(() => {
+            onOpenChange(true);
+            hoverTimer.current = null;
+          }, DROPDOWN_OPEN_DELAY_MS);
+        }}
+        onPointerLeave={() => {
+          if (hoverTimer.current) clearTimeout(hoverTimer.current);
+        }}
+        data-no-dnd="true"
+        asChild
+      >
         {children}
       </DropdownMenu.Trigger>
 
@@ -54,7 +69,7 @@ const SemesterCourseItemDropdown: FC<SemesterTileDropdownProps> = ({
         <DropdownMenu.Content
           data-no-dnd="true"
           className={contentClasses + ' animate-[slideUpAndFade_0.3s]'}
-          sideOffset={10}
+          sideOffset={5}
           align="start"
         >
           <DropdownMenu.Item
@@ -107,7 +122,7 @@ const SemesterCourseItemDropdown: FC<SemesterTileDropdownProps> = ({
                 {Object.entries(tagColors).map(([color, classes]) => (
                   <DropdownMenu.Item
                     className={itemClasses}
-                    key={`${id}-tag-${color}`}
+                    key={`${uuidv4()}-tag-${color}`}
                     onClick={() => changeColor(color as keyof typeof tagColors)}
                   >
                     <div className={`h-5 w-5 rounded-sm border ${classes}`}></div>
