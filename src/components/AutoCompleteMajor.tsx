@@ -22,10 +22,8 @@ const AutoCompleteMajor: FC<AutoCompleteMajorProps & React.ComponentPropsWithout
 }) => {
   const { majors, err } = useMajors();
   const containerRef = useRef<HTMLDivElement>(null);
-  console.log('majors: ', majors);
   // react-select requires options to be an object, so we convert it
   const convertedOptions: any[] = majors.map((e) => ({ label: e, value: e }));
-  console.log('converted: ', convertedOptions);
   return (
     <div {...props}>
       <div ref={containerRef} className="absolute -bottom-3 left-0 h-full w-full "></div>
