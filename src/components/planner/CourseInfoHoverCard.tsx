@@ -60,10 +60,12 @@ export default CourseInfoHoverCard;
  */
 const CourseDescription = ({ description }: { description: string }) => {
   const [showMore, setShowMore] = useState(false);
+  const boldDescription = description.replaceAll(/(\b[A-Z]{2,4} \d{4}\b)/ig, '<b>$1</b>');
   return (
     <span>
       <p className="text-xs">
-        {!showMore ? `${description.substring(0, 200)}... ` : `${description} `}
+        <span dangerouslySetInnerHTML={{__html: !showMore ? boldDescription.substring(0, 200) + "..." : boldDescription}}/>
+        {" "}
         <button
           className={`${showMore ? '' : 'inline'} font-medium text-primary`}
           onClick={(e) => {
