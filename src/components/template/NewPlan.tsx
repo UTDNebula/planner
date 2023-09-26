@@ -1,90 +1,65 @@
-import router from 'next/router';
-import { useState } from 'react'; //nprogress module
-import React from 'react';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
 
 import AutoCompleteMajor from '@/components/AutoCompleteMajor';
+
 import { trpc } from '@/utils/trpc';
 
+import useMajors from '@/shared/useMajors';
+
 import { Page } from './Page';
+import { ButtonProps } from '../Button';
 import useSearch from '../search/search';
 
-export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
-  const utils = trpc.useContext();
-
+export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
   const [name, setName] = useState('');
   const [major, setMajor] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-
   const [planNameError, setPlanNameError] = useState(false);
   const [majorError, setMajorError] = useState(false);
+  const { majors, err } = useMajors();
   const setErrors = () => {
     setPlanNameError(name === '');
     setMajorError(major === null);
   };
 
-  const {
-    data: templatesData,
-    isLoading,
-    isError,
-  } = trpc.template.publicGetAllTemplates.useQuery(undefined, {
-    staleTime: Infinity,
-    cacheTime: Infinity,
-  });
+  const router = useRouter();
+  const utils = trpc.useContext();
 
-  const createTemplateUserPlan = trpc.user.createTemplateUserPlan.useMutation({
+  const createUserPlan = trpc.user.createUserPlan.useMutation({
     async onSuccess() {
       await utils.user.getUser.invalidate();
     },
   });
 
   const { results, updateQuery } = useSearch({
-    getData: async () =>
-      templatesData ? templatesData.map((major) => ({ filMajor: `${major.name}` })) : [],
+    getData: async () => (majors ? majors.map((major) => ({ filMajor: `${major}` })) : []),
     initialQuery: '',
     filterFn: (major, query) => major.filMajor.toLowerCase().includes(query.toLowerCase()),
     constraints: [0, 100],
   });
 
-  React.useEffect(() => {
-    updateQuery('');
-  }, [isLoading]);
+  const [loading, setLoading] = useState(false);
 
-  if (isError) {
-    console.error('Error fetching templates');
-    return <div>Error fetching templates</div>;
-  }
-
-  if (!templatesData) {
-    return <div>Loading...</div>;
-  }
-
-  const handleTemplateCreation = async (name: string, major: string) => {
-    setLoading(true);
-
-    const selectedTemplate = templatesData.find((t) => t.name === major);
-    if (!selectedTemplate) {
-      alert('Template not found. Please try again');
-      setLoading(false);
-      return;
-    }
-    try {
-      const planId = await createTemplateUserPlan.mutateAsync({
+  async function handleSubmit() {
+    if (name !== '' && major !== null) {
+      setLoading(true);
+      const planId = await createUserPlan.mutateAsync({
         name,
-        templateName: selectedTemplate.id,
+        major,
+        transferCredits: [],
+        takenCourses: [],
       });
-      if (!planId) {
-        return router.push('/app/home');
-      }
-      return router.push(`/app/plans/${planId}`);
-    } catch (error) {
-      console.error(error);
+      router.push(`/app/plans/${planId}`);
     }
-  };
+  }
+
+  // TODO(https://nebula-labs.atlassian.net/browse/NP-85): Refactor parseTranscript.
   return (
     <Page
-      data-testid="create-template-plan-page"
-      title="Select a Degree Template"
-      subtitle="Find a degree template to start planning."
+      data-testid="create-blank-plan-page"
+      key="custom-plan-details"
+      title="Create a New Plan"
+      subtitle="Name your plan and choose your major"
       close={onDismiss}
       actions={[
         {
@@ -96,9 +71,10 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
           name: 'Create Plan',
           onClick: () => {
             if (name !== '' && major !== null) {
-              handleTemplateCreation(name, major);
+              handleSubmit();
               return;
             }
+
             setErrors();
           },
           color: 'primary',
@@ -114,18 +90,20 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
           className="w-full rounded-md border border-neutral-500 px-4 py-3 text-sm text-black/80 placeholder:text-neutral-400"
           placeholder="Name your plan"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => {
+            setName(e.target.value);
+          }}
         />
         <small className={`${planNameError ? 'visible' : 'invisible'}  text-red-500`}>
           Please provide a plan name
         </small>
       </div>
 
-      <p className="text-sm font-semibold">Search degree template</p>
+      <p className="text-sm font-semibold">Choose your major</p>
       <div className="relative mb-4">
         <AutoCompleteMajor
           data-testid="major-autocomplete"
-          className="w-[500px] outline-none"
+          className="w-[500px] rounded border outline-none"
           key={0}
           onValueChange={(value) => setMajor(value)}
           onInputChange={(query: string) => updateQuery(query)}
@@ -138,4 +116,18 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
       </small>
     </Page>
   );
+}
+
+export interface PageProps {
+  title: string;
+  subtitle: string;
+  close: () => void;
+  actions: {
+    name: string;
+    onClick: () => void;
+    color: ButtonProps['color'];
+    loading?: boolean;
+    'data-testid'?: string;
+    disabled?: boolean;
+  }[];
 }

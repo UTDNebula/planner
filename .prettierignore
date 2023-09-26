@@ -6,3 +6,6 @@ public
 
 node_modules/
 prisma/generated
+
+**/.mypy_cache/
+**/venv/

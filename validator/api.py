@@ -45,7 +45,7 @@ def get_degree_plans() -> Response:
     )
 
 
-@app.route("/test-validate", methods=["POST"])
+@app.route("/validate", methods=["POST"])
 def test_validate() -> Response:
     try:
         j = request.get_json()
@@ -80,3 +80,8 @@ def test_validate() -> Response:
             },
             500,
         )
+
+
+@app.route("/health")
+def health() -> Response:
+    return make_response({"ok": True}, 200)

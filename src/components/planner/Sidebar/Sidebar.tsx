@@ -1,20 +1,23 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { useRef, useState, useMemo, memo } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import { v4 as uuidv4 } from 'uuid';
+
+import AccordionSkeleton from './AccordionSkeleton';
+import DraggableCourseList from './DraggableCourseList';
+import { DegreeRequirement } from './types';
+import { Course, DraggableCourse, GetDragIdByCourse } from '../types';
+import useFuse from '../useFuse';
 
 import Button from '@/components/Button';
 import AnalyticsWrapper from '@/components/common/AnalyticsWrapper';
 import RequirementsContainer from '@/components/planner/Sidebar/RequirementsContainer';
 import SearchBar from '@/components/planner/Sidebar/SearchBar';
-import Spinner from '@/components/Spinner';
 import ChevronIcon from '@/icons/ChevronIcon';
 import { trpc } from '@/utils/trpc';
 import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
 
-import DraggableCourseList from './DraggableCourseList';
-import { DegreeRequirement } from './types';
-import { Course, DraggableCourse, GetDragIdByCourse } from '../types';
-import useFuse from '../useFuse';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 export interface CourseSelectorContainerProps {
   planId: string;
@@ -96,7 +99,11 @@ function CourseSelectorContainer({
             taken >= min ? 'text-primary-800' : 'text-yellow-500'
           }`}
         >
-          {taken}/{min} {unit}
+          {taken != -1 ? (
+            taken + '/' + min + ' ' + unit
+          ) : (
+            <Skeleton inline={true} width={100} className={`flex-1`} />
+          )}
         </span>
       </div>
     );
@@ -128,7 +135,7 @@ function CourseSelectorContainer({
                   </h1>
                 </div>
                 <div id="tutorial-editor-2">
-                  {validationData && !isValidationLoading && (
+                  {validationData ? (
                     <CreditsTaken
                       taken={sum}
                       min={
@@ -137,6 +144,8 @@ function CourseSelectorContainer({
                           : 120
                       }
                     />
+                  ) : (
+                    <CreditsTaken taken={-1} min={-1} />
                   )}
                 </div>
               </div>
@@ -176,30 +185,15 @@ function CourseSelectorContainer({
                     className="z-[999]"
                     onOpenAutoFocus={(e) => e.preventDefault()}
                   >
-                    {!isLoading ? (
-                      <div className="w-full border-[2px] border-[#EDEFF7] bg-white p-4 drop-shadow-2xl">
-                        <DraggableCourseList
-                          courses={courseResults}
-                          getDragId={getSearchedDragId}
-                        />
-                      </div>
-                    ) : (
-                      <div className="p-4 text-base text-[#757575]">
-                        Please wait, courses are loading....
-                      </div>
-                    )}
+                    <div className="w-full border-[2px] border-[#EDEFF7] bg-white p-4 drop-shadow-2xl">
+                      <DraggableCourseList courses={courseResults} getDragId={getSearchedDragId} />
+                    </div>
                   </Dialog.Content>
                 </Dialog.Portal>
               )}
             </Dialog.Root>
 
-            {isValidationLoading && (
-              <div className="flex flex-grow items-center justify-center">
-                <Spinner size="large" />
-              </div>
-            )}
-
-            {!isValidationLoading && error?.data?.code === 'INTERNAL_SERVER_ERROR' && (
+            {error?.data?.code === 'INTERNAL_SERVER_ERROR' && (
               <div className="flex h-[30vh] w-full text-base leading-5 text-[#A3A3A3]">
                 <div className="mx-12 mt-44 flex w-full flex-col items-center justify-center gap-4 text-center leading-6">
                   It seems like a screw has gone loose!
@@ -210,8 +204,7 @@ function CourseSelectorContainer({
               </div>
             )}
 
-            {!isValidationLoading &&
-              validationData &&
+            {validationData &&
               validationData.validation.requirements.length > 0 &&
               validationData.validation.requirements.map((req: DegreeRequirement, idx: number) => (
                 <RequirementsContainer
@@ -221,6 +214,7 @@ function CourseSelectorContainer({
                   getCourseItemDragId={getRequirementDragId}
                 />
               ))}
+            {!validationData && <AccordionSkeleton />}
             <div className="flex flex-grow items-end justify-end text-sm ">
               <div>
                 <span className="font-bold">Warning:</span> This is an unofficial tool not
