@@ -21,7 +21,7 @@ import {
 } from '@dnd-kit/core';
 import Router from 'next/router';
 import React, { useMemo, useState, useRef, FC, useEffect } from 'react';
-import { HotKeys } from 'react-hotkeys';
+import { GlobalHotKeys } from 'react-hotkeys';
 
 import { trpc } from '@/utils/trpc';
 
@@ -166,71 +166,70 @@ export default function Planner({
       onDragStart={handleOnDragStart}
       onDragEnd={handleOnDragEnd}
     >
-      <HotKeys keyMap={keyMap} handlers={handlers}>
-        <SelectedCoursesToast
-          show={selectedCourseCount > 0}
-          selectedCount={selectedCourseCount}
-          areAllCoursesSelected={selectedCourseCount === courseIds.length}
-          deleteSelectedCourses={handleDeleteAllSelectedCourses}
-          deselectAllCourses={handleDeselectAllCourses}
-          selectAllCourses={() => handleSelectCourses(courseIds)}
-        />
-        <div className="flex h-screen flex-row">
-          <DragOverlay dropAnimation={null}>
-            {activeCourse &&
-              (activeCourse.from === 'semester-tile' ? (
-                <SemesterCourseItem course={activeCourse.course} isDragging isValid />
-              ) : activeCourse.from === 'course-list' ? (
-                <SidebarCourseItem course={activeCourse.course} isDragging />
-              ) : null)}
-          </DragOverlay>
+      <GlobalHotKeys keyMap={keyMap} handlers={handlers} />
+      <SelectedCoursesToast
+        show={selectedCourseCount > 0}
+        selectedCount={selectedCourseCount}
+        areAllCoursesSelected={selectedCourseCount === courseIds.length}
+        deleteSelectedCourses={handleDeleteAllSelectedCourses}
+        deselectAllCourses={handleDeselectAllCourses}
+        selectAllCourses={() => handleSelectCourses(courseIds)}
+      />
+      <div className="flex h-screen flex-row">
+        <DragOverlay dropAnimation={null}>
+          {activeCourse &&
+            (activeCourse.from === 'semester-tile' ? (
+              <SemesterCourseItem course={activeCourse.course} isDragging isValid />
+            ) : activeCourse.from === 'course-list' ? (
+              <SidebarCourseItem course={activeCourse.course} isDragging />
+            ) : null)}
+        </DragOverlay>
 
-          <section
-            ref={ref}
-            className="flex max-h-screen flex-grow flex-col gap-y-6 overflow-y-scroll p-4 pb-0"
-          >
-            <Toolbar
-              planId={planId}
-              title={title}
-              degreeRequirements={{
-                ...degreeRequirementsData,
-                major: degreeRequirementsData?.major ?? 'undecided',
-              }}
-              transferCredits={transferCredits}
-              studentName={userData?.profile?.name ?? 'Student'}
-              deletePlan={() => {
-                setDeleteLoading(true);
-                deletePlan.mutateAsync(planId);
-              }}
-              deleteLoading={deleteLoading}
-            />
-
-            <article className="flex h-full  flex-col gap-y-5 overflow-x-hidden pb-8">
-              {transferCredits.length > 0 && <TransferBank transferCredits={transferCredits} />}
-              <div className="flex h-fit gap-5">
-                {filteredSemesters
-                  .reduce(
-                    (acc, curr, index) => {
-                      acc[index % 3].push(curr);
-                      return acc as Semester[][];
-                    },
-                    [[], [], []] as Semester[][],
-                  )
-                  .map((column, index) => (
-                    <MasonryColumn key={`column-${index}`} column={column} />
-                  ))}
-              </div>
-            </article>
-          </section>
-          <CourseSelectorContainer
+        <section
+          ref={ref}
+          className="flex max-h-screen flex-grow flex-col gap-y-6 overflow-y-scroll p-4 pb-0"
+        >
+          <Toolbar
             planId={planId}
-            courses={courseCodes}
+            title={title}
+            degreeRequirements={{
+              ...degreeRequirementsData,
+              major: degreeRequirementsData?.major ?? 'undecided',
+            }}
             transferCredits={transferCredits}
-            getSearchedDragId={(course) => `course-list-searched-${course.id}`}
-            getRequirementDragId={(course) => `course-list-requirement-${course.id}`}
+            studentName={userData?.profile?.name ?? 'Student'}
+            deletePlan={() => {
+              setDeleteLoading(true);
+              deletePlan.mutateAsync(planId);
+            }}
+            deleteLoading={deleteLoading}
           />
-        </div>
-      </HotKeys>
+
+          <article className="flex h-full  flex-col gap-y-5 overflow-x-hidden pb-8">
+            {transferCredits.length > 0 && <TransferBank transferCredits={transferCredits} />}
+            <div className="flex h-fit gap-5">
+              {filteredSemesters
+                .reduce(
+                  (acc, curr, index) => {
+                    acc[index % 3].push(curr);
+                    return acc as Semester[][];
+                  },
+                  [[], [], []] as Semester[][],
+                )
+                .map((column, index) => (
+                  <MasonryColumn key={`column-${index}`} column={column} />
+                ))}
+            </div>
+          </article>
+        </section>
+        <CourseSelectorContainer
+          planId={planId}
+          courses={courseCodes}
+          transferCredits={transferCredits}
+          getSearchedDragId={(course) => `course-list-searched-${course.id}`}
+          getRequirementDragId={(course) => `course-list-requirement-${course.id}`}
+        />
+      </div>
     </DndContext>
   );
 }
