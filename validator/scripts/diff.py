@@ -76,7 +76,9 @@ def createTicket(issueType: str, jira_connection: JIRA, URI: str, coursesImpacte
         project='NP',
         summary='Course requirement version changes',
         description=description,
-        issuetype={'name': 'Task'}
+        issuetype={'name': 'Task'},
+        customfield_10016=1,
+        labels=["Engineering"],
     )
 
 #Establishes JIRA connection and ierates through each major for versioning issues
