@@ -76,13 +76,13 @@ header a:hover {
  */
 
 .login {
-  background-color: #3772ff;
-  border-color: #3772ff;
+  background-color: #6266F9;
+  border-color: #6266F9;
   color: #fff !important;
 }
 
 .login:hover {
-  background-color: #2956c5;
+  background-color: #474bb6;
   color: #fff;
 }
 
