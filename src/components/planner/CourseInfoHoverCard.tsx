@@ -32,7 +32,6 @@ export const CourseInfoHoverCard: FC<CourseInfoHoverCardProps> = ({
         className="z-[999] w-[300px] animate-[slideUpAndFade_0.3s] rounded-md border border-neutral-200 bg-generic-white p-6 shadow-sm"
         sideOffset={5}
       >
-        Hdi
         <h3 className="mb-2 text-base font-semibold">
           <Link
             href={`https://catalog.utdallas.edu/${year}/undergraduate/courses/${courseCode
