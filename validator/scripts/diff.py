@@ -4,7 +4,6 @@ import re
 import os
 import difflib
 from bs4 import BeautifulSoup
-from dotenv import load_dotenv
 from jira import JIRA
 
 """This script looks through all major/concentration
@@ -13,8 +12,7 @@ over the year. If so, it raises a JIRA ticket with
 requirement change information
 """
 
-load_dotenv()
-jira_api_key = os.getenv('JIRA_API_KEY')
+jira_api_key = os.environ['JIRA_API_KEY']
 major_json_path = "/home/runner/work/planner/planner/validator/degree_data"
 
 #Extracts html from url and sends it to course extractor
