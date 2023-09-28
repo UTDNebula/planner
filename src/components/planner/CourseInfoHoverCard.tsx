@@ -32,6 +32,7 @@ export const CourseInfoHoverCard: FC<CourseInfoHoverCardProps> = ({
         className="z-[999] w-[300px] animate-[slideUpAndFade_0.3s] rounded-md border border-neutral-200 bg-generic-white p-6 shadow-sm"
         sideOffset={5}
       >
+        Hdi
         <h3 className="mb-2 text-base font-semibold">
           <Link
             href={`https://catalog.utdallas.edu/${year}/undergraduate/courses/${courseCode
@@ -44,7 +45,6 @@ export const CourseInfoHoverCard: FC<CourseInfoHoverCardProps> = ({
           </Link>
         </h3>
         <CourseDescription description={description} />
-
         <HoverCard.Arrow className="fill-primary" />
       </HoverCard.Content>
     </HoverCard.Portal>
@@ -60,12 +60,15 @@ export default CourseInfoHoverCard;
  */
 const CourseDescription = ({ description }: { description: string }) => {
   const [showMore, setShowMore] = useState(false);
-  const boldDescription = description.replaceAll(/(\b[A-Z]{2,4} \d{4}\b)/ig, '<b>$1</b>');
+  const boldDescription = description.replaceAll(/(\b[A-Z]{2,4} \d{4}\b)/gi, '<b>$1</b>');
   return (
     <span>
       <p className="text-xs">
-        <span dangerouslySetInnerHTML={{__html: !showMore ? boldDescription.substring(0, 200) + "..." : boldDescription}}/>
-        {" "}
+        <span
+          dangerouslySetInnerHTML={{
+            __html: !showMore ? boldDescription.substring(0, 200) + '...' : boldDescription,
+          }}
+        />{' '}
         <button
           className={`${showMore ? '' : 'inline'} font-medium text-primary`}
           onClick={(e) => {
