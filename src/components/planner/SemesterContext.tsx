@@ -87,7 +87,7 @@ export interface useSemestersProps {
 
 export type UndoStackReducerState = {
   stack: (() => void)[];
-  current: () => void;
+  current: (() => void) | null;
 };
 
 export type UndoStackReducerAction =
@@ -170,7 +170,6 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
     (state: UndoStackReducerState, action: UndoStackReducerAction) => UndoStackReducerState
   >(
     (state, action) => {
-      console.log('undo', state, action);
       switch (action.type) {
         case 'popUndoStack':
           return { stack: state.stack.slice(0, -1), current: state.stack[state.stack.length - 1] };
@@ -182,9 +181,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
     },
     {
       stack: [],
-      current: () => {
-        console.log('unimplemented');
-      },
+      current: null,
     },
   );
 
