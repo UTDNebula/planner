@@ -1,12 +1,7 @@
 import { UniqueIdentifier, useDraggable } from '@dnd-kit/core';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import React, { ComponentPropsWithoutRef, FC, forwardRef, useState, useRef } from 'react';
-
-import Checkbox from '@/components/Checkbox';
-import DotsHorizontalIcon from '@/icons/DotsHorizontalIcon';
-import FilledWarningIcon from '@/icons/FilledWarningIcon';
-import LockIcon from '@/icons/LockIcon';
-import { trpc } from '@/utils/trpc';
+import Skeleton from 'react-loading-skeleton';
 
 import SemesterCourseItemDropdown from './SemesterCourseItemDropdown';
 import CourseInfoHoverCard from '../CourseInfoHoverCard';
@@ -15,6 +10,14 @@ import { useSemestersContext } from '../SemesterContext';
 import { DragDataFromSemesterTile, DraggableCourse, Semester } from '../types';
 import useGetCourseInfo from '../useGetCourseInfo';
 import { tagColors } from '../utils';
+
+import Checkbox from '@/components/Checkbox';
+import DotsHorizontalIcon from '@/icons/DotsHorizontalIcon';
+import FilledWarningIcon from '@/icons/FilledWarningIcon';
+import LockIcon from '@/icons/LockIcon';
+import { trpc } from '@/utils/trpc';
+
+import 'react-loading-skeleton/dist/skeleton.css';
 
 export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'> {
   course: DraggableCourse;
@@ -72,17 +75,18 @@ export const MemoizedSemesterCourseItem = React.memo(
           !isValid && !course.prereqOveridden ? 'bg-[#FEFBED]' : 'bg-[#FFFFFF]'
         }  ${
           !course.locked || isValid || isValid === undefined
-            ? course.locked
-              ? 'bg-neutral-200'
+            ? course.locked || semesterLocked
+              ? 'cursor-default bg-neutral-200'
               : 'bg-inherit'
-            : 'bg-[#FFFBEB]'
+            : 'cursor-default bg-neutral-200'
         } ${semesterLocked || course.locked ? 'text-neutral-400' : 'text-[#1C2A6D]'}`}
         onClick={() => {
           // Don't open if user is hovering over course info
-          setDropdownOpen(true);
+          if (!course.locked && !semesterLocked) setDropdownOpen(true);
         }}
         onMouseEnter={() => {
-          if (!dropdownOpen) hoverTimer.current = setTimeout(() => setHoverOpen(true), 500);
+          if (!dropdownOpen && !course.locked && !semesterLocked)
+            hoverTimer.current = setTimeout(() => setHoverOpen(true), 500);
           setHoverEllipse(true);
         }}
         onMouseLeave={() => {
@@ -109,25 +113,29 @@ export const MemoizedSemesterCourseItem = React.memo(
         >
           <div className="flex w-full flex-row items-center gap-x-3">
             <DragIndicatorIcon fontSize="inherit" className="text-[16px] text-neutral-300" />
-            <Checkbox
-              disabled={course.locked}
-              style={{ minWidth: '20px', height: '20px', backgroundColor: 'inherit' }}
-              checked={isSelected}
-              onClick={(e) => e.stopPropagation()}
-              onCheckedChange={(checked) => {
-                if (checked && onSelectCourse) {
-                  onSelectCourse();
-                }
+            {course.locked || semesterLocked ? (
+              <LockIcon className="ml-1" />
+            ) : (
+              <Checkbox
+                disabled={course.locked}
+                style={{ minWidth: '20px', height: '20px', backgroundColor: 'inherit' }}
+                checked={isSelected}
+                onClick={(e) => e.stopPropagation()}
+                onCheckedChange={(checked) => {
+                  if (checked && onSelectCourse) {
+                    onSelectCourse();
+                  }
 
-                if (!checked && onDeselectCourse) {
-                  onDeselectCourse();
-                }
-              }}
-            />
+                  if (!checked && onDeselectCourse) {
+                    onDeselectCourse();
+                  }
+                }}
+              />
+            )}
             <div className="flex w-[calc(100%-8rem)] flex-col">
               <span className="content-middle flex items-center whitespace-nowrap text-sm">
                 {course.code}
-                {!isValid && !course.prereqOveridden && (
+                {!isValid && !course.prereqOveridden && !course.locked && (
                   <PrereqWarnHoverCard
                     prereqs={requirementsData === undefined ? [[], [], []] : requirementsData}
                     description={description ?? ''}
@@ -137,43 +145,50 @@ export const MemoizedSemesterCourseItem = React.memo(
                     isOverriden={course.prereqOveridden}
                   >
                     <span className="text-[#FBBF24]" onMouseLeave={() => setPrereqWarnOpen(false)}>
-                      <FilledWarningIcon />
+                      {!semesterLocked && <FilledWarningIcon />}
                     </span>
                   </PrereqWarnHoverCard>
                 )}
-                {course.locked && <LockIcon className="ml-1" />}
               </span>
-              <span className="truncate text-sm">{title}</span>
+              <span className="truncate text-sm">
+                {title || (course.code[0] == '0' ? '' : <Skeleton />)}
+              </span>
             </div>
-            <SemesterCourseItemDropdown
-              open={dropdownOpen}
-              onOpenChange={(open) => {
-                if (hoverOpen) {
-                  setHoverOpen(false);
+            {!semesterLocked && (
+              <SemesterCourseItemDropdown
+                open={dropdownOpen}
+                onOpenChange={(open) => {
+                  if (hoverOpen) {
+                    setHoverOpen(false);
+                  }
+                  if (!open) setHoverEllipse(false);
+                  setDropdownOpen(open);
+                }}
+                locked={course.locked}
+                onPrereqOverrideChange={() =>
+                  onPrereqOverrideChange && onPrereqOverrideChange(!course.prereqOveridden)
                 }
-                if (!open) setHoverEllipse(false);
-                setDropdownOpen(open);
-              }}
-              locked={course.locked}
-              onPrereqOverrideChange={() =>
-                onPrereqOverrideChange && onPrereqOverrideChange(!course.prereqOveridden)
-              }
-              isValid={isValid}
-              prereqOverriden={course.prereqOveridden}
-              semesterLocked={semesterLocked || false}
-              toggleLock={() => onLockChange && onLockChange(!course.locked)}
-              changeColor={(color) => onColorChange && onColorChange(color)}
-              deleteCourse={() => onDeleteCourse && onDeleteCourse()}
-            >
-              <div
-                className="mr-2 rounded-md px-2 py-3 hover:bg-gray-200/[.5]"
-                onClick={() => setDropdownOpen(true)}
+                isValid={isValid}
+                prereqOverriden={course.prereqOveridden}
+                semesterLocked={semesterLocked || false}
+                toggleLock={() => onLockChange && onLockChange(!course.locked)}
+                changeColor={(color) => onColorChange && onColorChange(color)}
+                deleteCourse={() => onDeleteCourse && onDeleteCourse()}
               >
-                <DotsHorizontalIcon
-                  className={`h-auto w-5 ${hoverEllipse || dropdownOpen ? '' : 'invisible'}`}
-                />
-              </div>
-            </SemesterCourseItemDropdown>
+                <div
+                  className={`mr-2 rounded-md px-2 py-3 hover:cursor-default ${
+                    course.locked ? 'hover:bg-gray-300' : 'hover:bg-gray-200/[.5]'
+                  }`}
+                  onClick={() => setDropdownOpen(true)}
+                >
+                  {!semesterLocked && (
+                    <DotsHorizontalIcon
+                      className={`h-auto w-5 ${hoverEllipse || dropdownOpen ? '' : 'invisible'}`}
+                    />
+                  )}
+                </div>
+              </SemesterCourseItemDropdown>
+            )}
           </div>
         </CourseInfoHoverCard>
       </div>

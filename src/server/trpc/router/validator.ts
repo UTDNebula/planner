@@ -2,6 +2,7 @@ import { Course, Prisma, Semester } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
+import { env } from '@/env/server.mjs';
 import courses, { JSONCourse } from '@data/courses.json';
 
 import { protectedProcedure, router } from '../trpc';
@@ -375,7 +376,7 @@ export const validatorRouter = router({
       bypasses,
     };
 
-    const validationData = await fetch(`${process.env.NEXT_PUBLIC_VALIDATOR}/test-validate`, {
+    const validationData = await fetch(`${env.NEXT_PUBLIC_VALIDATOR}/validate`, {
       method: 'POST',
       body: JSON.stringify(body),
       headers: {
