@@ -6,7 +6,7 @@ from datetime import datetime
 from types import GenericAlias
 from typing import Any, ForwardRef
 from jsonschema import Draft7Validator
-from major.requirements import REQUIREMENTS_MAP
+from major.requirements import loader
 
 schema: dict[str, Any] = {
     "$schema": Draft7Validator.META_SCHEMA["$id"],
@@ -89,8 +89,9 @@ def forward_ref_to_schema(ref: ForwardRef) -> dict[str, Any]:
         raise Exception("Expected type, got", type(ref_type), ref_type)
 
 
-for req_name in REQUIREMENTS_MAP:
-    req = REQUIREMENTS_MAP[req_name]
+req_loader = loader.Loader()
+for req_name in req_loader.REQUIREMENTS_MAP:
+    req = req_loader.REQUIREMENTS_MAP[req_name]
     requirement_schema_props: dict[str, Any] = {"matcher": {"const": req_name}}
 
     for prop_name, prop_type in req.JSON.__annotations__.items():
