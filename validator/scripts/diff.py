@@ -76,7 +76,7 @@ def createTicket(issueType: str, jira_connection: JIRA, URI: str, coursesImpacte
     f.close()
     ticket = jira_connection.create_issue(
         project='NP',
-        summary='Course requirement version changes',
+        summary='Course requirement version changes: ' +  URI.split("/")[-1],
         description=description,
         issuetype={'name': 'Task'},
         customfield_10016=1,
