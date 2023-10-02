@@ -56,8 +56,6 @@ function CourseSelectorContainer({
     },
   });
 
-  const isDroppable = dragActive;
-
   const { setNodeRef } = useDroppable({
     id: dropId,
     data: { to: 'sidebar-tile' } as DragDataToSidebarTile,
@@ -131,7 +129,7 @@ function CourseSelectorContainer({
       {open ? (
         open && dragActive ? (
           <div
-            ref={isDroppable ? setNodeRef : ref}
+            ref={setNodeRef}
             id="tutorial-editor-1"
             className="z-0 h-screen w-[30%] min-w-[30%] overflow-x-hidden overflow-y-scroll"
           >
@@ -261,7 +259,7 @@ function CourseSelectorContainer({
         )
       ) : dragActive ? (
         <div
-          ref={isDroppable ? setNodeRef : ref}
+          ref={setNodeRef}
           className="z-0 flex h-screen w-[50px] flex-col items-center border border-neutral-300 bg-red-500 py-8"
         ></div>
       ) : (
