@@ -208,6 +208,7 @@ const DroppableSemesterTile: FC<DroppableSemesterTileProps> = ({
   const { setNodeRef } = useDroppable({
     id: dropId,
     data: { to: 'semester-tile', semester } as DragDataToSemesterTile,
+    disabled: semester.locked,
   });
 
   return (
