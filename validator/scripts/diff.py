@@ -83,8 +83,8 @@ def createTicket(issueType: str, jira_connection: JIRA, URI: str, coursesImpacte
         labels=["Engineering"],
     )
     if os.path.getsize("description.txt"):
-        with open("description.txt", "rb") as f:
-            jira_connection.add_attachment(issue=ticket, attachment=f)
+        with open("description.txt", "rb") as descriptionFile:
+            jira_connection.add_attachment(issue=ticket, attachment=descriptionFile)
     os.remove("description.txt")
 
 #Establishes JIRA connection and ierates through each major for versioning issues
