@@ -67,12 +67,14 @@ def htmldiff(previousYearURL: str, currentYearURL: str, oldCourses: set[str], ne
 def createTicket(issueType: str, jira_connection: JIRA, URI: str, coursesImpacted: set[str], diffCodeBlock: str) -> None:
     description = "This is an automated diff script used to detect discrepancies between major requirements\nURI: " + URI + "\n"
     description += "Major: " + URI.split("/")[-1] + "\n"
+    f = open("description.txt", "w")
     if issueType == 'R':
         description += "This major/concentration has been renamed or removed\n\n"
     elif issueType == 'C':
-        description += "The following course(s) have been renamed/added/removed:\n" + str(coursesImpacted) + "\n\n"
-        description+="Below is a preview of the diff:\n" + diffCodeBlock
-    jira_connection.create_issue(
+        description += "See attachment for the course(s) that have been renamed/added/removed:\n" + str(coursesImpacted) + "\n\n"
+        f.write(diffCodeBlock)
+    f.close()
+    ticket = jira_connection.create_issue(
         project='NP',
         summary='Course requirement version changes',
         description=description,
@@ -80,6 +82,11 @@ def createTicket(issueType: str, jira_connection: JIRA, URI: str, coursesImpacte
         customfield_10016=1,
         labels=["Engineering"],
     )
+    f = open("description.txt", "r")
+    if os.path.getsize("description.txt"):
+        jira_connection.add_attachment(issue=ticket, attachment=f)
+    f.close()
+    os.remove("description.txt")
 
 #Establishes JIRA connection and ierates through each major for versioning issues
 if __name__ == "__main__":
