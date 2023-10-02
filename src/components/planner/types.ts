@@ -71,11 +71,16 @@ export interface DragDataFromCourseList {
   course: DraggableCourse;
 }
 
-export type DragEventDestinationData = DragDataToSemesterTile;
+export type DragEventDestinationData = DragDataToSemesterTile | DragDataToSidebarTile;
 
 export interface DragDataToSemesterTile {
   to: 'semester-tile';
   semester: Semester;
+}
+
+export interface DragDataToSidebarTile {
+  to: 'sidebar-tile';
+  course: DraggableCourse;
 }
 
 // Date stored during drag
