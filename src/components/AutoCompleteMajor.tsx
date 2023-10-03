@@ -11,6 +11,33 @@ interface AutoCompleteMajorProps extends React.ComponentPropsWithoutRef<'div'> {
   defaultValue?: string;
 }
 
+const customStyles = {
+  control: (provided: any) => ({
+    ...provided,
+    border: '1px solid var(--color-neutral-500)',
+    borderRadius: '0.375rem',
+    fontSize: '14px',
+    height: '46px',
+    // You can add more styles as needed
+  }),
+  option: (provided: any) => ({
+    ...provided,
+    color: 'black',
+  }),
+  input: (provided: any) => ({
+    ...provided,
+    paddingLeft: '0.5rem',
+    color: 'black',
+  }),
+  placeholder: (provided: any) => {
+    return {
+      ...provided,
+      paddingLeft: '0.5rem',
+      fontSize: '14px',
+    };
+  },
+};
+
 const AutoCompleteMajor: FC<AutoCompleteMajorProps & React.ComponentPropsWithoutRef<'button'>> = ({
   onValueChange,
   onInputChange,
@@ -26,8 +53,12 @@ const AutoCompleteMajor: FC<AutoCompleteMajorProps & React.ComponentPropsWithout
   const convertedOptions: any[] = majors.map((e) => ({ label: e, value: e }));
   return (
     <div {...props}>
-      <div ref={containerRef} className="absolute -bottom-3 left-0 h-full w-full "></div>
+      <div ref={containerRef} className="absolute -bottom-3 left-0 h-full w-full"></div>
       <Select
+        styles={customStyles}
+        components={{
+          IndicatorSeparator: () => null,
+        }}
         isSearchable={true}
         isClearable={false}
         onChange={(selection) => onValueChange(selection.value ?? '')}
