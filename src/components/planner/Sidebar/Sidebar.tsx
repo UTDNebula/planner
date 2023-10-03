@@ -25,6 +25,7 @@ export interface CourseSelectorContainerProps {
   transferCredits: string[];
   getSearchedDragId: GetDragIdByCourse;
   getRequirementDragId: GetDragIdByCourse;
+  courseDragged: boolean;
 }
 
 function CourseSelectorContainer({
@@ -33,6 +34,7 @@ function CourseSelectorContainer({
   transferCredits,
   getSearchedDragId,
   getRequirementDragId,
+  courseDragged,
 }: CourseSelectorContainerProps) {
   const {
     data: validationData,
@@ -119,7 +121,9 @@ function CourseSelectorContainer({
       {open ? (
         <div
           id="tutorial-editor-1"
-          className="z-0 h-screen w-[30%] min-w-[30%] overflow-x-hidden overflow-y-scroll"
+          className={`z-0 h-screen w-[30%] min-w-[30%] overflow-x-hidden ${
+            courseDragged ? 'overflow-y-hidden' : 'overflow-y-scroll'
+          }`}
         >
           <div className="flex h-fit min-h-screen w-full flex-col gap-y-4 bg-white p-4">
             <div className="flex flex-col">
