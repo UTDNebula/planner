@@ -122,6 +122,7 @@ export type SemestersReducerAction =
     }
   | { type: 'removeYear' }
   | { type: 'removeCourseFromSemester'; semesterId: string; courseId: string }
+  | { type: 'massInsertCourses'; coursesGrouped: CourseSemesterGrouped }
   | { type: 'massDeleteCoursesFromSemester'; courseIds: string[] }
   | {
       type: 'moveCourseFromSemesterToSemester';
@@ -165,6 +166,13 @@ export type SemestersReducerAction =
       type: 'reinitState';
       semesters: Semester[];
     };
+
+interface CourseSemester {
+  semesterId: string;
+  course: DraggableCourse;
+}
+
+type CourseSemesterGrouped = { [semesterId: string]: DraggableCourse[] };
 
 export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
   planId,
@@ -262,6 +270,17 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
                 }
               : semester;
           });
+
+        case 'massInsertCourses':
+          return state.map((semester) =>
+            semester.id.toString() in action.coursesGrouped &&
+            action.coursesGrouped[semester.id.toString()].length > 0
+              ? {
+                  ...semester,
+                  courses: [...semester.courses, ...action.coursesGrouped[semester.id.toString()]],
+                }
+              : semester,
+          );
 
         case 'massDeleteCoursesFromSemester':
           return state.map((semester) => {
@@ -496,6 +515,13 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
     },
   });
 
+  const massInsertCourses = trpc.plan.massInsertCourses.useMutation({
+    async onSuccess() {
+      await utils.validator.degreeValidator.invalidate();
+      await utils.validator.prereqValidator.invalidate();
+    },
+  });
+
   const moveCourse = trpc.plan.moveCourseFromSemester.useMutation({
     async onSuccess() {
       utils.validator.prereqValidator.invalidate();
@@ -516,8 +542,29 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
 
   const semesterColorChange = trpc.plan.changeSemesterColor.useMutation();
 
+  const expandCourseFromId = (id: string): CourseSemester | null => {
+    for (let semester of semesters) {
+      for (let course of semester.courses) {
+        if (course.id === id) {
+          return { semesterId: semester.id, course };
+        }
+      }
+    }
+    return null;
+  };
+
   const handleDeleteAllSelectedCourses = useCallback(() => {
     const coursesToDelete = [...selectedCourseIds];
+    const coursesCopy: CourseSemester[] = coursesToDelete.map((id) => expandCourseFromId(id)!!);
+    const coursesCopyGrouped: CourseSemesterGrouped = coursesCopy.reduce(
+      (groups: CourseSemesterGrouped, item) => {
+        const group = groups[item.semesterId] || [];
+        group.push(item.course);
+        groups[item.semesterId] = group;
+        return groups;
+      },
+      {},
+    );
 
     dispatchSemesters({
       type: 'massDeleteCoursesFromSemester',
@@ -541,9 +588,47 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
         ),
       args: { courseIds: coursesToDelete },
     });
+
+    dispatchUndo({
+      type: 'pushUndoStack',
+      callback: () => {
+        dispatchSemesters({
+          type: 'massInsertCourses',
+          coursesGrouped: coursesCopyGrouped,
+        });
+
+        addTask({
+          func: (courses) =>
+            toast.promise(
+              massInsertCourses.mutateAsync(
+                courses.map(({ course, semesterId }) => ({
+                  id: course.id,
+                  code: course.code,
+                  color: course.color,
+                  locked: course.locked,
+                  prereqOverriden: course.prereqOveridden,
+                  semesterId,
+                })),
+              ),
+              {
+                pending: 'Undoing deletion of selected courses',
+                success: 'Undo deletion of selected courses successful!',
+                error: 'Error during undo',
+              },
+              {
+                autoClose: 1000,
+                position: 'bottom-right',
+              },
+            ),
+          args: coursesCopy,
+        });
+      },
+    });
   }, [selectedCourseIds, addTask, massDeleteCourses]);
 
   const handleDeleteAllCoursesFromSemester = (semester: Semester) => {
+    const coursesGroup = { [semester.id]: semester.courses };
+
     handleDeselectCourses(semester.courses.map((course) => course.id.toString()));
 
     dispatchSemesters({ type: 'deleteAllCoursesFromSemester', semesterId: semester.id.toString() });
@@ -551,6 +636,42 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
     addTask({
       func: ({ semesterId }) => deleteAllCourses.mutateAsync({ semesterId }),
       args: { semesterId: semester.id.toString() },
+    });
+
+    dispatchUndo({
+      type: 'pushUndoStack',
+      callback: () => {
+        dispatchSemesters({
+          type: 'massInsertCourses',
+          coursesGrouped: coursesGroup,
+        });
+
+        addTask({
+          func: ({ semesterId, courses }) =>
+            toast.promise(
+              massInsertCourses.mutateAsync(
+                courses.map((course) => ({
+                  id: course.id,
+                  code: course.code,
+                  color: course.color,
+                  locked: course.locked,
+                  prereqOverriden: course.prereqOveridden,
+                  semesterId,
+                })),
+              ),
+              {
+                pending: 'Undoing deletion of courses',
+                success: 'Undo deletion of courses successful!',
+                error: 'Error during undo',
+              },
+              {
+                autoClose: 1000,
+                position: 'bottom-right',
+              },
+            ),
+          args: { semesterId: semester.id, courses: semester.courses },
+        });
+      },
     });
   };
 

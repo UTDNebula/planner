@@ -21,7 +21,7 @@ import {
 } from '@dnd-kit/core';
 import Router from 'next/router';
 import React, { useMemo, useState, useRef, FC, useEffect } from 'react';
-import { GlobalHotKeys } from 'react-hotkeys';
+import { useHotkeys } from 'react-hotkeys-hook';
 
 import { trpc } from '@/utils/trpc';
 
@@ -150,12 +150,7 @@ export default function Planner({
   const ref = useRef<HTMLDivElement>(null);
   // TODO: Use resizeobserver to change column count based on screen size
 
-  const keyMap = {
-    UNDO_ACTION: ['ctrl+z'],
-  };
-  const handlers = {
-    UNDO_ACTION: undo,
-  };
+  useHotkeys('ctrl+z', undo);
 
   return (
     <DndContext
@@ -166,7 +161,6 @@ export default function Planner({
       onDragStart={handleOnDragStart}
       onDragEnd={handleOnDragEnd}
     >
-      <GlobalHotKeys keyMap={keyMap} handlers={handlers} />
       <SelectedCoursesToast
         show={selectedCourseCount > 0}
         selectedCount={selectedCourseCount}

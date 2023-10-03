@@ -55,6 +55,7 @@ import { env } from '@/env/client.mjs';
 import ScreenSizeWarnModal from '@/shared/ScreenSizeWarnModal';
 
 import type { NextComponentType } from 'next'; //Import Component type
+import { GlobalHotKeys, HotKeys } from 'react-hotkeys';
 
 //Add custom appProp type then use union to add it
 type CustomAppProps = AppProps & {
