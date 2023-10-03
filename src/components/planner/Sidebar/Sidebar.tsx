@@ -3,12 +3,6 @@ import { useRef, useState, useMemo, memo } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { v4 as uuidv4 } from 'uuid';
 
-import AccordionSkeleton from './AccordionSkeleton';
-import DraggableCourseList from './DraggableCourseList';
-import { DegreeRequirement } from './types';
-import { Course, DraggableCourse, GetDragIdByCourse } from '../types';
-import useFuse from '../useFuse';
-
 import Button from '@/components/Button';
 import AnalyticsWrapper from '@/components/common/AnalyticsWrapper';
 import RequirementsContainer from '@/components/planner/Sidebar/RequirementsContainer';
@@ -16,6 +10,12 @@ import SearchBar from '@/components/planner/Sidebar/SearchBar';
 import ChevronIcon from '@/icons/ChevronIcon';
 import { trpc } from '@/utils/trpc';
 import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
+
+import AccordionSkeleton from './AccordionSkeleton';
+import DraggableCourseList from './DraggableCourseList';
+import { DegreeRequirement } from './types';
+import { Course, DraggableCourse, GetDragIdByCourse } from '../types';
+import useFuse from '../useFuse';
 
 import 'react-loading-skeleton/dist/skeleton.css';
 
@@ -36,11 +36,7 @@ function CourseSelectorContainer({
   getRequirementDragId,
   courseDragged,
 }: CourseSelectorContainerProps) {
-  const {
-    data: validationData,
-    error,
-    isLoading: isValidationLoading,
-  } = trpc.validator.degreeValidator.useQuery(planId, {
+  const { data: validationData, error } = trpc.validator.degreeValidator.useQuery(planId, {
     // TODO: Fix validator retries.
     // Validator kept retrying when the "REPORT ERROR" button was clicked on. At some point it should stop retrying.
     retry: false,
@@ -53,7 +49,17 @@ function CourseSelectorContainer({
     },
   });
 
-  const { data, isLoading } = trpc.courses.publicGetAllCourses.useQuery();
+  const validatorError = useMemo(
+    () => error?.data?.code === 'INTERNAL_SERVER_ERROR',
+    [error?.data?.code],
+  );
+
+  const validatorUnsupportedDegreeError = useMemo(
+    () => error?.data?.code === 'NOT_FOUND',
+    [error?.data?.code],
+  );
+
+  const { data } = trpc.courses.publicGetAllCourses.useQuery();
 
   const { results, updateQuery } = useFuse<Course>({
     dataSet:
@@ -197,18 +203,31 @@ function CourseSelectorContainer({
               )}
             </Dialog.Root>
 
-            {error?.data?.code === 'INTERNAL_SERVER_ERROR' && (
+            {validatorError && (
               <div className="flex h-[30vh] w-full text-base leading-5 text-[#A3A3A3]">
                 <div className="mx-12 mt-44 flex w-full flex-col items-center justify-center gap-4 text-center leading-6">
                   It seems like a screw has gone loose!
-                  <a href="https://airtable.com/shrFg9MPi9BGguwPU">
+                  <a target="_blank" rel="noreferrer" href="https://airtable.com/shrFg9MPi9BGguwPU">
                     <Button>REPORT ERROR</Button>
                   </a>
                 </div>
               </div>
             )}
 
-            {validationData &&
+            {validatorUnsupportedDegreeError && (
+              <div className="flex h-[30vh] w-full text-base leading-5 text-[#A3A3A3]">
+                <div className="mx-12 mt-44 flex w-full flex-col items-center justify-center gap-4 text-center leading-6">
+                  It seems like your major is no longer supported! Contact us to have it added.
+                  <a target="_blank" rel="noreferrer" href="https://airtable.com/shrFg9MPi9BGguwPU">
+                    <Button>REPORT ERROR</Button>
+                  </a>
+                </div>
+              </div>
+            )}
+
+            {!validatorError &&
+              !validatorUnsupportedDegreeError &&
+              validationData &&
               validationData.validation.requirements.length > 0 &&
               validationData.validation.requirements.map((req: DegreeRequirement, idx: number) => (
                 <RequirementsContainer
@@ -218,7 +237,11 @@ function CourseSelectorContainer({
                   getCourseItemDragId={getRequirementDragId}
                 />
               ))}
-            {!validationData && <AccordionSkeleton />}
+
+            {!validatorError && !validatorUnsupportedDegreeError && !validationData && (
+              <AccordionSkeleton />
+            )}
+
             <div className="flex flex-grow items-end justify-end text-sm ">
               <div>
                 <span className="font-bold">Warning:</span> This is an unofficial tool not
