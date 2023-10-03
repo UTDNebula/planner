@@ -27,7 +27,7 @@ import { trpc } from '@/utils/trpc';
 import PlannerMouseSensor from './PlannerMouseSensor';
 import SelectedCoursesToast from './SelectedCoursesToast';
 import { useSemestersContext } from './SemesterContext';
-import CourseSelectorContainer from './Sidebar/Sidebar';
+import Sidebar from './Sidebar/Sidebar';
 import { SidebarCourseItem } from './Sidebar/SidebarCourseItem';
 import { SemesterCourseItem } from './Tiles/SemesterCourseItem';
 import DroppableSemesterTile from './Tiles/SemesterTile';
@@ -212,7 +212,7 @@ export default function Planner({
             </div>
           </article>
         </section>
-        <CourseSelectorContainer
+        <Sidebar
           planId={planId}
           courses={courseCodes}
           transferCredits={transferCredits}
