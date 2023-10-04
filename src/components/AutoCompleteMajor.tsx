@@ -33,6 +33,7 @@ const customStyles = {
     return {
       ...provided,
       paddingLeft: '0.5rem',
+      color: 'rgb(163 163 163)',
       fontSize: '14px',
     };
   },
