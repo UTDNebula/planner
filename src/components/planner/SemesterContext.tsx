@@ -543,8 +543,8 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
   const semesterColorChange = trpc.plan.changeSemesterColor.useMutation();
 
   const expandCourseFromId = (id: string): CourseSemester | null => {
-    for (let semester of semesters) {
-      for (let course of semester.courses) {
+    for (const semester of semesters) {
+      for (const course of semester.courses) {
         if (course.id === id) {
           return { semesterId: semester.id, course };
         }
@@ -555,7 +555,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
 
   const handleDeleteAllSelectedCourses = useCallback(() => {
     const coursesToDelete = [...selectedCourseIds];
-    const coursesCopy: CourseSemester[] = coursesToDelete.map((id) => expandCourseFromId(id)!!);
+    const coursesCopy: CourseSemester[] = coursesToDelete.map((id) => expandCourseFromId(id)!);
     const coursesCopyGrouped: CourseSemesterGrouped = coursesCopy.reduce(
       (groups: CourseSemesterGrouped, item) => {
         const group = groups[item.semesterId] || [];
