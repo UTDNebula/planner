@@ -22,8 +22,3 @@ Cypress.Commands.add('resetDbAndLogin', () => {
   });
 });
 
-// Ultity to select dropdown options from MUI's autocomplete
-// Usage: cy.getDropdownOptions().contains("Whatever the option contains").click()
-Cypress.Commands.add('getDropdownOptions', () => {
-  return cy.get('.MuiAutocomplete-listbox [role="option"]');
-});

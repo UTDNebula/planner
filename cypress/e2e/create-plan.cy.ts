@@ -19,12 +19,15 @@ describe('Plan creation flow', () => {
     cy.task('log', 'Filling out plan creation form...');
     cy.dataTestId('plan-name-input').type(planName);
     cy.dataTestId('major-autocomplete').type('Computer');
-    cy.getDropdownOptions()
-      .contains('Computer Science')
-      .then(($el) => {
-        cy.wrap($el.get(0).innerText).as('major');
-        $el.click();
-      });
+    cy.contains('Computer Science')
+    .should('exist')
+    .click()
+    .then(() => {
+      cy.get('[data-testid=major-autocomplete]')
+        .invoke('text')
+        .as('major');
+    });
+
 
     // Create plan without upload transcript
     cy.task('log', 'Creating plan...');
@@ -63,12 +66,14 @@ describe('Plan creation flow', () => {
     cy.task('log', 'Filling out plan creation form...');
     cy.dataTestId('plan-name-input').type(planName);
     cy.dataTestId('major-autocomplete').type('Computer');
-    cy.getDropdownOptions()
-      .contains('Computer Science')
-      .then(($el) => {
-        cy.wrap($el.get(0).innerText).as('major');
-        $el.click();
-      });
+    cy.contains('Computer Science')
+    .should('exist')
+    .click()
+    .then(() => {
+      cy.get('[data-testid=major-autocomplete]')
+        .invoke('text')
+        .as('major');
+    });
 
     // Create plan with uploading transcript
     cy.task('log', 'Creating plan...');
@@ -111,12 +116,14 @@ describe('Plan creation flow', () => {
     cy.task('log', 'Filling out plan creation form...');
     cy.dataTestId('plan-name-input').type(planName);
     cy.dataTestId('major-autocomplete').type('Computer');
-    cy.getDropdownOptions()
-      .contains('Computer Science')
-      .then(($el) => {
-        cy.wrap($el.get(0).innerText).as('major');
-        $el.click();
-      });
+    cy.contains('Computer Science')
+    .should('exist')
+    .click()
+    .then(() => {
+      cy.get('[data-testid=major-autocomplete]')
+        .invoke('text')
+        .as('major');
+    });
 
     // Create template plan without upload transcript
     cy.task('log', 'Creating plan...');
