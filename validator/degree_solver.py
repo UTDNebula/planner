@@ -25,7 +25,7 @@ LOADER = loader.Loader()
 
 # Read all degree plan JSON files and store their contents in a hashmap
 # This is so that we can avoid reading all the files each time we want to get the data for a certain course
-degree_plans: DefaultDict[str, DefaultDict[str, dict]] = defaultdict(
+degree_plans: DefaultDict[str, DefaultDict[str, dict[str, Any]]] = defaultdict(
     lambda: defaultdict(dict)
 )
 
