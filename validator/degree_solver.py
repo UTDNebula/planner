@@ -185,7 +185,7 @@ class DegreeRequirementsSolver:
             if input_req not in degree_plans[str(year)]:
                 # Check if the years before this one have it
                 y = year
-                while y := y - 1 in degree_plans:
+                while str(y := y - 1) in degree_plans:
                     if input_req in degree_plans[str(y)]:
                         year = y
                         break
@@ -195,7 +195,7 @@ class DegreeRequirementsSolver:
                     break
                 # Check if the years after this one have it
                 y = year
-                while y := y + 1 in degree_plans:
+                while str(y := y + 1) in degree_plans:
                     if input_req in degree_plans[str(y)]:
                         year = y
                         break
