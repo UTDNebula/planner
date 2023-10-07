@@ -145,6 +145,12 @@ class DegreeRequirementsSolverException(Exception):
     pass
 
 
+class DegreeNotFoundException(Exception):
+    """Exception raised if the requested degree plan could not be found."""
+
+    pass
+
+
 class DegreeRequirementsSolver:
     def __init__(
         self,
@@ -203,8 +209,7 @@ class DegreeRequirementsSolver:
                     year != degree_requirements_input.year
                 ):  # The using_year has been replaced to a working year
                     break
-                print("Error: degree plan not found!")
-                return []
+                raise DegreeNotFoundException
             requirements_data = degree_plans[str(year)][input_req]["requirements"][
                 "major"
             ]

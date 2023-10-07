@@ -4,7 +4,12 @@ from flask import Flask, Response, request, make_response
 from http import HTTPStatus
 from flask_cors import CORS
 
-from degree_solver import BypassInput, DegreeRequirementsInput, DegreeRequirementsSolver
+from degree_solver import (
+    BypassInput,
+    DegreeRequirementsInput,
+    DegreeRequirementsSolver,
+    DegreeNotFoundException,
+)
 
 
 class APIError(Exception):
@@ -67,13 +72,17 @@ def validate() -> Response:
         courses: list[str] = j["courses"]
         year = j["requirements"]["year"]
         majors = j["requirements"]["majors"]
+        majors[0] = "jfoiewfj"
         minors = j["requirements"]["minors"]
         raw_bypasses = j["bypasses"]
 
         requirements = DegreeRequirementsInput(year, majors, minors, [])
         bypasses = BypassInput([], {majors[0]: [i for i in raw_bypasses]})
 
-        solver = DegreeRequirementsSolver(courses, requirements, bypasses)
+        try:
+            solver = DegreeRequirementsSolver(courses, requirements, bypasses)
+        except DegreeNotFoundException:
+            raise APIError("Degree plan not found!", HTTPStatus.NOT_FOUND)
         solver.solve()
 
         return make_response(solver.to_json(), 200)
