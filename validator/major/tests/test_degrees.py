@@ -36,9 +36,6 @@ def test_degrees(file: DirEntry[str]) -> None:
     "file", DEGREE_DATA_FILES, ids=lambda file: "file={}".format(file)
 )
 def test_degrees_include_first_year_seminar(file: DirEntry[str]) -> None:
-    degrees_with_no_seminar = ["Data Science(BS).json"]
-    if file.name in degrees_with_no_seminar:
-        return
     f = open(file, "r").read()
     data = json.loads(f)
     first_year_seminar_courses = {

@@ -21,6 +21,7 @@ import {
 } from '@dnd-kit/core';
 import Router from 'next/router';
 import React, { useMemo, useState, useRef, FC, useEffect } from 'react';
+import { useHotkeys } from 'react-hotkeys-hook';
 
 import { trpc } from '@/utils/trpc';
 
@@ -65,6 +66,7 @@ export default function Planner({
     handleSelectCourses,
     handleDeleteAllSelectedCourses,
     title,
+    undo,
   } = useSemestersContext();
 
   const utils = trpc.useContext();
@@ -153,6 +155,8 @@ export default function Planner({
 
   const ref = useRef<HTMLDivElement>(null);
   // TODO: Use resizeobserver to change column count based on screen size
+
+  useHotkeys('ctrl+z', undo);
 
   return (
     <DndContext

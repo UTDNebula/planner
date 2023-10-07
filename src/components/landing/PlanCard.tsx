@@ -2,10 +2,10 @@ import router from 'next/router';
 import { useState } from 'react';
 
 import DotsHorizontalIcon from '@/icons/DotsHorizontalIcon';
+import DeletePlanModal from '@/shared/DeletePlanModal';
 import { trpc } from '@/utils/trpc';
 
 import PlanCardDropdown from './PlanCardDropdown';
-import DeletePlanModal from '@/shared/DeletePlanModal';
 
 export type PlanCardProps = {
   id: string;

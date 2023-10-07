@@ -5,6 +5,7 @@ import { z } from 'zod';
 import { env } from '@/env/server.mjs';
 import courses, { JSONCourse } from '@data/courses.json';
 
+import { DegreeNotFound, DegreeValidationError } from './errors';
 import { protectedProcedure, router } from '../trpc';
 
 type PlanData = {
@@ -377,30 +378,35 @@ export const validatorRouter = router({
       bypasses,
     };
 
-    const validationData = await fetch(`${env.NEXT_PUBLIC_VALIDATOR}/validate`, {
+    const res = await fetch(`${env.NEXT_PUBLIC_VALIDATOR}/validate`, {
       method: 'POST',
       body: JSON.stringify(body),
       headers: {
         'content-type': 'application/json',
       },
-    })
-      .then(async (res) => {
-        if (!res.ok) {
-          const errorMsg = await res.json();
-          throw new Error(`validator fetch failed with status ${res.status}: ${errorMsg.error}.`);
-        }
-        return res.json();
-      })
-      .catch((err) => {
-        const errorMessage = `Validator error: ${err.message}`;
-        console.error('Validator error', err);
-        throw new TRPCError({
-          code: 'INTERNAL_SERVER_ERROR',
-          cause: err,
-          message: errorMessage,
-        });
-      });
+    });
 
+    if (!res.ok) {
+      const errorMsg = await res.json();
+      if (res.status == 404) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: errorMsg.error,
+          cause: new DegreeNotFound(errorMsg),
+        });
+      }
+
+      const error = new DegreeValidationError(
+        `Validator fetch failed with stats: ${res.status}, err: ${errorMsg}`,
+      );
+      throw new TRPCError({
+        code: 'INTERNAL_SERVER_ERROR',
+        message: error.message,
+        cause: error,
+      });
+    }
+
+    const validationData = await res.json();
     return { plan: planData, validation: validationData, bypasses };
   }),
 });
