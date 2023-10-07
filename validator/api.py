@@ -14,11 +14,11 @@ class APIError(Exception):
 
 
 # Load the list of degree plans that we support along with their json data
-plans = []
-for fname in glob("./degree_data/*.json"):
+plans = set()  # This is a set because we could have the same degree in multiple years
+for fname in glob("./degree_data/*/*.json"):
     with open(fname, "r") as f:
         data = json.load(f)
-        plans.append({"display_name": data["display_name"], "id": data["id"]})
+        plans.add(data["display_name"])
 
 
 # Instantiate flask app and ratelimiter
@@ -41,7 +41,7 @@ def get_degree_plans() -> Response:
     # Returns a list of degree plans that validator supports. This is just a list of the display names of all the JSON
     # plans we have.
     return make_response(
-        {"message": f"Supported degree plans.", "degree_plans": plans}, 200
+        {"message": f"Supported degree plans.", "degree_plans": list(plans)}, 200
     )
 
 
@@ -54,7 +54,9 @@ def test_validate() -> Response:
 
         courses: list[str] = j["courses"]
         rawReqs = j["requirements"]
-        requirements = DegreeRequirementsInput(rawReqs["majors"], rawReqs["minors"], [])
+        requirements = DegreeRequirementsInput(
+            rawReqs["year"], rawReqs["majors"], rawReqs["minors"], []
+        )
         rawBypasses = j["bypasses"]
         bypasses = BypassInput([], {rawReqs["majors"][0]: [i for i in rawBypasses]})
 
