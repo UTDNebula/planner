@@ -92,7 +92,7 @@ def test_computer_science_solver() -> None:
         "DEF 9199",
     ]
 
-    data = json.loads(open("degree_data/Computer Science(BS).json", "r").read())
+    data = json.loads(open("degree_data/2022/Computer Science(BS).json", "r").read())
 
     requirements_data = data["requirements"]["major"]
 
