@@ -77,19 +77,20 @@ def htmldiff(
 # Creates a ticket based on issue type, including URI and impacted courses in ticket
 # C issue type = Course renamed/added/removed
 # R issue type = Major/concentration removed
-def createTicket(
+def create_ticket(
     issueType: str,
     jira_connection: JIRA,
-    URI: str,
+    uri: str,
+    major_name: str,
     coursesImpacted: set[str],
     diffCodeBlock: str,
 ) -> None:
     description = (
         "This is an automated diff script used to detect discrepancies between major requirements\nURI: "
-        + URI
+        + uri
         + "\n"
     )
-    description += "Major: " + URI.split("/")[-1] + "\n"
+    description += f"Major: {major_name}\n"
     f = open("description.txt", "w")
     if issueType == "R":
         description += "This major/concentration has been renamed or removed\n\n"
@@ -103,7 +104,7 @@ def createTicket(
     f.close()
     ticket = jira_connection.create_issue(
         project="NP",
-        summary="Course requirement version changes: " + URI.split("/")[-1],
+        summary=f"Course requirement version changes: {major_name}",
         description=description,
         issuetype={"name": "Task"},
         customfield_10016=1,
@@ -140,18 +141,20 @@ if __name__ == "__main__":
             newCourses: set[str] = set()
             pageDiff = htmldiff(previousYearURL, currentYearURL, oldCourses, newCourses)
             if len(newCourses) == 0:
-                createTicket(
+                create_ticket(
                     "R",
                     jira_connection,
                     re.sub(yearRegex, f"/{ match }/", data["catalog_uri"]),
+                    data["display_name"],
                     set(),
                     pageDiff,
                 )
             else:
-                createTicket(
+                create_ticket(
                     "C",
                     jira_connection,
                     re.sub(yearRegex, f"/{ match }/", data["catalog_uri"]),
+                    data["display_name"],
                     (newCourses - oldCourses).union(oldCourses - newCourses),
                     pageDiff,
                 )
