@@ -21,4 +21,3 @@ Cypress.Commands.add('resetDbAndLogin', () => {
     });
   });
 });
-
