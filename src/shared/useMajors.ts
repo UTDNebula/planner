@@ -10,9 +10,7 @@ const useMajors = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setMajors(
-          data['degree_plans'].map((degree: { display_name: string }) => degree['display_name']),
-        );
+        setMajors(data['degree_plans']);
       })
       .catch((error) => {
         console.error('An error occurred while trying to load majors:', error);
