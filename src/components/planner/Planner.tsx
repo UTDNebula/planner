@@ -152,7 +152,7 @@ export default function Planner({
           originData.course,
         );
       }
-      // from semester to sidebar drag and drop delete
+      // from semester to sidebar drag and drop deletion
       if (originData.from === 'semester-tile' && destinationData.to === 'sidebar-tile') {
         handleRemoveCourseFromSemester(originData.semester, originData.course);
       }
