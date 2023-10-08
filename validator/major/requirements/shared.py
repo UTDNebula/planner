@@ -9,6 +9,7 @@ import utils
 
 from typing import Any, TypedDict
 from major.requirements import AbstractRequirement
+from major.requirements import loader
 from functools import reduce
 
 
@@ -24,7 +25,7 @@ class CourseRequirement(AbstractRequirement):
         self.metadata = metadata
         self.filled = filled
 
-    def attempt_fulfill(self, course: str) -> bool:
+    def attempt_fulfill(self, course: str, _: int = 0) -> bool:
         # fail duplicate attempt to fulfill
         if self.is_fulfilled():
             return False
@@ -79,7 +80,7 @@ class AndRequirement(AbstractRequirement):
         self.metadata = metadata
         self.override_filled = False
 
-    def attempt_fulfill(self, course: str) -> bool:
+    def attempt_fulfill(self, course: str, _: int = 0) -> bool:
         if self.is_fulfilled():
             return False
 
@@ -115,14 +116,10 @@ class AndRequirement(AbstractRequirement):
 
     @classmethod
     def from_json(cls, json: JSON) -> AndRequirement:
-        from .map import REQUIREMENTS_MAP
-
         # Get all requirements that are inside AndRequirement
         requirements: list[AbstractRequirement] = []
         for requirement_data in json["requirements"]:
-            requirement = REQUIREMENTS_MAP[requirement_data["matcher"]].from_json(
-                requirement_data
-            )
+            requirement = loader.Loader().requirement_from_json(requirement_data)
             requirements.append(requirement)
 
         return cls(requirements, json["metadata"])
@@ -157,7 +154,7 @@ class OrRequirement(AbstractRequirement):
         self.metadata = metadata
         self.override_filled = False  # use this as override fill
 
-    def attempt_fulfill(self, course: str) -> bool:
+    def attempt_fulfill(self, course: str, _: int = 0) -> bool:
         if self.is_fulfilled():
             return False
 
@@ -190,13 +187,9 @@ class OrRequirement(AbstractRequirement):
 
     @classmethod
     def from_json(cls, json: JSON) -> OrRequirement:
-        from .map import REQUIREMENTS_MAP
-
         requirements: list[AbstractRequirement] = []
         for requirement_data in json["requirements"]:
-            requirement = REQUIREMENTS_MAP[requirement_data["matcher"]].from_json(
-                requirement_data
-            )
+            requirement = loader.Loader().requirement_from_json(requirement_data)
             requirements.append(requirement)
 
         metadata = {}
@@ -243,7 +236,7 @@ class SelectRequirement(AbstractRequirement):
         self.metadata = metadata
         self.override_filled = False
 
-    def attempt_fulfill(self, course: str) -> bool:
+    def attempt_fulfill(self, course: str, _: int = 0) -> bool:
         if self.is_fulfilled():
             return False
 
@@ -281,13 +274,11 @@ class SelectRequirement(AbstractRequirement):
 
     @classmethod
     def from_json(cls, json: JSON) -> SelectRequirement:
-        from .map import REQUIREMENTS_MAP
+        from .loader import Loader
 
         requirements: list[AbstractRequirement] = []
         for requirement_data in json["requirements"]:
-            requirement = REQUIREMENTS_MAP[requirement_data["matcher"]].from_json(
-                requirement_data
-            )
+            requirement = loader.Loader().requirement_from_json(requirement_data)
             requirements.append(requirement)
 
         # Check if there's any metadata
@@ -345,7 +336,7 @@ class HoursRequirement(AbstractRequirement):
         self.metadata: dict[str, Any] = metadata
         self.override_filled = False
 
-    def attempt_fulfill(self, course: str) -> bool:
+    def attempt_fulfill(self, course: str, _: int = 0) -> bool:
         if self.is_fulfilled():
             return False
 
@@ -396,13 +387,9 @@ class HoursRequirement(AbstractRequirement):
             ]
         """
 
-        from .map import REQUIREMENTS_MAP
-
         requirements: list[AbstractRequirement] = []
         for requirement_data in json["requirements"]:
-            requirement = REQUIREMENTS_MAP[requirement_data["matcher"]].from_json(
-                requirement_data
-            )
+            requirement = loader.Loader().requirement_from_json(requirement_data)
             requirements.append(requirement)
 
         # Check if there's any metadata
@@ -456,7 +443,7 @@ class OtherRequirement(AbstractRequirement):
     def is_fulfilled(self) -> bool:
         return self.override_filled
 
-    def attempt_fulfill(self, course: str) -> bool:
+    def attempt_fulfill(self, course: str, _: int = 0) -> bool:
         return False
 
     def override_fill(self, index: str) -> bool:
@@ -522,14 +509,13 @@ class FreeElectiveRequirement(AbstractRequirement):
         self.metadata = metadata
         self.override_filled = False
 
-    def attempt_fulfill(self, course: str) -> bool:
+    def attempt_fulfill(self, course: str, available_hours: int = 0) -> bool:
         if self.is_fulfilled():
             return False
 
-        if not course in self.excluded_courses:
-            course_hrs = utils.get_hours_from_course(course)
-            self.fulfilled_hours += course_hrs
-            self.valid_courses[course] = course_hrs
+        if not course in self.excluded_courses and available_hours > 0:
+            self.fulfilled_hours += available_hours
+            self.valid_courses[course] = available_hours
             return True
 
         return False
@@ -607,7 +593,7 @@ class PrefixBucketRequirement(AbstractRequirement):
 
     # NOTE: This allows courses to satisfy the requirement even after it's filled,
     # as it doesn't check for whether or not the requirement has been filled
-    def attempt_fulfill(self, course: str) -> bool:
+    def attempt_fulfill(self, course: str, _: int = 0) -> bool:
         if course.startswith(self.prefix):
             self.filled = True
             self.valid_courses[course] = utils.get_hours_from_course(course)
@@ -680,7 +666,7 @@ class MajorGuidedElectiveRequirement(AbstractRequirement):
         self.metadata = metadata
         self.override_filled = False
 
-    def attempt_fulfill(self, course: str) -> bool:
+    def attempt_fulfill(self, course: str, _: int = 0) -> bool:
         if self.is_fulfilled():
             return False
 
@@ -747,12 +733,8 @@ class MajorGuidedElectiveRequirement(AbstractRequirement):
         """
 
         also_fulfills: list[AbstractRequirement] = []
-        from .map import REQUIREMENTS_MAP
-
         for requirement in json["also_fulfills"]:
-            also_fulfills.append(
-                REQUIREMENTS_MAP[requirement["matcher"]].from_json(requirement)
-            )
+            also_fulfills.append(loader.Loader().requirement_from_json(requirement))
 
         return cls(
             json["required_count"], json["starts_with"], also_fulfills, json["metadata"]
@@ -822,13 +804,11 @@ class MultiGroupElectiveRequirement(AbstractRequirement):
 
     @classmethod
     def from_json(cls, json: JSON) -> MultiGroupElectiveRequirement:
-        from .map import REQUIREMENTS_MAP
+        from .loader import Loader
 
         requirements: list[AbstractRequirement] = []
         for requirement_data in json["requirements"]:
-            requirement = REQUIREMENTS_MAP[requirement_data["matcher"]].from_json(
-                requirement_data
-            )
+            requirement = Loader().requirement_from_json(requirement_data)
             requirements.append(requirement)
 
         return cls(
@@ -864,7 +844,7 @@ class MultiGroupElectiveRequirement(AbstractRequirement):
             }
         )
 
-    def attempt_fulfill(self, course: str) -> bool:
+    def attempt_fulfill(self, course: str, _: int = 0) -> bool:
         if self.is_fulfilled():
             return False
 

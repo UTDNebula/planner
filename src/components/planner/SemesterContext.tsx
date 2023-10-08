@@ -24,6 +24,7 @@ export interface SemestersContextState {
   allSemesters: Semester[];
   selectedCourseCount: number;
   bypasses: string[];
+  undoStack: (() => void)[];
   courseIsSelected: (courseId: string) => boolean;
   handleSelectCourses: (courseId: string[]) => void;
   handleDeselectCourses: (courseId: string[]) => void;
@@ -62,6 +63,7 @@ export interface SemestersContextState {
     prereqOverriden: boolean,
     courseName: string,
   ) => void;
+  undo: () => void;
 }
 
 type Filter =
@@ -92,6 +94,20 @@ export interface useSemestersProps {
   plan?: Plan;
 }
 
+export type UndoStackReducerState = {
+  stack: (() => void)[];
+  current: (() => void) | null;
+};
+
+export type UndoStackReducerAction =
+  | {
+      type: 'popUndoStack';
+    }
+  | {
+      type: 'pushUndoStack';
+      callback: () => void;
+    };
+
 export type SemestersReducerState = Semester[];
 
 export type SemestersReducerAction =
@@ -106,6 +122,7 @@ export type SemestersReducerAction =
     }
   | { type: 'removeYear' }
   | { type: 'removeCourseFromSemester'; semesterId: string; courseId: string }
+  | { type: 'massInsertCourses'; coursesGrouped: CourseSemesterGrouped }
   | { type: 'massDeleteCoursesFromSemester'; courseIds: string[] }
   | {
       type: 'moveCourseFromSemesterToSemester';
@@ -150,6 +167,13 @@ export type SemestersReducerAction =
       semesters: Semester[];
     };
 
+interface CourseSemester {
+  semesterId: string;
+  course: DraggableCourse;
+}
+
+type CourseSemesterGrouped = { [semesterId: string]: DraggableCourse[] };
+
 export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
   planId,
   plan,
@@ -159,6 +183,35 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
   const { addTask } = useTaskQueue({ shouldProcess: true });
 
   const [selectedCourseIds, setSelectedCourseIds] = useState<Set<string>>(new Set());
+
+  const [undoStack, dispatchUndo] = useReducer<
+    (state: UndoStackReducerState, action: UndoStackReducerAction) => UndoStackReducerState
+  >(
+    (state, action) => {
+      switch (action.type) {
+        case 'popUndoStack':
+          return { stack: state.stack.slice(0, -1), current: state.stack[state.stack.length - 1] };
+        case 'pushUndoStack':
+          return { stack: [...state.stack, action.callback], current: state.current };
+        default:
+          return state;
+      }
+    },
+    {
+      stack: [],
+      current: null,
+    },
+  );
+
+  const undo = () => {
+    dispatchUndo({ type: 'popUndoStack' });
+  };
+
+  useEffect(() => {
+    if (undoStack.current) {
+      undoStack.current();
+    }
+  }, [undoStack.current]);
 
   const handleSelectCourses = (courseIds: string[]) => {
     setSelectedCourseIds((existingCourseIds) => {
@@ -178,7 +231,9 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
 
   const courseIsSelected = (courseId: string): boolean => selectedCourseIds.has(courseId);
 
-  const handleDeselectAllCourses = () => setSelectedCourseIds(new Set());
+  const handleDeselectAllCourses = () => {
+    setSelectedCourseIds(new Set());
+  };
 
   const [semesters, dispatchSemesters] = useReducer<
     (state: SemestersReducerState, action: SemestersReducerAction) => Semester[]
@@ -215,6 +270,17 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
                 }
               : semester;
           });
+
+        case 'massInsertCourses':
+          return state.map((semester) =>
+            semester.id.toString() in action.coursesGrouped &&
+            action.coursesGrouped[semester.id.toString()].length > 0
+              ? {
+                  ...semester,
+                  courses: [...semester.courses, ...action.coursesGrouped[semester.id.toString()]],
+                }
+              : semester,
+          );
 
         case 'massDeleteCoursesFromSemester':
           return state.map((semester) => {
@@ -334,6 +400,22 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
       func: ({ locked, semesterId }) => changeSemesterLock.mutateAsync({ locked, semesterId }),
       args: { locked, semesterId },
     });
+
+    dispatchUndo({
+      type: 'pushUndoStack',
+      callback: () => {
+        dispatchSemesters({
+          type: 'changeSemesterLock',
+          locked: !locked,
+          semesterId,
+        });
+
+        addTask({
+          func: ({ locked, semesterId }) => changeSemesterLock.mutateAsync({ locked, semesterId }),
+          args: { locked: !locked, semesterId },
+        });
+      },
+    });
   };
 
   const handleCourseLock = (semesterId: string, locked: boolean, courseName: string) => {
@@ -353,6 +435,23 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
       func: ({ locked, semesterId, courseName }) =>
         changeCourseLock.mutateAsync({ locked, semesterId, courseName }),
       args: { locked, semesterId, courseName },
+    });
+
+    dispatchUndo({
+      type: 'pushUndoStack',
+      callback: () => {
+        dispatchSemesters({
+          type: 'changeCourseLock',
+          locked: !locked,
+          semesterId,
+          courseName,
+        });
+        addTask({
+          func: ({ locked, semesterId, courseName }) =>
+            changeCourseLock.mutateAsync({ locked, semesterId, courseName }),
+          args: { locked: !locked, semesterId, courseName },
+        });
+      },
     });
   };
 
@@ -375,6 +474,24 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
         changeCoursePrereqOverride.mutateAsync({ semesterId, courseName, prereqOverriden }),
       args: { semesterId, courseName, prereqOverriden },
     });
+
+    dispatchUndo({
+      type: 'pushUndoStack',
+      callback: () => {
+        dispatchSemesters({
+          type: 'changeCoursePrereqOverride',
+          courseName,
+          prereqOverriden: !prereqOverriden,
+          semesterId,
+        });
+
+        addTask({
+          func: ({ semesterId, courseName, prereqOverriden }) =>
+            changeCoursePrereqOverride.mutateAsync({ semesterId, courseName, prereqOverriden }),
+          args: { semesterId, courseName, prereqOverriden: !prereqOverriden },
+        });
+      },
+    });
   };
 
   const addCourse = trpc.plan.addCourseToSemester.useMutation({
@@ -392,6 +509,13 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
   });
 
   const massDeleteCourses = trpc.plan.massDeleteCourses.useMutation({
+    async onSuccess() {
+      await utils.validator.degreeValidator.invalidate();
+      await utils.validator.prereqValidator.invalidate();
+    },
+  });
+
+  const massInsertCourses = trpc.plan.massInsertCourses.useMutation({
     async onSuccess() {
       await utils.validator.degreeValidator.invalidate();
       await utils.validator.prereqValidator.invalidate();
@@ -418,8 +542,29 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
 
   const semesterColorChange = trpc.plan.changeSemesterColor.useMutation();
 
+  const expandCourseFromId = (id: string): CourseSemester | null => {
+    for (const semester of semesters) {
+      for (const course of semester.courses) {
+        if (course.id === id) {
+          return { semesterId: semester.id, course };
+        }
+      }
+    }
+    return null;
+  };
+
   const handleDeleteAllSelectedCourses = useCallback(() => {
     const coursesToDelete = [...selectedCourseIds];
+    const coursesCopy: CourseSemester[] = coursesToDelete.map((id) => expandCourseFromId(id)!);
+    const coursesCopyGrouped: CourseSemesterGrouped = coursesCopy.reduce(
+      (groups: CourseSemesterGrouped, item) => {
+        const group = groups[item.semesterId] || [];
+        group.push(item.course);
+        groups[item.semesterId] = group;
+        return groups;
+      },
+      {},
+    );
 
     dispatchSemesters({
       type: 'massDeleteCoursesFromSemester',
@@ -443,9 +588,47 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
         ),
       args: { courseIds: coursesToDelete },
     });
+
+    dispatchUndo({
+      type: 'pushUndoStack',
+      callback: () => {
+        dispatchSemesters({
+          type: 'massInsertCourses',
+          coursesGrouped: coursesCopyGrouped,
+        });
+
+        addTask({
+          func: (courses) =>
+            toast.promise(
+              massInsertCourses.mutateAsync(
+                courses.map(({ course, semesterId }) => ({
+                  id: course.id,
+                  code: course.code,
+                  color: course.color,
+                  locked: course.locked,
+                  prereqOverriden: course.prereqOveridden,
+                  semesterId,
+                })),
+              ),
+              {
+                pending: 'Undoing deletion of selected courses',
+                success: 'Undo deletion of selected courses successful!',
+                error: 'Error during undo',
+              },
+              {
+                autoClose: 1000,
+                position: 'bottom-right',
+              },
+            ),
+          args: coursesCopy,
+        });
+      },
+    });
   }, [selectedCourseIds, addTask, massDeleteCourses]);
 
   const handleDeleteAllCoursesFromSemester = (semester: Semester) => {
+    const coursesGroup = { [semester.id]: semester.courses };
+
     handleDeselectCourses(semester.courses.map((course) => course.id.toString()));
 
     dispatchSemesters({ type: 'deleteAllCoursesFromSemester', semesterId: semester.id.toString() });
@@ -454,9 +637,45 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
       func: ({ semesterId }) => deleteAllCourses.mutateAsync({ semesterId }),
       args: { semesterId: semester.id.toString() },
     });
+
+    dispatchUndo({
+      type: 'pushUndoStack',
+      callback: () => {
+        dispatchSemesters({
+          type: 'massInsertCourses',
+          coursesGrouped: coursesGroup,
+        });
+
+        addTask({
+          func: ({ semesterId, courses }) =>
+            toast.promise(
+              massInsertCourses.mutateAsync(
+                courses.map((course) => ({
+                  id: course.id,
+                  code: course.code,
+                  color: course.color,
+                  locked: course.locked,
+                  prereqOverriden: course.prereqOveridden,
+                  semesterId,
+                })),
+              ),
+              {
+                pending: 'Undoing deletion of courses',
+                success: 'Undo deletion of courses successful!',
+                error: 'Error during undo',
+              },
+              {
+                autoClose: 1000,
+                position: 'bottom-right',
+              },
+            ),
+          args: { semesterId: semester.id, courses: semester.courses },
+        });
+      },
+    });
   };
 
-  const handleAddYear = () => {
+  const handleAddYear = (shouldPushUndo = true) => {
     const newYear: Semester[] = createYearBasedOnFall(
       semesters.length ? semesters[semesters.length - 1].code.year : 2022,
     );
@@ -483,9 +702,17 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
         ),
       args: { semesterIds: semesterIds.map((id) => id.toString()) },
     });
+
+    if (shouldPushUndo)
+      dispatchUndo({
+        type: 'pushUndoStack',
+        callback: () => {
+          handleRemoveYear(false);
+        },
+      });
   };
 
-  const handleRemoveYear = () => {
+  const handleRemoveYear = (shouldPushUndo = true) => {
     dispatchSemesters({ type: 'removeYear' });
 
     addTask({
@@ -506,11 +733,20 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
           .catch((err) => console.error(err)),
       args: {},
     });
+
+    if (shouldPushUndo)
+      dispatchUndo({
+        type: 'pushUndoStack',
+        callback: () => {
+          handleAddYear(false);
+        },
+      });
   };
 
   const handleRemoveCourseFromSemester = (
     targetSemester: Semester,
     targetCourse: DraggableCourse,
+    shouldPushUndo = true,
   ) => {
     dispatchSemesters({
       type: 'removeCourseFromSemester',
@@ -539,9 +775,25 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
           .catch((err) => console.error(err)),
       args: { semesterId, courseName },
     });
+
+    if (shouldPushUndo)
+      dispatchUndo({
+        type: 'pushUndoStack',
+        callback: () => {
+          const semesterUpdated: Semester = {
+            ...targetSemester,
+            courses: targetSemester.courses.filter((course) => course.code !== targetCourse.code),
+          };
+          handleAddCourseToSemester(semesterUpdated, targetCourse, false);
+        },
+      });
   };
 
-  const handleAddCourseToSemester = (targetSemester: Semester, newCourse: DraggableCourse) => {
+  const handleAddCourseToSemester = (
+    targetSemester: Semester,
+    newCourse: DraggableCourse,
+    shouldPushUndo = true,
+  ) => {
     // check for duplicate course
     const isDuplicate = Boolean(
       targetSemester.courses.find((course) => course.code === newCourse.code),
@@ -577,6 +829,14 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
         ),
       args: { semesterId, courseName },
     });
+
+    if (shouldPushUndo)
+      dispatchUndo({
+        type: 'pushUndoStack',
+        callback: () => {
+          handleRemoveCourseFromSemester(targetSemester, newCourse, false);
+        },
+      });
   };
 
   const handleMoveCourseFromSemesterToSemester = (
@@ -601,30 +861,41 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
     const newSemesterId = destinationSemester.id.toString();
     const courseName = courseToMove.code;
 
-    dispatchSemesters({
-      type: 'moveCourseFromSemesterToSemester',
-      originSemesterId: oldSemesterId,
-      destinationSemesterId: newSemesterId,
-      course: courseToMove,
-    });
+    const mutate = (oldSemesterId: string, newSemesterId: string) => {
+      dispatchSemesters({
+        type: 'moveCourseFromSemesterToSemester',
+        originSemesterId: oldSemesterId,
+        destinationSemesterId: newSemesterId,
+        course: courseToMove,
+      });
 
-    addTask({
-      func: ({ courseName, newSemesterId, oldSemesterId }) =>
-        toast
-          .promise(
-            moveCourse.mutateAsync({ planId, oldSemesterId, newSemesterId, courseName }),
-            {
-              pending: 'Moving course ' + courseName + '...',
-              success: 'Moved course ' + courseName + '!',
-              error: 'Error while moving ' + courseName,
-            },
-            {
-              autoClose: 1000,
-              position: 'bottom-right',
-            },
-          )
-          .catch((err) => console.error(err)),
-      args: { oldSemesterId, newSemesterId, courseName },
+      addTask({
+        func: ({ courseName, newSemesterId, oldSemesterId }) =>
+          toast
+            .promise(
+              moveCourse.mutateAsync({ planId, oldSemesterId, newSemesterId, courseName }),
+              {
+                pending: 'Moving course ' + courseName + '...',
+                success: 'Moved course ' + courseName + '!',
+                error: 'Error while moving ' + courseName,
+              },
+              {
+                autoClose: 1000,
+                position: 'bottom-right',
+              },
+            )
+            .catch((err) => console.error(err)),
+        args: { oldSemesterId, newSemesterId, courseName },
+      });
+    };
+
+    mutate(oldSemesterId, newSemesterId);
+
+    dispatchUndo({
+      type: 'pushUndoStack',
+      callback: () => {
+        mutate(newSemesterId, oldSemesterId);
+      },
     });
   };
 
@@ -633,19 +904,53 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
     courseName: string,
     semesterId: string,
   ) => {
+    const semester = semesters.find((sem) => sem.id === semesterId);
+    if (!semester) return;
+    const course = semester.courses.find((crs) => crs.code === courseName);
+    if (!course) return;
+    const oldColor = course.color;
     dispatchSemesters({ type: 'changeCourseColor', courseCode: courseName, semesterId, color });
     addTask({
       args: { color, courseName, semesterId },
       func: ({ color, courseName, semesterId }) =>
         colorChange.mutateAsync({ color, courseName, semesterId, planId }),
     });
+    dispatchUndo({
+      type: 'pushUndoStack',
+      callback: () => {
+        dispatchSemesters({
+          type: 'changeCourseColor',
+          courseCode: courseName,
+          semesterId,
+          color: oldColor,
+        });
+        addTask({
+          args: { color: oldColor, courseName, semesterId },
+          func: ({ color, courseName, semesterId }) =>
+            colorChange.mutateAsync({ color, courseName, semesterId, planId }),
+        });
+      },
+    });
   };
 
   const handleSemesterColorChange = (color: keyof typeof tagColors, semesterId: string) => {
+    const semester = semesters.find((sem) => sem.id === semesterId);
+    if (!semester) return;
+    const oldColor = semester.color;
     dispatchSemesters({ type: 'changeSemesterColor', semesterId, color });
     addTask({
       args: { color, semesterId },
       func: ({ color, semesterId }) => semesterColorChange.mutateAsync({ color, semesterId }),
+    });
+    dispatchUndo({
+      type: 'pushUndoStack',
+      callback: () => {
+        dispatchSemesters({ type: 'changeSemesterColor', semesterId, color: oldColor });
+        addTask({
+          args: { color: oldColor, semesterId },
+          func: ({ color, semesterId }) => semesterColorChange.mutateAsync({ color, semesterId }),
+        });
+      },
     });
   };
 
@@ -666,22 +971,37 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
 
   const handleAddBypass = ({ planId, requirement }: { planId: string; requirement: string }) => {
     addBypass.mutateAsync({ planId, requirement });
+    dispatchUndo({
+      type: 'pushUndoStack',
+      callback: () => {
+        removeBypass.mutateAsync({ planId, requirement });
+      },
+    });
   };
 
   const handleRemoveBypass = ({ planId, requirement }: { planId: string; requirement: string }) => {
     removeBypass.mutateAsync({ planId, requirement });
+    dispatchUndo({
+      type: 'pushUndoStack',
+      callback: () => {
+        addBypass.mutateAsync({ planId, requirement });
+      },
+    });
   };
 
   const [filters, setFilters] = useState<Filter[]>([]);
 
-  const toggleOffAllColorFilters = () =>
+  const toggleOffAllColorFilters = () => {
     setFilters(filters.filter((filter) => filter.type !== 'color'));
+  };
 
-  const toggleOffAllYearFilters = () =>
+  const toggleOffAllYearFilters = () => {
     setFilters(filters.filter((filter) => filter.type !== 'year'));
+  };
 
-  const toggleOffAllSemesterFilters = () =>
+  const toggleOffAllSemesterFilters = () => {
     setFilters(filters.filter((filter) => filter.type !== 'semester'));
+  };
 
   const toggleColorFilter = (color: keyof typeof tagColors) => {
     const hasFilter = filters.some((filter) => filter.type === 'color' && filter.color === color);
@@ -754,6 +1074,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
         allSemesters: semesters,
         filteredSemesters,
         bypasses: bypasses,
+        undoStack: [],
         selectedCourseCount: selectedCourseIds.size,
         courseIsSelected,
         handleSelectCourses,
@@ -780,6 +1101,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
         handleCourseLock,
         handleSemesterLock,
         handleCoursePrereqOverride,
+        undo,
       }}
     >
       {children}

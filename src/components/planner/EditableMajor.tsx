@@ -1,12 +1,12 @@
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import EditIcon from '@/icons/EditIcon';
-import { trpc } from '@/utils/trpc';
 import useMajors from '@/shared/useMajors';
-import Link from 'next/link';
+import { trpc } from '@/utils/trpc';
 
 const EditableMajor = ({
   major: initialMajor,

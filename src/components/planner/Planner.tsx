@@ -21,6 +21,7 @@ import {
 } from '@dnd-kit/core';
 import Router from 'next/router';
 import React, { useMemo, useState, useRef, FC, useEffect } from 'react';
+import { useHotkeys } from 'react-hotkeys-hook';
 
 import { trpc } from '@/utils/trpc';
 
@@ -66,6 +67,7 @@ export default function Planner({
     handleDeleteAllSelectedCourses,
     handleRemoveCourseFromSemester,
     title,
+    undo,
   } = useSemestersContext();
 
   const utils = trpc.useContext();
@@ -94,6 +96,9 @@ export default function Planner({
   // Course that is currently being dragged
   const [activeCourse, setActiveCourse] = useState<ActiveDragData | null>(null);
 
+  // Controls drag locking for the sidebar
+  const [isCourseDragging, setIsCourseDragging] = useState(false);
+
   // Delay necessary so events inside draggables propagate
   // valid sensors: https://github.com/clauderic/dnd-kit/discussions/82#discussioncomment-347608
   const sensors = useSensors(
@@ -120,6 +125,7 @@ export default function Planner({
       from: originData.from,
       course: originData.course,
     });
+    setIsCourseDragging(true);
   };
 
   const handleOnDragEnd = ({ active, over }: { active: Active; over: Over | null }) => {
@@ -151,15 +157,18 @@ export default function Planner({
         handleRemoveCourseFromSemester(originData.semester, originData.course);
       }
     }
+
+    setIsCourseDragging(false);
   };
 
   const ref = useRef<HTMLDivElement>(null);
   // TODO: Use resizeobserver to change column count based on screen size
 
+  useHotkeys('ctrl+z', undo);
+
   return (
     <DndContext
-      // Enabling autoScroll causes odd behavior when dragging outside of a scrollable container (eg. Sidebar)
-      autoScroll={false}
+      autoScroll={true}
       sensors={sensors}
       collisionDetection={pointerWithin}
       onDragStart={handleOnDragStart}
@@ -226,6 +235,7 @@ export default function Planner({
           transferCredits={transferCredits}
           getSearchedDragId={(course) => `course-list-searched-${course.id}`}
           getRequirementDragId={(course) => `course-list-requirement-${course.id}`}
+          courseDragged={isCourseDragging}
           dropId={`semester-tile-course-${activeCourse?.course}`}
           dragActive={activeCourse?.from === 'semester-tile'}
         />

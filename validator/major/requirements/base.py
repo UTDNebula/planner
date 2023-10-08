@@ -3,7 +3,6 @@
 from __future__ import annotations
 from abc import abstractmethod, ABC
 from dataclasses import dataclass
-
 from typing import Any
 
 from pydantic import Json
@@ -19,6 +18,7 @@ class AbstractRequirement(ABC):
     def attempt_fulfill(
         self,
         course: str,
+        available_hours: int = 0,
     ) -> bool:
         pass
 
