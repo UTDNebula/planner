@@ -3,6 +3,12 @@ import { useRef, useState, useMemo, memo } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { v4 as uuidv4 } from 'uuid';
 
+import AccordionSkeleton from './AccordionSkeleton';
+import DraggableCourseList from './DraggableCourseList';
+import { DegreeRequirement } from './types';
+import { Course, DraggableCourse, GetDragIdByCourse } from '../types';
+import useFuse from '../useFuse';
+
 import Button from '@/components/Button';
 import AnalyticsWrapper from '@/components/common/AnalyticsWrapper';
 import RequirementsContainer from '@/components/planner/Sidebar/RequirementsContainer';
@@ -10,12 +16,6 @@ import SearchBar from '@/components/planner/Sidebar/SearchBar';
 import ChevronIcon from '@/icons/ChevronIcon';
 import { trpc } from '@/utils/trpc';
 import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
-
-import AccordionSkeleton from './AccordionSkeleton';
-import DraggableCourseList from './DraggableCourseList';
-import { DegreeRequirement } from './types';
-import { Course, DraggableCourse, GetDragIdByCourse } from '../types';
-import useFuse from '../useFuse';
 
 import 'react-loading-skeleton/dist/skeleton.css';
 
