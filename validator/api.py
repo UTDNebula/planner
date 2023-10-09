@@ -72,7 +72,6 @@ def validate() -> Response:
         courses: list[str] = j["courses"]
         year = j["requirements"]["year"]
         majors = j["requirements"]["majors"]
-        majors[0] = "jfoiewfj"
         minors = j["requirements"]["minors"]
         raw_bypasses = j["bypasses"]
 
