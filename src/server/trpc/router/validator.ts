@@ -3,8 +3,9 @@ import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
 import { env } from '@/env/server.mjs';
-import courses, { JSONCourse } from '@data/courses.json';
+import { courses as PlatformCourse } from 'prisma/generated/platform';
 
+import { courseCache } from './courseCache';
 import { DegreeNotFound, DegreeValidationError } from './errors';
 import { protectedProcedure, router } from '../trpc';
 
@@ -47,7 +48,13 @@ export const validatorRouter = router({
         throw new TRPCError({ code: 'FORBIDDEN' });
       }
 
-      const coursesFromApi: JSONCourse[] = courses;
+      let year = new Date().getFullYear(); // If plan has no semesters, default to current year.
+      if (planData.semesters.length > 0) {
+        // If plan has semesters, default to first semester's year.
+        year = planData.semesters[0].year;
+      }
+
+      const coursesFromAPI: PlatformCourse[] = await courseCache.getCourses(year);
       /*  sanitizing data from API db.
        *  TODO: Fix this later somehow
        */
@@ -61,7 +68,7 @@ export const validatorRouter = router({
         }
       >();
 
-      for (const course of coursesFromApi) {
+      for (const course of coursesFromAPI) {
         courseMapWithCodeKey.set(`${course.subject_prefix} ${course.course_number}`, {
           prereqs: course.prerequisites,
           coreqs: course.corequisites,

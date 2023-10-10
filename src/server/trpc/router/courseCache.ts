@@ -8,14 +8,11 @@ class CourseCacheError extends Error {
 }
 
 class CourseCache {
-  private coursesByYear: Map<string, Course[]> = new Map();
+  private coursesByYear: Map<number, Course[]> = new Map();
   private mutex = new Mutex();
 
-  public async getCourses(year: string) {
-    if (year.length != 2) {
-      throw new CourseCacheError('Invalid year');
-    }
-
+  public async getCourses(year: number) {
+    const formattedYear = year.toString().slice(-2);
     // Acquire lock before success check so if another request is fetching, we don't fetch again.
     const release = await this.mutex.acquire();
     if (this.coursesByYear.has(year)) {
@@ -28,7 +25,7 @@ class CourseCache {
     return await platformPrisma.courses
       .findMany({
         where: {
-          catalog_year: year,
+          catalog_year: formattedYear,
         },
       })
       .then((courses) => {
