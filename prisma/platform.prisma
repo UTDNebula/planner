@@ -8,6 +8,223 @@ datasource db {
   url      = env("PLATFORM_DATABASE_URL")
 }
 
+type CoursesCoOrPreRequisites {
+  name     String
+  options  CoursesCoOrPreRequisitesOptions[]
+  required Int
+  type     String
+}
+
+type CoursesCoOrPreRequisitesOptions {
+  choices         CoursesCoOrPreRequisitesOptionsChoices?
+  class_reference String?
+  condition       String?
+  description     String?
+  max_hours       Int?
+  minimum_grade   String?
+  name            String?
+  options         CoursesCoOrPreRequisitesOptionsOptions[]
+  required        Int?
+  type            String
+}
+
+type CoursesCoOrPreRequisitesOptionsChoices {
+  name     String
+  options  CoursesCoOrPreRequisitesOptionsChoicesOptions[]
+  required Int
+  type     String
+}
+
+type CoursesCoOrPreRequisitesOptionsChoicesOptions {
+  class_reference String?
+  condition       String?
+  description     String?
+  minimum_grade   String?
+  type            String
+}
+
+type CoursesCoOrPreRequisitesOptionsOptions {
+  class_reference String?
+  condition       String?
+  description     String?
+  minimum_grade   String?
+  name            String?
+  options         CoursesCoOrPreRequisitesOptionsOptionsOptions[]
+  required        Int?
+  type            String
+}
+
+type CoursesCoOrPreRequisitesOptionsOptionsOptions {
+  class_reference String?
+  condition       String?
+  description     String?
+  major           String?
+  minimum_grade   String?
+  minor           String?
+  type            String
+}
+
+type CoursesCorequisites {
+  name     String
+  options  CoursesCorequisitesOptions[]
+  required Int
+  type     String
+}
+
+type CoursesCorequisitesOptions {
+  choices         CoursesCorequisitesOptionsChoices?
+  class_reference String?
+  condition       String?
+  description     String?
+  max_hours       Int?
+  minimum_grade   String?
+  name            String?
+  options         CoursesCorequisitesOptionsOptions[]
+  required        Int?
+  type            String
+}
+
+type CoursesCorequisitesOptionsChoices {
+  name     String
+  options  CoursesCorequisitesOptionsChoicesOptions[]
+  required Int
+  type     String
+}
+
+type CoursesCorequisitesOptionsChoicesOptions {
+  class_reference String?
+  condition       String?
+  description     String?
+  minimum_grade   String?
+  name            String?
+  options         CoursesCorequisitesOptionsChoicesOptionsOptions[]
+  required        Int?
+  type            String
+}
+
+type CoursesCorequisitesOptionsChoicesOptionsOptions {
+  class_reference String
+  minimum_grade   String
+  type            String
+}
+
+type CoursesCorequisitesOptionsOptions {
+  class_reference String?
+  condition       String?
+  description     String?
+  minimum_grade   String?
+  name            String?
+  options         CoursesCorequisitesOptionsOptionsOptions[]
+  required        Int?
+  type            String
+}
+
+type CoursesCorequisitesOptionsOptionsOptions {
+  class_reference String?
+  condition       String?
+  description     String?
+  major           String?
+  minimum_grade   String?
+  minor           String?
+  type            String
+}
+
+type CoursesPrerequisites {
+  name     String
+  options  CoursesPrerequisitesOptions[]
+  required Int
+  type     String
+}
+
+type CoursesPrerequisitesOptions {
+  choices         CoursesPrerequisitesOptionsChoices?
+  class_reference String?
+  condition       String?
+  core_flag       String?
+  description     String?
+  hours           Int?
+  major           String?
+  max_hours       Int?
+  minimum         Float?
+  minimum_grade   String?
+  name            String?
+  options         CoursesPrerequisitesOptionsOptions[]
+  required        Int?
+  subset          String?
+  type            String
+}
+
+type CoursesPrerequisitesOptionsChoices {
+  name     String
+  options  CoursesPrerequisitesOptionsChoicesOptions[]
+  required Int
+  type     String
+}
+
+type CoursesPrerequisitesOptionsChoicesOptions {
+  class_reference String?
+  condition       String?
+  description     String?
+  minimum_grade   String?
+  name            String?
+  options         CoursesPrerequisitesOptionsChoicesOptionsOptions[]
+  required        Int?
+  type            String
+}
+
+type CoursesPrerequisitesOptionsChoicesOptionsOptions {
+  class_reference String
+  minimum_grade   String
+  type            String
+}
+
+type CoursesPrerequisitesOptionsOptions {
+  class_reference String?
+  condition       String?
+  core_flag       String?
+  description     String?
+  granter         String?
+  hours           Int?
+  major           String?
+  minimum_grade   String?
+  name            String?
+  options         CoursesPrerequisitesOptionsOptionsOptions[]
+  required        Int?
+  type            String
+}
+
+type CoursesPrerequisitesOptionsOptionsOptions {
+  class_reference String?
+  condition       String?
+  description     String?
+  granter         String?
+  major           String?
+  minimum_grade   String?
+  name            String?
+  options         CoursesPrerequisitesOptionsOptionsOptionsOptions[]
+  required        Int?
+  type            String
+}
+
+type CoursesPrerequisitesOptionsOptionsOptionsOptions {
+  class_reference String?
+  condition       String?
+  description     String?
+  minimum_grade   String?
+  name            String?
+  options         CoursesPrerequisitesOptionsOptionsOptionsOptionsOptions[]
+  required        Int?
+  type            String
+}
+
+type CoursesPrerequisitesOptionsOptionsOptionsOptionsOptions {
+  class_reference String?
+  condition       String?
+  description     String?
+  minimum_grade   String?
+  type            String
+}
+
 type ExamsYields {
   outcome     Json
   requirement ExamsYieldsRequirement
@@ -66,31 +283,20 @@ type SectionsAcademicSession {
   start_date String
 }
 
-type SectionsAttributes {
-  raw_attributes String[]
-}
-
 type SectionsMeetings {
-  end_date     String?
+  end_date     String
   end_time     String
   location     SectionsMeetingsLocation
   meeting_days String[]
-  /// Could not determine type: the field only had null or empty values in the sample set.
-  modality     Json?
+  modality     String
   start_date   String
   start_time   String
 }
 
 type SectionsMeetingsLocation {
-  building String?
+  building String
   map_uri  String
-  room     String?
-}
-
-type SectionsSectionCorequisites {
-  /// Could not determine type: the field only had null or empty values in the sample set.
-  options Json?
-  type    String
+  room     String
 }
 
 type SectionsTeachingAssistants {
@@ -101,64 +307,80 @@ type SectionsTeachingAssistants {
 }
 
 model courses {
-  id                       String                   @id @default(auto()) @map("_id") @db.ObjectId
-  v                        Int                      @map("__v")
+  id                       String                    @id @default(auto()) @map("_id") @db.ObjectId
   activity_type            String
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  attributes               Json?
+  catalog_year             String
   class_level              String
-  co_or_pre_requisites     Json
-  corequisites             Json
+  co_or_pre_requisites     CoursesCoOrPreRequisites?
+  corequisites             CoursesCorequisites?
   course_number            String
   credit_hours             String
   description              String
+  enrollment_reqs          String
   grading                  String
   internal_course_number   String
-  laboratory_contact_hours String?
-  lecture_contact_hours    String?
-  offering_frequency       String?
-  prerequisites            Json
+  laboratory_contact_hours String
+  lecture_contact_hours    String
+  offering_frequency       String
+  prerequisites            CoursesPrerequisites?
   school                   String
-  sections                 String[]                 @db.ObjectId
+  sections                 String[]
   subject_prefix           String
   title                    String
 }
 
+model degrees {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
+
 model exams {
   id     String        @id @default(auto()) @map("_id") @db.ObjectId
+  level  String?
   name   String?
   type   String
   yields ExamsYields[]
+
+  @@index([type], map: "type_1")
+  @@index([name], map: "name_1")
+  @@index([level], map: "level_1")
 }
 
 model professors {
-  id           String            @id @default(auto()) @map("_id") @db.ObjectId
-  v            Int               @map("__v")
+  id           String           @id @default(auto()) @map("_id") @db.ObjectId
   email        String
   first_name   String
-  image_uri    String?
+  image_uri    String
   last_name    String
-  office       ProfessorsOffice?
+  office       ProfessorsOffice
   /// Could not determine type: the field only had null or empty values in the sample set.
   office_hours Json?
-  phone_number String?
-  profile_uri  String?
-  sections     String[]          @db.ObjectId
+  phone_number String
+  profile_uri  String
+  sections     String[]
   titles       String[]
+
+  @@index([first_name, last_name], map: "first_name_1_last_name_1")
 }
 
 model sections {
   id                    String                       @id @default(auto()) @map("_id") @db.ObjectId
-  v                     Int                          @map("__v")
   academic_session      SectionsAcademicSession
-  attributes            SectionsAttributes
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  attributes            Json?
   core_flags            String[]
   course_reference      String                       @db.ObjectId
   grade_distribution    Int[]
   instruction_mode      String
   internal_class_number String
   meetings              SectionsMeetings[]
-  professors            String[]                     @db.ObjectId
-  section_corequisites  SectionsSectionCorequisites
+  professors            String[]
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  section_corequisites  Json?
   section_number        String
-  syllabus_uri          String?
+  syllabus_uri          String
   teaching_assistants   SectionsTeachingAssistants[]
+
+  @@index([course_reference], map: "course_reference_1")
 }

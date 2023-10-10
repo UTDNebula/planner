@@ -1,12 +1,11 @@
 import { Prisma } from '@prisma/client';
 
-import courses, { JSONCourse } from '@data/courses.json';
-
+import { courseCache } from './courseCache';
 import { router, publicProcedure } from '../trpc';
 
 export const coursesRouter = router({
-  publicGetAllCourses: publicProcedure.query(async ({ ctx }) => {
-    return courses as JSONCourse[];
+  publicGetAllCourses: publicProcedure.query(async () => {
+    return await courseCache.getCourses(new Date().getFullYear().toString().slice(-2));
   }),
   publicGetSanitizedCourses: publicProcedure.query(async ({ ctx }) => {
     const courses = await ctx.platformPrisma.courses.findMany({
