@@ -1,6 +1,6 @@
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import * as HoverCard from '@radix-ui/react-hover-card';
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import useSearch from '@/components/search/search';
 import { trpc } from '@/utils/trpc';
@@ -16,7 +16,6 @@ import {
   CourseRequirement,
   DegreeRequirement,
 } from './types';
-import { useSemestersContext } from '../SemesterContext';
 import { GetDragIdByCourseAndReq } from '../types';
 
 function RequirementContainerHeader({
@@ -69,7 +68,7 @@ function RequirementContainerHeader({
           </div>
         </div>
 
-        <ProgressComponent2 value={value} max={max} unit={'hours'} />
+        <ProgressComponent2 value={value} max={max} />
       </div>
     </div>
   );
@@ -200,15 +199,7 @@ const getRequirementGroup = (
   }
 };
 
-export const ProgressComponent2 = ({
-  value,
-  max,
-  unit = 'done',
-}: {
-  value: number;
-  max: number;
-  unit?: string;
-}) => {
+export const ProgressComponent2 = ({ value, max }: { value: number; max: number }) => {
   const heh = `${(value * 100) / max}%`;
 
   return (
@@ -269,7 +260,7 @@ export default function RequirementsContainer({
   courses,
   getCourseItemDragId,
 }: RequirementsContainerProps) {
-  const [requirementIdx, setRequirementIdx] = React.useState<number>(0);
+  const [requirementIdx, setRequirementIdx] = useState<number>(0);
 
   const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
     staleTime: Infinity,
@@ -280,7 +271,7 @@ export default function RequirementsContainer({
   /**
    * These hooks manage the carousel state for RequirementsCarousel
    */
-  const [carousel, setCarousel] = React.useState<boolean>(false);
+  const [carousel, setCarousel] = useState<boolean>(false);
 
   // Note: this logic hides overflow during sliding animation
   const [overflow, setOverflow] = useState(false);
@@ -289,8 +280,6 @@ export default function RequirementsContainer({
     setOverflow(true);
     setCarousel(!carousel);
   }
-
-  const { bypasses } = useSemestersContext();
 
   return (
     <RequirementsCarousel
@@ -317,12 +306,6 @@ export default function RequirementsContainer({
             {degreeRequirement.requirements.map((elm, idx) => {
               const { name } = getRequirementGroup(elm, q.data);
               const { value, max } = displayRequirementProgress(elm);
-
-              const id = elm.metadata.id.toString();
-
-              const hasBypass = bypasses.includes(id);
-
-              const rightValue = hasBypass ? max : value;
 
               return (
                 <button
@@ -395,9 +378,9 @@ function RequirementContainer({
     constraints: [0, 3000],
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     updateQuery('');
-  }, [degreeRequirement]);
+  }, [degreeRequirement]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Put filled requirements first
   const sortedResults = [...results]
@@ -410,18 +393,8 @@ function RequirementContainer({
       return 0;
     })
     .slice(0, 100);
-
-  const { planId, bypasses, handleAddBypass, handleRemoveBypass } = useSemestersContext();
-
-  const hasBypass = bypasses.includes(degreeRequirement.metadata.id.toString());
-
-  const handleUpdateBypass = () => {
-    hasBypass
-      ? handleRemoveBypass({ planId, requirement: degreeRequirement.metadata.id.toString() })
-      : handleAddBypass({ planId, requirement: degreeRequirement.metadata.id.toString() });
-  };
-
   // Handles logic for adding bypass to requirement
+
   return (
     <>
       <RequirementContainerHeader name={name} progress={progress} setCarousel={setCarousel} />
