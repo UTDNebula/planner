@@ -154,7 +154,7 @@ npm install
 
     ```bash
     # DEGREE VALIDATOR
-    VALIDATOR=http://localhost:5000
+    NEXT_PUBLIC_VALIDATOR=http://127.0.0.1:5000
     ```
 
 9.  Generate `Prisma` client and run web server:
