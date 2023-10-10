@@ -12,7 +12,7 @@ export interface DraggableCourseListProps {
 function DraggableCourseList({ courses, getDragId }: DraggableCourseListProps) {
   // Add sorting logic here
   return (
-    <div className="flex flex-col gap-y-4 bg-white text-[#757575]">
+    <div className="flex max-h-64 flex-col gap-y-4 overflow-scroll bg-white text-[#757575]">
       {courses.length > 0 ? (
         courses.map((course, idx) => (
           <DraggableSidebarCourseItem dragId={getDragId(course)} key={idx} course={course} />
