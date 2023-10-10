@@ -8,9 +8,9 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Analytics } from '@vercel/analytics/react';
 import { AnimateSharedLayout } from 'framer-motion';
 import { type AppType, AppProps } from 'next/app';
-// import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { Router } from 'next/router';
+import Script from 'next/script';
 import { type Session } from 'next-auth';
 import { SessionProvider, useSession } from 'next-auth/react';
 import NProgress from 'nprogress'; //nprogress module
@@ -18,7 +18,13 @@ import { FC, useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 
 import Layout from '@/components/home/Layout';
+import { env } from '@/env/client.mjs';
+import ScreenSizeWarnModal from '@/shared/ScreenSizeWarnModal';
 import 'nprogress/nprogress.css'; //styles of nprogress
+
+import { getBaseUrl, trpc } from '../utils/trpc';
+
+import type { NextComponentType } from 'next'; //Import Component type
 
 // Binding events
 NProgress.configure({ showSpinner: false });
@@ -26,7 +32,6 @@ Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
 
-import { getBaseUrl, trpc } from '../utils/trpc';
 const theme = createTheme({
   typography: {
     allVariants: {
@@ -50,12 +55,6 @@ const theme = createTheme({
     ].join(','),
   },
 });
-
-import { env } from '@/env/client.mjs';
-import ScreenSizeWarnModal from '@/shared/ScreenSizeWarnModal';
-
-import type { NextComponentType } from 'next'; //Import Component type
-
 //Add custom appProp type then use union to add it
 type CustomAppProps = AppProps & {
   Component: NextComponentType & { auth?: boolean }; // add auth type
@@ -116,6 +115,17 @@ const NebulaApp: AppType<{ session: Session | null }> = ({
           />
         )}
       </Head>
+
+      <Script async src="https://www.googletagmanager.com/gtag/js?id=G-5V674KK1JX" />
+      <Script id="google-analytics">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-5V674KK1JX');
+        `}
+      </Script>
       <ScreenSizeWarnModal
         open={displayScreenSizeWarning && !hasWarned}
         onClose={() => setHasWarned(true)}
