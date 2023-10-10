@@ -3,8 +3,8 @@ import * as HoverCard from '@radix-ui/react-hover-card';
 import React, { useState } from 'react';
 
 import useSearch from '@/components/search/search';
-import { JSONCourse } from '@/data/courses.json';
 import { trpc } from '@/utils/trpc';
+import { courses as Course } from 'prisma/generated/platform';
 
 import Accordion from './Accordion';
 import { RecursiveRequirement } from './RecursiveRequirement';
@@ -77,7 +77,7 @@ function RequirementContainerHeader({
 
 const getRequirementGroup = (
   degreeRequirement: RequirementGroupTypes,
-  allCourses: JSONCourse[] | undefined,
+  allCourses: Course[] | undefined,
 ): {
   name: string;
   progress: { value: number; max: number; unit: string };
@@ -442,9 +442,6 @@ function RequirementContainer({
           );
         })}
       </div>
-      {/* <button onClick={handleUpdateBypass}>
-        {hasBypass ? 'Mark as Incomplete' : 'Mark Requirement as Completed'}
-      </button> */}
     </>
   );
 }
