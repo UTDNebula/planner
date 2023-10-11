@@ -3,8 +3,9 @@ import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
 import { env } from '@/env/server.mjs';
-import courses, { JSONCourse } from '@data/courses.json';
+import { courses as PlatformCourse } from 'prisma/generated/platform';
 
+import { courseCache } from './courseCache';
 import { DegreeNotFound, DegreeValidationError } from './errors';
 import { protectedProcedure, router } from '../trpc';
 
@@ -47,7 +48,13 @@ export const validatorRouter = router({
         throw new TRPCError({ code: 'FORBIDDEN' });
       }
 
-      const coursesFromApi: JSONCourse[] = courses;
+      let year = new Date().getFullYear(); // If plan has no semesters, default to current year.
+      if (planData.semesters.length > 0) {
+        // If plan has semesters, default to first semester's year.
+        year = Math.min(...planData.semesters.map((sem) => sem.year));
+      }
+
+      const coursesFromAPI: PlatformCourse[] = await courseCache.getCourses(year);
       /*  sanitizing data from API db.
        *  TODO: Fix this later somehow
        */
@@ -61,13 +68,16 @@ export const validatorRouter = router({
         }
       >();
 
-      for (const course of coursesFromApi) {
+      for (const course of coursesFromAPI) {
         courseMapWithCodeKey.set(`${course.subject_prefix} ${course.course_number}`, {
           prereqs: course.prerequisites,
           coreqs: course.corequisites,
           co_or_pre_requisites: course.co_or_pre_requisites,
         });
-        courseMapWithIdKey.set(course.id, `${course.subject_prefix} ${course.course_number}`);
+        courseMapWithIdKey.set(
+          course.internal_course_number,
+          `${course.subject_prefix} ${course.course_number}`,
+        );
       }
 
       /* Hash to store pre req data.
@@ -104,7 +114,7 @@ export const validatorRouter = router({
       ): Array<[Array<string>, number]> => {
         const prereqNotMet: Array<[Array<string>, number]> = [];
         let count = 0;
-        if (requirements.options.length === 0) {
+        if (!requirements || requirements.options.length === 0) {
           return [];
         }
         const temp: [Array<string>, number] = [[], 0];
@@ -152,7 +162,7 @@ export const validatorRouter = router({
       ): Array<[Array<string>, number]> => {
         const coreqNotMet: Array<[Array<string>, number]> = [];
         let count = 0;
-        if (requirements.options.length === 0) {
+        if (!requirements || requirements.options.length === 0) {
           return [];
         }
         const temp: [Array<string>, number] = [[], 0];
@@ -201,7 +211,7 @@ export const validatorRouter = router({
       ): Array<[Array<string>, number]> => {
         const coreqNotMet: Array<[Array<string>, number]> = [];
         let count = 0;
-        if (requirements.options.length === 0) {
+        if (!requirements || requirements.options.length === 0) {
           return [];
         }
         const temp: [Array<string>, number] = [[], 0];
