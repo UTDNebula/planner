@@ -51,7 +51,7 @@ export const validatorRouter = router({
       let year = new Date().getFullYear(); // If plan has no semesters, default to current year.
       if (planData.semesters.length > 0) {
         // If plan has semesters, default to first semester's year.
-        year = planData.semesters[0].year;
+        year = Math.min(...planData.semesters.map((sem) => sem.year));
       }
 
       const coursesFromAPI: PlatformCourse[] = await courseCache.getCourses(year);
@@ -74,7 +74,10 @@ export const validatorRouter = router({
           coreqs: course.corequisites,
           co_or_pre_requisites: course.co_or_pre_requisites,
         });
-        courseMapWithIdKey.set(course.id, `${course.subject_prefix} ${course.course_number}`);
+        courseMapWithIdKey.set(
+          course.internal_course_number,
+          `${course.subject_prefix} ${course.course_number}`,
+        );
       }
 
       /* Hash to store pre req data.
@@ -111,7 +114,7 @@ export const validatorRouter = router({
       ): Array<[Array<string>, number]> => {
         const prereqNotMet: Array<[Array<string>, number]> = [];
         let count = 0;
-        if (requirements.options.length === 0) {
+        if (!requirements || requirements.options.length === 0) {
           return [];
         }
         const temp: [Array<string>, number] = [[], 0];
@@ -159,7 +162,7 @@ export const validatorRouter = router({
       ): Array<[Array<string>, number]> => {
         const coreqNotMet: Array<[Array<string>, number]> = [];
         let count = 0;
-        if (requirements.options.length === 0) {
+        if (!requirements || requirements.options.length === 0) {
           return [];
         }
         const temp: [Array<string>, number] = [[], 0];
@@ -208,7 +211,7 @@ export const validatorRouter = router({
       ): Array<[Array<string>, number]> => {
         const coreqNotMet: Array<[Array<string>, number]> = [];
         let count = 0;
-        if (requirements.options.length === 0) {
+        if (!requirements || requirements.options.length === 0) {
           return [];
         }
         const temp: [Array<string>, number] = [[], 0];
