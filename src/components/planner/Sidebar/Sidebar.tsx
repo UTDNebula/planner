@@ -242,7 +242,9 @@ function CourseSelectorContainer({
           </div>
         )}
 
-        {validationData &&
+        {!validatorError &&
+          !validatorUnsupportedDegreeError &&
+          validationData &&
           validationData.validation.requirements.length > 0 &&
           validationData.validation.requirements.map((req: DegreeRequirement, idx: number) => (
             <RequirementsContainer
@@ -252,7 +254,11 @@ function CourseSelectorContainer({
               getCourseItemDragId={getRequirementDragId}
             />
           ))}
-        {!validationData && <AccordionSkeleton />}
+
+        {!validatorError && !validatorUnsupportedDegreeError && !validationData && (
+          <AccordionSkeleton />
+        )}
+
         <div className="flex flex-grow items-end justify-end text-sm ">
           <div>
             <span className="font-bold">Warning:</span> This is an unofficial tool not affiliated
