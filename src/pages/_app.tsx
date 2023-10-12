@@ -115,17 +115,20 @@ const NebulaApp: AppType<{ session: Session | null }> = ({
           />
         )}
       </Head>
+      {env.NEXT_PUBLIC_NODE_ENV === 'production' && (
+        <>
+          <Script async src="https://www.googletagmanager.com/gtag/js?id=G-5V674KK1JX" />
+          <Script id="google-analytics">
+            {`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
 
-      <Script async src="https://www.googletagmanager.com/gtag/js?id=G-5V674KK1JX" />
-      <Script id="google-analytics">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-
-          gtag('config', 'G-5V674KK1JX');
-        `}
-      </Script>
+              gtag('config', 'G-5V674KK1JX');
+            `}
+          </Script>
+        </>
+      )}
       <ScreenSizeWarnModal
         open={displayScreenSizeWarning && !hasWarned}
         onClose={() => setHasWarned(true)}
