@@ -21,7 +21,7 @@ export default function useFuse<T>({ dataSet, keys, threshold = 0.4 }: IUseSearc
   }, [dataSet, keys, threshold]);
 
   const updateQuery = (query: string) => {
-    setResults(fuse.search(query, { limit: 5 }).map((fuseResult) => fuseResult.item));
+    setResults(fuse.search(query, { limit: 100 }).map((fuseResult) => fuseResult.item));
   };
 
   /* const results = useMemo(() => {

@@ -2,10 +2,8 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 import AutoCompleteMajor from '@/components/AutoCompleteMajor';
-
-import { trpc } from '@/utils/trpc';
-
 import useMajors from '@/shared/useMajors';
+import { trpc } from '@/utils/trpc';
 
 import { Page } from './Page';
 import { ButtonProps } from '../Button';

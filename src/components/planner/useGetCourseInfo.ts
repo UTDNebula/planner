@@ -52,11 +52,11 @@ const getPrereqs = (
     if (cNum.subject_prefix + ' ' + cNum.course_number === courseCode) {
       title = cNum.title;
 
-      (cNum.prerequisites as Record<string, any>).options.map((elem: any) => {
+      cNum.prerequisites?.options.map((elem) => {
         if (elem.type !== 'course' && elem.type !== 'other' && elem.options) {
-          elem.options.map((elem2: any) => {
+          elem.options.map((elem2) => {
             if (elem2.type !== 'course' && elem2.type !== 'other') {
-              elem2.options?.map((elem3: any) => {
+              elem2.options?.map((elem3) => {
                 courseData?.map((elem4) => {
                   if (elem4.id === elem3.class_reference) {
                     prereqs.push(elem4.subject_prefix + ' ' + elem4.course_number);
@@ -64,7 +64,7 @@ const getPrereqs = (
                 });
               });
             } else if (elem2.type === 'other') {
-              prereqs.push(elem2.description);
+              prereqs.push(elem2.description || '');
             } else {
               courseData?.map((elem4) => {
                 if (elem4.id === elem2.class_reference) {
@@ -74,7 +74,7 @@ const getPrereqs = (
             }
           });
         } else if (elem.type === 'other') {
-          prereqs.push(elem.description);
+          prereqs.push(elem.description || '');
         } else {
           courseData?.map((elem4) => {
             if (elem4.id === elem.class_reference) {
@@ -83,11 +83,11 @@ const getPrereqs = (
           });
         }
       });
-      (cNum.corequisites as Record<string, any>).options.map((elem: any) => {
+      cNum.corequisites?.options.map((elem) => {
         if (elem.type !== 'course' && elem.type !== 'other' && elem.options) {
-          elem.options.map((elem2: any) => {
+          elem.options.map((elem2) => {
             if (elem2.type !== 'course' && elem2.type !== 'other') {
-              elem2.options?.map((elem3: any) => {
+              elem2.options?.map((elem3) => {
                 courseData?.map((elem4) => {
                   if (elem4.id === elem3.class_reference) {
                     coreqs.push(elem4.subject_prefix + ' ' + elem4.course_number);
@@ -95,7 +95,7 @@ const getPrereqs = (
                 });
               });
             } else if (elem2.type === 'other') {
-              coreqs.push(elem2.description);
+              coreqs.push(elem2.description || '');
             } else {
               courseData?.map((elem4) => {
                 if (elem4.id === elem2.class_reference) {
@@ -105,7 +105,7 @@ const getPrereqs = (
             }
           });
         } else if (elem.type === 'other') {
-          coreqs.push(elem.description);
+          coreqs.push(elem.description || '');
         } else {
           courseData?.map((elem4) => {
             if (elem4.id === elem.class_reference) {
@@ -114,11 +114,11 @@ const getPrereqs = (
           });
         }
       });
-      (cNum.co_or_pre_requisites as Record<string, any>).options.map((elem: any) => {
+      cNum.co_or_pre_requisites?.options.map((elem) => {
         if (elem.type !== 'course' && elem.type !== 'other' && elem.options) {
-          elem.options.map((elem2: any) => {
+          elem.options.map((elem2) => {
             if (elem2.type !== 'course' && elem2.type !== 'other') {
-              elem2.options?.map((elem3: any) => {
+              elem2.options?.map((elem3) => {
                 courseData?.map((elem4) => {
                   if (elem4.id === elem3.class_reference) {
                     co_or_pre.push(elem4.subject_prefix + ' ' + elem4.course_number);
@@ -126,7 +126,7 @@ const getPrereqs = (
                 });
               });
             } else if (elem2.type === 'other') {
-              co_or_pre.push(elem2.description);
+              co_or_pre.push(elem2.description || '');
             } else {
               courseData?.map((elem4) => {
                 if (elem4.id === elem2.class_reference) {
@@ -136,7 +136,7 @@ const getPrereqs = (
             }
           });
         } else if (elem.type === 'other') {
-          co_or_pre.push(elem.description);
+          co_or_pre.push(elem.description || '');
         } else {
           courseData?.map((elem4) => {
             if (elem4.id === elem.class_reference) {

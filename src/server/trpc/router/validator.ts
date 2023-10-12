@@ -3,8 +3,10 @@ import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
 import { env } from '@/env/server.mjs';
-import courses, { JSONCourse } from '@data/courses.json';
+import { courses as PlatformCourse } from 'prisma/generated/platform';
 
+import { courseCache } from './courseCache';
+import { DegreeNotFound, DegreeValidationError } from './errors';
 import { protectedProcedure, router } from '../trpc';
 
 type PlanData = {
@@ -46,7 +48,13 @@ export const validatorRouter = router({
         throw new TRPCError({ code: 'FORBIDDEN' });
       }
 
-      const coursesFromApi: JSONCourse[] = courses;
+      let year = new Date().getFullYear(); // If plan has no semesters, default to current year.
+      if (planData.semesters.length > 0) {
+        // If plan has semesters, default to first semester's year.
+        year = Math.min(...planData.semesters.map((sem) => sem.year));
+      }
+
+      const coursesFromAPI: PlatformCourse[] = await courseCache.getCourses(year);
       /*  sanitizing data from API db.
        *  TODO: Fix this later somehow
        */
@@ -60,13 +68,16 @@ export const validatorRouter = router({
         }
       >();
 
-      for (const course of coursesFromApi) {
+      for (const course of coursesFromAPI) {
         courseMapWithCodeKey.set(`${course.subject_prefix} ${course.course_number}`, {
           prereqs: course.prerequisites,
           coreqs: course.corequisites,
           co_or_pre_requisites: course.co_or_pre_requisites,
         });
-        courseMapWithIdKey.set(course.id, `${course.subject_prefix} ${course.course_number}`);
+        courseMapWithIdKey.set(
+          course.internal_course_number,
+          `${course.subject_prefix} ${course.course_number}`,
+        );
       }
 
       /* Hash to store pre req data.
@@ -103,7 +114,7 @@ export const validatorRouter = router({
       ): Array<[Array<string>, number]> => {
         const prereqNotMet: Array<[Array<string>, number]> = [];
         let count = 0;
-        if (requirements.options.length === 0) {
+        if (!requirements || requirements.options.length === 0) {
           return [];
         }
         const temp: [Array<string>, number] = [[], 0];
@@ -151,7 +162,7 @@ export const validatorRouter = router({
       ): Array<[Array<string>, number]> => {
         const coreqNotMet: Array<[Array<string>, number]> = [];
         let count = 0;
-        if (requirements.options.length === 0) {
+        if (!requirements || requirements.options.length === 0) {
           return [];
         }
         const temp: [Array<string>, number] = [[], 0];
@@ -200,7 +211,7 @@ export const validatorRouter = router({
       ): Array<[Array<string>, number]> => {
         const coreqNotMet: Array<[Array<string>, number]> = [];
         let count = 0;
-        if (requirements.options.length === 0) {
+        if (!requirements || requirements.options.length === 0) {
           return [];
         }
         const temp: [Array<string>, number] = [[], 0];
@@ -370,36 +381,42 @@ export const validatorRouter = router({
     const body = {
       courses: [...semestersWithCourses.flatMap((s) => s.courses), ...validTransferCredits],
       requirements: {
+        year: 2022,
         majors: [degreeRequirements.major],
         minors: [],
       },
       bypasses,
     };
 
-    const validationData = await fetch(`${env.NEXT_PUBLIC_VALIDATOR}/validate`, {
+    const res = await fetch(`${env.NEXT_PUBLIC_VALIDATOR}/validate`, {
       method: 'POST',
       body: JSON.stringify(body),
       headers: {
         'content-type': 'application/json',
       },
-    })
-      .then(async (res) => {
-        if (!res.ok) {
-          const errorMsg = await res.json();
-          throw new Error(`validator fetch failed with status ${res.status}: ${errorMsg.error}.`);
-        }
-        return res.json();
-      })
-      .catch((err) => {
-        const errorMessage = `Validator error: ${err.message}`;
-        console.error('Validator error', err);
-        throw new TRPCError({
-          code: 'INTERNAL_SERVER_ERROR',
-          cause: err,
-          message: errorMessage,
-        });
-      });
+    });
 
+    if (!res.ok) {
+      const errorMsg = await res.json();
+      if (res.status == 404) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: errorMsg.error,
+          cause: new DegreeNotFound(errorMsg),
+        });
+      }
+
+      const error = new DegreeValidationError(
+        `Validator fetch failed with stats: ${res.status}, err: ${errorMsg}`,
+      );
+      throw new TRPCError({
+        code: 'INTERNAL_SERVER_ERROR',
+        message: error.message,
+        cause: error,
+      });
+    }
+
+    const validationData = await res.json();
     return { plan: planData, validation: validationData, bypasses };
   }),
 });

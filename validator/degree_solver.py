@@ -1,11 +1,12 @@
 from __future__ import annotations
 from enum import Enum
 from glob import glob
-from collections import Counter
+from collections import Counter, defaultdict
+from pathlib import Path
 
 from pydantic import Json
 
-from typing import Any
+from typing import Any, DefaultDict
 
 import core
 from major.requirements import AbstractRequirement, FreeElectiveRequirement
@@ -24,11 +25,14 @@ LOADER = loader.Loader()
 
 # Read all degree plan JSON files and store their contents in a hashmap
 # This is so that we can avoid reading all the files each time we want to get the data for a certain course
-degree_plans = {}
-for fname in glob("degree_data/*.json"):
+degree_plans: DefaultDict[str, DefaultDict[str, dict[str, Any]]] = defaultdict(
+    lambda: defaultdict(dict)
+)
+
+for fname in glob("degree_data/*/*.json"):
     with open(fname, "r") as f:
         data = json.load(f)
-        degree_plans[data["display_name"]] = data
+        degree_plans[Path(fname).parts[1]][data["display_name"]] = data
 
 
 @dataclass
@@ -78,6 +82,7 @@ class DegreeRequirementsInput:
 
     Sample DegreeRequirementsInput:
         core: true
+        year: 2022
         majors: ["Computer Science(BS)"]
         minors: ["History"]
         other: []
@@ -86,6 +91,7 @@ class DegreeRequirementsInput:
     Computer Science, and History requirements.
     """
 
+    year: int  # We use an int for year because we perform arithmetic to find a fallback year
     majors: list[str]  # TODO: Change to Enum in the future
     minors: list[str]  # TODO: Change to Enum in the future
     other: list[str]  # TODO: Change to Enum in the future
@@ -139,6 +145,12 @@ class DegreeRequirementsSolverException(Exception):
     pass
 
 
+class DegreeNotFoundException(Exception):
+    """Exception raised if the requested degree plan could not be found."""
+
+    pass
+
+
 class DegreeRequirementsSolver:
     def __init__(
         self,
@@ -175,10 +187,32 @@ class DegreeRequirementsSolver:
         # Logic for adding majors
         for input_req in degree_requirements_input.majors:
             # Get major data from json
-            if input_req not in degree_plans:
-                print("Error: degree plan not found!")
-                return []
-            requirements_data = degree_plans[input_req]["requirements"]["major"]
+            year = degree_requirements_input.year
+            if input_req not in degree_plans[str(year)]:
+                # Check if the years before this one have it
+                y = year
+                while str(y := y - 1) in degree_plans:
+                    if input_req in degree_plans[str(y)]:
+                        year = y
+                        break
+                if (
+                    year != degree_requirements_input.year
+                ):  # The using_year has been replaced to a working year
+                    break
+                # Check if the years after this one have it
+                y = year
+                while str(y := y + 1) in degree_plans:
+                    if input_req in degree_plans[str(y)]:
+                        year = y
+                        break
+                if (
+                    year != degree_requirements_input.year
+                ):  # The using_year has been replaced to a working year
+                    break
+                raise DegreeNotFoundException
+            requirements_data = degree_plans[str(year)][input_req]["requirements"][
+                "major"
+            ]
 
             major_req = DegreeRequirement(
                 input_req,

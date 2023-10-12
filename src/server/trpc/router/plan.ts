@@ -290,6 +290,28 @@ export const planRouter = router({
         return false;
       }
     }),
+  massInsertCourses: protectedProcedure
+    .input(
+      z.array(
+        z.object({
+          id: z.string(),
+          code: z.string(),
+          color: z.string().default(''),
+          semesterId: z.string(),
+          locked: z.boolean(),
+          prereqOverriden: z.boolean(),
+        }),
+      ),
+    )
+    .mutation(async ({ ctx, input }) => {
+      try {
+        await ctx.prisma.course.createMany({ data: input });
+        return true;
+      } catch (error) {
+        console.error(error);
+        return false;
+      }
+    }),
   massDeleteCourses: protectedProcedure
     .input(z.object({ courseIds: z.array(z.string()) }))
     .mutation(async ({ ctx, input }) => {
