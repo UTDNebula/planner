@@ -18,6 +18,7 @@ import { Course, DraggableCourse, GetDragIdByCourse } from '../types';
 import useFuse from '../useFuse';
 
 import 'react-loading-skeleton/dist/skeleton.css';
+import { useSemestersContext } from '@components/planner/SemesterContext';
 
 export interface CourseSelectorContainerProps {
   planId: string;
@@ -36,18 +37,26 @@ function CourseSelectorContainer({
   getRequirementDragId,
   courseDragged,
 }: CourseSelectorContainerProps) {
-  const { data: validationData, error } = trpc.validator.degreeValidator.useQuery(planId, {
-    // TODO: Fix validator retries.
-    // Validator kept retrying when the "REPORT ERROR" button was clicked on. At some point it should stop retrying.
-    retry: false,
-    trpc: {
-      context: {
-        // Isolate the validation request from others. Validator is an external service so its reliability
-        // should not affect other requets.
-        skipBatch: true,
+  const { allSemesters: semesters } = useSemestersContext();
+  const { data: validationData, error } = trpc.validator.degreeValidator.useQuery(
+    {
+      planId,
+      // If they started during a Spring semester, it should use the previous numeric year's degree plan
+      startYear: semesters[0].code.year - (semesters[0].code.semester === 's' ? 1 : 0),
+    },
+    {
+      // TODO: Fix validator retries.
+      // Validator kept retrying when the "REPORT ERROR" button was clicked on. At some point it should stop retrying.
+      retry: false,
+      trpc: {
+        context: {
+          // Isolate the validation request from others. Validator is an external service so its reliability
+          // should not affect other requets.
+          skipBatch: true,
+        },
       },
     },
-  });
+  );
 
   const validatorError = useMemo(
     () => error?.data?.code === 'INTERNAL_SERVER_ERROR',
