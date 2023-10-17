@@ -73,7 +73,9 @@ export const SidebarCourseItem = React.memo(
                 {course.code} - {course.title}
               </div>
             </span>
-            <div className="flex flex-row items-center gap-x-2">
+            <div className={`flex flex-row items-center gap-x-2 ${
+                  course.status === 'complete' ? 'opacity-50' : 'opacity-100'
+              }`}>
               {course.hours && course.hours < getSemesterHourFromCourseCode(course.code)! && (
                 <div>{course.hours} hours </div>
               )}
