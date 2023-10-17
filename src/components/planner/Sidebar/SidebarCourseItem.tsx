@@ -62,12 +62,14 @@ export const SidebarCourseItem = React.memo(
           courseCode={course.code}
           year={year}
         >
-
-          
           <div className="flex w-full flex-row items-center justify-between">
             <span className="flex w-full flex-row items-center overflow-hidden text-sm text-[#1C2A6D]">
               <DragIndicatorIcon fontSize="inherit" className="mr-3 text-[16px] text-[#D4D4D4]" />
-              <div className={`mr-4 w-full overflow-hidden text-ellipsis whitespace-nowrap ${course.status === 'complete' ? 'opacity-50' : 'opacity-100'}`}>
+              <div
+                className={`mr-4 w-full overflow-hidden text-ellipsis whitespace-nowrap ${
+                  course.status === 'complete' ? 'opacity-50' : 'opacity-100'
+                }`}
+              >
                 {course.code} - {course.title}
               </div>
             </span>
