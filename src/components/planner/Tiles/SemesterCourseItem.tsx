@@ -79,7 +79,7 @@ export const MemoizedSemesterCourseItem = React.memo(
               ? 'cursor-default bg-neutral-200'
               : 'bg-inherit'
             : 'cursor-default bg-neutral-200'
-        } ${semesterLocked || course.locked ? 'text-neutral-400' : 'text-[#1C2A6D]'}`}
+        } ${semesterLocked || course.locked ? 'text-neutral-400' : 'text-[#1C2A6D]'} ${!isValid && '-order-1'}`}
         onClick={() => {
           // Don't open if user is hovering over course info
           if (!course.locked && !semesterLocked) setDropdownOpen(true);
