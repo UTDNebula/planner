@@ -187,7 +187,8 @@ class DegreeRequirementsSolver:
         # Logic for adding majors
         for input_req in degree_requirements_input.majors:
             # Get major data from json
-            year = degree_requirements_input.year
+            # We don't support degrees earlier than 2022
+            year = max([degree_requirements_input.year, 2022])
             if input_req not in degree_plans[str(year)]:
                 # Check if the years before this one have it
                 y = year
@@ -209,6 +210,7 @@ class DegreeRequirementsSolver:
                     year != degree_requirements_input.year
                 ):  # The using_year has been replaced to a working year
                     break
+                print("Error: Could not find the degree")
                 raise DegreeNotFoundException
             requirements_data = degree_plans[str(year)][input_req]["requirements"][
                 "major"
