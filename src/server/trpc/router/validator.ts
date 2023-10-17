@@ -7,8 +7,8 @@ import { courses as PlatformCourse } from 'prisma/generated/platform';
 
 import { courseCache } from './courseCache';
 import { DegreeNotFound, DegreeValidationError } from './errors';
-import { protectedProcedure, router } from '../trpc';
 import { getPlanFromUserId } from './plan';
+import { protectedProcedure, router } from '../trpc';
 
 type PlanData = {
   id: string;
@@ -60,16 +60,14 @@ export const validatorRouter = router({
       const courseToSemester = new Map<string, number>();
 
       planData?.semesters.forEach((semester, index) => {
-        for (let course of semester.courses) {
+        for (const course of semester.courses) {
           courseToSemester.set(course.code.trim(), index);
         }
       });
 
-      planData?.transferCredits.forEach(course => {
+      planData?.transferCredits.forEach((course) => {
         courseToSemester.set(course.trim(), -1);
       });
-
-      console.log(courseToSemester)
 
       const checkForRequisites = (
         requirements: CollectionOptions,
@@ -86,7 +84,8 @@ export const validatorRouter = router({
             const courseSemesterIndex = courseToSemester.get(courseCode as string);
             if (
               courseSemesterIndex !== undefined &&
-              ((requisiteType == RequisiteType.PRE && courseSemesterIndex < semester) || courseSemesterIndex <= semester)
+              ((requisiteType == RequisiteType.PRE && courseSemesterIndex < semester) ||
+                courseSemesterIndex <= semester)
             ) {
               // course is satisfied
               numRequisitesNotMet--;
@@ -124,7 +123,7 @@ export const validatorRouter = router({
 
       const validateRequisites = async (planData: PlanData, requisiteType: RequisiteType) => {
         planData?.semesters.forEach((semester, index) => {
-          for (let course of semester.courses) {
+          for (const course of semester.courses) {
             const reqsForCourse = courseCodeToReqs.get(course.code);
             const unfulfilledRequisites = checkForRequisites(
               reqsForCourse?.prereqs as CollectionOptions,
