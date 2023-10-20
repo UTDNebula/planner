@@ -11,105 +11,105 @@
         "matcher": "AndRequirement",
         "metadata": {
           "name": "Major Preparatory Courses",
-          "id": "Computer Engineering (BS)-0"
+          "id": "Computer Engineering(BS)-0"
         },
         "requirements": [
           {
             "matcher": "CourseRequirement",
             "course": "CE 1100",
             "metadata": {
-              "id": "Computer Engineering (BS)-1"
+              "id": "Computer Engineering(BS)-1"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CE 1202",
             "metadata": {
-              "id": "Computer Engineering (BS)-2"
+              "id": "Computer Engineering(BS)-2"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CS 1136",
             "metadata": {
-              "id": "Computer Engineering (BS)-3"
+              "id": "Computer Engineering(BS)-3"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CS 1336",
             "metadata": {
-              "id": "Computer Engineering (BS)-4"
+              "id": "Computer Engineering(BS)-4"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CE 1337",
             "metadata": {
-              "id": "Computer Engineering (BS)-5"
+              "id": "Computer Engineering(BS)-5"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ECS 1100",
             "metadata": {
-              "id": "Computer Engineering (BS)-6"
+              "id": "Computer Engineering(BS)-6"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ENGR 2300",
             "metadata": {
-              "id": "Computer Engineering (BS)-7"
+              "id": "Computer Engineering(BS)-7"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CE 2305",
             "metadata": {
-              "id": "Computer Engineering (BS)-8"
+              "id": "Computer Engineering(BS)-8"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CE 2310",
             "metadata": {
-              "id": "Computer Engineering (BS)-9"
+              "id": "Computer Engineering(BS)-9"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CE 2336",
             "metadata": {
-              "id": "Computer Engineering (BS)-10"
+              "id": "Computer Engineering(BS)-10"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "PHYS 2125",
             "metadata": {
-              "id": "Computer Engineering (BS)-11"
+              "id": "Computer Engineering(BS)-11"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "PHYS 2126",
             "metadata": {
-              "id": "Computer Engineering (BS)-12"
+              "id": "Computer Engineering(BS)-12"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "PHYS 2325",
             "metadata": {
-              "id": "Computer Engineering (BS)-13"
+              "id": "Computer Engineering(BS)-13"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "PHYS 2326",
             "metadata": {
-              "id": "Computer Engineering (BS)-14"
+              "id": "Computer Engineering(BS)-14"
             }
           },
           {
@@ -122,26 +122,26 @@
                     "matcher": "CourseRequirement",
                     "course": "MATH 2413",
                     "metadata": {
-                      "id": "Computer Engineering (BS)-17"
+                      "id": "Computer Engineering(BS)-17"
                     }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "MATH 2414",
                     "metadata": {
-                      "id": "Computer Engineering (BS)-18"
+                      "id": "Computer Engineering(BS)-18"
                     }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "MATH 2415",
                     "metadata": {
-                      "id": "Computer Engineering (BS)-19"
+                      "id": "Computer Engineering(BS)-19"
                     }
                   }
                 ],
                 "metadata": {
-                  "id": "Computer Engineering (BS)-16"
+                  "id": "Computer Engineering(BS)-16"
                 }
               },
               {
@@ -151,31 +151,31 @@
                     "matcher": "CourseRequirement",
                     "course": "MATH 2417",
                     "metadata": {
-                      "id": "Computer Engineering (BS)-21"
+                      "id": "Computer Engineering(BS)-21"
                     }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "MATH 2419",
                     "metadata": {
-                      "id": "Computer Engineering (BS)-22"
+                      "id": "Computer Engineering(BS)-22"
                     }
                   }
                 ],
                 "metadata": {
-                  "id": "Computer Engineering (BS)-20"
+                  "id": "Computer Engineering(BS)-20"
                 }
               }
             ],
             "metadata": {
-              "id": "Computer Engineering (BS)-15"
+              "id": "Computer Engineering(BS)-15"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MATH 2420",
             "metadata": {
-              "id": "Computer Engineering (BS)-23"
+              "id": "Computer Engineering(BS)-23"
             }
           }
         ]
@@ -184,119 +184,119 @@
         "matcher": "AndRequirement",
         "metadata": {
           "name": "Major Core Courses",
-          "id": "Computer Engineering (BS)-24"
+          "id": "Computer Engineering(BS)-24"
         },
         "requirements": [
           {
             "matcher": "CourseRequirement",
             "course": "CE 3161",
             "metadata": {
-              "id": "Computer Engineering (BS)-25"
+              "id": "Computer Engineering(BS)-25"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CE 3201",
             "metadata": {
-              "id": "Computer Engineering (BS)-26"
+              "id": "Computer Engineering(BS)-26"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CE 3202",
             "metadata": {
-              "id": "Computer Engineering (BS)-27"
+              "id": "Computer Engineering(BS)-27"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ECS 3390",
             "metadata": {
-              "id": "Computer Engineering (BS)-28"
+              "id": "Computer Engineering(BS)-28"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CE 3301",
             "metadata": {
-              "id": "Computer Engineering (BS)-29"
+              "id": "Computer Engineering(BS)-29"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CE 3303",
             "metadata": {
-              "id": "Computer Engineering (BS)-30"
+              "id": "Computer Engineering(BS)-30"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CE 3311",
             "metadata": {
-              "id": "Computer Engineering (BS)-31"
+              "id": "Computer Engineering(BS)-31"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CE 3320",
             "metadata": {
-              "id": "Computer Engineering (BS)-32"
+              "id": "Computer Engineering(BS)-32"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ENGR 3341",
             "metadata": {
-              "id": "Computer Engineering (BS)-33"
+              "id": "Computer Engineering(BS)-33"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CE 3345",
             "metadata": {
-              "id": "Computer Engineering (BS)-34"
+              "id": "Computer Engineering(BS)-34"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CE 3354",
             "metadata": {
-              "id": "Computer Engineering (BS)-35"
+              "id": "Computer Engineering(BS)-35"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CE 4304",
             "metadata": {
-              "id": "Computer Engineering (BS)-36"
+              "id": "Computer Engineering(BS)-36"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CE 4348",
             "metadata": {
-              "id": "Computer Engineering (BS)-37"
+              "id": "Computer Engineering(BS)-37"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CE 4370",
             "metadata": {
-              "id": "Computer Engineering (BS)-38"
+              "id": "Computer Engineering(BS)-38"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CE 4388",
             "metadata": {
-              "id": "Computer Engineering (BS)-39"
+              "id": "Computer Engineering(BS)-39"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CE 4389",
             "metadata": {
-              "id": "Computer Engineering (BS)-40"
+              "id": "Computer Engineering(BS)-40"
             }
           },
           {
@@ -306,40 +306,40 @@
                 "matcher": "CourseRequirement",
                 "course": "CE 4201",
                 "metadata": {
-                  "id": "Computer Engineering (BS)-42"
+                  "id": "Computer Engineering(BS)-42"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "CE 4202",
                 "metadata": {
-                  "id": "Computer Engineering (BS)-43"
+                  "id": "Computer Engineering(BS)-43"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "CE 4203",
                 "metadata": {
-                  "id": "Computer Engineering (BS)-44"
+                  "id": "Computer Engineering(BS)-44"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "CE 4204",
                 "metadata": {
-                  "id": "Computer Engineering (BS)-45"
+                  "id": "Computer Engineering(BS)-45"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "CE 4205",
                 "metadata": {
-                  "id": "Computer Engineering (BS)-46"
+                  "id": "Computer Engineering(BS)-46"
                 }
               }
             ],
             "metadata": {
-              "id": "Computer Engineering (BS)-41"
+              "id": "Computer Engineering(BS)-41"
             }
           }
         ]
@@ -348,7 +348,7 @@
         "matcher": "HoursRequirement",
         "metadata": {
           "name": "Major Guided Electives",
-          "id": "Computer Engineering (BS)-47"
+          "id": "Computer Engineering(BS)-47"
         },
         "required_hours": 9,
         "requirements": [
@@ -356,196 +356,196 @@
             "matcher": "CourseRequirement",
             "course": "CE 4V97",
             "metadata": {
-              "id": "Computer Engineering (BS)-48"
+              "id": "Computer Engineering(BS)-48"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CE 4V98",
             "metadata": {
-              "id": "Computer Engineering (BS)-49"
+              "id": "Computer Engineering(BS)-49"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CE 4399",
             "metadata": {
-              "id": "Computer Engineering (BS)-50"
+              "id": "Computer Engineering(BS)-50"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "EE 4325",
             "metadata": {
-              "id": "Computer Engineering (BS)-51"
+              "id": "Computer Engineering(BS)-51"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "EE 4330",
             "metadata": {
-              "id": "Computer Engineering (BS)-52"
+              "id": "Computer Engineering(BS)-52"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "EE 4340",
             "metadata": {
-              "id": "Computer Engineering (BS)-53"
+              "id": "Computer Engineering(BS)-53"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "EE 4342",
             "metadata": {
-              "id": "Computer Engineering (BS)-54"
+              "id": "Computer Engineering(BS)-54"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "EE 4360",
             "metadata": {
-              "id": "Computer Engineering (BS)-55"
+              "id": "Computer Engineering(BS)-55"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "EE 4361",
             "metadata": {
-              "id": "Computer Engineering (BS)-56"
+              "id": "Computer Engineering(BS)-56"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "EE 4363",
             "metadata": {
-              "id": "Computer Engineering (BS)-57"
+              "id": "Computer Engineering(BS)-57"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "EE 4365",
             "metadata": {
-              "id": "Computer Engineering (BS)-58"
+              "id": "Computer Engineering(BS)-58"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "EE 4367",
             "metadata": {
-              "id": "Computer Engineering (BS)-59"
+              "id": "Computer Engineering(BS)-59"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "EE 4371",
             "metadata": {
-              "id": "Computer Engineering (BS)-60"
+              "id": "Computer Engineering(BS)-60"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CE 4331",
             "metadata": {
-              "id": "Computer Engineering (BS)-61"
+              "id": "Computer Engineering(BS)-61"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CS 4332",
             "metadata": {
-              "id": "Computer Engineering (BS)-62"
+              "id": "Computer Engineering(BS)-62"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CS 4334",
             "metadata": {
-              "id": "Computer Engineering (BS)-63"
+              "id": "Computer Engineering(BS)-63"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CS 4337",
             "metadata": {
-              "id": "Computer Engineering (BS)-64"
+              "id": "Computer Engineering(BS)-64"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CS 4347",
             "metadata": {
-              "id": "Computer Engineering (BS)-65"
+              "id": "Computer Engineering(BS)-65"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CS 4352",
             "metadata": {
-              "id": "Computer Engineering (BS)-66"
+              "id": "Computer Engineering(BS)-66"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CS 4361",
             "metadata": {
-              "id": "Computer Engineering (BS)-67"
+              "id": "Computer Engineering(BS)-67"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CS 4365",
             "metadata": {
-              "id": "Computer Engineering (BS)-68"
+              "id": "Computer Engineering(BS)-68"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CS 4375",
             "metadata": {
-              "id": "Computer Engineering (BS)-69"
+              "id": "Computer Engineering(BS)-69"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CS 4384",
             "metadata": {
-              "id": "Computer Engineering (BS)-70"
+              "id": "Computer Engineering(BS)-70"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CS 4389",
             "metadata": {
-              "id": "Computer Engineering (BS)-71"
+              "id": "Computer Engineering(BS)-71"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CS 4390",
             "metadata": {
-              "id": "Computer Engineering (BS)-72"
+              "id": "Computer Engineering(BS)-72"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CS 4392",
             "metadata": {
-              "id": "Computer Engineering (BS)-73"
+              "id": "Computer Engineering(BS)-73"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CS 4393",
             "metadata": {
-              "id": "Computer Engineering (BS)-74"
+              "id": "Computer Engineering(BS)-74"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "CS 4398",
             "metadata": {
-              "id": "Computer Engineering (BS)-75"
+              "id": "Computer Engineering(BS)-75"
             }
           }
         ]
@@ -555,7 +555,7 @@
         "required_hours": 4,
         "excluded_courses": [],
         "metadata": {
-          "id": "Computer Engineering (BS)-76"
+          "id": "Computer Engineering(BS)-76"
         }
       }
     ]

@@ -32,61 +32,61 @@
             "course": "CS 1436",
             "matcher": "CourseRequirement",
             "metadata": {
-              "id": "Computer Science(BS)-4"
+              "id": "Computer Science(BS)-3"
             }
           },
           {
             "course": "CS 1337",
             "matcher": "CourseRequirement",
             "metadata": {
-              "id": "Computer Science(BS)-5"
+              "id": "Computer Science(BS)-4"
             }
           },
           {
             "course": "CS 2305",
             "matcher": "CourseRequirement",
             "metadata": {
-              "id": "Computer Science(BS)-6"
+              "id": "Computer Science(BS)-5"
             }
           },
           {
             "course": "CS 2336",
             "matcher": "CourseRequirement",
             "metadata": {
-              "id": "Computer Science(BS)-7"
+              "id": "Computer Science(BS)-6"
             }
           },
           {
             "course": "CS 2340",
             "matcher": "CourseRequirement",
             "metadata": {
-              "id": "Computer Science(BS)-8"
+              "id": "Computer Science(BS)-7"
             }
           },
           {
             "matcher": "OrRequirement",
             "metadata": {
-              "id": "Computer Science(BS)-9"
+              "id": "Computer Science(BS)-8"
             },
             "requirements": [
               {
                 "matcher": "AndRequirement",
                 "metadata": {
-                  "id": "Computer Science(BS)-10"
+                  "id": "Computer Science(BS)-9"
                 },
                 "requirements": [
                   {
                     "course": "MATH 2413",
                     "matcher": "CourseRequirement",
                     "metadata": {
-                      "id": "Computer Science(BS)-11"
+                      "id": "Computer Science(BS)-10"
                     }
                   },
                   {
                     "course": "MATH 2414",
                     "matcher": "CourseRequirement",
                     "metadata": {
-                      "id": "Computer Science(BS)-12"
+                      "id": "Computer Science(BS)-11"
                     }
                   }
                 ]
@@ -94,21 +94,21 @@
               {
                 "matcher": "AndRequirement",
                 "metadata": {
-                  "id": "Computer Science(BS)-13"
+                  "id": "Computer Science(BS)-12"
                 },
                 "requirements": [
                   {
                     "course": "MATH 2417",
                     "matcher": "CourseRequirement",
                     "metadata": {
-                      "id": "Computer Science(BS)-14"
+                      "id": "Computer Science(BS)-13"
                     }
                   },
                   {
                     "course": "MATH 2419",
                     "matcher": "CourseRequirement",
                     "metadata": {
-                      "id": "Computer Science(BS)-15"
+                      "id": "Computer Science(BS)-14"
                     }
                   }
                 ]
@@ -119,14 +119,14 @@
             "course": "MATH 2418",
             "matcher": "CourseRequirement",
             "metadata": {
-              "id": "Computer Science(BS)-16"
+              "id": "Computer Science(BS)-15"
             }
           },
           {
             "course": "RHET 1302",
             "matcher": "CourseRequirement",
             "metadata": {
-              "id": "Computer Science(BS)-3"
+              "id": "Computer Science(BS)-16"
             }
           },
           {
