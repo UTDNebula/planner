@@ -37,7 +37,9 @@ export const validatorRouter = router({
        *  TODO: Fix this later somehow
        */
 
+      // internal course id -> course code
       const courseInternalToCode = new Map<string, Prisma.JsonValue>();
+      // course code -> requisite information
       const courseCodeToReqs = new Map<
         string,
         {
@@ -57,6 +59,7 @@ export const validatorRouter = router({
         courseInternalToCode.set(course.internal_course_number, code);
       }
 
+      // course -> semester index, used to determine if A is taken before B by comparing indices
       const courseToSemester = new Map<string, number>();
 
       planData?.semesters.forEach((semester, index) => {
@@ -66,6 +69,7 @@ export const validatorRouter = router({
       });
 
       planData?.transferCredits.forEach((course) => {
+        // set semester index to -1, indicating credit comes before all semesters
         courseToSemester.set(course.trim(), -1);
       });
 
@@ -75,17 +79,20 @@ export const validatorRouter = router({
         requisiteType: RequisiteType,
       ) => {
         if (!requirements || requirements.options.length === 0) return [];
+        // count the number of requisites not met, if 0 then requisites are satisfied
         let numRequisitesNotMet = requirements.required;
-        const requisitesNotMet: [string[], number][] = [];
+        // storing course codes of the unmet requirements
         const currentUnmetCourses: string[] = [];
+        // this function's output: [currentUnmetCourses, numRequisitesNotMet]
+        const requisitesNotMet: [string[], number][] = [];
         for (const option of requirements.options) {
           if (option.type === 'course') {
             const courseCode = courseInternalToCode.get(option.class_reference);
             const courseSemesterIndex = courseToSemester.get(courseCode as string);
             if (
               courseSemesterIndex !== undefined &&
-              ((requisiteType == RequisiteType.PRE && courseSemesterIndex < semester) ||
-                courseSemesterIndex <= semester)
+              ((requisiteType == RequisiteType.PRE && courseSemesterIndex < semester) || // if pre-req, semester index has to be less than
+                courseSemesterIndex <= semester) // if coreq, it can be taken in the same semester
             ) {
               // course is satisfied
               numRequisitesNotMet--;
@@ -93,6 +100,7 @@ export const validatorRouter = router({
               currentUnmetCourses.push(courseCode as string);
             }
           } else if (option.type === 'collection') {
+            // recursively gather requisite information
             const nestedRequisitesNotMet = checkForRequisites(option, semester, requisiteType);
             if (nestedRequisitesNotMet.length > 0) {
               requisitesNotMet.push(...nestedRequisitesNotMet);
@@ -121,6 +129,7 @@ export const validatorRouter = router({
         [RequisiteType.CO_PRE]: new Map(),
       };
 
+      // populates pre-req validation into output object
       const validateRequisites = async (planData: PlanData, requisiteType: RequisiteType) => {
         planData?.semesters.forEach((semester, index) => {
           for (const course of semester.courses) {
