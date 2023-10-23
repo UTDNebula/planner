@@ -4,37 +4,27 @@ import { DragDataToSidebarTile } from '../types';
 
 export interface DeleteCourseDropProps {
   dropId: UniqueIdentifier;
-  open: boolean;
 }
 
-export default function DeleteCourseDrop({ dropId, open }: DeleteCourseDropProps) {
+export default function DeleteCourseDrop({ dropId }: DeleteCourseDropProps) {
   const { setNodeRef } = useDroppable({
     id: dropId,
     data: { to: 'sidebar-tile' } as DragDataToSidebarTile,
   });
 
-  if (open) {
-    return (
-      <div
-        ref={setNodeRef}
-        id="tutorial-editor-1"
-        className="z-0 h-screen w-[30%] min-w-[30%] overflow-x-hidden overflow-y-scroll"
-      >
-        <div className="flex h-fit min-h-screen w-full flex-col gap-y-4 bg-white p-4">
-          <div className="h-[96vh] rounded-lg border-2 border-dashed border-red-400">
-            <div className="flex h-screen items-center justify-center">
-              Drop here to delete course
-            </div>
+  return (
+    <div
+      ref={setNodeRef}
+      id="tutorial-editor-1"
+      className="z-0 h-screen w-[30%] min-w-[30%] overflow-x-hidden overflow-y-scroll"
+    >
+      <div className="flex h-fit min-h-screen w-full flex-col gap-y-4 bg-white p-4">
+        <div className="flex h-[96vh] flex-[1_0_0] flex-col items-center justify-center self-stretch rounded-3xl border-2 border-dashed border-[color:var(--destructive-500-main,#EF4444)]">
+          <div className="self-stretch text-center text-base font-semibold not-italic leading-6 text-[color:var(--neutral-400,#A3A3A3)]">
+            Drag course here to delete
           </div>
         </div>
       </div>
-    );
-  } else {
-    return (
-      <div
-        ref={setNodeRef}
-        className="z-0 flex h-screen w-[50px] flex-col items-center border border-neutral-300 bg-red-500 py-8"
-      ></div>
-    );
-  }
+    </div>
+  );
 }

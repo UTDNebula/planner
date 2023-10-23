@@ -11,6 +11,7 @@ import SearchBar from '@/components/planner/Sidebar/SearchBar';
 import ChevronIcon from '@/icons/ChevronIcon';
 import { trpc } from '@/utils/trpc';
 import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
+import { useSemestersContext } from '@components/planner/SemesterContext';
 
 import AccordionSkeleton from './AccordionSkeleton';
 import DeleteCourseDrop from './DeleteCourseDrop';
@@ -20,7 +21,6 @@ import { Course, DraggableCourse, GetDragIdByCourse } from '../types';
 import useFuse from '../useFuse';
 
 import 'react-loading-skeleton/dist/skeleton.css';
-import { useSemestersContext } from '@components/planner/SemesterContext';
 
 export interface CourseSelectorContainerProps {
   planId: string;
@@ -137,8 +137,8 @@ function CourseSelectorContainer({
   const [displayResults, setDisplay] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
-  if (dragActive) {
-    return <DeleteCourseDrop dropId={dropId} open={open} />;
+  if (dragActive && open) {
+    return <DeleteCourseDrop dropId={dropId} />;
   }
 
   if (!open) {
@@ -212,7 +212,6 @@ function CourseSelectorContainer({
             ></div>
           </div>
         </div>
-
         <Dialog.Root open={displayResults} onOpenChange={(v) => setDisplay(v)} modal={false}>
           {ref.current && (
             <Dialog.Portal className="z-[99]" container={ref?.current}>
@@ -228,7 +227,6 @@ function CourseSelectorContainer({
             </Dialog.Portal>
           )}
         </Dialog.Root>
-
         {validatorError && (
           <div className="flex h-[30vh] w-full text-base leading-5 text-[#A3A3A3]">
             <div className="mx-12 mt-44 flex w-full flex-col items-center justify-center gap-4 text-center leading-6">
@@ -239,7 +237,6 @@ function CourseSelectorContainer({
             </div>
           </div>
         )}
-
         {validatorUnsupportedDegreeError && (
           <div className="flex h-[30vh] w-full text-base leading-5 text-[#A3A3A3]">
             <div className="mx-12 mt-44 flex w-full flex-col items-center justify-center gap-4 text-center leading-6">
@@ -250,7 +247,6 @@ function CourseSelectorContainer({
             </div>
           </div>
         )}
-
         {!validatorError &&
           !validatorUnsupportedDegreeError &&
           validationData &&
@@ -263,11 +259,12 @@ function CourseSelectorContainer({
               getCourseItemDragId={getRequirementDragId}
             />
           ))}
-
         {!validatorError && !validatorUnsupportedDegreeError && !validationData && (
           <AccordionSkeleton />
         )}
-
+        <div className="flex flex-grow items-end justify-center text-center text-base font-semibold not-italic leading-6 text-[color:var(--neutral-400,#A3A3A3)]">
+          Drag courses here to delete
+        </div>
         <div className="flex flex-grow items-end justify-end text-sm ">
           <div>
             <span className="font-bold">Warning:</span> This is an unofficial tool not affiliated
