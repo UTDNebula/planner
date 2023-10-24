@@ -40,9 +40,6 @@ module.exports = async (phase) => {
         transform: '@mui/icons-material/{{member}}',
       },
     },
-    compiler: {
-      removeConsole: process.env.NODE_ENV === 'production',
-    },
     rewrites: async () => {
       return [
         {
