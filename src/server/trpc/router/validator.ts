@@ -7,6 +7,7 @@ import { courses as PlatformCourse } from 'prisma/generated/platform';
 
 import { courseCache } from './courseCache';
 import { DegreeNotFound, DegreeValidationError } from './errors';
+import { getPlanFromUserId } from './plan';
 import { protectedProcedure, router } from '../trpc';
 
 type PlanData = {
@@ -20,30 +21,7 @@ export const validatorRouter = router({
   prereqValidator: protectedProcedure.input(z.string().min(1)).query(async ({ ctx, input }) => {
     try {
       // Fetch current plan
-      const planData = await ctx.prisma.plan.findUnique({
-        where: {
-          id: input,
-        },
-        select: {
-          name: true,
-          id: true,
-          userId: true,
-          transferCredits: true,
-          semesters: {
-            include: {
-              courses: true,
-            },
-          },
-        },
-      });
-
-      if (!planData) {
-        throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: 'Plan not found',
-        });
-      }
-
+      const planData = await getPlanFromUserId(ctx, input);
       if (ctx.session.user.id !== planData.userId) {
         throw new TRPCError({ code: 'FORBIDDEN' });
       }
@@ -58,8 +36,11 @@ export const validatorRouter = router({
       /*  sanitizing data from API db.
        *  TODO: Fix this later somehow
        */
-      const courseMapWithIdKey = new Map<string, Prisma.JsonValue>();
-      const courseMapWithCodeKey = new Map<
+
+      // internal course id -> course code
+      const courseInternalToCode = new Map<string, Prisma.JsonValue>();
+      // course code -> requisite information
+      const courseCodeToReqs = new Map<
         string,
         {
           prereqs: Prisma.JsonValue;
@@ -69,241 +50,105 @@ export const validatorRouter = router({
       >();
 
       for (const course of coursesFromAPI) {
-        courseMapWithCodeKey.set(`${course.subject_prefix} ${course.course_number}`, {
+        const code = `${course.subject_prefix} ${course.course_number}`;
+        courseCodeToReqs.set(code, {
           prereqs: course.prerequisites,
           coreqs: course.corequisites,
           co_or_pre_requisites: course.co_or_pre_requisites,
         });
-        courseMapWithIdKey.set(
-          course.internal_course_number,
-          `${course.subject_prefix} ${course.course_number}`,
-        );
+        courseInternalToCode.set(course.internal_course_number, code);
       }
 
-      /* Hash to store pre req data.
-       *  key: course id
-       *  value: boolean to represent validity
-       */
-      const courseHash = new Map<string, number>();
-      const coReqHash = new Map<string, Array<[Array<string>, number]>>();
-      const preReqHash = new Map<string, Array<[Array<string>, number]>>();
-      const coOrPreReqHash = new Map<string, Array<[Array<string>, number]>>();
-      // Regex to parse course from description of improperly parsed course
-      const re = /\b[A-Z]{2,4} \d{4}\b/;
+      // course -> semester index, used to determine if A is taken before B by comparing indices
+      const courseToSemester = new Map<string, number>();
 
-      /* Recursive function to check for prereqs.
-       *  TODO: Move to a client side function. Possibly a hook.
-       */
-      for (let i = 0; i < planData?.semesters.length; i++) {
-        if (!planData?.semesters[i] || !planData?.semesters[i].courses) continue;
-        for (let j = 0; j < planData?.semesters[i].courses.length; j++) {
-          const course = planData?.semesters[i].courses[j];
-          courseHash.set(course.code.trim(), i);
+      planData?.semesters.forEach((semester, index) => {
+        for (const course of semester.courses) {
+          courseToSemester.set(course.code.trim(), index);
         }
+      });
+
+      planData?.transferCredits.forEach((course) => {
+        // set semester index to -1, indicating credit comes before all semesters
+        courseToSemester.set(course.trim(), -1);
+      });
+
+      const checkForRequisites = (
+        requirements: CollectionOptions,
+        semester: number,
+        requisiteType: RequisiteType,
+      ) => {
+        if (!requirements || requirements.options.length === 0) return [];
+        // count the number of requisites not met, if 0 then requisites are satisfied
+        let numRequisitesNotMet = requirements.required;
+        // storing course codes of the unmet requirements
+        const currentUnmetCourses: string[] = [];
+        // this function's output: [currentUnmetCourses, numRequisitesNotMet]
+        const requisitesNotMet: [string[], number][] = [];
+        for (const option of requirements.options) {
+          if (option.type === 'course') {
+            const courseCode = courseInternalToCode.get(option.class_reference);
+            const courseSemesterIndex = courseToSemester.get(courseCode as string);
+            if (
+              courseSemesterIndex !== undefined &&
+              ((requisiteType == RequisiteType.PRE && courseSemesterIndex < semester) || // if pre-req, semester index has to be less than
+                courseSemesterIndex <= semester) // if coreq, it can be taken in the same semester
+            ) {
+              // course is satisfied
+              numRequisitesNotMet--;
+            } else {
+              currentUnmetCourses.push(courseCode as string);
+            }
+          } else if (option.type === 'collection') {
+            // recursively gather requisite information
+            const nestedRequisitesNotMet = checkForRequisites(option, semester, requisiteType);
+            if (nestedRequisitesNotMet.length > 0) {
+              requisitesNotMet.push(...nestedRequisitesNotMet);
+            } else {
+              numRequisitesNotMet--;
+            }
+          }
+        }
+
+        if (numRequisitesNotMet <= 0) return [];
+        if (currentUnmetCourses.length > 0)
+          requisitesNotMet.push([currentUnmetCourses, numRequisitesNotMet]);
+        return requisitesNotMet;
+      };
+
+      enum RequisiteType {
+        PRE = 'prereq',
+        CO = 'coreq',
+        CO_PRE = 'coorpre',
       }
 
-      // Run on transfer credits
-      for (let i = 0; i < planData.transferCredits.length; i++) {
-        const course = planData.transferCredits[i];
-        courseHash.set(course.trim(), -1);
-      }
-
-      const checkForPreRecursive = (
-        requirements: CollectionOptions,
-        semester: number,
-      ): Array<[Array<string>, number]> => {
-        const prereqNotMet: Array<[Array<string>, number]> = [];
-        let count = 0;
-        if (!requirements || requirements.options.length === 0) {
-          return [];
-        }
-        const temp: [Array<string>, number] = [[], 0];
-        for (const option of requirements.options) {
-          if (option.type === 'course' || option.type === 'other') {
-            // 'other' might be an improperly parsed course
-            // if it's not, `course` will be set to undefined so nothing will happen
-            const course =
-              option.type === 'course'
-                ? courseMapWithIdKey.get(option.class_reference)
-                : option.description.match(re)?.[0];
-            if (course) {
-              const data = courseHash.get(course as string);
-              if (data === undefined) {
-                temp[0].push(course as string);
-              } else if (data < semester) {
-                count++;
-              } else {
-                temp[0].push(course as string);
-              }
-            }
-          } else if (option.type === 'collection') {
-            const prereq = checkForPreRecursive(option, semester);
-            if (prereq.length > 0) {
-              prereqNotMet.push(...prereq);
-            } else {
-              count++;
-            }
-          }
-        }
-
-        if (count >= requirements.required) {
-          return [];
-        }
-        if (temp[0].length > 0) {
-          temp[1] = requirements.required - count;
-          prereqNotMet.push(temp);
-        }
-        return prereqNotMet;
+      type RequisitesOutput = Map<string, Array<[Array<string>, number]>>;
+      const requisiteOutput: { [Key in RequisiteType]: RequisitesOutput } = {
+        [RequisiteType.PRE]: new Map(),
+        [RequisiteType.CO]: new Map(),
+        [RequisiteType.CO_PRE]: new Map(),
       };
 
-      const checkForCoRecursive = (
-        requirements: CollectionOptions,
-        semester: number,
-      ): Array<[Array<string>, number]> => {
-        const coreqNotMet: Array<[Array<string>, number]> = [];
-        let count = 0;
-        if (!requirements || requirements.options.length === 0) {
-          return [];
-        }
-        const temp: [Array<string>, number] = [[], 0];
-        for (const option of requirements.options) {
-          if (option.type === 'course' || option.type === 'other') {
-            // 'other' might be an improperly parsed course
-            // if it's not, `course` will be set to undefined so nothing will happen
-            const course =
-              option.type === 'course'
-                ? courseMapWithIdKey.get(option.class_reference)
-                : option.description.match(re)?.[0];
-            if (course) {
-              const data = courseHash.get(course as string);
-              if (data === undefined) {
-                temp[0].push(course as string);
-                continue;
-              }
-              if (data <= semester) {
-                count++;
-              } else {
-                temp[0].push(course as string);
-              }
-            }
-          } else if (option.type === 'collection') {
-            const coreq = checkForCoRecursive(option, semester);
-            if (coreq.length > 0) {
-              coreqNotMet.push(...coreq);
-            } else {
-              count++;
-            }
-          }
-        }
-        if (count >= requirements.required) {
-          return [];
-        }
-        if (temp[0].length > 0) {
-          temp[1] = requirements.required;
-          coreqNotMet.push(temp);
-        }
-        return coreqNotMet;
-      };
-
-      const checkForCoOrPreRecursive = (
-        requirements: CollectionOptions,
-        semester: number,
-      ): Array<[Array<string>, number]> => {
-        const coreqNotMet: Array<[Array<string>, number]> = [];
-        let count = 0;
-        if (!requirements || requirements.options.length === 0) {
-          return [];
-        }
-        const temp: [Array<string>, number] = [[], 0];
-        for (const option of requirements.options) {
-          if (option.type === 'course' || option.type === 'other') {
-            // 'other' might be an improperly parsed course
-            // if it's not, `course` will be set to undefined so nothing will happen
-            const course =
-              option.type === 'course'
-                ? courseMapWithIdKey.get(option.class_reference)
-                : option.description.match(re)?.[0];
-            if (course) {
-              const data = courseHash.get(course as string);
-              if (data === undefined) {
-                temp[0].push(course as string);
-                continue;
-              }
-              if (data <= semester) {
-                count++;
-              } else {
-                temp[0].push(course as string);
-              }
-            }
-          } else if (option.type === 'collection') {
-            const coreq = checkForCoOrPreRecursive(option, semester);
-            if (coreq.length > 0) {
-              coreqNotMet.push(...coreq);
-            } else {
-              count++;
-            }
-          }
-        }
-        if (count >= requirements.required) {
-          return [];
-        }
-        if (temp[0].length > 0) {
-          temp[1] = requirements.required;
-          coreqNotMet.push(temp);
-        }
-        return coreqNotMet;
-      };
-      const prereqValidation = async (planData: PlanData) => {
-        for (let i = 0; i < planData?.semesters.length; i++) {
-          if (!planData?.semesters[i] || !planData?.semesters[i].courses) continue;
-          for (let j = 0; j < planData?.semesters[i].courses.length; j++) {
-            const course = planData?.semesters[i].courses[j];
-            const reqsForCourse = courseMapWithCodeKey.get(course.code);
-            if (!reqsForCourse) {
-              continue;
-            }
-            const flag = checkForPreRecursive(reqsForCourse.prereqs as CollectionOptions, i);
-            preReqHash.set(course.code, flag);
-          }
-        }
-      };
-
-      const coreqValidation = async (planData: PlanData) => {
-        for (let i = 0; i < planData?.semesters.length; i++) {
-          if (!planData?.semesters[i] || !planData?.semesters[i].courses) continue;
-          for (let j = 0; j < planData?.semesters[i].courses.length; j++) {
-            const course = planData?.semesters[i].courses[j];
-            const reqsForCourse = courseMapWithCodeKey.get(course.code);
-            if (!reqsForCourse) {
-              continue;
-            }
-            const flag = checkForCoRecursive(reqsForCourse.coreqs as CollectionOptions, i);
-            coReqHash.set(course.code, flag);
-          }
-        }
-      };
-      const coOrPrereqValidation = async (planData: PlanData) => {
-        for (let i = 0; i < planData?.semesters.length; i++) {
-          if (!planData?.semesters[i] || !planData?.semesters[i].courses) continue;
-          for (let j = 0; j < planData?.semesters[i].courses.length; j++) {
-            const course = planData?.semesters[i].courses[j];
-            const reqsForCourse = courseMapWithCodeKey.get(course.code);
-            if (!reqsForCourse) {
-              continue;
-            }
-            const flag = checkForCoOrPreRecursive(
-              reqsForCourse.co_or_pre_requisites as CollectionOptions,
-              i,
+      // populates pre-req validation into output object
+      const validateRequisites = async (planData: PlanData, requisiteType: RequisiteType) => {
+        planData?.semesters.forEach((semester, index) => {
+          for (const course of semester.courses) {
+            const reqsForCourse = courseCodeToReqs.get(course.code);
+            const unfulfilledRequisites = checkForRequisites(
+              reqsForCourse?.prereqs as CollectionOptions,
+              index,
+              requisiteType,
             );
-            coOrPreReqHash.set(course.code, flag);
+            requisiteOutput[requisiteType].set(course.code, unfulfilledRequisites);
           }
-        }
+        });
       };
-      await prereqValidation(planData);
-      await coreqValidation(planData);
-      await coOrPrereqValidation(planData);
 
-      return { prereq: preReqHash, coreq: coReqHash, coorepre: coOrPreReqHash };
+      await validateRequisites(planData, RequisiteType.PRE);
+      await validateRequisites(planData, RequisiteType.CO);
+      await validateRequisites(planData, RequisiteType.CO_PRE);
+
+      return requisiteOutput;
     } catch (error) {
       console.error(error);
       return null;
