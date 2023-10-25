@@ -233,7 +233,12 @@
             "metadata": {
               "id": "Psychology(BS)-29"
             },
-            "accepted_prefixes": ["PSY", "CGS", "CLDP", "NSC"]
+            "accepted_prefixes": [
+              "PSY",
+              "CGS",
+              "CLDP",
+              "NSC"
+            ]
           }
         ]
       },

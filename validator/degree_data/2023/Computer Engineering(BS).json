@@ -1,9 +1,9 @@
 {
-  "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ecs/electrical-engineering",
-  "minimum_credit_hours": 128,
+  "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/ecs/computer-engineering",
+  "minimum_credit_hours": 126,
   "school": "Erik Jonsson School of Engineering and Computer Science",
   "subtype": "Major",
-  "year": "2022-2023",
+  "year": "2023-2024",
   "requirements": {
     "core": "@import ./core.json",
     "major": [
@@ -11,91 +11,105 @@
         "matcher": "AndRequirement",
         "metadata": {
           "name": "Major Preparatory Courses",
-          "id": "Electrical Engineering(BSEE)-0"
+          "id": "Computer Engineering(BS)-0"
         },
         "requirements": [
           {
             "matcher": "CourseRequirement",
-            "course": "CHEM 1111",
+            "course": "CE 1100",
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-1"
+              "id": "Computer Engineering(BS)-1"
             }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "CHEM 1311",
+            "course": "CE 1202",
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-2"
+              "id": "Computer Engineering(BS)-2"
             }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "CS 1325",
+            "course": "CS 1436",
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-3"
+              "id": "Computer Engineering(BS)-3"
             }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "EE 1100",
+            "course": "CE 1337",
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-4"
+              "id": "Computer Engineering(BS)-4"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ECS 1100",
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-5"
-            }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "EE 1202",
-            "metadata": {
-              "id": "Electrical Engineering(BSEE)-6"
+              "id": "Computer Engineering(BS)-5"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ENGR 2300",
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-7"
+              "id": "Computer Engineering(BS)-6"
             }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "EE 2310",
+            "course": "CE 2305",
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-8"
+              "id": "Computer Engineering(BS)-7"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CE 2310",
+            "metadata": {
+              "id": "Computer Engineering(BS)-8"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CE 2336",
+            "metadata": {
+              "id": "Computer Engineering(BS)-9"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "PHYS 2125",
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-9"
+              "id": "Computer Engineering(BS)-10"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "PHYS 2126",
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-10"
+              "id": "Computer Engineering(BS)-11"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "PHYS 2325",
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-11"
+              "id": "Computer Engineering(BS)-12"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "PHYS 2326",
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-12"
+              "id": "Computer Engineering(BS)-13"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "RHET 1302",
+            "metadata": {
+              "id": "Computer Engineering(BS)-14"
             }
           },
           {
@@ -108,26 +122,26 @@
                     "matcher": "CourseRequirement",
                     "course": "MATH 2413",
                     "metadata": {
-                      "id": "Electrical Engineering(BSEE)-15"
+                      "id": "Computer Engineering(BS)-17"
                     }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "MATH 2414",
                     "metadata": {
-                      "id": "Electrical Engineering(BSEE)-16"
+                      "id": "Computer Engineering(BS)-18"
                     }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "MATH 2415",
                     "metadata": {
-                      "id": "Electrical Engineering(BSEE)-17"
+                      "id": "Computer Engineering(BS)-19"
                     }
                   }
                 ],
                 "metadata": {
-                  "id": "Electrical Engineering(BSEE)-14"
+                  "id": "Computer Engineering(BS)-16"
                 }
               },
               {
@@ -137,31 +151,67 @@
                     "matcher": "CourseRequirement",
                     "course": "MATH 2417",
                     "metadata": {
-                      "id": "Electrical Engineering(BSEE)-19"
+                      "id": "Computer Engineering(BS)-21"
                     }
                   },
                   {
                     "matcher": "CourseRequirement",
                     "course": "MATH 2419",
                     "metadata": {
-                      "id": "Electrical Engineering(BSEE)-20"
+                      "id": "Computer Engineering(BS)-22"
                     }
                   }
                 ],
                 "metadata": {
-                  "id": "Electrical Engineering(BSEE)-18"
+                  "id": "Computer Engineering(BS)-20"
                 }
               }
             ],
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-13"
+              "id": "Computer Engineering(BS)-15"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "MATH 2420",
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-21"
+              "id": "Computer Engineering(BS)-23"
+            }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "ENGR 3300",
+                "metadata": {
+                  "id": "Computer Engineering(BS)-25"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MATH 3323",
+                "metadata": {
+                  "id": "Computer Engineering(BS)-26"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MATH 3397",
+                "metadata": {
+                  "id": "Computer Engineering(BS)-27"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "STAT 3355",
+                "metadata": {
+                  "id": "Computer Engineering(BS)-28"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Computer Engineering(BS)-24"
             }
           }
         ]
@@ -170,119 +220,119 @@
         "matcher": "AndRequirement",
         "metadata": {
           "name": "Major Core Courses",
-          "id": "Electrical Engineering(BSEE)-22"
+          "id": "Computer Engineering(BS)-29"
         },
         "requirements": [
           {
             "matcher": "CourseRequirement",
-            "course": "EE 3161",
+            "course": "CE 3161",
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-23"
+              "id": "Computer Engineering(BS)-30"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CE 3201",
+            "metadata": {
+              "id": "Computer Engineering(BS)-31"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CE 3202",
+            "metadata": {
+              "id": "Computer Engineering(BS)-32"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ECS 3390",
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-24"
+              "id": "Computer Engineering(BS)-33"
             }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "EE 3201",
+            "course": "CE 2301",
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-25"
+              "id": "Computer Engineering(BS)-34"
             }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "EE 3202",
+            "course": "CE 3303",
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-26"
+              "id": "Computer Engineering(BS)-35"
             }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "ENGR 3300",
+            "course": "CE 3311",
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-27"
+              "id": "Computer Engineering(BS)-36"
             }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "EE 3301",
+            "course": "CE 3320",
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-28"
-            }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "EE 3302",
-            "metadata": {
-              "id": "Electrical Engineering(BSEE)-29"
-            }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "EE 3310",
-            "metadata": {
-              "id": "Electrical Engineering(BSEE)-30"
-            }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "EE 3311",
-            "metadata": {
-              "id": "Electrical Engineering(BSEE)-31"
-            }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "EE 3320",
-            "metadata": {
-              "id": "Electrical Engineering(BSEE)-32"
+              "id": "Computer Engineering(BS)-37"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ENGR 3341",
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-33"
+              "id": "Computer Engineering(BS)-38"
             }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "EE 4301",
+            "course": "CE 3345",
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-34"
+              "id": "Computer Engineering(BS)-39"
             }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "EE 4310",
+            "course": "CE 3354",
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-35"
+              "id": "Computer Engineering(BS)-40"
             }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "EE 4370",
+            "course": "CE 4304",
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-36"
+              "id": "Computer Engineering(BS)-41"
             }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "EE 4388",
+            "course": "CE 4348",
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-37"
+              "id": "Computer Engineering(BS)-42"
             }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "EE 4389",
+            "course": "CE 4370",
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-38"
+              "id": "Computer Engineering(BS)-43"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CE 4388",
+            "metadata": {
+              "id": "Computer Engineering(BS)-44"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CE 4389",
+            "metadata": {
+              "id": "Computer Engineering(BS)-45"
             }
           },
           {
@@ -290,283 +340,255 @@
             "requirements": [
               {
                 "matcher": "CourseRequirement",
-                "course": "EE 4201",
+                "course": "CE 4201",
                 "metadata": {
-                  "id": "Electrical Engineering(BSEE)-40"
+                  "id": "Computer Engineering(BS)-47"
                 }
               },
               {
                 "matcher": "CourseRequirement",
-                "course": "EE 4202",
+                "course": "CE 4202",
                 "metadata": {
-                  "id": "Electrical Engineering(BSEE)-41"
+                  "id": "Computer Engineering(BS)-48"
                 }
               },
               {
                 "matcher": "CourseRequirement",
-                "course": "EE 4203",
+                "course": "CE 4203",
                 "metadata": {
-                  "id": "Electrical Engineering(BSEE)-42"
+                  "id": "Computer Engineering(BS)-49"
                 }
               },
               {
                 "matcher": "CourseRequirement",
-                "course": "EE 4204",
+                "course": "CE 4204",
                 "metadata": {
-                  "id": "Electrical Engineering(BSEE)-43"
+                  "id": "Computer Engineering(BS)-50"
                 }
               },
               {
                 "matcher": "CourseRequirement",
-                "course": "EE 4205",
+                "course": "CE 4205",
                 "metadata": {
-                  "id": "Electrical Engineering(BSEE)-44"
+                  "id": "Computer Engineering(BS)-51"
                 }
               }
             ],
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-39"
+              "id": "Computer Engineering(BS)-46"
             }
           }
         ]
       },
       {
         "matcher": "HoursRequirement",
-        "required_hours": 12,
         "metadata": {
           "name": "Major Guided Electives",
-          "id": "Electrical Engineering(BSEE)-45"
+          "id": "Computer Engineering(BS)-52"
         },
+        "required_hours": 9,
         "requirements": [
           {
             "matcher": "CourseRequirement",
-            "course": "EE 4V97",
+            "course": "CE 4V97",
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-46"
+              "id": "Computer Engineering(BS)-53"
             }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "EE 4V98",
+            "course": "CE 4V98",
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-47"
+              "id": "Computer Engineering(BS)-54"
             }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "EE 4399",
+            "course": "CE 4399",
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-48"
-            }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "EE 4168",
-            "metadata": {
-              "id": "Electrical Engineering(BSEE)-49"
+              "id": "Computer Engineering(BS)-55"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "EE 4325",
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-50"
-            }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "EE 4340",
-            "metadata": {
-              "id": "Electrical Engineering(BSEE)-51"
-            }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "EE 4368",
-            "metadata": {
-              "id": "Electrical Engineering(BSEE)-52"
-            }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "EE 4V95",
-            "metadata": {
-              "id": "Electrical Engineering(BSEE)-53"
-            }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "EE 4202",
-            "metadata": {
-              "id": "Electrical Engineering(BSEE)-54"
-            }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "EE 4304",
-            "metadata": {
-              "id": "Electrical Engineering(BSEE)-55"
-            }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "EE 4V95",
-            "metadata": {
-              "id": "Electrical Engineering(BSEE)-56"
-            }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "EE 4201",
-            "metadata": {
-              "id": "Electrical Engineering(BSEE)-57"
+              "id": "Computer Engineering(BS)-56"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "EE 4330",
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-58"
+              "id": "Computer Engineering(BS)-57"
             }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "EE 4391",
+            "course": "EE 4340",
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-59"
+              "id": "Computer Engineering(BS)-58"
             }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "EE 4371",
+            "course": "EE 4342",
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-60"
-            }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "EE 4V95",
-            "metadata": {
-              "id": "Electrical Engineering(BSEE)-61"
-            }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "EE 4204",
-            "metadata": {
-              "id": "Electrical Engineering(BSEE)-62"
-            }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "EE 4362",
-            "metadata": {
-              "id": "Electrical Engineering(BSEE)-63"
-            }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "EE 4363",
-            "metadata": {
-              "id": "Electrical Engineering(BSEE)-64"
-            }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "EE 4V95",
-            "metadata": {
-              "id": "Electrical Engineering(BSEE)-65"
-            }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "EE 4205",
-            "metadata": {
-              "id": "Electrical Engineering(BSEE)-66"
-            }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "EE 3350",
-            "metadata": {
-              "id": "Electrical Engineering(BSEE)-67"
-            }
-          },
-          {
-            "matcher": "CourseRequirement",
-            "course": "EE 4331",
-            "metadata": {
-              "id": "Electrical Engineering(BSEE)-68"
+              "id": "Computer Engineering(BS)-59"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "EE 4360",
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-69"
+              "id": "Computer Engineering(BS)-60"
             }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "EE 4361",
+            "course": "EE 4363",
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-70"
+              "id": "Computer Engineering(BS)-61"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "EE 4365",
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-71"
+              "id": "Computer Engineering(BS)-62"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "EE 4367",
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-72"
+              "id": "Computer Engineering(BS)-63"
             }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "EE 4V95",
+            "course": "EE 4371",
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-73"
+              "id": "Computer Engineering(BS)-64"
             }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "EE 4203",
+            "course": "CE 4331",
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-74"
+              "id": "Computer Engineering(BS)-65"
             }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "EE 4399",
+            "course": "CS 4332",
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-75"
+              "id": "Computer Engineering(BS)-66"
             }
           },
           {
             "matcher": "CourseRequirement",
-            "course": "EE 4V98",
+            "course": "CS 4334",
             "metadata": {
-              "id": "Electrical Engineering(BSEE)-76"
+              "id": "Computer Engineering(BS)-67"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4337",
+            "metadata": {
+              "id": "Computer Engineering(BS)-68"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4347",
+            "metadata": {
+              "id": "Computer Engineering(BS)-69"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4352",
+            "metadata": {
+              "id": "Computer Engineering(BS)-70"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4361",
+            "metadata": {
+              "id": "Computer Engineering(BS)-71"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4365",
+            "metadata": {
+              "id": "Computer Engineering(BS)-72"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4375",
+            "metadata": {
+              "id": "Computer Engineering(BS)-73"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4384",
+            "metadata": {
+              "id": "Computer Engineering(BS)-74"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4389",
+            "metadata": {
+              "id": "Computer Engineering(BS)-75"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4390",
+            "metadata": {
+              "id": "Computer Engineering(BS)-76"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4392",
+            "metadata": {
+              "id": "Computer Engineering(BS)-77"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4393",
+            "metadata": {
+              "id": "Computer Engineering(BS)-78"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "CS 4398",
+            "metadata": {
+              "id": "Computer Engineering(BS)-79"
             }
           }
         ]
       },
       {
         "matcher": "FreeElectiveRequirement",
-        "required_hours": 9,
+        "required_hours": 4,
         "excluded_courses": [],
         "metadata": {
-          "id": "Electrical Engineering(BSEE)-77"
+          "id": "Computer Engineering(BS)-80"
         }
       }
     ]
   },
-  "display_name": "Electrical Engineering(BSEE)",
-  "id": "2abe1b82-15a2-4854-8875-8b4c5a812610"
+  "display_name": "Computer Engineering(BS)",
+  "id": "8cd1b5e5-e906-4eb2-a2d0-11e121713799"
 }
