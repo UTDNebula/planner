@@ -80,7 +80,8 @@ export type BAGuidedElectives = Requirement & {
 
 export type CourseRequirement = Requirement & {
   matcher: 'Course';
-  course: string;
+  courseId: string;
+  courseCode: string;
 };
 
 export type HoursRequirement = Requirement & {

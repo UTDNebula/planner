@@ -177,19 +177,21 @@ function CourseRequirementComponent({
 
   let title = '';
   if (data && !isLoading) {
-    const course = data.find((c) => `${c.subject_prefix} ${c.course_number}` === req.course);
+    const course = data.find((c) => `${c.subject_prefix} ${c.course_number}` === req.courseCode);
     title = course ? course.title : '';
   }
+  console.log("REQUISITE: ", req);
 
   return (
     <DraggableSidebarCourseItem
       course={{
         color: '',
+        courseId: req.courseId,
         id: id,
-        code: req.course,
-        taken: courses.includes(req.course),
+        code: req.courseCode,
+        taken: courses.includes(req.courseCode),
         status: req.filled ? 'complete' : 'incomplete',
-        hours: validCourses[req.course],
+        hours: validCourses[req.courseCode],
         locked: false,
         prereqOveridden: false,
         title,

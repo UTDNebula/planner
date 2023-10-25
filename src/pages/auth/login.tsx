@@ -8,7 +8,6 @@ import { toast } from 'react-toastify';
 import Button from '@/components/Button';
 import AuthIcons from '@/icons/AuthIcons';
 import EmojiIcon from '@/icons/EmojiIcon';
-import { trpc } from '@/utils/trpc';
 import { isValidEmail } from '@/utils/utilFunctions';
 
 // Time elapsed after typing email to display error
@@ -39,13 +38,6 @@ export function AuthPage(props: {
 
   const displayEmailError = useMemo(() => !isEmailValid && email !== '', [isEmailValid, email]);
   const inputRef = useRef<HTMLInputElement>(null);
-
-  // Fetch courses here and put in cache
-  const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
-    staleTime: Infinity,
-    cacheTime: Infinity,
-    refetchOnWindowFocus: false,
-  });
 
   useEffect(() => {
     if (router && status === 'authenticated') {

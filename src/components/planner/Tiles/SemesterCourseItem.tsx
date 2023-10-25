@@ -62,7 +62,8 @@ export const MemoizedSemesterCourseItem = React.memo(
 
     const hoverTimer = useRef<ReturnType<typeof setTimeout>>();
 
-    const { title, description } = useGetCourseInfo(course.code);
+    console.log('FROM ITEM', course);
+    const { title, description } = useGetCourseInfo(course.courseId);
     const { allSemesters } = useSemestersContext();
     let year = allSemesters[0]['code']['year'];
     if (allSemesters[0]['code']['semester'] !== 'f') year--;

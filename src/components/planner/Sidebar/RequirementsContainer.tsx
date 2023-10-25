@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 
 import useSearch from '@/components/search/search';
 import { trpc } from '@/utils/trpc';
-import { courses as Course } from 'prisma/generated/platform';
 
 import Accordion from './Accordion';
 import { RecursiveRequirement } from './RecursiveRequirement';
@@ -16,7 +15,7 @@ import {
   CourseRequirement,
   DegreeRequirement,
 } from './types';
-import { GetDragIdByCourseAndReq } from '../types';
+import { GetDragIdByCourseAndReq, MinimalCourse } from '../types';
 
 function RequirementContainerHeader({
   name,
@@ -76,7 +75,7 @@ function RequirementContainerHeader({
 
 const getRequirementGroup = (
   degreeRequirement: RequirementGroupTypes,
-  allCourses: Course[] | undefined,
+  allCourses: MinimalCourse[] | undefined,
 ): {
   name: string;
   progress: { value: number; max: number; unit: string };
@@ -89,7 +88,7 @@ const getRequirementGroup = (
     query = query.toLowerCase();
     switch (elm.matcher) {
       case 'Course':
-        return elm.course.toLowerCase().includes(query);
+        return elm.courseCode.toLowerCase().includes(query);
       case 'Or':
         return elm.metadata && elm.metadata.name
           ? elm.metadata.name.toLowerCase().includes(query)
@@ -176,11 +175,12 @@ const getRequirementGroup = (
           allCourses
             ? (allCourses
                 .map((c) => ({
-                  course: `${c.subject_prefix} ${c.course_number}`,
+                  courseCode: `${c.subject_prefix} ${c.course_number}`,
+                  courseId: c.id,
                   matcher: 'Course',
                   filled: courses.includes(`${c.subject_prefix} ${c.course_number}`),
                 }))
-                .filter((c) => c.course.includes('CS 43')) as CourseRequirement[])
+                .filter((c) => c.courseCode.includes('CS 43')) as CourseRequirement[])
             : [],
         filterFunction: filterFunc,
       };
@@ -260,6 +260,7 @@ export default function RequirementsContainer({
   courses,
   getCourseItemDragId,
 }: RequirementsContainerProps) {
+  console.log(degreeRequirement);
   const [requirementIdx, setRequirementIdx] = useState<number>(0);
 
   const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {

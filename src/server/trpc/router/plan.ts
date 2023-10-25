@@ -249,11 +249,18 @@ export const planRouter = router({
     }),
   // Protected route: route uses session user id
   addCourseToSemester: protectedProcedure
-    .input(z.object({ planId: z.string(), semesterId: z.string(), courseName: z.string() }))
+    .input(
+      z.object({
+        planId: z.string(),
+        semesterId: z.string(),
+        courseId: z.string(),
+        courseName: z.string(),
+      }),
+    )
     .mutation(async ({ ctx, input }) => {
       // Get semester you're adding the course to
       try {
-        const { semesterId, courseName } = input;
+        const { semesterId, courseId, courseName } = input;
 
         // Update courses
         await ctx.prisma.semester.update({
@@ -263,7 +270,7 @@ export const planRouter = router({
           },
           data: {
             courses: {
-              create: { code: courseName, color: '' },
+              create: { courseId, code: courseName, color: '' },
             },
           },
         });
@@ -379,11 +386,12 @@ export const planRouter = router({
         oldSemesterId: z.string(),
         newSemesterId: z.string(),
         courseName: z.string(),
+        courseId: z.string(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
       try {
-        const { oldSemesterId, newSemesterId, courseName } = input;
+        const { oldSemesterId, newSemesterId, courseName, courseId } = input;
 
         await ctx.prisma.course.update({
           where: {
@@ -391,6 +399,7 @@ export const planRouter = router({
             semesterId_code: {
               semesterId: oldSemesterId,
               code: courseName,
+              courseId,
             },
           },
           data: {

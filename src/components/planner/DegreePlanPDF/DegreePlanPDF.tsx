@@ -6,10 +6,9 @@ import { SemesterCode } from 'prisma/utils';
 
 import AcademicYearTable, { DEFAULT_COURSE_CREDIT_HOUR } from './AcademicYearTable';
 import Header from './Header';
-import { Semester } from '../types';
+import { MinimalCourse, Semester } from '../types';
 import { customCourseSort } from '../utils';
 
-import type { Prisma } from '@prisma/client';
 
 Font.register({
   family: 'Inter',
@@ -48,13 +47,7 @@ interface DegreePlanPDFProps {
   major: string;
   semesters: Semester[];
   transferCredits: string[];
-  coursesData: {
-    title: string;
-    id: string;
-    course_number: string;
-    prerequisites: Prisma.JsonValue;
-    subject_prefix: string;
-  }[];
+  coursesData: MinimalCourse[];
 }
 
 interface AcademicYearData {
@@ -195,16 +188,7 @@ const DegreePlanPDF: FC<DegreePlanPDFProps> = ({
   );
 };
 
-const convertSemestersToAcademicYears = (
-  semesters: Semester[],
-  coursesData: {
-    title: string;
-    id: string;
-    course_number: string;
-    prerequisites: Prisma.JsonValue;
-    subject_prefix: string;
-  }[],
-) => {
+const convertSemestersToAcademicYears = (semesters: Semester[], coursesData: MinimalCourse[]) => {
   const academicYears = [];
 
   let i = 0;
@@ -281,13 +265,7 @@ const getStartingYear = (semCode: SemesterCode) => {
 
 const addCoursesToSemester = (
   semester: Semester,
-  coursesData: {
-    title: string;
-    id: string;
-    course_number: string;
-    prerequisites: Prisma.JsonValue;
-    subject_prefix: string;
-  }[],
+  coursesData: MinimalCourse[],
 ) => {
   return semester.courses.map((course) => {
     return {

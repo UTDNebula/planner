@@ -80,6 +80,7 @@ model Bypass {
 
 model Course {
   id              String   @id @default(uuid()) @db.Uuid
+  courseId        String
   code            String
   color           String   @default("")
   semester        Semester @relation(fields: [semesterId], references: [id], onDelete: Cascade)

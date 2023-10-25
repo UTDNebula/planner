@@ -78,7 +78,11 @@ function CourseSelectorContainer({
 
   const { results, updateQuery } = useFuse<Course>({
     dataSet:
-      data?.map((c) => ({ code: `${c.subject_prefix} ${c.course_number}`, title: c.title })) ?? [],
+      data?.map((c) => ({
+        code: `${c.subject_prefix} ${c.course_number}`,
+        title: c.title,
+        courseId: c.id,
+      })) ?? [],
 
     keys: ['title', 'code'],
     threshold: 0.2,

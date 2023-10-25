@@ -816,7 +816,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
     addTask({
       func: ({ semesterId, courseName }) =>
         toast.promise(
-          addCourse.mutateAsync({ planId, semesterId, courseName }),
+          addCourse.mutateAsync({ planId, semesterId, courseId: newCourse.id, courseName }),
           {
             pending: 'Adding course ' + courseName + '...',
             success: 'Added course ' + courseName + '!',
@@ -859,6 +859,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
 
     const oldSemesterId = originSemester.id.toString();
     const newSemesterId = destinationSemester.id.toString();
+    const courseId = courseToMove.id;
     const courseName = courseToMove.code;
 
     const mutate = (oldSemesterId: string, newSemesterId: string) => {
@@ -873,7 +874,13 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
         func: ({ courseName, newSemesterId, oldSemesterId }) =>
           toast
             .promise(
-              moveCourse.mutateAsync({ planId, oldSemesterId, newSemesterId, courseName }),
+              moveCourse.mutateAsync({
+                planId,
+                oldSemesterId,
+                newSemesterId,
+                courseId,
+                courseName,
+              }),
               {
                 pending: 'Moving course ' + courseName + '...',
                 success: 'Moved course ' + courseName + '!',

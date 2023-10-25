@@ -1,35 +1,16 @@
-import { Prisma } from '@prisma/client';
+import z from 'zod';
 
 import { courseCache } from './courseCache';
 import { router, publicProcedure } from '../trpc';
 
 export const coursesRouter = router({
+  // only gets course codes and titles for sidebar display
+  // TODO: brotli compression
   publicGetAllCourses: publicProcedure.query(async () => {
-    return await courseCache.getCourses(new Date().getFullYear());
+    return await courseCache.getCourses();
   }),
-  publicGetSanitizedCourses: publicProcedure.query(async ({ ctx }) => {
-    const courses = await ctx.platformPrisma.courses.findMany({
-      select: {
-        course_number: true,
-        subject_prefix: true,
-        id: true,
-        prerequisites: true,
-        corequisites: true,
-      },
-    });
-
-    const courseMapWithIdKey = new Map<string, Prisma.JsonValue>();
-    const courseMapWithCodeKey = new Map<string, Prisma.JsonValue>();
-
-    for (const course of courses) {
-      courseMapWithCodeKey.set(`${course.subject_prefix} ${course.course_number}`, {
-        prereq: course.prerequisites,
-        coreq: course.corequisites,
-      });
-      courseMapWithIdKey.set(course.id, `${course.subject_prefix} ${course.course_number}`);
-    }
-    // print the map
-
-    return courseMapWithCodeKey;
+  publicGetCourseById: publicProcedure.input(z.string()).query(async (opts) => {
+    const { input } = opts;
+    return await courseCache.getCourseById(input);
   }),
 });

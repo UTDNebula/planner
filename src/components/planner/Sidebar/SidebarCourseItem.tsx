@@ -32,7 +32,7 @@ export const SidebarCourseItem = React.memo(
       if (isDragging) clearTimeout(hoverTimer.current);
     }, [isDragging]);
 
-    const { title, description } = useGetCourseInfo(course.code);
+    const { title, description } = useGetCourseInfo(course.courseId);
     const { allSemesters } = useSemestersContext();
     let year = allSemesters[0]['code']['year'];
     if (allSemesters[0]['code']['semester'] !== 'f') year--;

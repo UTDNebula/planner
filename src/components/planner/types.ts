@@ -22,6 +22,7 @@ export interface Semester {
 }
 
 export interface Course {
+  courseId: string;
   code: string;
   title?: string;
 }
@@ -101,3 +102,12 @@ export type GetDragIdByCourseAndSemester = (
   course: DraggableCourse,
   semester: Semester,
 ) => UniqueIdentifier;
+
+
+// From trpc getAllCourses
+export interface MinimalCourse {
+  id: string;
+  title: string;
+  subject_prefix: string;
+  course_number: string;
+}
