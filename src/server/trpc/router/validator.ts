@@ -32,7 +32,7 @@ export const validatorRouter = router({
         year = Math.min(...planData.semesters.map((sem) => sem.year));
       }
 
-      const coursesFromAPI: PlatformCourse[] = await courseCache.getCourses(year);
+      const coursesFromAPI: PlatformCourse[] = await courseCache.getCourseReqs(year);
       /*  sanitizing data from API db.
        *  TODO: Fix this later somehow
        */
