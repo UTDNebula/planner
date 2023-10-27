@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 
 import useSearch from '@/components/search/search';
 import { trpc } from '@/utils/trpc';
-import { courses as Course } from 'prisma/generated/platform';
+import { MinimalCourse } from '@server/trpc/router/courseCache';
 
 import Accordion from './Accordion';
 import { RecursiveRequirement } from './RecursiveRequirement';
@@ -76,7 +76,7 @@ function RequirementContainerHeader({
 
 const getRequirementGroup = (
   degreeRequirement: RequirementGroupTypes,
-  allCourses: Course[] | undefined,
+  allCourses: MinimalCourse[] | undefined,
 ): {
   name: string;
   progress: { value: number; max: number; unit: string };

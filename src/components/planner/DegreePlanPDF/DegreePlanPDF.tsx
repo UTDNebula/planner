@@ -50,9 +50,7 @@ interface DegreePlanPDFProps {
   transferCredits: string[];
   coursesData: {
     title: string;
-    id: string;
     course_number: string;
-    prerequisites: Prisma.JsonValue;
     subject_prefix: string;
   }[];
 }
@@ -199,9 +197,7 @@ const convertSemestersToAcademicYears = (
   semesters: Semester[],
   coursesData: {
     title: string;
-    id: string;
     course_number: string;
-    prerequisites: Prisma.JsonValue;
     subject_prefix: string;
   }[],
 ) => {
@@ -283,9 +279,7 @@ const addCoursesToSemester = (
   semester: Semester,
   coursesData: {
     title: string;
-    id: string;
     course_number: string;
-    prerequisites: Prisma.JsonValue;
     subject_prefix: string;
   }[],
 ) => {

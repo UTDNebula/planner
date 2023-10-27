@@ -7,7 +7,7 @@ class CourseCacheError extends Error {
   name = 'CourseCacheError';
 }
 
-interface MinimalCourse {
+export interface MinimalCourse {
   title: string;
   description: string;
   subject_prefix: string;
