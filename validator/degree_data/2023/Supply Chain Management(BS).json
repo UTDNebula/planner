@@ -1,0 +1,605 @@
+{
+  "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/supply-chain-management",
+  "minimum_credit_hours": 120,
+  "school": "Naveen Jindal School of Management",
+  "subtype": "Major",
+  "year": "2022-2023",
+  "requirements": {
+    "core": "@import ./core.json",
+    "major": [
+      {
+        "matcher": "AndRequirement",
+        "metadata": {
+          "name": "Major Preparatory Courses",
+          "id": "Supply Chain Management(BS)-0"
+        },
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "ACCT 2301",
+            "metadata": {
+              "id": "Supply Chain Management(BS)-1"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ACCT 2302",
+            "metadata": {
+              "id": "Supply Chain Management(BS)-2"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "BLAW 2301",
+            "metadata": {
+              "id": "Supply Chain Management(BS)-3"
+            }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "MATH 1325",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-5"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MATH 2413",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-6"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MATH 2417",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-7"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Supply Chain Management(BS)-4"
+            }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "MATH 1326",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-9"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "OPRE 3340",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-10"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MATH 2414",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-11"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MATH 2419",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-12"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Supply Chain Management(BS)-8"
+            }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "OPRE 3333",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-14"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MATH 2333",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-15"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Supply Chain Management(BS)-13"
+            }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "OPRE 3360",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-17"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "STAT 3360",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-18"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Supply Chain Management(BS)-16"
+            }
+          },
+          {
+            "matcher": "SelectRequirement",
+            "required_count": 2,
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "BA 1310",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-20"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "BA 1320",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-21"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ECON 2301",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-22"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ECON 2302",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-23"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Supply Chain Management(BS)-19"
+            }
+          }
+        ]
+      },
+      {
+        "matcher": "AndRequirement",
+        "metadata": {
+          "name": "Major Core Courses",
+          "id": "Supply Chain Management(BS)-24"
+        },
+        "requirements": [
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "BCOM 1300",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-26"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "BCOM 3300",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-27"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Supply Chain Management(BS)-25"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "BCOM 4300",
+            "metadata": {
+              "id": "Supply Chain Management(BS)-28"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "IMS 3310",
+            "metadata": {
+              "id": "Supply Chain Management(BS)-29"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "FIN 3320",
+            "metadata": {
+              "id": "Supply Chain Management(BS)-30"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ITSS 3300",
+            "metadata": {
+              "id": "Supply Chain Management(BS)-31"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "OPRE 3310",
+            "metadata": {
+              "id": "Supply Chain Management(BS)-32"
+            }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "OBHR 3330",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-34"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "OBHR 3310",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-35"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Supply Chain Management(BS)-33"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MKT 3300",
+            "metadata": {
+              "id": "Supply Chain Management(BS)-36"
+            }
+          }
+        ]
+      },
+      {
+        "matcher": "AndRequirement",
+        "metadata": {
+          "name": "Major Related Courses",
+          "id": "Supply Chain Management(BS)-37"
+        },
+        "requirements": [
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "OPRE 4395",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-39"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "BPS 4395",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-40"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ENTP 4395",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-41"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Supply Chain Management(BS)-38"
+            }
+          },
+          {
+            "matcher": "SelectRequirement",
+            "required_count": 6,
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "OPRE 3320",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-43"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "OPRE 3330",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-44"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "OPRE 4310",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-45"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "OPRE 4320",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-46"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "OPRE 4330",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-47"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "OPRE 4340",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-48"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "OPRE 4362",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-49"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Supply Chain Management(BS)-42"
+            }
+          }
+        ]
+      },
+      {
+        "matcher": "AndRequirement",
+        "metadata": {
+          "name": "Major Guided Electives",
+          "id": "Supply Chain Management(BS)-50"
+        },
+        "requirements": [
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "OPRE 4V90",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-52"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "OPRE 4090",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-53"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "BA 4090",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-54"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Supply Chain Management(BS)-51"
+            }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "IMS 4335",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-56"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ENTP 4340",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-57"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MKT 4360",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-58"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "BA 4095",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-59"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Supply Chain Management(BS)-55"
+            }
+          },
+          {
+            "matcher": "HoursRequirement",
+            "required_hours": 12,
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "OPRE 4V90",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-61"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "OPRE 4090",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-62"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "BA 4090",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-63"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "IMS 4335",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-64"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ENTP 4340",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-65"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MKT 4360",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-66"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "BA 4095",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-67"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "OPRE 4350",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-68"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "OPRE 4357",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-69"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ITSS 4340",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-70"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MKT 4330",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-71"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MKT 3330",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-72"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "OBHR 4352",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-73"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MKT 3320",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-74"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "OPRE 4355",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-75"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "OPRE 4345",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-76"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "IMS 4310",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-77"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "BPS 4305",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-78"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "OPRE 4362",
+                "metadata": {
+                  "id": "Supply Chain Management(BS)-79"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Supply Chain Management(BS)-60"
+            }
+          }
+        ]
+      },
+      {
+        "matcher": "FreeElectiveRequirement",
+        "required_hours": 6,
+        "excluded_courses": [],
+        "metadata": {
+          "id": "Supply Chain Management(BS)-80"
+        }
+      }
+    ]
+  },
+  "display_name": "Supply Chain Management(BS)",
+  "id": "a1525a33-2c07-4300-be04-5ef54fa79c98"
+}
