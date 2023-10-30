@@ -1,5 +1,3 @@
-import { Prisma } from '@prisma/client';
-
 import { courseCache } from './courseCache';
 import { router, publicProcedure } from '../trpc';
 

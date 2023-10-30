@@ -9,8 +9,6 @@ import Header from './Header';
 import { Semester } from '../types';
 import { customCourseSort } from '../utils';
 
-import type { Prisma } from '@prisma/client';
-
 Font.register({
   family: 'Inter',
   fonts: [
