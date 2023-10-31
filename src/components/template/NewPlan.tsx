@@ -107,7 +107,6 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
           key={0}
           onValueChange={(value) => setMajor(value)}
           onInputChange={(query: string) => updateQuery(query)}
-          options={results.map((major: { filMajor: string }) => major.filMajor)}
           autoFocus
         ></AutoCompleteMajor>
       </div>
