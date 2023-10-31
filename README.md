@@ -157,7 +157,13 @@ npm install
     NEXT_PUBLIC_VALIDATOR=http://127.0.0.1:5000
     ```
 
-9.  Generate `Prisma` client and run web server:
+9.  Setup pre-commit hooks:
+
+    ```bash
+    npm run prepare
+    ```
+
+10. Generate `Prisma` client and run web server:
 
     ```bash
     npm run prisma:generate
