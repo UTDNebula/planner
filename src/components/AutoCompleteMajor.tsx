@@ -5,7 +5,6 @@ import useMajors from '@/shared/useMajors';
 interface AutoCompleteMajorProps extends React.ComponentPropsWithoutRef<'div'> {
   onValueChange: (value: string) => void;
   onInputChange: (query: string) => void;
-  options: string[];
   autoFocus?: boolean;
   placeholder?: string;
   defaultValue?: string;
@@ -42,7 +41,6 @@ const customStyles = {
 const AutoCompleteMajor: FC<AutoCompleteMajorProps & React.ComponentPropsWithoutRef<'button'>> = ({
   onValueChange,
   onInputChange,
-  options,
   autoFocus,
   placeholder = 'Major',
   defaultValue = '',
