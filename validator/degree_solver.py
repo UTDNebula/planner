@@ -1,16 +1,18 @@
 from __future__ import annotations
 from enum import Enum
 from glob import glob
+from collections import Counter, defaultdict
+from pathlib import Path
 
 from pydantic import Json
 
-from typing import Any
+from typing import Any, DefaultDict
 
 import core
-from major.requirements import AbstractRequirement
+from major.requirements import AbstractRequirement, FreeElectiveRequirement
 from dataclasses import dataclass
 
-from major.requirements.map import REQUIREMENTS_MAP
+from major.requirements import loader
 import json
 
 from major.requirements.shared import (
@@ -19,14 +21,18 @@ from major.requirements.shared import (
 )
 from course import Course
 
+LOADER = loader.Loader()
 
 # Read all degree plan JSON files and store their contents in a hashmap
 # This is so that we can avoid reading all the files each time we want to get the data for a certain course
-degree_plans = {}
-for fname in glob("degree_data/*.json"):
+degree_plans: DefaultDict[str, DefaultDict[str, dict[str, Any]]] = defaultdict(
+    lambda: defaultdict(dict)
+)
+
+for fname in glob("degree_data/*/*.json"):
     with open(fname, "r") as f:
         data = json.load(f)
-        degree_plans[data["display_name"]] = data
+        degree_plans[Path(fname).parts[1]][data["display_name"]] = data
 
 
 @dataclass
@@ -76,6 +82,7 @@ class DegreeRequirementsInput:
 
     Sample DegreeRequirementsInput:
         core: true
+        year: 2022
         majors: ["Computer Science(BS)"]
         minors: ["History"]
         other: []
@@ -84,6 +91,7 @@ class DegreeRequirementsInput:
     Computer Science, and History requirements.
     """
 
+    year: int  # We use an int for year because we perform arithmetic to find a fallback year
     majors: list[str]  # TODO: Change to Enum in the future
     minors: list[str]  # TODO: Change to Enum in the future
     other: list[str]  # TODO: Change to Enum in the future
@@ -137,6 +145,12 @@ class DegreeRequirementsSolverException(Exception):
     pass
 
 
+class DegreeNotFoundException(Exception):
+    """Exception raised if the requested degree plan could not be found."""
+
+    pass
+
+
 class DegreeRequirementsSolver:
     def __init__(
         self,
@@ -144,7 +158,7 @@ class DegreeRequirementsSolver:
         requirements: DegreeRequirementsInput,
         bypasses: BypassInput,
     ) -> None:
-        self.courses = set(courses)
+        self.courses = set([Course.from_name(course) for course in courses])
         self.degree_requirements = self.load_requirements(requirements)
         self.solved_core: core.store.AssignmentStore | None = None
         self.bypasses = bypasses
@@ -173,10 +187,32 @@ class DegreeRequirementsSolver:
         # Logic for adding majors
         for input_req in degree_requirements_input.majors:
             # Get major data from json
-            if input_req not in degree_plans:
-                print("Error: degree plan not found!")
-                return []
-            requirements_data = degree_plans[input_req]["requirements"]["major"]
+            year = degree_requirements_input.year
+            if input_req not in degree_plans[str(year)]:
+                # Check if the years before this one have it
+                y = year
+                while str(y := y - 1) in degree_plans:
+                    if input_req in degree_plans[str(y)]:
+                        year = y
+                        break
+                if (
+                    year != degree_requirements_input.year
+                ):  # The using_year has been replaced to a working year
+                    break
+                # Check if the years after this one have it
+                y = year
+                while str(y := y + 1) in degree_plans:
+                    if input_req in degree_plans[str(y)]:
+                        year = y
+                        break
+                if (
+                    year != degree_requirements_input.year
+                ):  # The using_year has been replaced to a working year
+                    break
+                raise DegreeNotFoundException
+            requirements_data = degree_plans[str(year)][input_req]["requirements"][
+                "major"
+            ]
 
             major_req = DegreeRequirement(
                 input_req,
@@ -187,9 +223,7 @@ class DegreeRequirementsSolver:
 
             # Add requirements
             for req_data in requirements_data:
-                major_req.requirements.append(
-                    REQUIREMENTS_MAP[req_data["matcher"]].from_json(req_data)
-                )
+                major_req.requirements.append(LOADER.requirement_from_json(req_data))
             degree_requirements.append(major_req)
             # We don't need to check the other JSON files
             break
@@ -201,23 +235,28 @@ class DegreeRequirementsSolver:
     def solve(self) -> DegreeRequirementsSolver:
         # Run for core
         core_solver = self.load_core()
-        self.solved_core = core_solver.solve(
-            [Course.from_name(course) for course in self.courses], []
-        )
-        # Set of the core courses that are fulfilled, so they won't be considered as free electives
-        used_core_courses = set()
+        self.solved_core = core_solver.solve(list(self.courses), [])
+
+        # Counter of the core courses and their used hours, so they won't be considered as free electives.
+        used_core_courses: Counter[Course] = Counter()
         if self.solved_core is not None:
             for req_fill in self.solved_core.reqs_to_courses.values():
-                used_core_courses.update([course.name for course in req_fill.keys()])
+                used_core_courses.update(req_fill)
 
         # Run for major
         for degree_req in self.degree_requirements:
             for course in self.courses:
-                # Make sure it's not a core course
-                if course in used_core_courses:
-                    continue
                 for requirement in degree_req.requirements:
-                    if requirement.attempt_fulfill(course):
+                    # Free elective requirements are special, since they can take left over hours from core courses.
+                    if type(requirement) == FreeElectiveRequirement:
+                        if requirement.attempt_fulfill(
+                            course.name,
+                            available_hours=(
+                                int(course.hours) - used_core_courses[course]
+                            ),
+                        ):
+                            break
+                    elif requirement.attempt_fulfill(course.name):
                         break
 
             # Handle requirements bypasses for major

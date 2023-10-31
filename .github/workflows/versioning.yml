@@ -24,5 +24,7 @@ jobs:
           pip3 install -r requirements.txt
 
       - name: Execute versioning script
+        env:
+          JIRA_API_KEY: ${{ secrets.JIRA_API_KEY }}
         working-directory: ./validator/scripts
         run: python diff.py

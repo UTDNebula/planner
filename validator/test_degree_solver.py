@@ -1,6 +1,6 @@
 from degree_solver import BypassInput, DegreeRequirementsSolver, DegreeRequirementsInput
 
-input = DegreeRequirementsInput(["Computer Science(BS)"], [], [])
+input = DegreeRequirementsInput(2022, ["Computer Science(BS)"], [], [])
 
 GRADUATEABLE_COURSES = [
     "ATCM 2340",

@@ -17,7 +17,6 @@ import { DragDataFromSemesterTile, DraggableCourse, Semester } from '../types';
 import useGetCourseInfo from '../useGetCourseInfo';
 import { tagColors } from '../utils';
 
-
 import 'react-loading-skeleton/dist/skeleton.css';
 
 export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'> {
