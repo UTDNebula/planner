@@ -174,7 +174,6 @@ export default function Planner({
       onDragStart={handleOnDragStart}
       onDragEnd={handleOnDragEnd}
     >
-      <h1>LMAOAOAOAO</h1>
       <SelectedCoursesToast
         show={selectedCourseCount > 0}
         selectedCount={selectedCourseCount}
