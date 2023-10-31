@@ -1,5 +1,6 @@
-import Select from 'react-select';
 import { FC, useRef } from 'react';
+import Select from 'react-select';
+
 import useMajors from '@/shared/useMajors';
 
 interface AutoCompleteMajorProps extends React.ComponentPropsWithoutRef<'div'> {

@@ -1,13 +1,13 @@
 import { MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import Link from 'next/link';
 import React from 'react';
 
 import AutoCompleteMajor from '@/components/AutoCompleteMajor';
 import EmojiIcons from '@/icons/EmojiIcon';
+import useMajors from '@/shared/useMajors';
 import { SemesterCode } from 'prisma/utils';
 
 import useSearch from '../search/search';
-import useMajors from '@/shared/useMajors';
-import Link from 'next/link';
 
 export type WelcomeTypes = {
   name: string;

@@ -3,6 +3,12 @@ import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import React, { ComponentPropsWithoutRef, FC, forwardRef, useState, useRef } from 'react';
 import Skeleton from 'react-loading-skeleton';
 
+import Checkbox from '@/components/Checkbox';
+import DotsHorizontalIcon from '@/icons/DotsHorizontalIcon';
+import FilledWarningIcon from '@/icons/FilledWarningIcon';
+import LockIcon from '@/icons/LockIcon';
+import { trpc } from '@/utils/trpc';
+
 import SemesterCourseItemDropdown from './SemesterCourseItemDropdown';
 import CourseInfoHoverCard from '../CourseInfoHoverCard';
 import PrereqWarnHoverCard from '../PrereqWarnHoverCard';
@@ -11,11 +17,6 @@ import { DragDataFromSemesterTile, DraggableCourse, Semester } from '../types';
 import useGetCourseInfo from '../useGetCourseInfo';
 import { tagColors } from '../utils';
 
-import Checkbox from '@/components/Checkbox';
-import DotsHorizontalIcon from '@/icons/DotsHorizontalIcon';
-import FilledWarningIcon from '@/icons/FilledWarningIcon';
-import LockIcon from '@/icons/LockIcon';
-import { trpc } from '@/utils/trpc';
 
 import 'react-loading-skeleton/dist/skeleton.css';
 

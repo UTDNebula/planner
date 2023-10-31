@@ -3,6 +3,13 @@ import { usePDF } from '@react-pdf/renderer';
 import Link from 'next/link';
 import { FC, useEffect, useState } from 'react';
 
+import AnalyticsWrapper from '@/components/common/AnalyticsWrapper';
+import DownloadIcon from '@/icons/DownloadIcon';
+import SettingsIcon from '@/icons/SettingsIcon';
+import SwitchVerticalIcon from '@/icons/SwitchVerticalIcon';
+import DeletePlanModal from '@/shared/DeletePlanModal';
+import { trpc } from '@/utils/trpc';
+
 import EditableMajorTitle from './EditablePlanTitle';
 import EditSemestersModal from './EditSemestersModal';
 import FilterByDropdown from './FilterByDropdown';
@@ -12,12 +19,6 @@ import DegreePlanPDF from '../DegreePlanPDF/DegreePlanPDF';
 import EditableMajor from '../EditableMajor';
 import { useSemestersContext } from '../SemesterContext';
 
-import AnalyticsWrapper from '@/components/common/AnalyticsWrapper';
-import DownloadIcon from '@/icons/DownloadIcon';
-import SettingsIcon from '@/icons/SettingsIcon';
-import SwitchVerticalIcon from '@/icons/SwitchVerticalIcon';
-import DeletePlanModal from '@/shared/DeletePlanModal';
-import { trpc } from '@/utils/trpc';
 
 export interface ToolbarProps {
   degreeRequirements: { id: string; major: string };
