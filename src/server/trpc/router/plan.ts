@@ -1,4 +1,4 @@
-import { Prisma, Semester } from '@prisma/client';
+import { Prisma, PrismaClient, Semester } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
@@ -12,6 +12,42 @@ import {
 import { SemesterCode, computeSemesterCode } from 'prisma/utils';
 
 import { protectedProcedure, router } from '../trpc';
+
+// extracted for reusability for other trpc routes
+export const getPlanFromUserId = async (ctx: { prisma: PrismaClient }, id: string) => {
+  // Fetch current plan
+  const planData = await ctx.prisma.plan.findUnique({
+    where: {
+      id,
+    },
+    select: {
+      name: true,
+      id: true,
+      userId: true,
+      semesters: {
+        include: {
+          courses: true,
+        },
+      },
+      transferCredits: true,
+    },
+  });
+
+  // Make sure semesters are in right orer
+  if (planData && planData.semesters) {
+    planData.semesters = planData.semesters.sort((a, b) =>
+      isEarlierSemester(computeSemesterCode(a), computeSemesterCode(b)) ? -1 : 1,
+    );
+  }
+
+  if (!planData) {
+    throw new TRPCError({
+      code: 'NOT_FOUND',
+      message: 'Plan not found',
+    });
+  }
+  return planData;
+};
 
 export const planRouter = router({
   // Protected route: route uses session user id to find user plans
@@ -36,36 +72,7 @@ export const planRouter = router({
   // Protected route: checks if session user and plan owner have the same id
   getPlanById: protectedProcedure.input(z.string().min(1)).query(async ({ ctx, input }) => {
     // Fetch current plan
-    const planData = await ctx.prisma.plan.findUnique({
-      where: {
-        id: input,
-      },
-      select: {
-        name: true,
-        id: true,
-        userId: true,
-        semesters: {
-          include: {
-            courses: true,
-          },
-        },
-        transferCredits: true,
-      },
-    });
-
-    // Make sure semesters are in right orer
-    if (planData && planData.semesters) {
-      planData.semesters = planData.semesters.sort((a, b) =>
-        isEarlierSemester(computeSemesterCode(a), computeSemesterCode(b)) ? -1 : 1,
-      );
-    }
-
-    if (!planData) {
-      throw new TRPCError({
-        code: 'NOT_FOUND',
-        message: 'Plan not found',
-      });
-    }
+    const planData = await getPlanFromUserId(ctx, input);
 
     if (ctx.session.user.id !== planData.userId) {
       throw new TRPCError({ code: 'FORBIDDEN' });

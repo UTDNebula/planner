@@ -12,7 +12,6 @@ class CourseCache {
   private mutex = new Mutex();
 
   public async getCourses(year: number) {
-    const formattedYear = year.toString().slice(-2);
     // Acquire lock before success check so if another request is fetching, we don't fetch again.
     const release = await this.mutex.acquire();
     if (this.coursesByYear.has(year)) {
@@ -24,9 +23,7 @@ class CourseCache {
     console.info(`Fetching courses for year ${year}...`);
     return await platformPrisma.courses
       .findMany({
-        where: {
-          catalog_year: formattedYear,
-        },
+        distinct: ['title', 'course_number', 'subject_prefix'],
       })
       .then((courses) => {
         this.coursesByYear.set(year, courses);

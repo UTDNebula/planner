@@ -239,7 +239,7 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
   const hoverList: [Array<string>, Array<string>, Array<string>] = [[], [], []];
   const prereqData = requirementsData.data?.prereq?.get(course.code);
   const coreqData = requirementsData.data?.coreq?.get(course.code);
-  const coorpreData = requirementsData.data?.coorepre?.get(course.code);
+  const coorpreData = requirementsData.data?.coorpre?.get(course.code);
   if (coreqData) {
     isValid[1] = coreqData.length > 0 ? false : true;
     coreqData.map((data) => {
