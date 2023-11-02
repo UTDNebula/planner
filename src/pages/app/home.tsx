@@ -29,7 +29,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     cookies.set('next-auth.session-token', session.sessionToken, {
       domain: 'localhost',
       // session is not actually a 'Date' object here, it's a string
-      expiry: Math.floor(new Date(session.expires).getTime() / 1000),
+      expires: new Date(session.expires),
       httpOnly: true,
       path: '/',
       secure: false,
