@@ -10,9 +10,17 @@ export interface SeededUserData {
 }
 
 export const seedTestUser = async (prisma: PrismaClient): Promise<SeededUserData> => {
+  const uuid = '00000000-0000-0000-0000-000000000000';
   // Create user
-  const user = await prisma.user.create({
-    data: {
+  const user = await prisma.user.upsert({
+    where: {
+      email: 'test@user.com',
+    },
+    update: {
+      id: uuid,
+    },
+    create: {
+      id: uuid,
       email: 'test@user.com',
       onboardingComplete: true,
       seenHomeOnboardingModal: true,
@@ -23,8 +31,15 @@ export const seedTestUser = async (prisma: PrismaClient): Promise<SeededUserData
   // Create profile
   const [profile, account, session] = await Promise.all([
     // Create profile
-    prisma.profile.create({
-      data: {
+    prisma.profile.upsert({
+      where: {
+        userId: user.id,
+      },
+      update: {
+        id: uuid,
+      },
+      create: {
+        id: uuid,
         name: 'Test User',
         startYear: 2021,
         startSemester: 's',
@@ -34,11 +49,16 @@ export const seedTestUser = async (prisma: PrismaClient): Promise<SeededUserData
       },
     }),
     // Create account
-    prisma.account.create({
-      data: {
-        type: 'test',
-        provider: 'test',
-        providerAccountId: 'test123',
+    prisma.account.upsert({
+      where: {
+        id: uuid,
+      },
+      update: {},
+      create: {
+        id: uuid,
+        type: 'test_bypass',
+        provider: 'test_bypass',
+        providerAccountId: 'test123_bypass',
         userId: user.id,
       },
     }),

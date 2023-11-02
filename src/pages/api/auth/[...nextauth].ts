@@ -77,7 +77,6 @@ export const authOptions: NextAuthOptions = {
       },
       from: env.EMAIL_FROM,
     }),
-    // ...add more providers here
   ],
   pages: {
     signIn: '/auth/login',
@@ -85,4 +84,5 @@ export const authOptions: NextAuthOptions = {
     newUser: '/app/onboarding',
   },
 };
+
 export default NextAuth(authOptions);

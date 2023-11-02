@@ -7,11 +7,7 @@ const fetch = require('node-fetch');
 const checkValidatorAvailability = async () => {
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_VALIDATOR}/health`);
-    if (response.ok) {
-      return true;
-    } else {
-      return false;
-    }
+    return response.ok;
   } catch (error) {
     return false;
   }

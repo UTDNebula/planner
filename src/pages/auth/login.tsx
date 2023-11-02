@@ -73,7 +73,7 @@ export function AuthPage(props: {
     setEmail(event.target.value);
   };
 
-  const handleEmailSignIn = () => {
+  const handleEmailSignIn = async () => {
     if (isEmailValid) {
       setIsModifyLoading(true);
       signIn('email', {
