@@ -1,0 +1,524 @@
+{
+  "catalog_uri": "https://catalog.utdallas.edu/2022/undergraduate/programs/jsom/marketing",
+  "minimum_credit_hours": 120,
+  "school": "Naveen Jindal School of Management",
+  "subtype": "Major",
+  "year": "2022-2023",
+  "requirements": {
+    "core": "@import ./core.json",
+    "major": [
+      {
+        "matcher": "AndRequirement",
+        "metadata": {
+          "name": "Major Preparatory Courses",
+          "id": "Marketing(BS)-0"
+        },
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "ACCT 2301",
+            "metadata": {
+              "id": "Marketing(BS)-1"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ACCT 2302",
+            "metadata": {
+              "id": "Marketing(BS)-2"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "BLAW 2301",
+            "metadata": {
+              "id": "Marketing(BS)-3"
+            }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "MATH 1325",
+                "metadata": {
+                  "id": "Marketing(BS)-5"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MATH 2413",
+                "metadata": {
+                  "id": "Marketing(BS)-6"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MATH 2417",
+                "metadata": {
+                  "id": "Marketing(BS)-7"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Marketing(BS)-4"
+            }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "OPRE 3360",
+                "metadata": {
+                  "id": "Marketing(BS)-9"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "STAT 3360",
+                "metadata": {
+                  "id": "Marketing(BS)-10"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Marketing(BS)-8"
+            }
+          },
+          {
+            "matcher": "SelectRequirement",
+            "required_count": 2,
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "BA 1310",
+                "metadata": {
+                  "id": "Marketing(BS)-12"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "BA 1320",
+                "metadata": {
+                  "id": "Marketing(BS)-13"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ECON 2301",
+                "metadata": {
+                  "id": "Marketing(BS)-14"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ECON 2302",
+                "metadata": {
+                  "id": "Marketing(BS)-15"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Marketing(BS)-11"
+            }
+          }
+        ]
+      },
+      {
+        "matcher": "AndRequirement",
+        "metadata": {
+          "name": "Major Core Courses",
+          "id": "Marketing(BS)-16"
+        },
+        "requirements": [
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "BCOM 1300",
+                "metadata": {
+                  "id": "Marketing(BS)-18"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "BCOM 3300",
+                "metadata": {
+                  "id": "Marketing(BS)-19"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Marketing(BS)-17"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "BCOM 4300",
+            "metadata": {
+              "id": "Marketing(BS)-20"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "FIN 3320",
+            "metadata": {
+              "id": "Marketing(BS)-21"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "IMS 3310",
+            "metadata": {
+              "id": "Marketing(BS)-22"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "ITSS 3300",
+            "metadata": {
+              "id": "Marketing(BS)-23"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MKT 3300",
+            "metadata": {
+              "id": "Marketing(BS)-24"
+            }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "OBHR 3330",
+                "metadata": {
+                  "id": "Marketing(BS)-26"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "OBHR 3310",
+                "metadata": {
+                  "id": "Marketing(BS)-27"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Marketing(BS)-25"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "OPRE 3310",
+            "metadata": {
+              "id": "Marketing(BS)-28"
+            }
+          }
+        ]
+      },
+      {
+        "matcher": "AndRequirement",
+        "metadata": {
+          "name": "Major Related Courses",
+          "id": "Marketing(BS)-29"
+        },
+        "requirements": [
+          {
+            "matcher": "CourseRequirement",
+            "course": "MKT 3330",
+            "metadata": {
+              "id": "Marketing(BS)-30"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MKT 3340",
+            "metadata": {
+              "id": "Marketing(BS)-31"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MKT 4330",
+            "metadata": {
+              "id": "Marketing(BS)-32"
+            }
+          },
+          {
+            "matcher": "CourseRequirement",
+            "course": "MKT 4337",
+            "metadata": {
+              "id": "Marketing(BS)-33"
+            }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "MKT 4395",
+                "metadata": {
+                  "id": "Marketing(BS)-35"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ENTP 3320",
+                "metadata": {
+                  "id": "Marketing(BS)-36"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "BPS 4395",
+                "metadata": {
+                  "id": "Marketing(BS)-37"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ENTP 4395",
+                "metadata": {
+                  "id": "Marketing(BS)-38"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Marketing(BS)-34"
+            }
+          }
+        ]
+      },
+      {
+        "matcher": "AndRequirement",
+        "metadata": {
+          "name": "Guided Electives",
+          "id": "Marketing(BS)-39"
+        },
+        "requirements": [
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "MKT 4V90",
+                "metadata": {
+                  "id": "Marketing(BS)-41"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MKT 4090",
+                "metadata": {
+                  "id": "Marketing(BS)-42"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "BA 4090",
+                "metadata": {
+                  "id": "Marketing(BS)-43"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Marketing(BS)-40"
+            }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "BPS 4396",
+                "metadata": {
+                  "id": "Marketing(BS)-45"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "ENTP 4340",
+                "metadata": {
+                  "id": "Marketing(BS)-46"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MKT 4360",
+                "metadata": {
+                  "id": "Marketing(BS)-47"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "BA 4095",
+                "metadata": {
+                  "id": "Marketing(BS)-48"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Marketing(BS)-44"
+            }
+          },
+          {
+            "matcher": "HoursRequirement",
+            "required_hours": 12,
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
+                "course": "MKT 3320",
+                "metadata": {
+                  "id": "Marketing(BS)-50"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MKT 3331",
+                "metadata": {
+                  "id": "Marketing(BS)-51"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MKT 4331",
+                "metadata": {
+                  "id": "Marketing(BS)-52"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MKT 4332",
+                "metadata": {
+                  "id": "Marketing(BS)-53"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MKT 4333",
+                "metadata": {
+                  "id": "Marketing(BS)-54"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MKT 4334",
+                "metadata": {
+                  "id": "Marketing(BS)-55"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MKT 4335",
+                "metadata": {
+                  "id": "Marketing(BS)-56"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MKT 4336",
+                "metadata": {
+                  "id": "Marketing(BS)-57"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MKT 4338",
+                "metadata": {
+                  "id": "Marketing(BS)-58"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MKT 4339",
+                "metadata": {
+                  "id": "Marketing(BS)-59"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MKT 4340",
+                "metadata": {
+                  "id": "Marketing(BS)-60"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MKT 4341",
+                "metadata": {
+                  "id": "Marketing(BS)-61"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MKT 4350",
+                "metadata": {
+                  "id": "Marketing(BS)-62"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MKT 4360",
+                "metadata": {
+                  "id": "Marketing(BS)-63"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MKT 4370",
+                "metadata": {
+                  "id": "Marketing(BS)-64"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MKT 4390",
+                "metadata": {
+                  "id": "Marketing(BS)-65"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MKT 4V83",
+                "metadata": {
+                  "id": "Marketing(BS)-66"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MKT 4V90",
+                "metadata": {
+                  "id": "Marketing(BS)-67"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "MKT 4V93",
+                "metadata": {
+                  "id": "Marketing(BS)-68"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Marketing(BS)-49"
+            }
+          }
+        ]
+      },
+      {
+        "matcher": "FreeElectiveRequirement",
+        "required_hours": 15,
+        "excluded_courses": [],
+        "metadata": {
+          "id": "Marketing(BS)-69"
+        }
+      }
+    ]
+  },
+  "display_name": "Marketing(BS)",
+  "id": "e7ba4ce4-dcbc-44f1-9382-e106d38fc311"
+}
