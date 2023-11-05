@@ -7,7 +7,19 @@ import ProfilePage from '@/components/home/Profile';
 export default function MiniDrawer() {
   // const isDesktop = useMedia('(min-width: 900px)');
 
-  return <ProfilePage isDesktop={true} />;
+  return (
+    <>
+      <Head>
+        <link
+          rel="canonical"
+          href="https://planner.utdnebula.com/app/profile"
+          key="canonical"
+        />
+        <meta property="og:url" content="https://planner.utdnebula.com/app/profile" />
+      </Head>
+      <ProfilePage isDesktop={true} />
+    </>
+  );
 }
 
 MiniDrawer.auth = true;
