@@ -87,14 +87,10 @@ export function AuthPage(props: {
 
   return (
     <>
-    <Head>
-      <link
-        rel="canonical"
-        href="https://planner.utdnebula.com/auth/login"
-        key="canonical"
-      />
-      <meta property="og:url" content="https://planner.utdnebula.com/auth/login" />
-    </Head>
+      <Head>
+        <link rel="canonical" href="https://planner.utdnebula.com/auth/login" key="canonical" />
+        <meta property="og:url" content="https://planner.utdnebula.com/auth/login" />
+      </Head>
       <div className="relative flex h-screen flex-col items-center justify-center space-y-10 bg-[#ffffff]">
         {status !== 'loading' && (
           <section className="w-full min-w-[300px] max-w-xl p-5 sm:w-2/3">

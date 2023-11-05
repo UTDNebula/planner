@@ -28,11 +28,7 @@ export default function MiniDrawer() {
   return (
     <>
       <Head>
-        <link
-          rel="canonical"
-          href="https://planner.utdnebula.com/app/home"
-          key="canonical"
-        />
+        <link rel="canonical" href="https://planner.utdnebula.com/app/home" key="canonical" />
         <meta property="og:url" content="https://planner.utdnebula.com/app/home" />
       </Head>
       <Home />

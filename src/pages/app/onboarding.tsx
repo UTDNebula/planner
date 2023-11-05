@@ -120,11 +120,7 @@ export default function OnboardingPage() {
   return (
     <>
       <Head>
-        <link
-          rel="canonical"
-          href="https://planner.utdnebula.com/app/onboarding"
-          key="canonical"
-        />
+        <link rel="canonical" href="https://planner.utdnebula.com/app/onboarding" key="canonical" />
         <meta property="og:url" content="https://planner.utdnebula.com/app/onboarding" />
       </Head>
       <div className="relative flex h-screen flex-col items-center justify-center space-y-10 bg-white">

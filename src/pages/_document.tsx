@@ -22,10 +22,7 @@ class MyDocument extends Document {
             content="Say goodbye to the stress and hassle of degree planning and hello to a smooth, organized path towards graduation with Nebula Planner."
           />
           <meta property="og:type" content="website" />
-          <meta
-            property="og:image"
-            content="https://planner.utdnebula.com/logoIcon.png"
-          />
+          <meta property="og:image" content="https://planner.utdnebula.com/logoIcon.png" />
           <meta property="og:image:type" content="image/png" />
           <meta property="og:image:alt" content="Nebula Labs Icon." />
           <meta property="og:image:width" content="512" />
