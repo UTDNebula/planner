@@ -3,7 +3,7 @@
   "minimum_credit_hours": 120,
   "school": "Naveen Jindal School of Management",
   "subtype": "Major",
-  "year": "2022-2023",
+  "year": "2023-2024",
   "requirements": {
     "core": "@import ./core.json",
     "major": [
@@ -39,7 +39,7 @@
             "matcher": "CourseRequirement",
             "course": "ITSS 3311",
             "metadata": {
-              "id": "Information Technology and Systems(BS)-17"
+              "id": "Information Technology and Systems(BS)-4"
             }
           },
           {
@@ -49,19 +49,19 @@
                 "matcher": "CourseRequirement",
                 "course": "ITSS 3312",
                 "metadata": {
-                  "id": "Information Technology and Systems(BS)-19"
+                  "id": "Information Technology and Systems(BS)-6"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "ITSS 4381",
                 "metadata": {
-                  "id": "Information Technology and Systems(BS)-20"
+                  "id": "Information Technology and Systems(BS)-7"
                 }
               }
             ],
             "metadata": {
-              "id": "Information Technology and Systems(BS)-18"
+              "id": "Information Technology and Systems(BS)-5"
             }
           },
           {
@@ -71,43 +71,21 @@
                 "course": "MATH 1325",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Information Technology and Systems(BS)-5"
+                  "id": "Information Technology and Systems(BS)-9"
                 }
               },
               {
                 "course": "MATH 2413",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Information Technology and Systems(BS)-6"
+                  "id": "Information Technology and Systems(BS)-10"
                 }
               },
               {
                 "course": "MATH 2417",
                 "matcher": "CourseRequirement",
                 "metadata": {
-                  "id": "Information Technology and Systems(BS)-7"
-                }
-              }
-            ],
-            "metadata": {
-              "id": "Information Technology and Systems(BS)-4"
-            }
-          },
-          {
-            "matcher": "OrRequirement",
-            "requirements": [
-              {
-                "matcher": "CourseRequirement",
-                "course": "MATH 1326",
-                "metadata": {
-                  "id": "Information Technology and Systems(BS)-9"
-                }
-              },
-              {
-                "matcher": "CourseRequirement",
-                "course": "OPRE 3340",
-                "metadata": {
-                  "id": "Information Technology and Systems(BS)-10"
+                  "id": "Information Technology and Systems(BS)-11"
                 }
               }
             ],
@@ -120,21 +98,43 @@
             "requirements": [
               {
                 "matcher": "CourseRequirement",
+                "course": "MATH 1326",
+                "metadata": {
+                  "id": "Information Technology and Systems(BS)-13"
+                }
+              },
+              {
+                "matcher": "CourseRequirement",
+                "course": "OPRE 3340",
+                "metadata": {
+                  "id": "Information Technology and Systems(BS)-14"
+                }
+              }
+            ],
+            "metadata": {
+              "id": "Information Technology and Systems(BS)-12"
+            }
+          },
+          {
+            "matcher": "OrRequirement",
+            "requirements": [
+              {
+                "matcher": "CourseRequirement",
                 "course": "OPRE 3333",
                 "metadata": {
-                  "id": "Information Technology and Systems(BS)-12"
+                  "id": "Information Technology and Systems(BS)-16"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "MATH 2333",
                 "metadata": {
-                  "id": "Information Technology and Systems(BS)-13"
+                  "id": "Information Technology and Systems(BS)-17"
                 }
               }
             ],
             "metadata": {
-              "id": "Information Technology and Systems(BS)-11"
+              "id": "Information Technology and Systems(BS)-15"
             }
           },
           {
@@ -144,19 +144,19 @@
                 "matcher": "CourseRequirement",
                 "course": "OPRE 3360",
                 "metadata": {
-                  "id": "Information Technology and Systems(BS)-15"
+                  "id": "Information Technology and Systems(BS)-19"
                 }
               },
               {
                 "matcher": "CourseRequirement",
                 "course": "STAT 3360",
                 "metadata": {
-                  "id": "Information Technology and Systems(BS)-16"
+                  "id": "Information Technology and Systems(BS)-20"
                 }
               }
             ],
             "metadata": {
-              "id": "Information Technology and Systems(BS)-14"
+              "id": "Information Technology and Systems(BS)-18"
             }
           },
           {
@@ -238,17 +238,16 @@
             "matcher": "CourseRequirement",
             "course": "FIN 3320",
             "metadata": {
-              "id": "Information Technology and Systems(BS)-32"
+              "id": "Information Technology and Systems(BS)-31"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "IMS 3310",
             "metadata": {
-              "id": "Information Technology and Systems(BS)-31"
+              "id": "Information Technology and Systems(BS)-32"
             }
           },
-
           {
             "matcher": "CourseRequirement",
             "course": "ITSS 3300",
@@ -260,7 +259,7 @@
             "matcher": "CourseRequirement",
             "course": "MKT 3300",
             "metadata": {
-              "id": "Information Technology and Systems(BS)-38"
+              "id": "Information Technology and Systems(BS)-34"
             }
           },
           {
@@ -289,10 +288,9 @@
             "matcher": "CourseRequirement",
             "course": "OPRE 3310",
             "metadata": {
-              "id": "Information Technology and Systems(BS)-34"
+              "id": "Information Technology and Systems(BS)-38"
             }
           },
-
           {
             "matcher": "CourseRequirement",
             "course": "BA 4095",
@@ -327,17 +325,16 @@
             "matcher": "CourseRequirement",
             "course": "ITSS 4351",
             "metadata": {
-              "id": "Information Technology and Systems(BS)-44"
+              "id": "Information Technology and Systems(BS)-43"
             }
           },
           {
             "matcher": "CourseRequirement",
             "course": "ITSS 4360",
             "metadata": {
-              "id": "Information Technology and Systems(BS)-43"
+              "id": "Information Technology and Systems(BS)-44"
             }
           },
-
           {
             "matcher": "CourseRequirement",
             "course": "ITSS 4370",

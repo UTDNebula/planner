@@ -3,7 +3,7 @@
   "minimum_credit_hours": 120,
   "school": "Naveen Jindal School of Management",
   "subtype": "Major",
-  "year": "2022-2023",
+  "year": "2023-2024",
   "requirements": {
     "core": "@import ./core.json",
     "major": [
