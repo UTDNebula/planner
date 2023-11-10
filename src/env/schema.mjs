@@ -10,6 +10,7 @@ export const serverSchema = z.object({
   DIRECT_DATABASE_URL: z.string().url(),
   PLATFORM_DATABASE_URL: z.string().url(),
   NODE_ENV: z.enum(['development', 'test', 'production']),
+  VERCEL_ENV: z.enum(['development', 'preview', 'production']),
   NEXTAUTH_SECRET:
     process.env.NODE_ENV === 'production' ? z.string().min(1) : z.string().min(1).optional(),
   NEXTAUTH_URL: z.preprocess(
