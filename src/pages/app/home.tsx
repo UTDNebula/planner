@@ -4,7 +4,7 @@ import { GetServerSidePropsContext } from 'next';
 import { getServerSession } from 'next-auth';
 import superjson from 'superjson';
 
-import { env } from '@/env/client.mjs';
+import { env } from '@/env/server.mjs';
 import { appRouter } from '@/server/trpc/router/_app';
 import { createContextInner } from '@server/trpc/context';
 import { seedTestUser } from 'prisma/seedTestUser';
@@ -15,7 +15,7 @@ import { authOptions } from '../api/auth/[...nextauth]';
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   let serverSession = await getServerSession(context.req, context.res, authOptions);
-  if (!serverSession && env.NEXT_PUBLIC_NODE_ENV === 'development') {
+  if (!serverSession && env.VERCEL_ENV === 'preview' || env.VERCEL_ENV === 'development' || env.NODE_ENV === 'development') {
     // bypass login using test user for convenience
     const { user, session } = await seedTestUser(prisma);
     serverSession = {
