@@ -1,11 +1,11 @@
 import { InferGetServerSidePropsType } from 'next';
 
-import { AuthPage, getStaticProps } from './login';
+import { AuthPage, getServerSideProps } from './login';
 
 export default function LoginPage({
   providers,
-}: InferGetServerSidePropsType<typeof getStaticProps>): JSX.Element {
+}: InferGetServerSidePropsType<typeof getServerSideProps>): JSX.Element {
   return <AuthPage providers={providers} signUp />;
 }
 
-export { getStaticProps } from './login';
+export { getServerSideProps } from './login';
