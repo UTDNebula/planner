@@ -63,7 +63,16 @@ const Toolbar: FC<ToolbarProps> = ({
     ),
   });
 
-  useEffect(() => update(), [update, studentName, title, semesters, transferCredits, coursesData]);
+  useEffect(() => update(
+      <DegreePlanPDF
+        studentName={studentName}
+        planTitle={title}
+        major={major}
+        semesters={semesters}
+        transferCredits={transferCredits}
+        coursesData={coursesData ?? []}
+      />
+  ), [update, studentName, title, semesters, transferCredits, coursesData]);
   return (
     <div className="flex flex-row items-start gap-2 py-1 text-primary-900">
       <ToolbarWrapper>
