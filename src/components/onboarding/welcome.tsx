@@ -13,6 +13,7 @@ export type WelcomeTypes = {
   name: string;
   startSemester: SemesterCode;
   endSemester: SemesterCode;
+  major: string;
 };
 
 export type WelcomeData = {
@@ -155,7 +156,10 @@ export default function Welcome({
           <AutoCompleteMajor
             className="w-[500px] rounded border outline-none"
             key={0}
-            onValueChange={(value) => setMajor(value)}
+            onValueChange={(value) => {
+              setMajor(value)
+              handleChange({ major: value })
+            }}
             onInputChange={(query: string) => updateQuery(query)}
             options={results.map((major: { filMajor: string }) => major.filMajor)}
             autoFocus

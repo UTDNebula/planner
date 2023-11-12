@@ -29,6 +29,7 @@ export interface OnboardingData {
   name: string;
   startSemester: SemesterCode;
   endSemester: SemesterCode;
+  major: string;
 }
 
 const startSemesters = generateSemesters(12, new Date().getFullYear() - 6, SemesterType.f, false)
@@ -45,6 +46,7 @@ const initialOnboardingData: OnboardingData = {
   name: '',
   startSemester: startSemesters[1], // TODO: Create util function for this in the future
   endSemester: endSemesters[6],
+  major: ''
 };
 
 export default function OnboardingPage() {
@@ -55,7 +57,7 @@ export default function OnboardingPage() {
     setOnboardingData({ ...onboardingData, ...updatedFields });
   };
 
-  const { name, startSemester, endSemester } = onboardingData;
+  const { name, startSemester, endSemester, major } = onboardingData;
 
   const utils = trpc.useContext();
 
@@ -98,7 +100,7 @@ export default function OnboardingPage() {
     <Welcome
       key={0}
       handleChange={handleOnboardingDataUpdate as (updatedFields: Partial<WelcomeTypes>) => void}
-      data={{ name, startSemester, endSemester }}
+      data={{ name, startSemester, endSemester, major }}
       semesterOptions={{ startSemesters, endSemesters }}
       handleValidate={validateForm}
     />,
