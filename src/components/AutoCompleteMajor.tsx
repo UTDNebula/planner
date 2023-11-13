@@ -1,82 +1,72 @@
-import Autocomplete from '@mui/material/Autocomplete';
-import Popper from '@mui/material/Popper';
-import TextField from '@mui/material/TextField';
-import { FC, useCallback, useRef } from 'react';
+import { FC, useRef } from 'react';
+import Select from 'react-select';
+
+import useMajors from '@/shared/useMajors';
 
 interface AutoCompleteMajorProps extends React.ComponentPropsWithoutRef<'div'> {
   onValueChange: (value: string) => void;
   onInputChange: (query: string) => void;
-  options: string[];
   autoFocus?: boolean;
   placeholder?: string;
   defaultValue?: string;
 }
 
+const customStyles = {
+  control: (provided: any) => ({
+    ...provided,
+    border: '1px solid var(--color-neutral-500)',
+    borderRadius: '0.375rem',
+    fontSize: '14px',
+    height: '46px',
+    // You can add more styles as needed
+  }),
+  option: (provided: any) => ({
+    ...provided,
+    color: 'black',
+  }),
+  input: (provided: any) => ({
+    ...provided,
+    paddingLeft: '0.5rem',
+    color: 'black',
+  }),
+  placeholder: (provided: any) => {
+    return {
+      ...provided,
+      paddingLeft: '0.5rem',
+      color: 'rgb(163 163 163)',
+      fontSize: '14px',
+    };
+  },
+};
+
 const AutoCompleteMajor: FC<AutoCompleteMajorProps & React.ComponentPropsWithoutRef<'button'>> = ({
   onValueChange,
   onInputChange,
-  options,
   autoFocus,
   placeholder = 'Major',
   defaultValue = '',
   ...props
 }) => {
+  const { majors, err } = useMajors();
   const containerRef = useRef<HTMLDivElement>(null);
-
-  const CustomPopper = useCallback(
-    (props) => {
-      if (!containerRef.current) {
-        return <div></div>;
-      }
-      const { width } = containerRef.current.getBoundingClientRect();
-      return (
-        <Popper
-          {...props}
-          placement="bottom"
-          anchorEl={containerRef.current}
-          className="z-[9999] overflow-hidden rounded-[10px] text-sm shadow-lg"
-          style={{
-            width: width,
-            border: options.length > 0 ? '1px solid #EDEFF7' : 'none',
-          }}
-        />
-      );
-    },
-    [containerRef, options.length],
-  );
-
+  // react-select requires options to be an object, so we convert it
+  const convertedOptions: any[] = majors.map((e) => ({ label: e, value: e }));
   return (
     <div {...props}>
-      <div ref={containerRef} className="absolute -bottom-3 left-0 h-full w-full "></div>
-      <Autocomplete
-        freeSolo
-        disableClearable
-        onChange={(_, value) => onValueChange(value ?? '')}
-        onInputChange={(_, query) => {
+      <div ref={containerRef} className="absolute -bottom-3 left-0 h-full w-full"></div>
+      <Select
+        styles={customStyles}
+        components={{
+          IndicatorSeparator: () => null,
+        }}
+        isSearchable={true}
+        isClearable={false}
+        onChange={(selection) => onValueChange(selection.value ?? '')}
+        onInputChange={(query) => {
           onInputChange(query);
         }}
-        options={options}
-        sx={{ border: '1px solid var(--color-neutral-500)', borderRadius: '0.375rem' }}
-        fullWidth
-        PopperComponent={CustomPopper}
-        renderInput={(params) => {
-          return (
-            <TextField
-              {...params}
-              variant="standard"
-              className="h-11 appearance-none pl-4 text-[14px] font-semibold text-black outline-none"
-              inputProps={{
-                style: { fontSize: 14, marginTop: 8 },
-                ...params.inputProps,
-              }}
-              placeholder={placeholder}
-              InputProps={{
-                ...params.InputProps,
-                disableUnderline: true,
-              }}
-            />
-          );
-        }}
+        options={convertedOptions}
+        placeholder={placeholder}
       />
     </div>
   );

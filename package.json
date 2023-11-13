@@ -63,6 +63,7 @@
     "react-dom": "^18.2.0",
     "react-hotkeys-hook": "^4.4.1",
     "react-loading-skeleton": "^3.3.1",
+    "react-select": "^5.7.7",
     "react-toastify": "^9.1.1",
     "superjson": "^1.11.0",
     "tss-react": "^3.3.6",

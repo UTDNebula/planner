@@ -9,3 +9,5 @@ prisma/generated
 
 **/.mypy_cache/
 **/venv/
+
+validator/degree_data/**
