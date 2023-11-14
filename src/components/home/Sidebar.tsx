@@ -78,7 +78,12 @@ export default function Sidebar({ isMobile }: { isMobile: boolean }): JSX.Elemen
         )}
         <ul className="flex flex-col gap-y-[25px]">
           {sidebarItems.map(({ url, label, Icon }, i) => (
-            <Link key={url + i} href={url}>
+            <Link
+              key={url + i}
+              href={url}
+              target={label !== 'Profile' ? '_blank' : ''}
+              rel="noopener noreferrer"
+            >
               <li
                 className={`${
                   router.pathname === url && 'rounded-lg bg-primary font-medium text-white'
