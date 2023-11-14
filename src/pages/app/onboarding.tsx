@@ -1,11 +1,11 @@
 import { SemesterType } from '@prisma/client';
 import { createServerSideHelpers } from '@trpc/react-query/server';
 import { GetServerSidePropsContext } from 'next';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { getServerSession } from 'next-auth/next';
 import React, { useEffect, useState } from 'react';
 import superjson from 'superjson';
-import Head from 'next/head';
 
 import Button from '@/components/Button';
 import Welcome, { WelcomeTypes } from '@/components/onboarding/welcome';

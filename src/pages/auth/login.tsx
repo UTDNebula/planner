@@ -1,4 +1,5 @@
 import { InferGetServerSidePropsType } from 'next';
+import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { getProviders, signIn, useSession } from 'next-auth/react';
