@@ -1,6 +1,7 @@
 import { SemesterType } from '@prisma/client';
 import { createServerSideHelpers } from '@trpc/react-query/server';
 import { GetServerSidePropsContext } from 'next';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { getServerSession } from 'next-auth/next';
 import React, { useEffect, useState } from 'react';
@@ -118,6 +119,10 @@ export default function OnboardingPage() {
   // TODO: Find better way to structure this glorified form.
   return (
     <>
+      <Head>
+        <link rel="canonical" href="https://planner.utdnebula.com/app/onboarding" key="canonical" />
+        <meta property="og:url" content="https://planner.utdnebula.com/app/onboarding" />
+      </Head>
       <div className="relative flex h-screen flex-col items-center justify-center space-y-10 bg-white">
         <section>
           <div className="w-auto">
