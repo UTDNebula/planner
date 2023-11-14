@@ -298,7 +298,7 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
     <Page
       key="custom-plan-transcript"
       title="Upload Transcript"
-      subtitle="Upload your transcript to add previously taken courses to your plan (required)"
+      subtitle="Upload your transcript to add previously taken courses to your plan. We don't process or store any grade data - the transcript is only used to import your classes."
       close={onDismiss}
       actions={[
         {
