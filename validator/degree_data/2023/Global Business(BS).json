@@ -391,7 +391,7 @@
                 }
               },
               {
-                "matcher": "OrRequirement",
+                "matcher": "CourseRequirement",
                 "course": "BPS 4396",
                 "metadata": {
                   "id": "Global Business(BS)-53"
