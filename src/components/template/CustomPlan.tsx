@@ -128,6 +128,11 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
         }
       }
     }
+
+    console.log(keywords); // *DELETE*
+    const classIndexes = []; // *DELETE*
+    const earnedIndexes = []; // *DELETE*
+
     // TODO: Consider whether credit was earned or not before adding to credits list
     const credits: Credit[] = [];
     let isTransfer = true;
@@ -135,8 +140,20 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
     for (let j = 0; j < keywords.length; j++) {
       const code = keywords[j];
       if (courseCode.includes(code) && j < keywords.length - 1) {
+        classIndexes.push(j); // *DELETE*
+        let attemptedIndex = j;
+        while (
+          isNaN(parseFloat(keywords[attemptedIndex])) ||
+          parseFloat(keywords[attemptedIndex]) > 10
+        ) {
+          attemptedIndex++;
+        }
+        const earnedIndex = attemptedIndex + 1;
+        earnedIndexes.push(earnedIndex); // *DELETE*
+        const creditEarned = true; // *FIX*
+
         const digit = keywords[j + 1].slice(0, 4).replace(/^\s+|\s+$/g, '');
-        if (/^[\d-]+$/.test(digit)) {
+        if (/^[\d-]+$/.test(digit) && creditEarned) {
           credits.push({
             semesterCode: term,
             courseCode: `${code} ${digit}`,
@@ -158,6 +175,10 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
         }
       }
     }
+
+    console.log(classIndexes); // *DELETE*
+    console.log(earnedIndexes); // *DELETE*
+
     const dedupedCredits = credits.reduce((acc, curr) => {
       if (!acc.some((i) => i.courseCode === curr.courseCode)) {
         acc.push(curr);

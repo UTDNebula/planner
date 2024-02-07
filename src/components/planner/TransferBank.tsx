@@ -13,24 +13,23 @@ const TransferBank: FC<TransferBankProps> = ({ transferCredits }) => {
   function toggleHeight() {
     if (open) {
       collapseSection(bankRef.current!);
-    } 
-    else {
+    } else {
       expandSection(bankRef.current!);
     }
   }
 
   function collapseSection(element: HTMLElement) {
-    var sectionHeight = element.scrollHeight;
+    const sectionHeight = element.scrollHeight;
     setTimeout(() => {
       element.style.height = sectionHeight + 'px';
-      requestAnimationFrame(function() {
+      requestAnimationFrame(function () {
         element.style.height = '50px';
-      }); 
+      });
     }, 100);
   }
 
   function expandSection(element: HTMLElement) {
-    let zero = performance.now();
+    const zero = performance.now();
     requestAnimationFrame(animate);
     function animate() {
       const value = (performance.now() - zero) / 1000;
@@ -42,7 +41,10 @@ const TransferBank: FC<TransferBankProps> = ({ transferCredits }) => {
   }
 
   return (
-    <section ref={bankRef} className="w-full rounded-2xl border border-neutral-200 bg-generic-white px-5 py-3 shadow-sm flex-shrink-0 overflow-hidden transition-all duration-1000 ease-in-out">
+    <section
+      ref={bankRef}
+      className="w-full flex-shrink-0 overflow-hidden rounded-2xl border border-neutral-200 bg-generic-white px-5 py-3 shadow-sm transition-all duration-1000 ease-in-out"
+    >
       <article className="flex items-center justify-between">
         <h5 className="text-xl font-semibold text-primary-900">Transfer Credits</h5>
         <ChevronIcon
