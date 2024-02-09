@@ -97,32 +97,29 @@ export const MemoizedSemesterTile = React.memo(
     function toggleHeight() {
       if (open) {
         collapseSection(outerRef.current!);
-      } else {
+      } 
+      else {
         expandSection(outerRef.current!);
       }
     }
 
     function collapseSection(element: HTMLElement) {
-      const sectionHeight = element.scrollHeight;
+      var sectionHeight = element.scrollHeight;
       setTimeout(() => {
         element.style.height = sectionHeight + 'px';
-        requestAnimationFrame(function () {
-          element.style.height =
-            (outerRef.current! as HTMLElement).childNodes[1].lastChild?.textContent ===
-            'Drag courses here'
-              ? '140px'
-              : '170px';
-        });
+        requestAnimationFrame(function() {
+          element.style.height = ((outerRef.current! as HTMLElement).childNodes[1].lastChild?.textContent === 'Drag courses here') ? '140px' : '170px';
+        }); 
       }, 100);
     }
 
     function expandSection(element: HTMLElement) {
-      const zero = performance.now();
+      let zero = performance.now();
       requestAnimationFrame(animate);
       function animate() {
         const value = (performance.now() - zero) / 700;
         if (value < 1) {
-          element.style.height = element.scrollHeight + 8 + 'px';
+          element.style.height = (element.scrollHeight + 8) + 'px';
           requestAnimationFrame(animate);
         }
       }

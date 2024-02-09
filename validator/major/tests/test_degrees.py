@@ -3,18 +3,18 @@ from typing import Any
 from jsonschema import Draft7Validator, validate
 from major.requirements import loader
 import json
-from os import DirEntry, scandir
+from glob import glob
 import pytest
 
 
-DEGREE_DATA_FILES = list(scandir("./degree_data"))
+DEGREE_DATA_FILES = glob("./degree_data/*/*")
 
 
 # ensure degree data's are valid
 @pytest.mark.parametrize(
     "file", DEGREE_DATA_FILES, ids=lambda file: "file={}".format(file)
 )
-def test_degrees(file: DirEntry[str]) -> None:
+def test_degrees(file: str) -> None:
     data = json.loads(open(file, "r").read())
 
     requirements = data["requirements"]["major"]
@@ -35,10 +35,7 @@ def test_degrees(file: DirEntry[str]) -> None:
 @pytest.mark.parametrize(
     "file", DEGREE_DATA_FILES, ids=lambda file: "file={}".format(file)
 )
-def test_degrees_include_first_year_seminar(file: DirEntry[str]) -> None:
-    degrees_with_no_seminar = ["Data Science(BS).json"]
-    if file.name in degrees_with_no_seminar:
-        return
+def test_degrees_include_first_year_seminar(file: str) -> None:
     f = open(file, "r").read()
     data = json.loads(f)
     first_year_seminar_courses = {
@@ -64,7 +61,7 @@ def test_degrees_include_first_year_seminar(file: DirEntry[str]) -> None:
 @pytest.mark.parametrize(
     "file", DEGREE_DATA_FILES, ids=lambda file: "file={}".format(file)
 )
-def test_req_metadata(file: DirEntry[str]) -> None:
+def test_req_metadata(file: str) -> None:
     data = json.loads(open(file, "r").read())
 
     requirements = data["requirements"]["major"]
@@ -86,7 +83,7 @@ schema = json.loads(open(".vscode/major.schema.json", "r").read())
 @pytest.mark.parametrize(
     "file", DEGREE_DATA_FILES, ids=lambda file: "file={}".format(file)
 )
-def test_degree_schema(file: DirEntry[str]) -> None:
+def test_degree_schema(file: str) -> None:
     # NOTE: if this test fails, there's probably something wrong with the format of the degree data. In VSCode, make an edit to the degree data file and save it. This will trigger the schema validation, then any errors will be highlighted and displayed in the Problems tab.
     # The schema generation is kinda jank so feel free to ignore/disable this test if it's being annoying
     data = json.loads(open(file, "r").read())

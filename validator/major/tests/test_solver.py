@@ -92,7 +92,7 @@ def test_computer_science_solver() -> None:
         "DEF 9199",
     ]
 
-    data = json.loads(open("degree_data/Computer Science(BS).json", "r").read())
+    data = json.loads(open("degree_data/2022/Computer Science(BS).json", "r").read())
 
     requirements_data = data["requirements"]["major"]
 
@@ -185,7 +185,7 @@ def test_accounting_solver() -> None:
         "MKT 4360",
     ]
 
-    data = json.loads(open("degree_data/Accounting(BS).json", "r").read())
+    data = json.loads(open("degree_data/2022/Accounting(BS).json", "r").read())
 
     requirements_data = data["requirements"]["major"]
 
@@ -294,7 +294,9 @@ def test_software_engineering_solver() -> None:
         "ABC 4499",
     ]
 
-    data = json.loads(open("degree_data/Software Engineering(BS).json", "r").read())
+    data = json.loads(
+        open("degree_data/2022/Software Engineering(BS).json", "r").read()
+    )
 
     requirements_data = data["requirements"]["major"]
 

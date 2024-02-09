@@ -4,7 +4,12 @@ from flask import Flask, Response, request, make_response
 from http import HTTPStatus
 from flask_cors import CORS
 
-from degree_solver import BypassInput, DegreeRequirementsInput, DegreeRequirementsSolver
+from degree_solver import (
+    BypassInput,
+    DegreeRequirementsInput,
+    DegreeRequirementsSolver,
+    DegreeNotFoundException,
+)
 
 
 class APIError(Exception):
@@ -14,14 +19,12 @@ class APIError(Exception):
         super().__init__(self.message)
 
 
-# Load the list of degree plans that we support along with their json data
-plans = []
-plan_names: set[str] = set()
-for fname in glob("./degree_data/*.json"):
+# Load the list of degree plans that we support
+plans: set[str] = set()
+for fname in glob("./degree_data/*/*.json"):
     with open(fname, "r") as f:
         data = json.load(f)
-        plan_names.add(data["display_name"])
-        plans.append({"display_name": data["display_name"], "id": data["id"]})
+        plans.add(data["display_name"])
 
 
 # Instantiate flask app and ratelimiter
@@ -44,7 +47,7 @@ def get_degree_plans() -> Response:
     # Returns a list of degree plans that validator supports. This is just a list of the display names of all the JSON
     # plans we have.
     return make_response(
-        {"message": f"Supported degree plans.", "degree_plans": plans}, 200
+        {"message": f"Supported degree plans.", "degree_plans": list(plans)}, 200
     )
 
 
@@ -63,18 +66,22 @@ def validate() -> Response:
             raise APIError("bad request", HTTPStatus.BAD_REQUEST)
 
         for major in j["requirements"]["majors"]:
-            if not major in plan_names:
+            if not major in plans:
                 raise APIError("unsupported degree plan", HTTPStatus.NOT_FOUND)
 
         courses: list[str] = j["courses"]
+        year = j["requirements"]["year"]
         majors = j["requirements"]["majors"]
         minors = j["requirements"]["minors"]
         raw_bypasses = j["bypasses"]
 
-        requirements = DegreeRequirementsInput(majors, minors, [])
+        requirements = DegreeRequirementsInput(year, majors, minors, [])
         bypasses = BypassInput([], {majors[0]: [i for i in raw_bypasses]})
 
-        solver = DegreeRequirementsSolver(courses, requirements, bypasses)
+        try:
+            solver = DegreeRequirementsSolver(courses, requirements, bypasses)
+        except DegreeNotFoundException:
+            raise APIError("Degree plan not found!", HTTPStatus.NOT_FOUND)
         solver.solve()
 
         return make_response(solver.to_json(), 200)

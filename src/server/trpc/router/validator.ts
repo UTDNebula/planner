@@ -3,8 +3,9 @@ import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
 import { env } from '@/env/server.mjs';
-import courses, { JSONCourse } from '@data/courses.json';
+import { courses as PlatformCourse } from 'prisma/generated/platform';
 
+import { courseCache } from './courseCache';
 import { DegreeNotFound, DegreeValidationError } from './errors';
 import { protectedProcedure, router } from '../trpc';
 
@@ -47,7 +48,13 @@ export const validatorRouter = router({
         throw new TRPCError({ code: 'FORBIDDEN' });
       }
 
-      const coursesFromApi: JSONCourse[] = courses;
+      let year = new Date().getFullYear(); // If plan has no semesters, default to current year.
+      if (planData.semesters.length > 0) {
+        // If plan has semesters, default to first semester's year.
+        year = Math.min(...planData.semesters.map((sem) => sem.year));
+      }
+
+      const coursesFromAPI: PlatformCourse[] = await courseCache.getCourses(year);
       /*  sanitizing data from API db.
        *  TODO: Fix this later somehow
        */
@@ -61,13 +68,16 @@ export const validatorRouter = router({
         }
       >();
 
-      for (const course of coursesFromApi) {
+      for (const course of coursesFromAPI) {
         courseMapWithCodeKey.set(`${course.subject_prefix} ${course.course_number}`, {
           prereqs: course.prerequisites,
           coreqs: course.corequisites,
           co_or_pre_requisites: course.co_or_pre_requisites,
         });
-        courseMapWithIdKey.set(course.id, `${course.subject_prefix} ${course.course_number}`);
+        courseMapWithIdKey.set(
+          course.internal_course_number,
+          `${course.subject_prefix} ${course.course_number}`,
+        );
       }
 
       /* Hash to store pre req data.
@@ -104,7 +114,7 @@ export const validatorRouter = router({
       ): Array<[Array<string>, number]> => {
         const prereqNotMet: Array<[Array<string>, number]> = [];
         let count = 0;
-        if (requirements.options.length === 0) {
+        if (!requirements || requirements.options.length === 0) {
           return [];
         }
         const temp: [Array<string>, number] = [[], 0];
@@ -152,7 +162,7 @@ export const validatorRouter = router({
       ): Array<[Array<string>, number]> => {
         const coreqNotMet: Array<[Array<string>, number]> = [];
         let count = 0;
-        if (requirements.options.length === 0) {
+        if (!requirements || requirements.options.length === 0) {
           return [];
         }
         const temp: [Array<string>, number] = [[], 0];
@@ -201,7 +211,7 @@ export const validatorRouter = router({
       ): Array<[Array<string>, number]> => {
         const coreqNotMet: Array<[Array<string>, number]> = [];
         let count = 0;
-        if (requirements.options.length === 0) {
+        if (!requirements || requirements.options.length === 0) {
           return [];
         }
         const temp: [Array<string>, number] = [[], 0];
@@ -300,114 +310,117 @@ export const validatorRouter = router({
     }
   }),
   // Protected route: ensures session user is same as plan owner
-  degreeValidator: protectedProcedure.input(z.string().min(1)).query(async ({ ctx, input }) => {
-    // Fetch current plan
-    const planData = await ctx.prisma.plan.findUnique({
-      where: {
-        id: input,
-      },
-      select: {
-        name: true,
-        id: true,
-        userId: true,
-        semesters: {
-          include: {
-            courses: true,
-          },
+  degreeValidator: protectedProcedure
+    .input(z.object({ planId: z.string().min(1), startYear: z.number() }))
+    .query(async ({ ctx, input: { planId, startYear } }) => {
+      // Fetch current plan
+      const planData = await ctx.prisma.plan.findUnique({
+        where: {
+          id: planId,
         },
-        transferCredits: true,
-      },
-    });
-
-    if (!planData) {
-      throw new TRPCError({
-        code: 'NOT_FOUND',
-        message: 'Plan not found',
+        select: {
+          name: true,
+          id: true,
+          userId: true,
+          semesters: {
+            include: {
+              courses: true,
+            },
+          },
+          transferCredits: true,
+        },
       });
-    }
 
-    if (ctx.session.user.id !== planData.userId) {
-      throw new TRPCError({ code: 'FORBIDDEN' });
-    }
-
-    const { semesters, transferCredits } = planData;
-
-    // Get degree requirements
-    const degreeRequirements = await ctx.prisma.degreeRequirements.findFirst({
-      where: {
-        plan: { id: planData.id },
-      },
-    });
-
-    // Get bypasses
-    const bypasses = degreeRequirements?.bypasses ?? [];
-
-    // Remove invalidCourses
-    const removeInvalidCoursesFromSemesters = () => {
-      return semesters.map((sem) => {
-        const courses = sem.courses
-          .reduce((acc, curr) => [...acc, curr.code], [] as string[])
-          .filter((c) => {
-            const [possiblePrefix, possibleCode] = c.split(' ');
-            if (Number.isNaN(Number(possibleCode)) || !Number.isNaN(Number(possiblePrefix))) {
-              return false;
-            }
-            return true;
-          });
-        return { ...sem, courses };
-      });
-    };
-
-    const semestersWithCourses = removeInvalidCoursesFromSemesters();
-
-    if (!degreeRequirements?.major || degreeRequirements.major === 'undecided') {
-      return { plan: planData, validation: [], bypasses: [] };
-    }
-
-    // TODO: will we always ignore odd credits such as 'PSY 1---'?
-    const regex = /([a-z0-9])* ([a-z0-9]){4}$/gi;
-    const validTransferCredits = transferCredits.filter((credit) => credit.match(regex) !== null);
-
-    const body = {
-      courses: [...semestersWithCourses.flatMap((s) => s.courses), ...validTransferCredits],
-      requirements: {
-        majors: [degreeRequirements.major],
-        minors: [],
-      },
-      bypasses,
-    };
-
-    const res = await fetch(`${env.NEXT_PUBLIC_VALIDATOR}/validate`, {
-      method: 'POST',
-      body: JSON.stringify(body),
-      headers: {
-        'content-type': 'application/json',
-      },
-    });
-
-    if (!res.ok) {
-      const errorMsg = await res.json();
-      if (res.status == 404) {
+      if (!planData) {
         throw new TRPCError({
           code: 'NOT_FOUND',
-          message: errorMsg.error,
-          cause: new DegreeNotFound(errorMsg),
+          message: 'Plan not found',
         });
       }
 
-      const error = new DegreeValidationError(
-        `Validator fetch failed with stats: ${res.status}, err: ${errorMsg}`,
-      );
-      throw new TRPCError({
-        code: 'INTERNAL_SERVER_ERROR',
-        message: error.message,
-        cause: error,
-      });
-    }
+      if (ctx.session.user.id !== planData.userId) {
+        throw new TRPCError({ code: 'FORBIDDEN' });
+      }
 
-    const validationData = await res.json();
-    return { plan: planData, validation: validationData, bypasses };
-  }),
+      const { semesters, transferCredits } = planData;
+
+      // Get degree requirements
+      const degreeRequirements = await ctx.prisma.degreeRequirements.findFirst({
+        where: {
+          plan: { id: planData.id },
+        },
+      });
+
+      // Get bypasses
+      const bypasses = degreeRequirements?.bypasses ?? [];
+
+      // Remove invalidCourses
+      const removeInvalidCoursesFromSemesters = () => {
+        return semesters.map((sem) => {
+          const courses = sem.courses
+            .reduce((acc, curr) => [...acc, curr.code], [] as string[])
+            .filter((c) => {
+              const [possiblePrefix, possibleCode] = c.split(' ');
+              if (Number.isNaN(Number(possibleCode)) || !Number.isNaN(Number(possiblePrefix))) {
+                return false;
+              }
+              return true;
+            });
+          return { ...sem, courses };
+        });
+      };
+
+      const semestersWithCourses = removeInvalidCoursesFromSemesters();
+
+      if (!degreeRequirements?.major || degreeRequirements.major === 'undecided') {
+        return { plan: planData, validation: [], bypasses: [] };
+      }
+
+      // TODO: will we always ignore odd credits such as 'PSY 1---'?
+      const regex = /([a-z0-9])* ([a-z0-9]){4}$/gi;
+      const validTransferCredits = transferCredits.filter((credit) => credit.match(regex) !== null);
+
+      const body = {
+        courses: [...semestersWithCourses.flatMap((s) => s.courses), ...validTransferCredits],
+        requirements: {
+          year: startYear,
+          majors: [degreeRequirements.major],
+          minors: [],
+        },
+        bypasses,
+      };
+
+      const res = await fetch(`${env.NEXT_PUBLIC_VALIDATOR}/validate`, {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {
+          'content-type': 'application/json',
+        },
+      });
+
+      if (!res.ok) {
+        const errorMsg = await res.json();
+        if (res.status == 404) {
+          throw new TRPCError({
+            code: 'NOT_FOUND',
+            message: errorMsg.error,
+            cause: new DegreeNotFound(errorMsg),
+          });
+        }
+
+        const error = new DegreeValidationError(
+          `Validator fetch failed with stats: ${res.status}, err: ${errorMsg}`,
+        );
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: error.message,
+          cause: error,
+        });
+      }
+
+      const validationData = await res.json();
+      return { plan: planData, validation: validationData, bypasses };
+    }),
 });
 
 type CourseOptions = {
