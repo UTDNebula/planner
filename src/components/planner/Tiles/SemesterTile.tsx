@@ -1,10 +1,11 @@
 import { UniqueIdentifier, useDroppable } from '@dnd-kit/core';
-import React, { FC, forwardRef, useState, useRef } from 'react';
+import React, { FC, forwardRef, useState, useRef, useImperativeHandle } from 'react';
 
 import AnalyticsWrapper from '@/components/common/AnalyticsWrapper';
 import ChevronIcon from '@/icons/ChevronIcon';
 import LockIcon from '@/icons/LockIcon';
 import UnlockedIcon from '@/icons/UnlockedIcon';
+import useAccordionAnimation from '@/shared/useAccordionAnimation';
 import { displaySemesterCode, getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
 
 import DraggableSemesterCourseItem from './SemesterCourseItem';
@@ -26,11 +27,17 @@ export interface SemesterTileProps {
 export const MemoizedSemesterTile = React.memo(
   forwardRef<HTMLDivElement, SemesterTileProps>(function SemesterTile(
     { semester, getDragId },
-    ref,
+    outerRef,
   ) {
-    const [open, setOpen] = useState(true);
+    const innerRef = useRef<HTMLDivElement>(null);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    useImperativeHandle(outerRef, () => innerRef.current!, []);
+
     const [hoverOpen, setHoverOpen] = useState(false);
     const hoverTimer = useRef<ReturnType<typeof setTimeout>>();
+    const { toggle, open } = useAccordionAnimation(innerRef, () =>
+      semester.courses.length === 0 ? '140px' : '170px',
+    );
 
     const {
       handleSelectCourses,
@@ -96,8 +103,8 @@ export const MemoizedSemesterTile = React.memo(
     // QUESTION: isValid color?
     return (
       <div
-        ref={ref}
-        className={`tutorial-editor-3 flex h-fit select-none flex-col gap-y-2 overflow-hidden rounded-2xl border border-neutral-300 ${
+        ref={innerRef}
+        className={`tutorial-editor-3 flex h-fit select-none flex-col gap-y-2 overflow-hidden rounded-2xl border border-neutral-300 transition-all duration-700 ease-in-out ${
           semester.locked ? 'bg-neutral-200' : 'bg-white'
         }`}
       >
@@ -110,7 +117,7 @@ export const MemoizedSemesterTile = React.memo(
                   open ? '-rotate-90' : 'rotate-90'
                 } ml-auto h-3 w-3 transform cursor-pointer text-neutral-500 transition-all duration-500`}
                 fontSize="inherit"
-                onClick={() => setOpen(!open)}
+                onClick={toggle}
               />
             </div>
           </article>
@@ -153,8 +160,8 @@ export const MemoizedSemesterTile = React.memo(
             />
           )}
           <article
-            className={`mb-5 flex flex-col gap-y-4 overflow-hidden transition-all duration-700 ${
-              open ? 'max-h-[999px]' : 'max-h-0'
+            className={`mb-5 flex flex-col gap-y-4 overflow-hidden transition-all duration-700 ease-in-out ${
+              open ? 'opacity-100' : 'opacity-0'
             }`}
           >
             {semester.courses.map((course) => (

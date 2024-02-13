@@ -128,6 +128,7 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
         }
       }
     }
+
     // TODO: Consider whether credit was earned or not before adding to credits list
     const credits: Credit[] = [];
     let isTransfer = true;
@@ -158,6 +159,7 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
         }
       }
     }
+
     const dedupedCredits = credits.reduce((acc, curr) => {
       if (!acc.some((i) => i.courseCode === curr.courseCode)) {
         acc.push(curr);
