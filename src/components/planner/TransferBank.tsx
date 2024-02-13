@@ -1,44 +1,15 @@
-import { FC, useState, useRef } from 'react';
+import { FC, useRef } from 'react';
 
 import ChevronIcon from '@/icons/ChevronIcon';
+import useAccordionAnimation from '@/shared/useAccordionAnimation';
 
 interface TransferBankProps {
   transferCredits: string[];
 }
 
 const TransferBank: FC<TransferBankProps> = ({ transferCredits }) => {
-  const [open, setOpen] = useState(true);
-
   const bankRef = useRef(null);
-  function toggleHeight() {
-    if (open) {
-      collapseSection(bankRef.current!);
-    } else {
-      expandSection(bankRef.current!);
-    }
-  }
-
-  function collapseSection(element: HTMLElement) {
-    const sectionHeight = element.scrollHeight;
-    setTimeout(() => {
-      element.style.height = sectionHeight + 'px';
-      requestAnimationFrame(function () {
-        element.style.height = '50px';
-      });
-    }, 100);
-  }
-
-  function expandSection(element: HTMLElement) {
-    const zero = performance.now();
-    requestAnimationFrame(animate);
-    function animate() {
-      const value = (performance.now() - zero) / 1000;
-      if (value < 1) {
-        element.style.height = element.scrollHeight + 'px';
-        requestAnimationFrame(animate);
-      }
-    }
-  }
+  const { toggle, open } = useAccordionAnimation(bankRef, () => '50px');
 
   return (
     <section
@@ -52,10 +23,7 @@ const TransferBank: FC<TransferBankProps> = ({ transferCredits }) => {
             open ? '-rotate-90' : 'rotate-90'
           } h-3 w-3 transform cursor-pointer text-neutral-500 transition-all duration-500`}
           fontSize="inherit"
-          onClick={() => {
-            toggleHeight();
-            setOpen(!open);
-          }}
+          onClick={toggle}
         />
       </article>
       <ol

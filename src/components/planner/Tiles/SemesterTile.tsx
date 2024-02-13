@@ -1,10 +1,11 @@
 import { UniqueIdentifier, useDroppable } from '@dnd-kit/core';
-import React, { FC, forwardRef, useState, useRef } from 'react';
+import React, { FC, forwardRef, useState, useRef, useImperativeHandle } from 'react';
 
 import AnalyticsWrapper from '@/components/common/AnalyticsWrapper';
 import ChevronIcon from '@/icons/ChevronIcon';
 import LockIcon from '@/icons/LockIcon';
 import UnlockedIcon from '@/icons/UnlockedIcon';
+import useAccordionAnimation from '@/shared/useAccordionAnimation';
 import { displaySemesterCode, getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
 
 import DraggableSemesterCourseItem from './SemesterCourseItem';
@@ -26,11 +27,17 @@ export interface SemesterTileProps {
 export const MemoizedSemesterTile = React.memo(
   forwardRef<HTMLDivElement, SemesterTileProps>(function SemesterTile(
     { semester, getDragId },
-    ref,
+    outerRef,
   ) {
-    const [open, setOpen] = useState(true);
+    const innerRef = useRef<HTMLDivElement>(null);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    useImperativeHandle(outerRef, () => innerRef.current!, []);
+
     const [hoverOpen, setHoverOpen] = useState(false);
     const hoverTimer = useRef<ReturnType<typeof setTimeout>>();
+    const { toggle, open } = useAccordionAnimation(innerRef, () =>
+      semester.courses.length === 0 ? '140px' : '170px',
+    );
 
     const {
       handleSelectCourses,
@@ -93,45 +100,10 @@ export const MemoizedSemesterTile = React.memo(
       );
     };
 
-    const outerRef = useRef(null);
-    function toggleHeight() {
-      if (open) {
-        collapseSection(outerRef.current!);
-      } else {
-        expandSection(outerRef.current!);
-      }
-    }
-
-    function collapseSection(element: HTMLElement) {
-      const sectionHeight = element.scrollHeight;
-      setTimeout(() => {
-        element.style.height = sectionHeight + 'px';
-        requestAnimationFrame(function () {
-          element.style.height =
-            (outerRef.current! as HTMLElement).childNodes[1].lastChild?.textContent ===
-            'Drag courses here'
-              ? '140px'
-              : '170px';
-        });
-      }, 100);
-    }
-
-    function expandSection(element: HTMLElement) {
-      const zero = performance.now();
-      requestAnimationFrame(animate);
-      function animate() {
-        const value = (performance.now() - zero) / 700;
-        if (value < 1) {
-          element.style.height = element.scrollHeight + 8 + 'px';
-          requestAnimationFrame(animate);
-        }
-      }
-    }
-
     // QUESTION: isValid color?
     return (
       <div
-        ref={outerRef}
+        ref={innerRef}
         className={`tutorial-editor-3 flex h-fit select-none flex-col gap-y-2 overflow-hidden rounded-2xl border border-neutral-300 transition-all duration-700 ease-in-out ${
           semester.locked ? 'bg-neutral-200' : 'bg-white'
         }`}
@@ -145,10 +117,7 @@ export const MemoizedSemesterTile = React.memo(
                   open ? '-rotate-90' : 'rotate-90'
                 } ml-auto h-3 w-3 transform cursor-pointer text-neutral-500 transition-all duration-500`}
                 fontSize="inherit"
-                onClick={() => {
-                  toggleHeight();
-                  setOpen(!open);
-                }}
+                onClick={toggle}
               />
             </div>
           </article>
@@ -192,7 +161,7 @@ export const MemoizedSemesterTile = React.memo(
           )}
           <article
             className={`mb-5 flex flex-col gap-y-4 overflow-hidden transition-all duration-700 ease-in-out ${
-              open ? 'h-full' : 'h-0'
+              open ? 'opacity-100' : 'opacity-0'
             }`}
           >
             {semester.courses.map((course) => (
