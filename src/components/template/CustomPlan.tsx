@@ -136,15 +136,6 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
     for (let j = 0; j < keywords.length; j++) {
       const code = keywords[j];
       if (courseCode.includes(code) && j < keywords.length - 1) {
-        let attemptedIndex = j;
-        while (
-          isNaN(parseFloat(keywords[attemptedIndex])) ||
-          parseFloat(keywords[attemptedIndex]) > 10
-        ) {
-          attemptedIndex++;
-        }
-        const earnedIndex = attemptedIndex + 1;
-
         const digit = keywords[j + 1].slice(0, 4).replace(/^\s+|\s+$/g, '');
         if (/^[\d-]+$/.test(digit)) {
           credits.push({
