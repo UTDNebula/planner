@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Neon Database Create Branch Action
-        uses: neondatabase/create-branch-action@v3
+        uses: neondatabase/create-branch-action@v4
         id: create_branch
         with:
           project_id: ${{ secrets.NEON_PROJECT_ID }}
