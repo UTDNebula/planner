@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Neon Database Create Branch Action
-        uses: neondatabase/create-branch-action@v3
+        uses: neondatabase/create-branch-action@v4
         id: create_branch
         with:
           project_id: ${{ secrets.NEON_PROJECT_ID }}
@@ -39,7 +39,7 @@ jobs:
           preview_url=$(vercel deploy \
             --env DATABASE_URL="${{ steps.create_branch.outputs.db_url_with_pooler}}/neondb?pgbouncer=true&connect_timeout=15&pool_timeout=15" \
             --build-env DIRECT_DATABASE_URL="${{ steps.create_branch.outputs.db_url}}/neondb?connect_timeout=10" \
-            --public --yes --token=${{ secrets.VERCEL_TOKEN }})
+            --public --yes --token="${{ secrets.VERCEL_TOKEN }}")
           echo preview_url=$preview_url >> $GITHUB_OUTPUT
 
       - name: Comment on Pull Request
