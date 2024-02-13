@@ -26,7 +26,10 @@
     "seed": "ts-node --transpile-only --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "lint-staged": {
-    "**/*.{js,jsx,ts,tsx,json}": ["npx prettier --write", "npx eslint --fix"]
+    "**/*.{js,jsx,ts,tsx,json}": [
+      "npx prettier --write",
+      "npx eslint --fix"
+    ]
   },
   "dependencies": {
     "@dnd-kit/core": "^6.0.6",
