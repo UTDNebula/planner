@@ -13,7 +13,7 @@ export const CreditsWarnHoverCard: FC<CreditsWarnHoverCardProps> = ({
   side = 'top',
   children,
 }) => (
-  <HoverCard.Root open={open} onOpenChange={onOpenChange} openDelay={0}>
+  <HoverCard.Root open={open} onOpenChange={onOpenChange}>
     <HoverCard.Trigger asChild>{children}</HoverCard.Trigger>
     <HoverCard.Portal>
       <HoverCard.Content
