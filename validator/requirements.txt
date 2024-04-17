@@ -13,7 +13,7 @@ exceptiongroup==1.1.0
 Flask==2.2.5
 Flask-Cors==3.0.10
 Flask-Limiter==2.9.2
-gunicorn==20.1.0
+gunicorn==22.0.0
 idna==3.4
 iniconfig==2.0.0
 itsdangerous==2.1.2
