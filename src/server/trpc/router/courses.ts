@@ -5,7 +5,7 @@ import { router, publicProcedure } from '../trpc';
 
 export const coursesRouter = router({
   publicGetAllCourses: publicProcedure.query(async () => {
-    return await courseCache.getCourses(new Date().getFullYear());
+    return await courseCache.getCourses(2023);
   }),
   publicGetSanitizedCourses: publicProcedure.query(async ({ ctx }) => {
     const courses = await ctx.platformPrisma.courses.findMany({
