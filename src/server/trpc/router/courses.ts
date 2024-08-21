@@ -5,6 +5,7 @@ import { router, publicProcedure } from '../trpc';
 
 export const coursesRouter = router({
   publicGetAllCourses: publicProcedure.query(async () => {
+    //TODO don't hardcode it
     return await courseCache.getCourses(2023);
   }),
   publicGetSanitizedCourses: publicProcedure.query(async ({ ctx }) => {
