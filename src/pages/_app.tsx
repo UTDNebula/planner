@@ -5,6 +5,7 @@ import '../styles/introjs.css';
 
 import { createTheme, StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import { Analytics } from '@vercel/analytics/react';
 import { AnimateSharedLayout } from 'framer-motion';
 import { type AppType, AppProps } from 'next/app';
@@ -84,6 +85,7 @@ const NebulaApp: AppType<{ session: Session | null }> = ({
 
   return (
     <SessionProvider session={session}>
+      <GoogleAnalytics gaId="G-NNMPZ9PJB9" />
       <ReactQueryDevtools initialIsOpen={false} />
       <Head>
         <title>Nebula Planner</title>
@@ -100,31 +102,7 @@ const NebulaApp: AppType<{ session: Session | null }> = ({
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"
         />
         <meta name="keywords" content="UTD, UT Dallas, degree planner" />
-        <meta name="msapplication-TileColor" content="#573DFF" />
-
-        {process.env.VERCEL_ENV === 'production' && (
-          <script
-            async
-            defer
-            data-website-id={env.NEXT_PUBLIC_UMAMI_WEBSITE_ID}
-            src={`${getBaseUrl()}/api/umami/test`}
-          />
-        )}
       </Head>
-      {env.NEXT_PUBLIC_NODE_ENV === 'production' && (
-        <>
-          <Script async src="https://www.googletagmanager.com/gtag/js?id=G-5V674KK1JX" />
-          <Script id="google-analytics">
-            {`
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-
-              gtag('config', 'G-5V674KK1JX');
-            `}
-          </Script>
-        </>
-      )}
       <ScreenSizeWarnModal
         open={displayScreenSizeWarning && !hasWarned}
         onClose={() => setHasWarned(true)}

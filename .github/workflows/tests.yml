@@ -64,10 +64,6 @@ jobs:
 
       NODE_ENV: test
 
-      # UMAMI
-      NEXT_PUBLIC_UMAMI_URL: hi
-      NEXT_PUBLIC_UMAMI_WEBSITE_ID: bye
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
