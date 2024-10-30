@@ -17,7 +17,7 @@ export type DegreeRequirement = Requirement & {
 
 export interface Requirement {
   matcher: string;
-  metadata: { [key: string]: string };
+  metadata: { id: string; [key: string]: string };
   filled: boolean;
 }
 
@@ -36,7 +36,6 @@ export type AndRequirementGroup = Requirement & {
 
 export type HoursRequirementGroup = Requirement & {
   matcher: 'Hours';
-  metadata: { [key: string]: string };
   required_hours: number;
   fulfilled_hours: number;
   requirements: RequirementTypes[];

@@ -155,7 +155,9 @@ const getRequirementGroup = (
                 course: `${c.subject_prefix} ${c.course_number}`,
                 matcher: 'Course',
                 filled: courses.includes(`${c.subject_prefix} ${c.course_number}`),
-                metadata: {},
+                metadata: {
+                  id: `course-${c.id}`,
+                },
               }))
             : [],
         filterFunction: filterFunc,
@@ -200,12 +202,12 @@ const getRequirementGroup = (
 };
 
 export const ProgressComponent2 = ({ value, max }: { value: number; max: number }) => {
-  const heh = `${(value * 100) / max}%`;
+  const width = `${(value * 100) / max}%`;
 
   return (
     <div className="flex w-full flex-col items-center justify-center">
       <div className="mt-2 h-1 w-full overflow-hidden rounded-2xl bg-[#F5F5F5] ">
-        <div style={{ width: heh }} className={`h-full bg-primary`}></div>
+        <div style={{ width }} className={`h-full bg-primary`}></div>
       </div>
     </div>
   );
@@ -220,7 +222,7 @@ export const ProgressComponent = ({
   max: number;
   unit?: string;
 }) => {
-  const heh = `${(value * 100) / max}%`;
+  const width = `${(value * 100) / max}%`;
 
   return (
     <div className="flex w-24 flex-col items-center justify-center">
@@ -228,7 +230,7 @@ export const ProgressComponent = ({
         {value}/{max} {unit}
       </div>
       <div className="h-3 w-full overflow-hidden rounded-2xl bg-[#F5F5F5]">
-        <div style={{ width: heh }} className={`h-full bg-primary`}></div>
+        <div style={{ width }} className={`h-full bg-primary`}></div>
       </div>
     </div>
   );

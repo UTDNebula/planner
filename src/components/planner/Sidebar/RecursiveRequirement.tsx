@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, Fragment } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { trpc } from '@/utils/trpc';
@@ -36,15 +36,14 @@ export function RecursiveRequirement({
             >
               <>
                 {req.requirements.map((req2, idx) => (
-                  <>
+                  <Fragment key={req2.metadata.id}>
                     <div className="h-2 px-2 text-sm">Option {idx + 1}</div>
                     <RecursiveRequirement
-                      key={idx}
                       req={req2}
                       courses={courses}
                       validCourses={validCourses}
                     />
-                  </>
+                  </Fragment>
                 ))}
               </>
             </Accordion>
@@ -58,15 +57,13 @@ export function RecursiveRequirement({
               filled={req.filled}
             >
               <>
-                {req.requirements.map((req2, idx) => (
-                  <>
-                    <RecursiveRequirement
-                      key={idx}
-                      req={req2}
-                      courses={courses}
-                      validCourses={validCourses}
-                    />
-                  </>
+                {req.requirements.map((req2) => (
+                  <RecursiveRequirement
+                    key={req2.metadata.id}
+                    req={req2}
+                    courses={courses}
+                    validCourses={validCourses}
+                  />
                 ))}
               </>
             </Accordion>
@@ -85,15 +82,14 @@ export function RecursiveRequirement({
             >
               <>
                 {req.requirements.map((req2, idx) => (
-                  <>
+                  <Fragment key={req2.metadata.id}>
                     <div className="h-2 px-2 text-sm">Option {idx + 1}</div>
                     <RecursiveRequirement
-                      key={idx}
                       req={req2}
                       courses={courses}
                       validCourses={validCourses}
                     />
-                  </>
+                  </Fragment>
                 ))}
               </>
             </Accordion>
@@ -112,15 +108,14 @@ export function RecursiveRequirement({
             >
               <>
                 {req.requirements.map((req2, idx) => (
-                  <>
+                  <Fragment key={req2.metadata.id}>
                     <div className="h-2 px-2 text-sm">Option {idx + 1}</div>
                     <RecursiveRequirement
-                      key={idx}
                       req={req2}
                       courses={courses}
                       validCourses={validCourses}
                     />
-                  </>
+                  </Fragment>
                 ))}
               </>
             </Accordion>
@@ -140,7 +135,7 @@ export function RecursiveRequirement({
               <>
                 {req.prefix_groups.map((req2, idx) => (
                   <RecursiveRequirement
-                    key={idx}
+                    key={req2.metadata.id}
                     req={req2}
                     courses={courses}
                     validCourses={validCourses}
@@ -156,7 +151,7 @@ export function RecursiveRequirement({
         return <div>NOT SUPPORTED</div>;
     }
   };
-  return <>{getRequirement()}</>;
+  return getRequirement();
 }
 
 function CourseRequirementComponent({
