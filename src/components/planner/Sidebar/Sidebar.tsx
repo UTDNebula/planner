@@ -189,21 +189,19 @@ function CourseSelectorContainer({
           <h6 className="text-base tracking-tight text-gray-500">Drag courses onto your plan</h6>
         </div>
         <div className="z-[999] drop-shadow-2xl">
-          <AnalyticsWrapper analyticsClass="umami--click--search-course">
-            <SearchBar
-              onClick={() => setDisplay(true)}
-              updateQuery={(q) => {
-                updateQuery(q);
-                setDisplay(true);
-              }}
-              className={`${
-                displayResults
-                  ? 'rounded-b-none border-b-transparent'
-                  : 'rounded-b-[10px] border-b-inherit'
-              }`}
-              placeholder="Search courses"
-            />
-          </AnalyticsWrapper>
+          <SearchBar
+            onClick={() => setDisplay(true)}
+            updateQuery={(q) => {
+              updateQuery(q);
+              setDisplay(true);
+            }}
+            className={`${
+              displayResults
+                ? 'rounded-b-none border-b-transparent'
+                : 'rounded-b-[10px] border-b-inherit'
+            }`}
+            placeholder="Search courses"
+          />
           <div className="relative">
             <div
               ref={ref}
