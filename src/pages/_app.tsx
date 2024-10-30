@@ -105,30 +105,7 @@ const NebulaApp: AppType<{ session: Session | null }> = ({
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#090b2a" />
         <meta name="msapplication-TileColor" content="#4659A7" />
         <meta name="theme-color" content="#4659A7" />
-
-        {process.env.VERCEL_ENV === 'production' && (
-          <script
-            async
-            defer
-            data-website-id={env.NEXT_PUBLIC_UMAMI_WEBSITE_ID}
-            src={`${getBaseUrl()}/api/umami/test`}
-          />
-        )}
       </Head>
-      {env.NEXT_PUBLIC_NODE_ENV === 'production' && (
-        <>
-          <Script async src="https://www.googletagmanager.com/gtag/js?id=G-5V674KK1JX" />
-          <Script id="google-analytics">
-            {`
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-
-              gtag('config', 'G-5V674KK1JX');
-            `}
-          </Script>
-        </>
-      )}
       <ScreenSizeWarnModal
         open={displayScreenSizeWarning && !hasWarned}
         onClose={() => setHasWarned(true)}

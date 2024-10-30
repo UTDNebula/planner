@@ -3,7 +3,6 @@ import { usePDF } from '@react-pdf/renderer';
 import Link from 'next/link';
 import { FC, useEffect, useState } from 'react';
 
-import AnalyticsWrapper from '@/components/common/AnalyticsWrapper';
 import DownloadIcon from '@/icons/DownloadIcon';
 import SettingsIcon from '@/icons/SettingsIcon';
 import SwitchVerticalIcon from '@/icons/SwitchVerticalIcon';
@@ -88,41 +87,37 @@ const Toolbar: FC<ToolbarProps> = ({
       <div className="grow"></div>
       <article className="flex flex-row gap-3">
         <ToolbarWrapper>
-          <AnalyticsWrapper analyticsClass="umami--click--export-pdf">
-            <a
-              href={url || '#'}
-              download={`${title} - ${new Date().toLocaleString().replaceAll('/', '_')}.pdf`}
+          <a
+            href={url || '#'}
+            download={`${title} - ${new Date().toLocaleString().replaceAll('/', '_')}.pdf`}
+          >
+            <Button
+              size="medium"
+              isLoading={false}
+              disabled={!!error}
+              icon={<DownloadIcon />}
+              id="tutorial-editor-7"
+              className="whitespace-nowrap"
             >
-              <Button
-                size="medium"
-                isLoading={false}
-                disabled={!!error}
-                icon={<DownloadIcon />}
-                id="tutorial-editor-7"
-                className="whitespace-nowrap"
-              >
-                Export Degree Plan
-              </Button>
-            </a>
-          </AnalyticsWrapper>
+              Export Degree Plan
+            </Button>
+          </a>
         </ToolbarWrapper>
 
         <ToolbarWrapper>
           <FilterByDropdown>
-            <AnalyticsWrapper analyticsClass="umami--click--sort-by">
-              <Button
-                aria-label="Filter by options"
-                size="medium"
-                color="border"
-                className="hover:bg-primary-100 hover:text-primary-900"
-                id="tutorial-editor-6"
-                icon={<SwitchVerticalIcon />}
-              >
-                <span className="whitespace-nowrap" id="world">
-                  Sort By
-                </span>
-              </Button>
-            </AnalyticsWrapper>
+            <Button
+              aria-label="Filter by options"
+              size="medium"
+              color="border"
+              className="hover:bg-primary-100 hover:text-primary-900"
+              id="tutorial-editor-6"
+              icon={<SwitchVerticalIcon />}
+            >
+              <span className="whitespace-nowrap" id="world">
+                Sort By
+              </span>
+            </Button>
           </FilterByDropdown>
         </ToolbarWrapper>
 
