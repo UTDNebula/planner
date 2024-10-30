@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { withSentryConfig } = require('@sentry/nextjs');
-const fetch = require('node-fetch');
+const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 
@@ -39,9 +39,6 @@ module.exports = async (phase) => {
       '@mui/icons-material': {
         transform: '@mui/icons-material/{{member}}',
       },
-    },
-    compiler: {
-      removeConsole: process.env.NODE_ENV === 'production',
     },
     rewrites: async () => {
       return [

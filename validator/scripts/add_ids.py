@@ -1,6 +1,6 @@
 # type: ignore
 import json
-import os
+from glob import glob
 
 """This script adds IDs to major requirements which 
 is utilized in the bypass logic
@@ -56,17 +56,15 @@ def add_ids(requirement_data) -> None:
 #     "Speech, Language, and Hearing Sciences(BS).json",
 # ]
 # Get the list of all files and directories
-path = "degree_data"
-dir_list = os.listdir(f"../{path}")
 
-for dir in dir_list:
+for fname in glob("../degree_data/*/*.json"):
     try:
         # Get major data from json
-        data = json.loads(open(f"degree_data/{dir}", "r").read())
+        data = json.loads(open(fname, "r").read())
         requirements_data = data["requirements"]["major"]
 
         counter = [0]
-        major_name = [data["abbreviation"]]
+        major_name = [data["display_name"]]
         for re in requirements_data:
             add_ids(re)
 
@@ -74,8 +72,11 @@ for dir in dir_list:
         # print(json.dumps(data, sort_keys=True))
 
         # Write to file
-        f = open(f"degree_data/{dir}", "w")
+        f = open(fname, "w")
         f.write(json.dumps(data, indent=2))
+        # Add trailing newline to file
+        f.write("\n")
         f.close()
-    except:
-        print(dir)
+    except Exception as error:
+        print("Error:", fname)
+        print(error)

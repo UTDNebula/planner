@@ -65,6 +65,7 @@ export default function Planner({
     handleDeselectAllCourses,
     handleSelectCourses,
     handleDeleteAllSelectedCourses,
+    handleRemoveCourseFromSemester,
     title,
     undo,
   } = useSemestersContext();
@@ -120,7 +121,10 @@ export default function Planner({
 
   const handleOnDragStart = ({ active }: { active: Active }) => {
     const originData = active.data.current as DragEventOriginData;
-    setActiveCourse({ from: originData.from, course: originData.course });
+    setActiveCourse({
+      from: originData.from,
+      course: originData.course,
+    });
     setIsCourseDragging(true);
   };
 
@@ -147,6 +151,10 @@ export default function Planner({
           destinationData.semester,
           originData.course,
         );
+      }
+      // from semester to sidebar drag and drop deletion
+      if (originData.from === 'semester-tile' && destinationData.to === 'sidebar-tile') {
+        handleRemoveCourseFromSemester(originData.semester, originData.course);
       }
     }
 
@@ -228,6 +236,8 @@ export default function Planner({
           getSearchedDragId={(course) => `course-list-searched-${course.id}`}
           getRequirementDragId={(course) => `course-list-requirement-${course.id}`}
           courseDragged={isCourseDragging}
+          dropId={`semester-tile-course-${activeCourse?.course}`}
+          dragActive={activeCourse?.from === 'semester-tile'}
         />
       </div>
     </DndContext>

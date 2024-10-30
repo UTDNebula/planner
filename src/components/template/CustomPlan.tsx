@@ -128,6 +128,7 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
         }
       }
     }
+
     // TODO: Consider whether credit was earned or not before adding to credits list
     const credits: Credit[] = [];
     let isTransfer = true;
@@ -158,6 +159,7 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
         }
       }
     }
+
     const dedupedCredits = credits.reduce((acc, curr) => {
       if (!acc.some((i) => i.courseCode === curr.courseCode)) {
         acc.push(curr);
@@ -298,7 +300,7 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
     <Page
       key="custom-plan-transcript"
       title="Upload Transcript"
-      subtitle="Upload your transcript to add previously taken courses to your plan (required)"
+      subtitle="Upload your transcript to add previously taken courses to your plan. We don't process or store any grade data - the transcript is only used to import your classes."
       close={onDismiss}
       actions={[
         {
