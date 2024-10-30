@@ -124,9 +124,7 @@ export const MemoizedSemesterTile = React.memo(
               >
                 {displaySemesterCode(semester.code)}
               </h3>
-              <button
-                onClick={() => handleSemesterLock(semester.id.toString(), !semester.locked)}
-              >
+              <button onClick={() => handleSemesterLock(semester.id.toString(), !semester.locked)}>
                 {!semester.locked ? <UnlockedIcon /> : <LockIcon />}
               </button>
             </div>
