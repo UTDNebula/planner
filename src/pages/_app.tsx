@@ -5,6 +5,7 @@ import '../styles/introjs.css';
 
 import { createTheme, StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import { Analytics } from '@vercel/analytics/react';
 import { AnimateSharedLayout } from 'framer-motion';
 import { type AppType, AppProps } from 'next/app';
@@ -84,6 +85,7 @@ const NebulaApp: AppType<{ session: Session | null }> = ({
 
   return (
     <SessionProvider session={session}>
+      <GoogleAnalytics gaId="G-NNMPZ9PJB9" />
       <ReactQueryDevtools initialIsOpen={false} />
       <Head>
         <meta charSet="utf-8" />
