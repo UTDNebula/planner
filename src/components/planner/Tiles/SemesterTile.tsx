@@ -1,7 +1,6 @@
 import { UniqueIdentifier, useDroppable } from '@dnd-kit/core';
 import React, { FC, forwardRef, useState, useRef } from 'react';
 
-import AnalyticsWrapper from '@/components/common/AnalyticsWrapper';
 import ChevronIcon from '@/icons/ChevronIcon';
 import LockIcon from '@/icons/LockIcon';
 import UnlockedIcon from '@/icons/UnlockedIcon';
@@ -125,13 +124,9 @@ export const MemoizedSemesterTile = React.memo(
               >
                 {displaySemesterCode(semester.code)}
               </h3>
-              <AnalyticsWrapper analyticsClass="umami--click--lock-course">
-                <button
-                  onClick={() => handleSemesterLock(semester.id.toString(), !semester.locked)}
-                >
-                  {!semester.locked ? <UnlockedIcon /> : <LockIcon />}
-                </button>
-              </AnalyticsWrapper>
+              <button onClick={() => handleSemesterLock(semester.id.toString(), !semester.locked)}>
+                {!semester.locked ? <UnlockedIcon /> : <LockIcon />}
+              </button>
             </div>
             <SemesterTileDropdown
               locked={semester.locked}

@@ -7,7 +7,6 @@ import ChevronIcon from '@/icons/ChevronIcon';
 import PlusIcon from '@/icons/PlusIcon';
 import { trpc } from '@utils/trpc';
 
-import AnalyticsWrapper from '../common/AnalyticsWrapper';
 import PlanCard from '../landing/PlanCard';
 import TemplateModal from '../template/Modal';
 
@@ -122,42 +121,36 @@ export default function PlansPage(): JSX.Element {
 
               <DropdownMenu.Portal>
                 <DropdownMenu.Content className="relative top-2 w-min rounded-md border border-neutral-300 bg-generic-white drop-shadow-xl">
-                  <AnalyticsWrapper analyticsClass="umami--click--custom-plan">
-                    <DropdownItem
-                      data-testid="add-blank-plan-btn"
-                      text="Start New"
-                      onClick={() => {
-                        setPlanPage(0);
-                        setOpenTemplateModal(true);
-                      }}
-                    />
-                  </AnalyticsWrapper>
+                  <DropdownItem
+                    data-testid="add-blank-plan-btn"
+                    text="Start New"
+                    onClick={() => {
+                      setPlanPage(0);
+                      setOpenTemplateModal(true);
+                    }}
+                  />
 
                   <DropdownMenu.Separator className="DropdownMenuSeparator h-0.5 bg-black opacity-10" />
 
-                  <AnalyticsWrapper analyticsClass="umami--click--custom-plan">
-                    <DropdownItem
-                      data-testid="add-custom-plan-btn"
-                      text="From Transcript"
-                      onClick={() => {
-                        setPlanPage(1);
-                        setOpenTemplateModal(true);
-                      }}
-                    />
-                  </AnalyticsWrapper>
+                  <DropdownItem
+                    data-testid="add-custom-plan-btn"
+                    text="From Transcript"
+                    onClick={() => {
+                      setPlanPage(1);
+                      setOpenTemplateModal(true);
+                    }}
+                  />
 
                   <DropdownMenu.Separator className="DropdownMenuSeparator h-0.5 bg-black opacity-10" />
 
-                  <AnalyticsWrapper analyticsClass="umami--click--template-plan">
-                    <DropdownItem
-                      text="From Template"
-                      data-testid="add-template-plan-btn"
-                      onClick={() => {
-                        setPlanPage(2);
-                        setOpenTemplateModal(true);
-                      }}
-                    />
-                  </AnalyticsWrapper>
+                  <DropdownItem
+                    text="From Template"
+                    data-testid="add-template-plan-btn"
+                    onClick={() => {
+                      setPlanPage(2);
+                      setOpenTemplateModal(true);
+                    }}
+                  />
                 </DropdownMenu.Content>
               </DropdownMenu.Portal>
             </DropdownMenu.Root>

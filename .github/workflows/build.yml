@@ -80,7 +80,3 @@ jobs:
 
           NODE_ENV: production
           VERCEL_ENV: preview
-
-          # UMAMI
-          NEXT_PUBLIC_UMAMI_URL: hi
-          NEXT_PUBLIC_UMAMI_WEBSITE_ID: bye
