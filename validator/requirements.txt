@@ -52,5 +52,5 @@ types-jsonschema==4.17.0.6
 types-requests==2.31.0.2
 typing_extensions==4.4.0
 urllib3==1.26.18
-Werkzeug==3.0.1
+Werkzeug==3.0.3
 wrapt==1.14.1
