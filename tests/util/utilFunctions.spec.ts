@@ -2,7 +2,7 @@ import { describe, expect, test, jest, afterEach } from '@jest/globals';
 import { SemesterType } from '@prisma/client';
 
 import { Semester } from '@/components/planner/types';
-import { SemesterCode } from 'prisma/utils';
+import { SemesterCode } from '@/../prisma/utils';
 
 import {
   createNewSemesterCode,

@@ -9,7 +9,7 @@ import {
   createSemesterCodeRange,
   isEarlierSemester,
 } from '@/utils/utilFunctions';
-import { SemesterCode, computeSemesterCode } from 'prisma/utils';
+import { SemesterCode, computeSemesterCode } from '@/../prisma/utils';
 
 import { protectedProcedure, router } from '../trpc';
 

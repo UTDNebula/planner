@@ -5,7 +5,7 @@ import React, { useEffect } from 'react';
 import AutoCompleteMajor from '@/components/AutoCompleteMajor';
 import EmojiIcons from '@/icons/EmojiIcon';
 import useMajors from '@/shared/useMajors';
-import { SemesterCode } from 'prisma/utils';
+import { SemesterCode } from '@/../prisma/utils';
 
 import useSearch from '../search/search';
 

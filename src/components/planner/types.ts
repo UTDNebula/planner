@@ -1,7 +1,7 @@
 import { UniqueIdentifier } from '@dnd-kit/core';
 
 import { RouterOutputs } from '@/utils/trpc';
-import { SemesterCode } from 'prisma/utils';
+import { SemesterCode } from '@/../prisma/utils';
 
 import { tagColors } from './utils';
 

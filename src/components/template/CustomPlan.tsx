@@ -8,7 +8,7 @@ import courseCode from '@/data/courseCode.json';
 import useMajors from '@/shared/useMajors';
 import { UnwrapArray } from '@/types/util-types';
 import { RouterInputs, trpc } from '@/utils/trpc';
-import { SemesterCode } from 'prisma/utils';
+import { SemesterCode } from '@/../prisma/utils';
 
 import { Page } from './Page';
 import { ButtonProps } from '../Button';

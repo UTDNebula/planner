@@ -14,7 +14,7 @@ import { appRouter } from '@/server/trpc/router/_app';
 import { trpc } from '@/utils/trpc';
 import { generateSemesters } from '@/utils/utilFunctions';
 import { type RouterInputs } from '@utils/trpc';
-import { SemesterCode } from 'prisma/utils';
+import { SemesterCode } from '@/../prisma/utils';
 
 import { authOptions } from '../api/auth/[...nextauth]';
 

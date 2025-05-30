@@ -1,4 +1,4 @@
-import Fuse from 'fuse.js';
+import Fuse, { IFuseOptions } from 'fuse.js';
 import { useState, useMemo } from 'react';
 
 interface IUseSearchProps<T> {
@@ -11,7 +11,7 @@ export default function useFuse<T>({ dataSet, keys, threshold = 0.4 }: IUseSearc
   const [results, setResults] = useState<T[]>([]);
 
   const fuse = useMemo(() => {
-    const options: Fuse.IFuseOptions<T> = {
+    const options: IFuseOptions<T> = {
       includeScore: true,
       threshold,
       keys,

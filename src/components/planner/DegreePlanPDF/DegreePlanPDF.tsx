@@ -2,7 +2,7 @@ import { Document, Font, Link, Page, StyleSheet, View, Text } from '@react-pdf/r
 import React, { FC } from 'react';
 
 import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
-import { SemesterCode } from 'prisma/utils';
+import { SemesterCode } from '@/../prisma/utils';
 
 import AcademicYearTable, { DEFAULT_COURSE_CREDIT_HOUR } from './AcademicYearTable';
 import Header from './Header';
