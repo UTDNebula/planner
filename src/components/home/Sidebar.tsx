@@ -4,7 +4,6 @@ import { signOut } from 'next-auth/react';
 import { useEffect, useMemo, useState } from 'react';
 
 import ChevronIcon from '@/icons/ChevronIcon';
-import FeedbackIcon from '@/icons/FeedbackIcon';
 import GlobalIcon from '@/icons/GlobalIcon';
 import HomeIcon from '@/icons/HomeIcon';
 import LogoIcon from '@/icons/LogoIcon';
