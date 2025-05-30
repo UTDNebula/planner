@@ -4,7 +4,7 @@ import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { getServerSession } from 'next-auth/next';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import superjson from 'superjson';
 
 import Button from '@/components/Button';
