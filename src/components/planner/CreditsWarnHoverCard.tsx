@@ -1,10 +1,11 @@
 import * as HoverCard from '@radix-ui/react-hover-card';
-import { FC } from 'react';
+import React, { FC } from 'react';
 
 interface CreditsWarnHoverCardProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   side?: 'top' | 'left' | 'bottom' | 'right';
+  children: React.ReactNode;
 }
 
 export const CreditsWarnHoverCard: FC<CreditsWarnHoverCardProps> = ({

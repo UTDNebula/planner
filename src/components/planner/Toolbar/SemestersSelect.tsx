@@ -20,10 +20,10 @@ const SemestersSelect: FC<
         <ChevronIcon className="rotate-90 transform" />
       </Select.Icon>
     </Select.Trigger>
-    <Select.Portal className="z-[9999]">
+    <Select.Portal>
       <Select.Content
         position="popper"
-        className="cursor-pointer select-none overflow-hidden rounded-md border border-neutral-100 bg-generic-white shadow-sm"
+        className="z-[9999] cursor-pointer select-none overflow-hidden rounded-md border border-neutral-100 bg-generic-white shadow-sm"
         sideOffset={10}
       >
         <Select.Viewport className="max-h-52 overflow-y-scroll">

@@ -49,20 +49,25 @@ const Toolbar: FC<ToolbarProps> = ({
 
   const { data: coursesData } = q;
 
+  const degreePlanPDF = (
+    <DegreePlanPDF
+      studentName={studentName}
+      planTitle={title}
+      major={major}
+      semesters={semesters}
+      transferCredits={transferCredits}
+      coursesData={coursesData ?? []}
+    />
+  );
+
   const [{ error, url }, update] = usePDF({
-    document: (
-      <DegreePlanPDF
-        studentName={studentName}
-        planTitle={title}
-        major={major}
-        semesters={semesters}
-        transferCredits={transferCredits}
-        coursesData={coursesData ?? []}
-      />
-    ),
+    document: degreePlanPDF,
   });
 
-  useEffect(() => update(), [update, studentName, title, semesters, transferCredits, coursesData]);
+  useEffect(
+    () => update(degreePlanPDF),
+    [update, studentName, title, semesters, transferCredits, coursesData],
+  );
   return (
     <div className="flex flex-row items-start gap-2 py-1 text-primary-900">
       <ToolbarWrapper>
@@ -155,6 +160,6 @@ const Toolbar: FC<ToolbarProps> = ({
 
 export default Toolbar;
 
-const ToolbarWrapper: FC = ({ children }) => {
+const ToolbarWrapper = ({ children }: { children: React.ReactNode }) => {
   return <div className="flex h-8 w-fit items-center justify-center">{children}</div>;
 };

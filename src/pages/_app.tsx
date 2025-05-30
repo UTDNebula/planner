@@ -117,7 +117,7 @@ const NebulaApp: AppType<{ session: Session | null }> = ({
               ) : (
                 <Component {...pageProps} />
               )}
-              <ToastContainer bodyClassName="text-sm text-primary-900 font-sans" />
+              <ToastContainer className="text-sm text-primary-900 font-sans" />
             </main>
           </ThemeProvider>
         </StyledEngineProvider>
@@ -126,7 +126,7 @@ const NebulaApp: AppType<{ session: Session | null }> = ({
   );
 };
 
-const Auth: FC = ({ children }) => {
+const Auth = ({ children }: { children: React.ReactNode }) => {
   const { status } = useSession({ required: true });
   if (status === 'loading') {
     return <p>Loading...</p>;

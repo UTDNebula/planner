@@ -1,6 +1,6 @@
 import { SemesterType } from '@prisma/client';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import { FC, useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 import CalendarIcon from '@/icons/CalendarIcon';
 import ChevronIcon from '@/icons/ChevronIcon';
@@ -16,7 +16,7 @@ const itemClasses =
 
 const contentClasses = 'w-64 rounded-md border border-neutral-300 bg-generic-white z-[9999]';
 
-const FilterByDropdown: FC = ({ children }) => {
+const FilterByDropdown = ({ children }: { children: React.ReactNode }) => {
   const {
     toggleColorFilter,
     toggleSemesterFilter,

@@ -1,5 +1,5 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import { FC } from 'react';
+import React, { FC } from 'react';
 
 import DeleteIcon from '@/icons/DeleteIcon';
 import PencilIcon from '@/icons/PencilIcon';
@@ -12,6 +12,7 @@ const contentClasses = 'rounded-md border border-neutral-300 bg-generic-white z-
 export interface SettingsDropdownProps {
   openDeletePlanModal: () => void;
   openEditSemesterModal: () => void;
+  children: React.ReactNode;
 }
 
 const SettingsDropdown: FC<SettingsDropdownProps> = ({

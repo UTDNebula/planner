@@ -211,7 +211,7 @@ function CourseSelectorContainer({
         </div>
         <Dialog.Root open={displayResults} onOpenChange={(v) => setDisplay(v)} modal={false}>
           {ref.current && (
-            <Dialog.Portal className="z-[99]" container={ref?.current}>
+            <Dialog.Portal container={ref?.current}>
               <Dialog.Content
                 asChild
                 className="z-[999]"
