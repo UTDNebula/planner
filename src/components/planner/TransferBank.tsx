@@ -1,4 +1,4 @@
-import { FC, useRef, useState } from 'react';
+import { FC, useRef } from 'react';
 
 import ChevronIcon from '@/icons/ChevronIcon';
 import useAccordionAnimation from '@/shared/useAccordionAnimation';
