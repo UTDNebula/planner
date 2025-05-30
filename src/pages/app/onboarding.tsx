@@ -109,7 +109,7 @@ export default function OnboardingPage() {
     }
   };
 
-  const validNextPage = validate[page]);
+  const validNextPage = validate[page];
 
   // TODO: Find better way to structure this glorified form.
   return (
