@@ -3,12 +3,12 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 
+import { SemesterCode } from '@/../prisma/utils';
 import AutoCompleteMajor from '@/components/AutoCompleteMajor';
 import courseCode from '@/data/courseCode.json';
 import useMajors from '@/shared/useMajors';
 import { UnwrapArray } from '@/types/util-types';
 import { RouterInputs, trpc } from '@/utils/trpc';
-import { SemesterCode } from '@/../prisma/utils';
 
 import { Page } from './Page';
 import { ButtonProps } from '../Button';

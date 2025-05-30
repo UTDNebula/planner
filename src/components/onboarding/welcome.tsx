@@ -2,10 +2,10 @@ import { MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import Link from 'next/link';
 import React, { useEffect } from 'react';
 
+import { SemesterCode } from '@/../prisma/utils';
 import AutoCompleteMajor from '@/components/AutoCompleteMajor';
 import EmojiIcons from '@/icons/EmojiIcon';
 import useMajors from '@/shared/useMajors';
-import { SemesterCode } from '@/../prisma/utils';
 
 import useSearch from '../search/search';
 

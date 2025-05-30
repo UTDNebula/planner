@@ -1,9 +1,9 @@
 import * as Select from '@radix-ui/react-select';
 import React, { FC } from 'react';
 
+import { SemesterCode } from '@/../prisma/utils';
 import ChevronIcon from '@/icons/ChevronIcon';
 import { displaySemesterCode } from '@/utils/utilFunctions';
-import { SemesterCode } from '@/../prisma/utils';
 
 const SemestersSelect: FC<
   Select.SelectProps & { id?: string; placeholder?: string; semesterCodes: SemesterCode[] }

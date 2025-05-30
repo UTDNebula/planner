@@ -3,13 +3,13 @@ import { TRPCError } from '@trpc/server';
 import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 
+import { SemesterCode, computeSemesterCode } from '@/../prisma/utils';
 import { Semester as PlanSemester } from '@/components/planner/types';
 import {
   createYearBasedOnFall,
   createSemesterCodeRange,
   isEarlierSemester,
 } from '@/utils/utilFunctions';
-import { SemesterCode, computeSemesterCode } from '@/../prisma/utils';
 
 import { protectedProcedure, router } from '../trpc';
 

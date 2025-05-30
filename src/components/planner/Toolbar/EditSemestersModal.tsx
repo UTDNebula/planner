@@ -1,9 +1,9 @@
 import { FC, useState } from 'react';
 
+import { SemesterCode } from '@/../prisma/utils';
 import Modal from '@/components/Modal';
 import { trpc } from '@/utils/trpc';
 import { displaySemesterCode, generateSemesters } from '@/utils/utilFunctions';
-import { SemesterCode } from '@/../prisma/utils';
 
 import SemestersSelect from './SemestersSelect';
 import Button from '../../Button';

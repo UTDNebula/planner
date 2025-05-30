@@ -7,6 +7,7 @@ import { getServerSession } from 'next-auth/next';
 import React, { useState } from 'react';
 import superjson from 'superjson';
 
+import { SemesterCode } from '@/../prisma/utils';
 import Button from '@/components/Button';
 import Welcome, { WelcomeTypes } from '@/components/onboarding/welcome';
 import { createContextInner } from '@/server/trpc/context';
@@ -14,7 +15,6 @@ import { appRouter } from '@/server/trpc/router/_app';
 import { trpc } from '@/utils/trpc';
 import { generateSemesters } from '@/utils/utilFunctions';
 import { type RouterInputs } from '@utils/trpc';
-import { SemesterCode } from '@/../prisma/utils';
 
 import { authOptions } from '../api/auth/[...nextauth]';
 
