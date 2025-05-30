@@ -17,7 +17,6 @@ export default function PlansPage(): JSX.Element {
   const [openTemplateModal, setOpenTemplateModal] = useState(false);
   const userPlanQuery = trpc.plan.getUserPlans.useQuery(undefined, {
     staleTime: Infinity,
-    cacheTime: Infinity,
   });
   const updateSeenHomeOnboarding = trpc.user.seenHomeOnboarding.useMutation({
     async onSuccess() {
@@ -26,7 +25,6 @@ export default function PlansPage(): JSX.Element {
   });
   const { data: userData, isLoading } = trpc.user.getUser.useQuery(undefined, {
     staleTime: Infinity,
-    cacheTime: Infinity,
   });
 
   const { data } = userPlanQuery;

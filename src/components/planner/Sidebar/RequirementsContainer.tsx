@@ -266,7 +266,6 @@ export default function RequirementsContainer({
 
   const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
     staleTime: Infinity,
-    cacheTime: Infinity,
     refetchOnWindowFocus: false,
   });
 
@@ -357,7 +356,6 @@ function RequirementContainer({
 }: RequirementContainerProps): JSX.Element {
   const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
     staleTime: Infinity,
-    cacheTime: Infinity,
     refetchOnWindowFocus: false,
   });
 

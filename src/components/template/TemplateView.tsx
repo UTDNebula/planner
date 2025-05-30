@@ -27,7 +27,6 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
     isError,
   } = trpc.template.publicGetAllTemplates.useQuery(undefined, {
     staleTime: Infinity,
-    cacheTime: Infinity,
   });
 
   const createTemplateUserPlan = trpc.user.createTemplateUserPlan.useMutation({

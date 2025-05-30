@@ -30,7 +30,6 @@ export default function PlanDetailPage(
 
   const { data: userData, isLoading } = trpc.user.getUser.useQuery(undefined, {
     staleTime: Infinity,
-    cacheTime: Infinity,
   });
 
   const steps = [
