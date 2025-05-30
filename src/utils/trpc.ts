@@ -18,7 +18,6 @@ const trpcEndpointURL = `${getBaseUrl()}/api/trpc`;
 export const trpc = createTRPCNext<AppRouter>({
   config() {
     return {
-      transformer: superjson,
       links: [
         loggerLink({
           enabled: (opts) =>
@@ -36,19 +35,23 @@ export const trpc = createTRPCNext<AppRouter>({
           // when condition is true, use normal request
           true: httpLink({
             url: trpcEndpointURL,
+            transformer: superjson,
           }),
           // when condition is false, use batching
           false: httpBatchLink({
             url: trpcEndpointURL,
+            transformer: superjson,
           }),
         }),
         httpBatchLink({
           url: trpcEndpointURL,
+          transformer: superjson,
         }),
       ],
     };
   },
   ssr: false,
+  transformer: superjson,
 });
 export type RouterInputs = inferRouterInputs<AppRouter>;
 export type RouterOutputs = inferRouterOutputs<AppRouter>;

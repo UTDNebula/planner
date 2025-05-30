@@ -1,6 +1,6 @@
-import { SVGProps } from 'react';
+import React from 'react';
 
-const EmojiIcons: { [provider: string]: [icon: SVGProps<SVGSVGElement>] } = {
+const EmojiIcons: { [provider: string]: React.ReactNode } = {
   waveEmoji: [
     <>
       <svg

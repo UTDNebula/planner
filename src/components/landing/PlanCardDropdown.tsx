@@ -1,5 +1,5 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import { FC } from 'react';
+import React, { FC } from 'react';
 
 import DeleteIcon from '@/icons/DeleteIcon';
 import DuplicateIcon from '@/icons/DuplicateIcon';
@@ -7,6 +7,7 @@ import DuplicateIcon from '@/icons/DuplicateIcon';
 export interface PlanCardDropdownProps {
   deletePlan: () => void;
   duplicatePlan: () => void;
+  children: React.ReactNode;
 }
 
 const PlanCardDropdown: FC<PlanCardDropdownProps> = ({ duplicatePlan, deletePlan, children }) => {

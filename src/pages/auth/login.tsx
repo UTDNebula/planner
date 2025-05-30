@@ -44,7 +44,6 @@ export function AuthPage(props: {
   // Fetch courses here and put in cache
   trpc.courses.publicGetAllCourses.useQuery(undefined, {
     staleTime: Infinity,
-    cacheTime: Infinity,
     refetchOnWindowFocus: false,
   });
 

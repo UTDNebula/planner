@@ -6,7 +6,6 @@ import '../styles/introjs.css';
 import { createTheme, StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { Analytics } from '@vercel/analytics/react';
 import { AnimateSharedLayout } from 'framer-motion';
 import { type AppType, AppProps } from 'next/app';
 import Head from 'next/head';
@@ -14,7 +13,7 @@ import { Router } from 'next/router';
 import { type Session } from 'next-auth';
 import { SessionProvider, useSession } from 'next-auth/react';
 import NProgress from 'nprogress'; //nprogress module
-import { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 
 import Layout from '@/components/home/Layout';
@@ -118,8 +117,7 @@ const NebulaApp: AppType<{ session: Session | null }> = ({
               ) : (
                 <Component {...pageProps} />
               )}
-              <ToastContainer bodyClassName="text-sm text-primary-900 font-sans" />
-              <Analytics />
+              <ToastContainer className="text-sm text-primary-900 font-sans" />
             </main>
           </ThemeProvider>
         </StyledEngineProvider>
@@ -128,7 +126,7 @@ const NebulaApp: AppType<{ session: Session | null }> = ({
   );
 };
 
-const Auth: FC = ({ children }) => {
+const Auth = ({ children }: { children: React.ReactNode }) => {
   const { status } = useSession({ required: true });
   if (status === 'loading') {
     return <p>Loading...</p>;

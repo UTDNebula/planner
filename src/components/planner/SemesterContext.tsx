@@ -1,5 +1,5 @@
 import { SemesterType } from '@prisma/client';
-import {
+import React, {
   createContext,
   FC,
   useCallback,
@@ -87,6 +87,7 @@ export interface SemestersContextProviderProps {
   planId: string;
   plan: Plan;
   bypasses: string[];
+  children: React.ReactNode;
 }
 
 export interface useSemestersProps {

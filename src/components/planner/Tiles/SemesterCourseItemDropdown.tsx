@@ -1,5 +1,5 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import ChevronIcon from '@/icons/ChevronIcon';
@@ -28,6 +28,7 @@ export interface SemesterTileDropdownProps {
   isValid: boolean;
   prereqOverriden: boolean;
   onPrereqOverrideChange: () => void;
+  children: React.ReactNode;
 }
 
 const SemesterCourseItemDropdown: FC<SemesterTileDropdownProps> = ({
