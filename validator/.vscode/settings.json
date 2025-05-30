@@ -8,10 +8,8 @@
   "python.analysis.typeCheckingMode": "basic",
   "json.schemas": [
     {
-        "fileMatch": [
-            "/degree_data/**.json"
-        ],
-        "url": ".vscode/major.schema.json"
+      "fileMatch": ["/degree_data/**.json"],
+      "url": ".vscode/major.schema.json"
     }
   ],
   "python.formatting.provider": "black"
