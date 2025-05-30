@@ -228,7 +228,7 @@ function CourseSelectorContainer({
           <div className="flex h-[30vh] w-full text-base leading-5 text-[#A3A3A3]">
             <div className="mx-12 mt-44 flex w-full flex-col items-center justify-center gap-4 text-center leading-6">
               It seems like a screw has gone loose!
-              <a target="_blank" rel="noreferrer" href="https://airtable.com/shrFg9MPi9BGguwPU">
+              <a target="_blank" rel="noreferrer" href="https://discord.utdnebula.com/">
                 <Button>REPORT ERROR</Button>
               </a>
             </div>
@@ -238,7 +238,7 @@ function CourseSelectorContainer({
           <div className="flex h-[30vh] w-full text-base leading-5 text-[#A3A3A3]">
             <div className="mx-12 mt-44 flex w-full flex-col items-center justify-center gap-4 text-center leading-6">
               It seems like your major is no longer supported! Contact us to have it added.
-              <a target="_blank" rel="noreferrer" href="https://airtable.com/shrFg9MPi9BGguwPU">
+              <a target="_blank" rel="noreferrer" href="https://discord.utdnebula.com/">
                 <Button>REPORT ERROR</Button>
               </a>
             </div>

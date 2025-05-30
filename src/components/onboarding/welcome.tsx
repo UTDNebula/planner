@@ -117,7 +117,7 @@ export default function Welcome({
     return (
       <>
         Oops, we ran into an error! Please let us know on our{' '}
-        <Link href="https://discord.gg/anrh9B2Z3w" className="underline">
+        <Link href="https://discord.utdnebula.com/" className="underline">
           discord
         </Link>{' '}
         to get it fixed as soon as possible.

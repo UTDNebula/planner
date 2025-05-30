@@ -4,7 +4,6 @@ import { signOut } from 'next-auth/react';
 import { useEffect, useMemo, useState } from 'react';
 
 import ChevronIcon from '@/icons/ChevronIcon';
-import ContactIcon from '@/icons/ContactIcon';
 import FeedbackIcon from '@/icons/FeedbackIcon';
 import GlobalIcon from '@/icons/GlobalIcon';
 import HomeIcon from '@/icons/HomeIcon';
@@ -37,17 +36,7 @@ export default function Sidebar({ isMobile }: { isMobile: boolean }): JSX.Elemen
       Icon: ProfileIcon,
     },
     {
-      url: 'https://discord.gg/K5B727vEnV',
-      label: 'Contact Support',
-      Icon: ContactIcon,
-    },
-    {
-      url: 'https://airtable.com/shrFg9MPi9BGguwPU',
-      label: 'Feedback Form',
-      Icon: FeedbackIcon,
-    },
-    {
-      url: 'https://discord.gg/anrh9B2Z3w',
+      url: 'https://discord.utdnebula.com/',
       label: 'Join Our Discord',
       Icon: GlobalIcon,
     },
