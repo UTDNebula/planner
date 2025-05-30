@@ -69,8 +69,6 @@ export default function OnboardingPage() {
   const [page, setPage] = useState(0);
   const [validate, setValidate] = useState([true, true, true]);
 
-  const [validNextPage, setValidNextPage] = useState(false);
-
   const router = useRouter();
 
   const validateForm = (value: boolean) => {
@@ -111,9 +109,7 @@ export default function OnboardingPage() {
     }
   };
 
-  useEffect(() => {
-    setValidNextPage(validate[page]);
-  }, [validate, page]);
+  const validNextPage = validate[page]);
 
   // TODO: Find better way to structure this glorified form.
   return (
