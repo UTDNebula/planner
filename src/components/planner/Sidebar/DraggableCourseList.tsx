@@ -1,5 +1,5 @@
 import { UniqueIdentifier } from '@dnd-kit/core';
-import React from 'react';
+import React, { memo } from 'react';
 
 import DraggableSidebarCourseItem from './SidebarCourseItem';
 import { DraggableCourse } from '../types';
@@ -24,4 +24,4 @@ function DraggableCourseList({ courses, getDragId }: DraggableCourseListProps) {
   );
 }
 
-export default React.memo(DraggableCourseList);
+export default memo(DraggableCourseList);

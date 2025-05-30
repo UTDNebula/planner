@@ -49,7 +49,7 @@ const Toolbar: FC<ToolbarProps> = ({
 
   const { data: coursesData } = q;
 
-  const [{ loading, error, url }, update] = usePDF({
+  const [{ error, url }, update] = usePDF({
     document: (
       <DegreePlanPDF
         studentName={studentName}

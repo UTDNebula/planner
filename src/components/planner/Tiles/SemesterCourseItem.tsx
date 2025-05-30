@@ -1,6 +1,6 @@
 import { UniqueIdentifier, useDraggable } from '@dnd-kit/core';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
-import React, { ComponentPropsWithoutRef, FC, forwardRef, useState, useRef } from 'react';
+import React, { ComponentPropsWithoutRef, FC, forwardRef, memo, useState, useRef } from 'react';
 import Skeleton from 'react-loading-skeleton';
 
 import Checkbox from '@/components/Checkbox';
@@ -36,7 +36,7 @@ export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'>
 
 /** UI implementation of a semester course */
 /* eslint-disable react/prop-types */
-export const MemoizedSemesterCourseItem = React.memo(
+export const MemoizedSemesterCourseItem = memo(
   forwardRef<HTMLDivElement, SemesterCourseItemProps>(function SemesterCourseItem(
     {
       course,
@@ -287,4 +287,4 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
   );
 };
 
-export default React.memo(DraggableSemesterCourseItem);
+export default memo(DraggableSemesterCourseItem);

@@ -4,7 +4,7 @@ import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { getServerSession } from 'next-auth/next';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import superjson from 'superjson';
 
 import Button from '@/components/Button';
@@ -50,7 +50,7 @@ const initialOnboardingData: OnboardingData = {
 
 export default function OnboardingPage() {
   const [onboardingData, setOnboardingData] = useState<OnboardingData>(initialOnboardingData);
-  const [isModifyLoading, setIsModifyLoading] = React.useState(false);
+  const [isModifyLoading, setIsModifyLoading] = useState(false);
 
   const handleOnboardingDataUpdate = (updatedFields: Partial<OnboardingData>) => {
     setOnboardingData({ ...onboardingData, ...updatedFields });
@@ -68,8 +68,6 @@ export default function OnboardingPage() {
 
   const [page, setPage] = useState(0);
   const [validate, setValidate] = useState([true, true, true]);
-
-  const [validNextPage, setValidNextPage] = useState(false);
 
   const router = useRouter();
 
@@ -100,7 +98,6 @@ export default function OnboardingPage() {
       key={0}
       handleChange={handleOnboardingDataUpdate as (updatedFields: Partial<WelcomeTypes>) => void}
       data={{ name, startSemester, endSemester }}
-      semesterOptions={{ startSemesters, endSemesters }}
       handleValidate={validateForm}
     />,
   ];
@@ -112,9 +109,7 @@ export default function OnboardingPage() {
     }
   };
 
-  useEffect(() => {
-    setValidNextPage(validate[page]);
-  });
+  const validNextPage = validate[page];
 
   // TODO: Find better way to structure this glorified form.
   return (

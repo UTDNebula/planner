@@ -1,9 +1,9 @@
 import { InputBase } from '@mui/material';
-import React, { useState } from 'react';
+import React, { ComponentPropsWithoutRef, useState } from 'react';
 
 import SearchCourseIcon from '@/icons/SearchCourseIcon';
 
-interface SearchBarProps extends React.ComponentPropsWithoutRef<'div'> {
+interface SearchBarProps extends ComponentPropsWithoutRef<'div'> {
   updateQuery: (query: string) => void;
   placeholder: string;
 }

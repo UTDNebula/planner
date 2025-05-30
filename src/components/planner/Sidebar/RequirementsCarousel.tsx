@@ -1,14 +1,10 @@
 export default function RequirementsCarousel({
   requirementsList,
   requirementInfo,
-  overflow,
-  setOverflow,
   carousel,
 }: {
   requirementsList: JSX.Element;
   requirementInfo: JSX.Element;
-  overflow: boolean;
-  setOverflow: (isOverflow: boolean) => void;
   carousel: boolean;
 }) {
   return (

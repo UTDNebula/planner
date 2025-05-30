@@ -1,6 +1,5 @@
 import router from 'next/router';
-import { useState } from 'react'; //nprogress module
-import React from 'react';
+import React, { useEffect, useState } from 'react'; //nprogress module
 
 import AutoCompleteMajor from '@/components/AutoCompleteMajor';
 import { trpc } from '@/utils/trpc';
@@ -45,7 +44,7 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
     constraints: [0, 100],
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     updateQuery('');
   }, [isLoading]);
 
@@ -130,7 +129,6 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
           onValueChange={(value) => setMajor(value)}
           onInputChange={(query: string) => updateQuery(query)}
           options={results.map((major: { filMajor: string }) => major.filMajor)}
-          autoFocus
         ></AutoCompleteMajor>
       </div>
       <small className={`${majorError ? 'visible' : 'hidden'} -mt-6  text-red-500`}>

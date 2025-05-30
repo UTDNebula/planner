@@ -527,7 +527,8 @@ export const planRouter = router({
 
         const bypasses = [...degreeRequirements.bypasses, requirement];
 
-        const updatedDegreeRequirements = await ctx.prisma.degreeRequirements.update({
+        //update degree plan requirements
+        await ctx.prisma.degreeRequirements.update({
           where: {
             plan: { userId: ctx.session.user.id },
             id: degreeRequirements.id,

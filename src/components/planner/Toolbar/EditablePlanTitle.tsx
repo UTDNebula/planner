@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 
 import PencilIcon from '@/icons/PencilIcon';
@@ -11,8 +11,8 @@ export default function EditableMajorTitle({
   initialTitle: string;
   planId: string;
 }) {
-  const [title, setTitle] = React.useState(initialTitle);
-  const [editTitle, setEditTitle] = React.useState(false);
+  const [title, setTitle] = useState(initialTitle);
+  const [editTitle, setEditTitle] = useState(false);
 
   const updatePlanName = trpc.plan.updatePlanTitle.useMutation();
 

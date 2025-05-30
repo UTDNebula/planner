@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 
 interface SearchParams<T, K> {
   getData: () => Promise<T[]>;
@@ -23,14 +23,14 @@ const useSearch = <T, K>({
   filterFn,
   constraints = [0, 20],
 }: SearchParams<T, K>): SearchReturn<T, K> => {
-  const [results, setResults] = React.useState<T[]>([]);
-  const [err, setErr] = React.useState<unknown>();
+  const [results, setResults] = useState<T[]>([]);
+  const [err, setErr] = useState<unknown>();
 
   const getResults = () => {
     return results;
   };
 
-  React.useEffect(() => updateQuery(initialQuery), []);
+  useEffect(() => updateQuery(initialQuery), []);
 
   // TODO: Insert logc for filtering w/ chips
   // TODO: Update filtering code to deal with data from Nebula API

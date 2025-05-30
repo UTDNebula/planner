@@ -15,7 +15,7 @@ const errorMessageStyle = {
   left: '35%',
 } as React.CSSProperties;
 
-export default function ErrorMessage(error: any) {
+export default function ErrorMessage(error: string) {
   return (
     <Alert id="errMess1" severity="error" style={errorMessageStyle}>
       Something went wrong - {error}!

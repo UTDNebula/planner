@@ -1,4 +1,4 @@
-import React, { Children, FC } from 'react';
+import React, { Children, ComponentPropsWithoutRef, FC } from 'react';
 
 import Spinner from './Spinner';
 
@@ -25,7 +25,7 @@ const fontClasses = {
   default: 'text-sm font-medium',
 };
 
-export interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
+export interface ButtonProps extends ComponentPropsWithoutRef<'button'> {
   color?: keyof typeof colorClasses;
   size?: keyof typeof sizeClasses;
   width?: keyof typeof widthClasses;

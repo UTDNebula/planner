@@ -1,24 +1,20 @@
 import Autocomplete from '@mui/material/Autocomplete';
 import Popper from '@mui/material/Popper';
 import TextField from '@mui/material/TextField';
-import { FC, useCallback, useRef } from 'react';
+import React, { ComponentPropsWithoutRef, FC, useCallback, useRef } from 'react';
 
-interface AutoCompleteMajorProps extends React.ComponentPropsWithoutRef<'div'> {
-  onValueChange: (value: string) => void;
+interface AutoCompleteMajorProps extends ComponentPropsWithoutRef<'div'> {
+  onValueChange?: (value: string) => void;
   onInputChange: (query: string) => void;
   options: string[];
-  autoFocus?: boolean;
   placeholder?: string;
-  defaultValue?: string;
 }
 
-const AutoCompleteMajor: FC<AutoCompleteMajorProps & React.ComponentPropsWithoutRef<'button'>> = ({
+const AutoCompleteMajor: FC<AutoCompleteMajorProps & ComponentPropsWithoutRef<'button'>> = ({
   onValueChange,
   onInputChange,
   options,
-  autoFocus,
   placeholder = 'Major',
-  defaultValue = '',
   ...props
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -51,7 +47,7 @@ const AutoCompleteMajor: FC<AutoCompleteMajorProps & React.ComponentPropsWithout
       <Autocomplete
         freeSolo
         disableClearable
-        onChange={(_, value) => onValueChange(value ?? '')}
+        onChange={(_, value) => typeof onValueChange !== 'undefined' && onValueChange(value ?? '')}
         onInputChange={(_, query) => {
           onInputChange(query);
         }}

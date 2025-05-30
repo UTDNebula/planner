@@ -40,11 +40,12 @@ module.exports = async (phase) => {
         transform: '@mui/icons-material/{{member}}',
       },
     },
-    rewrites: async () => {
+    redirects: async () => {
       return [
         {
           source: '/',
-          destination: '/index.html',
+          destination: 'https://www.utdnebula.com/projects/planner',
+          permanent: true,
         },
       ];
     },

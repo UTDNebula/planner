@@ -1,6 +1,6 @@
 import { MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import AutoCompleteMajor from '@/components/AutoCompleteMajor';
 import EmojiIcons from '@/icons/EmojiIcon';
@@ -18,16 +18,10 @@ export type WelcomeTypes = {
 export type WelcomeData = {
   handleChange: (updatedFields: Partial<WelcomeTypes>) => void;
   data: WelcomeTypes;
-  semesterOptions: { startSemesters: SemesterCode[]; endSemesters: SemesterCode[] };
   handleValidate: (value: boolean) => void;
 };
 
-export default function Welcome({
-  handleChange,
-  data,
-  handleValidate,
-  semesterOptions,
-}: WelcomeData): JSX.Element {
+export default function Welcome({ handleChange, data, handleValidate }: WelcomeData): JSX.Element {
   const { name, startSemester, endSemester }: WelcomeTypes = data;
 
   const setName = (event: SelectChangeEvent<string>) => {
@@ -42,7 +36,6 @@ export default function Welcome({
     handleChange({ endSemester: sem });
   };
 
-  const [major, setMajor] = React.useState('');
   const { majors, err } = useMajors();
 
   const { results, updateQuery } = useSearch({
@@ -105,11 +98,11 @@ export default function Welcome({
     handleValidate(isValid);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     checkValidate();
   }, [data]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
@@ -117,7 +110,7 @@ export default function Welcome({
     return (
       <>
         Oops, we ran into an error! Please let us know on our{' '}
-        <Link href="https://discord.gg/anrh9B2Z3w" className="underline">
+        <Link href="https://discord.utdnebula.com/" className="underline">
           discord
         </Link>{' '}
         to get it fixed as soon as possible.
@@ -155,7 +148,6 @@ export default function Welcome({
           <AutoCompleteMajor
             className="w-[500px] rounded border outline-none"
             key={0}
-            onValueChange={(value) => setMajor(value)}
             onInputChange={(query: string) => updateQuery(query)}
             options={results.map((major: { filMajor: string }) => major.filMajor)}
             autoFocus

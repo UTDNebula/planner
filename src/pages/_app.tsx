@@ -4,14 +4,13 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../styles/introjs.css';
 
 import { createTheme, StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { GoogleAnalytics } from '@next/third-parties/google';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Analytics } from '@vercel/analytics/react';
 import { AnimateSharedLayout } from 'framer-motion';
 import { type AppType, AppProps } from 'next/app';
 import Head from 'next/head';
 import { Router } from 'next/router';
-import Script from 'next/script';
 import { type Session } from 'next-auth';
 import { SessionProvider, useSession } from 'next-auth/react';
 import NProgress from 'nprogress'; //nprogress module
@@ -19,11 +18,10 @@ import { FC, useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 
 import Layout from '@/components/home/Layout';
-import { env } from '@/env/client.mjs';
 import ScreenSizeWarnModal from '@/shared/ScreenSizeWarnModal';
 import 'nprogress/nprogress.css'; //styles of nprogress
 
-import { getBaseUrl, trpc } from '../utils/trpc';
+import { trpc } from '../utils/trpc';
 
 import type { NextComponentType } from 'next'; //Import Component type
 

@@ -3,7 +3,7 @@ import { useState, useMemo } from 'react';
 
 interface IUseSearchProps<T> {
   dataSet: T[];
-  keys: any;
+  keys: string[];
   threshold?: number;
 }
 

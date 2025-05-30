@@ -2,7 +2,14 @@ import { UniqueIdentifier, useDraggable } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities';
 import CheckIcon from '@mui/icons-material/Check';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
-import React, { ComponentPropsWithoutRef, forwardRef, useState, useRef, useEffect } from 'react';
+import React, {
+  ComponentPropsWithoutRef,
+  forwardRef,
+  memo,
+  useState,
+  useRef,
+  useEffect,
+} from 'react';
 
 import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
 
@@ -17,7 +24,7 @@ interface SidebarCourseItemProps extends ComponentPropsWithoutRef<'div'> {
 }
 /** UI Implementation of sidebar course */
 /* eslint-disable react/prop-types */
-export const SidebarCourseItem = React.memo(
+export const SidebarCourseItem = memo(
   forwardRef<HTMLDivElement, SidebarCourseItemProps>(function SidebarCourseItem(
     { course, isDragging, ...props },
     ref,
