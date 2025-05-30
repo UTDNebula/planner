@@ -6,7 +6,6 @@ import '../styles/introjs.css';
 import { createTheme, StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { Analytics } from '@vercel/analytics/react';
 import { AnimateSharedLayout } from 'framer-motion';
 import { type AppType, AppProps } from 'next/app';
 import Head from 'next/head';
@@ -119,7 +118,6 @@ const NebulaApp: AppType<{ session: Session | null }> = ({
                 <Component {...pageProps} />
               )}
               <ToastContainer bodyClassName="text-sm text-primary-900 font-sans" />
-              <Analytics />
             </main>
           </ThemeProvider>
         </StyledEngineProvider>
