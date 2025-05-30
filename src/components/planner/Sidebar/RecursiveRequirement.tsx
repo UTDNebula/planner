@@ -133,7 +133,7 @@ export function RecursiveRequirement({
               filled={req.filled}
             >
               <>
-                {req.prefix_groups.map((req2, idx) => (
+                {req.prefix_groups.map((req2) => (
                   <RecursiveRequirement
                     key={req2.metadata.id}
                     req={req2}

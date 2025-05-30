@@ -1,5 +1,5 @@
 import { UniqueIdentifier, useDroppable } from '@dnd-kit/core';
-import React, { FC, forwardRef, useState, useRef, useImperativeHandle } from 'react';
+import React, { FC, forwardRef, memo, useState, useRef, useImperativeHandle } from 'react';
 
 import ChevronIcon from '@/icons/ChevronIcon';
 import LockIcon from '@/icons/LockIcon';
@@ -23,7 +23,7 @@ export interface SemesterTileProps {
  * Strictly UI implementation of a semester tile
  */
 /* eslint-disable react/prop-types */
-export const MemoizedSemesterTile = React.memo(
+export const MemoizedSemesterTile = memo(
   forwardRef<HTMLDivElement, SemesterTileProps>(function SemesterTile(
     { semester, getDragId },
     outerRef,
@@ -223,4 +223,4 @@ const DroppableSemesterTile: FC<DroppableSemesterTileProps> = ({
   );
 };
 
-export default React.memo(DroppableSemesterTile);
+export default memo(DroppableSemesterTile);

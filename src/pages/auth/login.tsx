@@ -42,7 +42,7 @@ export function AuthPage(props: {
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Fetch courses here and put in cache
-  const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
+  trpc.courses.publicGetAllCourses.useQuery(undefined, {
     staleTime: Infinity,
     cacheTime: Infinity,
     refetchOnWindowFocus: false,

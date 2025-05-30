@@ -275,18 +275,12 @@ export default function RequirementsContainer({
    */
   const [carousel, setCarousel] = useState<boolean>(false);
 
-  // Note: this logic hides overflow during sliding animation
-  const [overflow, setOverflow] = useState(false);
-
   function toggleCarousel() {
-    setOverflow(true);
     setCarousel(!carousel);
   }
 
   return (
     <RequirementsCarousel
-      overflow={overflow}
-      setOverflow={setOverflow}
       carousel={carousel}
       requirementsList={
         <Accordion

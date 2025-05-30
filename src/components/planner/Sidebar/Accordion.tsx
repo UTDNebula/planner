@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import ChevronIcon from '@/icons/ChevronIcon';
 export default function Accordion({
@@ -12,7 +12,7 @@ export default function Accordion({
   filled?: boolean;
   startOpen?: boolean;
 }) {
-  const [open, setOpen] = React.useState(startOpen);
+  const [open, setOpen] = useState(startOpen);
   function toggleAccordion() {
     setOpen(!open);
   }

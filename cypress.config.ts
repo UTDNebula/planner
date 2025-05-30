@@ -23,7 +23,7 @@ export default defineConfig({
     viewportHeight: 1080,
     viewportWidth: 1920,
     baseUrl: 'http://localhost:3000',
-    setupNodeEvents(on, config) {
+    setupNodeEvents(on) {
       on('after:run', async () => {
         await prisma.$disconnect();
       });

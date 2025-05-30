@@ -50,7 +50,7 @@ const initialOnboardingData: OnboardingData = {
 
 export default function OnboardingPage() {
   const [onboardingData, setOnboardingData] = useState<OnboardingData>(initialOnboardingData);
-  const [isModifyLoading, setIsModifyLoading] = React.useState(false);
+  const [isModifyLoading, setIsModifyLoading] = useState(false);
 
   const handleOnboardingDataUpdate = (updatedFields: Partial<OnboardingData>) => {
     setOnboardingData({ ...onboardingData, ...updatedFields });
@@ -100,7 +100,6 @@ export default function OnboardingPage() {
       key={0}
       handleChange={handleOnboardingDataUpdate as (updatedFields: Partial<WelcomeTypes>) => void}
       data={{ name, startSemester, endSemester }}
-      semesterOptions={{ startSemesters, endSemesters }}
       handleValidate={validateForm}
     />,
   ];
@@ -114,7 +113,7 @@ export default function OnboardingPage() {
 
   useEffect(() => {
     setValidNextPage(validate[page]);
-  });
+  }, [validate, page]);
 
   // TODO: Find better way to structure this glorified form.
   return (

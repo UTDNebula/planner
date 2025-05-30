@@ -1,7 +1,7 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { Steps } from 'intro.js-react';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import ChevronIcon from '@/icons/ChevronIcon';
 import PlusIcon from '@/icons/PlusIcon';
@@ -34,7 +34,7 @@ export default function PlansPage(): JSX.Element {
   const router = useRouter();
 
   const [showHomeOnboardingModal, setShowHomeOnboardingModal] = useState(false);
-  React.useEffect(() => {
+  useEffect(() => {
     setShowHomeOnboardingModal((userData && !userData.seenHomeOnboardingModal) ?? false);
     if (!isLoading && userData && !userData.onboardingComplete) {
       router.push('/app/onboarding');

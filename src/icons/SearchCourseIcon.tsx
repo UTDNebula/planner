@@ -2,7 +2,14 @@ import { SVGProps } from 'react';
 
 export default function ProfileIcon(props: SVGProps<SVGSVGElement>): JSX.Element {
   return (
-    <svg width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="12"
+      height="14"
+      viewBox="0 0 12 14"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
       <path
         d="M1.4705 1.64706C1.4705 0.737414 2.20792 0 3.11756 0H6.89409C7.33092 0 7.74985 0.173529 8.05874 0.482412L10.8704 3.29412C11.1793 3.603 11.3529 4.02194 11.3529 4.45876V11.5294C11.3529 12.4391 10.6154 13.1765 9.7058 13.1765H8.44762C9.23004 12.3023 9.7058 11.1479 9.7058 9.88235C9.7058 7.15342 7.49356 4.94118 4.76462 4.94118C3.49909 4.94118 2.34469 5.41694 1.4705 6.19935V1.64706Z"
         fill="#171717"

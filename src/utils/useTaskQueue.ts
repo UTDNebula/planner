@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useRef } from 'react';
 
 export type Task<T> = {
   func: (args: T) => Promise<unknown>;
@@ -15,9 +15,9 @@ export function useTaskQueue(params: { shouldProcess: boolean }): {
   isProcessing: boolean;
   addTask: <T>(task: Task<T>) => void;
 } {
-  const queue = React.useRef<TaskQueueState>({ isProcessing: false, tasks: [] });
+  const queue = useRef<TaskQueueState>({ isProcessing: false, tasks: [] });
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!params.shouldProcess || queue.current.tasks.length === 0) return;
     if (queue.current.isProcessing) return;
 

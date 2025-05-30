@@ -290,7 +290,6 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
           onValueChange={(value) => setMajor(value)}
           onInputChange={(query: string) => updateQuery(query)}
           options={results.map((major: { filMajor: string }) => major.filMajor)}
-          autoFocus
         ></AutoCompleteMajor>
       </div>
       <small className={`${majorError ? 'visible' : 'hidden'} -mt-6  text-red-500`}>

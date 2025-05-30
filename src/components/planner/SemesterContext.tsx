@@ -184,7 +184,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
 
   const [selectedCourseIds, setSelectedCourseIds] = useState<Set<string>>(new Set());
 
-  const [undoStack, dispatchUndo] = useReducer<
+  const [, dispatchUndo] = useReducer<
     (state: UndoStackReducerState, action: UndoStackReducerAction) => UndoStackReducerState
   >(
     (state, action) => {
@@ -206,12 +206,6 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
   const undo = () => {
     dispatchUndo({ type: 'popUndoStack' });
   };
-
-  useEffect(() => {
-    if (undoStack.current) {
-      undoStack.current();
-    }
-  }, [undoStack.current]);
 
   const handleSelectCourses = (courseIds: string[]) => {
     setSelectedCourseIds((existingCourseIds) => {
