@@ -1,16 +1,5 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
-  parserOptions: {
-    ecmaVersion: 2020,
-    // Allows for the parsing of modern ECMAScript features.
-    sourceType: 'module',
-    // Allows for the use of imports.
-    ecmaFeatures: {
-      jsx: true, // Allows for the parsing of JSX.
-    },
-  },
-
-  plugins: ['unused-imports'],
   extends: [
     'plugin:react-hooks/recommended',
     'plugin:react/recommended',
@@ -48,18 +37,6 @@ module.exports = {
       },
     ],
     'import/no-named-as-default': 'off',
-    // Configuration for unused-imports. See: https://github.com/sweepline/eslint-plugin-unused-imports#usage.
-    '@typescript-eslint/no-unused-vars': 'off',
-    'unused-imports/no-unused-imports': process.env.NODE_ENV === 'test' ? 'error' : 'warn',
-    'unused-imports/no-unused-vars': [
-      'warn',
-      {
-        vars: 'all',
-        varsIgnorePattern: '^_',
-        args: 'after-used',
-        argsIgnorePattern: '^_',
-      },
-    ],
   },
   settings: {
     react: {

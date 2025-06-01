@@ -195,7 +195,7 @@ const getRequirementGroup = (
         req: degreeRequirement,
         description: '',
         getData: () => Promise.resolve([] as RequirementTypes[]),
-        filterFunction: (_, __) => true,
+        filterFunction: () => true,
       };
     }
   }

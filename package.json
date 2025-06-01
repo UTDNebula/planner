@@ -47,7 +47,6 @@
     "@trpc/server": "^11.1.4",
     "async-mutex": "^0.5.0",
     "eslint": "^8.57.1",
-    "eslint-plugin-unused-imports": "^4.1.4",
     "framer-motion": "^12.15.0",
     "fuse.js": "^7.1.0",
     "intro.js": "^7.2.0",

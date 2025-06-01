@@ -67,7 +67,7 @@ export type JSONCourseType = {
  * HIST 1301 -> 3
  * */
 export function getSemesterHourFromCourseCode(code: string): number | null {
-  const [_, hours]: (string | undefined)[] = code.split(' ');
+  const [, hours]: (string | undefined)[] = code.split(' ');
 
   const hoursNum = Number(hours);
 

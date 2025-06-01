@@ -16,7 +16,7 @@ Contributions are welcome! Join the Discord and request access to the Planner de
 
 ### Set-up
 
-This project requires [Node v16+](https://nodejs.org/en/) and NPM
+This project requires [Node v22+](https://nodejs.org/en/) and NPM
 installation. It also requires local environment variables since it uses [Neon](https://neon.tech) (hosted PostgresDB service), a SMTP server, and Discord as authentication provider.
 
 <details>

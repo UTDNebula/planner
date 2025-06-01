@@ -69,7 +69,7 @@ export default function EditableMajorTitle({
               handleSaveTitle();
             }
           }}
-          onBlur={(_) => {
+          onBlur={() => {
             handleSaveTitle();
           }}
         />
