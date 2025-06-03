@@ -5,8 +5,8 @@ import Modal from '@/components/Modal';
 import { trpc } from '@/utils/trpc';
 import { displaySemesterCode, generateSemesters } from '@/utils/utilFunctions';
 
-import SemestersSelect from './SemestersSelect';
 import Button from '../../Button';
+import SemestersSelect from './SemestersSelect';
 
 export interface EditSemestersModalProps {
   planId: string;

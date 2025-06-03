@@ -1,5 +1,6 @@
 import { SemesterType } from '@prisma/client';
 import { createServerSideHelpers } from '@trpc/react-query/server';
+import { type RouterInputs } from '@utils/trpc';
 import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -14,7 +15,6 @@ import { createContextInner } from '@/server/trpc/context';
 import { appRouter } from '@/server/trpc/router/_app';
 import { trpc } from '@/utils/trpc';
 import { generateSemesters } from '@/utils/utilFunctions';
-import { type RouterInputs } from '@utils/trpc';
 
 import { authOptions } from '../api/auth/[...nextauth]';
 

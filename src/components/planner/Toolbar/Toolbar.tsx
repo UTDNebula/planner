@@ -9,14 +9,14 @@ import SwitchVerticalIcon from '@/icons/SwitchVerticalIcon';
 import DeletePlanModal from '@/shared/DeletePlanModal';
 import { trpc } from '@/utils/trpc';
 
-import EditableMajorTitle from './EditablePlanTitle';
-import EditSemestersModal from './EditSemestersModal';
-import FilterByDropdown from './FilterByDropdown';
-import SettingsDropdown from './SettingsDropdown';
 import Button from '../../Button';
 import DegreePlanPDF from '../DegreePlanPDF/DegreePlanPDF';
 import EditableMajor from '../EditableMajor';
 import { useSemestersContext } from '../SemesterContext';
+import EditableMajorTitle from './EditablePlanTitle';
+import EditSemestersModal from './EditSemestersModal';
+import FilterByDropdown from './FilterByDropdown';
+import SettingsDropdown from './SettingsDropdown';
 
 export interface ToolbarProps {
   degreeRequirements: { id: string; major: string };

@@ -15,7 +15,7 @@ import { trpc } from '@/utils/trpc';
 import { useTaskQueue } from '@/utils/useTaskQueue';
 import { createYearBasedOnFall } from '@/utils/utilFunctions';
 
-import { Plan, Semester, DraggableCourse } from './types';
+import { DraggableCourse, Plan, Semester } from './types';
 import { customCourseSort, tagColors } from './utils';
 
 export interface SemestersContextState {

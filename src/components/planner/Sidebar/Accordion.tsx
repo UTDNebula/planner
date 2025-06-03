@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import ChevronIcon from '@/icons/ChevronIcon';
+
 export default function Accordion({
   header,
   children,

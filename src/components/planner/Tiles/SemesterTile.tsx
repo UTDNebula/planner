@@ -1,5 +1,5 @@
 import { UniqueIdentifier, useDroppable } from '@dnd-kit/core';
-import React, { FC, forwardRef, memo, useState, useRef, useImperativeHandle } from 'react';
+import React, { FC, forwardRef, memo, useImperativeHandle, useRef, useState } from 'react';
 
 import ChevronIcon from '@/icons/ChevronIcon';
 import LockIcon from '@/icons/LockIcon';
@@ -7,12 +7,12 @@ import UnlockedIcon from '@/icons/UnlockedIcon';
 import useAccordionAnimation from '@/shared/useAccordionAnimation';
 import { displaySemesterCode, getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
 
-import DraggableSemesterCourseItem from './SemesterCourseItem';
-import SemesterTileDropdown from './SemesterTileDropdown';
 import CreditsWarnHoverCard from '../CreditsWarnHoverCard';
 import { useSemestersContext } from '../SemesterContext';
 import { DragDataToSemesterTile, GetDragIdByCourseAndSemester, Semester } from '../types';
 import { tagColors } from '../utils';
+import DraggableSemesterCourseItem from './SemesterCourseItem';
+import SemesterTileDropdown from './SemesterTileDropdown';
 
 export interface SemesterTileProps {
   semester: Semester;

@@ -1,22 +1,22 @@
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import * as HoverCard from '@radix-ui/react-hover-card';
-import { useState, useEffect } from 'react';
+import { courses as Course } from 'prisma/generated/platform';
+import { useEffect, useState } from 'react';
 
 import useSearch from '@/components/search/search';
 import { trpc } from '@/utils/trpc';
-import { courses as Course } from 'prisma/generated/platform';
 
+import { GetDragIdByCourseAndReq } from '../types';
 import Accordion from './Accordion';
 import { RecursiveRequirement } from './RecursiveRequirement';
 import RequirementsCarousel from './RequirementsCarousel';
 import RequirementSearchBar from './RequirementSearchBar';
 import {
-  RequirementGroupTypes,
-  RequirementTypes,
   CourseRequirement,
   DegreeRequirement,
+  RequirementGroupTypes,
+  RequirementTypes,
 } from './types';
-import { GetDragIdByCourseAndReq } from '../types';
 
 function RequirementContainerHeader({
   name,

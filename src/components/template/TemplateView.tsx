@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react'; //nprogress module
 import AutoCompleteMajor from '@/components/AutoCompleteMajor';
 import { trpc } from '@/utils/trpc';
 
-import { Page } from './Page';
 import useSearch from '../search/search';
+import { Page } from './Page';
 
 export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
   const utils = trpc.useContext();

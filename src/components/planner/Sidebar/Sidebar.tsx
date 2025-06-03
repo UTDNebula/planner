@@ -1,6 +1,9 @@
+import 'react-loading-skeleton/dist/skeleton.css';
+
+import { useSemestersContext } from '@components/planner/SemesterContext';
 import { UniqueIdentifier } from '@dnd-kit/core';
 import * as Dialog from '@radix-ui/react-dialog';
-import { useRef, useState, useMemo, memo } from 'react';
+import { memo, useMemo, useRef, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -10,16 +13,13 @@ import SearchBar from '@/components/planner/Sidebar/SearchBar';
 import ChevronIcon from '@/icons/ChevronIcon';
 import { trpc } from '@/utils/trpc';
 import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
-import { useSemestersContext } from '@components/planner/SemesterContext';
 
+import { Course, DraggableCourse, GetDragIdByCourse } from '../types';
+import useFuse from '../useFuse';
 import AccordionSkeleton from './AccordionSkeleton';
 import DeleteCourseDrop from './DeleteCourseDrop';
 import DraggableCourseList from './DraggableCourseList';
 import { DegreeRequirement } from './types';
-import { Course, DraggableCourse, GetDragIdByCourse } from '../types';
-import useFuse from '../useFuse';
-
-import 'react-loading-skeleton/dist/skeleton.css';
 
 export interface CourseSelectorContainerProps {
   planId: string;

@@ -6,9 +6,9 @@ import React, {
   ComponentPropsWithoutRef,
   forwardRef,
   memo,
-  useState,
-  useRef,
   useEffect,
+  useRef,
+  useState,
 } from 'react';
 
 import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';

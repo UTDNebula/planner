@@ -1,7 +1,6 @@
 import { defineConfig } from 'cypress';
-import dotenv from 'dotenv';
-
 import { prisma } from 'cypress/support/constants';
+import dotenv from 'dotenv';
 import { seedTemplates } from 'prisma/seedTemplates';
 import { seedTestUser } from 'prisma/seedTestUser';
 

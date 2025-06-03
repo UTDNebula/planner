@@ -11,16 +11,16 @@
  * Adding DndContext hooks (eg. useDraggable) without considering 'data' property will cause unexpected behaviors
  */
 import {
+  Active,
   DndContext,
   DragOverlay,
+  Over,
   pointerWithin,
   useSensor,
   useSensors,
-  Active,
-  Over,
 } from '@dnd-kit/core';
 import Router from 'next/router';
-import React, { useMemo, useState, useRef, FC, useEffect } from 'react';
+import React, { FC, useEffect, useMemo, useRef, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 
 import { trpc } from '@/utils/trpc';
@@ -34,7 +34,6 @@ import { SemesterCourseItem } from './Tiles/SemesterCourseItem';
 import DroppableSemesterTile from './Tiles/SemesterTile';
 import Toolbar from './Toolbar/Toolbar';
 import TransferBank from './TransferBank';
-
 import type {
   ActiveDragData,
   DragEventDestinationData,

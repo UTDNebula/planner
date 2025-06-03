@@ -1,11 +1,11 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import { trpc } from '@utils/trpc';
 import { Steps } from 'intro.js-react';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
 import ChevronIcon from '@/icons/ChevronIcon';
 import PlusIcon from '@/icons/PlusIcon';
-import { trpc } from '@utils/trpc';
 
 import PlanCard from '../landing/PlanCard';
 import TemplateModal from '../template/Modal';

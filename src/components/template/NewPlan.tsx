@@ -5,9 +5,9 @@ import AutoCompleteMajor from '@/components/AutoCompleteMajor';
 import useMajors from '@/shared/useMajors';
 import { trpc } from '@/utils/trpc';
 
-import { Page } from './Page';
 import { ButtonProps } from '../Button';
 import useSearch from '../search/search';
+import { Page } from './Page';
 
 export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
   const [name, setName] = useState('');

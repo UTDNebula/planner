@@ -1,6 +1,7 @@
 import { SemesterType } from '@prisma/client';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import type { PDFDocumentProxy } from 'pdfjs-dist';
 import { useEffect, useRef, useState } from 'react';
 
 import { SemesterCode } from '@/../prisma/utils';
@@ -10,12 +11,10 @@ import useMajors from '@/shared/useMajors';
 import { UnwrapArray } from '@/types/util-types';
 import { RouterInputs, trpc } from '@/utils/trpc';
 
-import { Page } from './Page';
 import { ButtonProps } from '../Button';
 import ErrorMessage from '../common/ErrorMessage';
 import useSearch from '../search/search';
-
-import type { PDFDocumentProxy } from 'pdfjs-dist';
+import { Page } from './Page';
 
 type TakenCourse = UnwrapArray<RouterInputs['user']['createUserPlan']['takenCourses']>;
 

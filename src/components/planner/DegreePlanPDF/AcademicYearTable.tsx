@@ -1,4 +1,4 @@
-import { View, Text } from '@react-pdf/renderer';
+import { Text, View } from '@react-pdf/renderer';
 
 import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
 
