@@ -14,10 +14,7 @@
   --border-width: 1px;
   --border-width-1_25: 1.25px;
 
-  --font-*: initial;
-  --font-sans:
-    Inter var, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-    'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-inter: var(--font-inter), Roboto, sans-serif;
 
   --color-generic-white: #ffffff;
   --color-generic-black: #000000;

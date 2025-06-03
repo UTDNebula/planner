@@ -10,6 +10,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { AnimateSharedLayout } from 'framer-motion';
 import type { NextComponentType } from 'next'; //Import Component type
 import { AppProps, type AppType } from 'next/app';
+import { Inter } from 'next/font/google';
 import Head from 'next/head';
 import { Router } from 'next/router';
 import { type Session } from 'next-auth';
@@ -29,27 +30,17 @@ Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
 
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+});
+
 const theme = createTheme({
   typography: {
     allVariants: {
       color: '#1C2A6D',
     },
-    fontFamily: [
-      'Inter var',
-      'ui-sans-serif',
-      'system-ui',
-      '-apple-system',
-      'BlinkMacSystemFont',
-      '"Segoe UI"',
-      '"Helvetica Neue"',
-      'Arial',
-      '"Noto Sans"',
-      'sans-serif',
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-      '"Noto Color Emoji"',
-    ].join(','),
+    fontFamily: 'inherit',
   },
 });
 //Add custom appProp type then use union to add it
@@ -106,7 +97,7 @@ const NebulaApp: AppType<{ session: Session | null }> = ({
       <AnimateSharedLayout>
         <StyledEngineProvider injectFirst>
           <ThemeProvider theme={theme}>
-            <main className="h-screen w-screen overflow-x-hidden">
+            <main className={`h-screen w-screen overflow-x-hidden ${inter.variable} font-inter`}>
               {Component.auth ? (
                 <Auth>
                   <Layout>
@@ -116,7 +107,7 @@ const NebulaApp: AppType<{ session: Session | null }> = ({
               ) : (
                 <Component {...pageProps} />
               )}
-              <ToastContainer className="text-sm text-primary-900 font-sans" />
+              <ToastContainer className="text-sm text-primary-900" />
             </main>
           </ThemeProvider>
         </StyledEngineProvider>
