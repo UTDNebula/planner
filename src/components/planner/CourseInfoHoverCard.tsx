@@ -1,6 +1,6 @@
 import * as HoverCard from '@radix-ui/react-hover-card';
 import Link from 'next/link';
-import { FC, useState } from 'react';
+import React, { FC, useState } from 'react';
 
 interface CourseInfoHoverCardProps {
   // prereqs: string[][];
@@ -11,6 +11,7 @@ interface CourseInfoHoverCardProps {
   title: string;
   courseCode: string;
   year: number;
+  children: React.ReactNode;
 }
 
 export const CourseInfoHoverCard: FC<CourseInfoHoverCardProps> = ({
@@ -29,7 +30,7 @@ export const CourseInfoHoverCard: FC<CourseInfoHoverCardProps> = ({
       <HoverCard.Content
         onClick={(e) => e.stopPropagation()}
         side={side}
-        className="z-[999] w-[300px] animate-[slideUpAndFade_0.3s] rounded-md border border-neutral-200 bg-generic-white p-6 shadow-sm"
+        className="z-999 w-[300px] animate-[slideUpAndFade_0.3s] rounded-md border border-neutral-200 bg-generic-white p-6 shadow-xs"
         sideOffset={5}
       >
         <h3 className="mb-2 text-base font-semibold">
@@ -70,7 +71,7 @@ const CourseDescription = ({ description }: { description: string }) => {
         />{' '}
         <button
           className={`${showMore ? '' : 'inline'} font-medium text-primary`}
-          onClick={(e) => {
+          onClick={() => {
             setShowMore(!showMore);
           }}
         >

@@ -2,7 +2,7 @@ import { createServerSideHelpers } from '@trpc/react-query/server';
 import { Steps } from 'intro.js-react';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next/types';
 import { getServerSession } from 'next-auth';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import superjson from 'superjson';
 
 import Planner from '@/components/planner/Planner';
@@ -18,7 +18,7 @@ import { trpc } from '@/utils/trpc';
  */
 export default function PlanDetailPage(
   props: InferGetServerSidePropsType<typeof getServerSideProps>,
-): JSX.Element {
+) {
   const { planId } = props;
 
   const {
@@ -30,7 +30,6 @@ export default function PlanDetailPage(
 
   const { data: userData, isLoading } = trpc.user.getUser.useQuery(undefined, {
     staleTime: Infinity,
-    cacheTime: Infinity,
   });
 
   const steps = [

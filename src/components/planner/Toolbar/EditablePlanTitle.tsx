@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 
 import PencilIcon from '@/icons/PencilIcon';
@@ -11,8 +11,8 @@ export default function EditableMajorTitle({
   initialTitle: string;
   planId: string;
 }) {
-  const [title, setTitle] = React.useState(initialTitle);
-  const [editTitle, setEditTitle] = React.useState(false);
+  const [title, setTitle] = useState(initialTitle);
+  const [editTitle, setEditTitle] = useState(false);
 
   const updatePlanName = trpc.plan.updatePlanTitle.useMutation();
 
@@ -56,7 +56,7 @@ export default function EditableMajorTitle({
       ) : (
         <input
           data-testid="plan-title"
-          className={`w-full border-2 border-[#F5F5F5] bg-inherit px-2 text-3xl font-semibold hover:ml-[1px] hover:border-[1px] hover:border-primary hover:py-[1px]`}
+          className={`w-full border-2 border-[#F5F5F5] bg-inherit px-2 text-3xl font-semibold hover:ml-px hover:border hover:border-primary hover:py-px`}
           value={title}
           autoFocus
           onChange={(event) => {
@@ -69,7 +69,7 @@ export default function EditableMajorTitle({
               handleSaveTitle();
             }
           }}
-          onBlur={(_) => {
+          onBlur={() => {
             handleSaveTitle();
           }}
         />

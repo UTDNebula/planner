@@ -64,13 +64,9 @@ jobs:
 
       NODE_ENV: test
 
-      # UMAMI
-      NEXT_PUBLIC_UMAMI_URL: hi
-      NEXT_PUBLIC_UMAMI_WEBSITE_ID: bye
-
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Python3.11
         uses: actions/setup-python@v4
@@ -91,9 +87,9 @@ jobs:
           mongodb-port: 27017
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 22
 
       - name: Install dependencies
         run: |
@@ -111,12 +107,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 22
 
       - name: Install dependencies
         run: |

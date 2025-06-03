@@ -1,18 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import ChevronIcon from '@/icons/ChevronIcon';
+
 export default function Accordion({
   header,
   children,
   filled = false,
   startOpen = false,
 }: {
-  header: JSX.Element;
-  children: JSX.Element;
+  header: React.ReactNode;
+  children: React.ReactNode;
   filled?: boolean;
   startOpen?: boolean;
 }) {
-  const [open, setOpen] = React.useState(startOpen);
+  const [open, setOpen] = useState(startOpen);
   function toggleAccordion() {
     setOpen(!open);
   }

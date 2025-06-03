@@ -1,5 +1,5 @@
 import * as RCheckbox from '@radix-ui/react-checkbox';
-import { FC } from 'react';
+import React, { FC } from 'react';
 
 import CheckIcon from '@/icons/CheckIcon';
 

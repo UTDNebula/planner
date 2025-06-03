@@ -1,24 +1,22 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import { trpc } from '@utils/trpc';
 import { Steps } from 'intro.js-react';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import ChevronIcon from '@/icons/ChevronIcon';
 import PlusIcon from '@/icons/PlusIcon';
-import { trpc } from '@utils/trpc';
 
-import AnalyticsWrapper from '../common/AnalyticsWrapper';
 import PlanCard from '../landing/PlanCard';
 import TemplateModal from '../template/Modal';
 
 /**
  * A list of the user's plans
  */
-export default function PlansPage(): JSX.Element {
+export default function PlansPage() {
   const [openTemplateModal, setOpenTemplateModal] = useState(false);
   const userPlanQuery = trpc.plan.getUserPlans.useQuery(undefined, {
     staleTime: Infinity,
-    cacheTime: Infinity,
   });
   const updateSeenHomeOnboarding = trpc.user.seenHomeOnboarding.useMutation({
     async onSuccess() {
@@ -27,7 +25,6 @@ export default function PlansPage(): JSX.Element {
   });
   const { data: userData, isLoading } = trpc.user.getUser.useQuery(undefined, {
     staleTime: Infinity,
-    cacheTime: Infinity,
   });
 
   const { data } = userPlanQuery;
@@ -35,7 +32,7 @@ export default function PlansPage(): JSX.Element {
   const router = useRouter();
 
   const [showHomeOnboardingModal, setShowHomeOnboardingModal] = useState(false);
-  React.useEffect(() => {
+  useEffect(() => {
     setShowHomeOnboardingModal((userData && !userData.seenHomeOnboardingModal) ?? false);
     if (!isLoading && userData && !userData.onboardingComplete) {
       router.push('/app/onboarding');
@@ -100,7 +97,7 @@ export default function PlansPage(): JSX.Element {
       />
       <section
         id="tutorial-1"
-        className="flex max-h-screen flex-grow flex-col gap-4 overflow-y-scroll p-16"
+        className="flex max-h-screen grow flex-col gap-4 overflow-y-scroll p-16"
       >
         <article className="flex flex-col">
           <div className="flex flex-row items-center justify-between">
@@ -122,42 +119,36 @@ export default function PlansPage(): JSX.Element {
 
               <DropdownMenu.Portal>
                 <DropdownMenu.Content className="relative top-2 w-min rounded-md border border-neutral-300 bg-generic-white drop-shadow-xl">
-                  <AnalyticsWrapper analyticsClass="umami--click--custom-plan">
-                    <DropdownItem
-                      data-testid="add-blank-plan-btn"
-                      text="Start New"
-                      onClick={() => {
-                        setPlanPage(0);
-                        setOpenTemplateModal(true);
-                      }}
-                    />
-                  </AnalyticsWrapper>
+                  <DropdownItem
+                    data-testid="add-blank-plan-btn"
+                    text="Start New"
+                    onClick={() => {
+                      setPlanPage(0);
+                      setOpenTemplateModal(true);
+                    }}
+                  />
 
                   <DropdownMenu.Separator className="DropdownMenuSeparator h-0.5 bg-black opacity-10" />
 
-                  <AnalyticsWrapper analyticsClass="umami--click--custom-plan">
-                    <DropdownItem
-                      data-testid="add-custom-plan-btn"
-                      text="From Transcript"
-                      onClick={() => {
-                        setPlanPage(1);
-                        setOpenTemplateModal(true);
-                      }}
-                    />
-                  </AnalyticsWrapper>
+                  <DropdownItem
+                    data-testid="add-custom-plan-btn"
+                    text="From Transcript"
+                    onClick={() => {
+                      setPlanPage(1);
+                      setOpenTemplateModal(true);
+                    }}
+                  />
 
                   <DropdownMenu.Separator className="DropdownMenuSeparator h-0.5 bg-black opacity-10" />
 
-                  <AnalyticsWrapper analyticsClass="umami--click--template-plan">
-                    <DropdownItem
-                      text="From Template"
-                      data-testid="add-template-plan-btn"
-                      onClick={() => {
-                        setPlanPage(2);
-                        setOpenTemplateModal(true);
-                      }}
-                    />
-                  </AnalyticsWrapper>
+                  <DropdownItem
+                    text="From Template"
+                    data-testid="add-template-plan-btn"
+                    onClick={() => {
+                      setPlanPage(2);
+                      setOpenTemplateModal(true);
+                    }}
+                  />
                 </DropdownMenu.Content>
               </DropdownMenu.Portal>
             </DropdownMenu.Root>

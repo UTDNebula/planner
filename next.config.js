@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const { withSentryConfig } = require('@sentry/nextjs');
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
 /* eslint-disable @typescript-eslint/no-var-requires */
@@ -17,7 +15,7 @@ const checkValidatorAvailability = async () => {
   }
 };
 
-module.exports = async (phase) => {
+const createConfig = async (phase) => {
   if (phase === 'phase-development-server') {
     const isValidatorReachable = await checkValidatorAvailability();
 
@@ -32,30 +30,52 @@ module.exports = async (phase) => {
   });
 
   const nextConfig = withBundleAnalyzer({
-    modularizeImports: {
-      '@mui/material': {
-        transform: '@mui/material/{{member}}',
-      },
-      '@mui/icons-material': {
-        transform: '@mui/icons-material/{{member}}',
-      },
-    },
-    rewrites: async () => {
+    redirects: async () => {
       return [
         {
           source: '/',
-          destination: '/index.html',
+          destination: 'https://www.utdnebula.com/projects/planner',
+          permanent: true,
         },
       ];
     },
   });
-
-  const sentryConfig = withSentryConfig(
-    nextConfig,
-    { silent: true },
-    // tunnelRoute set to bypass adblockers.
-    // See: https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/#configure-tunneling-to-avoid-ad-blockers.
-    { hideSourcemaps: false, tunnelRoute: '/sentry-tunnel' },
-  );
-  return sentryConfig;
+  return nextConfig;
 };
+
+// Injected content via Sentry wizard below
+
+const { withSentryConfig } = require('@sentry/nextjs');
+
+module.exports = (phase, args) =>
+  withSentryConfig(createConfig(phase, args), {
+    // For all available options, see:
+    // https://www.npmjs.com/package/@sentry/webpack-plugin#options
+
+    org: 'utdnebula',
+    project: 'planner',
+
+    // Only print logs for uploading source maps in CI
+    silent: !process.env.CI,
+
+    // For all available options, see:
+    // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
+
+    // Upload a larger set of source maps for prettier stack traces (increases build time)
+    widenClientFileUpload: true,
+
+    // Uncomment to route browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers.
+    // This can increase your server load as well as your hosting bill.
+    // Note: Check that the configured route will not match with your Next.js middleware, otherwise reporting of client-
+    // side errors will fail.
+    // tunnelRoute: "/monitoring",
+
+    // Automatically tree-shake Sentry logger statements to reduce bundle size
+    disableLogger: true,
+
+    // Enables automatic instrumentation of Vercel Cron Monitors. (Does not yet work with App Router route handlers.)
+    // See the following for more information:
+    // https://docs.sentry.io/product/crons/
+    // https://vercel.com/docs/cron-jobs
+    automaticVercelMonitors: true,
+  });

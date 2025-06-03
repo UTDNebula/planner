@@ -1,14 +1,12 @@
+import React from 'react';
+
 export default function RequirementsCarousel({
   requirementsList,
   requirementInfo,
-  overflow,
-  setOverflow,
   carousel,
 }: {
-  requirementsList: JSX.Element;
-  requirementInfo: JSX.Element;
-  overflow: boolean;
-  setOverflow: (isOverflow: boolean) => void;
+  requirementsList: React.ReactNode;
+  requirementInfo: React.ReactNode;
   carousel: boolean;
 }) {
   return (

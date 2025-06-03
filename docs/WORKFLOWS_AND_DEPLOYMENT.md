@@ -24,8 +24,6 @@ All deployment/external service:
 - Web server: Vercel
 - TRPC Routes: Vercel Edge Functions
 - Planner Postgres: Neon
-- Umami (User analytics): Railway
-- Umami Postgres: Railway
 - Sentry (Crash analytics)
 - Auth Providers: Discord, Google, Facebook
 - Mailtrap (Email "magic link" auth)

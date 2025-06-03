@@ -40,8 +40,6 @@ export const serverSchema = z.object({
  */
 export const clientSchema = z.object({
   NEXT_PUBLIC_NODE_ENV: z.enum(['development', 'test', 'production']),
-  NEXT_PUBLIC_UMAMI_URL: z.string(),
-  NEXT_PUBLIC_UMAMI_WEBSITE_ID: z.string(),
   NEXT_PUBLIC_VALIDATOR: z.string(),
 });
 
@@ -53,7 +51,5 @@ export const clientSchema = z.object({
  */
 export const clientEnv = {
   NEXT_PUBLIC_NODE_ENV: process.env.NODE_ENV,
-  NEXT_PUBLIC_UMAMI_URL: process.env.NEXT_PUBLIC_UMAMI_URL,
-  NEXT_PUBLIC_UMAMI_WEBSITE_ID: process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID,
   NEXT_PUBLIC_VALIDATOR: process.env.NEXT_PUBLIC_VALIDATOR,
 };

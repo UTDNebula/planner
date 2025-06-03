@@ -2,7 +2,14 @@ import { UniqueIdentifier, useDraggable } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities';
 import CheckIcon from '@mui/icons-material/Check';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
-import React, { ComponentPropsWithoutRef, forwardRef, useState, useRef, useEffect } from 'react';
+import React, {
+  ComponentPropsWithoutRef,
+  forwardRef,
+  memo,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 
 import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
 
@@ -17,7 +24,7 @@ interface SidebarCourseItemProps extends ComponentPropsWithoutRef<'div'> {
 }
 /** UI Implementation of sidebar course */
 /* eslint-disable react/prop-types */
-export const SidebarCourseItem = React.memo(
+export const SidebarCourseItem = memo(
   forwardRef<HTMLDivElement, SidebarCourseItemProps>(function SidebarCourseItem(
     { course, isDragging, ...props },
     ref,
@@ -26,10 +33,10 @@ export const SidebarCourseItem = React.memo(
     // Maybe DraggableCourse needs to take a prop specifying if it's needed or nah?
     // TODO: Update course status tag
     const [hoverOpen, setHoverOpen] = useState(false);
-    const hoverTimer = useRef<ReturnType<typeof setTimeout>>();
+    const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     useEffect(() => {
-      if (isDragging) clearTimeout(hoverTimer.current);
+      if (isDragging && hoverTimer.current !== null) clearTimeout(hoverTimer.current);
     }, [isDragging]);
 
     const { title, description } = useGetCourseInfo(course.code);
@@ -43,13 +50,13 @@ export const SidebarCourseItem = React.memo(
         {...props}
         className={`cursor-grab ${
           course.taken && 'opacity-50'
-        } flex h-[40px] flex-row items-center justify-between rounded-md border border-neutral-300 bg-white px-5 py-3 text-[10px] text-[#1C2A6D] drop-shadow-sm`}
+        } flex h-[40px] flex-row items-center justify-between rounded-md border border-neutral-300 bg-white px-5 py-3 text-[10px] text-[#1C2A6D] drop-shadow-xs`}
         onMouseEnter={() => {
-          clearTimeout(hoverTimer.current);
+          if (hoverTimer.current !== null) clearTimeout(hoverTimer.current);
           hoverTimer.current = setTimeout(() => setHoverOpen(true), 500);
         }}
         onMouseLeave={() => {
-          clearTimeout(hoverTimer.current);
+          if (hoverTimer.current !== null) clearTimeout(hoverTimer.current);
           hoverTimer.current = setTimeout(() => setHoverOpen(false), 800);
         }}
       >

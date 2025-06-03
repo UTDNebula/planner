@@ -1,18 +1,18 @@
 import { UniqueIdentifier, useDroppable } from '@dnd-kit/core';
-import React, { FC, forwardRef, useState, useRef } from 'react';
+import React, { FC, forwardRef, memo, useImperativeHandle, useRef, useState } from 'react';
 
-import AnalyticsWrapper from '@/components/common/AnalyticsWrapper';
 import ChevronIcon from '@/icons/ChevronIcon';
 import LockIcon from '@/icons/LockIcon';
 import UnlockedIcon from '@/icons/UnlockedIcon';
+import useAccordionAnimation from '@/shared/useAccordionAnimation';
 import { displaySemesterCode, getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
 
-import DraggableSemesterCourseItem from './SemesterCourseItem';
-import SemesterTileDropdown from './SemesterTileDropdown';
 import CreditsWarnHoverCard from '../CreditsWarnHoverCard';
 import { useSemestersContext } from '../SemesterContext';
 import { DragDataToSemesterTile, GetDragIdByCourseAndSemester, Semester } from '../types';
 import { tagColors } from '../utils';
+import DraggableSemesterCourseItem from './SemesterCourseItem';
+import SemesterTileDropdown from './SemesterTileDropdown';
 
 export interface SemesterTileProps {
   semester: Semester;
@@ -23,14 +23,20 @@ export interface SemesterTileProps {
  * Strictly UI implementation of a semester tile
  */
 /* eslint-disable react/prop-types */
-export const MemoizedSemesterTile = React.memo(
+export const MemoizedSemesterTile = memo(
   forwardRef<HTMLDivElement, SemesterTileProps>(function SemesterTile(
     { semester, getDragId },
-    ref,
+    outerRef,
   ) {
-    const [open, setOpen] = useState(true);
+    const innerRef = useRef<HTMLDivElement>(null);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    useImperativeHandle(outerRef, () => innerRef.current!, []);
+
     const [hoverOpen, setHoverOpen] = useState(false);
-    const hoverTimer = useRef<ReturnType<typeof setTimeout>>();
+    const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const { toggle, open } = useAccordionAnimation(innerRef, () =>
+      semester.courses.length === 0 ? '140px' : '170px',
+    );
 
     const {
       handleSelectCourses,
@@ -54,7 +60,7 @@ export const MemoizedSemesterTile = React.memo(
           }}
           onMouseLeave={() => {
             setHoverOpen(false);
-            clearTimeout(hoverTimer.current);
+            if (hoverTimer.current !== null) clearTimeout(hoverTimer.current);
           }}
         >
           <CreditsWarnHoverCard
@@ -96,8 +102,8 @@ export const MemoizedSemesterTile = React.memo(
     // QUESTION: isValid color?
     return (
       <div
-        ref={ref}
-        className={`tutorial-editor-3 flex h-fit select-none flex-col gap-y-2 overflow-hidden rounded-2xl border border-neutral-300 ${
+        ref={innerRef}
+        className={`tutorial-editor-3 flex h-fit select-none flex-col gap-y-2 overflow-hidden rounded-2xl border border-neutral-300 transition-all duration-700 ease-in-out ${
           semester.locked ? 'bg-neutral-200' : 'bg-white'
         }`}
       >
@@ -110,7 +116,7 @@ export const MemoizedSemesterTile = React.memo(
                   open ? '-rotate-90' : 'rotate-90'
                 } ml-auto h-3 w-3 transform cursor-pointer text-neutral-500 transition-all duration-500`}
                 fontSize="inherit"
-                onClick={() => setOpen(!open)}
+                onClick={toggle}
               />
             </div>
           </article>
@@ -125,13 +131,9 @@ export const MemoizedSemesterTile = React.memo(
               >
                 {displaySemesterCode(semester.code)}
               </h3>
-              <AnalyticsWrapper analyticsClass="umami--click--lock-course">
-                <button
-                  onClick={() => handleSemesterLock(semester.id.toString(), !semester.locked)}
-                >
-                  {!semester.locked ? <UnlockedIcon /> : <LockIcon />}
-                </button>
-              </AnalyticsWrapper>
+              <button onClick={() => handleSemesterLock(semester.id.toString(), !semester.locked)}>
+                {!semester.locked ? <UnlockedIcon /> : <LockIcon />}
+              </button>
             </div>
             <SemesterTileDropdown
               locked={semester.locked}
@@ -153,8 +155,8 @@ export const MemoizedSemesterTile = React.memo(
             />
           )}
           <article
-            className={`mb-5 flex flex-col gap-y-4 overflow-hidden transition-all duration-700 ${
-              open ? 'max-h-[999px]' : 'max-h-0'
+            className={`mb-5 flex flex-col gap-y-4 overflow-hidden transition-all duration-700 ease-in-out ${
+              open ? 'opacity-100' : 'opacity-0'
             }`}
           >
             {semester.courses.map((course) => (
@@ -221,4 +223,4 @@ const DroppableSemesterTile: FC<DroppableSemesterTileProps> = ({
   );
 };
 
-export default React.memo(DroppableSemesterTile);
+export default memo(DroppableSemesterTile);

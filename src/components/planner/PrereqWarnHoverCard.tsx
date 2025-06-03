@@ -1,5 +1,5 @@
 import * as HoverCard from '@radix-ui/react-hover-card';
-import { FC } from 'react';
+import React, { FC } from 'react';
 
 interface PrereqHoverCardProps {
   prereqs: [Array<string>, Array<string>, Array<string>];
@@ -9,6 +9,7 @@ interface PrereqHoverCardProps {
   isOverriden: boolean;
   title: string;
   side?: 'top' | 'left' | 'bottom' | 'right';
+  children: React.ReactNode;
 }
 
 export const PrereqWarnHoverCard: FC<PrereqHoverCardProps> = ({
@@ -25,7 +26,7 @@ export const PrereqWarnHoverCard: FC<PrereqHoverCardProps> = ({
     <HoverCard.Portal>
       <HoverCard.Content
         side={side}
-        className="z-[9999] h-fit w-[250px] animate-[slideUpAndFade_0.3s] rounded-md border border-neutral-200 bg-generic-white p-5 shadow-sm"
+        className="z-9999 h-fit w-[250px] animate-[slideUpAndFade_0.3s] rounded-md border border-neutral-200 bg-generic-white p-5 shadow-xs"
         sideOffset={5}
       >
         <h3 className="mb-2 text-lg font-semibold">{title}</h3>

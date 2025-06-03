@@ -18,10 +18,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Neon Database Create Branch Action
-        uses: neondatabase/create-branch-action@v3
+        uses: neondatabase/create-branch-action@v4
         id: create_branch
         with:
           project_id: ${{ secrets.NEON_PROJECT_ID }}
@@ -39,12 +39,12 @@ jobs:
           preview_url=$(vercel deploy \
             --env DATABASE_URL="${{ steps.create_branch.outputs.db_url_with_pooler}}/neondb?pgbouncer=true&connect_timeout=15&pool_timeout=15" \
             --build-env DIRECT_DATABASE_URL="${{ steps.create_branch.outputs.db_url}}/neondb?connect_timeout=10" \
-            --public --yes --token=${{ secrets.VERCEL_TOKEN }})
+            --public --yes --token="${{ secrets.VERCEL_TOKEN }}")
           echo preview_url=$preview_url >> $GITHUB_OUTPUT
 
       - name: Comment on Pull Request
         uses: thollander/actions-comment-pull-request@v2
         with:
           message: |
-            Vercel Preview URL :rocket: : ${{ steps.deploy.outputs.preview_url }}
+            Vercel Preview URL :rocket: : ${{ steps.deploy.outputs.preview_url }}/auth/login
             Neon branch :elephant: : https://console.neon.tech/app/projects/${{ secrets.NEON_PROJECT_ID }}/branches/${{ steps.create_branch.outputs.branch_id }}

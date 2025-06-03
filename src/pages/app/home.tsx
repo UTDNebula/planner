@@ -1,13 +1,16 @@
+import { createContextInner } from '@server/trpc/context';
 import { createServerSideHelpers } from '@trpc/react-query/server';
 import { GetServerSidePropsContext } from 'next';
+import Head from 'next/head';
 import { getServerSession } from 'next-auth';
+import React from 'react';
 import superjson from 'superjson';
 
 import { appRouter } from '@/server/trpc/router/_app';
-import { createContextInner } from '@server/trpc/context';
 
 import Home from '../../components/home/Home';
 import { authOptions } from '../api/auth/[...nextauth]';
+
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const session = await getServerSession(context.req, context.res, authOptions);
   const ssg = createServerSideHelpers({
@@ -25,7 +28,15 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   };
 }
 export default function MiniDrawer() {
-  return <Home />;
+  return (
+    <>
+      <Head>
+        <link rel="canonical" href="https://planner.utdnebula.com/app/home" key="canonical" />
+        <meta property="og:url" content="https://planner.utdnebula.com/app/home" />
+      </Head>
+      <Home />
+    </>
+  );
 }
 
 MiniDrawer.auth = true;
