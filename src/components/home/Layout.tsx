@@ -1,3 +1,5 @@
+import React from 'react';
+
 import useMedia from '@/utils/media';
 
 import Sidebar from './Sidebar';

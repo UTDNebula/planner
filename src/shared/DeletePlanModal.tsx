@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { createPortal } from 'react-dom';
 
 import Modal, { ModalProps } from '@/components/Modal';

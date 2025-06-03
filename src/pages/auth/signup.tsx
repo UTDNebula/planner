@@ -1,4 +1,5 @@
 import { InferGetServerSidePropsType } from 'next';
+import React from 'react';
 
 import { AuthPage, getStaticProps } from './login';
 

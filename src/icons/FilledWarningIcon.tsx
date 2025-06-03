@@ -1,4 +1,4 @@
-import { SVGProps } from 'react';
+import React, { SVGProps } from 'react';
 
 export default function FilledWarningIcon(props: SVGProps<SVGSVGElement>) {
   return (

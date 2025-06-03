@@ -3,7 +3,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import { useSemestersContext } from '@components/planner/SemesterContext';
 import { UniqueIdentifier } from '@dnd-kit/core';
 import * as Dialog from '@radix-ui/react-dialog';
-import { memo, useMemo, useRef, useState } from 'react';
+import React, { memo, useMemo, useRef, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { v4 as uuidv4 } from 'uuid';
 

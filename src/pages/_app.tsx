@@ -15,7 +15,7 @@ import { Router } from 'next/router';
 import { type Session } from 'next-auth';
 import { SessionProvider, useSession } from 'next-auth/react';
 import NProgress from 'nprogress'; //nprogress module
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 
 import Layout from '@/components/home/Layout';

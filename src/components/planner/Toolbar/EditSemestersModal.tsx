@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import React, { FC, useState } from 'react';
 
 import { SemesterCode } from '@/../prisma/utils';
 import Modal from '@/components/Modal';

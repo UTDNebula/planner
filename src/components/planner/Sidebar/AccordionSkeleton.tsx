@@ -1,6 +1,6 @@
 import 'react-loading-skeleton/dist/skeleton.css';
 
-import * as React from 'react';
+import React from 'react';
 import Skeleton from 'react-loading-skeleton';
 
 export default function AccordionSkeleton() {

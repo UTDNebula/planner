@@ -578,7 +578,9 @@ export const planRouter = router({
         });
 
         return newBypass.id;
-      } catch {}
+      } catch {
+        //Don't error
+      }
     }),
   // Protected route: route uses session user id
   getDegreeRequirements: protectedProcedure
@@ -602,7 +604,9 @@ export const planRouter = router({
         }
 
         return degreeRequirements;
-      } catch {}
+      } catch {
+        //Don't error
+      }
     }),
   // Protected route: route uses session user id
   updatePlanTitle: protectedProcedure

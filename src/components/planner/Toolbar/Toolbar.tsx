@@ -1,7 +1,7 @@
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { usePDF } from '@react-pdf/renderer';
 import Link from 'next/link';
-import { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 
 import DownloadIcon from '@/icons/DownloadIcon';
 import SettingsIcon from '@/icons/SettingsIcon';

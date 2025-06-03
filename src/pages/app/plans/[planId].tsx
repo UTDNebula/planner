@@ -2,7 +2,7 @@ import { createServerSideHelpers } from '@trpc/react-query/server';
 import { Steps } from 'intro.js-react';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next/types';
 import { getServerSession } from 'next-auth';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import superjson from 'superjson';
 
 import Planner from '@/components/planner/Planner';

@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { FC } from 'react';
+import React, { FC } from 'react';
 
 import CursorClickIcon from '@/icons/CursorClickIcon';
 import DeleteIcon from '@/icons/DeleteIcon';

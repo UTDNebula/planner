@@ -1,5 +1,5 @@
 import * as RSwitch from '@radix-ui/react-switch';
-import { FC } from 'react';
+import React, { FC } from 'react';
 
 const rootSizeClasses = {
   small: 'h-[16px] w-[26px]',

@@ -1,5 +1,5 @@
 import router from 'next/router';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import DotsHorizontalIcon from '@/icons/DotsHorizontalIcon';
 import DeletePlanModal from '@/shared/DeletePlanModal';

@@ -1,5 +1,5 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import ArchiveIcon from '@/icons/ArchiveIcon';

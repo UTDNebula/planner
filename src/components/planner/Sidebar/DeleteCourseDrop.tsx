@@ -1,4 +1,5 @@
 import { UniqueIdentifier, useDroppable } from '@dnd-kit/core';
+import React from 'react';
 
 import { DragDataToSidebarTile } from '../types';
 

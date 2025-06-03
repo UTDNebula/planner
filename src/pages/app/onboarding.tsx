@@ -88,7 +88,9 @@ export default function OnboardingPage() {
 
     try {
       await addProfile.mutateAsync(input);
-    } catch (error) {}
+    } catch {
+      //Don't error
+    }
 
     router.push('/app/home');
   };

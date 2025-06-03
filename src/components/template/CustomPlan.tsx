@@ -2,7 +2,7 @@ import { SemesterType } from '@prisma/client';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import type { PDFDocumentProxy } from 'pdfjs-dist';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { SemesterCode } from '@/../prisma/utils';
 import AutoCompleteMajor from '@/components/AutoCompleteMajor';

@@ -1026,34 +1026,38 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
     for (const filter of filters) {
       switch (filter.type) {
         case 'year':
-          const yearFilters = filters.filter((filter) => filter.type === 'year') as {
-            type: 'year';
-            year: number;
-          }[];
-          filtered = filtered.filter((semester) =>
-            yearFilters.some((filter) => filter.year === semester.code.year),
-          );
+          {
+            const yearFilters = filters.filter((filter) => filter.type === 'year') as {
+              type: 'year';
+              year: number;
+            }[];
+            filtered = filtered.filter((semester) =>
+              yearFilters.some((filter) => filter.year === semester.code.year),
+            );
+          }
           break;
 
         case 'color':
-          const colorFilters = filters.filter((filter) => filter.type === 'color') as {
-            type: 'color';
-            color: keyof typeof tagColors;
-          }[];
-          filtered = filtered.filter((semester) =>
-            colorFilters.some((filter) => filter.color === semester.color),
-          );
+          {
+            const colorFilters = filters.filter((filter) => filter.type === 'color') as {
+              type: 'color';
+              color: keyof typeof tagColors;
+            }[];
+            filtered = filtered.filter((semester) =>
+              colorFilters.some((filter) => filter.color === semester.color),
+            );
+          }
           break;
 
-        case 'semester':
+        case 'semester': {
           const semesterFilters = filters.filter((filter) => filter.type === 'semester') as {
             type: 'semester';
             semester: SemesterType;
           }[];
-
           filtered = filtered.filter((semester) =>
             semesterFilters.some((filter) => filter.semester === semester.code.semester),
           );
+        }
       }
     }
     return filtered;

@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, FC } from 'react';
+import React, { ComponentPropsWithoutRef, FC } from 'react';
 
 export type InputProps = ComponentPropsWithoutRef<'input'>;
 

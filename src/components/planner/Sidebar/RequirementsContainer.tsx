@@ -1,7 +1,7 @@
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import * as HoverCard from '@radix-ui/react-hover-card';
 import { courses as Course } from 'prisma/generated/platform';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import useSearch from '@/components/search/search';
 import { trpc } from '@/utils/trpc';
