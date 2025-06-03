@@ -1120,7 +1120,7 @@ const parsePlanSemestersFromPlan = (plan: Plan): Semester[] => {
           color: course.color as keyof typeof tagColors,
           code: course.code,
           prereqOveridden: course.prereqOverriden,
-        } as DraggableCourse),
+        }) as DraggableCourse,
     ),
   }));
 };
