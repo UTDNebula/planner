@@ -321,7 +321,7 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
       <div className="salt contents">
         <button
           ref={dropRef}
-          className="group flex flex-col items-center justify-center gap-0.5 rounded-md border border-neutral-200 bg-inherit py-10 transition-colors"
+          className="group flex flex-col items-center justify-center gap-0.5 rounded-md border border-neutral-200 bg-inherit py-10 transition-colors cursor-pointer"
           onClick={() => fileInputRef.current && fileInputRef.current.click()}
           data-testid="upload-transcript-btn"
         >
@@ -381,6 +381,7 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
                 setTransferCredits([]);
                 setTakenCourses([]);
               }}
+              className="cursor-pointer"
             >
               <svg
                 width="32"

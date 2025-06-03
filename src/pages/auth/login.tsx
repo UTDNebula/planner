@@ -160,7 +160,7 @@ export function AuthPage(props: {
                           callbackUrl: '/app/home',
                         });
                       }}
-                      className={`-ml-2 h-10 rounded-full px-3 text-gray-200 `}
+                      className={`-ml-2 h-10 rounded-full px-3 text-gray-200 cursor-pointer `}
                     >
                       {AuthIcons[provider.id]}
                     </button>

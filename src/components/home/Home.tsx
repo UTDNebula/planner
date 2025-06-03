@@ -109,7 +109,7 @@ export default function PlansPage() {
                 <button
                   id="tutorial-2"
                   data-testid="add-new-plan-btn"
-                  className="flex h-12 flex-row items-center gap-4 rounded-md bg-primary p-6 text-white transition-all hover:bg-primary-600 active:bg-primary-600"
+                  className="flex h-12 flex-row items-center gap-4 rounded-md bg-primary p-6 text-white transition-all hover:bg-primary-600 active:bg-primary-600 cursor-pointer"
                 >
                   <PlusIcon />
                   <p>Add New Plan</p>

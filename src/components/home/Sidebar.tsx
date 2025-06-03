@@ -69,11 +69,7 @@ export default function Sidebar({ isMobile }: { isMobile: boolean }) {
         )}
         <ul className="flex flex-col gap-y-[25px]">
           {sidebarItems.map(({ url, label, Icon, newTab }, i) => (
-            <Link
-              key={url + i}
-              href={url}
-              target={newTab ? '_blank' : ''}
-            >
+            <Link key={url + i} href={url} target={newTab ? '_blank' : ''}>
               <li
                 className={`${
                   router.pathname === url && 'rounded-lg bg-primary font-medium text-white'

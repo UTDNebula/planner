@@ -40,7 +40,7 @@ export default function PlanCard({ id, name, major }: PlanCardProps) {
       <div className="relative w-full rounded-2xl border-b-12 border-[#A3A3A3] border-b-primary bg-white text-[#1C2A6D] transition-all hover:scale-110 hover:border-b-0 hover:bg-primary hover:text-white">
         <button
           onClick={handlePlanClick}
-          className="flex h-[180px] w-full flex-col px-8 py-6 text-left"
+          className="flex h-[180px] w-full flex-col px-8 py-6 text-left cursor-pointer"
         >
           <div className="flex w-full flex-row items-center justify-between">
             <h4 className="overflow-hidden text-ellipsis whitespace-nowrap text-[15px] font-normal ">
@@ -52,7 +52,7 @@ export default function PlanCard({ id, name, major }: PlanCardProps) {
             >
               <button
                 aria-label="Customise options"
-                className="h-10 w-10 self-stretch rounded-full hover:bg-neutral-200 hover:text-black"
+                className="h-10 w-10 self-stretch rounded-full hover:bg-neutral-200 hover:text-black cursor-pointer"
               >
                 <DotsHorizontalIcon className="m-auto rotate-90" />
               </button>
