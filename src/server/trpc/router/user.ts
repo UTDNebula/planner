@@ -3,8 +3,8 @@ import { TRPCError } from '@trpc/server';
 import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 
-import { createNewSemesterCode, isSemCodeEqual, isEarlierSemester } from '@/utils/utilFunctions';
-import { computeProfileWithSemesterCode } from 'prisma/utils';
+import { computeProfileWithSemesterCode } from '@/../prisma/utils';
+import { createNewSemesterCode, isEarlierSemester, isSemCodeEqual } from '@/utils/utilFunctions';
 
 import { protectedProcedure, router } from '../trpc';
 
@@ -69,7 +69,6 @@ export const userRouter = router({
           },
         },
       });
-      console.table(user);
       return user;
     }),
   // Protected route: route uses session user id
@@ -111,7 +110,6 @@ export const userRouter = router({
         },
       });
 
-      console.table(user);
       return user;
     }),
   /**

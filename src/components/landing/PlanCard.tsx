@@ -1,5 +1,5 @@
 import router from 'next/router';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import DotsHorizontalIcon from '@/icons/DotsHorizontalIcon';
 import DeletePlanModal from '@/shared/DeletePlanModal';
@@ -37,7 +37,7 @@ export default function PlanCard({ id, name, major }: PlanCardProps) {
 
   return (
     <>
-      <div className="relative w-full rounded-2xl border-b-[12px] border-[#A3A3A3] border-b-primary bg-white text-[#1C2A6D] transition-all hover:scale-110 hover:border-b-[0px] hover:bg-primary hover:text-white">
+      <div className="relative w-full rounded-2xl border-b-12 border-[#A3A3A3] border-b-primary bg-white text-[#1C2A6D] transition-all hover:scale-110 hover:border-b-0 hover:bg-primary hover:text-white">
         <button
           onClick={handlePlanClick}
           className="flex h-[180px] w-full flex-col px-8 py-6 text-left"
@@ -67,7 +67,7 @@ export default function PlanCard({ id, name, major }: PlanCardProps) {
               deleteLoading={deleting}
             />
           </div>
-          <div className="flex flex-grow items-center text-xl font-semibold">{name}</div>
+          <div className="flex grow items-center text-xl font-semibold">{name}</div>
         </button>
       </div>
     </>

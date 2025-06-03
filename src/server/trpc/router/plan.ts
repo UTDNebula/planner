@@ -3,13 +3,13 @@ import { TRPCError } from '@trpc/server';
 import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 
+import { computeSemesterCode, SemesterCode } from '@/../prisma/utils';
 import { Semester as PlanSemester } from '@/components/planner/types';
 import {
-  createYearBasedOnFall,
   createSemesterCodeRange,
+  createYearBasedOnFall,
   isEarlierSemester,
 } from '@/utils/utilFunctions';
-import { SemesterCode, computeSemesterCode } from 'prisma/utils';
 
 import { protectedProcedure, router } from '../trpc';
 
@@ -177,7 +177,7 @@ export const planRouter = router({
         },
       });
       return true;
-    } catch (error) {
+    } catch {
       return false;
     }
   }),
@@ -578,7 +578,9 @@ export const planRouter = router({
         });
 
         return newBypass.id;
-      } catch {}
+      } catch {
+        //Don't error
+      }
     }),
   // Protected route: route uses session user id
   getDegreeRequirements: protectedProcedure
@@ -602,7 +604,9 @@ export const planRouter = router({
         }
 
         return degreeRequirements;
-      } catch {}
+      } catch {
+        //Don't error
+      }
     }),
   // Protected route: route uses session user id
   updatePlanTitle: protectedProcedure

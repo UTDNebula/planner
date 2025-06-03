@@ -1,13 +1,13 @@
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import AutoCompleteMajor from '@/components/AutoCompleteMajor';
 import useMajors from '@/shared/useMajors';
 import { trpc } from '@/utils/trpc';
 
-import { Page } from './Page';
 import { ButtonProps } from '../Button';
 import useSearch from '../search/search';
+import { Page } from './Page';
 
 export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
   const [name, setName] = useState('');
@@ -101,7 +101,7 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
       <div className="relative mb-4">
         <AutoCompleteMajor
           data-testid="major-autocomplete"
-          className="w-[500px] rounded border outline-none"
+          className="w-[500px] rounded-sm border outline-hidden"
           key={0}
           onValueChange={(value) => setMajor(value)}
           onInputChange={(query: string) => updateQuery(query)}

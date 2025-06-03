@@ -1,22 +1,22 @@
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import * as HoverCard from '@radix-ui/react-hover-card';
-import { useState, useEffect } from 'react';
+import { courses as Course } from 'prisma/generated/platform';
+import React, { useEffect, useState } from 'react';
 
 import useSearch from '@/components/search/search';
 import { trpc } from '@/utils/trpc';
-import { courses as Course } from 'prisma/generated/platform';
 
+import { GetDragIdByCourseAndReq } from '../types';
 import Accordion from './Accordion';
 import { RecursiveRequirement } from './RecursiveRequirement';
 import RequirementsCarousel from './RequirementsCarousel';
 import RequirementSearchBar from './RequirementSearchBar';
 import {
-  RequirementGroupTypes,
-  RequirementTypes,
   CourseRequirement,
   DegreeRequirement,
+  RequirementGroupTypes,
+  RequirementTypes,
 } from './types';
-import { GetDragIdByCourseAndReq } from '../types';
 
 function RequirementContainerHeader({
   name,
@@ -55,7 +55,7 @@ function RequirementContainerHeader({
               </div>
             </HoverCard.Trigger>
             <HoverCard.Portal>
-              <HoverCard.Content className="z-[999] w-[250px] animate-[slideUpAndFade_0.3s] rounded-md border border-neutral-200 bg-generic-white p-5 shadow-sm">
+              <HoverCard.Content className="z-999 w-[250px] animate-[slideUpAndFade_0.3s] rounded-md border border-neutral-200 bg-generic-white p-5 shadow-xs">
                 <h3 className="mb-2 text-lg font-semibold">{name}</h3>
 
                 <HoverCard.Arrow className="fill-primary" />
@@ -195,7 +195,7 @@ const getRequirementGroup = (
         req: degreeRequirement,
         description: '',
         getData: () => Promise.resolve([] as RequirementTypes[]),
-        filterFunction: (_, __) => true,
+        filterFunction: () => true,
       };
     }
   }
@@ -266,7 +266,6 @@ export default function RequirementsContainer({
 
   const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
     staleTime: Infinity,
-    cacheTime: Infinity,
     refetchOnWindowFocus: false,
   });
 
@@ -315,7 +314,7 @@ export default function RequirementsContainer({
                     className="flex items-center justify-between gap-x-4 rounded-md border border-neutral-300 px-5 py-4"
                     key={idx}
                   >
-                    <div className="w-[50%] flex-grow justify-start overflow-hidden text-ellipsis whitespace-nowrap text-start font-medium lg:w-4/5">
+                    <div className="w-[50%] grow justify-start overflow-hidden text-ellipsis whitespace-nowrap text-start font-medium lg:w-4/5">
                       {name}
                     </div>
                     <div className="flex items-center">
@@ -354,10 +353,9 @@ function RequirementContainer({
   degreeRequirement,
   setCarousel,
   courses,
-}: RequirementContainerProps): JSX.Element {
+}: RequirementContainerProps) {
   const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
     staleTime: Infinity,
-    cacheTime: Infinity,
     refetchOnWindowFocus: false,
   });
 

@@ -1,5 +1,5 @@
 import { UniqueIdentifier, useDroppable } from '@dnd-kit/core';
-import React, { FC, forwardRef, memo, useState, useRef, useImperativeHandle } from 'react';
+import React, { FC, forwardRef, memo, useImperativeHandle, useRef, useState } from 'react';
 
 import ChevronIcon from '@/icons/ChevronIcon';
 import LockIcon from '@/icons/LockIcon';
@@ -7,12 +7,12 @@ import UnlockedIcon from '@/icons/UnlockedIcon';
 import useAccordionAnimation from '@/shared/useAccordionAnimation';
 import { displaySemesterCode, getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
 
-import DraggableSemesterCourseItem from './SemesterCourseItem';
-import SemesterTileDropdown from './SemesterTileDropdown';
 import CreditsWarnHoverCard from '../CreditsWarnHoverCard';
 import { useSemestersContext } from '../SemesterContext';
 import { DragDataToSemesterTile, GetDragIdByCourseAndSemester, Semester } from '../types';
 import { tagColors } from '../utils';
+import DraggableSemesterCourseItem from './SemesterCourseItem';
+import SemesterTileDropdown from './SemesterTileDropdown';
 
 export interface SemesterTileProps {
   semester: Semester;
@@ -33,7 +33,7 @@ export const MemoizedSemesterTile = memo(
     useImperativeHandle(outerRef, () => innerRef.current!, []);
 
     const [hoverOpen, setHoverOpen] = useState(false);
-    const hoverTimer = useRef<ReturnType<typeof setTimeout>>();
+    const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
     const { toggle, open } = useAccordionAnimation(innerRef, () =>
       semester.courses.length === 0 ? '140px' : '170px',
     );
@@ -60,7 +60,7 @@ export const MemoizedSemesterTile = memo(
           }}
           onMouseLeave={() => {
             setHoverOpen(false);
-            clearTimeout(hoverTimer.current);
+            if (hoverTimer.current !== null) clearTimeout(hoverTimer.current);
           }}
         >
           <CreditsWarnHoverCard

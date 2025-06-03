@@ -1,4 +1,5 @@
-import { View, Text } from '@react-pdf/renderer';
+import { Text, View } from '@react-pdf/renderer';
+import React from 'react';
 
 import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
 
@@ -151,7 +152,7 @@ const AcademicTableRow = ({
           padding: '4px',
         }}
       >
-        <Text style={{}}>{elements[1]}</Text>
+        <Text style={{}}>{typeof elements[1] !== 'object' && elements[1]}</Text>
       </View>
       <Text style={{ flex: 5, borderLeft: '1px solid #D4D4D4', padding: '4px' }}>
         <Text style={{ color: '#6466f1', fontWeight: 'semibold' }}>
@@ -176,7 +177,7 @@ const AcademicTableRow = ({
           padding: '4px',
         }}
       >
-        <Text style={{}}>{elements[3]}</Text>
+        <Text style={{}}>{typeof elements[3] !== 'object' && elements[3]}</Text>
       </View>
       <Text style={{ flex: 5, borderLeft: '1px solid #D4D4D4', padding: '4px' }}>
         <Text style={{ color: '#6466f1', fontWeight: 'semibold' }}>
@@ -202,7 +203,7 @@ const AcademicTableRow = ({
           padding: '4px',
         }}
       >
-        <Text style={{}}>{elements[5]}</Text>
+        <Text style={{}}>{typeof elements[5] !== 'object' && elements[5]}</Text>
       </View>
     </View>
   );

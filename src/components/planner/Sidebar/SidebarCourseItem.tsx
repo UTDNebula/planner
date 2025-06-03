@@ -6,9 +6,9 @@ import React, {
   ComponentPropsWithoutRef,
   forwardRef,
   memo,
-  useState,
-  useRef,
   useEffect,
+  useRef,
+  useState,
 } from 'react';
 
 import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
@@ -33,10 +33,10 @@ export const SidebarCourseItem = memo(
     // Maybe DraggableCourse needs to take a prop specifying if it's needed or nah?
     // TODO: Update course status tag
     const [hoverOpen, setHoverOpen] = useState(false);
-    const hoverTimer = useRef<ReturnType<typeof setTimeout>>();
+    const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     useEffect(() => {
-      if (isDragging) clearTimeout(hoverTimer.current);
+      if (isDragging && hoverTimer.current !== null) clearTimeout(hoverTimer.current);
     }, [isDragging]);
 
     const { title, description } = useGetCourseInfo(course.code);
@@ -50,13 +50,13 @@ export const SidebarCourseItem = memo(
         {...props}
         className={`cursor-grab ${
           course.taken && 'opacity-50'
-        } flex h-[40px] flex-row items-center justify-between rounded-md border border-neutral-300 bg-white px-5 py-3 text-[10px] text-[#1C2A6D] drop-shadow-sm`}
+        } flex h-[40px] flex-row items-center justify-between rounded-md border border-neutral-300 bg-white px-5 py-3 text-[10px] text-[#1C2A6D] drop-shadow-xs`}
         onMouseEnter={() => {
-          clearTimeout(hoverTimer.current);
+          if (hoverTimer.current !== null) clearTimeout(hoverTimer.current);
           hoverTimer.current = setTimeout(() => setHoverOpen(true), 500);
         }}
         onMouseLeave={() => {
-          clearTimeout(hoverTimer.current);
+          if (hoverTimer.current !== null) clearTimeout(hoverTimer.current);
           hoverTimer.current = setTimeout(() => setHoverOpen(false), 800);
         }}
       >

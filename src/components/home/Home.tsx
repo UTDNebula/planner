@@ -1,11 +1,11 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import { trpc } from '@utils/trpc';
 import { Steps } from 'intro.js-react';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
 import ChevronIcon from '@/icons/ChevronIcon';
 import PlusIcon from '@/icons/PlusIcon';
-import { trpc } from '@utils/trpc';
 
 import PlanCard from '../landing/PlanCard';
 import TemplateModal from '../template/Modal';
@@ -13,11 +13,10 @@ import TemplateModal from '../template/Modal';
 /**
  * A list of the user's plans
  */
-export default function PlansPage(): JSX.Element {
+export default function PlansPage() {
   const [openTemplateModal, setOpenTemplateModal] = useState(false);
   const userPlanQuery = trpc.plan.getUserPlans.useQuery(undefined, {
     staleTime: Infinity,
-    cacheTime: Infinity,
   });
   const updateSeenHomeOnboarding = trpc.user.seenHomeOnboarding.useMutation({
     async onSuccess() {
@@ -26,7 +25,6 @@ export default function PlansPage(): JSX.Element {
   });
   const { data: userData, isLoading } = trpc.user.getUser.useQuery(undefined, {
     staleTime: Infinity,
-    cacheTime: Infinity,
   });
 
   const { data } = userPlanQuery;
@@ -99,7 +97,7 @@ export default function PlansPage(): JSX.Element {
       />
       <section
         id="tutorial-1"
-        className="flex max-h-screen flex-grow flex-col gap-4 overflow-y-scroll p-16"
+        className="flex max-h-screen grow flex-col gap-4 overflow-y-scroll p-16"
       >
         <article className="flex flex-col">
           <div className="flex flex-row items-center justify-between">

@@ -1,10 +1,12 @@
+import React from 'react';
+
 export default function RequirementsCarousel({
   requirementsList,
   requirementInfo,
   carousel,
 }: {
-  requirementsList: JSX.Element;
-  requirementInfo: JSX.Element;
+  requirementsList: React.ReactNode;
+  requirementInfo: React.ReactNode;
   carousel: boolean;
 }) {
   return (

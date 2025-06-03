@@ -1,8 +1,9 @@
-import { describe, test, expect } from '@jest/globals';
+import { describe, expect, test } from '@jest/globals';
 import { Template } from '@prisma/client';
 
 import { TEST_ONLY } from '../../prisma/seedTemplates';
 import degreeTemplates from '../../src/data/degree_template.json';
+
 const { findNewTemplates } = TEST_ONLY;
 
 describe('finding new templates during seeding', () => {

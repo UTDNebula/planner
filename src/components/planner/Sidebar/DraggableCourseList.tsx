@@ -1,8 +1,8 @@
 import { UniqueIdentifier } from '@dnd-kit/core';
 import React, { memo } from 'react';
 
-import DraggableSidebarCourseItem from './SidebarCourseItem';
 import { DraggableCourse } from '../types';
+import DraggableSidebarCourseItem from './SidebarCourseItem';
 
 export interface DraggableCourseListProps {
   courses: DraggableCourse[];
