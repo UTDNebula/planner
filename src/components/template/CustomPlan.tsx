@@ -85,7 +85,7 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
   const parseTranscript = async (file: File) => {
     const pdf = await import('pdfjs-dist');
     // TODO: How to use local import for this?
-    pdf.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdf.version}/pdf.worker.js`;
+    pdf.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdf.version}/pdf.worker.mjs`;
 
     let data: PDFDocumentProxy;
     try {
