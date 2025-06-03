@@ -177,7 +177,7 @@ export const planRouter = router({
         },
       });
       return true;
-    } catch (error) {
+    } catch {
       return false;
     }
   }),

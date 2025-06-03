@@ -68,7 +68,6 @@ interface CourseData {
   title: string;
   credits: number;
 }
-[];
 
 // Create Document Component containing the user's degree plan
 const DegreePlanPDF: FC<DegreePlanPDFProps> = ({

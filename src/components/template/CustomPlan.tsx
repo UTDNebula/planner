@@ -89,7 +89,7 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
     let data: PDFDocumentProxy;
     try {
       data = await pdf.getDocument(await file.arrayBuffer()).promise;
-    } catch (e) {
+    } catch {
       setError('Please ensure the selected file is a PDF file');
       return;
     }

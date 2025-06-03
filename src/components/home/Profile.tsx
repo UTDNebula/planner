@@ -179,10 +179,10 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps) {
     return true;
   };
 
-  const handleResetPassword = () => {
+  /*const handleResetPassword = () => {
     // TODO: Implement resetting password here
     return true;
-  };
+  };*/
 
   // TODO: Refactor this
   const dumbInitialsParser = useMemo(() => {
