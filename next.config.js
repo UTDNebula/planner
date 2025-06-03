@@ -29,17 +29,7 @@ const createConfig = async (phase) => {
     enabled: process.env.ANALYZE === 'true',
   });
 
-  const nextConfig = withBundleAnalyzer({
-    redirects: async () => {
-      return [
-        {
-          source: '/',
-          destination: 'https://www.utdnebula.com/projects/planner',
-          permanent: true,
-        },
-      ];
-    },
-  });
+  const nextConfig = withBundleAnalyzer({});
   return nextConfig;
 };
 

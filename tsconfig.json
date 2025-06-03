@@ -26,8 +26,13 @@
       "@styles/*": ["src/styles/*"], // This maps imports starting with @styles to the `src/styles` folder
       "@server/*": ["src/server/*"],
       "@public/*": ["public/*"] // This maps imports starting with @server to the `src/server` folder
-    }
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["**/*.ts", "**/*.tsx", "next-env.d.ts", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }
