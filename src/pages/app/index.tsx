@@ -29,7 +29,6 @@ export default function MiniDrawer() {
   const router = useRouter();
   const userQuery = trpc.user.getUser.useQuery();
   const { data } = userQuery;
-  console.table(data);
   if (data && !data.onboardingComplete) {
     router.push('/app/onboarding');
     return;

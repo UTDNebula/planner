@@ -379,8 +379,6 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
     [semesters],
   );
 
-  useEffect(() => console.log('stateChange', { semesters }), [semesters]);
-
   const changeCourseLock = trpc.plan.changeCourseLock.useMutation();
   const changeSemesterLock = trpc.plan.changeSemesterLock.useMutation();
 

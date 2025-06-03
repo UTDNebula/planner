@@ -8,7 +8,6 @@ export const templateRouter = router({
   publicGetAllTemplates: publicProcedure.query(async ({ ctx }) => {
     try {
       const templates = await ctx.prisma.template.findMany();
-      // console.table(templates);
       return templates;
     } catch (error) {
       if (error instanceof TRPCError) {

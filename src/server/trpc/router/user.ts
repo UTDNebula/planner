@@ -69,7 +69,6 @@ export const userRouter = router({
           },
         },
       });
-      console.table(user);
       return user;
     }),
   // Protected route: route uses session user id
@@ -111,7 +110,6 @@ export const userRouter = router({
         },
       });
 
-      console.table(user);
       return user;
     }),
   /**
