@@ -14,7 +14,7 @@ const TransferBank: FC<TransferBankProps> = ({ transferCredits }) => {
   return (
     <section
       ref={bankRef}
-      className="w-full flex-shrink-0 overflow-hidden rounded-2xl border border-neutral-200 bg-generic-white px-5 py-3 shadow-sm transition-all duration-1000 ease-in-out"
+      className="w-full shrink-0 overflow-hidden rounded-2xl border border-neutral-200 bg-generic-white px-5 py-3 shadow-xs transition-all duration-1000 ease-in-out"
     >
       <article className="flex items-center justify-between">
         <h5 className="text-xl font-semibold text-primary-900">Transfer Credits</h5>

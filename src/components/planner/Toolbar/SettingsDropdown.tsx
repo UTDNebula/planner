@@ -7,7 +7,7 @@ import PencilIcon from '@/icons/PencilIcon';
 const itemClasses =
   'flex items-center gap-x-3 border-b border-neutral-300 px-3 py-2 hover:bg-neutral-100 cursor-pointer group';
 
-const contentClasses = 'rounded-md border border-neutral-300 bg-generic-white z-[9999]';
+const contentClasses = 'rounded-md border border-neutral-300 bg-generic-white z-9999';
 
 export interface SettingsDropdownProps {
   openDeletePlanModal: () => void;

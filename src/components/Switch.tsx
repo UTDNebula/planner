@@ -20,7 +20,7 @@ const Switch: FC<SwitchProps> = ({ size = 'small', ...props }) => {
       className={`${rootSizeClasses[size]} relative rounded-full bg-neutral-300 data-[state=checked]:bg-primary`}
     >
       <RSwitch.Thumb
-        className={`${thumbSizeClasses[size]} duration-400 block h-[14px] w-[14px] translate-x-[1px] transform rounded-full bg-generic-white transition-transform will-change-transform data-[state=checked]:translate-x-[10px]`}
+        className={`${thumbSizeClasses[size]} duration-400 block h-[14px] w-[14px] translate-x-px transform rounded-full bg-generic-white transition-transform will-change-transform data-[state=checked]:translate-x-[10px]`}
       />
     </RSwitch.Root>
   );

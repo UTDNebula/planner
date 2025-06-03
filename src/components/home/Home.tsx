@@ -97,7 +97,7 @@ export default function PlansPage(): JSX.Element {
       />
       <section
         id="tutorial-1"
-        className="flex max-h-screen flex-grow flex-col gap-4 overflow-y-scroll p-16"
+        className="flex max-h-screen grow flex-col gap-4 overflow-y-scroll p-16"
       >
         <article className="flex flex-col">
           <div className="flex flex-row items-center justify-between">

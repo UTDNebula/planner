@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 
 const BetaBanner: FC = () => {
   return (
-    <div className="flex h-[50px] w-full items-center justify-center gap-8 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
+    <div className="flex h-[50px] w-full items-center justify-center gap-8 bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500">
       <div className="flex items-center gap-3">
         <h3 className="text-[18px] font-medium text-white">{'Hey! This is our beta release'}</h3>
         <button

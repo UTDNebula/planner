@@ -193,7 +193,7 @@ export default function Planner({
 
         <section
           ref={ref}
-          className="flex max-h-screen flex-grow flex-col gap-y-6 overflow-y-scroll p-4 pb-0"
+          className="flex max-h-screen grow flex-col gap-y-6 overflow-y-scroll p-4 pb-0"
         >
           <Toolbar
             planId={planId}

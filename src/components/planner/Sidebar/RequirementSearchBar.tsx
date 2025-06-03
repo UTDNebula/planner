@@ -23,7 +23,7 @@ export default function SearchBar({ updateQuery }: SearchBarProps): JSX.Element 
     <div className="sticky top-0 z-30 flex min-h-[40px] flex-row items-center rounded-md border border-[#1C2A6D] bg-white px-2 ">
       <FilterIcon className="" />
       <input
-        className=" ml-2 text-sm outline-none"
+        className=" ml-2 text-sm outline-hidden"
         placeholder="Filter requirements"
         value={query}
         onChange={handleQueryUpdate}

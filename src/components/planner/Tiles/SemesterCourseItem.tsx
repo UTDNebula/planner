@@ -98,7 +98,7 @@ export const MemoizedSemesterCourseItem = memo(
           clearTimeout(hoverTimer.current);
         }}
       >
-        <div className="h-[50px] min-w-[0.5rem]">
+        <div className="h-[50px] min-w-2">
           {course.color && (
             <div
               className={`h-full w-full rounded-l-md transition-all ${tagColors[course.color]} `}

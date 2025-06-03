@@ -30,7 +30,7 @@ export const CourseInfoHoverCard: FC<CourseInfoHoverCardProps> = ({
       <HoverCard.Content
         onClick={(e) => e.stopPropagation()}
         side={side}
-        className="z-[999] w-[300px] animate-[slideUpAndFade_0.3s] rounded-md border border-neutral-200 bg-generic-white p-6 shadow-sm"
+        className="z-999 w-[300px] animate-[slideUpAndFade_0.3s] rounded-md border border-neutral-200 bg-generic-white p-6 shadow-xs"
         sideOffset={5}
       >
         <h3 className="mb-2 text-base font-semibold">

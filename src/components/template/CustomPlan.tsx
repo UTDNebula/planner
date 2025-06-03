@@ -284,7 +284,7 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
       <div className="relative mb-4">
         <AutoCompleteMajor
           data-testid="major-autocomplete"
-          className="w-[500px] outline-none"
+          className="w-[500px] outline-hidden"
           key={0}
           onValueChange={(value) => setMajor(value)}
           onInputChange={(query: string) => updateQuery(query)}

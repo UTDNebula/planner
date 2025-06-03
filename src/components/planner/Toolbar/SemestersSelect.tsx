@@ -11,7 +11,7 @@ const SemestersSelect: FC<
   <Select.Root {...props}>
     <Select.Trigger
       id={id}
-      className={`flex w-full items-center justify-between rounded-md border border-neutral-300 px-5 py-3 outline-none focus:border-primary ${
+      className={`flex w-full items-center justify-between rounded-md border border-neutral-300 px-5 py-3 outline-hidden focus:border-primary ${
         props.open ? 'border-primary' : ''
       }`}
     >
@@ -23,7 +23,7 @@ const SemestersSelect: FC<
     <Select.Portal>
       <Select.Content
         position="popper"
-        className="z-[9999] cursor-pointer select-none overflow-hidden rounded-md border border-neutral-100 bg-generic-white shadow-sm"
+        className="z-9999 cursor-pointer select-none overflow-hidden rounded-md border border-neutral-100 bg-generic-white shadow-xs"
         sideOffset={10}
       >
         <Select.Viewport className="max-h-52 overflow-y-scroll">

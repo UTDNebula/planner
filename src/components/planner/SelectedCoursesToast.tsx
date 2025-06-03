@@ -27,7 +27,7 @@ const SelectedCoursesToast: FC<SelectedCoursesToastProps> = ({
   <AnimatePresence>
     {show && (
       <motion.div
-        className="fixed left-1/2 top-11 z-[999] -translate-x-1/2 transform"
+        className="fixed left-1/2 top-11 z-999 -translate-x-1/2 transform"
         initial={{ y: -120, x: '-50%' }}
         animate={{ y: 0, x: '-50%' }}
         exit={{ y: -120 }}

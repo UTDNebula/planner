@@ -55,7 +55,7 @@ function RequirementContainerHeader({
               </div>
             </HoverCard.Trigger>
             <HoverCard.Portal>
-              <HoverCard.Content className="z-[999] w-[250px] animate-[slideUpAndFade_0.3s] rounded-md border border-neutral-200 bg-generic-white p-5 shadow-sm">
+              <HoverCard.Content className="z-999 w-[250px] animate-[slideUpAndFade_0.3s] rounded-md border border-neutral-200 bg-generic-white p-5 shadow-xs">
                 <h3 className="mb-2 text-lg font-semibold">{name}</h3>
 
                 <HoverCard.Arrow className="fill-primary" />
@@ -314,7 +314,7 @@ export default function RequirementsContainer({
                     className="flex items-center justify-between gap-x-4 rounded-md border border-neutral-300 px-5 py-4"
                     key={idx}
                   >
-                    <div className="w-[50%] flex-grow justify-start overflow-hidden text-ellipsis whitespace-nowrap text-start font-medium lg:w-4/5">
+                    <div className="w-[50%] grow justify-start overflow-hidden text-ellipsis whitespace-nowrap text-start font-medium lg:w-4/5">
                       {name}
                     </div>
                     <div className="flex items-center">

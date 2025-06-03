@@ -70,7 +70,7 @@ const Toolbar: FC<ToolbarProps> = ({
   return (
     <div className="flex flex-row items-start gap-2 py-1 text-primary-900">
       <ToolbarWrapper>
-        <button type="button" className="rounded-sm transition-all hover:bg-black/10">
+        <button type="button" className="rounded-xs transition-all hover:bg-black/10">
           <Link href="/app/home">
             <ArrowBackIcon fontSize="medium" />
           </Link>
