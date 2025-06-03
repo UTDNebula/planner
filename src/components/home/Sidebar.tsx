@@ -28,16 +28,19 @@ export default function Sidebar({ isMobile }: { isMobile: boolean }) {
       url: '/app/home',
       label: 'Dashboard',
       Icon: HomeIcon,
+      newTab: false,
     },
     {
       url: '/app/profile',
       label: 'Profile',
       Icon: ProfileIcon,
+      newTab: false,
     },
     {
       url: 'https://discord.utdnebula.com/',
       label: 'Join Our Discord',
       Icon: GlobalIcon,
+      newTab: true,
     },
   ];
 
@@ -65,8 +68,8 @@ export default function Sidebar({ isMobile }: { isMobile: boolean }) {
           </div>
         )}
         <ul className="flex flex-col gap-y-[25px]">
-          {sidebarItems.map(({ url, label, Icon }, i) => (
-            <Link key={url + i} href={url}>
+          {sidebarItems.map(({ url, label, Icon, newTab }, i) => (
+            <Link key={url + i} href={url} target={newTab ? '_blank' : ''}>
               <li
                 className={`${
                   router.pathname === url && 'rounded-lg bg-primary font-medium text-white'
@@ -83,7 +86,7 @@ export default function Sidebar({ isMobile }: { isMobile: boolean }) {
         <div className="grow"></div>
 
         <button
-          className="mx-4 flex  items-center gap-6 px-5 pb-5 align-bottom"
+          className="mx-4 flex  items-center gap-6 px-5 pb-5 align-bottom cursor-pointer"
           onClick={() => signOut()}
         >
           <LogoutIcon className="h-6 w-6" />

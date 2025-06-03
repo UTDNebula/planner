@@ -70,7 +70,7 @@ const CourseDescription = ({ description }: { description: string }) => {
           }}
         />{' '}
         <button
-          className={`${showMore ? '' : 'inline'} font-medium text-primary`}
+          className={`${showMore ? '' : 'inline'} font-medium text-primary cursor-pointer`}
           onClick={() => {
             setShowMore(!showMore);
           }}

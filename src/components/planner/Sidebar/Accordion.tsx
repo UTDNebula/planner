@@ -20,7 +20,7 @@ export default function Accordion({
   return (
     <div className={` rounded-md ${filled ? ' opacity-50' : ''}`}>
       <button
-        className="flex w-full flex-row items-center justify-between px-2 duration-500"
+        className="flex w-full flex-row items-center justify-between px-2 duration-500 cursor-pointer"
         onClick={toggleAccordion}
       >
         {header}

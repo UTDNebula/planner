@@ -139,13 +139,6 @@ export default function OnboardingPage() {
             >
               Create Account
             </Button>
-            {/* <button
-              onClick={incrementPage}
-              disabled={!validNextPage}
-              className="w-full rounded-lg bg-[#6366F1] py-3 text-center text-[16px] font-semibold text-white hover:bg-[#EEF2FF] hover:text-[#312E81] disabled:opacity-50"
-            >
-              Create Account
-            </button> */}
           </div>
         </section>
       </div>

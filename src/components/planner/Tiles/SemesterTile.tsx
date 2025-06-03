@@ -131,7 +131,10 @@ export const MemoizedSemesterTile = memo(
               >
                 {displaySemesterCode(semester.code)}
               </h3>
-              <button onClick={() => handleSemesterLock(semester.id.toString(), !semester.locked)}>
+              <button
+                onClick={() => handleSemesterLock(semester.id.toString(), !semester.locked)}
+                className="cursor-pointer"
+              >
                 {!semester.locked ? <UnlockedIcon /> : <LockIcon />}
               </button>
             </div>

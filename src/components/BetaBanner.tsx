@@ -10,7 +10,7 @@ const BetaBanner: FC = () => {
             e.preventDefault();
             window.open('https://forms.gle/wx4zxm3cemut31tNA', '_blank');
           }}
-          className="flex items-center justify-center rounded-md bg-white px-2 py-1 font-medium hover:bg-gray-50"
+          className="flex items-center justify-center rounded-md bg-white px-2 py-1 font-medium hover:bg-gray-50 cursor-pointer"
         >
           Report a bug
         </button>
@@ -25,7 +25,7 @@ const BetaBanner: FC = () => {
               '_blank',
             );
           }}
-          className="flex items-center justify-center rounded-md bg-white px-2 py-1 font-medium hover:bg-gray-50"
+          className="flex items-center justify-center rounded-md bg-white px-2 py-1 font-medium hover:bg-gray-50 cursor-pointer"
         >
           Learn more
         </button>

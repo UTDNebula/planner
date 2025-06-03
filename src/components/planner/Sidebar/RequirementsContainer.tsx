@@ -30,7 +30,7 @@ function RequirementContainerHeader({
   const { value, max, unit } = progress;
   return (
     <div className="flex w-full flex-row items-start justify-start">
-      <button onClick={() => setCarousel(false)}>
+      <button onClick={() => setCarousel(false)} className="cursor-pointer">
         <svg
           width="30"
           height="27"
@@ -309,6 +309,7 @@ export default function RequirementsContainer({
                     toggleCarousel();
                     setRequirementIdx(idx);
                   }}
+                  className="cursor-pointer"
                 >
                   <div
                     className="flex items-center justify-between gap-x-4 rounded-md border border-neutral-300 px-5 py-4"
