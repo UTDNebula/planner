@@ -13,7 +13,7 @@ import TemplateModal from '../template/Modal';
 /**
  * A list of the user's plans
  */
-export default function PlansPage(): JSX.Element {
+export default function PlansPage() {
   const [openTemplateModal, setOpenTemplateModal] = useState(false);
   const userPlanQuery = trpc.plan.getUserPlans.useQuery(undefined, {
     staleTime: Infinity,

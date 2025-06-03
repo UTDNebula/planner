@@ -20,14 +20,14 @@ const EMAIL_VALIDATION_ERROR_TIMEOUT_MS = 600;
  */
 export default function LoginPage({
   providers,
-}: InferGetServerSidePropsType<typeof getStaticProps>): JSX.Element {
+}: InferGetServerSidePropsType<typeof getStaticProps>) {
   return <AuthPage providers={providers} />;
 }
 
 export function AuthPage(props: {
   providers: Awaited<ReturnType<typeof getProviders>>;
   signUp?: boolean;
-}): JSX.Element {
+}) {
   const { providers } = props;
   const signUp = props.signUp ?? false;
   const [email, setEmail] = useState('');

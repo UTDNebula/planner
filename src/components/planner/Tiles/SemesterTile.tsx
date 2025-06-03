@@ -33,7 +33,7 @@ export const MemoizedSemesterTile = memo(
     useImperativeHandle(outerRef, () => innerRef.current!, []);
 
     const [hoverOpen, setHoverOpen] = useState(false);
-    const hoverTimer = useRef<ReturnType<typeof setTimeout>>();
+    const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
     const { toggle, open } = useAccordionAnimation(innerRef, () =>
       semester.courses.length === 0 ? '140px' : '170px',
     );
@@ -60,7 +60,7 @@ export const MemoizedSemesterTile = memo(
           }}
           onMouseLeave={() => {
             setHoverOpen(false);
-            clearTimeout(hoverTimer.current);
+            if (hoverTimer.current !== null) clearTimeout(hoverTimer.current);
           }}
         >
           <CreditsWarnHoverCard

@@ -18,7 +18,7 @@ import { trpc } from '@/utils/trpc';
  */
 export default function PlanDetailPage(
   props: InferGetServerSidePropsType<typeof getServerSideProps>,
-): JSX.Element {
+) {
   const { planId } = props;
 
   const {

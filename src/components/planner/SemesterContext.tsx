@@ -185,10 +185,8 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
 
   const [selectedCourseIds, setSelectedCourseIds] = useState<Set<string>>(new Set());
 
-  const [, dispatchUndo] = useReducer<
-    (state: UndoStackReducerState, action: UndoStackReducerAction) => UndoStackReducerState
-  >(
-    (state, action) => {
+  const [, dispatchUndo] = useReducer(
+    (state: UndoStackReducerState, action: UndoStackReducerAction) => {
       switch (action.type) {
         case 'popUndoStack':
           return { stack: state.stack.slice(0, -1), current: state.stack[state.stack.length - 1] };
@@ -230,10 +228,8 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
     setSelectedCourseIds(new Set());
   };
 
-  const [semesters, dispatchSemesters] = useReducer<
-    (state: SemestersReducerState, action: SemestersReducerAction) => Semester[]
-  >(
-    (state, action) => {
+  const [semesters, dispatchSemesters] = useReducer(
+    (state: SemestersReducerState, action: SemestersReducerAction) => {
       switch (action.type) {
         case 'reinitState':
           return action.semesters;

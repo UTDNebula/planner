@@ -21,7 +21,7 @@ type ProfilePageProps = {
 /**
  * A page containing student attributes and other account settings.
  */
-export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Element {
+export default function ProfilePage({ isDesktop }: ProfilePageProps) {
   const userQuery = trpc.user.getUser.useQuery();
   const utils = trpc.useContext();
 

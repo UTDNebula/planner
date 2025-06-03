@@ -353,7 +353,7 @@ function RequirementContainer({
   degreeRequirement,
   setCarousel,
   courses,
-}: RequirementContainerProps): JSX.Element {
+}: RequirementContainerProps) {
   const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
     staleTime: Infinity,
     refetchOnWindowFocus: false,

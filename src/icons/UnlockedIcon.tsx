@@ -1,6 +1,6 @@
 import React, { SVGProps } from 'react';
 
-export default function UnlockedIcon(props: SVGProps<SVGSVGElement>): JSX.Element {
+export default function UnlockedIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       width="15"

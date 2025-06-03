@@ -4,9 +4,7 @@ import useMedia from '@/utils/media';
 
 import Sidebar from './Sidebar';
 
-export default function Layout({
-  children,
-}: React.PropsWithChildren<Record<string, unknown>>): JSX.Element {
+export default function Layout({ children }: React.PropsWithChildren<Record<string, unknown>>) {
   const isDesktop = useMedia('(min-width: 900px)');
 
   return (

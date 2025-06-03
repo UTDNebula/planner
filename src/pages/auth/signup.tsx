@@ -5,7 +5,7 @@ import { AuthPage, getStaticProps } from './login';
 
 export default function LoginPage({
   providers,
-}: InferGetServerSidePropsType<typeof getStaticProps>): JSX.Element {
+}: InferGetServerSidePropsType<typeof getStaticProps>) {
   return <AuthPage providers={providers} signUp />;
 }
 

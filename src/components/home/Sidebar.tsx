@@ -10,7 +10,7 @@ import LogoIcon from '@/icons/LogoIcon';
 import LogoutIcon from '@/icons/LogoutIcon';
 import ProfileIcon from '@/icons/ProfileIcon';
 
-export default function Sidebar({ isMobile }: { isMobile: boolean }): JSX.Element {
+export default function Sidebar({ isMobile }: { isMobile: boolean }) {
   const [open, setOpen] = useState(!isMobile);
   const [display, setDisplay] = useState(true);
   const hiddenRoutes = useMemo(() => ['/app/plans'], []);

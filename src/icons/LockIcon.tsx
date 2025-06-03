@@ -1,6 +1,6 @@
 import React, { SVGProps } from 'react';
 
-export default function LockIcon(props: SVGProps<SVGSVGElement>): JSX.Element {
+export default function LockIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       width="13"

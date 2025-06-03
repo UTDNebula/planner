@@ -1,8 +1,9 @@
 import { createContextInner } from '@server/trpc/context';
 import { createServerSideHelpers } from '@trpc/react-query/server';
-import React, { GetServerSidePropsContext } from 'next';
+import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import { getServerSession } from 'next-auth';
+import React from 'react';
 import superjson from 'superjson';
 
 import { appRouter } from '@/server/trpc/router/_app';

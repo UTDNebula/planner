@@ -21,7 +21,7 @@ export type WelcomeData = {
   handleValidate: (value: boolean) => void;
 };
 
-export default function Welcome({ handleChange, data, handleValidate }: WelcomeData): JSX.Element {
+export default function Welcome({ handleChange, data, handleValidate }: WelcomeData) {
   const { name, startSemester, endSemester }: WelcomeTypes = data;
 
   const setName = (event: SelectChangeEvent<string>) => {

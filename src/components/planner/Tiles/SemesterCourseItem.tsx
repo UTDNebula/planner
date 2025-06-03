@@ -60,7 +60,7 @@ export const MemoizedSemesterCourseItem = memo(
     const [hoverEllipse, setHoverEllipse] = useState(false);
     const [prereqWarnOpen, setPrereqWarnOpen] = useState(false);
 
-    const hoverTimer = useRef<ReturnType<typeof setTimeout>>();
+    const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     const { title, description } = useGetCourseInfo(course.code);
     const { allSemesters } = useSemestersContext();
@@ -95,7 +95,7 @@ export const MemoizedSemesterCourseItem = memo(
           setHoverEllipse(false);
           setHoverOpen(false);
           setPrereqWarnOpen(false);
-          clearTimeout(hoverTimer.current);
+          if (hoverTimer.current !== null) clearTimeout(hoverTimer.current);
         }}
       >
         <div className="h-[50px] min-w-2">

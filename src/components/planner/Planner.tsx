@@ -51,10 +51,7 @@ export interface PlannerProps {
 /** Controlled wrapper around course list and semester tiles */
 
 /** Controlled wrapper around course list and semester tiles */
-export default function Planner({
-  degreeRequirementsData,
-  transferCredits,
-}: PlannerProps): JSX.Element {
+export default function Planner({ degreeRequirementsData, transferCredits }: PlannerProps) {
   const {
     planId,
     filteredSemesters,

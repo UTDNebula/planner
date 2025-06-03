@@ -8,7 +8,7 @@ export default function Accordion({
   filled = false,
   startOpen = false,
 }: {
-  header: JSX.Element;
+  header: React.ReactNode;
   children: React.ReactNode;
   filled?: boolean;
   startOpen?: boolean;
