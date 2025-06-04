@@ -1,5 +1,5 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import ArchiveIcon from '@/icons/ArchiveIcon';
@@ -14,7 +14,7 @@ import { tagColors } from '../utils';
 const itemClasses =
   'flex items-center gap-x-3 border-b border-neutral-300 px-2 py-2 hover:bg-neutral-200 cursor-pointer text-sm';
 
-const contentClasses = 'w-64 rounded-md border border-neutral-300 bg-generic-white z-[9999]';
+const contentClasses = 'w-64 rounded-md border border-neutral-300 bg-generic-white z-9999';
 
 const disabledClasses = 'text-black/25 cursor-default';
 
@@ -37,7 +37,7 @@ const SemesterTileDropdown: FC<SemesterTileDropdownProps> = ({
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
-        <button aria-label="Customise options" className="self-stretch">
+        <button aria-label="Customise options" className="self-stretch cursor-pointer">
           <DotsHorizontalIcon className="m-auto" />
         </button>
       </DropdownMenu.Trigger>
@@ -95,7 +95,7 @@ const SemesterTileDropdown: FC<SemesterTileDropdownProps> = ({
                     key={`${id}-tag-${color}`}
                     onClick={() => changeColor(color as keyof typeof tagColors)}
                   >
-                    <div className={`h-5 w-5 rounded-sm border ${classes}`}></div>
+                    <div className={`h-5 w-5 rounded-xs border ${classes}`}></div>
                     <span>
                       {color.substring(0, 1).toUpperCase() + color.substring(1) || 'None'}
                     </span>

@@ -1,6 +1,6 @@
-import { SVGProps } from 'react';
+import React from 'react';
 
-const AuthIcons: { [provider: string]: [icon: SVGProps<SVGSVGElement>] } = {
+const AuthIcons: { [provider: string]: React.ReactNode } = {
   discord: [
     <>
       <svg

@@ -1,5 +1,5 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import ChevronIcon from '@/icons/ChevronIcon';
@@ -28,6 +28,7 @@ export interface SemesterTileDropdownProps {
   isValid: boolean;
   prereqOverriden: boolean;
   onPrereqOverrideChange: () => void;
+  children: React.ReactNode;
 }
 
 const SemesterCourseItemDropdown: FC<SemesterTileDropdownProps> = ({
@@ -110,7 +111,7 @@ const SemesterCourseItemDropdown: FC<SemesterTileDropdownProps> = ({
                     key={`${id}-tag-${color}`}
                     onClick={() => changeColor(color as keyof typeof tagColors)}
                   >
-                    <div className={`h-5 w-5 rounded-sm border ${classes}`}></div>
+                    <div className={`h-5 w-5 rounded-xs border ${classes}`}></div>
                     <span>
                       {color.substring(0, 1).toUpperCase() + color.substring(1) || 'None'}
                     </span>

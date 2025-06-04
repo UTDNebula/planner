@@ -1,4 +1,4 @@
-import React, { Children, FC } from 'react';
+import React, { Children, ComponentPropsWithoutRef, FC } from 'react';
 
 import Spinner from './Spinner';
 
@@ -6,7 +6,7 @@ const colorClasses = {
   primary: 'bg-primary hover:bg-[#EEF2FF] hover:text-[#312E81]  text-generic-white',
   secondary: 'bg-generic-white hover:bg-neutral-50 border border-neutral-300',
   tertiary: 'bg-primary-100 text-primary-900',
-  border: 'border-1 border-[#E5E5E5] bg-white',
+  border: 'border border-[#E5E5E5] bg-white',
 };
 
 const sizeClasses = {
@@ -25,7 +25,7 @@ const fontClasses = {
   default: 'text-sm font-medium',
 };
 
-export interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
+export interface ButtonProps extends ComponentPropsWithoutRef<'button'> {
   color?: keyof typeof colorClasses;
   size?: keyof typeof sizeClasses;
   width?: keyof typeof widthClasses;
@@ -49,7 +49,7 @@ const Button: FC<ButtonProps> = ({
   return (
     <button
       {...props}
-      className={`relative ${colorClasses[color]} ${sizeClasses[size]} flex h-fit ${widthClasses[width]} ${fontClasses[font]} items-center justify-center rounded-md transition duration-200 ease-in-out ${className} disabled:opacity-50`}
+      className={`relative ${colorClasses[color]} ${sizeClasses[size]} flex h-fit ${widthClasses[width]} ${fontClasses[font]} items-center justify-center rounded-md transition duration-200 ease-in-out ${className} disabled:opacity-50 cursor-pointer`}
     >
       {icon && <span className={isLoading ? 'opacity-0' : ''}>{icon}</span>}
       {Children.count(children) > 0 && (

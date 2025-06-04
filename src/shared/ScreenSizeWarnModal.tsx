@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 
 import Modal, { ModalProps } from '@/components/Modal';
 import UnfilledWarningIcon from '@/icons/UnfilledWarningIcon';

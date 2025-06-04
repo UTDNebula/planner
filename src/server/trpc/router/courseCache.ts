@@ -1,7 +1,7 @@
 import { Mutex } from 'async-mutex';
+import { courses as Course } from 'prisma/generated/platform';
 
 import { platformPrisma } from '@/server/db/platform_client';
-import { courses as Course } from 'prisma/generated/platform';
 
 class CourseCacheError extends Error {
   name = 'CourseCacheError';

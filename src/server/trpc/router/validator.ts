@@ -1,13 +1,13 @@
 import { Course, Prisma, Semester } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
+import { courses as PlatformCourse } from 'prisma/generated/platform';
 import { z } from 'zod';
 
 import { env } from '@/env/server.mjs';
-import { courses as PlatformCourse } from 'prisma/generated/platform';
 
+import { protectedProcedure, router } from '../trpc';
 import { courseCache } from './courseCache';
 import { DegreeNotFound, DegreeValidationError } from './errors';
-import { protectedProcedure, router } from '../trpc';
 
 type PlanData = {
   id: string;

@@ -1,6 +1,8 @@
+import 'react-loading-skeleton/dist/skeleton.css';
+
 import { UniqueIdentifier, useDraggable } from '@dnd-kit/core';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
-import React, { ComponentPropsWithoutRef, FC, forwardRef, useState, useRef } from 'react';
+import React, { ComponentPropsWithoutRef, FC, forwardRef, memo, useRef, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 
 import Checkbox from '@/components/Checkbox';
@@ -9,15 +11,13 @@ import FilledWarningIcon from '@/icons/FilledWarningIcon';
 import LockIcon from '@/icons/LockIcon';
 import { trpc } from '@/utils/trpc';
 
-import SemesterCourseItemDropdown from './SemesterCourseItemDropdown';
 import CourseInfoHoverCard from '../CourseInfoHoverCard';
 import PrereqWarnHoverCard from '../PrereqWarnHoverCard';
 import { useSemestersContext } from '../SemesterContext';
 import { DragDataFromSemesterTile, DraggableCourse, Semester } from '../types';
 import useGetCourseInfo from '../useGetCourseInfo';
 import { tagColors } from '../utils';
-
-import 'react-loading-skeleton/dist/skeleton.css';
+import SemesterCourseItemDropdown from './SemesterCourseItemDropdown';
 
 export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'> {
   course: DraggableCourse;
@@ -36,7 +36,7 @@ export interface SemesterCourseItemProps extends ComponentPropsWithoutRef<'div'>
 
 /** UI implementation of a semester course */
 /* eslint-disable react/prop-types */
-export const MemoizedSemesterCourseItem = React.memo(
+export const MemoizedSemesterCourseItem = memo(
   forwardRef<HTMLDivElement, SemesterCourseItemProps>(function SemesterCourseItem(
     {
       course,
@@ -60,7 +60,7 @@ export const MemoizedSemesterCourseItem = React.memo(
     const [hoverEllipse, setHoverEllipse] = useState(false);
     const [prereqWarnOpen, setPrereqWarnOpen] = useState(false);
 
-    const hoverTimer = useRef<ReturnType<typeof setTimeout>>();
+    const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     const { title, description } = useGetCourseInfo(course.code);
     const { allSemesters } = useSemestersContext();
@@ -95,10 +95,10 @@ export const MemoizedSemesterCourseItem = React.memo(
           setHoverEllipse(false);
           setHoverOpen(false);
           setPrereqWarnOpen(false);
-          clearTimeout(hoverTimer.current);
+          if (hoverTimer.current !== null) clearTimeout(hoverTimer.current);
         }}
       >
-        <div className="h-[50px] min-w-[0.5rem]">
+        <div className="h-[50px] min-w-2">
           {course.color && (
             <div
               className={`h-full w-full rounded-l-md transition-all ${tagColors[course.color]} `}
@@ -287,4 +287,4 @@ const DraggableSemesterCourseItem: FC<DraggableSemesterCourseItemProps> = ({
   );
 };
 
-export default React.memo(DraggableSemesterCourseItem);
+export default memo(DraggableSemesterCourseItem);

@@ -1,12 +1,11 @@
 import router from 'next/router';
-import { useState } from 'react'; //nprogress module
-import React from 'react';
+import React, { useEffect, useState } from 'react'; //nprogress module
 
 import AutoCompleteMajor from '@/components/AutoCompleteMajor';
 import { trpc } from '@/utils/trpc';
 
-import { Page } from './Page';
 import useSearch from '../search/search';
+import { Page } from './Page';
 
 export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
   const utils = trpc.useContext();
@@ -28,7 +27,6 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
     isError,
   } = trpc.template.publicGetAllTemplates.useQuery(undefined, {
     staleTime: Infinity,
-    cacheTime: Infinity,
   });
 
   const createTemplateUserPlan = trpc.user.createTemplateUserPlan.useMutation({
@@ -45,7 +43,7 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
     constraints: [0, 100],
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     updateQuery('');
   }, [isLoading]);
 
@@ -125,12 +123,11 @@ export default function TemplateView({ onDismiss }: { onDismiss: () => void }) {
       <div className="relative mb-4">
         <AutoCompleteMajor
           data-testid="major-autocomplete"
-          className="w-[500px] outline-none"
+          className="w-[500px] outline-hidden"
           key={0}
           onValueChange={(value) => setMajor(value)}
           onInputChange={(query: string) => updateQuery(query)}
           options={results.map((major: { filMajor: string }) => major.filMajor)}
-          autoFocus
         ></AutoCompleteMajor>
       </div>
       <small className={`${majorError ? 'visible' : 'hidden'} -mt-6  text-red-500`}>

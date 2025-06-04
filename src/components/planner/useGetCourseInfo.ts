@@ -15,7 +15,6 @@ const useGetCourseInfo = (
 } => {
   const { data } = trpc.courses.publicGetAllCourses.useQuery(undefined, {
     staleTime: Infinity,
-    cacheTime: Infinity,
     refetchOnWindowFocus: false,
   });
   const { prereqs, coreqs, co_or_pre, title } = useMemo(

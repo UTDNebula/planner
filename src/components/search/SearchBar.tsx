@@ -10,7 +10,7 @@ export type SearchBarProps = {
   updateQuery: (query: string) => void;
 };
 
-export default function SearchBar({ updateQuery }: SearchBarProps): JSX.Element {
+export default function SearchBar({ updateQuery }: SearchBarProps) {
   const [query, setQuery] = useState<string>('');
 
   const handleQueryUpdate = (event: React.ChangeEvent<HTMLInputElement>) => {

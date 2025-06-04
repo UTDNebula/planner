@@ -2,30 +2,27 @@
 import '../styles/globals.css';
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/introjs.css';
+import 'nprogress/nprogress.css'; //styles of nprogress
 
 import { createTheme, StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { GoogleAnalytics } from '@next/third-parties/google';
-import { Analytics } from '@vercel/analytics/react';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { AnimateSharedLayout } from 'framer-motion';
-import { type AppType, AppProps } from 'next/app';
+import type { NextComponentType } from 'next'; //Import Component type
+import { AppProps, type AppType } from 'next/app';
+import { Inter } from 'next/font/google';
 import Head from 'next/head';
 import { Router } from 'next/router';
-import Script from 'next/script';
 import { type Session } from 'next-auth';
 import { SessionProvider, useSession } from 'next-auth/react';
 import NProgress from 'nprogress'; //nprogress module
-import { FC, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 
 import Layout from '@/components/home/Layout';
-import { env } from '@/env/client.mjs';
 import ScreenSizeWarnModal from '@/shared/ScreenSizeWarnModal';
-import 'nprogress/nprogress.css'; //styles of nprogress
 
-import { getBaseUrl, trpc } from '../utils/trpc';
-
-import type { NextComponentType } from 'next'; //Import Component type
+import { trpc } from '../utils/trpc';
 
 // Binding events
 NProgress.configure({ showSpinner: false });
@@ -33,27 +30,17 @@ Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
 
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+});
+
 const theme = createTheme({
   typography: {
     allVariants: {
       color: '#1C2A6D',
     },
-    fontFamily: [
-      'Inter var',
-      'ui-sans-serif',
-      'system-ui',
-      '-apple-system',
-      'BlinkMacSystemFont',
-      '"Segoe UI"',
-      '"Helvetica Neue"',
-      'Arial',
-      '"Noto Sans"',
-      'sans-serif',
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-      '"Noto Color Emoji"',
-    ].join(','),
+    fontFamily: 'inherit',
   },
 });
 //Add custom appProp type then use union to add it
@@ -110,7 +97,7 @@ const NebulaApp: AppType<{ session: Session | null }> = ({
       <AnimateSharedLayout>
         <StyledEngineProvider injectFirst>
           <ThemeProvider theme={theme}>
-            <main className="h-screen w-screen overflow-x-hidden">
+            <main className={`h-screen w-screen overflow-x-hidden ${inter.variable} font-inter`}>
               {Component.auth ? (
                 <Auth>
                   <Layout>
@@ -120,8 +107,7 @@ const NebulaApp: AppType<{ session: Session | null }> = ({
               ) : (
                 <Component {...pageProps} />
               )}
-              <ToastContainer bodyClassName="text-sm text-primary-900 font-sans" />
-              <Analytics />
+              <ToastContainer className="text-sm text-primary-900" />
             </main>
           </ThemeProvider>
         </StyledEngineProvider>
@@ -130,7 +116,7 @@ const NebulaApp: AppType<{ session: Session | null }> = ({
   );
 };
 
-const Auth: FC = ({ children }) => {
+const Auth = ({ children }: { children: React.ReactNode }) => {
   const { status } = useSession({ required: true });
   if (status === 'loading') {
     return <p>Loading...</p>;

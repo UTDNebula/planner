@@ -1,9 +1,9 @@
 import { InputBase } from '@mui/material';
-import React, { useState } from 'react';
+import React, { ComponentPropsWithoutRef, useState } from 'react';
 
 import SearchCourseIcon from '@/icons/SearchCourseIcon';
 
-interface SearchBarProps extends React.ComponentPropsWithoutRef<'div'> {
+interface SearchBarProps extends ComponentPropsWithoutRef<'div'> {
   updateQuery: (query: string) => void;
   placeholder: string;
 }
@@ -20,7 +20,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ placeholder, updateQuery, ...prop
   return (
     <div
       {...props}
-      className={`top-0 z-20 flex h-10 flex-row items-center justify-between overflow-hidden rounded-[10px] border-[2px] border-[#EDEFF7] px-4 ${props.className}`}
+      className={`top-0 z-20 flex h-10 flex-row items-center justify-between overflow-hidden rounded-[10px] border-2 border-[#EDEFF7] px-4 ${props.className}`}
     >
       <SearchCourseIcon />
       <InputBase

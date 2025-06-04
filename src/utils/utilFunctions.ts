@@ -1,9 +1,9 @@
 import { SemesterType } from '@prisma/client';
 import { v4 as uuidv4 } from 'uuid';
 
+import { SemesterCode } from '@/../prisma/utils';
 import { Semester } from '@/components/planner/types';
 import { tagColors } from '@/components/planner/utils';
-import { SemesterCode } from 'prisma/utils';
 
 /**
  * Creates 3 new semesters based on given Fall year.
@@ -67,7 +67,7 @@ export type JSONCourseType = {
  * HIST 1301 -> 3
  * */
 export function getSemesterHourFromCourseCode(code: string): number | null {
-  const [_, hours]: (string | undefined)[] = code.split(' ');
+  const [, hours]: (string | undefined)[] = code.split(' ');
 
   const hoursNum = Number(hours);
 
@@ -169,7 +169,7 @@ export function isSemCodeEqual(semCodeOne: SemesterCode, semCodeTwo: SemesterCod
 }
 
 const regex =
-  /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 export const isValidEmail = (email: string) => {
   return regex.test(email);

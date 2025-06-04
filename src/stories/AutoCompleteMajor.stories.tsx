@@ -1,6 +1,6 @@
-import AutoCompleteMajor from '@/components/AutoCompleteMajor';
-
 import type { Meta, StoryObj } from '@storybook/react';
+
+import AutoCompleteMajor from '@/components/AutoCompleteMajor';
 
 const meta: Meta<typeof AutoCompleteMajor> = {
   component: AutoCompleteMajor,

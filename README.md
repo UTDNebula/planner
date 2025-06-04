@@ -12,11 +12,11 @@ Nebula Planner is a degree planning tool for UTD students.
 
 Contributions are welcome! Join the Discord and request access to the Planner dev team.
 
-<a href="https://discord.com/invite/tcpcnfxmeQ"><img src=".github/discord-join-banner.svg" /></a>
+<a href="https://discord.utdnebula.com/"><img src=".github/discord-join-banner.svg" /></a>
 
 ### Set-up
 
-This project requires [Node v16+](https://nodejs.org/en/) and NPM
+This project requires [Node v22+](https://nodejs.org/en/) and NPM
 installation. It also requires local environment variables since it uses [Neon](https://neon.tech) (hosted PostgresDB service), a SMTP server, and Discord as authentication provider.
 
 <details>
@@ -146,6 +146,7 @@ npm install
     cd validator
     python3.11 -m venv venv # Create virtual environment
     source venv/bin/activate # Use virtual enviornment
+    #venv/Scripts/activate on Windows
     pip install -r requirements.txt # Install dependencies
     flask --app api run
     ```
@@ -176,7 +177,7 @@ npm install
 <!-- TODO(@jasonappah): Copy this over to Confluence, link here. Would probably be worth revisiting/possibly rewriting other docs in this repo as well -->
 <!-- Check out this [blog](https://btt.skgr.xyz/blog/nebula-planner-tech-stack) to learn about the stack we are using and a basic overview of the codebase. -->
 
-Not sure where to start? Join the [Discord](https://discord.com/invite/tcpcnfxmeQ) to get help.
+Not sure where to start? Join the [Discord](https://discord.utdnebula.com/) to get help.
 
 ## Internals
 

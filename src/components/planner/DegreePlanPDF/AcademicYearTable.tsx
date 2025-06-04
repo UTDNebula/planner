@@ -1,4 +1,5 @@
-import { View, Text } from '@react-pdf/renderer';
+import { Text, View } from '@react-pdf/renderer';
+import React from 'react';
 
 import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
 
@@ -106,7 +107,18 @@ const AcademicTableHeaders = ({ elements }: { elements: string[] }) => {
   );
 };
 
-const AcademicTableRow = ({ elements }: { elements: any }) => {
+const AcademicTableRow = ({
+  elements,
+}: {
+  elements: (
+    | null
+    | number
+    | {
+        code: string;
+        title: string;
+      }
+  )[];
+}) => {
   return (
     <View
       style={{
@@ -119,10 +131,16 @@ const AcademicTableRow = ({ elements }: { elements: any }) => {
     >
       <Text style={{ flex: 5, borderLeft: '1px solid #D4D4D4', padding: '4px' }}>
         <Text style={{ color: '#6466f1', fontWeight: 'semibold' }}>
-          {elements[0] && elements[0].code}
+          {typeof elements[0] === 'object' &&
+            elements[0] !== null &&
+            'code' in elements[0] &&
+            elements[0].code}
         </Text>
         <Text> </Text>
-        {elements[0] && elements[0].title}
+        {typeof elements[0] === 'object' &&
+          elements[0] !== null &&
+          'title' in elements[0] &&
+          elements[0].title}
       </Text>
       <View
         style={{
@@ -134,14 +152,20 @@ const AcademicTableRow = ({ elements }: { elements: any }) => {
           padding: '4px',
         }}
       >
-        <Text style={{}}>{elements[1]}</Text>
+        <Text style={{}}>{typeof elements[1] !== 'object' && elements[1]}</Text>
       </View>
       <Text style={{ flex: 5, borderLeft: '1px solid #D4D4D4', padding: '4px' }}>
         <Text style={{ color: '#6466f1', fontWeight: 'semibold' }}>
-          {elements[2] && elements[2].code}
+          {typeof elements[2] === 'object' &&
+            elements[2] !== null &&
+            'code' in elements[2] &&
+            elements[2].code}
         </Text>
         <Text> </Text>
-        {elements[2] && elements[2].title}
+        {typeof elements[2] === 'object' &&
+          elements[2] !== null &&
+          'title' in elements[2] &&
+          elements[2].title}
       </Text>
       <View
         style={{
@@ -153,14 +177,20 @@ const AcademicTableRow = ({ elements }: { elements: any }) => {
           padding: '4px',
         }}
       >
-        <Text style={{}}>{elements[3]}</Text>
+        <Text style={{}}>{typeof elements[3] !== 'object' && elements[3]}</Text>
       </View>
       <Text style={{ flex: 5, borderLeft: '1px solid #D4D4D4', padding: '4px' }}>
         <Text style={{ color: '#6466f1', fontWeight: 'semibold' }}>
-          {elements[4] && elements[4].code}
+          {typeof elements[4] === 'object' &&
+            elements[4] !== null &&
+            'code' in elements[4] &&
+            elements[4].code}
         </Text>
         <Text> </Text>
-        {elements[4] && elements[4].title}
+        {typeof elements[4] === 'object' &&
+          elements[4] !== null &&
+          'title' in elements[4] &&
+          elements[4].title}
       </Text>
       <View
         style={{
@@ -173,7 +203,7 @@ const AcademicTableRow = ({ elements }: { elements: any }) => {
           padding: '4px',
         }}
       >
-        <Text style={{}}>{elements[5]}</Text>
+        <Text style={{}}>{typeof elements[5] !== 'object' && elements[5]}</Text>
       </View>
     </View>
   );

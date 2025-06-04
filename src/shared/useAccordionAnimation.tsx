@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useCallback, useState } from 'react';
 
 const useAccordionAnimation = (
   ref: React.RefObject<HTMLElement | null> | null,

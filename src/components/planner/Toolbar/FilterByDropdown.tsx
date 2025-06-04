@@ -1,6 +1,6 @@
 import { SemesterType } from '@prisma/client';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import { FC, useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 import CalendarIcon from '@/icons/CalendarIcon';
 import ChevronIcon from '@/icons/ChevronIcon';
@@ -14,9 +14,9 @@ import { tagColors } from '../utils';
 const itemClasses =
   'flex items-center gap-x-3 border-b border-neutral-300 px-3 py-2 hover:bg-neutral-100 cursor-pointer group';
 
-const contentClasses = 'w-64 rounded-md border border-neutral-300 bg-generic-white z-[9999]';
+const contentClasses = 'w-64 rounded-md border border-neutral-300 bg-generic-white z-9999';
 
-const FilterByDropdown: FC = ({ children }) => {
+const FilterByDropdown = ({ children }: { children: React.ReactNode }) => {
   const {
     toggleColorFilter,
     toggleSemesterFilter,
@@ -56,7 +56,7 @@ const FilterByDropdown: FC = ({ children }) => {
             >
               <div className="flex items-center gap-x-3">
                 <Checkbox
-                  className="group-hover:!bg-neutral-100"
+                  className="group-hover:bg-neutral-100!"
                   checked={filters.some((filter) => filter.type === 'color')}
                 />
                 <ColorSwatchIcon />
@@ -82,14 +82,14 @@ const FilterByDropdown: FC = ({ children }) => {
                       }}
                     >
                       <Checkbox
-                        className="group-hover:!bg-neutral-100"
+                        className="group-hover:bg-neutral-100!"
                         checked={filters.some(
                           (filter) => filter.type === 'color' && filter.color === color,
                         )}
                         onClick={(e) => e.stopPropagation()}
                         onCheckedChange={() => toggleColorFilter(color as keyof typeof tagColors)}
                       />
-                      <div className={`h-5 w-5 rounded-sm border ${classes}`}></div>
+                      <div className={`h-5 w-5 rounded-xs border ${classes}`}></div>
                       <span>
                         {color.substring(0, 1).toUpperCase() + color.substring(1) || 'None'}
                       </span>
@@ -107,7 +107,7 @@ const FilterByDropdown: FC = ({ children }) => {
             >
               <div className="flex items-center gap-x-3">
                 <Checkbox
-                  className="group-hover:!bg-neutral-100"
+                  className="group-hover:bg-neutral-100!"
                   checked={filters.some((filter) => filter.type === 'year')}
                 />
                 <CalendarIcon />
@@ -135,7 +135,7 @@ const FilterByDropdown: FC = ({ children }) => {
                         }}
                       >
                         <Checkbox
-                          className="group-hover:!bg-neutral-100"
+                          className="group-hover:bg-neutral-100!"
                           onClick={(e) => e.stopPropagation()}
                           checked={filters.some(
                             (filter) => filter.type === 'year' && filter.year === year,
@@ -157,7 +157,7 @@ const FilterByDropdown: FC = ({ children }) => {
             >
               <div className="flex items-center gap-x-3">
                 <Checkbox
-                  className="group-hover:!bg-neutral-100"
+                  className="group-hover:bg-neutral-100!"
                   checked={filters.some((filter) => filter.type === 'semester')}
                 />
                 <ClockIcon />
@@ -183,7 +183,7 @@ const FilterByDropdown: FC = ({ children }) => {
                       }}
                     >
                       <Checkbox
-                        className="group-hover:!bg-neutral-100"
+                        className="group-hover:bg-neutral-100!"
                         onClick={(e) => e.stopPropagation()}
                         checked={filters.some(
                           (filter) =>

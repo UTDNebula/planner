@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { createPortal } from 'react-dom';
 
 import Modal, { ModalProps } from '@/components/Modal';
@@ -18,7 +18,7 @@ const DeletePlanModal: FC<DeleteModalProps> = ({ deletePlan, deleteLoading, onCl
         {'Are you sure you want to delete? This action cannot be undone.'}
       </p>
       <div className="mt-4 flex h-full w-full flex-row gap-x-4">
-        <div className="flex-grow"></div>
+        <div className="grow"></div>
         <Button
           className="ml-autoc"
           color="tertiary"

@@ -1,4 +1,4 @@
-""" Parser for *.req files."""
+"""Parser for *.req files."""
 
 from core.requirement import Requirement
 from core.matchers import Matcher

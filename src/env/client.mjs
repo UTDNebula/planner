@@ -4,10 +4,6 @@ import { clientEnv, clientSchema } from './schema.mjs';
 
 const _clientEnv = clientSchema.safeParse(clientEnv);
 
-if (_clientEnv.success === false) {
-  _clientEnv.error; // it works!
-}
-
 export const formatErrors = (
   /** @type {import('zod').ZodFormattedError<Map<string,string>,string>} */
   errors,

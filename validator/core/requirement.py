@@ -1,4 +1,5 @@
 """Requirement represents a degree requirements."""
+
 from utils import hashable
 from core import matchers
 

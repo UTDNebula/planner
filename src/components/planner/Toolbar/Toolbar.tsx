@@ -1,7 +1,7 @@
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { usePDF } from '@react-pdf/renderer';
 import Link from 'next/link';
-import { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 
 import DownloadIcon from '@/icons/DownloadIcon';
 import SettingsIcon from '@/icons/SettingsIcon';
@@ -9,14 +9,14 @@ import SwitchVerticalIcon from '@/icons/SwitchVerticalIcon';
 import DeletePlanModal from '@/shared/DeletePlanModal';
 import { trpc } from '@/utils/trpc';
 
-import EditableMajorTitle from './EditablePlanTitle';
-import EditSemestersModal from './EditSemestersModal';
-import FilterByDropdown from './FilterByDropdown';
-import SettingsDropdown from './SettingsDropdown';
 import Button from '../../Button';
 import DegreePlanPDF from '../DegreePlanPDF/DegreePlanPDF';
 import EditableMajor from '../EditableMajor';
 import { useSemestersContext } from '../SemesterContext';
+import EditableMajorTitle from './EditablePlanTitle';
+import EditSemestersModal from './EditSemestersModal';
+import FilterByDropdown from './FilterByDropdown';
+import SettingsDropdown from './SettingsDropdown';
 
 export interface ToolbarProps {
   degreeRequirements: { id: string; major: string };
@@ -43,30 +43,37 @@ const Toolbar: FC<ToolbarProps> = ({
 
   const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
     staleTime: Infinity,
-    cacheTime: Infinity,
     refetchOnWindowFocus: false,
   });
 
   const { data: coursesData } = q;
 
-  const [{ loading, error, url }, update] = usePDF({
-    document: (
-      <DegreePlanPDF
-        studentName={studentName}
-        planTitle={title}
-        major={major}
-        semesters={semesters}
-        transferCredits={transferCredits}
-        coursesData={coursesData ?? []}
-      />
-    ),
+  const degreePlanPDF = (
+    <DegreePlanPDF
+      studentName={studentName}
+      planTitle={title}
+      major={major}
+      semesters={semesters}
+      transferCredits={transferCredits}
+      coursesData={coursesData ?? []}
+    />
+  );
+
+  const [{ error, url }, update] = usePDF({
+    document: degreePlanPDF,
   });
 
-  useEffect(() => update(), [update, studentName, title, semesters, transferCredits, coursesData]);
+  useEffect(
+    () => update(degreePlanPDF),
+    [update, studentName, title, semesters, transferCredits, coursesData],
+  );
   return (
     <div className="flex flex-row items-start gap-2 py-1 text-primary-900">
       <ToolbarWrapper>
-        <button type="button" className="rounded-sm transition-all hover:bg-black/10">
+        <button
+          type="button"
+          className="rounded-xs transition-all hover:bg-black/10 cursor-pointer"
+        >
           <Link href="/app/home">
             <ArrowBackIcon fontSize="medium" />
           </Link>
@@ -155,6 +162,6 @@ const Toolbar: FC<ToolbarProps> = ({
 
 export default Toolbar;
 
-const ToolbarWrapper: FC = ({ children }) => {
+const ToolbarWrapper = ({ children }: { children: React.ReactNode }) => {
   return <div className="flex h-8 w-fit items-center justify-center">{children}</div>;
 };

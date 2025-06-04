@@ -1,6 +1,6 @@
-import { SVGProps } from 'react';
+import React, { SVGProps } from 'react';
 
-export default function ChevronIcon(props: SVGProps<SVGSVGElement>): JSX.Element {
+export default function ChevronIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

@@ -46,5 +46,5 @@ jobs:
         uses: thollander/actions-comment-pull-request@v2
         with:
           message: |
-            Vercel Preview URL :rocket: : ${{ steps.deploy.outputs.preview_url }}
+            Vercel Preview URL :rocket: : ${{ steps.deploy.outputs.preview_url }}/auth/login
             Neon branch :elephant: : https://console.neon.tech/app/projects/${{ secrets.NEON_PROJECT_ID }}/branches/${{ steps.create_branch.outputs.branch_id }}

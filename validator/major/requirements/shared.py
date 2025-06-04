@@ -1,4 +1,4 @@
-""" Definitions for shared requirements """
+"""Definitions for shared requirements"""
 
 from __future__ import annotations
 import json
@@ -330,9 +330,9 @@ class HoursRequirement(AbstractRequirement):
     ) -> None:
         self.required_hours = required_hours
         self.requirements = requirements
-        self.valid_courses: dict[
-            str, int
-        ] = valid_courses  # Stores map of course & # hours fulfilled (i.e. {"CS 1200": 2}). This is done due to course splitting (1 course can be used to satisfy multiple requirements)
+        self.valid_courses: dict[str, int] = (
+            valid_courses  # Stores map of course & # hours fulfilled (i.e. {"CS 1200": 2}). This is done due to course splitting (1 course can be used to satisfy multiple requirements)
+        )
         self.metadata: dict[str, Any] = metadata
         self.override_filled = False
 

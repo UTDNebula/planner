@@ -1,70 +1,40 @@
 import Autocomplete from '@mui/material/Autocomplete';
-import Popper from '@mui/material/Popper';
 import TextField from '@mui/material/TextField';
-import { FC, useCallback, useRef } from 'react';
+import React, { ComponentPropsWithoutRef, FC } from 'react';
 
-interface AutoCompleteMajorProps extends React.ComponentPropsWithoutRef<'div'> {
-  onValueChange: (value: string) => void;
+interface AutoCompleteMajorProps extends ComponentPropsWithoutRef<'div'> {
+  onValueChange?: (value: string) => void;
   onInputChange: (query: string) => void;
   options: string[];
-  autoFocus?: boolean;
   placeholder?: string;
-  defaultValue?: string;
 }
 
-const AutoCompleteMajor: FC<AutoCompleteMajorProps & React.ComponentPropsWithoutRef<'button'>> = ({
+const AutoCompleteMajor: FC<AutoCompleteMajorProps & ComponentPropsWithoutRef<'button'>> = ({
   onValueChange,
   onInputChange,
   options,
-  autoFocus,
   placeholder = 'Major',
-  defaultValue = '',
   ...props
 }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const CustomPopper = useCallback(
-    (props) => {
-      if (!containerRef.current) {
-        return <div></div>;
-      }
-      const { width } = containerRef.current.getBoundingClientRect();
-      return (
-        <Popper
-          {...props}
-          placement="bottom"
-          anchorEl={containerRef.current}
-          className="z-[9999] overflow-hidden rounded-[10px] text-sm shadow-lg"
-          style={{
-            width: width,
-            border: options.length > 0 ? '1px solid #EDEFF7' : 'none',
-          }}
-        />
-      );
-    },
-    [containerRef, options.length],
-  );
-
   return (
     <div {...props}>
-      <div ref={containerRef} className="absolute -bottom-3 left-0 h-full w-full "></div>
+      <div className="absolute -bottom-3 left-0 h-full w-full "></div>
       <Autocomplete
         freeSolo
         disableClearable
-        onChange={(_, value) => onValueChange(value ?? '')}
+        onChange={(_, value) => typeof onValueChange !== 'undefined' && onValueChange(value ?? '')}
         onInputChange={(_, query) => {
           onInputChange(query);
         }}
         options={options}
         sx={{ border: '1px solid var(--color-neutral-500)', borderRadius: '0.375rem' }}
         fullWidth
-        PopperComponent={CustomPopper}
         renderInput={(params) => {
           return (
             <TextField
               {...params}
               variant="standard"
-              className="h-11 appearance-none pl-4 text-[14px] font-semibold text-black outline-none"
+              className="h-11 appearance-none pl-4 text-[14px] font-semibold text-black outline-hidden"
               inputProps={{
                 style: { fontSize: 14, marginTop: 8 },
                 ...params.inputProps,

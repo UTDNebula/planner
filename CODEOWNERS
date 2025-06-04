@@ -1,6 +1,6 @@
 # Request lead for file changes in root and workflows.
-/* @akevinge
-/.github/**/* @akevinge
+/* @UTDNebula/pr-reviewers
+/.github/**/* @UTDNebula/pr-reviewers
 
 # Request Planner PR Reviewers team for changes in to the following root directories.
 /.vscode/ @UTDNebula/pr-reviewers
