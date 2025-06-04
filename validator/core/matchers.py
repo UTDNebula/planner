@@ -277,5 +277,5 @@ def list_matcher_requirements(matcher: Matcher) -> list[str]:
     Only supports NameList atm
     """
     if not isinstance(matcher, NameListMatcher):
-        raise NotImplemented
+        raise NotImplementedError
     return [course for course in matcher.name_list]
