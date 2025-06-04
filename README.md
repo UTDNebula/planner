@@ -146,6 +146,7 @@ npm install
     cd validator
     python3.11 -m venv venv # Create virtual environment
     source venv/bin/activate # Use virtual enviornment
+    #venv/Scripts/activate on Windows
     pip install -r requirements.txt # Install dependencies
     flask --app api run
     ```

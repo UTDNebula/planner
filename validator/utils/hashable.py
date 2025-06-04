@@ -9,7 +9,7 @@ class NameDefinedClass(ABC):
 
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, NameDefinedClass):
-            raise NotImplemented
+            raise NotImplementedError
         return self.name == other.name
 
     def __lt__(self, other: NameDefinedClass) -> bool:
