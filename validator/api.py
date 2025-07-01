@@ -1,5 +1,6 @@
 import json
 from glob import glob
+import sentry_sdk
 from flask import Flask, Response, request, make_response
 from http import HTTPStatus
 from flask_cors import CORS
@@ -9,6 +10,13 @@ from degree_solver import (
     DegreeRequirementsInput,
     DegreeRequirementsSolver,
     DegreeNotFoundException,
+)
+
+sentry_sdk.init(
+    dsn="https://3ee7dc417c569e7069bf9d6f18a5c14a@o4504918397353984.ingest.us.sentry.io/4509591448846336",
+    # Add data like request headers and IP for users,
+    # see https://docs.sentry.io/platforms/python/data-management/data-collected/ for more info
+    send_default_pii=True,
 )
 
 
