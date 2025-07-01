@@ -63,6 +63,7 @@ rich==13.9.4
 rpds-py==0.25.1
 ruamel.yaml==0.18.12
 ruamel.yaml.clib==0.2.12
+sentry-sdk==2.32.0
 six==1.17.0
 soupsieve==2.7
 tomli==2.2.1
