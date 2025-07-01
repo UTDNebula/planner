@@ -258,7 +258,7 @@ function CourseSelectorContainer({
         <div className="flex grow items-end justify-center text-center text-base font-semibold not-italic leading-6 text-(--neutral-400,#A3A3A3)">
           Drag courses here to delete
         </div>
-        <div className="flex grow items-end justify-end text-sm ">
+        <div className="flex grow items-end justify-end text-sm mb-16">
           <div>
             <span className="font-bold">Warning:</span> This is an unofficial tool not affiliated
             with the university. For official advice, please consult the course catalog and confirm

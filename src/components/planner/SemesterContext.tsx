@@ -572,7 +572,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
           },
           {
             autoClose: 1000,
-            position: 'bottom-right',
+            position: 'bottom-left',
           },
         ),
       args: { courseIds: coursesToDelete },
@@ -606,7 +606,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
               },
               {
                 autoClose: 1000,
-                position: 'bottom-right',
+                position: 'bottom-left',
               },
             ),
           args: coursesCopy,
@@ -655,7 +655,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
               },
               {
                 autoClose: 1000,
-                position: 'bottom-right',
+                position: 'bottom-left',
               },
             ),
           args: { semesterId: semester.id, courses: semester.courses },
@@ -686,7 +686,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
           },
           {
             autoClose: 1000,
-            position: 'bottom-right',
+            position: 'bottom-left',
           },
         ),
       args: { semesterIds: semesterIds.map((id) => id.toString()) },
@@ -716,7 +716,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
             },
             {
               autoClose: 1000,
-              position: 'bottom-right',
+              position: 'bottom-left',
             },
           )
           .catch((err) => console.error(err)),
@@ -758,7 +758,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
             },
             {
               autoClose: 1000,
-              position: 'bottom-right',
+              position: 'bottom-left',
             },
           )
           .catch((err) => console.error(err)),
@@ -791,7 +791,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
       toast.warn(
         `You're already taking ${newCourse.code} in ${targetSemester.code.year}${targetSemester.code.semester}`,
         {
-          position: 'bottom-right',
+          position: 'bottom-left',
         },
       );
       return;
@@ -812,7 +812,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
             error: 'Error in adding ' + courseName,
           },
           {
-            position: 'bottom-right',
+            position: 'bottom-left',
             autoClose: 1000,
           },
         ),
@@ -840,7 +840,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
       toast.warn(
         `You're already taking ${courseToMove.code} in ${originSemester.code.year}${destinationSemester.code.semester}`,
         {
-          position: 'bottom-right',
+          position: 'bottom-left',
         },
       );
       return;
@@ -870,7 +870,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
               },
               {
                 autoClose: 1000,
-                position: 'bottom-right',
+                position: 'bottom-left',
               },
             )
             .catch((err) => console.error(err)),
