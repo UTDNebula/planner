@@ -1,15 +1,16 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 
 export interface ModalProps {
   onClose: () => void;
   open: boolean;
+  children?: React.ReactNode;
 }
 
 const Modal: FC<ModalProps> = ({ onClose, open, children }) =>
   open ? (
     <div
       onClick={onClose}
-      className="fixed left-0 top-0 z-[9999] flex h-full w-full animate-fade items-center justify-center bg-black/50 transition-all"
+      className="fixed left-0 top-0 z-9999 flex h-full w-full animate-fade items-center justify-center bg-black/50 transition-all"
     >
       <div
         onClick={(e) => e.stopPropagation()}

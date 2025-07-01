@@ -7,7 +7,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { signOut } from 'next-auth/react';
-import { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { trpc } from '@/utils/trpc';
@@ -21,7 +21,7 @@ type ProfilePageProps = {
 /**
  * A page containing student attributes and other account settings.
  */
-export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Element {
+export default function ProfilePage({ isDesktop }: ProfilePageProps) {
   const userQuery = trpc.user.getUser.useQuery();
   const utils = trpc.useContext();
 
@@ -179,10 +179,10 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
     return true;
   };
 
-  const handleResetPassword = () => {
+  /*const handleResetPassword = () => {
     // TODO: Implement resetting password here
     return true;
-  };
+  };*/
 
   // TODO: Refactor this
   const dumbInitialsParser = useMemo(() => {
@@ -198,7 +198,7 @@ export default function ProfilePage({ isDesktop }: ProfilePageProps): JSX.Elemen
     <main className="flex h-full w-full flex-col overflow-y-auto">
       <div className="mt-4 flex flex-col items-center gap-y-4 self-center">
         <section className="w-full rounded-2xl bg-white">
-          <article className="relative z-10 h-40 w-full rounded-t-lg bg-gradient-to-r from-purple-500 to-blue-500">
+          <article className="relative z-10 h-40 w-full rounded-t-lg bg-linear-to-r from-purple-500 to-blue-500">
             <Avatar
               alt="Remy Sharp"
               sx={{

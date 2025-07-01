@@ -1,25 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import ChevronIcon from '@/icons/ChevronIcon';
+
 export default function Accordion({
   header,
   children,
   filled = false,
   startOpen = false,
 }: {
-  header: JSX.Element;
-  children: JSX.Element;
+  header: React.ReactNode;
+  children: React.ReactNode;
   filled?: boolean;
   startOpen?: boolean;
 }) {
-  const [open, setOpen] = React.useState(startOpen);
+  const [open, setOpen] = useState(startOpen);
   function toggleAccordion() {
     setOpen(!open);
   }
   return (
     <div className={` rounded-md ${filled ? ' opacity-50' : ''}`}>
       <button
-        className="flex w-full flex-row items-center justify-between px-2 duration-500"
+        className="flex w-full flex-row items-center justify-between px-2 duration-500 cursor-pointer"
         onClick={toggleAccordion}
       >
         {header}

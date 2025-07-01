@@ -1,20 +1,20 @@
 import { SemesterType } from '@prisma/client';
 import { createServerSideHelpers } from '@trpc/react-query/server';
+import { type RouterInputs } from '@utils/trpc';
 import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { getServerSession } from 'next-auth/next';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import superjson from 'superjson';
 
+import { SemesterCode } from '@/../prisma/utils';
 import Button from '@/components/Button';
 import Welcome, { WelcomeTypes } from '@/components/onboarding/welcome';
 import { createContextInner } from '@/server/trpc/context';
 import { appRouter } from '@/server/trpc/router/_app';
 import { trpc } from '@/utils/trpc';
 import { generateSemesters } from '@/utils/utilFunctions';
-import { type RouterInputs } from '@utils/trpc';
-import { SemesterCode } from 'prisma/utils';
 
 import { authOptions } from '../api/auth/[...nextauth]';
 
@@ -50,7 +50,7 @@ const initialOnboardingData: OnboardingData = {
 
 export default function OnboardingPage() {
   const [onboardingData, setOnboardingData] = useState<OnboardingData>(initialOnboardingData);
-  const [isModifyLoading, setIsModifyLoading] = React.useState(false);
+  const [isModifyLoading, setIsModifyLoading] = useState(false);
 
   const handleOnboardingDataUpdate = (updatedFields: Partial<OnboardingData>) => {
     setOnboardingData({ ...onboardingData, ...updatedFields });
@@ -68,8 +68,6 @@ export default function OnboardingPage() {
 
   const [page, setPage] = useState(0);
   const [validate, setValidate] = useState([true, true, true]);
-
-  const [validNextPage, setValidNextPage] = useState(false);
 
   const router = useRouter();
 
@@ -90,7 +88,9 @@ export default function OnboardingPage() {
 
     try {
       await addProfile.mutateAsync(input);
-    } catch (error) {}
+    } catch {
+      //Don't error
+    }
 
     router.push('/app/home');
   };
@@ -100,7 +100,6 @@ export default function OnboardingPage() {
       key={0}
       handleChange={handleOnboardingDataUpdate as (updatedFields: Partial<WelcomeTypes>) => void}
       data={{ name, startSemester, endSemester }}
-      semesterOptions={{ startSemesters, endSemesters }}
       handleValidate={validateForm}
     />,
   ];
@@ -112,9 +111,7 @@ export default function OnboardingPage() {
     }
   };
 
-  useEffect(() => {
-    setValidNextPage(validate[page]);
-  });
+  const validNextPage = validate[page];
 
   // TODO: Find better way to structure this glorified form.
   return (
@@ -142,13 +139,6 @@ export default function OnboardingPage() {
             >
               Create Account
             </Button>
-            {/* <button
-              onClick={incrementPage}
-              disabled={!validNextPage}
-              className="w-full rounded-lg bg-[#6366F1] py-3 text-center text-[16px] font-semibold text-white hover:bg-[#EEF2FF] hover:text-[#312E81] disabled:opacity-50"
-            >
-              Create Account
-            </button> */}
           </div>
         </section>
       </div>

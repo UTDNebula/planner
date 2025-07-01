@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { getProviders, signIn, useSession } from 'next-auth/react';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import Button from '@/components/Button';
@@ -20,14 +20,14 @@ const EMAIL_VALIDATION_ERROR_TIMEOUT_MS = 600;
  */
 export default function LoginPage({
   providers,
-}: InferGetServerSidePropsType<typeof getStaticProps>): JSX.Element {
+}: InferGetServerSidePropsType<typeof getStaticProps>) {
   return <AuthPage providers={providers} />;
 }
 
 export function AuthPage(props: {
   providers: Awaited<ReturnType<typeof getProviders>>;
   signUp?: boolean;
-}): JSX.Element {
+}) {
   const { providers } = props;
   const signUp = props.signUp ?? false;
   const [email, setEmail] = useState('');
@@ -42,9 +42,8 @@ export function AuthPage(props: {
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Fetch courses here and put in cache
-  const q = trpc.courses.publicGetAllCourses.useQuery(undefined, {
+  trpc.courses.publicGetAllCourses.useQuery(undefined, {
     staleTime: Infinity,
-    cacheTime: Infinity,
     refetchOnWindowFocus: false,
   });
 
@@ -92,7 +91,7 @@ export function AuthPage(props: {
         <link rel="canonical" href="https://planner.utdnebula.com/auth/login" key="canonical" />
         <meta property="og:url" content="https://planner.utdnebula.com/auth/login" />
       </Head>
-      <div className="relative flex h-screen flex-col items-center justify-center space-y-10 bg-[#ffffff]">
+      <div className="relative flex h-screen flex-col items-center justify-center space-y-10 bg-generic-white">
         {status !== 'loading' && (
           <section className="w-full min-w-[300px] max-w-xl p-5 sm:w-2/3">
             <div className="flex flex-wrap items-center">
@@ -111,8 +110,8 @@ export function AuthPage(props: {
                 <input
                   ref={inputRef}
                   type="email"
-                  className={`w-full rounded border bg-[#F5F5F5] p-3 pl-4 text-[14px] text-[#737373] outline-none focus:border-primary ${
-                    displayEmailError ? '!border-red-500' : ''
+                  className={`w-full rounded border bg-[#F5F5F5] p-3 pl-4 text-[14px] text-[#737373] outline-hidden focus:border-primary ${
+                    displayEmailError ? 'border-red-500!' : ''
                   }`}
                   value={email}
                   onChange={handleEmailChange}
@@ -143,11 +142,11 @@ export function AuthPage(props: {
               </Button>
               {providers && (
                 <div className="relative flex items-center py-5">
-                  <div className="flex-grow border-t border-gray-400"></div>
-                  <span className="mx-4 flex-shrink font-medium text-gray-400">
+                  <div className="grow border-t border-gray-400"></div>
+                  <span className="mx-4 shrink font-medium text-gray-400">
                     or {signUp ? 'sign up' : 'log in'} using other accounts
                   </span>
-                  <div className="flex-grow border-t border-gray-400"></div>
+                  <div className="grow border-t border-gray-400"></div>
                 </div>
               )}
               <div className="flex w-full appearance-none items-center justify-center rounded-lg pb-4">
@@ -161,7 +160,7 @@ export function AuthPage(props: {
                           callbackUrl: '/app/home',
                         });
                       }}
-                      className={`-ml-2 h-10 rounded-full px-3 text-gray-200 `}
+                      className={`-ml-2 h-10 rounded-full px-3 text-gray-200 cursor-pointer `}
                     >
                       {AuthIcons[provider.id]}
                     </button>

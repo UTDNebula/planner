@@ -1,7 +1,7 @@
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import EditIcon from '@/icons/EditIcon';
@@ -28,7 +28,7 @@ const EditableMajor = ({
     <>
       {!editMajor ? (
         <button
-          className="flex items-center gap-x-3 rounded-2xl bg-primary-100 px-3 py-2 tracking-tight"
+          className="flex items-center gap-x-3 rounded-2xl bg-primary-100 px-3 py-2 tracking-tight cursor-pointer"
           onClick={() => setEditMajor(true)}
         >
           <span className="text-lg font-semibold text-primary-800" data-testid="plan-major">
@@ -94,7 +94,7 @@ const EditMajorAutocomplete = ({
     return (
       <>
         Oops, we ran into an error! Please let us know on our{' '}
-        <Link href="https://discord.gg/anrh9B2Z3w" className="underline">
+        <Link href="https://discord.utdnebula.com/" className="underline">
           discord
         </Link>{' '}
         to get it fixed as soon as possible.

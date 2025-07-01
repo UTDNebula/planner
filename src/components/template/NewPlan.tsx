@@ -1,20 +1,20 @@
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import AutoCompleteMajor from '@/components/AutoCompleteMajor';
 import useMajors from '@/shared/useMajors';
 import { trpc } from '@/utils/trpc';
 
-import { Page } from './Page';
 import { ButtonProps } from '../Button';
 import useSearch from '../search/search';
+import { Page } from './Page';
 
 export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
   const [name, setName] = useState('');
   const [major, setMajor] = useState<string | null>(null);
   const [planNameError, setPlanNameError] = useState(false);
   const [majorError, setMajorError] = useState(false);
-  const { majors, err } = useMajors();
+  const { majors } = useMajors();
   const setErrors = () => {
     setPlanNameError(name === '');
     setMajorError(major === null);
@@ -101,12 +101,11 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
       <div className="relative mb-4">
         <AutoCompleteMajor
           data-testid="major-autocomplete"
-          className="w-[500px] rounded border outline-none"
+          className="w-[500px] rounded-sm border outline-hidden"
           key={0}
           onValueChange={(value) => setMajor(value)}
           onInputChange={(query: string) => updateQuery(query)}
           options={results.map((major: { filMajor: string }) => major.filMajor)}
-          autoFocus
         ></AutoCompleteMajor>
       </div>
       <small className={`${majorError ? 'visible' : 'hidden'} -mt-6  text-red-500`}>

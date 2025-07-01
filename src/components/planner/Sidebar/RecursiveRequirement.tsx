@@ -1,4 +1,4 @@
-import React, { useMemo, Fragment } from 'react';
+import React, { Fragment, useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { trpc } from '@/utils/trpc';
@@ -133,7 +133,7 @@ export function RecursiveRequirement({
               filled={req.filled}
             >
               <>
-                {req.prefix_groups.map((req2, idx) => (
+                {req.prefix_groups.map((req2) => (
                   <RecursiveRequirement
                     key={req2.metadata.id}
                     req={req2}
@@ -166,7 +166,6 @@ function CourseRequirementComponent({
   const id = useMemo(() => uuidv4(), []);
   const courseQuery = trpc.courses.publicGetAllCourses.useQuery(undefined, {
     staleTime: Infinity,
-    cacheTime: Infinity,
   });
   const { data, isLoading } = courseQuery;
 

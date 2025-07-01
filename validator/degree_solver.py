@@ -334,7 +334,7 @@ class DegreeRequirementsSolver:
 
 
 def format_core_reqs(
-    reqs: dict[str, core.store.AssignmentStoreJSON]
+    reqs: dict[str, core.store.AssignmentStoreJSON],
 ) -> list[AbstractRequirement]:
     core_reqs = []
     for req_name, req_info in reqs.items():

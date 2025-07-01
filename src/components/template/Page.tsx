@@ -1,8 +1,8 @@
 import CloseIcon from '@mui/icons-material/Close';
-import { PropsWithChildren } from 'react';
+import React, { PropsWithChildren } from 'react';
 
-import { PageProps } from './CustomPlan';
 import Button from '../Button';
+import { PageProps } from './CustomPlan';
 
 export function Page({
   title,
@@ -37,7 +37,7 @@ export function Page({
         </div>
         <button
           onClick={close}
-          className="h-min w-min p-2 text-neutral-500 transition-colors hover:text-neutral-700"
+          className="h-min w-min p-2 text-neutral-500 transition-colors hover:text-neutral-700 cursor-pointer"
         >
           <CloseIcon fontSize="small" />
         </button>
@@ -51,6 +51,7 @@ export function Page({
             key={index}
             isLoading={loading}
             disabled={disabled}
+            className="cursor-pointer"
             {...props}
           >
             {name}

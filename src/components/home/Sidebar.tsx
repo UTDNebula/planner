@@ -1,18 +1,16 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { signOut } from 'next-auth/react';
-import { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import ChevronIcon from '@/icons/ChevronIcon';
-import ContactIcon from '@/icons/ContactIcon';
-import FeedbackIcon from '@/icons/FeedbackIcon';
 import GlobalIcon from '@/icons/GlobalIcon';
 import HomeIcon from '@/icons/HomeIcon';
 import LogoIcon from '@/icons/LogoIcon';
 import LogoutIcon from '@/icons/LogoutIcon';
 import ProfileIcon from '@/icons/ProfileIcon';
 
-export default function Sidebar({ isMobile }: { isMobile: boolean }): JSX.Element {
+export default function Sidebar({ isMobile }: { isMobile: boolean }) {
   const [open, setOpen] = useState(!isMobile);
   const [display, setDisplay] = useState(true);
   const hiddenRoutes = useMemo(() => ['/app/plans'], []);
@@ -30,26 +28,19 @@ export default function Sidebar({ isMobile }: { isMobile: boolean }): JSX.Elemen
       url: '/app/home',
       label: 'Dashboard',
       Icon: HomeIcon,
+      newTab: false,
     },
     {
       url: '/app/profile',
       label: 'Profile',
       Icon: ProfileIcon,
+      newTab: false,
     },
     {
-      url: 'https://discord.gg/K5B727vEnV',
-      label: 'Contact Support',
-      Icon: ContactIcon,
-    },
-    {
-      url: 'https://airtable.com/shrFg9MPi9BGguwPU',
-      label: 'Feedback Form',
-      Icon: FeedbackIcon,
-    },
-    {
-      url: 'https://discord.gg/anrh9B2Z3w',
+      url: 'https://discord.utdnebula.com/',
       label: 'Join Our Discord',
       Icon: GlobalIcon,
+      newTab: true,
     },
   ];
 
@@ -58,7 +49,7 @@ export default function Sidebar({ isMobile }: { isMobile: boolean }): JSX.Elemen
       <div
         className={`${
           open ? 'w-[288px] shrink-0' : 'w-auto'
-        } flex h-screen max-h-screen flex-col border-r-[1px] border-r-[#e0e0e0] bg-white  transition-all`}
+        } flex h-screen max-h-screen flex-col border-r border-r-[#e0e0e0] bg-white  transition-all`}
       >
         {!isMobile && (
           <div className="relative mb-[70px] mt-6 flex h-fit w-full items-center justify-center">
@@ -77,8 +68,8 @@ export default function Sidebar({ isMobile }: { isMobile: boolean }): JSX.Elemen
           </div>
         )}
         <ul className="flex flex-col gap-y-[25px]">
-          {sidebarItems.map(({ url, label, Icon }, i) => (
-            <Link key={url + i} href={url}>
+          {sidebarItems.map(({ url, label, Icon, newTab }, i) => (
+            <Link key={url + i} href={url} target={newTab ? '_blank' : ''}>
               <li
                 className={`${
                   router.pathname === url && 'rounded-lg bg-primary font-medium text-white'
@@ -92,10 +83,10 @@ export default function Sidebar({ isMobile }: { isMobile: boolean }): JSX.Elemen
             </Link>
           ))}
         </ul>
-        <div className="flex-grow"></div>
+        <div className="grow"></div>
 
         <button
-          className="mx-4 flex  items-center gap-6 px-5 pb-5 align-bottom"
+          className="mx-4 flex  items-center gap-6 px-5 pb-5 align-bottom cursor-pointer"
           onClick={() => signOut()}
         >
           <LogoutIcon className="h-6 w-6" />

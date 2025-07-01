@@ -1,9 +1,9 @@
+import { router } from '../trpc';
 import { coursesRouter } from './courses';
 import { planRouter } from './plan';
 import { templateRouter } from './template';
 import { userRouter } from './user';
 import { validatorRouter } from './validator';
-import { router } from '../trpc';
 
 export const appRouter = router({
   user: userRouter,

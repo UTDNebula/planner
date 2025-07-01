@@ -1,11 +1,11 @@
 import { MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect } from 'react';
 
+import { SemesterCode } from '@/../prisma/utils';
 import AutoCompleteMajor from '@/components/AutoCompleteMajor';
 import EmojiIcons from '@/icons/EmojiIcon';
 import useMajors from '@/shared/useMajors';
-import { SemesterCode } from 'prisma/utils';
 
 import useSearch from '../search/search';
 
@@ -18,16 +18,10 @@ export type WelcomeTypes = {
 export type WelcomeData = {
   handleChange: (updatedFields: Partial<WelcomeTypes>) => void;
   data: WelcomeTypes;
-  semesterOptions: { startSemesters: SemesterCode[]; endSemesters: SemesterCode[] };
   handleValidate: (value: boolean) => void;
 };
 
-export default function Welcome({
-  handleChange,
-  data,
-  handleValidate,
-  semesterOptions,
-}: WelcomeData): JSX.Element {
+export default function Welcome({ handleChange, data, handleValidate }: WelcomeData) {
   const { name, startSemester, endSemester }: WelcomeTypes = data;
 
   const setName = (event: SelectChangeEvent<string>) => {
@@ -42,7 +36,6 @@ export default function Welcome({
     handleChange({ endSemester: sem });
   };
 
-  const [major, setMajor] = React.useState('');
   const { majors, err } = useMajors();
 
   const { results, updateQuery } = useSearch({
@@ -105,11 +98,11 @@ export default function Welcome({
     handleValidate(isValid);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     checkValidate();
   }, [data]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
@@ -117,7 +110,7 @@ export default function Welcome({
     return (
       <>
         Oops, we ran into an error! Please let us know on our{' '}
-        <Link href="https://discord.gg/anrh9B2Z3w" className="underline">
+        <Link href="https://discord.utdnebula.com/" className="underline">
           discord
         </Link>{' '}
         to get it fixed as soon as possible.
@@ -140,7 +133,7 @@ export default function Welcome({
         <div className="relative mb-4">
           <input
             type="text"
-            className="w-[500px] rounded border bg-[#F5F5F5] p-3 pl-4 text-[14px] text-[#737373] outline-none focus:border-[#6366F1]"
+            className="w-[500px] rounded-sm border bg-[#F5F5F5] p-3 pl-4 text-[14px] text-[#737373] outline-hidden focus:border-[#6366F1]"
             value={name}
             onChange={
               setName as
@@ -153,9 +146,8 @@ export default function Welcome({
 
         <div className="relative mb-5">
           <AutoCompleteMajor
-            className="w-[500px] rounded border outline-none"
+            className="w-[500px] rounded-sm border outline-hidden"
             key={0}
-            onValueChange={(value) => setMajor(value)}
             onInputChange={(query: string) => updateQuery(query)}
             options={results.map((major: { filMajor: string }) => major.filMajor)}
             autoFocus
@@ -165,7 +157,7 @@ export default function Welcome({
         <div className="flex items-center justify-between">
           <div className="relative mb-4">
             <Select
-              className="h-[50px] w-[225px] rounded  border bg-[#F5F5F5] pl-1 text-[14px] text-[#737373] outline-none"
+              className="h-[50px] w-[225px] rounded-sm  border bg-[#F5F5F5] pl-1 text-[14px] text-[#737373] outline-hidden"
               sx={{
                 '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
                   borderColor: '#6366F1',
@@ -195,7 +187,7 @@ export default function Welcome({
           </div>
           <div className="relative mb-4">
             <Select
-              className="h-[50px] w-[225px] rounded  border bg-[#F5F5F5] pl-1 text-[14px] text-[#737373] outline-none"
+              className="h-[50px] w-[225px] rounded-sm  border bg-[#F5F5F5] pl-1 text-[14px] text-[#737373] outline-hidden"
               sx={{
                 '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
                   borderColor: '#6366F1',
@@ -253,7 +245,7 @@ export default function Welcome({
         <div className="flex items-center justify-between">
           <div className="relative mb-4">
             <Select
-              className="h-[50px] w-[225px] rounded  border bg-[#F5F5F5] pl-1 text-[14px] text-[#737373] outline-none"
+              className="h-[50px] w-[225px] rounded-sm  border bg-[#F5F5F5] pl-1 text-[14px] text-[#737373] outline-hidden"
               sx={{
                 '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
                   borderColor: '#6366F1',
@@ -284,7 +276,7 @@ export default function Welcome({
           </div>
           <div className="relative mb-4">
             <Select
-              className="h-[50px] w-[225px] rounded  border bg-[#F5F5F5] pl-1 text-[14px] text-[#737373] outline-none"
+              className="h-[50px] w-[225px] rounded-sm  border bg-[#F5F5F5] pl-1 text-[14px] text-[#737373] outline-hidden"
               sx={{
                 '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
                   borderColor: '#6366F1',

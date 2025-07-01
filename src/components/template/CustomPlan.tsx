@@ -1,21 +1,20 @@
 import { SemesterType } from '@prisma/client';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useRef, useState } from 'react';
+import type { PDFDocumentProxy } from 'pdfjs-dist';
+import React, { useEffect, useRef, useState } from 'react';
 
+import { SemesterCode } from '@/../prisma/utils';
 import AutoCompleteMajor from '@/components/AutoCompleteMajor';
 import courseCode from '@/data/courseCode.json';
 import useMajors from '@/shared/useMajors';
 import { UnwrapArray } from '@/types/util-types';
 import { RouterInputs, trpc } from '@/utils/trpc';
-import { SemesterCode } from 'prisma/utils';
 
-import { Page } from './Page';
 import { ButtonProps } from '../Button';
 import ErrorMessage from '../common/ErrorMessage';
 import useSearch from '../search/search';
-
-import type { PDFDocumentProxy } from 'pdfjs-dist';
+import { Page } from './Page';
 
 type TakenCourse = UnwrapArray<RouterInputs['user']['createUserPlan']['takenCourses']>;
 
@@ -85,12 +84,12 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
   const parseTranscript = async (file: File) => {
     const pdf = await import('pdfjs-dist');
     // TODO: How to use local import for this?
-    pdf.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdf.version}/pdf.worker.js`;
+    pdf.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdf.version}/pdf.worker.mjs`;
 
     let data: PDFDocumentProxy;
     try {
       data = await pdf.getDocument(await file.arrayBuffer()).promise;
-    } catch (e) {
+    } catch {
       setError('Please ensure the selected file is a PDF file');
       return;
     }
@@ -285,12 +284,11 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
       <div className="relative mb-4">
         <AutoCompleteMajor
           data-testid="major-autocomplete"
-          className="w-[500px] outline-none"
+          className="w-[500px] outline-hidden"
           key={0}
           onValueChange={(value) => setMajor(value)}
           onInputChange={(query: string) => updateQuery(query)}
           options={results.map((major: { filMajor: string }) => major.filMajor)}
-          autoFocus
         ></AutoCompleteMajor>
       </div>
       <small className={`${majorError ? 'visible' : 'hidden'} -mt-6  text-red-500`}>
@@ -323,7 +321,7 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
       <div className="salt contents">
         <button
           ref={dropRef}
-          className="group flex flex-col items-center justify-center gap-0.5 rounded-md border border-neutral-200 bg-inherit py-10 transition-colors"
+          className="group flex flex-col items-center justify-center gap-0.5 rounded-md border border-neutral-200 bg-inherit py-10 transition-colors cursor-pointer"
           onClick={() => fileInputRef.current && fileInputRef.current.click()}
           data-testid="upload-transcript-btn"
         >
@@ -383,6 +381,7 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
                 setTransferCredits([]);
                 setTakenCourses([]);
               }}
+              className="cursor-pointer"
             >
               <svg
                 width="32"
@@ -433,7 +432,7 @@ export default function CustomPlan({ onDismiss }: { onDismiss: () => void }) {
     return (
       <>
         Oops, we ran into an error! Please let us know on our{' '}
-        <Link href="https://discord.gg/anrh9B2Z3w" className="underline">
+        <Link href="https://discord.utdnebula.com/" className="underline">
           discord
         </Link>{' '}
         to get it fixed as soon as possible.

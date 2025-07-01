@@ -1,6 +1,9 @@
+import 'react-loading-skeleton/dist/skeleton.css';
+
+import { useSemestersContext } from '@components/planner/SemesterContext';
 import { UniqueIdentifier } from '@dnd-kit/core';
 import * as Dialog from '@radix-ui/react-dialog';
-import { useRef, useState, useMemo, memo } from 'react';
+import React, { memo, useMemo, useRef, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -10,16 +13,13 @@ import SearchBar from '@/components/planner/Sidebar/SearchBar';
 import ChevronIcon from '@/icons/ChevronIcon';
 import { trpc } from '@/utils/trpc';
 import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
-import { useSemestersContext } from '@components/planner/SemesterContext';
 
+import { Course, DraggableCourse, GetDragIdByCourse } from '../types';
+import useFuse from '../useFuse';
 import AccordionSkeleton from './AccordionSkeleton';
 import DeleteCourseDrop from './DeleteCourseDrop';
 import DraggableCourseList from './DraggableCourseList';
 import { DegreeRequirement } from './types';
-import { Course, DraggableCourse, GetDragIdByCourse } from '../types';
-import useFuse from '../useFuse';
-
-import 'react-loading-skeleton/dist/skeleton.css';
 
 export interface CourseSelectorContainerProps {
   planId: string;
@@ -188,7 +188,7 @@ function CourseSelectorContainer({
           </div>
           <h6 className="text-base tracking-tight text-gray-500">Drag courses onto your plan</h6>
         </div>
-        <div className="z-[999] drop-shadow-2xl">
+        <div className="z-999 drop-shadow-2xl">
           <SearchBar
             onClick={() => setDisplay(true)}
             updateQuery={(q) => {
@@ -205,19 +205,15 @@ function CourseSelectorContainer({
           <div className="relative">
             <div
               ref={ref}
-              className="absolute z-[99] w-full overflow-clip rounded-b-[10px] bg-white"
+              className="absolute z-99 w-full overflow-clip rounded-b-[10px] bg-white"
             ></div>
           </div>
         </div>
         <Dialog.Root open={displayResults} onOpenChange={(v) => setDisplay(v)} modal={false}>
           {ref.current && (
-            <Dialog.Portal className="z-[99]" container={ref?.current}>
-              <Dialog.Content
-                asChild
-                className="z-[999]"
-                onOpenAutoFocus={(e) => e.preventDefault()}
-              >
-                <div className="w-full border-[2px] border-[#EDEFF7] bg-white p-4 drop-shadow-2xl">
+            <Dialog.Portal container={ref?.current}>
+              <Dialog.Content asChild className="z-999" onOpenAutoFocus={(e) => e.preventDefault()}>
+                <div className="w-full border-2 border-[#EDEFF7] bg-white p-4 drop-shadow-2xl">
                   <DraggableCourseList courses={courseResults} getDragId={getSearchedDragId} />
                 </div>
               </Dialog.Content>
@@ -228,7 +224,7 @@ function CourseSelectorContainer({
           <div className="flex h-[30vh] w-full text-base leading-5 text-[#A3A3A3]">
             <div className="mx-12 mt-44 flex w-full flex-col items-center justify-center gap-4 text-center leading-6">
               It seems like a screw has gone loose!
-              <a target="_blank" rel="noreferrer" href="https://airtable.com/shrFg9MPi9BGguwPU">
+              <a target="_blank" rel="noreferrer" href="https://discord.utdnebula.com/">
                 <Button>REPORT ERROR</Button>
               </a>
             </div>
@@ -238,7 +234,7 @@ function CourseSelectorContainer({
           <div className="flex h-[30vh] w-full text-base leading-5 text-[#A3A3A3]">
             <div className="mx-12 mt-44 flex w-full flex-col items-center justify-center gap-4 text-center leading-6">
               It seems like your major is no longer supported! Contact us to have it added.
-              <a target="_blank" rel="noreferrer" href="https://airtable.com/shrFg9MPi9BGguwPU">
+              <a target="_blank" rel="noreferrer" href="https://discord.utdnebula.com/">
                 <Button>REPORT ERROR</Button>
               </a>
             </div>
@@ -259,10 +255,10 @@ function CourseSelectorContainer({
         {!validatorError && !validatorUnsupportedDegreeError && !validationData && (
           <AccordionSkeleton />
         )}
-        <div className="flex flex-grow items-end justify-center text-center text-base font-semibold not-italic leading-6 text-[color:var(--neutral-400,#A3A3A3)]">
+        <div className="flex grow items-end justify-center text-center text-base font-semibold not-italic leading-6 text-(--neutral-400,#A3A3A3)">
           Drag courses here to delete
         </div>
-        <div className="flex flex-grow items-end justify-end text-sm ">
+        <div className="flex grow items-end justify-end text-sm mb-16">
           <div>
             <span className="font-bold">Warning:</span> This is an unofficial tool not affiliated
             with the university. For official advice, please consult the course catalog and confirm

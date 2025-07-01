@@ -1,5 +1,5 @@
 import { UniqueIdentifier, useDroppable } from '@dnd-kit/core';
-import React, { FC, forwardRef, useState, useRef, useImperativeHandle } from 'react';
+import React, { FC, forwardRef, memo, useImperativeHandle, useRef, useState } from 'react';
 
 import ChevronIcon from '@/icons/ChevronIcon';
 import LockIcon from '@/icons/LockIcon';
@@ -7,12 +7,12 @@ import UnlockedIcon from '@/icons/UnlockedIcon';
 import useAccordionAnimation from '@/shared/useAccordionAnimation';
 import { displaySemesterCode, getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
 
-import DraggableSemesterCourseItem from './SemesterCourseItem';
-import SemesterTileDropdown from './SemesterTileDropdown';
 import CreditsWarnHoverCard from '../CreditsWarnHoverCard';
 import { useSemestersContext } from '../SemesterContext';
 import { DragDataToSemesterTile, GetDragIdByCourseAndSemester, Semester } from '../types';
 import { tagColors } from '../utils';
+import DraggableSemesterCourseItem from './SemesterCourseItem';
+import SemesterTileDropdown from './SemesterTileDropdown';
 
 export interface SemesterTileProps {
   semester: Semester;
@@ -23,7 +23,7 @@ export interface SemesterTileProps {
  * Strictly UI implementation of a semester tile
  */
 /* eslint-disable react/prop-types */
-export const MemoizedSemesterTile = React.memo(
+export const MemoizedSemesterTile = memo(
   forwardRef<HTMLDivElement, SemesterTileProps>(function SemesterTile(
     { semester, getDragId },
     outerRef,
@@ -33,7 +33,7 @@ export const MemoizedSemesterTile = React.memo(
     useImperativeHandle(outerRef, () => innerRef.current!, []);
 
     const [hoverOpen, setHoverOpen] = useState(false);
-    const hoverTimer = useRef<ReturnType<typeof setTimeout>>();
+    const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
     const { toggle, open } = useAccordionAnimation(innerRef, () =>
       semester.courses.length === 0 ? '140px' : '170px',
     );
@@ -60,7 +60,7 @@ export const MemoizedSemesterTile = React.memo(
           }}
           onMouseLeave={() => {
             setHoverOpen(false);
-            clearTimeout(hoverTimer.current);
+            if (hoverTimer.current !== null) clearTimeout(hoverTimer.current);
           }}
         >
           <CreditsWarnHoverCard
@@ -131,7 +131,10 @@ export const MemoizedSemesterTile = React.memo(
               >
                 {displaySemesterCode(semester.code)}
               </h3>
-              <button onClick={() => handleSemesterLock(semester.id.toString(), !semester.locked)}>
+              <button
+                onClick={() => handleSemesterLock(semester.id.toString(), !semester.locked)}
+                className="cursor-pointer"
+              >
                 {!semester.locked ? <UnlockedIcon /> : <LockIcon />}
               </button>
             </div>
@@ -223,4 +226,4 @@ const DroppableSemesterTile: FC<DroppableSemesterTileProps> = ({
   );
 };
 
-export default React.memo(DroppableSemesterTile);
+export default memo(DroppableSemesterTile);

@@ -1,15 +1,14 @@
-import { Document, Font, Link, Page, StyleSheet, View, Text } from '@react-pdf/renderer';
+import type { Prisma } from '@prisma/client';
+import { Document, Font, Link, Page, StyleSheet, Text, View } from '@react-pdf/renderer';
 import React, { FC } from 'react';
 
+import { SemesterCode } from '@/../prisma/utils';
 import { getSemesterHourFromCourseCode } from '@/utils/utilFunctions';
-import { SemesterCode } from 'prisma/utils';
 
-import AcademicYearTable, { DEFAULT_COURSE_CREDIT_HOUR } from './AcademicYearTable';
-import Header from './Header';
 import { Semester } from '../types';
 import { customCourseSort } from '../utils';
-
-import type { Prisma } from '@prisma/client';
+import AcademicYearTable, { DEFAULT_COURSE_CREDIT_HOUR } from './AcademicYearTable';
+import Header from './Header';
 
 Font.register({
   family: 'Inter',
@@ -69,7 +68,6 @@ interface CourseData {
   title: string;
   credits: number;
 }
-[];
 
 // Create Document Component containing the user's degree plan
 const DegreePlanPDF: FC<DegreePlanPDFProps> = ({

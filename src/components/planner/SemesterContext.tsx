@@ -1,5 +1,5 @@
 import { SemesterType } from '@prisma/client';
-import {
+import React, {
   createContext,
   FC,
   useCallback,
@@ -15,7 +15,7 @@ import { trpc } from '@/utils/trpc';
 import { useTaskQueue } from '@/utils/useTaskQueue';
 import { createYearBasedOnFall } from '@/utils/utilFunctions';
 
-import { Plan, Semester, DraggableCourse } from './types';
+import { DraggableCourse, Plan, Semester } from './types';
 import { customCourseSort, tagColors } from './utils';
 
 export interface SemestersContextState {
@@ -87,6 +87,7 @@ export interface SemestersContextProviderProps {
   planId: string;
   plan: Plan;
   bypasses: string[];
+  children: React.ReactNode;
 }
 
 export interface useSemestersProps {
@@ -184,10 +185,8 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
 
   const [selectedCourseIds, setSelectedCourseIds] = useState<Set<string>>(new Set());
 
-  const [undoStack, dispatchUndo] = useReducer<
-    (state: UndoStackReducerState, action: UndoStackReducerAction) => UndoStackReducerState
-  >(
-    (state, action) => {
+  const [, dispatchUndo] = useReducer(
+    (state: UndoStackReducerState, action: UndoStackReducerAction) => {
       switch (action.type) {
         case 'popUndoStack':
           return { stack: state.stack.slice(0, -1), current: state.stack[state.stack.length - 1] };
@@ -206,12 +205,6 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
   const undo = () => {
     dispatchUndo({ type: 'popUndoStack' });
   };
-
-  useEffect(() => {
-    if (undoStack.current) {
-      undoStack.current();
-    }
-  }, [undoStack.current]);
 
   const handleSelectCourses = (courseIds: string[]) => {
     setSelectedCourseIds((existingCourseIds) => {
@@ -235,10 +228,8 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
     setSelectedCourseIds(new Set());
   };
 
-  const [semesters, dispatchSemesters] = useReducer<
-    (state: SemestersReducerState, action: SemestersReducerAction) => Semester[]
-  >(
-    (state, action) => {
+  const [semesters, dispatchSemesters] = useReducer(
+    (state: SemestersReducerState, action: SemestersReducerAction) => {
       switch (action.type) {
         case 'reinitState':
           return action.semesters;
@@ -383,8 +374,6 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
       })),
     [semesters],
   );
-
-  useEffect(() => console.log('stateChange', { semesters }), [semesters]);
 
   const changeCourseLock = trpc.plan.changeCourseLock.useMutation();
   const changeSemesterLock = trpc.plan.changeSemesterLock.useMutation();
@@ -583,7 +572,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
           },
           {
             autoClose: 1000,
-            position: 'bottom-right',
+            position: 'bottom-left',
           },
         ),
       args: { courseIds: coursesToDelete },
@@ -617,7 +606,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
               },
               {
                 autoClose: 1000,
-                position: 'bottom-right',
+                position: 'bottom-left',
               },
             ),
           args: coursesCopy,
@@ -666,7 +655,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
               },
               {
                 autoClose: 1000,
-                position: 'bottom-right',
+                position: 'bottom-left',
               },
             ),
           args: { semesterId: semester.id, courses: semester.courses },
@@ -697,7 +686,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
           },
           {
             autoClose: 1000,
-            position: 'bottom-right',
+            position: 'bottom-left',
           },
         ),
       args: { semesterIds: semesterIds.map((id) => id.toString()) },
@@ -727,7 +716,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
             },
             {
               autoClose: 1000,
-              position: 'bottom-right',
+              position: 'bottom-left',
             },
           )
           .catch((err) => console.error(err)),
@@ -769,7 +758,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
             },
             {
               autoClose: 1000,
-              position: 'bottom-right',
+              position: 'bottom-left',
             },
           )
           .catch((err) => console.error(err)),
@@ -802,7 +791,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
       toast.warn(
         `You're already taking ${newCourse.code} in ${targetSemester.code.year}${targetSemester.code.semester}`,
         {
-          position: 'bottom-right',
+          position: 'bottom-left',
         },
       );
       return;
@@ -823,7 +812,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
             error: 'Error in adding ' + courseName,
           },
           {
-            position: 'bottom-right',
+            position: 'bottom-left',
             autoClose: 1000,
           },
         ),
@@ -851,7 +840,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
       toast.warn(
         `You're already taking ${courseToMove.code} in ${originSemester.code.year}${destinationSemester.code.semester}`,
         {
-          position: 'bottom-right',
+          position: 'bottom-left',
         },
       );
       return;
@@ -881,7 +870,7 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
               },
               {
                 autoClose: 1000,
-                position: 'bottom-right',
+                position: 'bottom-left',
               },
             )
             .catch((err) => console.error(err)),
@@ -1033,34 +1022,38 @@ export const SemestersContextProvider: FC<SemestersContextProviderProps> = ({
     for (const filter of filters) {
       switch (filter.type) {
         case 'year':
-          const yearFilters = filters.filter((filter) => filter.type === 'year') as {
-            type: 'year';
-            year: number;
-          }[];
-          filtered = filtered.filter((semester) =>
-            yearFilters.some((filter) => filter.year === semester.code.year),
-          );
+          {
+            const yearFilters = filters.filter((filter) => filter.type === 'year') as {
+              type: 'year';
+              year: number;
+            }[];
+            filtered = filtered.filter((semester) =>
+              yearFilters.some((filter) => filter.year === semester.code.year),
+            );
+          }
           break;
 
         case 'color':
-          const colorFilters = filters.filter((filter) => filter.type === 'color') as {
-            type: 'color';
-            color: keyof typeof tagColors;
-          }[];
-          filtered = filtered.filter((semester) =>
-            colorFilters.some((filter) => filter.color === semester.color),
-          );
+          {
+            const colorFilters = filters.filter((filter) => filter.type === 'color') as {
+              type: 'color';
+              color: keyof typeof tagColors;
+            }[];
+            filtered = filtered.filter((semester) =>
+              colorFilters.some((filter) => filter.color === semester.color),
+            );
+          }
           break;
 
-        case 'semester':
+        case 'semester': {
           const semesterFilters = filters.filter((filter) => filter.type === 'semester') as {
             type: 'semester';
             semester: SemesterType;
           }[];
-
           filtered = filtered.filter((semester) =>
             semesterFilters.some((filter) => filter.semester === semester.code.semester),
           );
+        }
       }
     }
     return filtered;
@@ -1123,7 +1116,7 @@ const parsePlanSemestersFromPlan = (plan: Plan): Semester[] => {
           color: course.color as keyof typeof tagColors,
           code: course.code,
           prereqOveridden: course.prereqOverriden,
-        } as DraggableCourse),
+        }) as DraggableCourse,
     ),
   }));
 };
