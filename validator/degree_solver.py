@@ -191,27 +191,22 @@ class DegreeRequirementsSolver:
             year = max([degree_requirements_input.year, 2022])
             if input_req not in degree_plans[str(year)]:
                 # Check if the years before this one have it
-                y = year
-                while str(y := y - 1) in degree_plans:
+                y = year - 1
+                while y >= 2022:
                     if input_req in degree_plans[str(y)]:
                         year = y
                         break
-                if (
-                    year != degree_requirements_input.year
-                ):  # The using_year has been replaced to a working year
-                    break
-                # Check if the years after this one have it
-                y = year
-                while str(y := y + 1) in degree_plans:
-                    if input_req in degree_plans[str(y)]:
-                        year = y
-                        break
-                if (
-                    year != degree_requirements_input.year
-                ):  # The using_year has been replaced to a working year
-                    break
-                print("Error: Could not find the degree")
-                raise DegreeNotFoundException
+                    y = y - 1
+                else:
+                    # Check if the years after this one have it
+                    y = year
+                    while str(y := y + 1) in degree_plans:
+                        if input_req in degree_plans[str(y)]:
+                            year = y
+                            break
+                    else:
+                        print("Error: Could not find the degree")
+                        raise DegreeNotFoundException
             requirements_data = degree_plans[str(year)][input_req]["requirements"][
                 "major"
             ]
