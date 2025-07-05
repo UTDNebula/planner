@@ -153,7 +153,7 @@ export const MemoizedSemesterCourseItem = memo(
                 )}
               </span>
               <span className="truncate text-sm">
-                {title || (course.code[0] == '0' ? '' : <Skeleton />)}
+                {title || (course.code[0] == '0' || course.code.includes("Elective") ? '' : <Skeleton />)}
               </span>
             </div>
             {!semesterLocked && (
