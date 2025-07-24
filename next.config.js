@@ -68,4 +68,11 @@ module.exports = (phase, args) =>
     // https://docs.sentry.io/product/crons/
     // https://vercel.com/docs/cron-jobs
     automaticVercelMonitors: true,
+
+    sourcemaps: {
+      disable: process.env.VERCEL_ENV !== 'production',
+    },
+    release: {
+      create: process.env.VERCEL_ENV === 'production',
+    },
   });
