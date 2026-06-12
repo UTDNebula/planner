@@ -1,14 +1,2 @@
-# Request lead for file changes in root and workflows.
-/* @UTDNebula/pr-reviewers
-/.github/**/* @UTDNebula/pr-reviewers
-
-# Request Planner PR Reviewers team for changes in to the following root directories.
-/.vscode/ @UTDNebula/pr-reviewers
-/cypress/ @UTDNebula/pr-reviewers
-/docs/ @UTDNebula/pr-reviewers
-/prisma/ @UTDNebula/pr-reviewers
-/public/ @UTDNebula/pr-reviewers
-/src/ @UTDNebula/pr-reviewers
-/tests/ @UTDNebula/pr-reviewers
-/validator/ @UTDNebula/pr-reviewers
-
+# Request Portfolio Lead and Head of Engineering
+* @UTDNebula/portfolio-lead @UTDNebula/head-of-engineering
