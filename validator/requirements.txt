@@ -40,7 +40,7 @@ ortools==9.12.4544
 packaging==25.0
 pandas==2.2.3
 pathspec==0.12.1
-pillow==11.2.1
+pillow==11.3.0
 platformdirs==4.3.8
 pluggy==1.6.0
 protobuf==5.29.5
